@@ -16,13 +16,16 @@ import {
   CreateCourseWeekMutation,
   DeleteCourseLessonMutation,
   DeleteCourseTriadCoachesMutation,
+  DeleteCourseTriadsMutation,
   DeleteCourseWeekMutation,
-  GetCourseInfoQuery,
   GetGroupQuery,
+  SearchUsersQuery,
   UpdateCourseInfoMutation,
+  UpdateCourseLessonMutation,
   UpdateCourseTriadsMutation,
   UpdateCourseWeekMutation,
 } from "src/API"
+import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import CourseChat from "../../components/CourseViewer/CourseChat"
@@ -158,7 +161,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     })
   }
 
-  updateBackOfficeStaff = async (value: any): Promise<void> => {
+  updateBackOfficeStaff = async (
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ): Promise<void> => {
     console.log(this.state.courseData?.backOfficeStaff?.items)
     const del = this.state.courseData?.backOfficeStaff?.items?.filter(
       (x) => !value.map((z) => z.id).includes(x?.userID)
@@ -216,29 +221,35 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         })
         console.log(deleteCourseBackOfficeStaff)
         const temp = this.state.courseData
-        temp.backOfficeStaff.items = temp.backOfficeStaff?.items?.filter(
-          (user) => user?.id !== item?.id
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
+        if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
+          temp.backOfficeStaff.items = temp.backOfficeStaff?.items?.filter(
+            (user) => user?.id !== item?.id
+          )
+          console.log(temp)
+          this.setState({ courseData: temp })
+        }
       } catch (createCourseTriadUsers) {
         console.log(createCourseTriadUsers)
         const temp = this.state.courseData
-        temp.backOfficeStaff.items = temp.backOfficeStaff.users.items.filter(
-          (user) => user.id !== item.id
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
+        if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
+          temp.backOfficeStaff.items = temp.backOfficeStaff.items.filter(
+            (user) => user.id !== item.id
+          )
+          console.log(temp)
+          this.setState({ courseData: temp })
+        }
       }
     })
   }
-  updateInstructors = async (value: any): Promise<void> => {
-    console.log(this.state.courseData.instructors.items)
-    const del = this.state.courseData.instructors.items.filter(
+  updateInstructors = async (
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ): Promise<void> => {
+    console.log(this.state.courseData?.instructors?.items)
+    const del = this.state.courseData?.instructors?.items?.filter(
       (x) => !value.map((z) => z.id).includes(x.userID)
     )
     const add = value.filter(
-      (x) => !this.state.courseData.instructors.items.map((z) => z.userID).includes(x.id)
+      (x) => !this.state.courseData?.instructors?.items?.map((z) => z?.userID).includes(x.id)
     )
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
     console.log({ del: del })
@@ -259,15 +270,19 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         })
         console.log(createCourseInstructors)
         const temp = this.state.courseData
-        temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
-        console.log(temp)
-        this.setState({ courseData: temp })
+        if (temp && temp.instructors && temp.instructors.items) {
+          temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
+          console.log(temp)
+          this.setState({ courseData: temp })
+        }
       } catch (createCourseInstructors) {
         console.log(createCourseInstructors)
         const temp = this.state.courseData
-        temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
-        console.log(temp)
-        this.setState({ courseData: temp })
+        if (temp && temp.instructors && temp.instructors.items) {
+          temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
+          console.log(temp)
+          this.setState({ courseData: temp })
+        }
       }
     })
 
@@ -286,91 +301,110 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         })
         console.log(deleteCourseInstructors)
         const temp = this.state.courseData
-        temp.instructors.items = temp.instructors.items.filter((user) => user.id !== item.id)
-        console.log(temp)
-        this.setState({ courseData: temp })
+        if (temp && temp.instructors && temp.instructors.items) {
+          temp.instructors.items = temp.instructors.items.filter((user) => user.id !== item.id)
+          console.log(temp)
+          this.setState({ courseData: temp })
+        }
       } catch (createCourseTriadUsers) {
         console.log(createCourseTriadUsers)
         const temp = this.state.courseData
-        temp.instructors.items = temp.instructors.users.items.filter((user) => user.id !== item.id)
-        console.log(temp)
-        this.setState({ courseData: temp })
+        if (temp && temp.instructors && temp.instructors.items) {
+          temp.instructors.items = temp.instructors.items.filter((user) => user.id !== item.id)
+          console.log(temp)
+          this.setState({ courseData: temp })
+        }
       }
     })
   }
-  updateTriadUsers = async (index: number, value: any): Promise<void> => {
-    const del = this.state.courseData.triads.items[index].users.items.filter(
-      (x) => !value.map((z) => z.id).includes(x.userID)
-    )
-    const add = value.filter(
-      (x) =>
-        !this.state.courseData.triads.items[index].users.items.map((z) => z.userID).includes(x.id)
-    )
-    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
-    console.log({ del: del })
-    add.map(async (item) => {
-      let createCourseTriadUsers: any
-      try {
-        console.log({ Adding: item })
+  updateTriadUsers = async (
+    index: number,
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ): Promise<void> => {
+    if (this.state.courseData?.triads?.items) {
+      const del = this.state.courseData.triads.items[index]!.users?.items?.filter(
+        (x) => !value?.map((z) => z.id).includes(x.userID)
+      )
+      const add = value?.filter(
+        (x) =>
+          !this.state.courseData.triads.items[index]!.users?.items?.map((z) => z.userID).includes(
+            x.id
+          )
+      )
+      // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
+      console.log({ del: del })
+      add?.map(async (item) => {
+        let createCourseTriadUsers: any
+        try {
+          console.log({ Adding: item })
 
-        createCourseTriadUsers = await API.graphql({
-          query: mutations.createCourseTriadUsers,
-          variables: {
-            input: {
-              triadID: this.state.courseData.triads.items[index].id,
-              userID: item.id,
+          createCourseTriadUsers = await API.graphql({
+            query: mutations.createCourseTriadUsers,
+            variables: {
+              input: {
+                triadID: this.state.courseData.triads.items[index].id,
+                userID: item.id,
+              },
             },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
-        console.log(createCourseTriadUsers)
-        const temp = this.state.courseData
-        temp.triads.items[index].users.items.push(
-          createCourseTriadUsers.data.createCourseTriadUsers
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      } catch (createCourseTriadUsers) {
-        console.log(createCourseTriadUsers)
-        const temp = this.state.courseData
-        temp.triads.items[index].users.items.push(
-          createCourseTriadUsers.data.createCourseTriadUsers
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      }
-    })
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })
+          console.log(createCourseTriadUsers)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items) {
+            temp.triads.items[index]!.users?.items?.push(
+              createCourseTriadUsers.data.createCourseTriadUsers
+            )
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        } catch (createCourseTriadUsers) {
+          console.log(createCourseTriadUsers)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items) {
+            temp.triads.items[index]!.users?.items?.push(
+              createCourseTriadUsers.data.createCourseTriadUsers
+            )
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        }
+      })
 
-    del.map(async (item) => {
-      try {
-        console.log({ Deleting: item })
+      del?.map(async (item) => {
+        try {
+          console.log({ Deleting: item })
 
-        const createCourseTriadUsers: any = await API.graphql({
-          query: mutations.deleteCourseTriadUsers,
-          variables: {
-            input: {
-              id: item.id,
+          const createCourseTriadUsers: any = await API.graphql({
+            query: mutations.deleteCourseTriadUsers,
+            variables: {
+              input: {
+                id: item.id,
+              },
             },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
-        console.log(createCourseTriadUsers)
-        const temp = this.state.courseData
-        temp.triads.items[index].users.items = temp.triads.items[index].users.items.filter(
-          (user) => user.id !== item.id
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      } catch (createCourseTriadUsers) {
-        console.log(createCourseTriadUsers)
-        const temp = this.state.courseData
-        temp.triads.items[index].users.items = temp.triads.items[index].users.items.filter(
-          (user) => user.id !== item.id
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      }
-    })
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })
+          console.log(createCourseTriadUsers)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items && temp.triads.items[index]) {
+            temp.triads.items[index].users.items = temp.triads.items[index]!.users?.items?.filter(
+              (user) => user.id !== item.id
+            )
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        } catch (createCourseTriadUsers) {
+          console.log(createCourseTriadUsers)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items && temp.triads.items[index]) {
+            temp.triads.items[index].users.items = temp.triads.items[index]!.users?.items?.filter(
+              (user) => user.id !== item.id
+            )
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        }
+      })
+    }
   }
   removeDuplicates(originalArray, prop) {
     const newArray = []
@@ -387,10 +421,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   }
 
   myCourseGroups = (): { all: any[]; cohort: any[]; completeTriad: any[] } => {
-    const z: [{ cohort; completeTriad }] = this.state.courseData?.triads?.items.map((item) => {
-      let triadTemp = [],
-        coachTemp = [],
-        cohortTemp = []
+    const z: [{ cohort; completeTriad }] = this.state.courseData?.triads?.items?.map((item) => {
+      let triadTemp = []
+      let coachTemp = []
+      let cohortTemp = []
       let completeTriad = null
       if (
         item.users.items.filter((user) => user.userID == this.state.currentUser).length > 0 ||
@@ -408,24 +442,24 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       }
       return { completeTriad: completeTriad, cohort: cohortTemp }
     })
-    let fromTriads: Array<any> = this.state.courseData?.triads?.items
-      .map((item: any) => {
+    let fromTriads = this.state.courseData?.triads?.items
+      .map((item) => {
         return [...item.users.items, ...item.coaches.items]
       })
       .flat()
-      .filter((item: any) => {
+      .filter((item) => {
         return item.user != null
       })
-      .map((item: any) => {
+      .map((item) => {
         return item.user
       })
     if (fromTriads == undefined) fromTriads = []
-    const instructors: Array<any> = this.state.courseData
+    const instructors = this.state.courseData
       ? this.state.courseData.instructors.items.map((item) => {
           return item.user
         })
       : []
-    const backOfficeStaff: Array<any> = this.state.courseData
+    const backOfficeStaff = this.state.courseData
       ? this.state.courseData.backOfficeStaff.items.map((item) => {
           return item.user
         })
@@ -433,7 +467,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     console.log(instructors)
     console.log(backOfficeStaff)
     console.log(fromTriads)
-    const allWithDuplicates: Array<any> = [...fromTriads, ...instructors, ...backOfficeStaff]
+    const allWithDuplicates = [...fromTriads, ...instructors, ...backOfficeStaff]
     const all = this.removeDuplicates(allWithDuplicates, "id")
     let cohort = [],
       completeTriad = []
@@ -449,77 +483,93 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     console.log(final)
     return final
   }
-  updateTriadCoaches = async (index: number, value: any): Promise<void> => {
-    const del = this.state.courseData.triads.items[index].coaches.items.filter(
-      (x) => !value.map((z) => z.id).includes(x.userID)
-    )
-    const add = value.filter(
-      (x) =>
-        !this.state.courseData.triads.items[index].coaches.items.map((z) => z.userID).includes(x.id)
-    )
-    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
-    add.map(async (item: any) => {
-      try {
-        console.log({ Adding: item })
+  updateTriadCoaches = async (
+    index: number,
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ): Promise<void> => {
+    if (this.state.courseData?.triads?.items) {
+      const del = this.state.courseData.triads.items[index]!.coaches?.items?.filter(
+        (x) => !value.map((z) => z.id).includes(x.userID)
+      )
+      const add = value.filter(
+        (x) =>
+          !this.state.courseData.triads.items[index]!.coaches?.items?.map((z) => z.userID).includes(
+            x.id
+          )
+      )
 
-        const createCourseTriadCoaches: any = await API.graphql({
-          query: mutations.createCourseTriadCoaches,
-          variables: {
-            input: {
-              triadID: this.state.courseData.triads.items[index].id,
-              userID: item.id,
+      // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
+      add.map(async (item: any) => {
+        try {
+          console.log({ Adding: item })
+
+          const createCourseTriadCoaches: any = await API.graphql({
+            query: mutations.createCourseTriadCoaches,
+            variables: {
+              input: {
+                triadID: this.state.courseData.triads.items[index]!.id,
+                userID: item.id,
+              },
             },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
-        console.log(createCourseTriadCoaches)
-        const temp = this.state.courseData
-        temp.triads.items[index].coaches.items.push(
-          createCourseTriadCoaches.data.createCourseTriadCoaches
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      } catch (createCourseTriadCoaches) {
-        console.log(createCourseTriadCoaches)
-        const temp = this.state.courseData
-        temp.triads.items[index].coaches.items.push(
-          createCourseTriadCoaches.data.createCourseTriadCoaches
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      }
-    })
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })
+          console.log(createCourseTriadCoaches)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items) {
+            temp.triads.items[index]!.coaches?.items?.push(
+              createCourseTriadCoaches.data.createCourseTriadCoaches
+            )
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        } catch (createCourseTriadCoaches) {
+          console.log(createCourseTriadCoaches)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items) {
+            temp.triads.items[index]!.coaches?.items?.push(
+              createCourseTriadCoaches.data.createCourseTriadCoaches
+            )
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        }
+      })
 
-    del.map(async (item) => {
-      try {
-        console.log({ Deleting: item })
+      del?.map(async (item) => {
+        try {
+          console.log({ Deleting: item })
 
-        const deleteCourseTriadCoaches = (await API.graphql({
-          query: mutations.deleteCourseTriadCoaches,
-          variables: {
-            input: {
-              id: item?.id,
+          const deleteCourseTriadCoaches = (await API.graphql({
+            query: mutations.deleteCourseTriadCoaches,
+            variables: {
+              input: {
+                id: item?.id,
+              },
             },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<DeleteCourseTriadCoachesMutation>
-        console.log(deleteCourseTriadCoaches)
-        const temp = this.state.courseData
-        temp.triads.items[index].coaches.items = temp.triads.items[index].coaches.items.filter(
-          (user) => user?.id !== item?.id
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      } catch (deleteCourseTriadCoaches) {
-        console.log(deleteCourseTriadCoaches)
-        const temp = this.state.courseData
-        temp.triads.items[index].coaches.items = temp.triads.items[index].coaches.items.filter(
-          (user) => user?.id !== item?.id
-        )
-        console.log(temp)
-        this.setState({ courseData: temp })
-      }
-    })
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })) as GraphQLResult<DeleteCourseTriadCoachesMutation>
+          console.log(deleteCourseTriadCoaches)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items) {
+            temp.triads.items[index].coaches.items = temp.triads.items[
+              index
+            ]!.coaches?.items?.filter((user) => user?.id !== item?.id)
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        } catch (deleteCourseTriadCoaches) {
+          console.log(deleteCourseTriadCoaches)
+          const temp = this.state.courseData
+          if (temp && temp.triads && temp.triads.items) {
+            temp.triads.items[index].coaches.items = temp.triads.items[
+              index
+            ]!.coaches?.items?.filter((user) => user?.id !== item?.id)
+            console.log(temp)
+            this.setState({ courseData: temp })
+          }
+        }
+      })
+    }
   }
   updateTriad = async (index: number, item: string, value: any): Promise<void> => {
     try {
@@ -537,8 +587,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })) as GraphQLResult<UpdateCourseTriadsMutation>
       console.log(updateCourseTriads)
       const temp = this.state.courseData
-      temp.triads.items[index][item] = value
-      this.setState({ courseData: temp })
+      if (temp && temp.triads && temp.triads.items) {
+        temp.triads.items[index][item] = value
+        this.setState({ courseData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -577,9 +629,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       console.log(createTriad)
       if (createTriad?.data?.createCourseTriads) {
         const temp = this.state.courseData
-        temp?.triads?.items?.push(createTriad.data.createCourseTriads)
-        console.log(temp)
-        this.setState({ courseData: temp }, () => this.forceUpdate())
+        if (createTriad.data.createCourseTriads) {
+          temp?.triads?.items?.push(createTriad.data.createCourseTriads)
+          console.log(temp)
+          this.setState({ courseData: temp }, () => this.forceUpdate())
+        }
       }
     } catch (e) {
       console.log(e)
@@ -694,8 +748,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })) as GraphQLResult<UpdateCourseLessonMutation>
       console.log(updateWeek)
       const temp = this.state.courseData
-      temp.courseWeeks.items[week].lessons.items[lesson][item] = value
-      this.setState({ courseData: temp })
+      if (temp && temp.courseWeeks && temp.courseWeeks.items) {
+        temp.courseWeeks.items[week].lessons.items[lesson][item] = value
+        this.setState({ courseData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -716,8 +772,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })) as GraphQLResult<UpdateCourseInfoMutation>
       console.log(updateCourseInfo)
       const temp = this.state.courseData
-      temp[item] = value
-      this.setState({ courseData: temp })
+      if (temp) {
+        temp[item] = value
+        this.setState({ courseData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -738,8 +796,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })) as GraphQLResult<UpdateCourseWeekMutation>
       console.log(updateWeek)
       const temp = this.state.courseData
-      temp.courseWeeks.items[index][item] = value
-      this.setState({ courseData: temp })
+      if (temp && temp.courseWeeks && temp.courseWeeks.items && temp.courseWeeks.items[index]) {
+        temp.courseWeeks.items[index][item] = value
+        this.setState({ courseData: temp })
+      }
     } catch (e) {
       console.log(e)
     }

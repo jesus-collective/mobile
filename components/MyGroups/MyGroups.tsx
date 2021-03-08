@@ -1,3 +1,4 @@
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Ionicons } from "@expo/vector-icons"
 import { Tooltip } from "@material-ui/core"
 import { Analytics, API, Auth } from "aws-amplify"
@@ -7,6 +8,8 @@ import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider }
 import * as React from "react"
 import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
+import { ListOrganizationsQuery, ListUsersQuery } from "src/API"
+import { GroupByTypeQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -27,6 +30,12 @@ interface Props {
   onDataload(mapData: MapData[]): void
   showMy?: boolean
 }
+type GroupData =
+  | NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
+  | NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
+  | NonNullable<
+      NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
+    >["items"]
 interface State extends JCState {
   myFilter: boolean
   eventFilter: boolean
@@ -38,7 +47,8 @@ interface State extends JCState {
   cardWidth: any
   createString: string
   titleString: string
-  data: any
+  data: GroupData
+
   showCreateButton: boolean
   currentUser: string | null
   nextToken: string | null
@@ -262,47 +272,62 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
 
-  convertProfileToMapData(data: any, isOrg?: boolean): MapData[] {
-    if (isOrg) {
-      return data
-        .map((dataItem) => {
-          if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
-            return {
-              latitude:
-                Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-              longitude:
-                Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-              name: dataItem.orgName,
-              user: dataItem,
-              link: "",
-              type: "organization",
-            } as MapData
-          else return null
-        })
-        .filter((o) => o)
-    } else {
-      return data
-        .map((dataItem) => {
-          if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
-            return {
-              latitude:
-                Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-              longitude:
-                Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-              name: dataItem.given_name + " " + dataItem.family_name,
-              user: dataItem,
-              link: "",
-              type: "profile",
-            } as MapData
-          else return null
-        })
-        .filter((o) => o)
-    }
+  convertOrgToMapData(
+    data: NonNullable<
+      NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
+    >["items"]
+  ): MapData[] {
+    return data
+      ?.map((dataItem) => {
+        if (
+          dataItem &&
+          dataItem.location &&
+          dataItem.location.latitude &&
+          dataItem.location.longitude
+        )
+          return {
+            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+            longitude:
+              Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
+            name: dataItem.orgName,
+            user: dataItem,
+            link: "",
+            type: "organization",
+          } as MapData
+        else return null
+      })
+      .filter((o) => o) as MapData[]
+  }
+  convertProfileToMapData(
+    data: NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
+  ): MapData[] {
+    return data
+      ?.map((dataItem) => {
+        if (
+          dataItem &&
+          dataItem.location &&
+          dataItem.location.latitude &&
+          dataItem.location.longitude
+        )
+          return {
+            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+            longitude:
+              Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
+            name: dataItem.given_name + " " + dataItem.family_name,
+            user: dataItem,
+            link: "",
+            type: "profile",
+          } as MapData
+        else return null
+      })
+      .filter((o) => o) as MapData[]
   }
 
-  convertEventToMapData(data: any): MapData[] {
+  convertEventToMapData(
+    data: NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
+  ): MapData[] {
     return data
-      .map((dataItem) => {
+      ?.map((dataItem) => {
         if (
           dataItem &&
           dataItem.locationLatLong &&
@@ -320,29 +345,41 @@ export default class MyGroups extends JCComponent<Props, State> {
           } as MapData
         else return null
       })
-      .filter((o) => o)
+      .filter((o) => o) as MapData[]
   }
-  convertToMapData(data: any): MapData[] {
+  convertToMapData(data: GroupData): MapData[] {
     switch (this.state.type) {
       case "group":
         return []
       case "event":
-        return this.convertEventToMapData(data)
+        return this.convertEventToMapData(
+          data as NonNullable<
+            NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]
+          >["items"]
+        )
       case "resource":
         return []
       case "organization":
-        return this.convertProfileToMapData(data, true)
+        return this.convertOrgToMapData(
+          data as NonNullable<
+            NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
+          >["items"]
+        )
       case "course":
         return []
       case "profile":
-        return this.convertProfileToMapData(data)
+        return this.convertProfileToMapData(
+          data as NonNullable<
+            NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]
+          >["items"]
+        )
       default:
         return []
     }
   }
   setInitialData(props: Props): void {
     if (props.type == "profile") {
-      const listUsers: any = API.graphql({
+      const listUsers = API.graphql({
         query: queries.listUsers,
         variables: {
           limit: 20,
@@ -350,11 +387,11 @@ export default class MyGroups extends JCComponent<Props, State> {
           nextToken: this.state.nextToken,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      const processList = (json: any) => {
-        let temp: any[]
-        if (this.state.data) temp = [...this.state.data, ...json.data.listUsers.items]
-        else temp = [...json.data.listUsers.items]
+      }) as Promise<GraphQLResult<ListUsersQuery>>
+      const processList = (json: GraphQLResult<ListUsersQuery>) => {
+        let temp
+        if (this.state.data) temp = [...this.state.data, ...(json.data.listUsers.items ?? [])]
+        else temp = [...(json.data.listUsers.items ?? [])]
         this.setState(
           {
             data: temp,
@@ -367,7 +404,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       }
       listUsers.then(processList).catch(processList)
     } else if (props.type == "organization") {
-      const listOrgs: any = API.graphql({
+      const listOrgs = API.graphql({
         query: queries.listOrganizations,
         variables: {
           limit: 20,
@@ -375,11 +412,11 @@ export default class MyGroups extends JCComponent<Props, State> {
           nextToken: this.state.nextToken,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<ListOrganizationsQuery>>
 
-      const processList = (json) => {
+      const processList = (json: GraphQLResult<ListOrganizationsQuery>) => {
         console.log({ profile: json })
-        const temp = [...this.state.data, ...json.data.listOrganizations.items]
+        const temp = [...this.state.data, ...(json.data.listOrganizations.items ?? [])]
         this.setState(
           {
             data: temp,
@@ -392,7 +429,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       }
       listOrgs.then(processList).catch(processList)
     } else {
-      const listGroup: any = API.graphql({
+      const listGroup = API.graphql({
         query: customQueries.groupByTypeForMyGroups,
         variables: {
           limit: 20,
@@ -400,9 +437,10 @@ export default class MyGroups extends JCComponent<Props, State> {
           nextToken: this.state.nextToken,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<GroupByTypeQuery>>
 
-      const processList = (json: any) => {
+      const processList = (json: GraphQLResult<GroupByTypeQuery>) => {
+        if (json.data?.groupByType == null) return
         if (props.type === "event") {
           // sorting events by date
           if (json?.data?.groupByType?.items) {
@@ -417,8 +455,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
         let temp: any[]
-        if (this.state.data) temp = [...this.state.data, ...json.data.groupByType.items]
-        else temp = [...json.data.groupByType.items]
+        if (this.state.data) temp = [...this.state.data, ...(json.data.groupByType.items ?? [])]
+        else temp = [...(json.data.groupByType.items ?? [])]
         this.setState(
           {
             data: temp,

@@ -576,12 +576,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                         >
                           <View style={{ flex: 1 }}>
                             <JCButton
-                              enabled={this.state.enabled}
-                              buttonType={
-                                this.state.enabled
-                                  ? ButtonTypes.SolidSignIn
-                                  : ButtonTypes.DisabledSignIn
-                              }
+                              enabled={true}
+                              buttonType={ButtonTypes.SolidSignIn}
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (

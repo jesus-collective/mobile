@@ -43,6 +43,17 @@ projects:
         codeGenTarget: typescript
         generatedFileName: src/API-crm.ts
         docsFilePath: src/graphql
+  customqueries:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql-custom/queries.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API-customqueries.ts
+        docsFilePath: src/graphql
 extensions:
   amplify:
     version: 3

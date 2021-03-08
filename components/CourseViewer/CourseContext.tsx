@@ -1,6 +1,7 @@
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
-import { GetGroupQuery } from "../../src/API"
+import { GetGroupQuery, SearchUsersQuery } from "../../src/API"
 import { GetCourseInfoQuery } from "../../src/API-courses"
 
 export interface CourseState extends JCState {
@@ -53,10 +54,20 @@ export interface CourseActions {
   createTriad: () => Promise<void>
   deleteTriad: (index: number) => Promise<void>
   setEditMode: (editMode: boolean) => void
-  updateTriadUsers: (index: number, value: any) => Promise<void>
-  updateTriadCoaches: (index: number, value: any) => Promise<void>
-  updateInstructors: (value: any) => Promise<void>
-  updateBackOfficeStaff: (value: any) => Promise<void>
+  updateTriadUsers: (
+    index: number,
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ) => Promise<void>
+  updateTriadCoaches: (
+    index: number,
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ) => Promise<void>
+  updateInstructors: (
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ) => Promise<void>
+  updateBackOfficeStaff: (
+    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  ) => Promise<void>
   setActiveMessageBoard: (messageBoard: string) => void
   setActiveCourseActivity: (courseActivity: string) => void
   myCourseGroups: () => { all: any[]; cohort: any[]; completeTriad: any[] }

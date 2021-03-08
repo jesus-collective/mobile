@@ -1,4 +1,5 @@
-﻿import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
+﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { MapData } from "components/MyGroups/MyGroups"
 import { convertToRaw, EditorState } from "draft-js"
@@ -20,7 +21,13 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { CreateCourseInfoInput, CreateGroupInput, UserGroupType } from "../../src/API"
+import {
+  CreateCourseInfoInput,
+  CreateGroupInput,
+  GetGroupQuery,
+  GetUserQuery,
+  UserGroupType,
+} from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
@@ -44,10 +51,10 @@ interface State extends JCState {
   isEditable: boolean
   canDelete: boolean
   validationError: string
-  currentUser: string
+  currentUser: string | null
   currentUserProfile: any
   memberIDs: string[]
-  members: any
+  members: NonNullable<GraphQLResult<GetUserQuery>["data"]>["getUser"][]
   mapData: MapData[]
   canGotoActiveCourse: boolean
 }
@@ -84,7 +91,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
       this.setState({
         currentUser: user.username,
       })
-      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user["username"] }))
+      const getUser = API.graphql(
+        graphqlOperation(queries.getUser, { id: user["username"] })
+      ) as Promise<GraphQLResult<GetUserQuery>>
       getUser
         .then((json) => {
           this.setState(
@@ -182,13 +191,13 @@ export default class CourseScreen extends JCComponent<Props, State> {
         })
       })
     else {
-      const getGroup: any = API.graphql({
+      const getGroup = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<GetGroupQuery>>
 
-      const processResults = (json) => {
+      const processResults = (json: GraphQLResult<GetGroupQuery>) => {
         const isEditable = json.data.getGroup.owner == this.state.currentUser
 
         this.setState(
@@ -231,20 +240,20 @@ export default class CourseScreen extends JCComponent<Props, State> {
             this.setIsPaid()
             this.setMembers()
 
-            const getUser: any = API.graphql({
+            const getUser = API.graphql({
               query: queries.getUser,
               variables: { id: this.state.data.owner },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
+            }) as Promise<GraphQLResult<GetUserQuery>>
             getUser
-              .then((json: any) => {
+              .then((json) => {
                 this.setState({
                   mapData: this.state.mapData.concat(
                     this.convertProfileToMapData([json.data.getUser])
                   ),
                 })
               })
-              .catch((e: any) => {
+              .catch((e) => {
                 if (e.data) {
                   this.setState({
                     mapData: this.state.mapData.concat(
@@ -259,7 +268,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
       getGroup.then(processResults).catch(processResults)
     }
   }
-  convertProfileToMapData(data: any): [] {
+  convertProfileToMapData(
+    data: NonNullable<GraphQLResult<GetUserQuery>["data"]>["getUser"][]
+  ): MapData[] {
     return data
       .map((dataItem) => {
         if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude) {
@@ -270,10 +281,10 @@ export default class CourseScreen extends JCComponent<Props, State> {
             user: dataItem,
             link: "",
             type: "course",
-          }
+          } as MapData
         } else return null
       })
-      .filter((o) => o)
+      .filter((o) => o) as MapData[]
   }
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
