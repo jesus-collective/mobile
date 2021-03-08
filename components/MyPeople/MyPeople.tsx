@@ -23,7 +23,7 @@ interface State extends JCState {
   // type: String
   //cardWidth: any
   //createString: String
-  data: ListUsersQuery["listUsers"]["items"]
+  data: NonNullable<ListUsersQuery["listUsers"]>["items"]
   currentUser: string | null
   //showCreateButton: Boolean
 }
@@ -47,9 +47,9 @@ export default class MyPeople extends JCComponent<Props, State> {
       this.setState({ currentUser: user.username }, () => this.setInitialData())
     })
   }
-  convertProfileToMapData(data: ListUsersQuery["listUsers"]["items"]): MapData[] {
+  convertProfileToMapData(data: NonNullable<ListUsersQuery["listUsers"]>["items"]): MapData[] {
     return data
-      .map((dataItem) => {
+      ?.map((dataItem) => {
         if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude)
           return {
             latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
@@ -59,10 +59,10 @@ export default class MyPeople extends JCComponent<Props, State> {
             user: dataItem,
             link: "",
             type: "profile",
-          }
+          } as MapData
         else return null
       })
-      .filter((o) => o)
+      .filter((o) => o) as MapData[]
   }
 
   setInitialData(): void {
@@ -75,7 +75,7 @@ export default class MyPeople extends JCComponent<Props, State> {
     listUsers
       .then((json) => {
         // console.log(json)
-        this.setState({ data: json.data?.listUsers?.items }, () => {
+        this.setState({ data: json.data?.listUsers?.items ?? [] }, () => {
           this.props.onDataload(this.convertProfileToMapData(this.state.data))
         })
       })
@@ -122,7 +122,8 @@ export default class MyPeople extends JCComponent<Props, State> {
               </Text>
             </Button>
             <Content style={this.styles.style.rightCardWidth}>
-              {this.state.data.map((item) => {
+              {this.state.data?.map((item) => {
+                if (item == null) return null
                 if (item.id !== this.state.currentUser) {
                   return (
                     <TouchableOpacity

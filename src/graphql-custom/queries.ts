@@ -43,7 +43,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
   }
 `
 export const getUserForGroupOrEvent = /* GraphQL */ `
-  query GetUser($id: ID!) {
+  query GetUser2($id: ID!) {
     getUser(id: $id) {
       id
       given_name
