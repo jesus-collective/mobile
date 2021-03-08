@@ -1,9 +1,16 @@
-﻿import { API, Auth } from "aws-amplify"
+﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
 import { Container, StyleProvider } from "native-base"
 import React from "react"
-import { CreateCourseLessonInput, CreateCourseTriadsInput, CreateCourseWeekInput } from "src/API"
+import {
+  CreateCourseLessonInput,
+  CreateCourseTriadsInput,
+  CreateCourseWeekInput,
+  GetGroupQuery,
+} from "src/API"
+import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
@@ -60,18 +67,18 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       query: queries.getGroup,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as Promise<GraphQLResult<GetGroupQuery>>
     const getCourse = API.graphql({
       query: courseQueries.getCourseInfo,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    const processResults2 = (json) => {
+    }) as Promise<GraphQLResult<GetCourseInfoQuery>>
+    const processResults2 = (json: GraphQLResult<GetCourseInfoQuery>) => {
       console.log({ courseData: json })
       this.setState({ courseData: json.data.getCourseInfo })
     }
     getCourse.then(processResults2).catch(processResults2)
-    const processResults = (json) => {
+    const processResults = (json: GraphQLResult<GetGroupQuery>) => {
       const isEditable =
         json.data.getGroup.owner == this.state.currentUser || groups.includes("courseAdmin")
       console.log({
@@ -381,24 +388,24 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       }
       return { completeTriad: completeTriad, cohort: cohortTemp }
     })
-    let fromTriads: Array<any> = this.state.courseData?.triads?.items
-      .map((item: any) => {
+    let fromTriads = this.state.courseData?.triads?.items
+      .map((item) => {
         return [...item.users.items, ...item.coaches.items]
       })
       .flat()
-      .filter((item: any) => {
+      .filter((item) => {
         return item.user != null
       })
-      .map((item: any) => {
+      .map((item) => {
         return item.user
       })
     if (fromTriads == undefined) fromTriads = []
-    const instructors: Array<any> = this.state.courseData
+    const instructors = this.state.courseData
       ? this.state.courseData.instructors.items.map((item) => {
           return item.user
         })
       : []
-    const backOfficeStaff: Array<any> = this.state.courseData
+    const backOfficeStaff = this.state.courseData
       ? this.state.courseData.backOfficeStaff.items.map((item) => {
           return item.user
         })
@@ -406,7 +413,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     console.log(instructors)
     console.log(backOfficeStaff)
     console.log(fromTriads)
-    const allWithDuplicates: Array<any> = [...fromTriads, ...instructors, ...backOfficeStaff]
+    const allWithDuplicates = [...fromTriads, ...instructors, ...backOfficeStaff]
     const all = this.removeDuplicates(allWithDuplicates, "id")
     let cohort = [],
       completeTriad = []

@@ -1,8 +1,10 @@
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import React, { Component } from "react"
 import Chips, { Chip } from "react-chips"
 import { Text } from "react-native"
+import { SearchUsersQuery } from "src/API"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import * as queries from "../../src/graphql/queries"
 import JCComponent from "../JCComponent/JCComponent"
@@ -18,7 +20,11 @@ interface Props {
   placeholderTextColor?: string
   listOfSuggestedUsers?: string[]
   showProfileImages: boolean
-  onChange?(value: any[]): void
+  onChange?(
+    value: NonNullable<
+      NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]
+    >["items"][]
+  ): void
   testID?: any
 }
 interface UserProps {
@@ -41,14 +47,22 @@ export default class EditableText extends JCComponent<Props> {
       ...super.getInitialState(),
     }
   }
-  onChanged(val: any[]): void {
+  onChanged(
+    val: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"][]
+  ): void {
     if (this.props.limit) if (val.length > this.props.limit) val.slice(0, this.props.limit)
     if (this.props.onChange) this.props.onChange(val)
   }
-  async autoCompleteUser(value: string): Promise<any[]> {
-    let searchUsers: any
+  async autoCompleteUser(
+    value: string
+  ): Promise<
+    | NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+    | null
+    | undefined
+  > {
+    let searchUsers
     try {
-      searchUsers = await API.graphql({
+      searchUsers = (await API.graphql({
         query: queries.searchUsers,
         variables: {
           filter: {
@@ -60,8 +74,8 @@ export default class EditableText extends JCComponent<Props> {
           limit: 10,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      return searchUsers.data.searchUsers.items
+      })) as GraphQLResult<SearchUsersQuery>
+      return searchUsers.data?.searchUsers?.items
     } catch (e) {
       console.log({ Error: e })
       return e.data.searchUsers.items
@@ -74,10 +88,20 @@ export default class EditableText extends JCComponent<Props> {
           fromSuggestionsOnly={true}
           uniqueChips={true}
           value={this.props.value ? this.props.value : []}
-          onChange={(val: any[]) => {
+          onChange={(
+            val: NonNullable<
+              NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]
+            >["items"][]
+          ) => {
             this.onChanged(val)
           }}
-          renderChip={(value) => {
+          renderChip={(
+            value: NonNullable<
+              NonNullable<
+                NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]
+              >["items"]
+            >[0]
+          ) => {
             return (
               <Chip>
                 <span>
@@ -100,13 +124,19 @@ export default class EditableText extends JCComponent<Props> {
                 }
           }
           suggestions={this.props.listOfSuggestedUsers ? this.props.listOfSuggestedUsers : null}
-          renderSuggestion={(value) => {
+          renderSuggestion={(
+            value: NonNullable<
+              NonNullable<
+                NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]
+              >["items"]
+            >[0]
+          ) => {
             return (
               <Text>
                 {this.props.showProfileImages ? (
                   <ProfileImage size="xsmall" user={value}></ProfileImage>
                 ) : null}
-                {value.given_name} {value.family_name}
+                {value?.given_name} {value?.family_name}
               </Text>
             )
           }}
@@ -116,14 +146,16 @@ export default class EditableText extends JCComponent<Props> {
       return (
         <div>
           {this.props.value.map((item) => {
-            {
-              this.props.showProfileImages ? (
-                <ProfileImage size="small" user={item}></ProfileImage>
-              ) : null
-            }
-            ;<Text style={this.props.textStyle}>
-              {item.given_name} {item.family_name}
-            </Text>
+            return (
+              <>
+                {this.props.showProfileImages ? (
+                  <ProfileImage size="small" user={item}></ProfileImage>
+                ) : null}
+                <Text style={this.props.textStyle}>
+                  {item.given_name} {item.family_name}
+                </Text>
+              </>
+            )
           })}
         </div>
       )

@@ -1,8 +1,11 @@
-﻿import { API, Auth } from "aws-amplify"
+﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container, Content } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
+import { CreateDirectMessageRoomMutation, CreateDirectMessageUserMutation } from "src/API"
+import { GetDirectMessageUserQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
 import EditableUsers from "../../components/Forms/EditableUsers"
 import Header from "../../components/Header/Header"
@@ -20,10 +23,10 @@ interface Props {
 interface State extends JCState {
   newToList: any[]
   showMap: boolean
-  data: any
+  data: NonNullable<GraphQLResult<GetDirectMessageUserQuery>["data"]>["getDirectMessageUser"][]
   selectedRoom: any
-  currentUser: string
-  currentRoomId: string
+  currentUser: string | null
+  currentRoomId: string | null
 }
 
 export default class ConversationScreen extends JCComponent<Props, State> {
@@ -50,18 +53,18 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser()
       .then((user: JCCognitoUser) => {
-        const createDirectMessageRoom: any = API.graphql({
+        const createDirectMessageRoom = API.graphql({
           query: mutations.createDirectMessageRoom,
           variables: { input: { name: "", roomType: "directMessage" } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        }) as Promise<GraphQLResult<CreateDirectMessageRoomMutation>>
         createDirectMessageRoom
           .then((json) => {
             console.log({ createDirectMessageRoom: json })
             console.log("createDMUser")
-            const addDM2 = (json2) => {
+            const addDM2 = (json2: GraphQLResult<CreateDirectMessageUserMutation>) => {
               console.log({ Dm2: json2 })
-              const createDirectMessageUser2: any = API.graphql({
+              const createDirectMessageUser2 = API.graphql({
                 query: mutations.createDirectMessageUser,
                 variables: {
                   input: {
@@ -71,19 +74,21 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                   },
                 },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })
+              }) as Promise<GraphQLResult<CreateDirectMessageUserMutation>>
               createDirectMessageUser2
                 .then(() => {
                   console.log(json2)
-                  this.getNewUser(json2.data.createDirectMessageUser.id)
+                  if (json2.data?.createDirectMessageUser)
+                    this.getNewUser(json2.data.createDirectMessageUser.id)
                 })
                 .catch(() => {
                   console.log(json2)
-                  this.getNewUser(json2.data.createDirectMessageUser.id)
+                  if (json2.data?.createDirectMessageUser)
+                    this.getNewUser(json2.data.createDirectMessageUser.id)
                 })
             }
-            const myUserName = user.attributes["given_name"] + " " + user.attributes["family_name"]
-            const createDirectMessageUser1: any = API.graphql({
+            const myUserName = user.attributes?.given_name + " " + user.attributes?.family_name
+            const createDirectMessageUser1 = API.graphql({
               query: mutations.createDirectMessageUser,
               variables: {
                 input: {
@@ -93,7 +98,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                 },
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
+            }) as Promise<GraphQLResult<CreateDirectMessageUserMutation>>
 
             createDirectMessageUser1.then(addDM2).catch(addDM2)
           })
@@ -109,16 +114,17 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     if (
       !this.state.data
         .map((item, index: number) => {
-          if (item.room.roomType == null || item.room.roomType == "directMessage")
-            if (
-              item.room.messageUsers.items.length == 2 &&
-              (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID ||
-                item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)
-            ) {
-              console.log("Found")
-              this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
-              return true
-            }
+          if (item && item.room)
+            if (item.room.roomType == null || item.room.roomType == "directMessage")
+              if (
+                item.room.messageUsers?.items?.length == 2 &&
+                (item.room.messageUsers?.items[0].userID == this.props.route.params.initialUserID ||
+                  item.room.messageUsers?.items[1].userID == this.props.route.params.initialUserID)
+              ) {
+                console.log("Found")
+                this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
+                return true
+              }
         })
         .some((z) => {
           return z
@@ -140,11 +146,11 @@ export default class ConversationScreen extends JCComponent<Props, State> {
 
   async getNewUser(id: string): Promise<void> {
     try {
-      const json: any = await API.graphql({
+      const json = (await API.graphql({
         query: customQueries.getDirectMessageUser,
         variables: { id: id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<GetDirectMessageUserQuery>
       if (json?.data?.getDirectMessageUser) {
         console.log({ "customQueries.getDirectMessageUser": json.data.getDirectMessageUser })
         this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
@@ -157,7 +163,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     }
   }
 
-  async getInitialData(next: string): Promise<void> {
+  async getInitialData(next: string | null): Promise<void> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       try {
@@ -202,8 +208,8 @@ export default class ConversationScreen extends JCComponent<Props, State> {
   }
 
   getOtherUsers(data: any): { ids: string[]; names: string[] } {
-    const ids = []
-    const names = []
+    const ids: string[] = []
+    const names: string[] = []
     data.room.messageUsers.items.forEach((user) => {
       if (user.userID !== this.state.currentUser) {
         ids.push(user.userID)
@@ -219,10 +225,10 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     this.setState({ currentRoomId: this.state.data[index].roomID })
   }
   getCurrentRoomRecipients(): string[] {
-    const ids = []
+    const ids: string[] = []
     console.log(this.state.data[this.state.selectedRoom])
     this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items.forEach((user) => {
-      ids.push(user.userID)
+      if (user) ids.push(user.userID)
     })
     return ids
   }
@@ -264,9 +270,11 @@ export default class ConversationScreen extends JCComponent<Props, State> {
               {this.state.data != null
                 ? this.state.data
                     .filter(
-                      (item) => item.room.roomType == "directMessage" || item.room.roomType == null
+                      (item) =>
+                        item?.room?.roomType == "directMessage" || item.room.roomType == null
                     )
                     .map((item, index: number) => {
+                      if (item == null) return
                       const otherUsers = this.getOtherUsers(item)
                       let stringOfNames = ""
                       otherUsers.names.forEach((name, index: number) => {
@@ -314,7 +322,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                                 user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
                                 size="small2"
                               ></ProfileImage>
-                              {item.room.name ? item.room.name : stringOfNames}
+                              {item?.room?.name ? item.room.name : stringOfNames}
                             </Text>
                           </View>
                         </TouchableOpacity>
