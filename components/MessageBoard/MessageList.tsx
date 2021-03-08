@@ -6,6 +6,7 @@ import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import { Body, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
+import { isFirefox } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native"
 import Observable, { ZenObservable } from "zen-observable-ts"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -76,27 +77,27 @@ class MessageListImpl extends JCComponent<Props, State> {
 
   componentDidMount() {
     this.connectSubscriptions()
-    /* if (this.props.inputAt !== "bottom" && !isFirefox) {
+    if (this.props.inputAt === "bottom" && !isFirefox) {
       const scrollNode = this.flatListRef.current && this.flatListRef.current?.getScrollableNode()
       if (!!scrollNode)
         scrollNode.addEventListener("wheel", (e: any) => {
           scrollNode.scrollTop -= e.deltaY
           e.preventDefault()
         })
-      //this.flatListRef.current?.setNativeProps({
-      //  style: { transform: "translate3d(0,0,0) scaleY(-1)" },
-      //})
-    }*/
+      this.flatListRef.current?.setNativeProps({
+        style: { transform: "translate3d(0,0,0) scaleY(-1)" },
+      })
+    }
   }
   componentWillUnmount() {
-    /*  if (this.props.inputAt !== "bottom" && !isFirefox) {
+    if (this.props.inputAt === "bottom" && !isFirefox) {
       const scrollNode = this.flatListRef.current && this.flatListRef.current?.getScrollableNode()
       if (!!scrollNode)
         scrollNode.removeEventListener("wheel", (e: any) => {
           scrollNode.scrollTop -= e.deltaY
           e.preventDefault()
         })
-    }*/
+    }
   }
   async connectSubscriptions() {
     if (this.props.groupId) {
