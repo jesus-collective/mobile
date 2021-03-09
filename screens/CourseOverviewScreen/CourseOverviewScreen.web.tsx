@@ -702,7 +702,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                         <View style={{ flexDirection: "row" }}>
                           <Image
                             style={this.styles.style.courseMainIcons}
-                            source={require("../../assets/svg/education.svg")}
+                            source={require("../../assets/svg/calendar_black.svg")}
                           />
                           <Text
                             style={{
@@ -731,19 +731,24 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
                           isEditable={this.state.isEditable}
                         ></EditableDate>
-
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                            marginTop: 8,
-                          }}
-                        >
-                          Duration
-                        </Text>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image
+                            style={this.styles.style.courseMainIcons}
+                            source={require("../../assets/svg/time_black.svg")}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              lineHeight: 16,
+                              fontFamily: "Graphik-Regular-App",
+                              color: "#333333",
+                              textTransform: "uppercase",
+                              marginTop: 5,
+                            }}
+                          >
+                            Duration
+                          </Text>
+                        </View>
                         <EditableText
                           testID="course-duration"
                           onChange={(value: any) => {
@@ -756,18 +761,24 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           value={this.state.data.length}
                           isEditable={this.state.isEditable}
                         ></EditableText>
-
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          Effort
-                        </Text>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image
+                            style={this.styles.style.courseMainIcons}
+                            source={require("../../assets/svg/time_black.svg")}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              lineHeight: 16,
+                              fontFamily: "Graphik-Regular-App",
+                              color: "#333333",
+                              textTransform: "uppercase",
+                              marginTop: 5,
+                            }}
+                          >
+                            Effort
+                          </Text>
+                        </View>
                         <EditableText
                           testID="course-effort"
                           onChange={(value: any) => {
@@ -780,17 +791,24 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           value={this.state.data.effort}
                           isEditable={this.state.isEditable}
                         ></EditableText>
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          Cost
-                        </Text>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image
+                            style={this.styles.style.courseMainIcons}
+                            source={require("../../assets/svg/time_black.svg")}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              lineHeight: 16,
+                              fontFamily: "Graphik-Regular-App",
+                              color: "#333333",
+                              textTransform: "uppercase",
+                              marginTop: 5,
+                            }}
+                          >
+                            Cost
+                          </Text>
+                        </View>
                         <EditableDollar
                           testID="course-amount"
                           onChange={(value: any) => {
@@ -804,7 +822,6 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           isEditable={this.state.isEditable}
                         ></EditableDollar>
                       </View>
-
                       <Text
                         style={{
                           fontFamily: "Graphik-Regular-App",
