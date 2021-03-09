@@ -874,8 +874,10 @@ const courseStyles = EStyleSheet.create({
   },
   courseMainIcons: {
     color: "#000000",
-    width: 15,
-    height: 15,
+    width: 22,
+    height: 22,
+    alignSelf: "flex-end",
+    marginRight: 6,
   },
 
   "@media (min-width: 350) and (max-width: 768)": {
