@@ -70,7 +70,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
     }
   }
   componentDidUpdate(prevProps: Props) {
-    if (this.props !== prevProps) {
+    if (this.props.roomId !== prevProps.roomId) {
       this.removeDirectSubscriptions()
       this.setInitialData(this.props)
     }

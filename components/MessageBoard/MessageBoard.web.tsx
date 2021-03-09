@@ -489,16 +489,26 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       <>
         {this.props.groupId ? (
           <MessageList
-            {...this.props}
-            onHandlePressReply={this.handlePressReply}
+            groupId={this.props.groupId}
+            replies={this.props.replies}
+            style={this.props.style}
+            inputAt={this.props.inputAt}
+            onHandlePressReply={(item) => {
+              this.handlePressReply(item)
+            }}
             onHandleCreated={() => {
               this.setState({ created: true })
             }}
           />
         ) : this.props.roomId ? (
           <MessageListDirect
-            {...this.props}
-            onHandlePressReply={this.handlePressReplyDM}
+            roomId={this.props.roomId}
+            replies={this.props.replies}
+            style={this.props.style}
+            inputAt={this.props.inputAt}
+            onHandlePressReply={(item) => {
+              this.handlePressReplyDM(item)
+            }}
             onHandleCreated={() => {
               this.setState({ created: true })
             }}
@@ -668,9 +678,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               : this.styles.style.messageBoardContainer
           }
         >
-          {inputAt === "top" && this.state.created && this.renderMessageInput()}
+          {inputAt === "top" && this.state.created ? this.renderMessageInput() : null}
           {this.renderMessages()}
-          {inputAt === "bottom" && this.state.created && this.renderMessageInput()}
+          {inputAt === "bottom" && this.state.created ? this.renderMessageInput() : null}
         </Container>
       </StyleProvider>
     )

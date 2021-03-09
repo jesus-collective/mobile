@@ -6,9 +6,8 @@ import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import { Body, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
-
-import { isFirefox } from "react-device-detect"
-import { ActivityIndicator, FlatList, Text, TouchableOpacity, View,Dimensions } from "react-native"
+import { isFirefox, isSafari } from "react-device-detect"
+import { ActivityIndicator, Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
 import Observable, { ZenObservable } from "zen-observable-ts"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -71,14 +70,14 @@ class MessageListImpl extends JCComponent<Props, State> {
     }
   }
   componentDidUpdate(prevProps: Props) {
-    if (this.props !== prevProps) {
+    if (this.props.groupId !== prevProps.groupId) {
       this.setInitialData(this.props)
     }
   }
 
   componentDidMount() {
     this.connectSubscriptions()
-    if (this.props.inputAt === "bottom" && !isFirefox) {
+    if (this.props.inputAt === "bottom" && !isFirefox && !isSafari) {
       const scrollNode = this.flatListRef.current && this.flatListRef.current?.getScrollableNode()
       if (!!scrollNode)
         scrollNode.addEventListener("wheel", (e: any) => {
@@ -91,7 +90,7 @@ class MessageListImpl extends JCComponent<Props, State> {
     }
   }
   componentWillUnmount() {
-    if (this.props.inputAt === "bottom" && !isFirefox) {
+    if (this.props.inputAt === "bottom" && !isFirefox && !isSafari) {
       const scrollNode = this.flatListRef.current && this.flatListRef.current?.getScrollableNode()
       if (!!scrollNode)
         scrollNode.removeEventListener("wheel", (e: any) => {
