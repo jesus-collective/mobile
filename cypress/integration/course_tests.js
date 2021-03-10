@@ -167,7 +167,7 @@ const logout = () => {
 }
 describe("Course Admin", () => {
   sizes.forEach((size) => {
-    it("Size - " + size, () => {
+    it.skip("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {
@@ -258,6 +258,20 @@ describe("Course Admin", () => {
       //      cy.get('[data-testId="course-purchase"]').last()
 
       // cy.get('[data-testId="header-logo"]').last().click()
+    })
+  })
+})
+
+describe("Course Users", () => {
+  sizes.forEach((size) => {
+    it("Size - " + size, () => {
+      if (Cypress._.isArray(size)) {
+        cy.viewport(size[0], size[1])
+      } else {
+        cy.viewport(size)
+      }
+      login("courseuser1")
+      gotoCourse("Test Course 1")
     })
   })
 })
