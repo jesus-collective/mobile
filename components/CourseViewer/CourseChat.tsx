@@ -39,12 +39,8 @@ class CourseChatImpl extends JCComponent<Props, State> {
     return (
       <CourseChatImpl.Consumer>
         {({ state, actions }) => {
-          if (!state) return null
-          const week = state.courseData?.courseWeeks?.items[state.activeWeek]
-          const lesson = week?.lessons?.items[state.activeLesson]
-          return state.data &&
-            state.currentScreen == "Details" &&
-            !(lesson?.lessonType == "respond" || lesson?.lessonType == "assignment") ? (
+          if (!state?.data) return null
+          return state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
               <Container style={{ width: chatWidth }}>
                 <Container style={this.styles.style.courseDetailButtonTrio}>
