@@ -15,7 +15,11 @@ import {
   OnCreateDirectMessageReplySubscription,
   OnCreateDirectMessageSubscription,
 } from "../../src/API-messages"
-import { getMessage, onCreateDirectMessageReply } from "../../src/graphql-custom/messages"
+import {
+  directMessagesByRoom,
+  getMessage,
+  onCreateDirectMessageReply,
+} from "../../src/graphql-custom/messages"
 import * as queries from "../../src/graphql/queries"
 import { onCreateDirectMessage } from "../../src/graphql/subscriptions"
 import ProfileImage from "../ProfileImage/ProfileImage"
@@ -179,8 +183,8 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
   }
   async getDirectMessages() {
     try {
-      const directMessagesByRoom = (await API.graphql({
-        query: queries.directMessagesByRoom,
+      const directMessages = (await API.graphql({
+        query: directMessagesByRoom,
         variables: {
           messageRoomID: this.props.roomId,
           sortDirection: "DESC",
@@ -189,12 +193,12 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as GraphQLResult<DirectMessagesByRoomQuery>
 
-      console.debug(directMessagesByRoom)
+      console.debug(directMessages)
 
-      if (directMessagesByRoom.data?.directMessagesByRoom?.items) {
+      if (directMessages.data?.directMessagesByRoom?.items) {
         this.setState({
-          dms: directMessagesByRoom.data.directMessagesByRoom.items,
-          nextToken: directMessagesByRoom.data.directMessagesByRoom.nextToken,
+          dms: directMessages.data.directMessagesByRoom.items,
+          nextToken: directMessages.data.directMessagesByRoom.nextToken,
         })
         this.props.onHandleCreated()
       }
@@ -214,8 +218,8 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
     this.setState({ fetchingData: true })
     if (this.state.nextToken) {
       try {
-        const directMessagesByRoom = (await API.graphql({
-          query: queries.directMessagesByRoom,
+        const directMessages = (await API.graphql({
+          query: directMessagesByRoom,
           variables: {
             messageRoomID: this.props.roomId,
             sortDirection: "DESC",
@@ -225,13 +229,10 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as GraphQLResult<DirectMessagesByRoomQuery>
 
-        if (directMessagesByRoom.data?.directMessagesByRoom?.items) {
+        if (directMessages.data?.directMessagesByRoom?.items) {
           this.setState({
-            dms: [
-              ...(this.state.dms ?? []),
-              ...directMessagesByRoom.data.directMessagesByRoom.items,
-            ],
-            nextToken: directMessagesByRoom.data.directMessagesByRoom.nextToken,
+            dms: [...(this.state.dms ?? []), ...directMessages.data.directMessagesByRoom.items],
+            nextToken: directMessages.data.directMessagesByRoom.nextToken,
           })
         }
       } catch (e) {
@@ -250,8 +251,8 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
   }
   getCourseAssignment() {
     if (this.props.style == "courseResponse") {
-      const directMessagesByRoom = API.graphql({
-        query: queries.directMessagesByRoom,
+      const directMessages = API.graphql({
+        query: directMessagesByRoom,
         variables: { messageRoomID: this.props.roomId, sortDirection: "ASC", limit: 1 },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       }) as Promise<GraphQLResult<DirectMessagesByRoomQuery>>
@@ -261,7 +262,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
             dataAssignment: json.data.directMessagesByRoom.items,
           })
       }
-      directMessagesByRoom.then(processAssignment).catch(processAssignment)
+      directMessages.then(processAssignment).catch(processAssignment)
     }
   }
   renderDirectMessageWithReplies(item: DM, index: number) {
@@ -274,7 +275,12 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
       </View>
     )
   }
-  renderDirectMessage(item: DM | DMReply, index: number, isReply: boolean) {
+  renderDirectMessage(
+    item: DM | DMReply,
+    index: number,
+    isReply: boolean,
+    hideReplyButton: boolean
+  ) {
     const { style, replies } = this.props
     if (!item?.author) {
       return null
@@ -313,7 +319,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
             </Body>
           </Left>
           <Right style={{ justifyContent: "center" }}>
-            {replies && (
+            {replies && !hideReplyButton && (
               <TouchableOpacity
                 style={{
                   alignSelf: "flex-end",
@@ -377,7 +383,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
   }
   renderAssignment() {
     if (this.state.dataAssignment?.length > 0) {
-      return this.renderDirectMessage(this.state.dataAssignment[0], -1, false)
+      return this.renderDirectMessage(this.state.dataAssignment[0], -1, false, true)
     }
   }
 
@@ -389,7 +395,13 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
         <FlatList
           scrollEnabled
           renderItem={({ item, index }) => this.renderDirectMessageWithReplies(item, index)}
-          data={this.state.dms}
+          data={
+            this.props.style == "course" || this.props.style == "courseResponse"
+              ? this.state.dataAssignment?.length > 0
+                ? this.state.dms?.filter((z) => z?.id != this.state.dataAssignment[0].id)
+                : this.state.dms
+              : this.state.dms
+          }
           inverted={this.props.inputAt === "bottom"}
           onEndReached={!this.state.fetchingData ? () => this.getMoreDirectMessages() : undefined}
           style={{ height: 0.5 * height }}

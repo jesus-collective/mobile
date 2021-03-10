@@ -9,6 +9,7 @@ import { Container, Content, Picker, StyleProvider, View } from "native-base"
 import React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
+import PaidUsersModal from "../../components/CourseViewer/PaidUsersModal"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
 import EditableRichText from "../../components/Forms/EditableRichText"
@@ -58,6 +59,7 @@ interface State extends JCState {
   members: NonNullable<GraphQLResult<GetUserQuery>["data"]>["getUser"][]
   mapData: MapData[]
   canGotoActiveCourse: boolean
+  showPaidUsersModal: boolean
 }
 
 export default class CourseScreen extends JCComponent<Props, State> {
@@ -82,6 +84,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
       validationError: "",
       currentUser: null,
       currentUserProfile: null,
+      showPaidUsersModal: false,
       memberIDs: [],
       members: [],
       mapData: [],
@@ -548,6 +551,24 @@ export default class CourseScreen extends JCComponent<Props, State> {
   isCoursePaid(id: string) {
     return this.state.isPaid
   }
+
+  renderPaymentAdmin(): React.ReactNode {
+    return (
+      this.state.isEditable && (
+        <View style={{ marginBottom: 35 }}>
+          <JCButton
+            testID="course-purchase"
+            buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
+            onPress={() => {
+              this.setState({ showPaidUsersModal: true })
+            }}
+          >
+            Paid Users
+          </JCButton>
+        </View>
+      )
+    )
+  }
   renderPermissions(): React.ReactNode {
     return (
       this.state.isEditable && (
@@ -672,6 +693,17 @@ export default class CourseScreen extends JCComponent<Props, State> {
     )
   }
   static UserConsumer = UserContext.Consumer
+  renderPaidUsersModal() {
+    return (
+      <PaidUsersModal
+        visible={this.state.showPaidUsersModal}
+        groupId={this.state.data.id}
+        onClose={() => {
+          this.setState({ showPaidUsersModal: false })
+        }}
+      />
+    )
+  }
   render(): React.ReactNode {
     console.log("CourseScreen")
     return (
@@ -958,6 +990,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                         )}
                       </View>
                       {this.renderPermissions()}
+                      {this.renderPaymentAdmin()}
                       {this.renderButtons(userActions)}
                     </Container>
                     <Container style={this.styles.style.detailScreenRightCard}>
@@ -1011,6 +1044,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                       </Container>
                     </Container>
                   </Container>
+                  {this.renderPaidUsersModal()}
                 </Content>
               </Container>
             </StyleProvider>

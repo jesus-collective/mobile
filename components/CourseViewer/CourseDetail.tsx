@@ -5,6 +5,7 @@ import { Card, Container, Content, Icon, Picker, StyleProvider } from "native-ba
 import React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
 import getTheme from "../../native-base-theme/components"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import EditableCourseAssignment from "../Forms/EditableCourseAssignment"
 import EditableDate from "../Forms/EditableDate"
@@ -37,6 +38,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     }
   }
   static Consumer = CourseContext.Consumer
+  static UserConsumer = UserContext.Consumer
+
   renderAssignmentConfig(
     state: CourseState,
     actions: CourseActions,
@@ -952,11 +955,18 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             value={lesson?.description}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
-          <EditableCourseAssignment
-            actions={actions}
-            assignmentId={actions.getLessonById(lesson?.courseLessonResponseId as string).id}
-            wordCount={parseInt(lesson?.wordCount as string, 10)}
-          ></EditableCourseAssignment>
+          <CourseDetailImpl.UserConsumer>
+            {({ userActions }) => {
+              return (
+                <EditableCourseAssignment
+                  actions={actions}
+                  userActions={userActions}
+                  assignmentId={actions.getLessonById(lesson?.courseLessonResponseId as string).id}
+                  wordCount={parseInt(lesson?.wordCount as string, 10)}
+                ></EditableCourseAssignment>
+              )
+            }}
+          </CourseDetailImpl.UserConsumer>
         </Container>
       </Container>
     )
@@ -1035,11 +1045,18 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             value={lesson?.description}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
-          <EditableCourseAssignment
-            actions={actions}
-            assignmentId={lesson?.id as string}
-            wordCount={parseInt(lesson?.wordCount as string, 10)}
-          ></EditableCourseAssignment>
+          <CourseDetailImpl.UserConsumer>
+            {({ userActions }) => {
+              return (
+                <EditableCourseAssignment
+                  actions={actions}
+                  userActions={userActions}
+                  assignmentId={lesson?.id as string}
+                  wordCount={parseInt(lesson?.wordCount as string, 10)}
+                ></EditableCourseAssignment>
+              )
+            }}
+          </CourseDetailImpl.UserConsumer>
         </Container>
       </Container>
     )

@@ -23,6 +23,7 @@ interface Props {
   wordCount: number
   assignmentId: string
   actions: CourseActions
+  userActions: UserActions
 }
 interface State extends JCState {
   assignmentComplete: boolean
@@ -33,7 +34,7 @@ interface State extends JCState {
   newToList: any
   userList: any
 }
-export default class EditableRichText extends JCComponent<Props, State> {
+export default class EditableCourseAssignment extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
     const z = this.props.actions?.myCourseGroups()
@@ -67,11 +68,12 @@ export default class EditableRichText extends JCComponent<Props, State> {
         })
         console.log({ Assignment: this.props.assignmentId })
         const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+        console.log({ AssignmentID: "course-" + this.props.assignmentId + "-" })
         try {
           const query = {
             limit: 20,
             filter: {
-              id: { contains: "course-" + this.props.assignmentId + "-" },
+              id: { beginsWith: "course-" + this.props.assignmentId + "-" },
             },
             nextToken: next,
           }
@@ -81,7 +83,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
             variables: query,
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })
-
+          console.log({ MessageInfo: json })
           if (json.data.listDirectMessageRooms.nextToken !== null) {
             this.setState({
               data: [...this.state.data, ...json.data.listDirectMessageRooms.items],
@@ -94,7 +96,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
               },
               () => {
                 // TODO FIX
-                // this.shouldCreateRoom(userActions)
+                this.shouldCreateRoom(this.props.userActions)
               }
             )
           }
@@ -112,7 +114,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
               },
               () => {
                 // TODO FIX
-                // this.shouldCreateRoom(shouldCreateRoom)
+                this.shouldCreateRoom(this.props.userActions)
               }
             )
           }
@@ -299,7 +301,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
   render(): React.ReactNode {
     return (
-      <EditableRichText.UserConsumer>
+      <EditableCourseAssignment.UserConsumer>
         {({ userState, userActions }) => {
           if (!userState) return null
 
@@ -371,7 +373,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
             </>
           )
         }}
-      </EditableRichText.UserConsumer>
+      </EditableCourseAssignment.UserConsumer>
     )
   }
 }
