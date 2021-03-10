@@ -181,7 +181,9 @@ export default class ConversationScreen extends JCComponent<Props, State> {
           console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState(
             { data: this.state.data.concat(json.data.listDirectMessageUsers.items) },
-            this.shouldCreateRoom
+            () => {
+              this.shouldCreateRoom()
+            }
           )
         }
       } catch (json) {
@@ -193,7 +195,9 @@ export default class ConversationScreen extends JCComponent<Props, State> {
           console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState(
             { data: this.state.data.concat(json.data.listDirectMessageUsers.items) },
-            this.shouldCreateRoom
+            () => {
+              this.shouldCreateRoom()
+            }
           )
         }
         console.error(json)
