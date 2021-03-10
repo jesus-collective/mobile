@@ -1,12 +1,13 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { AntDesign } from "@expo/vector-icons"
 import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { MapData } from "components/MyGroups/MyGroups"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, Content, StyleProvider, View } from "native-base"
+import { Container, Content, Picker, StyleProvider, View } from "native-base"
 import React from "react"
-import { Text, TouchableOpacity, Image } from "react-native"
+import { Image, Text, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
@@ -547,6 +548,68 @@ export default class CourseScreen extends JCComponent<Props, State> {
   isCoursePaid(id: string) {
     return this.state.isPaid
   }
+  renderPermissions(): React.ReactNode {
+    return (
+      this.state.isEditable && (
+        <View style={{ marginBottom: 35 }}>
+          <Text style={{ fontWeight: "bold" }}>Permissions</Text>
+          <Picker
+            mode="dropdown"
+            style={{
+              width: "100%",
+              marginTop: 10,
+              marginBottom: 30,
+              fontSize: 16,
+              height: 30,
+              flexGrow: 0,
+              paddingTop: 3,
+              paddingBottom: 3,
+            }}
+            selectedValue={null}
+            onValueChange={(value: string) => {
+              console.log({ value: value })
+              let tmp = this.state.data.readGroups
+              if (!tmp) tmp = []
+              tmp.push(value as UserGroupType)
+              this.updateValue("readGroups", tmp)
+            }}
+          >
+            <Picker.Item key={null} label={"Add Group"} value={null} />
+            {Object.keys(UserGroupType).map((org: string) => {
+              return <Picker.Item key={org} label={org} value={org} />
+            })}
+          </Picker>
+          {this.state.data?.readGroups?.map((item: UserGroupType | null, index: number) => {
+            return (
+              <React.Fragment key={index}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text style={{ fontWeight: "normal" }}>{item}</Text>
+                  <TouchableOpacity
+                    style={{ alignSelf: "center", marginLeft: 15 }}
+                    onPress={() => {
+                      if (this.state.data) {
+                        let tmp = this.state.data.readGroups
+                        if (!tmp) tmp = []
+                        tmp.splice(index, 1)
+                        this.updateValue("readGroups", tmp)
+                      }
+                    }}
+                  >
+                    <AntDesign name="close" size={20} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </React.Fragment>
+            )
+          })}
+        </View>
+      )
+    )
+  }
   renderButtons(userActions: UserActions): React.ReactNode {
     return (
       <Container style={{ minHeight: 30 }}>
@@ -894,7 +957,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           })
                         )}
                       </View>
-
+                      {this.renderPermissions()}
                       {this.renderButtons(userActions)}
                     </Container>
                     <Container style={this.styles.style.detailScreenRightCard}>
