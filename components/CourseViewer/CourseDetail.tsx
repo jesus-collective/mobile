@@ -1018,7 +1018,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               style={this.styles.style.courseDetailCalendarImage}
               source={require("../../assets/svg/calendar.svg")}
             ></Image>
-            <Text style={this.styles.style.courseDetailCalendarText}>{lesson?.time}</Text>
+            <Text style={this.styles.style.courseDetailCalendarText}>
+              {moment(lesson?.time).format("LLL")}
+            </Text>
           </Container>
         </Container>
         <Container style={{ width: "100%" }}>
@@ -1101,7 +1103,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           return state.data && state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
               <Container style={{ flex: 85 }}>
-                <CourseHeader groupData={state.data}></CourseHeader>
+                {/* <CourseHeader groupData={state.data}></CourseHeader> */}
                 <CourseDetailMenu />
                 <Container style={{ flex: 80 }}>
                   <Content style={{ flex: 85 }}>
