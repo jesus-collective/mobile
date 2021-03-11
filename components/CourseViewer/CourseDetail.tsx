@@ -1101,7 +1101,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           return state.data && state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
               <Container style={{ flex: 85 }}>
-                <CourseHeader groupData={state.data}></CourseHeader>
+                {/* <CourseHeader groupData={state.data}></CourseHeader> */}
                 <CourseDetailMenu />
                 <Container style={{ flex: 80 }}>
                   <Content style={{ flex: 85 }}>
