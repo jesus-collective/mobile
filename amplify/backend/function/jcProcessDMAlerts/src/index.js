@@ -37,10 +37,14 @@ async function getUser(id) {
       authMode: "AMAZON_COGNITO_USER_POOLS",
     })
     console.log("Done Get Users")
-    const email = json.data.getUser.email
-    const name = json.data.getUser.given_name + " " + json.data.getUser.family_name
-    const alertConfig = json.data.getUser.alertConfig
-    return { email: email, name: name, alertConfig: alertConfig }
+    if (json && json.data && json.data.getUser) {
+      const email = json.data.getUser.email
+      const name = json.data.getUser.given_name + " " + json.data.getUser.family_name
+      const alertConfig = json.data.getUser.alertConfig
+      return { email: email, name: name, alertConfig: alertConfig }
+    }
+    console.log({ "Error getting user": json })
+    return null
   } catch (json) {
     if (json && json.data && json.data.getUser) {
       const email = json.data.getUser.email
@@ -53,10 +57,12 @@ async function getUser(id) {
   }
 }
 
-async function sendEmail(recipient, message, name) {
+async function sendEmail(recipient, message, name, type) {
   console.log("Setting Up Email")
   const sender = "Jesus Collective <donot-reply@jesuscollective.com>"
-  const subject = "Jesus Collective DM from " + name
+  var subject
+  if (type == "Course") subject = "Jesus Collective Course Activity from " + name
+  else subject = "Jesus Collective DM from " + name
   const charset = "UTF-8"
   console.log("Create SES")
   var ses = new aws.SES()
@@ -109,33 +115,61 @@ function convertCommentFromJSONToTEXT(text) {
     return null
   }
 }
-function generateMessage(html, text, name) {
-  const body_text =
-    "You have received a direct message on Jesus Collective from " +
-    name +
-    "\r\n" +
-    text +
-    "\r\nPlease login to view it."
+function generateMessage(html, text, name, type) {
+  var body_text
+
+  if (type == "course")
+    body_text =
+      "There is new course activity on Jesus Collective from " +
+      name +
+      "\r\n" +
+      text +
+      "\r\nPlease login to view it."
+  else
+    body_text =
+      "You have received a direct message on Jesus Collective from " +
+      name +
+      "\r\n" +
+      text +
+      "\r\nPlease login to view it."
   var env
   if (process.env.ENV == "beta") env = "dev"
   else if (process.env.ENV == "dev") env = "beta"
   else env = process.env.ENV
 
   // The HTML body of the email.
-  const body_html =
-    `<html>
+  var body_html
+  if (type == "course") {
+    body_html =
+      `<html>
+<head></head>
+<body>
+  <h1>Jesus Collective Course Alert</h1>
+  <p>There is new course activity on Jesus Collective from ` +
+      name +
+      `</p>` +
+      html +
+      `<a href='https://` +
+      env +
+      `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
+</body>
+</html>`
+  } else {
+    body_html =
+      `<html>
     <head></head>
     <body>
       <h1>Jesus Collective Direct Message Alert</h1>
       <p>You have received a direct message on Jesus Collective from ` +
-    name +
-    `</p>` +
-    html +
-    `<a href='https://` +
-    env +
-    `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
+      name +
+      `</p>` +
+      html +
+      `<a href='https://` +
+      env +
+      `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
     </body>
   </html>`
+  }
   //  console.log(body_html)
   return { html: body_html, text: body_text }
 }
@@ -151,6 +185,20 @@ const start = async () => {
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array)
+  }
+}
+async function emailRouter(html, text, fromInfo, messageRoomID, recipientInfo) {
+  if (
+    messageRoomID.startsWith("course") &&
+    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailCourseMessage)
+  ) {
+    const message = generateMessage(html, text, fromInfo.name, "course")
+    const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "Course")
+    console.log(data)
+  } else if (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailDirectMessage) {
+    const message = generateMessage(html, text, fromInfo.name, "dm")
+    const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "DM")
+    console.log(data)
   }
 }
 
@@ -197,21 +245,17 @@ async function Execute(event) {
         await asyncForEach(
           recipients.filter((item) => item != from),
           async (recipientID) => {
-            if (!messageRoomID.startsWith("course-")) {
-              console.log({ "Lookup user": recipientID })
-              const recipientInfo = await getUser(recipientID)
-              if (
-                recipientInfo &&
-                (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailDirectMessage)
-              ) {
-                console.log({ "Sending a DM to": recipientInfo })
-                const html = convertCommentFromJSONToHTML(content)
-                const text = convertCommentFromJSONToTEXT(content)
-                if (html && text) {
-                  const message = generateMessage(html, text, fromInfo.name)
-                  const data = await sendEmail(recipientInfo.email, message, fromInfo.name)
-                  console.log(data)
-                }
+            console.log({ "Lookup user": recipientID })
+            const recipientInfo = await getUser(recipientID)
+            if (
+              recipientInfo &&
+              (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailDirectMessage)
+            ) {
+              console.log({ "Sending a DM to": recipientInfo })
+              const html = convertCommentFromJSONToHTML(content)
+              const text = convertCommentFromJSONToTEXT(content)
+              if (html && text) {
+                await emailRouter(html, text, fromInfo, messageRoomID, recipientInfo)
               }
             }
           }

@@ -124,7 +124,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcProcessDMAlerts-526339495a4669716943-build.zip"
+          "S3Key": "amplify-builds/jcProcessDMAlerts-6c57334c416645646d4a-build.zip"
         },
         "Layers": []
       }
@@ -279,6 +279,63 @@
         "EventSourceArn": {
           "Fn::ImportValue": {
             "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
+          }
+        },
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "LambdaTriggerPolicyDirectReply": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy-Reply",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListShards",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": {
+                "Fn::ImportValue": {
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageReplyTable:StreamArn"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaEventSourceMappingDirectReply": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "LambdaTriggerPolicyDirectReply",
+        "LambdaExecutionRole"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageReplyTable:StreamArn"
           }
         },
         "FunctionName": {

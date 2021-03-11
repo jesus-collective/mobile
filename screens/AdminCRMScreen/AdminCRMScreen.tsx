@@ -725,7 +725,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     key={index}
                   >
                     <Text style={this.styles.style.adminCRMModal} key={index}>
-                      {item.product.name}
+                      {item.product?.name}
                     </Text>
                     <JCButton
                       buttonType={ButtonTypes.AdminModalOrange}
