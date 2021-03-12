@@ -879,6 +879,13 @@ const courseStyles = EStyleSheet.create({
     alignSelf: "flex-end",
     marginRight: 6,
   },
+  courseMainIcons2: {
+    color: "#000000",
+    width: 18,
+    height: 18,
+    alignSelf: "flex-end",
+    marginRight: 6,
+  },
 
   "@media (min-width: 350) and (max-width: 768)": {
     courseAssignmentScreenRightCard: {
