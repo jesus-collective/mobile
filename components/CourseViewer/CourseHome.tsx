@@ -479,7 +479,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                               </TouchableOpacity>
                                             </Right>
                                           </CardItem>
-                                          <CardItem>
+                                          <CardItem style={{ zIndex: 99999 }}>
                                             <EditableUsers
                                               limit={1}
                                               onChange={(value: any[]) => {
