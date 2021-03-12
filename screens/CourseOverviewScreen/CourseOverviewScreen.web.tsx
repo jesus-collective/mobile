@@ -828,8 +828,8 @@ export default class CourseScreen extends JCComponent<Props, State> {
                         ></EditableDate>
                         <View style={{ flexDirection: "row" }}>
                           <Image
-                            style={this.styles.style.courseMainIcons}
-                            source={require("../../assets/svg/time_black.svg")}
+                            style={this.styles.style.courseMainIcons2}
+                            source={require("../../assets/svg/hourglass.svg")}
                           />
                           <Text
                             style={{
@@ -888,8 +888,8 @@ export default class CourseScreen extends JCComponent<Props, State> {
                         ></EditableText>
                         <View style={{ flexDirection: "row" }}>
                           <Image
-                            style={this.styles.style.courseMainIcons}
-                            source={require("../../assets/svg/time_black.svg")}
+                            style={this.styles.style.courseMainIcons2}
+                            source={require("../../assets/svg/tag.svg")}
                           />
                           <Text
                             style={{
