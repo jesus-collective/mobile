@@ -412,12 +412,12 @@ class MyMapImpl extends JCComponent<Props, State> {
                                 }
                               : mapItem.type === "organization"
                               ? {
-                                  url: require("../../assets/svg/business-and-trade.svg"),
+                                  url: require("../../assets/svg/map-icon-darkred.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
                                 }
                               : mapItem.type === "profile"
                               ? {
-                                  url: require("../../assets/svg/person-silhouette.svg"),
+                                  url: require("../../assets/svg/map-icon-yellow.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
                                 }
                               : undefined
