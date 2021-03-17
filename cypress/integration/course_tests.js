@@ -238,7 +238,7 @@ describe("Course Admin", () => {
       cy.get('[data-testId="course-returnToWeekButton-true"]', { timeout: 15000 }).click()
 */
       logout()
-      login("courseUser")
+      login("courseuser1")
 
       //   deleteCourse("Test Course 1")
       //   deleteCourse("Test Course 1-edit")
@@ -270,8 +270,15 @@ describe("Course Users", () => {
       } else {
         cy.viewport(size)
       }
-      login("courseuser1")
+      // login("courseuser1")
+      // gotoCourse("Test Course 1")
+      // logout()
+      login("courseuser2")
       gotoCourse("Test Course 1")
+      // logout()
+      login("courseuser3")
+      gotoCourse("Test Course 1")
+      logout()
     })
   })
 })
