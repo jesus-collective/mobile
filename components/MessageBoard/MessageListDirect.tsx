@@ -349,7 +349,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
             )}
           </Right>
         </CardItem>
-        <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
+        <CardItem style={this.styles.style.coursePageMessageBoardInnerCard}>
           <div id="comment-div">
             <div
               dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}

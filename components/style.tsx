@@ -1087,6 +1087,36 @@ export default class MainStyles {
               fontSize: 16,
               lineHeight: 22,
             },
+      coursePageMessageBoardInnerCard:
+        Platform.OS === "web"
+          ? {
+              wordBreak: "break-word",
+              marginTop: 0,
+              paddingTop: 15,
+              paddingBottom: 15,
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              backgroundColor: "#ffffff",
+              fontFamily: "Graphik-Regular-App",
+              fontSize: 16,
+              lineHeight: 22,
+              paddingLeft: 100,
+            }
+          : {
+              marginTop: 0,
+              paddingTop: 15,
+              paddingBottom: 15,
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              backgroundColor: "#ffffff",
+              fontFamily: "Graphik-Regular-App",
+              fontSize: 16,
+              lineHeight: 22,
+            },
       eventPageMessageBoardLeft: {
         alignSelf: "center",
       },
