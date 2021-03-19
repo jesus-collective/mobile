@@ -4,7 +4,6 @@ const { API } = require("@aws-amplify/api")
 const mutations = require("./mutations")
 const queries = require("./queries")
 const { v4: uuidv4 } = require("uuid")
-const aws = require("aws-sdk")
 Amplify.default.configure({
   aws_appsync_graphqlEndpoint: process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
   aws_appsync_region: process.env.region,
@@ -61,8 +60,8 @@ const authenticate = async () => {
     }
     console.log("Loading Secret Done")
 
-    await Amplify.Auth.signIn(secret.userName, secret.password)
-    const currentSession = await Amplify.Auth.currentSession()
+    await Auth.signIn(secret.userName, secret.password)
+    const currentSession = await Auth.currentSession()
     Amplify.default.configure({
       Authorization: currentSession.getIdToken().getJwtToken(),
     })
@@ -74,7 +73,7 @@ const authenticate = async () => {
 exports.handler = async (event) => {
   try {
     // await authenticate()
-    // missing secretmanager configuration in cloudformation template
+    // Missing SecretManager configuration in cloudformation template
     await Auth.signIn(process.env.user, process.env.pass)
     console.log("Done login")
     const dynamoEvent = event.Records[0]
@@ -125,6 +124,8 @@ exports.handler = async (event) => {
             activityEntry.ownerID = dynamoEvent.dynamodb.NewImage.owner.S
             activityEntry.activityGroupId = course.data.getCourseWeek.courseInfoID
             console.log(dynamoEvent.dynamodb.NewImage)
+            // Previous record and modified record can be accessed here.
+            // Create new activityActionTypes in schema and add messages in the switch statement in ActivityBox.tsx
             switch (dynamoEvent.dynamodb.NewImage.lessonType.S) {
               case "assignment":
                 activityEntry.activityActionType = "courses_assignment_create"
@@ -153,7 +154,8 @@ exports.handler = async (event) => {
         console.log("Direct message detected")
         switch (dynamoEvent.eventName) {
           case "INSERT":
-            // Query messageRoom with messageRoomID
+            // This will trigger every time a direct message is sent.
+            // Query DirectMessageRoom with messageRoomID to get roomType
             const directMessageRoom = await API.graphql({
               query: queries.getDirectMessageRoom,
               variables: {
@@ -200,7 +202,6 @@ exports.handler = async (event) => {
                 await createActivity(activityEntry)
                 break
               default:
-                // ignore every other DirectMessage
                 console.log("Not an assignment")
                 break
             }
