@@ -404,7 +404,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
           }
           inverted={this.props.inputAt === "bottom"}
           onEndReached={!this.state.fetchingData ? () => this.getMoreDirectMessages() : undefined}
-          style={{ height: this.props.style == "courseResponse" ? "6rem" : 0.5 * height }}
+          style={{ height: this.props.style == "courseResponse" ? null : 0.5 * height }}
           ListFooterComponent={() => this.messagesLoader()}
           refreshing={this.state.fetchingData}
           onEndReachedThreshold={0.1}

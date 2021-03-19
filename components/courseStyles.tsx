@@ -375,6 +375,7 @@ const courseStyles = EStyleSheet.create({
           shadowRadius: 30,
           height: "auto",
           width: 446,
+          paddingTop: 30,
         }
       : {
           flex: 70,
@@ -388,6 +389,7 @@ const courseStyles = EStyleSheet.create({
           borderRadius: 4,
           height: "auto",
           width: 446,
+          paddingTop: 30,
         },
   courseAssignmentMainContainer:
     Platform.OS === "web"
