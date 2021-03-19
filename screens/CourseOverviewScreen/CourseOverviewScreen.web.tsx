@@ -1016,11 +1016,12 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                   <>
                                     <Text
                                       style={{
-                                        fontFamily: "Graphik-Regular-App",
+                                        fontFamily: "Graphik-SemiBold-App",
                                         fontSize: 16,
                                         lineHeight: 24,
                                         letterSpacing: -0.3,
-                                        color: "#333333",
+                                        color: "#ffffff",
+                                        alignSelf: "center",
                                       }}
                                     >
                                       Week {index1 + 1} - {item.title}
@@ -1031,7 +1032,21 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                 <View>
                                   {item.lessons.items.map((lesson, index2: number) => {
                                     return (
-                                      <Text key={index2}>
+                                      <Text
+                                        key={index2}
+                                        style={{
+                                          fontFamily: "Graphik-Regular-App",
+                                          fontSize: 16,
+                                          lineHeight: 24,
+                                          letterSpacing: -0.3,
+                                          color: "#333333",
+                                          paddingLeft: 20,
+                                        }}
+                                      >
+                                        <Image
+                                          style={this.styles.style.courseAccordionIcons}
+                                          source={require("../../assets/svg/document.svg")}
+                                        />
                                         {index1 + 1}.{index2 + 1} - {lesson.name}
                                       </Text>
                                     )

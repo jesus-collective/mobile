@@ -888,6 +888,13 @@ const courseStyles = EStyleSheet.create({
     alignSelf: "flex-end",
     marginRight: 6,
   },
+  courseAccordionIcons: {
+    color: "#000000",
+    width: 18,
+    height: 18,
+    top: 2,
+    marginRight: 5,
+  },
 
   "@media (min-width: 350) and (max-width: 768)": {
     courseAssignmentScreenRightCard: {
