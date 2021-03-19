@@ -524,9 +524,6 @@ const courseStyles = EStyleSheet.create({
           marginTop: 30,
           width: "90%",
           paddingBottom: 50,
-          borderBottomWidth: 1,
-          borderBottomStyle: "solid",
-          borderBottomColor: "#333333",
         }
       : {
           flex: 5,

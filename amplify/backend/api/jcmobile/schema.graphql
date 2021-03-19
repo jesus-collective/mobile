@@ -542,6 +542,41 @@ type Organization
   resource: [ResourceRoot] @connection(keyName: "resourceByOrganization", fields: ["id"])
 }
 
+enum ActivityGroupType {
+  courses
+}
+
+enum ActivityActionType {
+  courses_assignment_create
+  courses_assignment_submit
+  courses_assignment_respond
+  courses_lesson_create
+  courses_zoom_create
+  courses_respond_create
+  courses_youtube_create
+}
+
+type Activity
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["courseUser"], operations: [read] }
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"], operations: [read] }
+    ]
+  ) 
+  @key(name: "byGroupTypeId", fields:["activityGroupType", "activityGroupId"], queryField:"activityByGroup")
+  {
+    id: ID!
+    ownerName:String!
+    ownerID:ID!
+    owner:User @connection(fields:["ownerID"])
+    activityGroupId: ID!
+    activityGroupType: ActivityGroupType!
+    activityActionType: ActivityActionType!
+    time: String!
+    date: String!
+  }
 
 type Payment
   @model

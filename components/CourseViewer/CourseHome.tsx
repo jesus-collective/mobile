@@ -1,5 +1,6 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import ActivityBox from "../../components/Activity/ActivityBox"
 import moment from "moment-timezone"
 import {
   Body,
@@ -754,18 +755,13 @@ class CourseHomeImpl extends JCComponent<Props> {
                             </span>
                           </Text>
                         </Container>
-                        {/*
-                          <Container style={{ width: '100%', marginTop: 30, marginBottom: 50 }}>
-                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
-                          </Container>
-                          <Container style={this.styles.style.CourseHomeActivityContainer}>
-                            <JCButton buttonType={state.activeCourseActivity == "today" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("today") }}>Today</JCButton>
-                            <JCButton buttonType={state.activeCourseActivity == "yesterday" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("yesterday") }}>Yesterday</JCButton>
-                            <JCButton buttonType={state.activeCourseActivity == "thisweek" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("thisweek") }}>This Week</JCButton>
-                          </Container>
-
-                          <Text style={this.styles.style.courseHomeCourseActivityText}>Adam posted assignment to review</Text>
-                          */}
+                        <Container style={this.styles.style.CourseHomeActivityContainer}>
+                          <ActivityBox
+                            activityGroupType={"courses"}
+                            activityGroupId={state.courseData?.id as string}
+                            title="Course Activity"
+                          />
+                        </Container>
                       </Container>
                     </Container>
                   </Content>
