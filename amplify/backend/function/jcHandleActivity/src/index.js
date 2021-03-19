@@ -169,8 +169,7 @@ exports.handler = async (event) => {
             ) {
               case "assignment":
                 console.log(dynamoEvent.dynamodb.NewImage.messageRoomID.S)
-                let lessonId = "course-61580a07-cfc8-4d31-ad28-3098b74d0ec9-c07f6c6f-fa00-44ed-afbc-f4f4b08bcda1"
-                  .split("-")
+                let lessonId = dynamoEvent.dynamodb.NewImage.messageRoomID.S.split("-")
                   ?.splice(1, 5)
                   ?.join("-") // Pulling lessonId from messageRoomID
                 console.log(lessonId)
