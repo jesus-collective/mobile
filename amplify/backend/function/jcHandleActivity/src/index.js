@@ -86,8 +86,6 @@ exports.handler = async (event) => {
       time: date.toTimeString().slice(0, 8),
       date: date.toISOString().slice(0, 10),
     }
-    // TODO: Use proper sign in, user must exist in jc dev environment and have proper permissions
-    // TODO: REMOVE is currently throwing an error somewhere
     switch (dynamoEvent.dynamodb.NewImage.__typename.S) {
       case "CourseLesson":
         console.log("Logging query variables:")
