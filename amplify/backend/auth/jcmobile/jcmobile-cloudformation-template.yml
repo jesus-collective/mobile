@@ -207,6 +207,9 @@ Parameters:
             
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
+  
+  ShouldOutputAppClientSecrets: !Equals [!Ref userpoolClientGenerateSecret, true ]
+  
 
 Resources:
   
@@ -462,7 +465,7 @@ Resources:
             - ' }'
             - '};'
       Handler: index.handler
-      Runtime: nodejs10.x
+      Runtime: nodejs12.x
       Timeout: '300'
       Role: !GetAtt
         - UserPoolClientRole
@@ -590,7 +593,7 @@ Resources:
             - ' }'
             - '};'
       Handler: index.handler
-      Runtime: nodejs10.x
+      Runtime: nodejs12.x
       Timeout: '300'
       Role: !GetAtt
         - MFALambdaRole
@@ -720,6 +723,7 @@ Outputs :
     Description: The user pool app client id
   AppClientSecret:
     Value: !GetAtt UserPoolClientInputs.appSecret
+    Condition: ShouldOutputAppClientSecrets
   
   CreatedSNSRole:
     Value: !GetAtt SNSRole.Arn

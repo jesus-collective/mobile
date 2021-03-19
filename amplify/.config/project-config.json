@@ -1,17 +1,17 @@
 {
-    "projectName": "jc-mobile",
-    "version": "3.0",
-    "frontend": "javascript",
-    "javascript": {
-        "framework": "react-native",
-        "config": {
-            "SourceDir": "/src",
-            "DistributionDir": "/web-build",
-            "BuildCommand": "npm run-script build",
-            "StartCommand": "npm run-script start"
-        }
-    },
-    "providers": [
-        "awscloudformation"
-    ]
+  "projectName": "jc-mobile",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react-native",
+    "config": {
+      "SourceDir": "/src",
+      "DistributionDir": "/web-build",
+      "BuildCommand": "npm run-script build",
+      "StartCommand": "npm run-script start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
 }

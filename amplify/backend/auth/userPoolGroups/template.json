@@ -56,7 +56,7 @@
               
               "UserPoolId" : {
                 "Ref": "authjcmobileUserPoolId"
-              } 
+              }
             }
         },
         
@@ -110,7 +110,7 @@
               
               "UserPoolId" : {
                 "Ref": "authjcmobileUserPoolId"
-              } 
+              }
             }
         },
         
@@ -178,13 +178,13 @@
                         "ShouldNotCreateEnvResources",
                         {
                            
-                        }, 
+                        },
                         {
 
                             "Fn::Join": [
                                 "",
                                 [
-                                  
+
                                   "jcmobile",
                                   "-ExecutionRole-",
                                   {
@@ -192,7 +192,7 @@
                                   }
                                 ]
                             ]
-                        }       
+                        }
                     ]
                 },
                 "AssumeRolePolicyDocument": {
@@ -307,7 +307,7 @@
                                 "    cognitoidentity.setIdentityPoolRoles(params).promise();",
                                 "    response.send(event, context, response.SUCCESS, {message: 'Successfully updated identity pool.'})",
                                 "    } catch(err) {",
-                                
+
                                 "        response.send(event, context, response.FAILED, {message: 'Error updating identity pool'});",
                                 "    }",
                                 "   };",
@@ -318,7 +318,7 @@
                     }
                 },
                 "Handler": "index.handler",
-                "Runtime": "nodejs10.x",
+                "Runtime": "nodejs12.x",
                 "Timeout": "300",
                 "Role": {
                     "Fn::GetAtt": [
@@ -376,7 +376,7 @@
                     "Arn"
                 ]
             }
-         
+        
         },
         
       
