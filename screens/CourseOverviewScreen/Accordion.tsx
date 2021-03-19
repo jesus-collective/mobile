@@ -22,8 +22,22 @@ export default class Accordion extends Component<Props, State> {
   render() {
     return (
       <View>
-        <TouchableOpacity onPress={() => this.toggleExpand()}>{this.props.header}</TouchableOpacity>
-        <View />
+        <TouchableOpacity
+          onPress={() => this.toggleExpand()}
+          style={{
+            width: "100%",
+            borderRadius: 4,
+            backgroundColor: "#F0493E",
+            paddingTop: 13,
+            paddingBottom: 13,
+            paddingLeft: 20,
+            paddingRight: 20,
+            marginTop: 20,
+            marginBottom: 20,
+          }}
+        >
+          {this.props.header}
+        </TouchableOpacity>
         {this.state.expanded && this.props.children}
       </View>
     )

@@ -288,13 +288,23 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
     return (
       <Card
         key={index}
-        style={{
-          borderRadius: 10,
-          minHeight: 50,
-          borderColor: "#ffffff",
-          marginLeft: isReply ? 50 : 0,
-          marginBottom: 35,
-        }}
+        style={
+          style == "courseResponse"
+            ? {
+                borderRadius: 10,
+                minHeight: 50,
+                borderColor: "#ffffff",
+                marginLeft: isReply ? 50 : 0,
+                marginBottom: 20,
+              }
+            : {
+                borderRadius: 10,
+                minHeight: 50,
+                borderColor: "#ffffff",
+                marginLeft: isReply ? 50 : 0,
+                marginBottom: 35,
+              }
+        }
       >
         <CardItem style={this.styles.style.eventPageMessageBoard}>
           <Left style={this.styles.style.eventPageMessageBoardLeft}>
@@ -404,7 +414,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
           }
           inverted={this.props.inputAt === "bottom"}
           onEndReached={!this.state.fetchingData ? () => this.getMoreDirectMessages() : undefined}
-          style={{ height: this.props.style == "courseResponse" ? "6rem" : 0.5 * height }}
+          style={{ height: this.props.style == "courseResponse" ? null : 0.5 * height }}
           ListFooterComponent={() => this.messagesLoader()}
           refreshing={this.state.fetchingData}
           onEndReachedThreshold={0.1}

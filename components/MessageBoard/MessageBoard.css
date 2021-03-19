@@ -41,11 +41,12 @@
   border-radius: 10px;
   border: 1px;
   margin-left: 10px;
-  height: 300px;
+  height: 850px;
   /* width: 85%;
   left: 50px; */
   margin-left: 30px;
-  bottom: 50px;
+  /* bottom: 50px; */
+  top: 2rem;
 }
 
 .customToolbar {
