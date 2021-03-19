@@ -331,7 +331,7 @@ const courseStyles = EStyleSheet.create({
           marginTop: 30,
           borderRadius: 4,
           shadowOffset: { width: 0, height: 5 },
-          shadowColor: "rgba(0, 0, 0, 0.45)",
+          shadowColor: "rgba(0, 0, 0, 0.19)",
           shadowRadius: 30,
           height: "auto",
           width: 446,
@@ -352,7 +352,7 @@ const courseStyles = EStyleSheet.create({
           marginTop: 30,
           borderRadius: 4,
           shadowOffset: { width: 0, height: 5 },
-          shadowColor: "rgba(0, 0, 0, 0.45)",
+          shadowColor: "rgba(0, 0, 0, 0.19)",
           shadowRadius: 30,
           height: "auto",
           width: 446,
@@ -371,10 +371,11 @@ const courseStyles = EStyleSheet.create({
           marginTop: 30,
           borderRadius: 4,
           shadowOffset: { width: 0, height: 5 },
-          shadowColor: "rgba(0, 0, 0, 0.45)",
+          shadowColor: "rgba(0, 0, 0, 0.19)",
           shadowRadius: 30,
           height: "auto",
           width: 446,
+          paddingTop: 30,
         }
       : {
           flex: 70,
@@ -388,6 +389,7 @@ const courseStyles = EStyleSheet.create({
           borderRadius: 4,
           height: "auto",
           width: 446,
+          paddingTop: 30,
         },
   courseAssignmentMainContainer:
     Platform.OS === "web"
@@ -885,6 +887,13 @@ const courseStyles = EStyleSheet.create({
     height: 18,
     alignSelf: "flex-end",
     marginRight: 6,
+  },
+  courseAccordionIcons: {
+    color: "#000000",
+    width: 18,
+    height: 18,
+    top: 2,
+    marginRight: 5,
   },
 
   "@media (min-width: 350) and (max-width: 768)": {
