@@ -288,13 +288,23 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
     return (
       <Card
         key={index}
-        style={{
-          borderRadius: 10,
-          minHeight: 50,
-          borderColor: "#ffffff",
-          marginLeft: isReply ? 50 : 0,
-          marginBottom: 35,
-        }}
+        style={
+          style == "courseResponse"
+            ? {
+                borderRadius: 10,
+                minHeight: 50,
+                borderColor: "#ffffff",
+                marginLeft: isReply ? 50 : 0,
+                marginBottom: 20,
+              }
+            : {
+                borderRadius: 10,
+                minHeight: 50,
+                borderColor: "#ffffff",
+                marginLeft: isReply ? 50 : 0,
+                marginBottom: 35,
+              }
+        }
       >
         <CardItem style={this.styles.style.eventPageMessageBoard}>
           <Left style={this.styles.style.eventPageMessageBoardLeft}>
