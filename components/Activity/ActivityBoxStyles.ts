@@ -5,8 +5,8 @@ const { height, width } = Dimensions.get("window")
 const smallScreen = width < 563
 const ActivityBoxStyles = EStyleSheet.create({
   ActivityBoxContainer: {
-    width: smallScreen ? Dimensions.get("window").width : "100%",
-    height: smallScreen ? Dimensions.get("window").height : Dimensions.get("window").height * 0.4,
+    width: smallScreen ? width : "100%",
+    height: smallScreen ? height : height * 0.4,
   },
   ActivityBoxAlertContainer: {
     overflowY: "scroll",
