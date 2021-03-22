@@ -6,7 +6,7 @@ import { Text, TouchableHighlight, View } from "react-native"
 import { Activity } from "src/API"
 import { activityByGroup } from "../../src/graphql-custom/queries"
 import ActivityBoxStyles from "./ActivityBoxStyles"
-type Selected = string
+type Selected = "Today" | "Yesterday" | "Last 7 Days"
 
 type Props = {
   title: string
@@ -17,7 +17,7 @@ type Props = {
 const ActivityBox = ({ title, activityGroupType, activityGroupId }: Props): JSX.Element => {
   const [activities, setactivities] = useState<Array<Activity>>([])
   const [selected, setSelected] = useState<Selected>("Today")
-  const options = ["Today", "Yesterday", "Last 7 Days"]
+  const options: Array<Selected> = ["Today", "Yesterday", "Last 7 Days"]
   const DetermineMessage = (activity: Activity) => {
     console.log(activity)
     switch (activity.activityGroupType) {
