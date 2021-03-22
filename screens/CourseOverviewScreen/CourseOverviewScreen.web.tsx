@@ -60,6 +60,7 @@ interface State extends JCState {
   mapData: MapData[]
   canGotoActiveCourse: boolean
   showPaidUsersModal: boolean
+  expanded: false
 }
 
 export default class CourseScreen extends JCComponent<Props, State> {
@@ -1014,18 +1015,29 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                 key={index1}
                                 header={
                                   <>
-                                    <Text
+                                    <View
                                       style={{
-                                        fontFamily: "Graphik-SemiBold-App",
-                                        fontSize: 16,
-                                        lineHeight: 24,
-                                        letterSpacing: -0.3,
-                                        color: "#ffffff",
-                                        alignSelf: "center",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
                                       }}
                                     >
-                                      Week {index1 + 1} - {item.title}
-                                    </Text>
+                                      <Text
+                                        style={{
+                                          fontFamily: "Graphik-SemiBold-App",
+                                          fontSize: 16,
+                                          lineHeight: 24,
+                                          letterSpacing: -0.3,
+                                          color: "#ffffff",
+                                          alignSelf: "center",
+                                        }}
+                                      >
+                                        Week {index1 + 1} - {item.title}
+                                      </Text>
+                                      <Image
+                                        style={{ width: 12, height: 6, alignSelf: "center" }}
+                                        source={require("../../assets/svg/dropdown_white.svg")}
+                                      />
+                                    </View>
                                   </>
                                 }
                               >

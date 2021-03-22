@@ -1,6 +1,6 @@
 import { View } from "native-base"
 import React, { Component } from "react"
-import { LayoutAnimation, Platform, TouchableOpacity, UIManager } from "react-native"
+import { LayoutAnimation, Platform, TouchableOpacity, UIManager, Image } from "react-native"
 interface Props {
   header: any
 }
@@ -21,7 +21,7 @@ export default class Accordion extends Component<Props, State> {
 
   render() {
     return (
-      <View>
+      <View style={{ width: "30vw", marginBottom: 15 }}>
         <TouchableOpacity
           onPress={() => this.toggleExpand()}
           style={{
