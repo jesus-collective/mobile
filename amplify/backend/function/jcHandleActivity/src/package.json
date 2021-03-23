@@ -1,0 +1,13 @@
+{
+  "name": "jchandleactivity",
+  "version": "1.0.0",
+  "description": "Lambda that creates Activity's based on DynamoDB Stream",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-amplify/api": "^3.2.27",
+    "@aws-amplify/auth": "^3.4.27",
+    "@aws-amplify/core": "^3.8.19",
+    "uuid": "^3.4.0"
+  }
+}
