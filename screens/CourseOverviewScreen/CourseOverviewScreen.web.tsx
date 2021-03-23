@@ -60,6 +60,7 @@ interface State extends JCState {
   mapData: MapData[]
   canGotoActiveCourse: boolean
   showPaidUsersModal: boolean
+  expanded: false
 }
 
 export default class CourseScreen extends JCComponent<Props, State> {
@@ -1005,7 +1006,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           ></EditableRichText>
                         ) : null}
 
-                        <Text style={this.styles.style.courseDetails}>Course Details</Text>
+                        <Text style={this.styles.style.courseDetailsAccordion}>Course Details</Text>
 
                         {this.state.courseData?.courseWeeks?.items.map(
                           (item: any, index1: number) => {
@@ -1014,22 +1015,29 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                 key={index1}
                                 header={
                                   <>
-                                    <Text
+                                    <View
                                       style={{
-                                        fontFamily: "Graphik-SemiBold-App",
-                                        fontSize: 16,
-                                        lineHeight: 24,
-                                        letterSpacing: -0.3,
-                                        color: "#ffffff",
-                                        alignSelf: "center",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
                                       }}
                                     >
-                                      Week {index1 + 1} - {item.title}
-                                    </Text>
+                                      <Text
+                                        style={{
+                                          fontFamily: "Graphik-SemiBold-App",
+                                          fontSize: 16,
+                                          lineHeight: 24,
+                                          letterSpacing: -0.3,
+                                          color: "#ffffff",
+                                          alignSelf: "center",
+                                        }}
+                                      >
+                                        Week {index1 + 1} - {item.title}
+                                      </Text>
+                                    </View>
                                   </>
                                 }
                               >
-                                <View>
+                                <View style={{ marginBottom: 30 }}>
                                   {item.lessons.items.map((lesson, index2: number) => {
                                     return (
                                       <Text

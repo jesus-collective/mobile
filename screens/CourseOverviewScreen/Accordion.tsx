@@ -1,6 +1,6 @@
-import { View } from "native-base"
+import { View, Row } from "native-base"
 import React, { Component } from "react"
-import { LayoutAnimation, Platform, TouchableOpacity, UIManager } from "react-native"
+import { LayoutAnimation, Platform, TouchableOpacity, UIManager, Image } from "react-native"
 interface Props {
   header: any
 }
@@ -21,7 +21,7 @@ export default class Accordion extends Component<Props, State> {
 
   render() {
     return (
-      <View>
+      <View style={{ width: "30vw" }}>
         <TouchableOpacity
           onPress={() => this.toggleExpand()}
           style={{
@@ -32,11 +32,24 @@ export default class Accordion extends Component<Props, State> {
             paddingBottom: 13,
             paddingLeft: 20,
             paddingRight: 20,
-            marginTop: 20,
-            marginBottom: 20,
+            marginTop: 10,
+            marginBottom: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
           {this.props.header}
+          {this.state.expanded ? (
+            <Image
+              style={{ width: 12, height: 6, alignSelf: "center" }}
+              source={require("../../assets/svg/dropdown_up_white.svg")}
+            />
+          ) : (
+            <Image
+              style={{ width: 12, height: 6, alignSelf: "center" }}
+              source={require("../../assets/svg/dropdown_white.svg")}
+            />
+          )}
         </TouchableOpacity>
         {this.state.expanded && this.props.children}
       </View>
