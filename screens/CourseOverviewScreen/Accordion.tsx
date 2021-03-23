@@ -21,7 +21,7 @@ export default class Accordion extends Component<Props, State> {
 
   render() {
     return (
-      <View style={{ width: "30vw", marginBottom: 15 }}>
+      <View style={{ width: "30vw" }}>
         <TouchableOpacity
           onPress={() => this.toggleExpand()}
           style={{
@@ -32,8 +32,8 @@ export default class Accordion extends Component<Props, State> {
             paddingBottom: 13,
             paddingLeft: 20,
             paddingRight: 20,
-            marginTop: 20,
-            marginBottom: 20,
+            marginTop: 10,
+            marginBottom: 10,
             flexDirection: "row",
             justifyContent: "space-between",
           }}

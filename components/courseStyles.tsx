@@ -212,6 +212,13 @@ const courseStyles = EStyleSheet.create({
     fontSize: 24,
     marginTop: 60,
   },
+  courseDetailsAccordion: {
+    fontFamily: "Graphik-Bold-App",
+    fontWeight: "bold",
+    fontSize: 24,
+    marginTop: 60,
+    marginBottom: 20,
+  },
   courseTimeNonEditable: {
     fontFamily: "Graphik-Regular-App",
     fontSize: 16,

@@ -1006,7 +1006,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           ></EditableRichText>
                         ) : null}
 
-                        <Text style={this.styles.style.courseDetails}>Course Details</Text>
+                        <Text style={this.styles.style.courseDetailsAccordion}>Course Details</Text>
 
                         {this.state.courseData?.courseWeeks?.items.map(
                           (item: any, index1: number) => {
@@ -1037,7 +1037,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                   </>
                                 }
                               >
-                                <View>
+                                <View style={{ marginBottom: 30 }}>
                                   {item.lessons.items.map((lesson, index2: number) => {
                                     return (
                                       <Text
