@@ -1033,10 +1033,6 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                       >
                                         Week {index1 + 1} - {item.title}
                                       </Text>
-                                      <Image
-                                        style={{ width: 12, height: 6, alignSelf: "center" }}
-                                        source={require("../../assets/svg/dropdown_white.svg")}
-                                      />
                                     </View>
                                   </>
                                 }

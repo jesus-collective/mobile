@@ -1,4 +1,4 @@
-import { View } from "native-base"
+import { View, Row } from "native-base"
 import React, { Component } from "react"
 import { LayoutAnimation, Platform, TouchableOpacity, UIManager, Image } from "react-native"
 interface Props {
@@ -34,9 +34,22 @@ export default class Accordion extends Component<Props, State> {
             paddingRight: 20,
             marginTop: 20,
             marginBottom: 20,
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
           {this.props.header}
+          {this.state.expanded ? (
+            <Image
+              style={{ width: 12, height: 6, alignSelf: "center" }}
+              source={require("../../assets/svg/dropdown_up_white.svg")}
+            />
+          ) : (
+            <Image
+              style={{ width: 12, height: 6, alignSelf: "center" }}
+              source={require("../../assets/svg/dropdown_white.svg")}
+            />
+          )}
         </TouchableOpacity>
         {this.state.expanded && this.props.children}
       </View>
