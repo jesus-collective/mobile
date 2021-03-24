@@ -246,7 +246,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apijcmobileGraphQLAPIIdOutput}:GetAtt:CourseLessonTable:StreamArn"
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:CourseLessonTable:StreamArn"
                 }
               }
             }
@@ -265,7 +265,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apijcmobileGraphQLAPIIdOutput}:GetAtt:CourseLessonTable:StreamArn"
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:CourseLessonTable:StreamArn"
           }
         },
         "FunctionName": {
@@ -302,7 +302,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apijcmobileGraphQLAPIIdOutput}:GetAtt:DirectMessageTable:StreamArn"
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
                 }
               }
             }
@@ -321,7 +321,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apijcmobileGraphQLAPIIdOutput}:GetAtt:DirectMessageTable:StreamArn"
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
           }
         },
         "FunctionName": {

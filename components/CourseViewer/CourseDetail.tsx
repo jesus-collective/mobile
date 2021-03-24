@@ -6,7 +6,6 @@ import React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
-import CourseHeader from "../CourseHeader/CourseHeader"
 import EditableCourseAssignment from "../Forms/EditableCourseAssignment"
 import EditableDate from "../Forms/EditableDate"
 import EditableRichText from "../Forms/EditableRichText"
@@ -73,7 +72,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         {state.isEditable && state.editMode ? (
           <EditableText
             onChange={(e) => {
-              actions.updateLesson(state.activeWeek, lesson, "wordCount", e)
+              if (Number.isInteger(e))
+                actions.updateLesson(state.activeWeek, lesson, "wordCount", e)
             }}
             placeholder="Word Count"
             multiline={false}

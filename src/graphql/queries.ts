@@ -681,6 +681,169 @@ export const listOrganizations = /* GraphQL */ `
     }
   }
 `
+export const getActivity = /* GraphQL */ `
+  query GetActivity($id: ID!) {
+    getActivity(id: $id) {
+      id
+      ownerName
+      ownerID
+      activityGroupId
+      activityGroupType
+      activityActionType
+      time
+      date
+      createdAt
+      updatedAt
+      owner {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+export const listActivitys = /* GraphQL */ `
+  query ListActivitys($filter: ModelActivityFilterInput, $limit: Int, $nextToken: String) {
+    listActivitys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        ownerName
+        ownerID
+        activityGroupId
+        activityGroupType
+        activityActionType
+        time
+        date
+        createdAt
+        updatedAt
+        owner {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
 export const getPayment = /* GraphQL */ `
   query GetPayment($id: ID!) {
     getPayment(id: $id) {
@@ -4067,6 +4230,70 @@ export const groupByType = /* GraphQL */ `
         createdAt
         updatedAt
         ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
+export const activityByGroup = /* GraphQL */ `
+  query ActivityByGroup(
+    $activityGroupType: ActivityGroupType
+    $activityGroupId: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelActivityFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    activityByGroup(
+      activityGroupType: $activityGroupType
+      activityGroupId: $activityGroupId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        ownerName
+        ownerID
+        activityGroupId
+        activityGroupType
+        activityActionType
+        time
+        date
+        createdAt
+        updatedAt
+        owner {
           id
           given_name
           family_name

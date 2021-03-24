@@ -17,7 +17,6 @@ Amplify.default.configure({
     identityPoolId: process.env.identityPoolId,
   },
 })
-
 const createActivity = async (activityEntry) => {
   try {
     console.log("Submitting the following activity: ")

@@ -176,6 +176,13 @@
         "jcmobileSendHelpRequest": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
           "s3Key": "amplify-builds/jcmobileSendHelpRequest-48622f753751562b4775-build.zip"
+        },
+        "jcHandleActivity": {
+          "userPoolId": "us-east-1_Bq1YZMmzA",
+          "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/jcHandleActivity-71322f362b36694c2b62-build.zip"
         }
       },
       "video": {

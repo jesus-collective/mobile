@@ -467,18 +467,20 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             </View>
           )}
           {this.state.attachment ? this.renderFileUploadBadge() : null}
-          <JCButton
-            buttonType={
-              style == "regular" || style == "course" || style == "courseResponse"
-                ? ButtonTypes.SolidRightJustified
-                : ButtonTypes.SolidRightJustifiedMini
-            }
-            onPress={async () => {
-              this.state.replyToId ? await this.sendReply() : await this.saveMessage()
-            }}
-          >
-            {style == "course" || style == "courseResponse" ? "Save" : "Post"}
-          </JCButton>
+          {!this.props.showWordCount || this.state.wordCount >= (this.props.totalWordCount ?? 0) ? (
+            <JCButton
+              buttonType={
+                style == "regular" || style == "course" || style == "courseResponse"
+                  ? ButtonTypes.SolidRightJustified
+                  : ButtonTypes.SolidRightJustifiedMini
+              }
+              onPress={async () => {
+                this.state.replyToId ? await this.sendReply() : await this.saveMessage()
+              }}
+            >
+              {style == "course" || style == "courseResponse" ? "Save" : "Post"}
+            </JCButton>
+          ) : null}
         </View>
       </View>
     )
