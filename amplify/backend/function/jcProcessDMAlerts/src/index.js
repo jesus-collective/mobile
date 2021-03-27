@@ -120,14 +120,10 @@ function generateMessage(html, text, name, type) {
 
   if (type == "course")
     body_text =
-      "There is new course activity on Jesus Collective from " +
-      name +
-      "\r\n" +
-      text +
-      "\r\nPlease login to view it."
+      "There is new course activity from " + name + "\r\n" + text + "\r\nPlease login to view it."
   else
     body_text =
-      "You have received a direct message on Jesus Collective from " +
+      "You have received a direct message from " +
       name +
       "\r\n" +
       text +
@@ -145,13 +141,13 @@ function generateMessage(html, text, name, type) {
 <head></head>
 <body>
   <h1>Jesus Collective Course Alert</h1>
-  <p>There is new course activity on Jesus Collective from ` +
+  <p>There is new course activity from ` +
       name +
       `</p>` +
       html +
       `<a href='https://` +
       env +
-      `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
+      `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>View on Jesus Collective</a></p>
 </body>
 </html>`
   } else {
@@ -160,13 +156,13 @@ function generateMessage(html, text, name, type) {
     <head></head>
     <body>
       <h1>Jesus Collective Direct Message Alert</h1>
-      <p>You have received a direct message on Jesus Collective from ` +
+      <p>You have received a direct message from ` +
       name +
       `</p>` +
       html +
       `<a href='https://` +
       env +
-      `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
+      `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>View on Jesus Collective</a></p>
     </body>
   </html>`
   }

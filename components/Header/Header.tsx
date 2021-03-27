@@ -115,6 +115,9 @@ export default class HeaderJC extends JCComponent<Props, State> {
     this.handleResourcesDropdownClose()
     this.props.navigation.push("ResourcesScreen")
   }
+  openMessages = (): void => {
+    this.props.navigation.push("ConversationScreen")
+  }
   openKids = (): void => {
     this.handleResourcesDropdownClose()
     this.props.navigation.push("ResourceScreen", {
@@ -245,6 +248,11 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
                   <Button transparent testID="header-map" onPress={this.openAdmin}>
                     <Ionicons name="ios-rocket" style={this.headerStyles.style.icon} />
+                  </Button>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
+                  <Button transparent testID="header-messages" onPress={this.openMessages}>
+                    <Ionicons name="mail-outline" style={this.headerStyles.style.icon} />
                   </Button>
                 ) : null}
                 {constants["SETTING_ISVISIBLE_MAP"] ? (

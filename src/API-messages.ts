@@ -276,10 +276,11 @@ export type ModelDirectMessageReplyConnection = {
 export type DirectMessageReply = {
   __typename: "DirectMessageReply"
   id?: string
-  content?: string
+  content?: string | null
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  recipients?: Array<string | null>
   userId?: string
   messageId?: string
   parentMessage?: DirectMessage
@@ -991,7 +992,7 @@ export type DirectMessagesByRoomQuery = {
             stripeSubscriptionID?: string | null
             profileState?: string | null
           } | null
-          content: string
+          content?: string | null
           createdAt: string
           id: string
           messageId: string
@@ -1402,7 +1403,7 @@ export type OnCreateDirectMessageSubscription = {
       items?: Array<{
         __typename: "DirectMessageReply"
         id: string
-        content: string
+        content?: string | null
         when: string
         attachment?: string | null
         attachmentName?: string | null
@@ -1554,7 +1555,7 @@ export type OnCreateDirectMessageReplySubscription = {
   onCreateDirectMessageReply?: {
     __typename: "DirectMessageReply"
     id: string
-    content: string
+    content?: string | null
     when: string
     attachment?: string | null
     attachmentName?: string | null
@@ -1623,7 +1624,7 @@ export type GetDirectMessageQuery = {
           stripeSubscriptionID?: string | null
           profileState?: string | null
         } | null
-        content: string
+        content?: string | null
         createdAt: string
         id: string
         messageId: string

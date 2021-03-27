@@ -467,20 +467,22 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             </View>
           )}
           {this.state.attachment ? this.renderFileUploadBadge() : null}
-          {!this.props.showWordCount || this.state.wordCount >= (this.props.totalWordCount ?? 0) ? (
-            <JCButton
-              buttonType={
-                style == "regular" || style == "course" || style == "courseResponse"
-                  ? ButtonTypes.SolidRightJustified
-                  : ButtonTypes.SolidRightJustifiedMini
-              }
-              onPress={async () => {
-                this.state.replyToId ? await this.sendReply() : await this.saveMessage()
-              }}
-            >
-              {style == "course" || style == "courseResponse" ? "Save" : "Post"}
-            </JCButton>
-          ) : null}
+
+          <JCButton
+            enabled={
+              !this.props.showWordCount || this.state.wordCount >= (this.props.totalWordCount ?? 0)
+            }
+            buttonType={
+              style == "regular" || style == "course" || style == "courseResponse"
+                ? ButtonTypes.SolidRightJustified
+                : ButtonTypes.SolidRightJustifiedMini
+            }
+            onPress={async () => {
+              this.state.replyToId ? await this.sendReply() : await this.saveMessage()
+            }}
+          >
+            {style == "course" || style == "courseResponse" ? "Save" : "Post"}
+          </JCButton>
         </View>
       </View>
     )
@@ -586,6 +588,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           messageRoomID: replyToRoomId,
           userId: user.username,
           messageId: replyToId,
+          recipients: this.props.recipients ?? [],
           parentReplyId: "0000-0000-0000-0000", // void value
         }
 

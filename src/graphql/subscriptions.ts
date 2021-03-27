@@ -6371,6 +6371,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -6513,6 +6514,7 @@ export const onUpdateDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -6655,6 +6657,7 @@ export const onDeleteDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -6788,6 +6791,7 @@ export const onCreateDirectMessageReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      recipients
       userId
       messageId
       parentMessage {
@@ -6851,6 +6855,7 @@ export const onCreateDirectMessageReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        recipients
         userId
         messageId
         parentMessage {
@@ -6873,6 +6878,7 @@ export const onCreateDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -6924,6 +6930,7 @@ export const onCreateDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -7043,6 +7050,7 @@ export const onUpdateDirectMessageReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      recipients
       userId
       messageId
       parentMessage {
@@ -7106,6 +7114,7 @@ export const onUpdateDirectMessageReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        recipients
         userId
         messageId
         parentMessage {
@@ -7128,6 +7137,7 @@ export const onUpdateDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -7179,6 +7189,7 @@ export const onUpdateDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -7298,6 +7309,7 @@ export const onDeleteDirectMessageReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      recipients
       userId
       messageId
       parentMessage {
@@ -7361,6 +7373,7 @@ export const onDeleteDirectMessageReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        recipients
         userId
         messageId
         parentMessage {
@@ -7383,6 +7396,7 @@ export const onDeleteDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
@@ -7434,6 +7448,7 @@ export const onDeleteDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID

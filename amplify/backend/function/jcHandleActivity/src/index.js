@@ -71,9 +71,9 @@ const authenticate = async () => {
 }
 exports.handler = async (event) => {
   try {
-    // await authenticate()
+    await authenticate()
     // Missing SecretManager configuration in cloudformation template
-    await Auth.signIn(process.env.user, process.env.pass)
+    //await Auth.signIn(process.env.user, process.env.pass)
     console.log("Done login")
     const dynamoEvent = event.Records[0]
     console.log(dynamoEvent.dynamodb)
@@ -84,6 +84,7 @@ exports.handler = async (event) => {
       time: date.toTimeString().slice(0, 8),
       date: date.toISOString().slice(0, 10),
     }
+
     switch (dynamoEvent.dynamodb.NewImage.__typename.S) {
       case "CourseLesson":
         console.log("Logging query variables:")

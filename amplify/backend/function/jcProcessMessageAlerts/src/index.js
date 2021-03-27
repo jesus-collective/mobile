@@ -143,7 +143,7 @@ function generateMessage(html, text, name, type) {
   const body_text =
     "You have received a " +
     type +
-    " message on Jesus Collective from " +
+    " message from " +
     name +
     "\r\n" +
     text +
@@ -161,13 +161,13 @@ function generateMessage(html, text, name, type) {
       <h1>Jesus Collective Message Alert</h1>
       <p>You have received a ` +
     type +
-    ` message on Jesus Collective from ` +
+    ` message from ` +
     name +
     `</p>` +
     html +
     `<a href='https://` +
     env +
-    `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
+    `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>View on Jesus Collective</a></p>
     </body>
   </html>`
   //  console.log(body_html)

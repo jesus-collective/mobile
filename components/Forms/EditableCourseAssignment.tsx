@@ -289,6 +289,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
               showWordCount={true}
               totalWordCount={this.props.wordCount}
               style="courseResponse"
+              toolbar={true}
               roomId={this.state.currentRoomId}
               recipients={this.getCurrentRoomRecipients()}
             ></MessageBoard>
@@ -363,6 +364,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
               ) : this.hasInitialPost() == initialPostState.No ? (
                 <MessageBoard
                   replies
+                  toolbar={true}
                   showWordCount={true}
                   totalWordCount={this.props.wordCount}
                   style="course"

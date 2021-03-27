@@ -1,16 +1,26 @@
+import { Ionicons } from "@expo/vector-icons"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { Body, Button, Header, Right } from "native-base"
 import React from "react"
 import { Dimensions, Text } from "react-native"
+import { constants } from "../../src/constants"
 import { EmptyProps } from "../../src/types"
 import EditableButton from "../Forms/EditableButton"
 import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
 import { CourseContext } from "./CourseContext"
 
-class CourseDetailMenu extends JCComponent<EmptyProps> {
+interface Props {
+  navigation?: any
+  route?: any
+}
+class CourseDetailMenuImpl extends JCComponent<Props> {
   static Consumer = CourseContext.Consumer
   constructor(props: EmptyProps) {
     super(props)
+  }
+  openMessages = (): void => {
+    this.props.navigation.push("ConversationScreen")
   }
 
   updateStyles = (): void => {
@@ -27,7 +37,7 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
   headerStyles = new HeaderStyles()
   render(): React.ReactNode {
     return (
-      <CourseDetailMenu.Consumer>
+      <CourseDetailMenuImpl.Consumer>
         {({ state, actions }) => {
           if (!state) {
             return null
@@ -74,12 +84,22 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                   </Button>
                 ) : null}
               </Body>
-              <Right></Right>
+              <Right>
+                {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
+                  <Button transparent testID="header-messages" onPress={this.openMessages}>
+                    <Ionicons name="mail-outline" style={this.headerStyles.style.icon} />
+                  </Button>
+                ) : null}
+              </Right>
             </Header>
           )
         }}
-      </CourseDetailMenu.Consumer>
+      </CourseDetailMenuImpl.Consumer>
     )
   }
 }
-export default CourseDetailMenu
+export default function CourseDetailMenu(props: Props): JSX.Element {
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <CourseDetailMenuImpl {...props} navigation={navigation} route={route} />
+}

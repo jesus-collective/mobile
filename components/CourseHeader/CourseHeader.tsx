@@ -5,7 +5,6 @@ import React from "react"
 import { Text } from "react-native"
 import EditableText from "../Forms/EditableText"
 import JCComponent from "../JCComponent/JCComponent"
-
 interface Props {
   groupData: any
   navigation?: any

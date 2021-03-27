@@ -41,7 +41,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
       currentRoomId: null,
       newToList: [],
     }
-    console.log(this.props.route.params.initialUser)
+    // console.log(this.props.route.params.initialUser)
 
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({ currentUser: user.username })
@@ -111,37 +111,43 @@ export default class ConversationScreen extends JCComponent<Props, State> {
       })
   }
   shouldCreateRoom = (): void => {
-    if (
-      !this.state.data
-        .map((item, index: number) => {
-          if (item && item.room)
-            if (item.room.roomType == null || item.room.roomType == "directMessage")
-              if (
-                item.room.messageUsers?.items?.length == 2 &&
-                (item.room.messageUsers?.items[0].userID == this.props.route.params.initialUserID ||
-                  item.room.messageUsers?.items[1].userID == this.props.route.params.initialUserID)
-              ) {
-                console.log("Found")
-                this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
-                return true
-              }
-        })
-        .some((z) => {
-          return z
-        })
-    ) {
-      console.log("Creating Room")
+    if (this.props.route?.params?.initialUserID)
       if (
-        this.props.route.params.initialUserID != null &&
-        this.props.route.params.initialUserName != null &&
-        this.props.route.params.initialUserID != "null" &&
-        this.props.route.params.initialUserName != "null"
-      )
-        this.createRoom(
-          this.props.route.params.initialUserID,
-          this.props.route.params.initialUserName
+        !this.state.data
+          .map((item, index: number) => {
+            if (item && item.room)
+              if (item.room.roomType == null || item.room.roomType == "directMessage")
+                if (
+                  item.room.messageUsers?.items?.length == 2 &&
+                  (item.room.messageUsers?.items[0].userID ==
+                    this.props.route.params.initialUserID ||
+                    item.room.messageUsers?.items[1].userID ==
+                      this.props.route.params.initialUserID)
+                ) {
+                  console.log("Found")
+                  this.setState({
+                    selectedRoom: index,
+                    currentRoomId: this.state.data[index].roomID,
+                  })
+                  return true
+                }
+          })
+          .some((z) => {
+            return z
+          })
+      ) {
+        console.log("Creating Room")
+        if (
+          this.props.route.params.initialUserID != null &&
+          this.props.route.params.initialUserName != null &&
+          this.props.route.params.initialUserID != "null" &&
+          this.props.route.params.initialUserName != "null"
         )
-    }
+          this.createRoom(
+            this.props.route.params.initialUserID,
+            this.props.route.params.initialUserName
+          )
+      }
   }
 
   async getNewUser(id: string): Promise<void> {

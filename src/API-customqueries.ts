@@ -576,10 +576,11 @@ export type ModelDirectMessageReplyConnection = {
 export type DirectMessageReply = {
   __typename: "DirectMessageReply"
   id?: string
-  content?: string
+  content?: string | null
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  recipients?: Array<string | null>
   userId?: string
   messageId?: string
   parentMessage?: DirectMessage

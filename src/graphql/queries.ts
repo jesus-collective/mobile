@@ -2423,6 +2423,7 @@ export const getDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          recipients
           userId
           messageId
           messageRoomID
