@@ -136,7 +136,7 @@
         },
         "Runtime": "nodejs14.x",
         "Layers": [],
-        "Timeout": "25"
+        "Timeout": "300"
       }
     },
     "LambdaExecutionRole": {
@@ -262,6 +262,8 @@
       ],
       "Properties": {
         "BatchSize": 100,
+        "MaximumRecordAgeInSeconds": 3600,
+        "MaximumRetryAttempts": 2,
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
@@ -318,6 +320,8 @@
       ],
       "Properties": {
         "BatchSize": 100,
+        "MaximumRecordAgeInSeconds": 3600,
+        "MaximumRetryAttempts": 2,
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
