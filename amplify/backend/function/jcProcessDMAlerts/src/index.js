@@ -243,10 +243,7 @@ async function Execute(event) {
           async (recipientID) => {
             console.log({ "Lookup user": recipientID })
             const recipientInfo = await getUser(recipientID)
-            if (
-              recipientInfo &&
-              (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailDirectMessage)
-            ) {
+            if (recipientInfo) {
               console.log({ "Sending a DM to": recipientInfo })
               const html = convertCommentFromJSONToHTML(content)
               const text = convertCommentFromJSONToTEXT(content)

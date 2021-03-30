@@ -283,13 +283,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
         emailPromotions: string
       } = {
         __typename: "AlertConfig",
-        emailDirectMessage: "false",
-        emailGroupMessage: "false",
-        emailEventMessage: "false",
-        emailOrgMessage: "false",
-        emailResourceMessage: "false",
-        emailCourseMessage: "false",
-        emailPromotions: "false",
+        emailDirectMessage: "true",
+        emailGroupMessage: "true",
+        emailEventMessage: "true",
+        emailOrgMessage: "true",
+        emailResourceMessage: "true",
+        emailCourseMessage: "true",
+        emailPromotions: "true",
       }
       updateData.alertConfig = z
       delete updateData.alertConfig.__typename

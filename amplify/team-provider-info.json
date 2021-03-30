@@ -177,7 +177,7 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcProcessDMAlerts-566654426d494e715734-build.zip"
+          "s3Key": "amplify-builds/jcProcessDMAlerts-6b324e65455156416c55-build.zip"
         },
         "jcProcessMessageAlerts": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
