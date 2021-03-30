@@ -798,6 +798,7 @@ const courseStyles = EStyleSheet.create({
   },
   courseHomeCalendarLabels: {
     flexDirection: "row",
+    marginBottom: 16,
     width: "100%",
     justifyContent: "flex-start",
   },
@@ -1096,6 +1097,7 @@ const courseStyles = EStyleSheet.create({
     },
     courseHomeCalendarLabels: {
       flexDirection: "column",
+      marginBottom: 16,
       marginTop: 15,
     },
     courseDetailMessageBoardContainer: {
@@ -1183,6 +1185,7 @@ const courseStyles = EStyleSheet.create({
     },
     courseHomeCalendarLabels: {
       flexDirection: "column",
+      marginBottom: 16,
       marginTop: 15,
     },
     courseTimeNonEditable: {
