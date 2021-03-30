@@ -190,31 +190,31 @@ async function asyncForEach(array, callback) {
 async function emailRouter(html, text, fromInfo, messageRoomID, recipientInfo) {
   if (
     messageRoomID.startsWith("group") &&
-    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailGroupMessage)
+    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailGroupMessage == "true")
   ) {
     const message = generateMessage(html, text, fromInfo.name, "group")
     const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "Group")
   } else if (
     messageRoomID.startsWith("event") &&
-    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailEventMessage)
+    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailEventMessage == "true")
   ) {
     const message = generateMessage(html, text, fromInfo.name, "event")
     const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "Event")
   } else if (
     messageRoomID.startsWith("org") &&
-    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailOrgMessage)
+    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailOrgMessage == "true")
   ) {
     const message = generateMessage(html, text, fromInfo.name, "organization")
     const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "Organization")
   } else if (
     messageRoomID.startsWith("resource") &&
-    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailResourceMessage)
+    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailResourceMessage == "true")
   ) {
     const message = generateMessage(html, text, fromInfo.name, "resource")
     const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "Resource")
   } else if (
     messageRoomID.startsWith("course") &&
-    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailCourseMessage)
+    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailCourseMessage == "true")
   ) {
     const message = generateMessage(html, text, fromInfo.name, "course")
     const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "Course")
