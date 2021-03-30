@@ -2177,6 +2177,9 @@ export default class MainStyles {
         myMapConversationCardAboutMe: {
           alignSelf: "center",
         },
+        coursePageMessageBoardInnerCard: {
+          paddingLeft: 20,
+        },
       },
 
       dashboardMainContainer:
