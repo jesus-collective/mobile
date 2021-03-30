@@ -1073,6 +1073,7 @@ export default EStyleSheet.create({
     shadowOpacity: 0,
     borderRadius: 4,
     alignSelf: "flex-end",
+    cursor: "pointer",
   },
   SolidRightJustifiedText: {
     color: "#ffffff",

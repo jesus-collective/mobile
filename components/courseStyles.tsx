@@ -1200,6 +1200,9 @@ const courseStyles = EStyleSheet.create({
     courseDetailButtonTrio: {
       flex: "0 1 0%",
     },
+    courseDetailCalendarImage: {
+      marginTop: 20,
+    },
   },
   "@media (min-width: 320px) and (max-width: 720px)": {
     coursesScreenMainContainer: {
