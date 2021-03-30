@@ -32,5 +32,41 @@ const getCourseInfoIdFromLesson = `
     }
   }
 `
+const getCourseUsers = `
+query GetCourseInfo($id: ID!) {
+  getCourseInfo(id: $id) {
+    triads {
+      items {
+        users {
+          items {
+            userID
+          }
+        }
+        coaches {
+          items {
+            userID
+          }
+        }
+      }
+    }
+    instructors {
+      items {
+        userID
+      }
+    }
+    backOfficeStaff {
+      items {
+        userID
+      }
+    }
+  }
+}
+`
 
-module.exports = { getUser, getCourseWeek, getDirectMessageRoom, getCourseInfoIdFromLesson }
+module.exports = {
+  getCourseUsers,
+  getUser,
+  getCourseWeek,
+  getDirectMessageRoom,
+  getCourseInfoIdFromLesson,
+}

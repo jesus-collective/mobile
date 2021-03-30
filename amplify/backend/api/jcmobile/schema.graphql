@@ -560,14 +560,13 @@ type Activity
   @model
   @auth(
     rules: [
-      { allow: groups, groups: ["courseUser"], operations: [read] }
-      { allow: groups, groups: ["courseCoach"], operations: [read] }
-      { allow: groups, groups: ["courseAdmin"], operations: [read] }
+      { allow: owner, ownerField: "readUser", operations: [read] }
     ]
   ) 
-  @key(name: "byGroupTypeId", fields:["activityGroupType", "activityGroupId"], queryField:"activityByGroup")
+  @key(name: "byGroupTypeId", fields:["readUser", "time"], queryField:"activityByGroup")
   {
     id: ID!
+    readUser: ID!
     ownerName:String!
     ownerID:ID!
     owner:User @connection(fields:["ownerID"])
@@ -576,6 +575,7 @@ type Activity
     activityActionType: ActivityActionType!
     time: String!
     date: String!
+    expirationDate: AWSTimestamp! @ttl
   }
 
 type Payment
