@@ -192,8 +192,8 @@ async function emailRouter(html, text, fromInfo, messageRoomID, recipientInfo) {
     const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "Course")
     console.log(data)
   } else if (
-    recipientInfo.alertConfig == null ||
-    recipientInfo.alertConfig.emailDirectMessage == "true"
+    !messageRoomID.startsWith("course") &&
+    (recipientInfo.alertConfig == null || recipientInfo.alertConfig.emailDirectMessage == "true")
   ) {
     const message = generateMessage(html, text, fromInfo.name, "dm")
     const data = await sendEmail(recipientInfo.email, message, fromInfo.name, "DM")
