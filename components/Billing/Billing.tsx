@@ -12,10 +12,9 @@ import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import moment from "moment"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
-import { ActivityIndicator, Image, Picker, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import EditableRichText from "../../components/Forms/EditableRichText"
@@ -98,7 +97,7 @@ class BillingImpl extends JCComponent<Props, State> {
       idempotency: uuidv4(),
       processing: "entry",
       validatingUser: false,
-      freeDays: 0,
+      freeDays: 30,
       eula: false,
       productType: props.route?.params?.productType,
       joinedProduct: props.route?.params?.joinedProduct
@@ -1128,49 +1127,6 @@ class BillingImpl extends JCComponent<Props, State> {
                             : ""}
                         </Text>
                       </View>
-                      <Text
-                        style={{
-                          marginHorizontal: 10,
-                          fontFamily: "Graphik-Regular-App",
-                          fontSize: 12,
-                        }}
-                      >
-                        Select your billing option
-                      </Text>
-                      <Picker
-                        mode="dropdown"
-                        style={{
-                          width: "95%",
-                          marginTop: 10,
-                          marginHorizontal: 10,
-                          marginBottom: 30,
-                          fontSize: 16,
-                          height: 30,
-                          flexGrow: 0,
-                          paddingTop: 3,
-                          paddingBottom: 3,
-                        }}
-                        selectedValue={this.state.freeDays}
-                        onValueChange={(value: any) => {
-                          this.setState({ freeDays: value })
-                        }}
-                      >
-                        <Picker.Item key={"0"} label={"Start Billing Immediately"} value={0} />
-                        <Picker.Item key={"30"} label={"Start Billing In 30 Days"} value={30} />
-                        <Picker.Item key={"60"} label={"Start Billing In 60 Days"} value={60} />
-                        {["2021-05-01"].map((date: string) => {
-                          const daysUntil = moment().diff(moment(date), "days") * -1
-                          if (daysUntil > 60)
-                            return (
-                              <Picker.Item
-                                key={daysUntil.toString()}
-                                label={`Start Billing In ${daysUntil} Days`}
-                                value={daysUntil}
-                              />
-                            )
-                          else return null
-                        })}
-                      </Picker>
                       <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
                         {this.state.errorMsg}
                       </Text>
