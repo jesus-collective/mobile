@@ -102,6 +102,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     }
   }
   async performStartup(): Promise<void> {
+    this.trackUserId()
     if (this.state.authState == "signedIn") {
       await this.recheckUserState()
     } else if (this.state.authState == "signIn") {
@@ -430,7 +431,23 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
   renderFallback(): React.ReactNode {
     return <Text>loading...</Text>
   }
-
+  trackUserId = async () => {
+    console.log("Setting up Analytics")
+    try {
+      const { attributes } = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+      const userAttributes = mapToArrayOfStrings(attributes)
+      console.log({ Email: attributes.email, Sub: attributes.sub, userAttributes: userAttributes })
+      Analytics.updateEndpoint({
+        address: attributes.email,
+        channelType: "EMAIL",
+        optOut: "NONE",
+        userId: attributes.sub,
+        userAttributes,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   async getAuthInitialState() {
     const initialUrl: string = await Linking.getInitialURL()
     const initialParams = Linking.parse(initialUrl).queryParams
@@ -459,7 +476,6 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       ],
     })
 
-    trackUserId()
     if (this.state.initialAuthType)
       return (
         <HomeScreenRouter.UserProvider
@@ -515,23 +531,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     else return null
   }
 }
-
 const mapObj = (f: any) => (obj: any) =>
   Object.keys(obj).reduce((acc, key) => ({ ...acc, [key]: f(obj[key]) }), {})
 const toArrayOfStrings = (value: any) => [`${value}`]
 const mapToArrayOfStrings = mapObj(toArrayOfStrings)
-async function trackUserId() {
-  try {
-    const { attributes } = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    const userAttributes = mapToArrayOfStrings(attributes)
-    Analytics.updateEndpoint({
-      address: attributes.email,
-      channelType: "EMAIL",
-      optOut: "NONE",
-      userId: attributes.sub,
-      userAttributes,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}

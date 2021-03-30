@@ -381,7 +381,6 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
             this.setState({ editorState })
           }}
           toolbar={{
-            link: { defaultTargetOption: "_blank" },
             options: ["inline", "list", "emoji"],
             inline: {
               options: ["bold", "italic", "underline"],

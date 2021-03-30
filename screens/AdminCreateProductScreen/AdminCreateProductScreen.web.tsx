@@ -50,7 +50,6 @@ interface State extends JCState {
 }
 
 const toolBar = {
-  link: { defaultTargetOption: "_blank" },
   options: ["inline", "list"],
   inline: {
     options: ["bold", "italic", "underline"],

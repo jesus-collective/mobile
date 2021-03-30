@@ -338,7 +338,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   }}
                   toolbarHidden={!toolbar}
                   toolbar={{
-                    link: { defaultTargetOption: "_blank" },
                     options: ["inline", "list", "emoji"],
                     inline: {
                       options: ["bold", "italic", "underline"],
@@ -390,7 +389,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   }}
                   toolbarHidden={!toolbar}
                   toolbar={{
-                    link: { defaultTargetOption: "_blank" },
                     options: ["inline", "list", "emoji"],
                     inline: {
                       options: ["bold", "italic", "underline"],
