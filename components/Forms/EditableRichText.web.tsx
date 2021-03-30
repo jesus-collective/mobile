@@ -123,6 +123,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
             }}
             toolbar={
               this.props.toolBar ?? {
+                link: { defaultTargetOption: "_blank" },
                 options: ["inline", "list", "colorPicker", "link", "emoji", "image", "history"],
                 inline: {
                   options: ["bold", "italic", "underline", "strikethrough"],
