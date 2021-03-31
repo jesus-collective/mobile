@@ -861,7 +861,7 @@
   background: white;
   flex-wrap: wrap;
   font-size: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 1px !important;
   user-select: none;
 }
 .public-DraftStyleDefault-block {

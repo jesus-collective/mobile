@@ -309,7 +309,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
 
     return (
-      <View style={{ marginBottom: 40, bottom: 25 }}>
+      <View style={{ marginBottom: 40 }}>
         {style === "mini" ? (
           this.state.showVideo ? (
             <CameraRecorder></CameraRecorder>
