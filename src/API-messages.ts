@@ -528,6 +528,7 @@ export type Product = {
   payments?: ModelPaymentConnection
   isOrgTier?: string | null
   isIndividualTier?: string | null
+  isLogin?: string | null
   marketingDescription?: string | null
   groupsIncluded?: Array<string | null> | null
   enabled?: string | null

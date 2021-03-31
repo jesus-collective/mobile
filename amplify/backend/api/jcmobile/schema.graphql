@@ -1178,6 +1178,7 @@ type Product
     payments: [Payment] @connection(name:"paymentProduct",keyField: "productID")
     isOrgTier:String
     isIndividualTier:String
+    isLogin:String
     marketingDescription:String
     groupsIncluded:[String]
     enabled:String

@@ -745,6 +745,7 @@ export type Product = {
   payments?: ModelPaymentConnection,
   isOrgTier?: string | null,
   isIndividualTier?: string | null,
+  isLogin?: string | null,
   marketingDescription?: string | null,
   groupsIncluded?: Array< string | null > | null,
   enabled?: string | null,
@@ -1345,6 +1346,7 @@ export type DeleteOrganizationInput = {
 
 export type CreateActivityInput = {
   id?: string | null,
+  readUser: string,
   ownerName: string,
   ownerID: string,
   activityGroupId: string,
@@ -1352,6 +1354,7 @@ export type CreateActivityInput = {
   activityActionType: ActivityActionType,
   time: string,
   date: string,
+  expirationDate: number,
 };
 
 export enum ActivityGroupType {
@@ -1373,6 +1376,7 @@ export enum ActivityActionType {
 export type Activity = {
   __typename: "Activity",
   id?: string,
+  readUser?: string,
   ownerName?: string,
   ownerID?: string,
   activityGroupId?: string,
@@ -1380,6 +1384,7 @@ export type Activity = {
   activityActionType?: ActivityActionType,
   time?: string,
   date?: string,
+  expirationDate?: number,
   createdAt?: string,
   updatedAt?: string,
   owner?: User,
@@ -1387,6 +1392,7 @@ export type Activity = {
 
 export type UpdateActivityInput = {
   id: string,
+  readUser?: string | null,
   ownerName?: string | null,
   ownerID?: string | null,
   activityGroupId?: string | null,
@@ -1394,6 +1400,7 @@ export type UpdateActivityInput = {
   activityActionType?: ActivityActionType | null,
   time?: string | null,
   date?: string | null,
+  expirationDate?: number | null,
 };
 
 export type DeleteActivityInput = {
@@ -2029,6 +2036,7 @@ export type CreateProductInput = {
   confirmationMsg?: string | null,
   isOrgTier?: string | null,
   isIndividualTier?: string | null,
+  isLogin?: string | null,
   marketingDescription?: string | null,
   groupsIncluded?: Array< string | null > | null,
   enabled?: string | null,
@@ -2052,6 +2060,7 @@ export type UpdateProductInput = {
   confirmationMsg?: string | null,
   isOrgTier?: string | null,
   isIndividualTier?: string | null,
+  isLogin?: string | null,
   marketingDescription?: string | null,
   groupsIncluded?: Array< string | null > | null,
   enabled?: string | null,
@@ -2225,6 +2234,7 @@ export type ModelOrganizationFilterInput = {
 
 export type ModelActivityFilterInput = {
   id?: ModelIDFilterInput | null,
+  readUser?: ModelIDFilterInput | null,
   ownerName?: ModelStringFilterInput | null,
   ownerID?: ModelIDFilterInput | null,
   activityGroupId?: ModelIDFilterInput | null,
@@ -2232,6 +2242,7 @@ export type ModelActivityFilterInput = {
   activityActionType?: ModelActivityActionTypeFilterInput | null,
   time?: ModelStringFilterInput | null,
   date?: ModelStringFilterInput | null,
+  expirationDate?: ModelIntFilterInput | null,
   and?: Array< ModelActivityFilterInput | null > | null,
   or?: Array< ModelActivityFilterInput | null > | null,
   not?: ModelActivityFilterInput | null,
@@ -2547,6 +2558,7 @@ export type ModelProductFilterInput = {
   confirmationMsg?: ModelStringFilterInput | null,
   isOrgTier?: ModelStringFilterInput | null,
   isIndividualTier?: ModelStringFilterInput | null,
+  isLogin?: ModelStringFilterInput | null,
   marketingDescription?: ModelStringFilterInput | null,
   groupsIncluded?: ModelStringFilterInput | null,
   enabled?: ModelStringFilterInput | null,
@@ -7183,6 +7195,7 @@ export type CreateActivityMutation = {
   createActivity?:  {
     __typename: "Activity",
     id: string,
+    readUser: string,
     ownerName: string,
     ownerID: string,
     activityGroupId: string,
@@ -7190,6 +7203,7 @@ export type CreateActivityMutation = {
     activityActionType: ActivityActionType,
     time: string,
     date: string,
+    expirationDate: number,
     createdAt: string,
     updatedAt: string,
     owner?:  {
@@ -7316,6 +7330,7 @@ export type UpdateActivityMutation = {
   updateActivity?:  {
     __typename: "Activity",
     id: string,
+    readUser: string,
     ownerName: string,
     ownerID: string,
     activityGroupId: string,
@@ -7323,6 +7338,7 @@ export type UpdateActivityMutation = {
     activityActionType: ActivityActionType,
     time: string,
     date: string,
+    expirationDate: number,
     createdAt: string,
     updatedAt: string,
     owner?:  {
@@ -7449,6 +7465,7 @@ export type DeleteActivityMutation = {
   deleteActivity?:  {
     __typename: "Activity",
     id: string,
+    readUser: string,
     ownerName: string,
     ownerID: string,
     activityGroupId: string,
@@ -7456,6 +7473,7 @@ export type DeleteActivityMutation = {
     activityActionType: ActivityActionType,
     time: string,
     date: string,
+    expirationDate: number,
     createdAt: string,
     updatedAt: string,
     owner?:  {
@@ -7597,6 +7615,7 @@ export type CreatePaymentMutation = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -7756,6 +7775,7 @@ export type UpdatePaymentMutation = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -7915,6 +7935,7 @@ export type DeletePaymentMutation = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -16460,6 +16481,7 @@ export type CreateProductMutation = {
     } | null,
     isOrgTier?: string | null,
     isIndividualTier?: string | null,
+    isLogin?: string | null,
     marketingDescription?: string | null,
     groupsIncluded?: Array< string | null > | null,
     enabled?: string | null,
@@ -16506,6 +16528,7 @@ export type UpdateProductMutation = {
     } | null,
     isOrgTier?: string | null,
     isIndividualTier?: string | null,
+    isLogin?: string | null,
     marketingDescription?: string | null,
     groupsIncluded?: Array< string | null > | null,
     enabled?: string | null,
@@ -16552,6 +16575,7 @@ export type DeleteProductMutation = {
     } | null,
     isOrgTier?: string | null,
     isIndividualTier?: string | null,
+    isLogin?: string | null,
     marketingDescription?: string | null,
     groupsIncluded?: Array< string | null > | null,
     enabled?: string | null,
@@ -17445,6 +17469,7 @@ export type GetActivityQuery = {
   getActivity?:  {
     __typename: "Activity",
     id: string,
+    readUser: string,
     ownerName: string,
     ownerID: string,
     activityGroupId: string,
@@ -17452,6 +17477,7 @@ export type GetActivityQuery = {
     activityActionType: ActivityActionType,
     time: string,
     date: string,
+    expirationDate: number,
     createdAt: string,
     updatedAt: string,
     owner?:  {
@@ -17582,6 +17608,7 @@ export type ListActivitysQuery = {
     items?:  Array< {
       __typename: "Activity",
       id: string,
+      readUser: string,
       ownerName: string,
       ownerID: string,
       activityGroupId: string,
@@ -17589,6 +17616,7 @@ export type ListActivitysQuery = {
       activityActionType: ActivityActionType,
       time: string,
       date: string,
+      expirationDate: number,
       createdAt: string,
       updatedAt: string,
       owner?:  {
@@ -17651,6 +17679,7 @@ export type GetPaymentQuery = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -17812,6 +17841,7 @@ export type ListPaymentsQuery = {
         confirmationMsg?: string | null,
         isOrgTier?: string | null,
         isIndividualTier?: string | null,
+        isLogin?: string | null,
         marketingDescription?: string | null,
         groupsIncluded?: Array< string | null > | null,
         enabled?: string | null,
@@ -21145,6 +21175,7 @@ export type GetProductQuery = {
     } | null,
     isOrgTier?: string | null,
     isIndividualTier?: string | null,
+    isLogin?: string | null,
     marketingDescription?: string | null,
     groupsIncluded?: Array< string | null > | null,
     enabled?: string | null,
@@ -21184,6 +21215,7 @@ export type ListProductsQuery = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -21565,8 +21597,8 @@ export type GroupByTypeQuery = {
 };
 
 export type ActivityByGroupQueryVariables = {
-  activityGroupType?: ActivityGroupType | null,
-  activityGroupId?: ModelIDKeyConditionInput | null,
+  readUser?: string | null,
+  time?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelActivityFilterInput | null,
   limit?: number | null,
@@ -21579,6 +21611,7 @@ export type ActivityByGroupQuery = {
     items?:  Array< {
       __typename: "Activity",
       id: string,
+      readUser: string,
       ownerName: string,
       ownerID: string,
       activityGroupId: string,
@@ -21586,6 +21619,7 @@ export type ActivityByGroupQuery = {
       activityActionType: ActivityActionType,
       time: string,
       date: string,
+      expirationDate: number,
       createdAt: string,
       updatedAt: string,
       owner?:  {
@@ -21650,6 +21684,7 @@ export type PaymentByUserQuery = {
         confirmationMsg?: string | null,
         isOrgTier?: string | null,
         isIndividualTier?: string | null,
+        isLogin?: string | null,
         marketingDescription?: string | null,
         groupsIncluded?: Array< string | null > | null,
         enabled?: string | null,
@@ -25853,10 +25888,15 @@ export type OnDeleteOrganizationSubscription = {
   } | null,
 };
 
+export type OnCreateActivitySubscriptionVariables = {
+  readUser?: string,
+};
+
 export type OnCreateActivitySubscription = {
   onCreateActivity?:  {
     __typename: "Activity",
     id: string,
+    readUser: string,
     ownerName: string,
     ownerID: string,
     activityGroupId: string,
@@ -25864,6 +25904,7 @@ export type OnCreateActivitySubscription = {
     activityActionType: ActivityActionType,
     time: string,
     date: string,
+    expirationDate: number,
     createdAt: string,
     updatedAt: string,
     owner?:  {
@@ -25980,12 +26021,17 @@ export type OnCreateActivitySubscription = {
       updatedAt: string,
     } | null,
   } | null,
+};
+
+export type OnUpdateActivitySubscriptionVariables = {
+  readUser?: string,
 };
 
 export type OnUpdateActivitySubscription = {
   onUpdateActivity?:  {
     __typename: "Activity",
     id: string,
+    readUser: string,
     ownerName: string,
     ownerID: string,
     activityGroupId: string,
@@ -25993,6 +26039,7 @@ export type OnUpdateActivitySubscription = {
     activityActionType: ActivityActionType,
     time: string,
     date: string,
+    expirationDate: number,
     createdAt: string,
     updatedAt: string,
     owner?:  {
@@ -26111,10 +26158,15 @@ export type OnUpdateActivitySubscription = {
   } | null,
 };
 
+export type OnDeleteActivitySubscriptionVariables = {
+  readUser?: string,
+};
+
 export type OnDeleteActivitySubscription = {
   onDeleteActivity?:  {
     __typename: "Activity",
     id: string,
+    readUser: string,
     ownerName: string,
     ownerID: string,
     activityGroupId: string,
@@ -26122,6 +26174,7 @@ export type OnDeleteActivitySubscription = {
     activityActionType: ActivityActionType,
     time: string,
     date: string,
+    expirationDate: number,
     createdAt: string,
     updatedAt: string,
     owner?:  {
@@ -26259,6 +26312,7 @@ export type OnCreatePaymentSubscription = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -26414,6 +26468,7 @@ export type OnUpdatePaymentSubscription = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -26569,6 +26624,7 @@ export type OnDeletePaymentSubscription = {
       } | null,
       isOrgTier?: string | null,
       isIndividualTier?: string | null,
+      isLogin?: string | null,
       marketingDescription?: string | null,
       groupsIncluded?: Array< string | null > | null,
       enabled?: string | null,
@@ -34930,6 +34986,7 @@ export type OnCreateProductSubscription = {
     } | null,
     isOrgTier?: string | null,
     isIndividualTier?: string | null,
+    isLogin?: string | null,
     marketingDescription?: string | null,
     groupsIncluded?: Array< string | null > | null,
     enabled?: string | null,
@@ -34972,6 +35029,7 @@ export type OnUpdateProductSubscription = {
     } | null,
     isOrgTier?: string | null,
     isIndividualTier?: string | null,
+    isLogin?: string | null,
     marketingDescription?: string | null,
     groupsIncluded?: Array< string | null > | null,
     enabled?: string | null,
@@ -35014,6 +35072,7 @@ export type OnDeleteProductSubscription = {
     } | null,
     isOrgTier?: string | null,
     isIndividualTier?: string | null,
+    isLogin?: string | null,
     marketingDescription?: string | null,
     groupsIncluded?: Array< string | null > | null,
     enabled?: string | null,

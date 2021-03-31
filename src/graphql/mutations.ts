@@ -3850,6 +3850,7 @@ export const createActivity = /* GraphQL */ `
   mutation CreateActivity($input: CreateActivityInput!) {
     createActivity(input: $input) {
       id
+      readUser
       ownerName
       ownerID
       activityGroupId
@@ -3857,6 +3858,7 @@ export const createActivity = /* GraphQL */ `
       activityActionType
       time
       date
+      expirationDate
       createdAt
       updatedAt
       owner {
@@ -3963,6 +3965,7 @@ export const updateActivity = /* GraphQL */ `
   mutation UpdateActivity($input: UpdateActivityInput!) {
     updateActivity(input: $input) {
       id
+      readUser
       ownerName
       ownerID
       activityGroupId
@@ -3970,6 +3973,7 @@ export const updateActivity = /* GraphQL */ `
       activityActionType
       time
       date
+      expirationDate
       createdAt
       updatedAt
       owner {
@@ -4076,6 +4080,7 @@ export const deleteActivity = /* GraphQL */ `
   mutation DeleteActivity($input: DeleteActivityInput!) {
     deleteActivity(input: $input) {
       id
+      readUser
       ownerName
       ownerID
       activityGroupId
@@ -4083,6 +4088,7 @@ export const deleteActivity = /* GraphQL */ `
       activityActionType
       time
       date
+      expirationDate
       createdAt
       updatedAt
       owner {
@@ -4202,6 +4208,7 @@ export const createPayment = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -4338,6 +4345,7 @@ export const updatePayment = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -4474,6 +4482,7 @@ export const deletePayment = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -11871,6 +11880,7 @@ export const createProduct = /* GraphQL */ `
       }
       isOrgTier
       isIndividualTier
+      isLogin
       marketingDescription
       groupsIncluded
       enabled
@@ -11910,6 +11920,7 @@ export const updateProduct = /* GraphQL */ `
       }
       isOrgTier
       isIndividualTier
+      isLogin
       marketingDescription
       groupsIncluded
       enabled
@@ -11949,6 +11960,7 @@ export const deleteProduct = /* GraphQL */ `
       }
       isOrgTier
       isIndividualTier
+      isLogin
       marketingDescription
       groupsIncluded
       enabled

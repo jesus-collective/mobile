@@ -774,6 +774,7 @@ export type Product = {
   payments?: ModelPaymentConnection
   isOrgTier?: string | null
   isIndividualTier?: string | null
+  isLogin?: string | null
   marketingDescription?: string | null
   groupsIncluded?: Array<string | null> | null
   enabled?: string | null
@@ -802,7 +803,7 @@ export type AlertConfig = {
   emailPromotions?: string | null
 }
 
-export type ModelIDKeyConditionInput = {
+export type ModelStringKeyConditionInput = {
   eq?: string | null
   le?: string | null
   lt?: string | null
@@ -815,6 +816,89 @@ export type ModelIDKeyConditionInput = {
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC",
+}
+
+export type ModelActivityFilterInput = {
+  id?: ModelIDFilterInput | null
+  readUser?: ModelIDFilterInput | null
+  ownerName?: ModelStringFilterInput | null
+  ownerID?: ModelIDFilterInput | null
+  activityGroupId?: ModelIDFilterInput | null
+  activityGroupType?: ModelActivityGroupTypeFilterInput | null
+  activityActionType?: ModelActivityActionTypeFilterInput | null
+  time?: ModelStringFilterInput | null
+  date?: ModelStringFilterInput | null
+  expirationDate?: ModelIntFilterInput | null
+  and?: Array<ModelActivityFilterInput | null> | null
+  or?: Array<ModelActivityFilterInput | null> | null
+  not?: ModelActivityFilterInput | null
+}
+
+export type ModelActivityGroupTypeFilterInput = {
+  eq?: ActivityGroupType | null
+  ne?: ActivityGroupType | null
+}
+
+export enum ActivityGroupType {
+  courses = "courses",
+}
+
+export type ModelActivityActionTypeFilterInput = {
+  eq?: ActivityActionType | null
+  ne?: ActivityActionType | null
+}
+
+export enum ActivityActionType {
+  courses_assignment_create = "courses_assignment_create",
+  courses_assignment_submit = "courses_assignment_submit",
+  courses_assignment_respond = "courses_assignment_respond",
+  courses_lesson_create = "courses_lesson_create",
+  courses_zoom_create = "courses_zoom_create",
+  courses_respond_create = "courses_respond_create",
+  courses_youtube_create = "courses_youtube_create",
+}
+
+export type ModelIntFilterInput = {
+  ne?: number | null
+  eq?: number | null
+  le?: number | null
+  lt?: number | null
+  ge?: number | null
+  gt?: number | null
+  between?: Array<number | null> | null
+}
+
+export type ModelActivityConnection = {
+  __typename: "ModelActivityConnection"
+  items?: Array<Activity | null> | null
+  nextToken?: string | null
+}
+
+export type Activity = {
+  __typename: "Activity"
+  id?: string
+  readUser?: string
+  ownerName?: string
+  ownerID?: string
+  activityGroupId?: string
+  activityGroupType?: ActivityGroupType
+  activityActionType?: ActivityActionType
+  time?: string
+  date?: string
+  expirationDate?: number
+  createdAt?: string
+  updatedAt?: string
+  owner?: User
+}
+
+export type ModelIDKeyConditionInput = {
+  eq?: string | null
+  le?: string | null
+  lt?: string | null
+  ge?: string | null
+  gt?: string | null
+  between?: Array<string | null> | null
+  beginsWith?: string | null
 }
 
 export type ModelGroupFilterInput = {
@@ -848,16 +932,6 @@ export type ModelUserGroupTypeListFilterInput = {
   ne?: Array<UserGroupType | null> | null
   contains?: UserGroupType | null
   notContains?: UserGroupType | null
-}
-
-export type ModelIntFilterInput = {
-  ne?: number | null
-  eq?: number | null
-  le?: number | null
-  lt?: number | null
-  ge?: number | null
-  gt?: number | null
-  between?: Array<number | null> | null
 }
 
 export type ModelDirectMessageUserFilterInput = {
@@ -918,6 +992,36 @@ export type ListDirectMessageRoomsQuery = {
       updatedAt: string
     } | null> | null
     nextToken?: string | null
+  } | null
+}
+
+export type ActivityByGroupQueryVariables = {
+  readUser?: string | null
+  time?: ModelStringKeyConditionInput | null
+  sortDirection?: ModelSortDirection | null
+  filter?: ModelActivityFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ActivityByGroupQuery = {
+  activityByGroup?: {
+    __typename: "ModelActivityConnection"
+    items?: Array<{
+      __typename: "Activity"
+      id: string
+      readUser: string
+      ownerName: string
+      ownerID: string
+      activityGroupId: string
+      activityGroupType: ActivityGroupType
+      activityActionType: ActivityActionType
+      time: string
+      date: string
+      expirationDate: number
+      createdAt: string
+      updatedAt: string
+    } | null> | null
   } | null
 }
 

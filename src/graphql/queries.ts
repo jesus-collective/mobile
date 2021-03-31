@@ -685,6 +685,7 @@ export const getActivity = /* GraphQL */ `
   query GetActivity($id: ID!) {
     getActivity(id: $id) {
       id
+      readUser
       ownerName
       ownerID
       activityGroupId
@@ -692,6 +693,7 @@ export const getActivity = /* GraphQL */ `
       activityActionType
       time
       date
+      expirationDate
       createdAt
       updatedAt
       owner {
@@ -799,6 +801,7 @@ export const listActivitys = /* GraphQL */ `
     listActivitys(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        readUser
         ownerName
         ownerID
         activityGroupId
@@ -806,6 +809,7 @@ export const listActivitys = /* GraphQL */ `
         activityActionType
         time
         date
+        expirationDate
         createdAt
         updatedAt
         owner {
@@ -861,6 +865,7 @@ export const getPayment = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -1007,6 +1012,7 @@ export const listPayments = /* GraphQL */ `
           confirmationMsg
           isOrgTier
           isIndividualTier
+          isLogin
           marketingDescription
           groupsIncluded
           enabled
@@ -3878,6 +3884,7 @@ export const getProduct = /* GraphQL */ `
       }
       isOrgTier
       isIndividualTier
+      isLogin
       marketingDescription
       groupsIncluded
       enabled
@@ -3908,6 +3915,7 @@ export const listProducts = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -4268,16 +4276,16 @@ export const groupByType = /* GraphQL */ `
 `
 export const activityByGroup = /* GraphQL */ `
   query ActivityByGroup(
-    $activityGroupType: ActivityGroupType
-    $activityGroupId: ModelIDKeyConditionInput
+    $readUser: ID
+    $time: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelActivityFilterInput
     $limit: Int
     $nextToken: String
   ) {
     activityByGroup(
-      activityGroupType: $activityGroupType
-      activityGroupId: $activityGroupId
+      readUser: $readUser
+      time: $time
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -4285,6 +4293,7 @@ export const activityByGroup = /* GraphQL */ `
     ) {
       items {
         id
+        readUser
         ownerName
         ownerID
         activityGroupId
@@ -4292,6 +4301,7 @@ export const activityByGroup = /* GraphQL */ `
         activityActionType
         time
         date
+        expirationDate
         createdAt
         updatedAt
         owner {
@@ -4357,6 +4367,7 @@ export const paymentByUser = /* GraphQL */ `
           confirmationMsg
           isOrgTier
           isIndividualTier
+          isLogin
           marketingDescription
           groupsIncluded
           enabled

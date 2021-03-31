@@ -38,6 +38,7 @@ interface State extends JCState {
   pricePer: string
   tiered: TieredProductInput[]
   mode: "save" | "edit"
+  isLogin: string
   isOrgTier: string
   isIndividualTier: string
   marketingDescription: string
@@ -72,6 +73,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       price: "",
       pricePer: "One-Time",
       mode: "save",
+      isLogin: "false",
       isOrgTier: "false",
       isIndividualTier: "false",
       marketingDescription: JSON.stringify(
@@ -111,6 +113,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       price: product.price.toFixed(2),
       pricePer: product.pricePer,
       mode: "edit",
+      isLogin: product.isLogin,
       isOrgTier: product.isOrgTier,
       isIndividualTier: product.isIndividualTier,
       marketingDescription: product.marketingDescription,
@@ -153,6 +156,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             description: this.state.description,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
+            isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
             marketingDescription: this.state.marketingDescription,
@@ -178,6 +182,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             confirmationMsg: "",
             price: "",
             pricePer: "One-Time",
+            isLogin: "false",
             isOrgTier: "false",
             isIndividualTier: "false",
             marketingDescription: JSON.stringify(
@@ -199,6 +204,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             description: this.state.description,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
+            isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
             marketingDescription: this.state.marketingDescription,
@@ -224,6 +230,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             confirmationMsg: "",
             price: "",
             pricePer: "One-Time",
+            isLogin: "false",
             isOrgTier: "false",
             isIndividualTier: "false",
             marketingDescription: JSON.stringify(
@@ -337,6 +344,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               multiline={false}
               value={this.state.confirmationMsg}
             ></TextInput>
+            <JCSwitch
+              switchLabel="Show on Login Page"
+              initState={this.state.isLogin == "true"}
+              onPress={(val) => {
+                this.setState({ isLogin: val })
+              }}
+            ></JCSwitch>
             <JCSwitch
               switchLabel="Is Org Tier"
               initState={this.state.isOrgTier == "true"}

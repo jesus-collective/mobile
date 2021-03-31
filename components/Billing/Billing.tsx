@@ -130,7 +130,7 @@ class BillingImpl extends JCComponent<Props, State> {
     try {
       const listProducts = (await API.graphql({
         query: queries.listProducts,
-        variables: { limit: 50 },
+        variables: { filter: { enabled: { eq: "true" }, isLogin: { eq: "true" } }, limit: 50 },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as GraphQLResult<ListProductsQuery>
       if (listProducts.data?.listProducts)

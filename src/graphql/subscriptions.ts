@@ -2905,9 +2905,10 @@ export const onDeleteOrganization = /* GraphQL */ `
   }
 `
 export const onCreateActivity = /* GraphQL */ `
-  subscription OnCreateActivity {
-    onCreateActivity {
+  subscription OnCreateActivity($readUser: String!) {
+    onCreateActivity(readUser: $readUser) {
       id
+      readUser
       ownerName
       ownerID
       activityGroupId
@@ -2915,6 +2916,7 @@ export const onCreateActivity = /* GraphQL */ `
       activityActionType
       time
       date
+      expirationDate
       createdAt
       updatedAt
       owner {
@@ -3018,9 +3020,10 @@ export const onCreateActivity = /* GraphQL */ `
   }
 `
 export const onUpdateActivity = /* GraphQL */ `
-  subscription OnUpdateActivity {
-    onUpdateActivity {
+  subscription OnUpdateActivity($readUser: String!) {
+    onUpdateActivity(readUser: $readUser) {
       id
+      readUser
       ownerName
       ownerID
       activityGroupId
@@ -3028,6 +3031,7 @@ export const onUpdateActivity = /* GraphQL */ `
       activityActionType
       time
       date
+      expirationDate
       createdAt
       updatedAt
       owner {
@@ -3131,9 +3135,10 @@ export const onUpdateActivity = /* GraphQL */ `
   }
 `
 export const onDeleteActivity = /* GraphQL */ `
-  subscription OnDeleteActivity {
-    onDeleteActivity {
+  subscription OnDeleteActivity($readUser: String!) {
+    onDeleteActivity(readUser: $readUser) {
       id
+      readUser
       ownerName
       ownerID
       activityGroupId
@@ -3141,6 +3146,7 @@ export const onDeleteActivity = /* GraphQL */ `
       activityActionType
       time
       date
+      expirationDate
       createdAt
       updatedAt
       owner {
@@ -3260,6 +3266,7 @@ export const onCreatePayment = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -3396,6 +3403,7 @@ export const onUpdatePayment = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -3532,6 +3540,7 @@ export const onDeletePayment = /* GraphQL */ `
         }
         isOrgTier
         isIndividualTier
+        isLogin
         marketingDescription
         groupsIncluded
         enabled
@@ -10929,6 +10938,7 @@ export const onCreateProduct = /* GraphQL */ `
       }
       isOrgTier
       isIndividualTier
+      isLogin
       marketingDescription
       groupsIncluded
       enabled
@@ -10968,6 +10978,7 @@ export const onUpdateProduct = /* GraphQL */ `
       }
       isOrgTier
       isIndividualTier
+      isLogin
       marketingDescription
       groupsIncluded
       enabled
@@ -11007,6 +11018,7 @@ export const onDeleteProduct = /* GraphQL */ `
       }
       isOrgTier
       isIndividualTier
+      isLogin
       marketingDescription
       groupsIncluded
       enabled
