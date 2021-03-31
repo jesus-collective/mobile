@@ -1,5 +1,8 @@
 {
     "Version": 4,
     "ElasticsearchWarning": true,
+    "transformers": [
+        "graphql-ttl-transformer"
+    ],
     "ResolverConfig": {}
 }

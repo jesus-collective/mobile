@@ -1,13 +1,11 @@
-import { GraphQLResult } from "@aws-amplify/api"
-import { API } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api/lib/types"
+import { API, Auth } from "aws-amplify"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
 import { Text, TouchableHighlight, View } from "react-native"
 import { Activity } from "src/API"
-import * as queries from "../../src/graphql/queries"
+import { activityByGroup } from "../../src/graphql-custom/queries"
 import ActivityBoxStyles from "./ActivityBoxStyles"
-
 type Selected = "Today" | "Yesterday" | "Last 7 Days"
 
 type Props = {
@@ -42,15 +40,20 @@ const ActivityBox = ({ title, activityGroupType, activityGroupId }: Props): JSX.
   }
   useEffect(() => {
     const loadActivities = async () => {
-      console.log("fetching activities")
+      const user = await Auth.currentAuthenticatedUser()
+      console.log("Fetching activities")
       const activities = (await API.graphql({
-        query: queries.activityByGroup,
+        query: activityByGroup,
         variables: {
-          activityGroupId: { eq: activityGroupId },
-          activityGroupType,
+          readUser: user.username,
+          sortDirection: "DESC",
+          filter: {
+            activityGroupId: { eq: activityGroupId },
+          },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as GraphQLResult<any>
+      console.log(activities)
       setactivities(activities.data.activityByGroup.items ?? [])
     }
     loadActivities()

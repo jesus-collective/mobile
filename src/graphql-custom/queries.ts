@@ -42,6 +42,42 @@ export const listDirectMessageRooms = /* GraphQL */ `
     }
   }
 `
+
+export const activityByGroup = /* GraphQL */ `
+  query ActivityByGroup(
+    $readUser: ID
+    $time: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelActivityFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    activityByGroup(
+      readUser: $readUser
+      time: $time
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        readUser
+        ownerName
+        ownerID
+        activityGroupId
+        activityGroupType
+        activityActionType
+        time
+        date
+        expirationDate
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+
 export const getUserForGroupOrEvent = /* GraphQL */ `
   query GetUser2($id: ID!) {
     getUser(id: $id) {
@@ -156,6 +192,7 @@ export const getUserForGroupOrEvent = /* GraphQL */ `
     }
   }
 `
+
 export const getCourseInfoForOverview = /* GraphQL */ `
   query GetCourseInfo($id: ID!) {
     getCourseInfo(id: $id) {
