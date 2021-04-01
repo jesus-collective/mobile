@@ -129,7 +129,6 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             label: "Menu",
             value: ResourcePageItemType.Menu,
             icon: this.icon,
-            hidden: true,
           },
           {
             label: "Header",
