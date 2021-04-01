@@ -9,7 +9,7 @@ const ActivityBoxStyles = EStyleSheet.create({
     height: smallScreen ? height : height * 0.4,
   },
   ActivityBoxAlertContainer: {
-    overflowY: "scroll",
+    overflowY: "auto",
     height: "100%",
   },
   ActivityBoxHeader: {

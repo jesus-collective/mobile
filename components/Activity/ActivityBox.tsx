@@ -2,8 +2,8 @@ import { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api/lib/types"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
-import { Text, TouchableHighlight, View } from "react-native"
-import { Activity } from "src/API"
+import { ActivityIndicator, Text, TouchableHighlight, View } from "react-native"
+import { ActivityByGroupQuery } from "src/API"
 import { activityByGroup } from "../../src/graphql-custom/queries"
 import ActivityBoxStyles from "./ActivityBoxStyles"
 type Selected = "Today" | "Yesterday" | "Last 7 Days"
@@ -13,16 +13,20 @@ type Props = {
   activityGroupType: string
   activityGroupId: string
 }
-
-const ActivityBox = ({ title, activityGroupType, activityGroupId }: Props): JSX.Element => {
-  const [activities, setactivities] = useState<Array<Activity>>([])
+type ActivityData = NonNullable<
+  NonNullable<NonNullable<ActivityByGroupQuery>["activityByGroup"]>["items"]
+>
+type Activity = ActivityData[0]
+const ActivityBox = ({ title, activityGroupId }: Props): JSX.Element => {
+  const [activities, setactivities] = useState<ActivityData>([])
   const [selected, setSelected] = useState<Selected>("Today")
+  const [isLoading, setIsLoading] = useState(false)
   const options: Array<Selected> = ["Today", "Yesterday", "Last 7 Days"]
   const DetermineMessage = (activity: Activity) => {
     console.log(activity)
-    switch (activity.activityGroupType) {
+    switch (activity?.activityGroupType) {
       case "courses":
-        switch (activity.activityActionType) {
+        switch (activity?.activityActionType) {
           case "courses_assignment_submit":
             return " submitted an assignment."
           case "courses_assignment_create":
@@ -38,10 +42,20 @@ const ActivityBox = ({ title, activityGroupType, activityGroupId }: Props): JSX.
         }
     }
   }
-  useEffect(() => {
-    const loadActivities = async () => {
+  const handleFilter = (option: Selected) => {
+    setSelected(option)
+    let date
+    if (option === "Today") date = moment().format("YYYY-MM-DD")
+    else if (option === "Yesterday") date = moment().subtract(1, "day").format("YYYY-MM-DD")
+    else {
+      date = moment().subtract(7, "days").format("YYYY-MM-DD")
+    }
+    loadActivities(date)
+  }
+  const loadActivities = async (date: string) => {
+    try {
+      setIsLoading(true)
       const user = await Auth.currentAuthenticatedUser()
-      console.log("Fetching activities")
       const activities = (await API.graphql({
         query: activityByGroup,
         variables: {
@@ -49,14 +63,22 @@ const ActivityBox = ({ title, activityGroupType, activityGroupId }: Props): JSX.
           sortDirection: "DESC",
           filter: {
             activityGroupId: { eq: activityGroupId },
+            date: { ge: date },
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<any>
+      })) as GraphQLResult<ActivityByGroupQuery>
       console.log(activities)
-      setactivities(activities.data.activityByGroup.items ?? [])
+      setactivities(activities?.data?.activityByGroup?.items ?? [])
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsLoading(false)
     }
-    loadActivities()
+  }
+  useEffect(() => {
+    const today = moment().format("YYYY-MM-DD")
+    loadActivities(today)
   }, [activityGroupId])
   return (
     <View style={ActivityBoxStyles.ActivityBoxContainer}>
@@ -67,8 +89,9 @@ const ActivityBox = ({ title, activityGroupType, activityGroupId }: Props): JSX.
             <TouchableHighlight
               underlayColor="rgba(255,255,255,0.2)"
               key={option}
+              disabled={selected === option}
               onPress={() => {
-                setSelected(option)
+                handleFilter(option)
               }}
               style={{
                 padding: 16,
@@ -81,36 +104,37 @@ const ActivityBox = ({ title, activityGroupType, activityGroupId }: Props): JSX.
         })}
       </View>
       <View style={ActivityBoxStyles.ActivityBoxAlertContainer}>
-        {activities
-          .filter((activity) => {
-            const alertDate = moment(activity.createdAt)
-            const today = moment().format("YYYY-MM-DD")
-            const yesterday = moment().subtract(1, "days").format("YYYY-MM-DD")
-            switch (selected) {
-              case "Today":
-                return alertDate.format("YYYY-MM-DD") === today
-              case "Yesterday":
-                return alertDate.format("YYYY-MM-DD") === yesterday
-              case "Last 7 Days":
-                return alertDate.diff(moment(), "days") > -7
-            }
-          })
-          .sort((a, b) => b?.time?.localeCompare(a?.time ?? "") ?? 0)
-          .map((activity) => {
-            return (
-              <View style={ActivityBoxStyles.ActivityEntryContainer} key={activity.id}>
-                <Text style={ActivityBoxStyles.ActivityEntryText}>
-                  <Text style={ActivityBoxStyles.ActivityEntryownerText}>{activity.ownerName}</Text>
-                  {DetermineMessage(activity)}
-                  <Text style={ActivityBoxStyles.ActivityEntryTimeText}>
-                    {`  ${
-                      selected === "Last 7 Days" ? moment(activity.createdAt).format("ddd") : ""
-                    } ${moment(activity.createdAt).format("hh:mm A").replace(/^0+/, "")} `}
+        {isLoading ? (
+          <ActivityIndicator
+            style={{ marginTop: 60 }}
+            color="#000"
+            size="large"
+          ></ActivityIndicator>
+        ) : activities?.length ? (
+          activities
+            .sort((a, b) => b?.time?.localeCompare(a?.time ?? "") ?? 0)
+            .map((activity) => {
+              return (
+                <View style={ActivityBoxStyles.ActivityEntryContainer} key={activity?.id}>
+                  <Text style={ActivityBoxStyles.ActivityEntryText}>
+                    <Text style={ActivityBoxStyles.ActivityEntryownerText}>
+                      {activity?.ownerName}
+                    </Text>
+                    {DetermineMessage(activity)}
+                    <Text style={ActivityBoxStyles.ActivityEntryTimeText}>
+                      {`  ${
+                        selected === "Last 7 Days" ? moment(activity?.createdAt).format("ddd") : ""
+                      } ${moment(activity?.createdAt).format("hh:mm A").replace(/^0+/, "")} `}
+                    </Text>
                   </Text>
-                </Text>
-              </View>
-            )
-          })}
+                </View>
+              )
+            })
+        ) : (
+          <Text style={[ActivityBoxStyles.ActivityEntryText, { padding: 16, margin: 4 }]}>
+            No activities found
+          </Text>
+        )}
       </View>
     </View>
   )
