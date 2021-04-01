@@ -157,13 +157,13 @@ class MySignInImpl extends React.Component<Props, State> {
                           lineHeight: 20,
                         }}
                       >
-                        You are in the right place to sign up for One Story Curriculum! One Story is
-                        excited to partner with Jesus Collective in this tangible way and provide
-                        our curriculum through Jesus Collective. Through this platform, you not only
-                        access these great discipleship resources for kids and youth in a super easy
-                        to use way, but you also have the benefit of meaningful interaction and
-                        engagement with other One Story users to give feedback, share ideas and
-                        more. Welcome!
+                        We are looking forward to partnering with you as you introduce kids and
+                        youth in your community to Jesus. To access our content you will need to
+                        create a Jesus Collective account. One Story’s partnership with Jesus
+                        Collective allows us to not only make all of our resources available online
+                        in a convenient easy to assess way, but also provides you the benefit of
+                        connecting with other One Story users to give feedback, share ideas and ask
+                        questions.
                       </Text>
                     )}
                     <TextInput
