@@ -640,15 +640,7 @@ class BillingImpl extends JCComponent<Props, State> {
                   />
 
                   <Text
-                    style={{
-                      fontFamily: "Graphik-Semibold-App",
-                      alignSelf: "center",
-                      fontSize: 42,
-                      lineHeight: 51,
-                      textAlign: "center",
-                      width: "100%",
-                      marginBottom: 20,
-                    }}
+                    style={this.styles.style.SignUpScreenSetupText}
                   >
                     We&apos;ve received your payment.
                     <br />
@@ -678,26 +670,12 @@ class BillingImpl extends JCComponent<Props, State> {
                   {this.state.processing == "processing" ? (
                     <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
                       <Text
-                        style={{
-                          fontFamily: "Graphik-Bold-App",
-                          alignSelf: "center",
-                          fontSize: 42,
-                          lineHeight: 51,
-                          textAlign: "center",
-                          width: "100%",
-                          marginBottom: 20,
-                        }}
+                        style={this.styles.style.SignUpScreenSetupText}
                       >
                         Processing Payment
                       </Text>
                       <Text
-                        style={{
-                          fontFamily: "Graphik-Bold-App",
-                          textAlign: "center",
-                          width: "100%",
-                          fontSize: 12,
-                          marginBottom: 8,
-                        }}
+                        style={this.styles.style.SignUpScreenSetupTextSmaller}
                       >
                         Please wait while we process your payment. This may take several seconds.
                       </Text>

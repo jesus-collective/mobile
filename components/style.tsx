@@ -1521,6 +1521,24 @@ export default class MainStyles {
       profileCardContent: {
         paddingTop: 15,
       },
+      SignUpScreenSetupText: {
+        fontFamily: "Graphik-Medium-App",
+        textAlign: "center",
+        width: "50%",
+        fontSize: 28,
+        lineHeight: 33,
+        marginBottom: 8,
+        left: "16rem",
+        position: "relative",
+      },
+      SignUpScreenSetupTextSmaller: {
+        fontFamily: "Graphik-Regular-App",
+        textAlign: "center",
+        width: "100%",
+        fontSize: 18,
+        lineHeight: 30,
+        marginBottom: 8,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
