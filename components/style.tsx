@@ -2198,6 +2198,17 @@ export default class MainStyles {
         coursePageMessageBoardInnerCard: {
           paddingLeft: 20,
         },
+        signUpScreen1PaymentColumn1: {
+          left: "0%",
+          width: "90%",
+        },
+        SignUpScreenSetupText: {
+          width: "100%",
+          left: 0,
+        },
+        SignUpScreenSetupTextSmaller: {
+          lineHeight: 24,
+        },
       },
 
       dashboardMainContainer:
@@ -2552,7 +2563,7 @@ export default class MainStyles {
       signUpScreen1PaymentColumn1:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", left: "7.5%", width: "100%", top: "40vh", height: "100%" }
-          : { marginLeft: 20, marginRight: 20 },
+          : { marginLeft: 20, marginRight: 20, left: "0%" },
       signUpScreen1PaymentColumn1Form:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }
