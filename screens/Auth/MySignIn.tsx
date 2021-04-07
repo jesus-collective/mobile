@@ -74,26 +74,39 @@ class MySignInImpl extends React.Component<Props, State> {
     if (user) action.onSetUser(user)
   }
 
+  validateLogin(): boolean {
+    if (!/^\S*$/.test(this.state.user)) {
+      this.setState({ authError: "Email cannot contain spaces" })
+      return false
+    }
+    if (!this.state.user) {
+      this.setState({ authError: "Email cannot be empty" })
+      return false
+    }
+    if (!this.state.pass) {
+      this.setState({ authError: "Password cannot be empty" })
+      return false
+    }
+    return true
+  }
   async handleSignIn(actions: any): Promise<void> {
-    try {
-      Sentry.setUser({ email: this.state.user.toLowerCase() })
-      Sentry.setTag("User Email", this.state.user.toLowerCase())
-      await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then(async (user) => {
-        if (user.challengeName == "NEW_PASSWORD_REQUIRED") {
-          await this.changeAuthState(actions, "requireNewPassword", user)
-        } else {
-          await this.changeAuthState(actions, "signedIn")
-        }
-      })
-    } catch (err) {
-      if (!this.state.pass && this.state.user) {
-        this.setState({ authError: "Password cannot be empty" })
-      } else {
+    if (this.validateLogin()) {
+      try {
+        Sentry.setUser({ email: this.state.user?.toLowerCase() })
+        Sentry.setTag("User Email", this.state.user?.toLowerCase())
+        await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then(async (user) => {
+          if (user.challengeName == "NEW_PASSWORD_REQUIRED") {
+            await this.changeAuthState(actions, "requireNewPassword", user)
+          } else {
+            await this.changeAuthState(actions, "signedIn")
+          }
+        })
+      } catch (err) {
         this.setState({ authError: err.message })
+        Sentry.configureScope((scope) => {
+          scope.setUser(null)
+        })
       }
-      Sentry.configureScope((scope) => {
-        scope.setUser(null)
-      })
     }
   }
 
