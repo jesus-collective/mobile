@@ -26,6 +26,7 @@ export type CRMMessage = {
   authorName?: string
   authorId?: string
   attachment?: string | null
+  attachmentOwner?: string | null
   thread?: ModelCRMReplyConnection
   createdAt?: string
   updatedAt?: string
@@ -46,6 +47,7 @@ export type CRMReply = {
   authorName?: string
   authorId?: string
   attachment?: string | null
+  attachmentOwner?: string | null
   parentId?: string
   parent?: CRMMessage
   createdAt?: string
@@ -71,6 +73,7 @@ export type GetCrmRootQuery = {
         authorName: string
         authorId: string
         attachment?: string | null
+        attachmentOwner?: string | null
         thread?: {
           __typename: "ModelCRMReplyConnection"
           items?: Array<{
@@ -82,6 +85,7 @@ export type GetCrmRootQuery = {
             authorName: string
             authorId: string
             attachment?: string | null
+            attachmentOwner?: string | null
             parentId: string
             createdAt: string
             updatedAt: string

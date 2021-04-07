@@ -731,6 +731,7 @@ export const createUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -746,6 +747,7 @@ export const createUser = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -762,6 +764,7 @@ export const createUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -948,6 +951,7 @@ export const updateUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -963,6 +967,7 @@ export const updateUser = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -979,6 +984,7 @@ export const updateUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -1165,6 +1171,7 @@ export const deleteUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -1180,6 +1187,7 @@ export const deleteUser = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -1196,6 +1204,7 @@ export const deleteUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -2019,6 +2028,7 @@ export const createGroup = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -2263,6 +2273,7 @@ export const updateGroup = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -2507,6 +2518,7 @@ export const deleteGroup = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -4656,6 +4668,7 @@ export const createCourseInfo = /* GraphQL */ `
       introduction
       sylabusAttachment
       sylabusAttachmentName
+      sylabusAttachmentOwner
       createdAt
       updatedAt
     }
@@ -4715,6 +4728,7 @@ export const updateCourseInfo = /* GraphQL */ `
       introduction
       sylabusAttachment
       sylabusAttachmentName
+      sylabusAttachmentOwner
       createdAt
       updatedAt
     }
@@ -4774,6 +4788,7 @@ export const deleteCourseInfo = /* GraphQL */ `
       introduction
       sylabusAttachment
       sylabusAttachmentName
+      sylabusAttachmentOwner
       createdAt
       updatedAt
     }
@@ -4804,6 +4819,7 @@ export const createCourseTriads = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -4857,6 +4873,7 @@ export const updateCourseTriads = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -4910,6 +4927,7 @@ export const deleteCourseTriads = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -4963,6 +4981,7 @@ export const createCourseBackOfficeStaff = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -5094,6 +5113,7 @@ export const updateCourseBackOfficeStaff = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -5225,6 +5245,7 @@ export const deleteCourseBackOfficeStaff = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -5356,6 +5377,7 @@ export const createCourseInstructors = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -5487,6 +5509,7 @@ export const updateCourseInstructors = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -5618,6 +5641,7 @@ export const deleteCourseInstructors = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -5740,6 +5764,7 @@ export const createCourseTriadCoaches = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -5871,6 +5896,7 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -6002,6 +6028,7 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -6133,6 +6160,7 @@ export const createCourseTriadUsers = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -6264,6 +6292,7 @@ export const updateCourseTriadUsers = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -6395,6 +6424,7 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -6541,6 +6571,7 @@ export const createCourseWeek = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -6600,6 +6631,7 @@ export const updateCourseWeek = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -6659,6 +6691,7 @@ export const deleteCourseWeek = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -6720,6 +6753,7 @@ export const createCourseLesson = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -6767,6 +6801,7 @@ export const updateCourseLesson = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -6814,6 +6849,7 @@ export const deleteCourseLesson = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -7216,6 +7252,7 @@ export const createDirectMessageRoom = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -7253,6 +7290,7 @@ export const updateDirectMessageRoom = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -7290,6 +7328,7 @@ export const deleteDirectMessageRoom = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -7312,6 +7351,7 @@ export const createDirectMessage = /* GraphQL */ `
       content
       attachment
       attachmentName
+      attachmentOwner
       when
       recipients
       userId
@@ -7322,6 +7362,7 @@ export const createDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -7455,6 +7496,7 @@ export const updateDirectMessage = /* GraphQL */ `
       content
       attachment
       attachmentName
+      attachmentOwner
       when
       recipients
       userId
@@ -7465,6 +7507,7 @@ export const updateDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -7598,6 +7641,7 @@ export const deleteDirectMessage = /* GraphQL */ `
       content
       attachment
       attachmentName
+      attachmentOwner
       when
       recipients
       userId
@@ -7608,6 +7652,7 @@ export const deleteDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -7742,6 +7787,7 @@ export const createDirectMessageReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       recipients
       userId
       messageId
@@ -7750,6 +7796,7 @@ export const createDirectMessageReply = /* GraphQL */ `
         content
         attachment
         attachmentName
+        attachmentOwner
         when
         recipients
         userId
@@ -7806,6 +7853,7 @@ export const createDirectMessageReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         recipients
         userId
         messageId
@@ -7814,6 +7862,7 @@ export const createDirectMessageReply = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -7829,6 +7878,7 @@ export const createDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -7881,6 +7931,7 @@ export const createDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -8001,6 +8052,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       recipients
       userId
       messageId
@@ -8009,6 +8061,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
         content
         attachment
         attachmentName
+        attachmentOwner
         when
         recipients
         userId
@@ -8065,6 +8118,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         recipients
         userId
         messageId
@@ -8073,6 +8127,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -8088,6 +8143,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -8140,6 +8196,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -8260,6 +8317,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       recipients
       userId
       messageId
@@ -8268,6 +8326,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
         content
         attachment
         attachmentName
+        attachmentOwner
         when
         recipients
         userId
@@ -8324,6 +8383,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         recipients
         userId
         messageId
@@ -8332,6 +8392,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -8347,6 +8408,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -8399,6 +8461,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -8524,6 +8587,7 @@ export const createCrmRoot = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           createdAt
           updatedAt
         }
@@ -8547,6 +8611,7 @@ export const updateCrmRoot = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           createdAt
           updatedAt
         }
@@ -8570,6 +8635,7 @@ export const deleteCrmRoot = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           createdAt
           updatedAt
         }
@@ -8598,6 +8664,7 @@ export const createCrmMessage = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       thread {
         items {
           id
@@ -8607,6 +8674,7 @@ export const createCrmMessage = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           parentId
           createdAt
           updatedAt
@@ -8636,6 +8704,7 @@ export const updateCrmMessage = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       thread {
         items {
           id
@@ -8645,6 +8714,7 @@ export const updateCrmMessage = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           parentId
           createdAt
           updatedAt
@@ -8674,6 +8744,7 @@ export const deleteCrmMessage = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       thread {
         items {
           id
@@ -8683,6 +8754,7 @@ export const deleteCrmMessage = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           parentId
           createdAt
           updatedAt
@@ -8704,6 +8776,7 @@ export const createCrmReply = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       parentId
       parent {
         id
@@ -8718,6 +8791,7 @@ export const createCrmReply = /* GraphQL */ `
         authorName
         authorId
         attachment
+        attachmentOwner
         thread {
           nextToken
         }
@@ -8739,6 +8813,7 @@ export const updateCrmReply = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       parentId
       parent {
         id
@@ -8753,6 +8828,7 @@ export const updateCrmReply = /* GraphQL */ `
         authorName
         authorId
         attachment
+        attachmentOwner
         thread {
           nextToken
         }
@@ -8774,6 +8850,7 @@ export const deleteCrmReply = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       parentId
       parent {
         id
@@ -8788,6 +8865,7 @@ export const deleteCrmReply = /* GraphQL */ `
         authorName
         authorId
         attachment
+        attachmentOwner
         thread {
           nextToken
         }
@@ -8807,6 +8885,7 @@ export const createMessage = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       roomId
       userId
       postingAs
@@ -8916,6 +8995,7 @@ export const createMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -9035,6 +9115,7 @@ export const updateMessage = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       roomId
       userId
       postingAs
@@ -9144,6 +9225,7 @@ export const updateMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -9263,6 +9345,7 @@ export const deleteMessage = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       roomId
       userId
       postingAs
@@ -9372,6 +9455,7 @@ export const deleteMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -9491,6 +9575,7 @@ export const createReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       userId
       messageId
       parentMessage {
@@ -9499,6 +9584,7 @@ export const createReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         roomId
         userId
         postingAs
@@ -9572,6 +9658,7 @@ export const createReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         userId
         messageId
         parentMessage {
@@ -9580,6 +9667,7 @@ export const createReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -9595,6 +9683,7 @@ export const createReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -9646,6 +9735,7 @@ export const createReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -9765,6 +9855,7 @@ export const updateReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       userId
       messageId
       parentMessage {
@@ -9773,6 +9864,7 @@ export const updateReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         roomId
         userId
         postingAs
@@ -9846,6 +9938,7 @@ export const updateReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         userId
         messageId
         parentMessage {
@@ -9854,6 +9947,7 @@ export const updateReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -9869,6 +9963,7 @@ export const updateReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -9920,6 +10015,7 @@ export const updateReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -10039,6 +10135,7 @@ export const deleteReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       userId
       messageId
       parentMessage {
@@ -10047,6 +10144,7 @@ export const deleteReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         roomId
         userId
         postingAs
@@ -10120,6 +10218,7 @@ export const deleteReply = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         userId
         messageId
         parentMessage {
@@ -10128,6 +10227,7 @@ export const deleteReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -10143,6 +10243,7 @@ export const deleteReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -10194,6 +10295,7 @@ export const deleteReply = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId

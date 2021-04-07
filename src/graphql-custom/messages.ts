@@ -3,6 +3,7 @@ export const getMessage = /* GraphQL */ `
     getMessage(id: $id) {
       attachment
       attachmentName
+      attachmentOwner
       author {
         aboutMeLong
         aboutMeShort
@@ -47,6 +48,7 @@ export const getMessage = /* GraphQL */ `
         items {
           attachment
           attachmentName
+          attachmentOwner
           author {
             aboutMeLong
             aboutMeShort
@@ -114,6 +116,7 @@ export const directMessagesByRoom = /* GraphQL */ `
         content
         attachment
         attachmentName
+        attachmentOwner
         when
         recipients
         userId
@@ -121,6 +124,7 @@ export const directMessagesByRoom = /* GraphQL */ `
           items {
             attachment
             attachmentName
+            attachmentOwner
             author {
               aboutMeLong
               aboutMeShort
@@ -230,6 +234,7 @@ export const messagesByRoom = /* GraphQL */ `
       items {
         attachment
         attachmentName
+        attachmentOwner
         author {
           aboutMeLong
           aboutMeShort
@@ -274,6 +279,7 @@ export const messagesByRoom = /* GraphQL */ `
           items {
             attachment
             attachmentName
+            attachmentOwner
             author {
               aboutMeLong
               aboutMeShort
@@ -329,6 +335,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       roomId
       userId
       postingAs
@@ -437,6 +444,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           parentReplyId
@@ -522,6 +530,7 @@ export const onCreateReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       userId
       messageId
       roomId
@@ -540,6 +549,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
       content
       attachment
       attachmentName
+      attachmentOwner
       when
       recipients
       userId
@@ -550,6 +560,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           messageRoomID
@@ -684,6 +695,7 @@ export const onCreateDirectMessageReply = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       userId
       messageId
       parentMessage {
@@ -703,6 +715,7 @@ export const getDirectMessage = /* GraphQL */ `
       content
       attachment
       attachmentName
+      attachmentOwner
       when
       recipients
       userId
@@ -710,6 +723,7 @@ export const getDirectMessage = /* GraphQL */ `
         items {
           attachment
           attachmentName
+          attachmentOwner
           author {
             aboutMeLong
             aboutMeShort

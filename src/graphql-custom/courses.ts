@@ -5,6 +5,7 @@ export const getCourseInfo = /* GraphQL */ `
       designedBy
       summary
       sylabusAttachmentName
+      sylabusAttachmentOwner
       sylabusAttachment
       backOfficeStaff {
         items {

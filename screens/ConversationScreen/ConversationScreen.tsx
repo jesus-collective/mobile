@@ -232,7 +232,11 @@ export default class ConversationScreen extends JCComponent<Props, State> {
 
   switchRoom(index: number): void {
     this.setState({ selectedRoom: index })
-    this.setState({ currentRoomId: this.state.data[index].roomID })
+    this.setState({
+      currentRoomId: this.state.data.filter(
+        (item) => item?.room?.roomType == "directMessage" || item.room.roomType == null
+      )[index].roomID,
+    })
   }
   getCurrentRoomRecipients(): string[] {
     const ids: string[] = []

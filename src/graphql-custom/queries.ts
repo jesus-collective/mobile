@@ -26,6 +26,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
             content
             attachment
             attachmentName
+            attachmentOwner
             when
             recipients
             userId
@@ -200,6 +201,7 @@ export const getCourseInfoForOverview = /* GraphQL */ `
       designedBy
       summary
       sylabusAttachmentName
+      sylabusAttachmentOwner
       sylabusAttachment
 
       courseWeeks {

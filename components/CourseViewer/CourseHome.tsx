@@ -1,6 +1,5 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
-import ActivityBox from "../../components/Activity/ActivityBox"
 import moment from "moment-timezone"
 import {
   Body,
@@ -17,11 +16,13 @@ import React from "react"
 import { Dimensions, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import { Calendar } from "react-native-calendars"
 import { UserData } from "src/types"
+import ActivityBox from "../../components/Activity/ActivityBox"
 import EditableFileUpload from "../../components/Forms/EditableFileUpload"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableUsers from "../../components/Forms/EditableUsers"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
+import { constants } from "../../src/constants"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
@@ -96,6 +97,7 @@ class CourseHomeImpl extends JCComponent<Props> {
   }
 
   goToLesson(actions: CourseActions, week: string, lesson: string): void {
+    console.log({ week, lesson })
     actions.setActiveWeek(parseInt(week, 10) - 1)
     actions.setActiveLesson(parseInt(lesson, 10) - 1)
     actions.setActiveScreen("Details")
@@ -353,8 +355,10 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 attachment={state.courseData.sylabusAttachment as string}
                                 isEditable={state.isEditable && state.editMode}
                                 attachmentName={state.courseData.sylabusAttachmentName as string}
+                                owner={state.courseData.sylabusAttachmentOwner as string}
                                 onChange={(obj) => {
                                   console.log({
+                                    attachmentOwner: obj.owner,
                                     attachmentName: obj.attachmentName,
                                     attachment: obj.attachment,
                                   })
@@ -363,6 +367,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       "sylabusAttachmentName",
                                       obj.attachmentName
                                     )
+                                  if (obj.owner != undefined)
+                                    actions.updateCourse("sylabusAttachmentOwner", obj.owner)
                                   if (obj.attachment != undefined)
                                     actions.updateCourse("sylabusAttachment", obj.attachment)
                                 }}
@@ -647,121 +653,131 @@ class CourseHomeImpl extends JCComponent<Props> {
                           )}
                         </Container>
                       </Container>
-                      <Container style={this.styles.style.courseHomeRightContainer}>
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            lineHeight: 25,
-                            fontFamily: "Graphik-Bold-App",
-                            marginTop: 30,
-                            width: "90%",
-                          }}
-                        >
-                          To-Do
-                        </Text>
-                        <Card style={this.styles.style.courseHomeCoachingCard}>
-                          {Dimensions.get("window").width > 720 ? (
-                            <FlatList
-                              renderItem={({ item }) => this.renderToDo(item, actions)}
-                              data={toDo}
-                              style={{ height: 200 }}
-                            />
-                          ) : (
-                            toDo?.slice(0, 7).map((item) => {
-                              return this.renderToDo(item, actions)
-                            })
-                          )}
-                        </Card>
 
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            lineHeight: 25,
-                            fontFamily: "Graphik-Bold-App",
-                            marginTop: 50,
-                            width: "90%",
-                          }}
-                        >
-                          My Calendar
-                        </Text>
-                        <Calendar
-                          style={this.styles.style.courseHomeCalendar}
-                          current={moment().format("YYYY-MM-DD")}
-                          markedDates={markedDates}
-                          onDayPress={(day) =>
-                            this.handlePressCalendar(actions, markedDates[day.dateString])
-                          }
-                          theme={{ todayTextColor: "#F0493E" }}
-                        />
-                        <Container style={this.styles.style.courseHomeCalendarLabels}>
-                          <Text
-                            style={{
-                              fontSize: 25,
-                              color: "#ff0000",
-                              fontFamily: "Graphik-Bold-App",
-                              marginTop: 10,
-                              marginRight: 25,
-                            }}
-                          >
-                            •{" "}
-                            <span
+                      <Container style={this.styles.style.courseHomeRightContainer}>
+                        {constants["SETTING_ISVISIBLE_COURSE_TODO"] ? (
+                          <>
+                            <Text
                               style={{
-                                fontFamily: "Graphik-Regular-App",
-                                color: "#000000",
-                                fontSize: 13,
+                                fontSize: 20,
+                                lineHeight: 25,
+                                fontFamily: "Graphik-Bold-App",
+                                marginTop: 30,
+                                width: "90%",
                               }}
                             >
-                              Zoom
-                            </span>
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 25,
-                              color: "#71C209",
-                              fontFamily: "Graphik-Bold-App",
-                              marginTop: 10,
-                              marginRight: 25,
-                            }}
-                          >
-                            •{" "}
-                            <span
+                              To-Do
+                            </Text>
+                            <Card style={this.styles.style.courseHomeCoachingCard}>
+                              {Dimensions.get("window").width > 720 ? (
+                                <FlatList
+                                  renderItem={({ item }) => this.renderToDo(item, actions)}
+                                  data={toDo}
+                                  style={{ height: 200 }}
+                                />
+                              ) : (
+                                toDo?.slice(0, 7).map((item) => {
+                                  return this.renderToDo(item, actions)
+                                })
+                              )}
+                            </Card>
+                          </>
+                        ) : null}
+                        {constants["SETTING_ISVISIBLE_COURSE_CALENDAR"] ? (
+                          <>
+                            <Text
                               style={{
-                                fontFamily: "Graphik-Regular-App",
-                                color: "#000000",
-                                fontSize: 13,
+                                fontSize: 20,
+                                lineHeight: 25,
+                                fontFamily: "Graphik-Bold-App",
+                                marginTop: 50,
+                                width: "90%",
                               }}
                             >
-                              Assignment
-                            </span>
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 25,
-                              color: "#0000ff",
-                              fontFamily: "Graphik-Bold-App",
-                              marginTop: 10,
-                              marginRight: 25,
-                            }}
-                          >
-                            •{" "}
-                            <span
-                              style={{
-                                fontFamily: "Graphik-Regular-App",
-                                color: "#000000",
-                                fontSize: 13,
-                              }}
-                            >
-                              Response
-                            </span>
-                          </Text>
-                        </Container>
-                        <Container style={this.styles.style.CourseHomeActivityContainer}>
-                          <ActivityBox
-                            activityGroupType={"courses"}
-                            activityGroupId={state.courseData?.id as string}
-                            title="Course Activity"
-                          />
-                        </Container>
+                              My Calendar
+                            </Text>
+                            <Calendar
+                              style={this.styles.style.courseHomeCalendar}
+                              current={moment().format("YYYY-MM-DD")}
+                              markedDates={markedDates}
+                              onDayPress={(day) =>
+                                this.handlePressCalendar(actions, markedDates[day.dateString])
+                              }
+                              theme={{ todayTextColor: "#F0493E" }}
+                            />
+                            <Container style={this.styles.style.courseHomeCalendarLabels}>
+                              <Text
+                                style={{
+                                  fontSize: 25,
+                                  color: "#ff0000",
+                                  fontFamily: "Graphik-Bold-App",
+                                  marginTop: 10,
+                                  marginRight: 25,
+                                }}
+                              >
+                                •{" "}
+                                <span
+                                  style={{
+                                    fontFamily: "Graphik-Regular-App",
+                                    color: "#000000",
+                                    fontSize: 13,
+                                  }}
+                                >
+                                  Zoom
+                                </span>
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: 25,
+                                  color: "#71C209",
+                                  fontFamily: "Graphik-Bold-App",
+                                  marginTop: 10,
+                                  marginRight: 25,
+                                }}
+                              >
+                                •{" "}
+                                <span
+                                  style={{
+                                    fontFamily: "Graphik-Regular-App",
+                                    color: "#000000",
+                                    fontSize: 13,
+                                  }}
+                                >
+                                  Assignment
+                                </span>
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: 25,
+                                  color: "#0000ff",
+                                  fontFamily: "Graphik-Bold-App",
+                                  marginTop: 10,
+                                  marginRight: 25,
+                                }}
+                              >
+                                •{" "}
+                                <span
+                                  style={{
+                                    fontFamily: "Graphik-Regular-App",
+                                    color: "#000000",
+                                    fontSize: 13,
+                                  }}
+                                >
+                                  Response
+                                </span>
+                              </Text>
+                            </Container>
+                          </>
+                        ) : null}
+                        {constants["SETTING_ISVISIBLE_COURSE_ACTIVITY"] ? (
+                          <Container style={this.styles.style.CourseHomeActivityContainer}>
+                            <ActivityBox
+                              activityGroupType={"courses"}
+                              activityGroupId={state.courseData?.id as string}
+                              title="Course Activity"
+                            />
+                          </Container>
+                        ) : null}
                       </Container>
                     </Container>
                   </Content>

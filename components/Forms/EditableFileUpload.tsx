@@ -9,6 +9,7 @@ import JCButton, { ButtonTypes } from "./JCButton"
 interface Props {
   attachment: string
   attachmentName: string
+  owner: string
   isEditable: boolean
   textStyle: any
   inputStyle?: any
@@ -22,7 +23,7 @@ export default class EditableFileUpload extends JCComponent<Props> {
 
   renderFileDownloadBadge(): React.ReactNode {
     return this.props.attachment ? (
-      <TouchableOpacity onPress={() => this.getAttachment(this.props.attachment)}>
+      <TouchableOpacity onPress={() => this.getAttachment(this.props.attachment, this.props.owner)}>
         <Badge style={{ backgroundColor: "#EFF1F5", marginRight: 10, marginTop: 5, height: 30 }}>
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
             {this.renderFileIcon(this.props.attachment)}
@@ -99,17 +100,15 @@ export default class EditableFileUpload extends JCComponent<Props> {
     return fileName
   }
 
-  async getAttachment(filePath: string): Promise<void> {
+  async getAttachment(filePath: string, owner: string): Promise<void> {
+    console.log({ filePath, owner })
     try {
-      const user = await Auth.currentCredentials()
-      const userId = user.identityId
-
       const res = await Storage.get(filePath, {
         level: "protected",
-        identityId: userId,
+        identityId: owner,
       })
 
-      window.open(res as string, "_blank", "noopener noreferrer")
+      window.open(res as string, "_blank", "")
     } catch (e) {
       console.error(e)
     }
@@ -128,7 +127,7 @@ export default class EditableFileUpload extends JCComponent<Props> {
           identityId: userId,
         })
         if (upload && this.props.onChange)
-          this.props.onChange({ attachment: fn, attachmentName: null })
+          this.props.onChange({ attachment: fn, attachmentName: null, owner: userId })
       } catch (e) {
         console.error(e)
       }

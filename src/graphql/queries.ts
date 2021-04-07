@@ -156,6 +156,7 @@ export const getGroup = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -1117,6 +1118,7 @@ export const getCourseInfo = /* GraphQL */ `
       introduction
       sylabusAttachment
       sylabusAttachmentName
+      sylabusAttachmentOwner
       createdAt
       updatedAt
     }
@@ -1145,6 +1147,7 @@ export const listCourseInfos = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -1177,6 +1180,7 @@ export const getCourseTriads = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -1219,6 +1223,7 @@ export const listCourseTriadss = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -1260,6 +1265,7 @@ export const getCourseBackOfficeStaff = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -1384,6 +1390,7 @@ export const listCourseBackOfficeStaffs = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -1451,6 +1458,7 @@ export const getCourseInstructors = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -1575,6 +1583,7 @@ export const listCourseInstructorss = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -1633,6 +1642,7 @@ export const getCourseTriadCoaches = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -1819,6 +1829,7 @@ export const getCourseTriadUsers = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -2028,6 +2039,7 @@ export const getCourseWeek = /* GraphQL */ `
         introduction
         sylabusAttachment
         sylabusAttachmentName
+        sylabusAttachmentOwner
         createdAt
         updatedAt
       }
@@ -2076,6 +2088,7 @@ export const listCourseWeeks = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -2122,6 +2135,7 @@ export const getCourseLesson = /* GraphQL */ `
           introduction
           sylabusAttachment
           sylabusAttachmentName
+          sylabusAttachmentOwner
           createdAt
           updatedAt
         }
@@ -2373,6 +2387,7 @@ export const getDirectMessageRoom = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -2419,6 +2434,7 @@ export const getDirectMessage = /* GraphQL */ `
       content
       attachment
       attachmentName
+      attachmentOwner
       when
       recipients
       userId
@@ -2429,6 +2445,7 @@ export const getDirectMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           recipients
           userId
           messageId
@@ -2567,6 +2584,7 @@ export const listDirectMessages = /* GraphQL */ `
         content
         attachment
         attachmentName
+        attachmentOwner
         when
         recipients
         userId
@@ -2632,6 +2650,7 @@ export const getCrmRoot = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           createdAt
           updatedAt
         }
@@ -2675,6 +2694,7 @@ export const getCrmMessage = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       thread {
         items {
           id
@@ -2684,6 +2704,7 @@ export const getCrmMessage = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           parentId
           createdAt
           updatedAt
@@ -2711,6 +2732,7 @@ export const listCrmMessages = /* GraphQL */ `
         authorName
         authorId
         attachment
+        attachmentOwner
         thread {
           nextToken
         }
@@ -2731,6 +2753,7 @@ export const getCrmReply = /* GraphQL */ `
       authorName
       authorId
       attachment
+      attachmentOwner
       parentId
       parent {
         id
@@ -2745,6 +2768,7 @@ export const getCrmReply = /* GraphQL */ `
         authorName
         authorId
         attachment
+        attachmentOwner
         thread {
           nextToken
         }
@@ -2767,6 +2791,7 @@ export const listCrmReplys = /* GraphQL */ `
         authorName
         authorId
         attachment
+        attachmentOwner
         parentId
         parent {
           id
@@ -2776,6 +2801,7 @@ export const listCrmReplys = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           createdAt
           updatedAt
         }
@@ -2794,6 +2820,7 @@ export const getMessage = /* GraphQL */ `
       when
       attachment
       attachmentName
+      attachmentOwner
       roomId
       userId
       postingAs
@@ -2903,6 +2930,7 @@ export const getMessage = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId
@@ -3023,6 +3051,7 @@ export const listMessages = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         roomId
         userId
         postingAs
@@ -4570,6 +4599,7 @@ export const directMessagesByRoom = /* GraphQL */ `
         content
         attachment
         attachmentName
+        attachmentOwner
         when
         recipients
         userId
@@ -4645,6 +4675,7 @@ export const messagesByRoom = /* GraphQL */ `
         when
         attachment
         attachmentName
+        attachmentOwner
         roomId
         userId
         postingAs
@@ -5040,6 +5071,7 @@ export const getUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           roomId
           userId
           postingAs
@@ -5055,6 +5087,7 @@ export const getUser = /* GraphQL */ `
           content
           attachment
           attachmentName
+          attachmentOwner
           when
           recipients
           userId
@@ -5071,6 +5104,7 @@ export const getUser = /* GraphQL */ `
           when
           attachment
           attachmentName
+          attachmentOwner
           userId
           messageId
           roomId

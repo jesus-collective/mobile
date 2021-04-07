@@ -560,7 +560,8 @@ type Activity
   @model
   @auth(
     rules: [
-      { allow: owner, ownerField: "readUser", operations: [read] }
+      { allow: owner, ownerField: "readUser", operations: [read] },
+      { allow: groups, groups: ["admin"]}
     ]
   ) 
   @key(name: "byGroupTypeId", fields:["readUser", "time"], queryField:"activityByGroup")
@@ -616,6 +617,7 @@ type CourseInfo
   introduction: String
   sylabusAttachment:String
   sylabusAttachmentName:String
+  sylabusAttachmentOwner:String
 }
 type CourseTriads
 @model
@@ -802,6 +804,11 @@ type DirectMessage
       { allow: owner, ownerField: "userId", operations: [create, update, read] },
       { allow: owner, ownerField: "recipients", operations: [create, update, read] },
     ])
+  attachmentOwner: String
+    @auth(rules: [
+      { allow: owner, ownerField: "userId", operations: [create, update, read] },
+      { allow: owner, ownerField: "recipients", operations: [create, update, read] },
+    ])
   when: String!
   recipients: [String]!
   userId: ID!
@@ -830,6 +837,11 @@ type DirectMessageReply
       { allow: owner, ownerField: "recipients", operations: [create, update, read] },
     ])
     attachmentName: String
+    @auth(rules: [
+      { allow: owner, ownerField: "userId", operations: [create, update, read] },
+      { allow: owner, ownerField: "recipients", operations: [create, update, read] },
+    ])
+     attachmentOwner: String
     @auth(rules: [
       { allow: owner, ownerField: "userId", operations: [create, update, read] },
       { allow: owner, ownerField: "recipients", operations: [create, update, read] },
@@ -873,6 +885,7 @@ type CRMMessage @model
   authorName: String!
   authorId: ID!
   attachment: String
+  attachmentOwner: String
   thread: [CRMReply] @connection(keyName: "crmReplyByMessage", fields: ["id"])
 }
 
@@ -890,6 +903,7 @@ type CRMReply @model
   authorName: String!
   authorId: ID!
   attachment: String
+  attachmentOwner: String
   parentId: ID!
   parent: CRMMessage @connection(fields: ["parentId"])
 }
@@ -909,6 +923,7 @@ type Message
   when: String!
   attachment: String
   attachmentName: String
+  attachmentOwner: String
   roomId: ID
   userId: ID
 #  authorOrgId: ID!
@@ -933,6 +948,7 @@ type Reply @model(queries: null)
     when: String!
     attachment: String
     attachmentName: String
+    attachmentOwner: String
     userId: ID!
     author: User @connection(fields: ["userId"])
 

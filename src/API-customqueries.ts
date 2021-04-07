@@ -303,6 +303,7 @@ export type Message = {
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   roomId?: string | null
   userId?: string | null
   postingAs?: string | null
@@ -327,6 +328,7 @@ export type Reply = {
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   userId?: string
   messageId?: string
   parentMessage?: Message
@@ -556,6 +558,7 @@ export type DirectMessage = {
   content?: string | null
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   when?: string
   recipients?: Array<string | null>
   userId?: string
@@ -580,6 +583,7 @@ export type DirectMessageReply = {
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   recipients?: Array<string | null>
   userId?: string
   messageId?: string
@@ -634,6 +638,7 @@ export type CourseInfo = {
   introduction?: string | null
   sylabusAttachment?: string | null
   sylabusAttachmentName?: string | null
+  sylabusAttachmentOwner?: string | null
   createdAt?: string
   updatedAt?: string
 }
@@ -979,6 +984,7 @@ export type ListDirectMessageRoomsQuery = {
           content?: string | null
           attachment?: string | null
           attachmentName?: string | null
+          attachmentOwner?: string | null
           when: string
           recipients: Array<string | null>
           userId: string
@@ -1164,6 +1170,7 @@ export type GetCourseInfoQuery = {
     designedBy?: string | null
     summary?: string | null
     sylabusAttachmentName?: string | null
+    sylabusAttachmentOwner?: string | null
     sylabusAttachment?: string | null
     courseWeeks?: {
       __typename: "ModelCourseWeekConnection"

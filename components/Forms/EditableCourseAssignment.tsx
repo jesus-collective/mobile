@@ -199,6 +199,22 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       }
     else return initialPostState.Unknown
   }
+  shouldShowMB = () => {
+    if (this.state.currentUser == null) return false
+    if (
+      this.state.currentRoomId ==
+      "course-" + this.props.assignmentId + "-" + this.state.currentUser
+    )
+      return true
+    if (this.props.assignmentId)
+      if (
+        this.state.data.filter((item) => item.id == this.state.currentRoomId)[0].directMessage.items
+          .length > 0
+      )
+        return true
+      else return false
+    else return false
+  }
   getOtherUsers(data: any): { ids: string[]; names: string[] } {
     const ids: string[] = []
     const names: string[] = []
@@ -281,7 +297,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
           )}
         </Container>
 
-        {this.state.data != null && this.state.data.length != 0 ? (
+        {this.state.data != null && this.state.data.length != 0 && this.shouldShowMB() ? (
           <Container style={this.styles.style.courseAssignmentScreenRightCard}>
             <MessageBoard
               replies

@@ -9,6 +9,7 @@ export type Message = {
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   roomId?: string | null
   userId?: string | null
   postingAs?: string | null
@@ -256,6 +257,7 @@ export type DirectMessage = {
   content?: string | null
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   when?: string
   recipients?: Array<string | null>
   userId?: string
@@ -280,6 +282,7 @@ export type DirectMessageReply = {
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   recipients?: Array<string | null>
   userId?: string
   messageId?: string
@@ -335,6 +338,7 @@ export type Reply = {
   when?: string
   attachment?: string | null
   attachmentName?: string | null
+  attachmentOwner?: string | null
   userId?: string
   messageId?: string
   parentMessage?: Message
@@ -388,6 +392,7 @@ export type CourseInfo = {
   introduction?: string | null
   sylabusAttachment?: string | null
   sylabusAttachmentName?: string | null
+  sylabusAttachmentOwner?: string | null
   createdAt?: string
   updatedAt?: string
 }
@@ -782,6 +787,7 @@ export type ModelDirectMessageFilterInput = {
   content?: ModelStringFilterInput | null
   attachment?: ModelStringFilterInput | null
   attachmentName?: ModelStringFilterInput | null
+  attachmentOwner?: ModelStringFilterInput | null
   when?: ModelStringFilterInput | null
   recipients?: ModelStringFilterInput | null
   userId?: ModelIDFilterInput | null
@@ -823,6 +829,7 @@ export type ModelMessageFilterInput = {
   when?: ModelStringFilterInput | null
   attachment?: ModelStringFilterInput | null
   attachmentName?: ModelStringFilterInput | null
+  attachmentOwner?: ModelStringFilterInput | null
   roomId?: ModelIDFilterInput | null
   userId?: ModelIDFilterInput | null
   postingAs?: ModelStringFilterInput | null
@@ -841,6 +848,7 @@ export type GetMessageQuery = {
     __typename: "Message"
     attachment?: string | null
     attachmentName?: string | null
+    attachmentOwner?: string | null
     author?: {
       __typename: "User"
       aboutMeLong?: string | null
@@ -888,6 +896,7 @@ export type GetMessageQuery = {
         __typename: "Reply"
         attachment?: string | null
         attachmentName?: string | null
+        attachmentOwner?: string | null
         author?: {
           __typename: "User"
           aboutMeLong?: string | null
@@ -952,6 +961,7 @@ export type DirectMessagesByRoomQuery = {
       content?: string | null
       attachment?: string | null
       attachmentName?: string | null
+      attachmentOwner?: string | null
       when: string
       recipients: Array<string | null>
       userId: string
@@ -961,6 +971,7 @@ export type DirectMessagesByRoomQuery = {
           __typename: "DirectMessageReply"
           attachment?: string | null
           attachmentName?: string | null
+          attachmentOwner?: string | null
           author?: {
             __typename: "User"
             aboutMeLong?: string | null
@@ -1069,6 +1080,7 @@ export type MessagesByRoomQuery = {
       __typename: "Message"
       attachment?: string | null
       attachmentName?: string | null
+      attachmentOwner?: string | null
       author?: {
         __typename: "User"
         aboutMeLong?: string | null
@@ -1116,6 +1128,7 @@ export type MessagesByRoomQuery = {
           __typename: "Reply"
           attachment?: string | null
           attachmentName?: string | null
+          attachmentOwner?: string | null
           author?: {
             __typename: "User"
             aboutMeLong?: string | null
@@ -1175,6 +1188,7 @@ export type OnCreateMessageByRoomIdSubscription = {
     when: string
     attachment?: string | null
     attachmentName?: string | null
+    attachmentOwner?: string | null
     roomId?: string | null
     userId?: string | null
     postingAs?: string | null
@@ -1291,6 +1305,7 @@ export type OnCreateMessageByRoomIdSubscription = {
         when: string
         attachment?: string | null
         attachmentName?: string | null
+        attachmentOwner?: string | null
         userId: string
         messageId: string
         parentReplyId: string
@@ -1377,6 +1392,7 @@ export type OnCreateReplySubscription = {
     when: string
     attachment?: string | null
     attachmentName?: string | null
+    attachmentOwner?: string | null
     userId: string
     messageId: string
     roomId?: string | null
@@ -1396,6 +1412,7 @@ export type OnCreateDirectMessageSubscription = {
     content?: string | null
     attachment?: string | null
     attachmentName?: string | null
+    attachmentOwner?: string | null
     when: string
     recipients: Array<string | null>
     userId: string
@@ -1408,6 +1425,7 @@ export type OnCreateDirectMessageSubscription = {
         when: string
         attachment?: string | null
         attachmentName?: string | null
+        attachmentOwner?: string | null
         userId: string
         messageId: string
         messageRoomID?: string | null
@@ -1560,6 +1578,7 @@ export type OnCreateDirectMessageReplySubscription = {
     when: string
     attachment?: string | null
     attachmentName?: string | null
+    attachmentOwner?: string | null
     userId: string
     messageId: string
     parentMessage?: {
@@ -1584,6 +1603,7 @@ export type GetDirectMessageQuery = {
     content?: string | null
     attachment?: string | null
     attachmentName?: string | null
+    attachmentOwner?: string | null
     when: string
     recipients: Array<string | null>
     userId: string
@@ -1593,6 +1613,7 @@ export type GetDirectMessageQuery = {
         __typename: "DirectMessageReply"
         attachment?: string | null
         attachmentName?: string | null
+        attachmentOwner?: string | null
         author?: {
           __typename: "User"
           aboutMeLong?: string | null

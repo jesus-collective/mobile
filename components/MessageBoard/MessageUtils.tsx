@@ -44,7 +44,7 @@ export default class Utils {
     return fileName
   }
 
-  static async getAttachment(filePath?: string | null): Promise<void> {
+  static async getAttachment(filePath?: string | null, owner): Promise<void> {
     if (!filePath) return
 
     try {
@@ -53,17 +53,17 @@ export default class Utils {
 
       const res = await Storage.get(filePath, {
         level: "protected",
-        identityId: userId,
+        identityId: owner,
       })
 
-      window.open(res as string, "_blank", "noopener noreferrer")
+      window.open(res as string, "_blank", "")
     } catch (e) {
       console.error(e)
     }
   }
   static renderFileDownloadBadge(item: DM | DMReply | Message | Reply): React.ReactNode {
     return (
-      <TouchableOpacity onPress={() => this.getAttachment(item?.attachment)}>
+      <TouchableOpacity onPress={() => this.getAttachment(item?.attachment, item?.attachmentOwner)}>
         <Badge style={{ backgroundColor: "#EFF1F5", marginRight: 10, marginTop: 5, height: 30 }}>
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
             {this.renderFileIcon(item?.attachment)}

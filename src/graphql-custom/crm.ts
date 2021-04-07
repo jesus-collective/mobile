@@ -11,6 +11,7 @@ export const getCrmRoot = /* GraphQL */ `
           authorName
           authorId
           attachment
+          attachmentOwner
           thread {
             items {
               id
@@ -20,6 +21,7 @@ export const getCrmRoot = /* GraphQL */ `
               authorName
               authorId
               attachment
+              attachmentOwner
               parentId
               createdAt
               updatedAt

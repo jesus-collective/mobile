@@ -72,8 +72,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         {state.isEditable && state.editMode ? (
           <EditableText
             onChange={(e) => {
-              if (Number.isInteger(e))
-                actions.updateLesson(state.activeWeek, lesson, "wordCount", e)
+              actions.updateLesson(state.activeWeek, lesson, "wordCount", e)
             }}
             placeholder="Word Count"
             multiline={false}

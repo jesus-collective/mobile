@@ -66,6 +66,7 @@ interface State extends JCState {
   UserDetails: GetUserQuery["getUser"]
   editorState: EditorState
   attachment: string
+  attachmentOwner: string
   attachmentName: string
   fileNameWidth: number
   wordCount: number
@@ -83,6 +84,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       UserDetails: null,
       editorState: EditorState.createEmpty(),
       attachment: "",
+      attachmentOwner: "",
       attachmentName: "",
       wordCount: 0,
       showVideo: false,
@@ -90,6 +92,18 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       replyToId: "",
       replyToRoomId: "",
       fetchingData: false,
+    }
+  }
+  componentDidUpdate(prevProps: Props): void {
+    if (prevProps.groupId !== this.props.groupId) {
+      this.setState({
+        editorState: EditorState.createEmpty(),
+      })
+    }
+    if (prevProps.roomId !== this.props.roomId) {
+      this.setState({
+        editorState: EditorState.createEmpty(),
+      })
     }
   }
   static defaultProps = {
@@ -109,7 +123,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           contentType: file.type,
           identityId: userId,
         })
-        if (upload) this.setState({ attachment: fn })
+        if (upload) this.setState({ attachment: fn, attachmentOwner: userId })
       } catch (e) {
         console.error(e)
       }
@@ -134,7 +148,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   renderFileUploadBadge(): React.ReactNode {
-    const { attachment } = this.state
+    const { attachment, attachmentOwner } = this.state
 
     return (
       <View>
@@ -144,7 +158,11 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             <Text style={{ fontSize: 16, marginHorizontal: 5 }}>
               {this.processFileName(attachment)}
             </Text>
-            <TouchableOpacity onPress={() => this.setState({ attachment: "", attachmentName: "" })}>
+            <TouchableOpacity
+              onPress={() =>
+                this.setState({ attachment: "", attachmentName: "", attachmentOwner: "" })
+              }
+            >
               <AntDesign name="close" size={20} color="black" />
             </TouchableOpacity>
           </View>
@@ -195,7 +213,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   async saveMessage(): Promise<void> {
-    const { editorState, attachment, attachmentName } = this.state
+    const { editorState, attachment, attachmentName, attachmentOwner } = this.state
 
     if (!editorState.getCurrentContent().hasText()) {
       return
@@ -211,6 +229,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           when: Date.now().toString(),
           attachment: attachment,
           attachmentName: attachmentName,
+          attachmentOwner: attachmentOwner,
           roomId: this.props.groupId,
           userId: user.username,
           owner: user.username,
@@ -227,6 +246,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             editorState: EditorState.createEmpty(),
             attachmentName: "",
             attachment: "",
+            attachmentOwner: "",
           })
         } catch (err) {
           console.error({ "Error mutations.createMessage": err })
@@ -235,6 +255,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               editorState: EditorState.createEmpty(),
               attachmentName: "",
               attachment: "",
+              attachmentOwner: "",
             })
           }
         }
@@ -245,6 +266,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           content: message,
           attachment: attachment,
           attachmentName: attachmentName,
+          attachmentOwner: attachmentOwner,
           when: Date.now().toString(),
           messageRoomID: this.props.roomId,
           recipients: this.props.recipients ?? [],
@@ -260,6 +282,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             editorState: EditorState.createEmpty(),
             attachmentName: "",
             attachment: "",
+            attachmentOwner: "",
           })
         } catch (err) {
           console.error({ "Error mutations.createDirectMessage ": err })
@@ -268,6 +291,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               editorState: EditorState.createEmpty(),
               attachmentName: "",
               attachment: "",
+              attachmentOwner: "",
             })
           }
         }
@@ -520,7 +544,14 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   async sendReply() {
-    const { editorState, attachment, attachmentName, replyToId, replyToRoomId } = this.state
+    const {
+      editorState,
+      attachment,
+      attachmentName,
+      attachmentOwner,
+      replyToId,
+      replyToRoomId,
+    } = this.state
     console.log(replyToRoomId)
     if (!editorState.getCurrentContent().hasText() || !replyToId || !replyToRoomId) {
       return
@@ -536,6 +567,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           when: Date.now().toString(),
           attachment: attachment,
           attachmentName: attachmentName,
+          attachmentOwner: attachmentOwner,
           roomId: replyToRoomId,
           userId: user.username,
           messageId: replyToId,
@@ -552,6 +584,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           editorState: EditorState.createEmpty(),
           attachmentName: "",
           attachment: "",
+          attachmentOwner: "",
           replyToId: "",
           replyToRoomId: "",
           replyToWho: [],
@@ -563,6 +596,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             editorState: EditorState.createEmpty(),
             attachmentName: "",
             attachment: "",
+            attachmentOwner: "",
             replyToId: "",
             replyToRoomId: "",
             replyToWho: [],
@@ -582,6 +616,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           when: Date.now().toString(),
           attachment: attachment,
           attachmentName: attachmentName,
+          attachmentOwner: attachmentOwner,
           messageRoomID: replyToRoomId,
           userId: user.username,
           messageId: replyToId,
@@ -599,6 +634,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           editorState: EditorState.createEmpty(),
           attachmentName: "",
           attachment: "",
+          attachmentOwner: "",
           replyToId: "",
           replyToRoomId: "",
           replyToWho: [],
@@ -610,6 +646,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             editorState: EditorState.createEmpty(),
             attachmentName: "",
             attachment: "",
+            attachmentOwner: "",
             replyToId: "",
             replyToRoomId: "",
             replyToWho: [],
