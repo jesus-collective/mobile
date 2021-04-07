@@ -469,9 +469,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           {this.state.attachment ? this.renderFileUploadBadge() : null}
 
           <JCButton
-            enabled={
-              !this.props.showWordCount || this.state.wordCount >= (this.props.totalWordCount ?? 0)
-            }
             buttonType={
               style == "regular" || style == "course" || style == "courseResponse"
                 ? ButtonTypes.SolidRightJustified
