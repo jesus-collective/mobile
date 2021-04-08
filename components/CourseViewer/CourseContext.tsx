@@ -1,21 +1,33 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { JCState } from "components/JCComponent/JCComponent"
+import { Moment } from "moment"
 import * as React from "react"
 import { GetGroupQuery, SearchUsersQuery } from "../../src/API"
 import { GetCourseInfoQuery } from "../../src/API-courses"
+
+type CourseInfo = NonNullable<GetCourseInfoQuery>["getCourseInfo"]
+
+export type CourseWeek = NonNullable<
+  NonNullable<NonNullable<CourseInfo>["courseWeeks"]>["items"]
+>[0]
+
+export type CourseLesson = NonNullable<NonNullable<NonNullable<CourseWeek>["lessons"]>["items"]>[0]
+
+export type CourseWeekObj = CourseWeek & { lessons: Record<string, CourseLesson> }
 
 export interface CourseState extends JCState {
   showMap: boolean
   loadId: string
   data: NonNullable<GetGroupQuery>["getGroup"]
-  courseData: NonNullable<GetCourseInfoQuery>["getCourseInfo"]
+  courseData: CourseInfo
+  courseWeeks: Record<string, CourseWeekObj>
   editMode: boolean
   isEditable: boolean
   validationError: string
   currentScreen: string
   currentUser: string | null
-  activeWeek: number
-  activeLesson: number | null
+  activeWeek: string
+  activeLesson: string
   activeMessageBoard: string
   activeCourseActivity: string
   showChat: boolean
@@ -25,14 +37,24 @@ export type CourseToDo = {
   lessonType: string
   time: string
   date: string
-  moment: moment.Moment
-  weekNumber: string
-  lessonNumber: string
+  moment: Moment
+  week: string
+  lesson: string
 }
 
-export type CourseDates = Record<
+export type MarkedDates = Record<string, { marked: true; dotColor: string }>
+
+export type AgendaItems = Record<
   string,
-  { marked: true; dotColor: string; weekNumber: string; lessonNumber: string }
+  | Array<{
+      name: string
+      lessonType: string
+      lesson: string
+      week: string
+      time: string
+      date: string
+    }>
+  | undefined
 >
 
 export interface CourseActions {
@@ -41,15 +63,15 @@ export interface CourseActions {
   updateCourse: (item: string, value: any) => Promise<void>
   deleteCourse: null
   setActiveScreen: (screen: string) => void
-  setActiveWeek: (index: number) => void
-  setActiveLesson: (index: number) => void
+  setActiveWeek: (index: string) => void
+  setActiveLesson: (index: string) => void
   createWeek: () => Promise<void>
-  updateWeek: (index: number, item: string, value: any) => Promise<void>
-  deleteWeek: (index: number) => Promise<void>
+  updateWeek: (week: string, item: string, value: any) => Promise<void>
+  deleteWeek: (week: string) => Promise<void>
   updateWeekOrder: () => void
   createLesson: () => Promise<void>
-  updateLesson: (week: number, lesson: number, item: string, value: any) => Promise<void>
-  deleteLesson: (week: number, lesson: number) => Promise<void>
+  updateLesson: (week: string, lesson: string, item: string, value: any) => Promise<void>
+  deleteLesson: (week: string, lesson: string) => Promise<void>
   updateTriad: (index: number, item: string, value: any) => Promise<void>
   createTriad: () => Promise<void>
   deleteTriad: (index: number) => Promise<void>
@@ -73,7 +95,7 @@ export interface CourseActions {
   myCourseGroups: () => { all: any[]; cohort: any[]; completeTriad: any[] }
   getAssignmentList: () => any[] | undefined
   getLessonById: (id: string) => any
-  myCourseDates: () => CourseDates
+  myCourseDates: () => { markedDates: MarkedDates; items: AgendaItems }
   myCourseTodo: () => CourseToDo[]
   setShowChat: () => void
 }
@@ -115,7 +137,7 @@ export const CourseContext = React.createContext<CourseContextType>({
     getAssignmentList: () => [],
     getLessonById: () => null,
     myCourseDates: () => {
-      return {}
+      return { markedDates: {}, items: {} }
     },
     myCourseTodo: () => {
       return []
