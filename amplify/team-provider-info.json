@@ -70,14 +70,14 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcProcessDMAlerts-566654426d494e715734-build.zip"
+          "s3Key": "amplify-builds/jcProcessDMAlerts-32736c2b4c3872313632-build.zip"
         },
         "jcProcessMessageAlerts": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcProcessMessageAlerts-6a59615a504f4a7a2f61-build.zip"
+          "s3Key": "amplify-builds/jcProcessMessageAlerts-4a6e31374d776a6e4f4c-build.zip"
         },
         "jcmobile": {},
         "jcmobileStripeCreatePaymentIntent": {},
@@ -92,11 +92,16 @@
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
           "s3Key": "amplify-builds/jcmobileStripCancelSubscription-706a4c586e66314e746a-build.zip"
         },
-        "jcmobileSendHelpRequest": {},
+        "jcmobileSendHelpRequest": {
+          "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
+          "s3Key": "amplify-builds/jcmobileSendHelpRequest-48622f753751562b4775-build.zip"
+        },
         "jcHandleActivity": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
-          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
+          "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
+          "s3Key": "amplify-builds/jcHandleActivity-486d71615965666d4876-build.zip"
         }
       },
       "video": {
@@ -177,14 +182,14 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcProcessDMAlerts-6b324e65455156416c55-build.zip"
+          "s3Key": "amplify-builds/jcProcessDMAlerts-32736c2b4c3872313632-build.zip"
         },
         "jcProcessMessageAlerts": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcProcessMessageAlerts-6a59615a504f4a7a2f61-build.zip"
+          "s3Key": "amplify-builds/jcProcessMessageAlerts-7161796f773742767351-build.zip"
         },
         "jcmobile": {},
         "jcmobilePreTokenGeneration": {
@@ -208,7 +213,7 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcHandleActivity-3468566468354d4a5472-build.zip"
+          "s3Key": "amplify-builds/jcHandleActivity-486d71615965666d4876-build.zip"
         }
       },
       "video": {
