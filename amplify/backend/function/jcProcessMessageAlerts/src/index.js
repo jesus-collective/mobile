@@ -28,6 +28,7 @@ Amplify.default.configure({
     identityPoolId: process.env.identityPoolId,
   },
 })
+
 async function groupMemberByGroup(groupID) {
   try {
     console.log("Starting groupMemberByGroup")

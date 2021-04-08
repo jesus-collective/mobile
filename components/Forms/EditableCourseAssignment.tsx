@@ -208,8 +208,8 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       return true
     if (this.props.assignmentId)
       if (
-        this.state.data.filter((item) => item.id == this.state.currentRoomId)[0].directMessage.items
-          .length > 0
+        this.state.data.filter((item) => item.id == this.state.currentRoomId)[0]?.directMessage
+          ?.items?.length > 0
       )
         return true
       else return false
