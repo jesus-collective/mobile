@@ -184,6 +184,45 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     })
   }
 
+  sortLessons = async (): Promise<void> => {
+    const { lessons } = this.state.courseWeeks[this.state.activeWeek]
+
+    const sortedLessons = Object.values(lessons).sort((a, b) =>
+      (a?.time ?? "")?.localeCompare(b?.time ?? "")
+    )
+
+    const promises = sortedLessons.map(async (lesson, idx) => {
+      if (lesson?.id) {
+        await this.updateLesson(
+          this.state.activeWeek,
+          lesson.id as string,
+          "lesson",
+          (idx + 1).toString()
+        )
+      }
+    })
+
+    await Promise.all(promises)
+
+    const courseWeeks = { ...this.state.courseWeeks }
+
+    const lessonsPostSort: CourseWeekObj["lessons"] = {}
+
+    Object.values(courseWeeks?.[this.state.activeWeek].lessons)
+      .sort((a, b) => (a?.time ?? "")?.localeCompare(b?.time ?? ""))
+      .forEach((lesson) => {
+        if (lesson?.id) {
+          lessonsPostSort[lesson.id] = lesson
+        }
+      })
+
+    courseWeeks[this.state.activeWeek].lessons = lessonsPostSort
+
+    this.setState({ courseWeeks })
+
+    console.debug("SORT COMPLETE")
+  }
+
   updateBackOfficeStaff = async (
     value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
   ): Promise<void> => {
@@ -1011,6 +1050,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             myCourseDates: this.myCourseDates,
             myCourseTodo: this.myCourseTodo,
             setShowChat: () => this.setState({ showChat: !this.state.showChat }),
+            sortLessons: this.sortLessons,
           },
         }}
       >

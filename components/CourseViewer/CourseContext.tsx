@@ -98,6 +98,7 @@ export interface CourseActions {
   myCourseDates: () => { markedDates: MarkedDates; items: AgendaItems }
   myCourseTodo: () => CourseToDo[]
   setShowChat: () => void
+  sortLessons: () => Promise<void>
 }
 
 type CourseContextType = {
@@ -143,6 +144,7 @@ export const CourseContext = React.createContext<CourseContextType>({
       return []
     },
     setShowChat: () => null,
+    sortLessons: () => Promise.resolve(),
   },
   state: undefined,
 })

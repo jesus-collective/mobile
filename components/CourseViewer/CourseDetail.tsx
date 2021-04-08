@@ -444,6 +444,16 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
       week ? (
         <Container style={this.styles.style.courseDetailLeftContainer}>
           <Container style={this.styles.style.courseDetailCourseInfoContainer}>
+            {state.isEditable && state.editMode ? (
+              <JCButton
+                buttonType={ButtonTypes.CourseHomeSidebarTop}
+                onPress={() => {
+                  actions.sortLessons()
+                }}
+              >
+                Sort Lessons
+              </JCButton>
+            ) : null}
             <EditableText
               onChange={(e) => {
                 actions.updateWeek(state.activeWeek, "title", e)
@@ -772,7 +782,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             >
               {week?.name}
             </Text>
-            <Text style={this.styles.style.courseDetailLessonText}>{lesson?.name}</Text>
+            <Text style={this.styles.style.courseDetailLessonText}>
+              Lesson {lesson?.lesson} - {lesson?.name}
+            </Text>
           </Container>
           <Image
             style={this.styles.style.courseDetailCalendarImage}
@@ -837,7 +849,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             >
               {week?.name}
             </Text>
-            <Text style={this.styles.style.courseDetailLessonText}>{lesson?.name}</Text>
+            <Text style={this.styles.style.courseDetailLessonText}>
+              Lesson {lesson?.lesson} - {lesson?.name}
+            </Text>
             {lesson?.zoomUrl ? (
               <JCButton
                 buttonType={ButtonTypes.CourseZoom}
@@ -921,7 +935,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             >
               {week?.name}
             </Text>
-            <Text style={this.styles.style.courseDetailLessonText}>{lesson?.name}</Text>
+            <Text style={this.styles.style.courseDetailLessonText}>
+              Lesson {lesson?.lesson} - {lesson?.name}
+            </Text>
           </Container>
           <Container style={this.styles.style.courseDetailAssignmentTime2}>
             <Image
@@ -1006,7 +1022,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             >
               {week?.name}
             </Text>
-            <Text style={this.styles.style.courseDetailLessonText}>{lesson?.name}</Text>
+            <Text style={this.styles.style.courseDetailLessonText}>
+              Lesson {lesson?.lesson} - {lesson?.name}
+            </Text>
           </Container>
           <Container style={this.styles.style.courseDetailAssignmentTime}>
             <Image
