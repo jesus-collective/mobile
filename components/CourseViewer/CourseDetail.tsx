@@ -13,21 +13,20 @@ import EditableText from "../Forms/EditableText"
 import EditableUrl from "../Forms/EditableUrl"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { CourseActions, CourseContext, CourseState } from "./CourseContext"
+import {
+  CourseActions,
+  CourseContext,
+  CourseLesson,
+  CourseState,
+  CourseWeek,
+  CourseWeekObj,
+} from "./CourseContext"
 import CourseDetailMenu from "./CourseDetailMenu"
 
 interface Props {
   navigation?: any
   route?: any
 }
-
-type CourseWeek =
-  | NonNullable<NonNullable<NonNullable<CourseState["courseData"]>["courseWeeks"]>["items"]>[0]
-  | undefined
-
-type CourseLesson =
-  | NonNullable<NonNullable<NonNullable<CourseWeek>["lessons"]>["items"]>[0]
-  | undefined
 
 class CourseDetailImpl extends JCComponent<Props, JCState> {
   constructor(props: Props) {
@@ -58,8 +57,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             testID={"course-lessonConfig-zoomDate-" + lesson}
             type="datetime"
             onChange={(time, timeZone) => {
-              actions.updateLesson(state.activeWeek, lesson, "time", time)
-              actions.updateLesson(state.activeWeek, lesson, "tz", timeZone)
+              actions.updateLesson(state.activeWeek, item?.id as string, "time", time)
+              actions.updateLesson(state.activeWeek, item?.id as string, "tz", timeZone)
             }}
             placeholder="Enter Zoom Date/Time"
             textStyle={this.styles.style.fontRegular}
@@ -72,7 +71,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         {state.isEditable && state.editMode ? (
           <EditableText
             onChange={(e) => {
-              actions.updateLesson(state.activeWeek, lesson, "wordCount", e)
+              actions.updateLesson(state.activeWeek, item?.id as string, "wordCount", e)
             }}
             placeholder="Word Count"
             multiline={false}
@@ -119,8 +118,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             type="datetime"
             testID={"course-lessonConfig-zoomDate-" + lesson}
             onChange={(time, timeZone) => {
-              actions.updateLesson(state.activeWeek, lesson, "time", time)
-              actions.updateLesson(state.activeWeek, lesson, "tz", timeZone)
+              actions.updateLesson(state.activeWeek, item?.id as string, "time", time)
+              actions.updateLesson(state.activeWeek, item?.id as string, "tz", timeZone)
             }}
             placeholder="Enter Response Date/Time"
             textStyle={this.styles.style.fontRegular}
@@ -155,7 +154,12 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               placeholderIconColor="#007aff"
               selectedValue={item?.courseLessonResponseId}
               onValueChange={(value) => {
-                actions.updateLesson(state.activeWeek, lesson, "courseLessonResponseId", value)
+                actions.updateLesson(
+                  state.activeWeek,
+                  item?.id as string,
+                  "courseLessonResponseId",
+                  value
+                )
               }}
             >
               <Picker.Item label="Pick an assignment to Review" />
@@ -165,7 +169,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             </Picker>
             <EditableText
               onChange={(e) => {
-                actions.updateLesson(state.activeWeek, lesson, "wordCount", e)
+                actions.updateLesson(state.activeWeek, item?.id as string, "wordCount", e)
               }}
               placeholder="Word Count"
               multiline={false}
@@ -211,7 +215,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         <EditableUrl
           title="Open in Zoom"
           onChange={(e) => {
-            actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e)
+            actions.updateLesson(state.activeWeek, item?.id as string, "zoomUrl", e)
           }}
           testID={"course-lessonConfig-zoomUrl-" + lesson}
           placeholder="Enter Event URL"
@@ -220,11 +224,11 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           inputStyle={this.styles.style.courseEditableURL}
           value={item?.zoomUrl ?? ""}
           isEditable={state.isEditable && state.editMode}
-        ></EditableUrl>
+        />
         <EditableUrl
           title="Zoom Recording"
           onChange={(e) => {
-            actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e)
+            actions.updateLesson(state.activeWeek, item?.id as string, "zoomRecording", e)
           }}
           testID={"course-lessonConfig-zoomRecordingUrl-" + lesson}
           placeholder="Enter Recording URL"
@@ -233,14 +237,14 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           inputStyle={this.styles.style.courseEditableURL}
           value={item?.zoomRecording ?? ""}
           isEditable={state.isEditable && state.editMode}
-        ></EditableUrl>
+        />
         {state.isEditable && state.editMode ? (
           <EditableDate
             type="datetime"
             testID={"course-lessonConfig-zoomDate-" + lesson}
             onChange={(time, timeZone) => {
-              actions.updateLesson(state.activeWeek, lesson, "time", time)
-              actions.updateLesson(state.activeWeek, lesson, "tz", timeZone)
+              actions.updateLesson(state.activeWeek, item?.id as string, "time", time)
+              actions.updateLesson(state.activeWeek, item?.id as string, "tz", timeZone)
             }}
             placeholder="Enter Zoom Date/Time"
             textStyle={this.styles.style.fontRegular}
@@ -271,7 +275,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           <EditableUrl
             title="Open in Youtube"
             onChange={(e) => {
-              actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e)
+              actions.updateLesson(state.activeWeek, item?.id as string, "zoomRecording", e)
             }}
             placeholder="Enter youtube ID"
             multiline={false}
@@ -279,7 +283,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             inputStyle={this.styles.style.courseEditableURL}
             value={item?.zoomRecording ?? ""}
             isEditable={state.isEditable && state.editMode}
-          ></EditableUrl>
+          />
         ) : null}
 
         {state.isEditable && state.editMode ? (
@@ -287,8 +291,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             type="datetime"
             testID={"course-lessonConfig-zoomDate-" + lesson}
             onChange={(time, timeZone) => {
-              actions.updateLesson(state.activeWeek, lesson, "time", time)
-              actions.updateLesson(state.activeWeek, lesson, "tz", timeZone)
+              actions.updateLesson(state.activeWeek, item?.id as string, "time", time)
+              actions.updateLesson(state.activeWeek, item?.id as string, "tz", timeZone)
             }}
             placeholder="Enter Zoom Date/Time"
             textStyle={this.styles.style.fontRegular}
@@ -301,7 +305,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
       </Container>
     )
   }
-  getMonth(week: CourseWeek, item: CourseLesson, lesson: number) {
+  getMonth(week: CourseWeekObj, item: CourseLesson, lesson: number) {
     if (item?.time && item?.tz) {
       if (moment.tz(item.time, item.tz).format("MMM DD") == "Invalid date") {
         return ""
@@ -321,7 +325,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
       .add(lesson, "days")
       .format("MMM DD")
   }
-  getDay(week: CourseWeek, item: CourseLesson, lesson: number) {
+  getDay(week: CourseWeekObj, item: CourseLesson, lesson: number) {
     if (item?.time && item?.tz) {
       if (moment.tz(item.time, item.tz).format("H:mm") == "Invalid date") {
         return ""
@@ -431,11 +435,25 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     }
   }
 
-  renderWeekDetails(state: CourseState, actions: CourseActions, week: CourseWeek): React.ReactNode {
-    return state.activeLesson == null ? (
+  renderWeekDetails(
+    state: CourseState,
+    actions: CourseActions,
+    week: CourseWeekObj
+  ): React.ReactNode {
+    return state.activeLesson === "" ? (
       week ? (
         <Container style={this.styles.style.courseDetailLeftContainer}>
           <Container style={this.styles.style.courseDetailCourseInfoContainer}>
+            {state.isEditable && state.editMode ? (
+              <JCButton
+                buttonType={ButtonTypes.CourseHomeSidebarTop}
+                onPress={() => {
+                  actions.sortLessons()
+                }}
+              >
+                Sort Lessons
+              </JCButton>
+            ) : null}
             <EditableText
               onChange={(e) => {
                 actions.updateWeek(state.activeWeek, "title", e)
@@ -460,8 +478,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               }}
               value={week.title ?? ""}
               isEditable={state.isEditable && state.editMode}
-            ></EditableText>
-
+            />
             <EditableRichText
               testID="course-leader"
               onChange={(val: string) => {
@@ -472,203 +489,211 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             ></EditableRichText>
           </Container>
           <Container style={this.styles.style.courseLessonContainer}>
-            {week.lessons?.items?.map((item, lesson: number) => {
-              return (
-                <TouchableOpacity
-                  key={lesson}
-                  testID={"course-lessonButton-" + lesson}
-                  onPress={() => {
-                    !state.editMode ? actions.setActiveLesson(lesson) : null
-                  }}
-                >
-                  <Card
-                    style={
-                      state.isEditable && state.editMode
-                        ? this.styles.style.courseDetailLessonCardEdit
-                        : this.styles.style.courseDetailLessonCardNoEdit
-                    }
+            {Object.values(week.lessons).map((item, lesson: number) => {
+              if (item) {
+                return (
+                  <TouchableOpacity
+                    key={lesson}
+                    testID={"course-lessonButton-" + lesson}
+                    onPress={() => {
+                      !state.editMode ? actions.setActiveLesson(item?.id) : null
+                    }}
                   >
-                    <Container style={this.styles.style.courseDetailActivityCard}>
-                      <Container style={this.styles.style.courseDetailActivityInnerCard}>
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            lineHeight: 25,
-                            fontFamily: "Graphik-Regular-App",
-                            marginRight: 0,
-                            alignSelf: "flex-start",
-                          }}
-                        >
-                          {this.getMonth(week, item, lesson)}
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            lineHeight: 25,
-                            fontFamily: "Graphik-Regular-App",
-                            marginRight: 0,
-                            alignSelf: "flex-start",
-                          }}
-                        >
-                          {this.getDay(week, item, lesson)}
-                        </Text>
-                      </Container>
-                      <Container style={this.styles.style.courseDetailActivityInnerCardCenter}>
-                        <EditableText
-                          onChange={(e) => {
-                            actions.updateLesson(state.activeWeek, lesson, "name", e)
-                          }}
-                          placeholder="Title"
-                          multiline={true}
-                          testID={"course-lessonTitle-" + lesson}
-                          textStyle={this.styles.style.courseDetailHeading}
-                          inputStyle={{
-                            borderWidth: 1,
-                            borderColor: "#dddddd",
-                            marginTop: 0,
-                            marginBottom: 10,
-                            width: "100%",
-                            paddingTop: 5,
-                            paddingRight: 5,
-                            paddingBottom: 5,
-                            paddingLeft: 5,
-                            fontFamily: "Graphik-Regular-App",
-                            fontSize: 16,
-                            lineHeight: 21,
-                            height: 30,
-                          }}
-                          value={item?.name ?? ""}
-                          isEditable={state.isEditable && state.editMode}
-                        ></EditableText>
-
-                        <Container style={this.styles.style.courseActivityDetails}>
+                    <Card
+                      style={
+                        state.isEditable && state.editMode
+                          ? this.styles.style.courseDetailLessonCardEdit
+                          : this.styles.style.courseDetailLessonCardNoEdit
+                      }
+                    >
+                      <Container style={this.styles.style.courseDetailActivityCard}>
+                        <Container style={this.styles.style.courseDetailActivityInnerCard}>
                           <Text
-                            style={
-                              state.isEditable && state.editMode
-                                ? { marginRight: 10, paddingTop: 0 }
-                                : { marginRight: 0, paddingTop: 4 }
-                            }
+                            style={{
+                              fontSize: 20,
+                              lineHeight: 25,
+                              fontFamily: "Graphik-Regular-App",
+                              marginRight: 0,
+                              alignSelf: "flex-start",
+                            }}
                           >
-                            {state.isEditable && state.editMode ? null : (
-                              <Image
-                                style={{
-                                  width: "22px",
-                                  height: "22px",
-                                  alignSelf: "center",
-                                  top: 4,
-                                  marginRight: 3,
-                                }}
-                                source={require("../../assets/svg/time.svg")}
-                              />
-                            )}
-                            <EditableText
-                              onChange={(e) => {
-                                actions.updateLesson(state.activeWeek, lesson, "duration", e)
-                              }}
-                              placeholder="Duration"
-                              multiline={false}
-                              testID={"course-lessonDuration-" + lesson}
-                              textStyle={this.styles.style.courseTimeNonEditable}
-                              inputStyle={
-                                state.isEditable && state.editMode
-                                  ? {
-                                      borderWidth: 1,
-                                      borderColor: "#dddddd",
-                                      marginTop: 0,
-                                      marginBottom: 0,
-                                      width: "100%",
-                                      paddingTop: 5,
-                                      paddingRight: 5,
-                                      paddingBottom: 5,
-                                      paddingLeft: 5,
-                                      fontFamily: "Graphik-Regular-App",
-                                      fontSize: 16,
-                                      lineHeight: 21,
-                                      height: 30,
-                                    }
-                                  : {
-                                      borderWidth: 1,
-                                      borderColor: "#dddddd",
-                                      marginTop: 5,
-                                      marginBottom: 5,
-                                      width: "100%",
-                                      paddingTop: 5,
-                                      paddingRight: 5,
-                                      paddingBottom: 5,
-                                      paddingLeft: 5,
-                                      fontFamily: "Graphik-Regular-App",
-                                      fontSize: 16,
-                                      lineHeight: 21,
-                                      height: 30,
-                                    }
-                              }
-                              value={item?.duration ?? ""}
-                              isEditable={state.isEditable && state.editMode}
-                            ></EditableText>
+                            {this.getMonth(week, item, lesson)}
                           </Text>
-
-                          {state.isEditable && state.editMode ? (
-                            <Picker
-                              testID={"course-eventType-" + lesson}
-                              onStartShouldSetResponder={() => true}
-                              onMoveShouldSetResponderCapture={() => true}
-                              onStartShouldSetResponderCapture={() => true}
-                              onMoveShouldSetResponder={() => true}
-                              mode="dropdown"
-                              iosIcon={<Icon name="arrow-down" />}
-                              style={{
-                                width: "30%",
-                                marginBottom: 0,
-                                marginTop: 0,
-                                fontSize: 16,
-                                height: 30,
-                                flexGrow: 0,
-                                marginRight: 0,
-                                borderColor: "#dddddd",
-                              }}
-                              placeholder="Event type"
-                              placeholderStyle={{ color: "#bfc6ea" }}
-                              placeholderIconColor="#007aff"
-                              selectedValue={item?.lessonType}
-                              onValueChange={(value) => {
-                                actions.updateLesson(state.activeWeek, lesson, "lessonType", value)
-                              }}
-                            >
-                              <Picker.Item label="Zoom Call" value="zoom" />
-                              <Picker.Item label="Assignment" value="assignment" />
-                              <Picker.Item label="Respond" value="respond" />
-                              <Picker.Item label="Youtube" value="youtube" />
-                            </Picker>
-                          ) : (
-                            this.renderLessonIcon(item)
-                          )}
+                          <Text
+                            style={{
+                              fontSize: 20,
+                              lineHeight: 25,
+                              fontFamily: "Graphik-Regular-App",
+                              marginRight: 0,
+                              alignSelf: "flex-start",
+                            }}
+                          >
+                            {this.getDay(week, item, lesson)}
+                          </Text>
                         </Container>
-                        {this.renderConfig(state, actions, lesson, item)}
+                        <Container style={this.styles.style.courseDetailActivityInnerCardCenter}>
+                          <EditableText
+                            onChange={(e) => {
+                              actions.updateLesson(state.activeWeek, item.id, "name", e)
+                            }}
+                            placeholder="Title"
+                            multiline={true}
+                            testID={"course-lessonTitle-" + lesson}
+                            textStyle={this.styles.style.courseDetailHeading}
+                            inputStyle={{
+                              borderWidth: 1,
+                              borderColor: "#dddddd",
+                              marginTop: 0,
+                              marginBottom: 10,
+                              width: "100%",
+                              paddingTop: 5,
+                              paddingRight: 5,
+                              paddingBottom: 5,
+                              paddingLeft: 5,
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 16,
+                              lineHeight: 21,
+                              height: 30,
+                            }}
+                            value={item?.name ?? ""}
+                            isEditable={state.isEditable && state.editMode}
+                          ></EditableText>
+
+                          <Container style={this.styles.style.courseActivityDetails}>
+                            <Text
+                              style={
+                                state.isEditable && state.editMode
+                                  ? { marginRight: 10, paddingTop: 0 }
+                                  : { marginRight: 0, paddingTop: 4 }
+                              }
+                            >
+                              {state.isEditable && state.editMode ? null : (
+                                <Image
+                                  style={{
+                                    width: "22px",
+                                    height: "22px",
+                                    alignSelf: "center",
+                                    top: 4,
+                                    marginRight: 3,
+                                  }}
+                                  source={require("../../assets/svg/time.svg")}
+                                />
+                              )}
+                              <EditableText
+                                onChange={(e) => {
+                                  actions.updateLesson(state.activeWeek, item.id, "duration", e)
+                                }}
+                                placeholder="Duration"
+                                multiline={false}
+                                testID={"course-lessonDuration-" + lesson}
+                                textStyle={this.styles.style.courseTimeNonEditable}
+                                inputStyle={
+                                  state.isEditable && state.editMode
+                                    ? {
+                                        borderWidth: 1,
+                                        borderColor: "#dddddd",
+                                        marginTop: 0,
+                                        marginBottom: 0,
+                                        width: "100%",
+                                        paddingTop: 5,
+                                        paddingRight: 5,
+                                        paddingBottom: 5,
+                                        paddingLeft: 5,
+                                        fontFamily: "Graphik-Regular-App",
+                                        fontSize: 16,
+                                        lineHeight: 21,
+                                        height: 30,
+                                      }
+                                    : {
+                                        borderWidth: 1,
+                                        borderColor: "#dddddd",
+                                        marginTop: 5,
+                                        marginBottom: 5,
+                                        width: "100%",
+                                        paddingTop: 5,
+                                        paddingRight: 5,
+                                        paddingBottom: 5,
+                                        paddingLeft: 5,
+                                        fontFamily: "Graphik-Regular-App",
+                                        fontSize: 16,
+                                        lineHeight: 21,
+                                        height: 30,
+                                      }
+                                }
+                                value={item?.duration ?? ""}
+                                isEditable={state.isEditable && state.editMode}
+                              ></EditableText>
+                            </Text>
+
+                            {state.isEditable && state.editMode ? (
+                              <Picker
+                                testID={"course-eventType-" + lesson}
+                                onStartShouldSetResponder={() => true}
+                                onMoveShouldSetResponderCapture={() => true}
+                                onStartShouldSetResponderCapture={() => true}
+                                onMoveShouldSetResponder={() => true}
+                                mode="dropdown"
+                                iosIcon={<Icon name="arrow-down" />}
+                                style={{
+                                  width: "30%",
+                                  marginBottom: 0,
+                                  marginTop: 0,
+                                  fontSize: 16,
+                                  height: 30,
+                                  flexGrow: 0,
+                                  marginRight: 0,
+                                  borderColor: "#dddddd",
+                                }}
+                                placeholder="Event type"
+                                placeholderStyle={{ color: "#bfc6ea" }}
+                                placeholderIconColor="#007aff"
+                                selectedValue={item?.lessonType}
+                                onValueChange={(value) => {
+                                  actions.updateLesson(
+                                    state.activeWeek,
+                                    item.id,
+                                    "lessonType",
+                                    value
+                                  )
+                                }}
+                              >
+                                <Picker.Item label="Zoom Call" value="zoom" />
+                                <Picker.Item label="Assignment" value="assignment" />
+                                <Picker.Item label="Respond" value="respond" />
+                                <Picker.Item label="Youtube" value="youtube" />
+                              </Picker>
+                            ) : (
+                              this.renderLessonIcon(item)
+                            )}
+                          </Container>
+                          {this.renderConfig(state, actions, lesson, item)}
+                        </Container>
+                        {item?.lessonType == "zoom" &&
+                        moment.tz(item.time, item.tz as string) < moment() ? (
+                          <Text style={this.styles.style.assignmentCheckmark}>
+                            <Image
+                              style={this.styles.style.courseCheckmark}
+                              source={require("../../assets/svg/checkmark.svg")}
+                            />
+                          </Text>
+                        ) : null}
+                        {state.isEditable && state.editMode ? (
+                          <TouchableOpacity
+                            testID={"course-deleteLesson-" + lesson}
+                            style={{ alignSelf: "center", marginLeft: 15 }}
+                            onPress={() => {
+                              actions.deleteLesson(state.activeWeek, item.id)
+                            }}
+                          >
+                            <AntDesign name="close" size={20} color="black" />
+                          </TouchableOpacity>
+                        ) : null}
                       </Container>
-                      {item?.lessonType == "zoom" &&
-                      moment.tz(item.time, item.tz as string) < moment() ? (
-                        <Text style={this.styles.style.assignmentCheckmark}>
-                          <Image
-                            style={this.styles.style.courseCheckmark}
-                            source={require("../../assets/svg/checkmark.svg")}
-                          />
-                        </Text>
-                      ) : null}
-                      {state.isEditable && state.editMode ? (
-                        <TouchableOpacity
-                          testID={"course-deleteLesson-" + lesson}
-                          style={{ alignSelf: "center", marginLeft: 15 }}
-                          onPress={() => {
-                            actions.deleteLesson(state.activeWeek, lesson)
-                          }}
-                        >
-                          <AntDesign name="close" size={20} color="black" />
-                        </TouchableOpacity>
-                      ) : null}
-                    </Container>
-                  </Card>
-                </TouchableOpacity>
-              )
+                    </Card>
+                  </TouchableOpacity>
+                )
+              }
+              return null
             })}
 
             {state.isEditable && state.editMode ? (
@@ -758,7 +783,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               {week?.name}
             </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
-              Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
+              Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
           </Container>
           <Image
@@ -782,12 +807,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           <EditableRichText
             testID={"course-lesson-description"}
             onChange={(val: string) => {
-              actions.updateLesson(
-                state.activeWeek,
-                state.activeLesson as number,
-                "description",
-                val
-              )
+              actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
             value={lesson?.description}
             isEditable={state.isEditable && state.editMode}
@@ -830,7 +850,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               {week?.name}
             </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
-              Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
+              Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
             {lesson?.zoomUrl ? (
               <JCButton
@@ -868,12 +888,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           <EditableRichText
             testID={"course-lesson-description"}
             onChange={(val: string) => {
-              actions.updateLesson(
-                state.activeWeek,
-                state.activeLesson as number,
-                "description",
-                val
-              )
+              actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
             value={lesson?.description}
             isEditable={state.isEditable && state.editMode}
@@ -921,7 +936,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               {week?.name}
             </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
-              Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
+              Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
           </Container>
           <Container style={this.styles.style.courseDetailAssignmentTime2}>
@@ -948,12 +963,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           <EditableRichText
             testID={"course-lesson-description"}
             onChange={(val: string) => {
-              actions.updateLesson(
-                state.activeWeek,
-                state.activeLesson as number,
-                "description",
-                val
-              )
+              actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
             value={lesson?.description}
             isEditable={state.isEditable && state.editMode}
@@ -1013,7 +1023,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               {week?.name}
             </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
-              Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
+              Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
           </Container>
           <Container style={this.styles.style.courseDetailAssignmentTime}>
@@ -1040,12 +1050,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           <EditableRichText
             testID={"course-lesson-description"}
             onChange={(val: string) => {
-              actions.updateLesson(
-                state.activeWeek,
-                state.activeLesson as number,
-                "description",
-                val
-              )
+              actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
             value={lesson?.description}
             isEditable={state.isEditable && state.editMode}
@@ -1086,10 +1091,10 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
   renderLessonDetails(
     state: CourseState,
     actions: CourseActions,
-    week: CourseWeek
+    week: CourseWeekObj
   ): React.ReactNode {
-    if (week?.lessons && state.activeLesson !== null) {
-      const lesson = week.lessons?.items?.[state.activeLesson]
+    if (week?.lessons && state.activeLesson !== "") {
+      const lesson = week.lessons[state.activeLesson]
       return this.renderLessonType(state, actions, week, lesson)
     } else {
       return null
@@ -1102,7 +1107,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
       <CourseDetailImpl.Consumer>
         {({ state, actions }) => {
           if (!state) return null
-          const week = state.courseData?.courseWeeks?.items?.[state.activeWeek]
+          const week = state.courseWeeks[state.activeWeek]
           return state.data && state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
               <Container style={{ flex: 85 }}>

@@ -53,20 +53,20 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                   marginLeft: "4.5%",
                 }}
               >
-                {state.courseData?.courseWeeks?.items?.map((item, index: number) => {
+                {Object.values(state.courseWeeks).map((item, index: number) => {
                   if (item) {
                     return (
                       <EditableButton
                         testID={"menu-item-" + index}
-                        onDelete={() => actions.deleteWeek(index)}
-                        onChange={(value) => actions.updateWeek(index, "name", value)}
+                        onDelete={() => actions.deleteWeek(item.id)}
+                        onChange={(value) => actions.updateWeek(item.id, "name", value)}
                         key={index}
                         placeholder="temp"
                         isEditable={state.isEditable}
-                        onPress={() => actions.setActiveWeek(index)}
+                        onPress={() => actions.setActiveWeek(item.id)}
                         inputStyle={this.headerStyles.style.centerMenuButtonsText}
                         textStyle={
-                          state.activeWeek == index
+                          state.activeWeek == item.id
                             ? this.headerStyles.style.centerMenuButtonsTextSelected
                             : this.headerStyles.style.centerMenuButtonsText
                         }

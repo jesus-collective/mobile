@@ -1,6 +1,6 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
-import moment from "moment-timezone"
+import moment from "moment"
 import {
   Body,
   Button,
@@ -26,17 +26,29 @@ import { constants } from "../../src/constants"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
-import { CourseActions, CourseContext, CourseDates, CourseToDo } from "./CourseContext"
+import { AgendaItems, CourseActions, CourseContext, CourseToDo } from "./CourseContext"
 
 interface Props {
   navigation?: any
   route?: any
 }
 
-class CourseHomeImpl extends JCComponent<Props> {
+interface State {
+  calendarItems: AgendaItems["foo"]
+  calendarWidth: number
+  calendarHeight: number
+}
+
+class CourseHomeImpl extends JCComponent<Props, State> {
   static Consumer = CourseContext.Consumer
   constructor(props: Props) {
     super(props)
+
+    this.state = {
+      calendarItems: undefined,
+      calendarWidth: 300,
+      calendarHeight: 300,
+    }
   }
 
   openConversation(initialUser: string, name: string): void {
@@ -89,21 +101,29 @@ class CourseHomeImpl extends JCComponent<Props> {
     return null
   }
 
-  handlePressCalendar(actions: CourseActions, calendarItem: CourseDates[0] | undefined): void {
-    if (calendarItem) {
-      // if no key error, navigate to lesson
-      this.goToLesson(actions, calendarItem.weekNumber, calendarItem.lessonNumber)
+  handlePressCalendar(actions: CourseActions, items: AgendaItems["foo"]): void {
+    // if no key error, navigate to lesson
+    // else no-op
+    if (items?.length) {
+      if (items.length === 1) {
+        this.goToLesson(actions, items[0].week, items[0].lesson)
+      } else {
+        this.setState({ calendarItems: items })
+      }
     }
   }
 
   goToLesson(actions: CourseActions, week: string, lesson: string): void {
     console.log({ week, lesson })
-    actions.setActiveWeek(parseInt(week, 10) - 1)
-    actions.setActiveLesson(parseInt(lesson, 10) - 1)
+    actions.setActiveWeek(week)
+    actions.setActiveLesson(lesson)
     actions.setActiveScreen("Details")
   }
 
-  renderToDo(item: CourseToDo, actions: CourseActions): JSX.Element {
+  renderToDo(
+    item: CourseToDo | NonNullable<AgendaItems["foo"]>[0],
+    actions: CourseActions
+  ): JSX.Element {
     switch (item.lessonType) {
       case "assignment":
         return (
@@ -114,7 +134,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               marginTop: 10,
               marginBottom: 10,
             }}
-            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
+            onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -165,7 +185,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               marginTop: 10,
               marginBottom: 10,
             }}
-            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
+            onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -217,7 +237,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               marginTop: 10,
               marginBottom: 10,
             }}
-            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
+            onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -275,7 +295,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             return item?.user
           })
 
-          const markedDates = actions.myCourseDates()
+          const courseDates = actions.myCourseDates()
           const toDo = actions.myCourseTodo()
 
           return state.data && state.currentScreen == "Home" ? (
@@ -696,15 +716,56 @@ class CourseHomeImpl extends JCComponent<Props> {
                             >
                               My Calendar
                             </Text>
-                            <Calendar
-                              style={this.styles.style.courseHomeCalendar}
-                              current={moment().format("YYYY-MM-DD")}
-                              markedDates={markedDates}
-                              onDayPress={(day) =>
-                                this.handlePressCalendar(actions, markedDates[day.dateString])
+                            <View
+                              onLayout={(e) =>
+                                this.setState({
+                                  calendarWidth: e.nativeEvent.layout.width,
+                                  calendarHeight: e.nativeEvent.layout.height,
+                                })
                               }
-                              theme={{ todayTextColor: "#F0493E" }}
-                            />
+                            >
+                              {this.state.calendarItems && (
+                                <View
+                                  style={{
+                                    position: "absolute",
+                                    zIndex: 999,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    backgroundColor: "white",
+                                    height: this.state.calendarHeight - 20,
+                                  }}
+                                >
+                                  <TouchableOpacity
+                                    style={{ alignSelf: "flex-end", marginTop: 5, marginRight: 5 }}
+                                    onPress={() => this.setState({ calendarItems: undefined })}
+                                  >
+                                    <AntDesign name="close" size={24} color="black" />
+                                  </TouchableOpacity>
+                                  <FlatList
+                                    renderItem={({ item }) => this.renderToDo(item, actions)}
+                                    data={this.state.calendarItems}
+                                    style={{
+                                      height: this.state.calendarHeight - 50,
+                                      width: this.state.calendarWidth - 20,
+                                      paddingLeft: 20,
+                                    }}
+                                  />
+                                </View>
+                              )}
+                              <Calendar
+                                style={this.styles.style.courseHomeCalendar}
+                                current={moment().format("YYYY-MM-DD")}
+                                markedDates={courseDates.markedDates}
+                                onDayPress={(day) =>
+                                  this.handlePressCalendar(
+                                    actions,
+                                    courseDates.items[day.dateString]
+                                  )
+                                }
+                                theme={{ todayTextColor: "#F0493E" }}
+                              />
+                            </View>
+
                             <Container style={this.styles.style.courseHomeCalendarLabels}>
                               <Text
                                 style={{
