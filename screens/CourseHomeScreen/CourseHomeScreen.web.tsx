@@ -770,22 +770,23 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
   }
 
-  // fix these two functions!!!!!!!!!!!
   getLessonById = (id: string) => {
-    return this.state.courseData?.courseWeeks?.items
-      ?.map((week) => {
-        return week?.lessons?.items?.filter((lesson) => {
-          if (lesson?.id == id) return lesson
-        })
+    return Object.values(this.state.courseWeeks)
+      .map((week) => {
+        if (week.lessons[id]) {
+          return week.lessons[id]
+        }
       })
       .flat()[0]
   }
 
   getAssignmentList = () => {
-    return this.state.courseData?.courseWeeks?.items
-      ?.map((week) => {
-        return week?.lessons?.items?.map((lesson) => {
-          if (lesson?.lessonType == "assignment") return lesson
+    return Object.values(this.state.courseWeeks)
+      .map((week) => {
+        return Object.values(week.lessons).map((lesson) => {
+          if (lesson?.lessonType == "assignment") {
+            return lesson
+          }
         })
       })
       .flat()
