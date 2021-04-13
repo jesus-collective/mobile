@@ -17,7 +17,7 @@ import {
 } from "../../src/API-messages"
 import {
   directMessagesByRoom,
-  getMessage,
+  getDirectMessage,
   onCreateDirectMessageReply,
 } from "../../src/graphql-custom/messages"
 import * as queries from "../../src/graphql/queries"
@@ -157,7 +157,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
 
             try {
               const updatedMessage = (await API.graphql({
-                query: getMessage,
+                query: getDirectMessage,
                 variables: {
                   id: incoming.value.data.onCreateDirectMessageReply.messageId,
                 },
