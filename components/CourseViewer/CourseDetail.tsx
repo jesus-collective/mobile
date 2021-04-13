@@ -463,7 +463,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                   Sync Lesson Numbers
                 </JCButton>
                 <Tooltip
-                  title={`Chronologically synchronize lesson numbers with date/time of lessons. 
+                  title={`Synchronize order of lesson numbers with date/time of lessons. 
                   It is recommended to use this function after adding/removing lesson(s).`}
                   placement="right"
                 >
