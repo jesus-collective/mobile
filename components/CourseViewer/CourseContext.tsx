@@ -31,6 +31,7 @@ export interface CourseState extends JCState {
   activeMessageBoard: string
   activeCourseActivity: string
   showChat: boolean
+  dateFilter: string
 }
 
 export type CourseToDo = {
@@ -42,7 +43,7 @@ export type CourseToDo = {
   lesson: string
 }
 
-export type MarkedDates = Record<string, { marked: true; dotColor: string }>
+export type MarkedDates = Record<string, { marked: true; dots: Array<{ color: string }> }>
 
 export type AgendaItems = Record<
   string,
@@ -99,6 +100,7 @@ export interface CourseActions {
   myCourseTodo: () => CourseToDo[]
   setShowChat: () => void
   sortLessons: () => Promise<void>
+  setDateFilter: (date: string) => void
 }
 
 type CourseContextType = {
@@ -145,6 +147,7 @@ export const CourseContext = React.createContext<CourseContextType>({
     },
     setShowChat: () => null,
     sortLessons: () => Promise.resolve(),
+    setDateFilter: () => null,
   },
   state: undefined,
 })
