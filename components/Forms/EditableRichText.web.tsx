@@ -2,7 +2,7 @@ import { Storage } from "aws-amplify"
 //TODO FIGURE OUT WHY THIS DOESN'T WORK
 //import '../MessageBoard.css';
 import { ContentState, convertFromRaw, convertToRaw, EditorState } from "draft-js"
-import { stateToHTML } from "draft-js-export-html"
+import draftToHtml from "draftjs-to-html"
 import React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { TouchableOpacity } from "react-native"
@@ -43,7 +43,7 @@ interface State extends JCState {
   // textStyle: any,
   // inputStyle: any,
   //placeholder: string,
-  editorState
+  editorState: EditorState
 }
 export default class EditableRichText extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -95,9 +95,10 @@ export default class EditableRichText extends JCComponent<Props, State> {
       // this.props.onChange(this.state.value)
     )
   }
-  convertCommentFromJSONToHTML = (text: string): string => {
+  convertDraftToHtml = (contentState: ContentState): string => {
+    const raw = convertToRaw(contentState)
     try {
-      return stateToHTML(convertFromRaw(JSON.parse(text)))
+      return draftToHtml(raw)
     } catch (e) {
       console.log({ Error: e })
       return "<div>Message Can't Be Displayed</div>"
@@ -183,7 +184,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
               ) : (
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: this.convertCommentFromJSONToHTML(this.props.value),
+                    __html: this.convertDraftToHtml(this.state.editorState.getCurrentContent()),
                   }}
                   style={{
                     fontFamily: "Graphik-Regular-App",
@@ -206,7 +207,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
         <div id="comment-div">
           <div
             dangerouslySetInnerHTML={{
-              __html: this.convertCommentFromJSONToHTML(this.state.value),
+              __html: this.convertDraftToHtml(this.state.editorState.getCurrentContent()),
             }}
             style={
               this.props.textStyle
