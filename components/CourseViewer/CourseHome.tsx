@@ -94,7 +94,7 @@ class CourseHomeImpl extends JCComponent<Props> {
     // else no-op
     if (items?.length) {
       if (items.length === 1) {
-        // if day has one lesson, navigate directly to that lessons
+        // if day has one lesson, navigate directly to that lesson
         this.goToLesson(actions, items[0].week, items[0].lesson)
       } else {
         // if day has multiple lesson, navigate to week, filter by day
