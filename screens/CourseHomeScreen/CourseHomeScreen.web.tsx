@@ -947,7 +947,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               dots = courseDates.markedDates[dateKey].dots
             }
 
-            dots.push({ color: this.getDotColour(item?.lessonType ?? "") })
+            if (dots.length < 4) {
+              // max 4 dots to prevent dots from adjacent days from overlapping
+              dots.push({ color: this.getDotColour(item?.lessonType ?? "") })
+            }
 
             courseDates.markedDates[dateKey] = {
               marked: true,
