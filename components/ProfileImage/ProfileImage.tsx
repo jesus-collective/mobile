@@ -5,6 +5,7 @@ import { Image, ImageStyle, TouchableOpacity } from "react-native"
 import awsconfig from "../../src/aws-exports"
 import * as customQueries from "../../src/graphql-custom/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { Tooltip } from "@material-ui/core"
 
 Amplify.configure(awsconfig)
 
@@ -17,6 +18,7 @@ interface Props {
   linkToProfile?: boolean
   navigation?: any
   route?: any
+  showNameInTooltip?: boolean
 }
 interface State extends JCState {
   profileImage: any

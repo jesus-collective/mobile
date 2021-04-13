@@ -436,7 +436,7 @@ class MessageListImpl extends JCComponent<Props, State> {
         data={this.state.messages}
         inverted={this.props.inputAt === "bottom"}
         onEndReached={!this.state.fetchingData ? () => this.getMoreMessages() : undefined}
-        style={{ height: Dimensions.get("window").height - 250 }}
+        style={{ height: Dimensions.get("window").height - 270 }}
         ListFooterComponent={() => this.messagesLoader()}
         refreshing={this.state.fetchingData}
         onEndReachedThreshold={0.1}
