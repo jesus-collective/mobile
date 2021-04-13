@@ -99,7 +99,7 @@ export interface CourseActions {
   myCourseDates: () => { markedDates: MarkedDates; items: AgendaItems }
   myCourseTodo: () => CourseToDo[]
   setShowChat: () => void
-  sortLessons: () => Promise<void>
+  syncLessonNumbers: () => Promise<void>
   setDateFilter: (date: string) => void
 }
 
@@ -146,7 +146,7 @@ export const CourseContext = React.createContext<CourseContextType>({
       return []
     },
     setShowChat: () => null,
-    sortLessons: () => Promise.resolve(),
+    syncLessonNumbers: () => Promise.resolve(),
     setDateFilter: () => null,
   },
   state: undefined,

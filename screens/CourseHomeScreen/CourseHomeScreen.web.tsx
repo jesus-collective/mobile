@@ -109,11 +109,13 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         if (week?.id) {
           const lessonsObj: CourseWeekObj["lessons"] = {}
 
-          week.lessons?.items?.forEach((lesson) => {
-            if (lesson?.id) {
-              lessonsObj[lesson.id] = lesson
-            }
-          })
+          week.lessons?.items
+            ?.sort((a, b) => (a?.time ?? "")?.localeCompare(b?.time ?? ""))
+            .forEach((lesson) => {
+              if (lesson?.id) {
+                lessonsObj[lesson.id] = lesson
+              }
+            })
 
           const weekObj: CourseWeekObj = { ...week, lessons: lessonsObj }
           courseWeeks[week.id] = weekObj
@@ -190,7 +192,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     })
   }
 
-  sortLessons = async (): Promise<void> => {
+  syncLessonNumbers = async (): Promise<void> => {
     const { lessons } = this.state.courseWeeks[this.state.activeWeek]
 
     const sortedLessons = Object.values(lessons).sort((a, b) =>
@@ -1069,7 +1071,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             myCourseDates: this.myCourseDates,
             myCourseTodo: this.myCourseTodo,
             setShowChat: () => this.setState({ showChat: !this.state.showChat }),
-            sortLessons: this.sortLessons,
+            syncLessonNumbers: this.syncLessonNumbers,
             setDateFilter: this.setDateFilter,
           },
         }}
