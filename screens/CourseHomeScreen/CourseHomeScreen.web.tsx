@@ -75,6 +75,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       activeMessageBoard: "cohort",
       activeCourseActivity: "today",
       showChat: false,
+      dateFilter: "",
     }
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({ currentUser: user.username }, () => {
@@ -163,6 +164,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     this.setState({
       activeWeek: id,
       activeLesson: "",
+      dateFilter: "",
     })
   }
 
@@ -170,6 +172,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     this.setState({
       activeLesson: id,
     })
+  }
+
+  setDateFilter = (dateFilter: string): void => {
+    this.setState({ dateFilter })
   }
 
   setActiveMessageBoard = (messageBoard: string): void => {
@@ -764,6 +770,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
   }
 
+  // fix these two functions!!!!!!!!!!!
   getLessonById = (id: string) => {
     return this.state.courseData?.courseWeeks?.items
       ?.map((week) => {
@@ -907,7 +914,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     switch (lessonType) {
       case "assignment":
         return "#71C209"
-      case "response":
+      case "respond":
         return "#0000ff"
       default:
         return "#ff0000"
@@ -933,9 +940,17 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           const tz = item?.tz || moment.tz.guess()
           const dateKey = moment.tz(item?.time, tz).format("YYYY-MM-DD")
           if (dateKey !== "Invalid date" && item?.lessonType !== "youtube") {
+            let dots: Array<{ color: string }> = []
+
+            if (courseDates.markedDates[dateKey]) {
+              dots = courseDates.markedDates[dateKey].dots
+            }
+
+            dots.push({ color: this.getDotColour(item?.lessonType ?? "") })
+
             courseDates.markedDates[dateKey] = {
               marked: true,
-              dotColor: this.getDotColour(item?.lessonType ?? ""),
+              dots,
             }
 
             if (courseDates.items[dateKey]?.length) {
@@ -1051,6 +1066,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             myCourseTodo: this.myCourseTodo,
             setShowChat: () => this.setState({ showChat: !this.state.showChat }),
             sortLessons: this.sortLessons,
+            setDateFilter: this.setDateFilter,
           },
         }}
       >
