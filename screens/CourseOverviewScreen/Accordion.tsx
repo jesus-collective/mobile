@@ -1,6 +1,8 @@
 import { View, Row } from "native-base"
 import React, { Component } from "react"
 import { LayoutAnimation, Platform, TouchableOpacity, UIManager, Image } from "react-native"
+import { isMobile, isBrowser } from "react-device-detect"
+
 interface Props {
   header: any
 }
@@ -21,7 +23,7 @@ export default class Accordion extends Component<Props, State> {
 
   render() {
     return (
-      <View style={{ width: "30vw" }}>
+      <View style={{ width: isBrowser ? "30vw" : isMobile ? "100%" : "30vw" }}>
         <TouchableOpacity
           onPress={() => this.toggleExpand()}
           style={{

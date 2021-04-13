@@ -515,6 +515,7 @@ const courseStyles = EStyleSheet.create({
   courseHeaderContainer: {
     backgroundColor: "#F0493E",
     flex: 32,
+    paddingBottom: "3rem",
   },
   courseHomeMainTextContainer: {
     flex: 80,

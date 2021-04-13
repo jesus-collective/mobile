@@ -2,7 +2,7 @@
 import Amplify from "aws-amplify"
 import { Content } from "native-base"
 import React from "react"
-import { ActivityIndicator, Text, View } from "react-native"
+import { ActivityIndicator, Text, View, Image } from "react-native"
 import Billing from "../../components/Billing/Billing"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -46,13 +46,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text
-                      style={{
-                        fontFamily: "Graphik-Bold-App",
-                        textAlign: "center",
-                        width: "100%",
-                        fontSize: 12,
-                        marginBottom: 8,
-                      }}
+                      style={this.styles.style.SignUpScreenSetupText}
                     >
                       We're getting you setup. This may takes several seconds.
                     </Text>
@@ -74,15 +68,16 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <SignUpSidebar position="3"></SignUpSidebar>
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                  <Image
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    top: 6,
+                  }}
+                  source={require("../../assets/svg/checkmark.svg")}
+                ></Image>
                     <Text
-                      style={{
-                        fontFamily: "Graphik-Bold-App",
-                        alignSelf: "center",
-                        fontSize: 42,
-                        lineHeight: 51,
-                        textAlign: "center",
-                        marginBottom: 20,
-                      }}
+                      style={this.styles.style.SignUpScreenSetupText}
                     >
                       We've received your payment.
                       <br />
@@ -106,14 +101,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text
-                      style={{
-                        fontFamily: "Graphik-Bold-App",
-                        alignSelf: "center",
-                        fontSize: 22,
-                        lineHeight: 51,
-                        textAlign: "center",
-                        marginBottom: 20,
-                      }}
+                      style={this.styles.style.SignUpScreenSetupText}
                     >
                       Please wait a moment while we set up your account.
                       <br />
@@ -129,14 +117,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text
-                      style={{
-                        fontFamily: "Graphik-Bold-App",
-                        alignSelf: "center",
-                        fontSize: 22,
-                        lineHeight: 51,
-                        textAlign: "center",
-                        marginBottom: 20,
-                      }}
+                      style={this.styles.style.SignUpScreenSetupText}
                     >
                       There may have been a problem, please contact support!
                       <br />
@@ -152,14 +133,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text
-                      style={{
-                        fontFamily: "Graphik-Bold-App",
-                        alignSelf: "center",
-                        fontSize: 22,
-                        lineHeight: 51,
-                        textAlign: "center",
-                        marginBottom: 20,
-                      }}
+                      style={this.styles.style.SignUpScreenSetupText}
                     >
                       There has been a problem, please contact support!
                       <br />
