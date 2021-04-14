@@ -1,5 +1,5 @@
 import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native"
-import { Button, Container } from "native-base"
+import { Button, Container, Left } from "native-base"
 import React from "react"
 import { Dimensions, Image, Text } from "react-native"
 import HeaderStyles from "../CourseSidebar/style"
@@ -7,6 +7,7 @@ import { CourseContext } from "../CourseViewer/CourseContext"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 //import AnimatedProgressWheel from 'react-native-progress-wheel';
 import JCComponent from "../JCComponent/JCComponent"
+import { Ionicons } from "@expo/vector-icons"
 
 interface Props {
   navigation?: any
@@ -76,6 +77,16 @@ class CourseSidebarImpl extends JCComponent<Props> {
 
           return (
             <Container style={this.styles.style.courseSideBar}>
+              <Left style={this.styles.style.courseHeaderLeft}>
+                <Button
+                  testID="header-hamburger"
+                  style={this.headerStyles.style.leftButtons}
+                  transparent
+                  onPress={this.openDrawer}
+                >
+                  <Ionicons name="md-menu" style={this.headerStyles.style.courseIcon} />
+                </Button>
+              </Left>
               <Button transparent testID="header-logo" onPress={this.openHome}>
                 <Image
                   style={this.headerStyles.style.logo}
