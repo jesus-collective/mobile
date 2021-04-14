@@ -1,4 +1,5 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
+import { Tooltip } from "@material-ui/core"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
 import { Card, Container, Content, Icon, Picker, StyleProvider } from "native-base"
@@ -445,14 +446,35 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         <Container style={this.styles.style.courseDetailLeftContainer}>
           <Container style={this.styles.style.courseDetailCourseInfoContainer}>
             {state.isEditable && state.editMode ? (
-              <JCButton
-                buttonType={ButtonTypes.CourseHomeSidebarTop}
-                onPress={() => {
-                  actions.sortLessons()
+              <Container
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  maxHeight: 85,
                 }}
               >
-                Sort Lessons
-              </JCButton>
+                <JCButton
+                  buttonType={ButtonTypes.CourseHomeSidebarTop}
+                  onPress={() => {
+                    actions.syncLessonNumbers()
+                  }}
+                >
+                  Sync Lesson Numbers
+                </JCButton>
+                <Tooltip
+                  title={`Synchronize order of lesson numbers with date/time of lessons. 
+                  It is recommended to use this function after adding/removing lesson(s).`}
+                  placement="right"
+                >
+                  <AntDesign
+                    name="questioncircle"
+                    size={20}
+                    color="black"
+                    style={{ marginLeft: 10 }}
+                  />
+                </Tooltip>
+              </Container>
             ) : null}
             <EditableText
               onChange={(e) => {
