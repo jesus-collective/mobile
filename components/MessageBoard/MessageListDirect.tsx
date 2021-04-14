@@ -176,9 +176,9 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
               }
             } catch (e) {
               console.debug(e)
-              if (e.data?.getMessage && index !== undefined && dms && dms[index]) {
+              if (e.data?.getDirectMessage && index !== undefined && dms && dms[index]) {
                 // replace old message/replies with incoming data
-                dms[index] = e.data.getMessage
+                dms[index] = e.data.getDirectMessage
                 this.setState({ dms })
               }
             }
