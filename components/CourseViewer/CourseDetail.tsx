@@ -1003,9 +1003,11 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                 <EditableCourseAssignment
                   actions={actions}
                   userActions={userActions}
-                  assignmentId={actions.getLessonById(lesson?.courseLessonResponseId as string).id}
+                  assignmentId={
+                    actions.getLessonById(lesson?.courseLessonResponseId ?? "")?.id ?? ""
+                  }
                   wordCount={parseInt(lesson?.wordCount as string, 10)}
-                ></EditableCourseAssignment>
+                />
               )
             }}
           </CourseDetailImpl.UserConsumer>

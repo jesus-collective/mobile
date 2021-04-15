@@ -95,7 +95,7 @@ export interface CourseActions {
   setActiveCourseActivity: (courseActivity: string) => void
   myCourseGroups: () => { all: any[]; cohort: any[]; completeTriad: any[] }
   getAssignmentList: () => any[] | undefined
-  getLessonById: (id: string) => any
+  getLessonById: (id: string) => CourseLesson | undefined
   myCourseDates: () => { markedDates: MarkedDates; items: AgendaItems }
   myCourseTodo: () => CourseToDo[]
   setShowChat: () => void
