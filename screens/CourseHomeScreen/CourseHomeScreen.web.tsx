@@ -33,6 +33,7 @@ import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {
   AgendaItems,
   CourseContext,
+  CourseLesson,
   CourseState,
   CourseToDo,
   CourseWeekObj,
@@ -772,14 +773,12 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
   }
 
-  getLessonById = (id: string) => {
-    return Object.values(this.state.courseWeeks)
-      .map((week) => {
-        if (week.lessons[id]) {
-          return week.lessons[id]
-        }
-      })
-      .flat()[0]
+  getLessonById = (id: string): CourseLesson | undefined => {
+    for (const week of Object.values(this.state.courseWeeks)) {
+      if (week.lessons[id]) {
+        return week.lessons[id]
+      }
+    }
   }
 
   getAssignmentList = () => {
