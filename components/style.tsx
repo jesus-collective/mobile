@@ -1869,7 +1869,6 @@ export default class MainStyles {
         },
         dashboardRightCard: {
           flexBasis: "auto",
-          top: 2150,
         },
         myProfileMainContainer: {
           flexDirection: "column",

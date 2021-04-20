@@ -4,6 +4,7 @@ import { Dimensions, Platform } from "react-native"
 import Cookies from "universal-cookie"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
+import { isMobile } from "react-device-detect"
 
 const cookies = new Cookies()
 
@@ -68,53 +69,55 @@ class HomeScreen extends JCComponent<Props, State> {
           <MyMap type={"filters"} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.dashboardPrimaryContainer}>
             <Container style={this.styles.style.dashboardMainContainer}>
-              <Container style={this.styles.style.dashboardLeftCard}>
-                <MyGroups
-                  showMore={false}
-                  type="event"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="group"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="resource"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="organization"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="course"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                ></MyGroups>
-              </Container>
+              {!isMobile ? (
+                <Container style={this.styles.style.dashboardLeftCard}>
+                  <MyGroups
+                    showMore={false}
+                    type="event"
+                    wrap={false}
+                    navigation={this.props.navigation}
+                    onDataload={(mapData: MapData[]) => {
+                      this.mergeMapData(mapData)
+                    }}
+                  ></MyGroups>
+                  <MyGroups
+                    showMore={false}
+                    type="group"
+                    wrap={false}
+                    navigation={this.props.navigation}
+                    onDataload={(mapData: MapData[]) => {
+                      this.mergeMapData(mapData)
+                    }}
+                  ></MyGroups>
+                  <MyGroups
+                    showMore={false}
+                    type="resource"
+                    wrap={false}
+                    navigation={this.props.navigation}
+                    onDataload={(mapData: MapData[]) => {
+                      this.mergeMapData(mapData)
+                    }}
+                  ></MyGroups>
+                  <MyGroups
+                    showMore={false}
+                    type="organization"
+                    wrap={false}
+                    navigation={this.props.navigation}
+                    onDataload={(mapData: MapData[]) => {
+                      this.mergeMapData(mapData)
+                    }}
+                  ></MyGroups>
+                  <MyGroups
+                    showMore={false}
+                    type="course"
+                    wrap={false}
+                    navigation={this.props.navigation}
+                    onDataload={(mapData: MapData[]) => {
+                      this.mergeMapData(mapData)
+                    }}
+                  ></MyGroups>
+                </Container>
+              ) : null}
               <Container style={this.styles.style.dashboardRightCard}>
                 <MyPeople
                   wrap={false}
