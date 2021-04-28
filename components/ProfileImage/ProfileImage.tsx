@@ -247,6 +247,42 @@ class MyProfileImpl extends JCComponent<Props, State> {
           {this.renderImage()}
         </TouchableOpacity>
       )
+    else if (this.props.linkToProfile && this.props.showNameInTooltip == true)
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            this.showProfile()
+          }}
+        >
+          <Tooltip
+            title={
+              this.props.user.given_name +
+              " " +
+              this.props.user.family_name +
+              " | " +
+              this.props.user.currentRole
+            }
+            placement={"right"}
+          >
+            {this.renderImage()}
+          </Tooltip>
+        </TouchableOpacity>
+      )
+    else if (this.props.showNameInTooltip == true)
+      return (
+        <Tooltip
+          title={
+            this.props.user.given_name +
+            " " +
+            this.props.user.family_name +
+            " | " +
+            this.props.user.currentRole
+          }
+          placement={"right"}
+        >
+          {this.renderImage()}
+        </Tooltip>
+      )
     else return this.renderImage()
   }
 }
