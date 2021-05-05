@@ -77,6 +77,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   onDataload={(mapData: MapData[]) => {
                     this.mergeMapData(mapData)
                   }}
+                  homeDashboard
                 ></MyGroups>
                 <MyGroups
                   showMore={false}
@@ -86,6 +87,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   onDataload={(mapData: MapData[]) => {
                     this.mergeMapData(mapData)
                   }}
+                  homeDashboard
                 ></MyGroups>
                 <MyGroups
                   showMore={false}
@@ -95,6 +97,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   onDataload={(mapData: MapData[]) => {
                     this.mergeMapData(mapData)
                   }}
+                  homeDashboard
                 ></MyGroups>
                 <MyGroups
                   showMore={false}
@@ -104,6 +107,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   onDataload={(mapData: MapData[]) => {
                     this.mergeMapData(mapData)
                   }}
+                  homeDashboard
                 ></MyGroups>
                 <MyGroups
                   showMore={false}
@@ -113,6 +117,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   onDataload={(mapData: MapData[]) => {
                     this.mergeMapData(mapData)
                   }}
+                  homeDashboard
                 ></MyGroups>
               </Container>
               <Container style={this.styles.style.dashboardRightCard}>
