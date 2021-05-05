@@ -9,13 +9,18 @@ import * as React from "react"
 import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import { ListOrganizationsQuery, ListUsersQuery } from "src/API"
-import { GroupByTypeQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import {
+  GroupByTypeByTimeQuery,
+  GroupByTypeByTimeQueryVariables,
+  GroupByTypeQuery,
+  ModelSortDirection,
+} from "../../src/API-customqueries"
 import { constants } from "../../src/constants"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
@@ -30,6 +35,7 @@ interface Props {
   onDataload(mapData: MapData[]): void
   showMy?: boolean
 }
+
 type GroupData =
   | NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
   | NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
@@ -48,12 +54,14 @@ interface State extends JCState {
   createString: string
   titleString: string
   data: GroupData
-
+  pastEvents: GroupData
+  showAllEvents: boolean
   showCreateButton: boolean
   currentUser: string | null
   nextToken: string | null
-  canLeave: any
-  isOwner: any
+  nextTokenPastEvents: string | null
+  canLeave: Record<string, boolean>
+  isOwner: Record<string, boolean>
   canPay: any
   isPaid: any
   pickerState: any
@@ -70,12 +78,27 @@ export interface MapData {
 }
 
 export default class MyGroups extends JCComponent<Props, State> {
+  private commonInitialState = {
+    data: [],
+    pastEvents: [],
+    showCreateButton: false,
+    currentUser: null,
+    nextToken: null,
+    nextTokenPastEvents: null,
+    canLeave: {},
+    isOwner: {},
+    joinCourse: null,
+    canPay: [],
+    isPaid: [],
+    showAllEvents: false,
+  }
+
   constructor(props: Props) {
     super(props)
-    if (props.type == "event") {
+    if (props.type === "event") {
       this.state = {
         ...super.getInitialState(),
-        myFilter: false || this.props.showMy,
+        myFilter: !!this.props.showMy,
         eventFilter: false,
         pickerState: "",
         myTitleScreen: "My Events",
@@ -86,20 +109,12 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "Events",
         type: props.type,
         cardWidth: 300,
-        data: null,
-        showCreateButton: false,
-        currentUser: null,
-        nextToken: null,
-        canLeave: [],
-        isOwner: [],
-        joinCourse: null,
-        canPay: [],
-        isPaid: [],
+        ...this.commonInitialState,
       }
-    } else if (props.type == "group") {
+    } else if (props.type === "group") {
       this.state = {
         ...super.getInitialState(),
-        myFilter: false || this.props.showMy,
+        myFilter: !!this.props.showMy,
         eventFilter: false,
         myTitleScreen: "My Groups",
         openSingle: "GenericGroupScreen",
@@ -109,17 +124,9 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "Groups",
         type: props.type,
         cardWidth: 300,
-        data: [],
-        showCreateButton: false,
-        currentUser: null,
-        nextToken: null,
-        canLeave: [],
-        isOwner: [],
-        joinCourse: null,
-        canPay: [],
-        isPaid: [],
+        ...this.commonInitialState,
       }
-    } else if (props.type == "resource") {
+    } else if (props.type === "resource") {
       this.state = {
         ...super.getInitialState(),
         myFilter: false,
@@ -132,17 +139,9 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "Resources",
         type: props.type,
         cardWidth: 215,
-        data: [],
-        showCreateButton: false,
-        currentUser: null,
-        nextToken: null,
-        canLeave: [],
-        isOwner: [],
-        joinCourse: null,
-        canPay: [],
-        isPaid: [],
+        ...this.commonInitialState,
       }
-    } else if (props.type == "organization") {
+    } else if (props.type === "organization") {
       this.state = {
         ...super.getInitialState(),
         myFilter: false,
@@ -155,17 +154,9 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "Organizations",
         type: props.type,
         cardWidth: 215,
-        data: [],
-        showCreateButton: false,
-        currentUser: null,
-        nextToken: null,
-        canLeave: [],
-        isOwner: [],
-        joinCourse: null,
-        canPay: [],
-        isPaid: [],
+        ...this.commonInitialState,
       }
-    } else if (props.type == "course") {
+    } else if (props.type === "course") {
       this.state = {
         ...super.getInitialState(),
         myFilter: false,
@@ -178,17 +169,9 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "Courses",
         type: props.type,
         cardWidth: 215,
-        data: [],
-        showCreateButton: false,
-        currentUser: null,
-        nextToken: null,
-        canLeave: [],
-        isOwner: [],
-        joinCourse: null,
-        canPay: [],
-        isPaid: [],
+        ...this.commonInitialState,
       }
-    } else if (props.type == "profile") {
+    } else if (props.type === "profile") {
       this.state = {
         ...super.getInitialState(),
         myFilter: false,
@@ -201,15 +184,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "Profiles",
         type: props.type,
         cardWidth: 215,
-        data: [],
-        showCreateButton: false,
-        currentUser: null,
-        nextToken: null,
-        canLeave: [],
-        isOwner: [],
-        joinCourse: null,
-        canPay: [],
-        isPaid: [],
+        ...this.commonInitialState,
       }
     } else {
       this.state = {
@@ -224,25 +199,16 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "",
         createString: "",
         cardWidth: 300,
-        data: [],
-        showCreateButton: false,
-        currentUser: null,
-        nextToken: null,
-        canLeave: [],
-        isOwner: [],
-        joinCourse: null,
-        canPay: [],
-        isPaid: [],
+        ...this.commonInitialState,
       }
     }
   }
-  componentDidMount(): void {
-    this.setInitialData(this.props)
 
-    const user = Auth.currentAuthenticatedUser()
-    user.then((user: JCCognitoUser) => {
+  async componentDidMount(): Promise<void> {
+    try {
+      const user: JCCognitoUser = await Auth.currentAuthenticatedUser()
       this.setState({ currentUser: user.username })
-      if (this.props.type != "profile")
+      if (this.props.type != "profile") {
         this.setState({
           showCreateButton:
             this.props.type == "resource"
@@ -269,7 +235,12 @@ export default class MyGroups extends JCComponent<Props, State> {
                   ?.getAccessToken()
                   .payload["cognito:groups"]?.includes("verifiedUsers"),
         })
-    })
+      }
+    } catch (e) {
+      console.error(e)
+    }
+
+    await this.setData(this.props, true)
   }
 
   convertOrgToMapData(
@@ -377,7 +348,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         return []
     }
   }
-  setInitialData(props: Props): void {
+  async setData(props: Props, initialCall = false, pastEvents = false): Promise<void> {
     if (props.type == "profile") {
       const listUsers = API.graphql({
         query: queries.listUsers,
@@ -428,6 +399,83 @@ export default class MyGroups extends JCComponent<Props, State> {
         )
       }
       listOrgs.then(processList).catch(processList)
+    } else if (props.type === "event") {
+      const processEvents = (json: GraphQLResult<GroupByTypeByTimeQuery>, past: boolean) => {
+        if (!json.data?.groupByTypeByTime) {
+          return
+        }
+        console.debug({ eventData: json })
+        this.setCanLeave(json.data.groupByTypeByTime.items)
+        this.setIsOwner(json.data.groupByTypeByTime.items)
+
+        if (past) {
+          this.setState(
+            {
+              nextTokenPastEvents: json.data.groupByTypeByTime.nextToken ?? null,
+              pastEvents: [...this.state.pastEvents, ...(json.data.groupByTypeByTime.items ?? [])],
+            },
+            async () => {
+              this.props.onDataload(this.convertToMapData(this.state.pastEvents))
+            }
+          )
+        } else {
+          this.setState(
+            {
+              nextToken: json.data.groupByTypeByTime.nextToken ?? null,
+              data: [...this.state.data, ...(json.data.groupByTypeByTime.items ?? [])],
+            },
+            async () => {
+              this.props.onDataload(this.convertToMapData(this.state.data))
+            }
+          )
+        }
+      }
+
+      try {
+        const makeQueryVariables = (
+          nextToken: GroupByTypeByTimeQueryVariables["nextToken"],
+          past: boolean,
+          limit: number
+        ): GroupByTypeByTimeQueryVariables => {
+          return {
+            nextToken,
+            type: props.type,
+            limit,
+            time: past
+              ? { lt: moment().format() }
+              : {
+                  ge: moment().format(),
+                },
+            sortDirection: ModelSortDirection.DESC,
+          }
+        }
+
+        if (initialCall || !pastEvents) {
+          // future or current events
+          const json = (await API.graphql({
+            query: customQueries.groupByTypeByTime,
+            variables: makeQueryVariables(this.state.nextToken, false, initialCall ? 30 : 10),
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })) as GraphQLResult<GroupByTypeByTimeQuery>
+          processEvents(json, false)
+        }
+
+        if (initialCall || pastEvents) {
+          // past events
+          const json = (await API.graphql({
+            query: customQueries.groupByTypeByTime,
+            variables: makeQueryVariables(
+              this.state.nextTokenPastEvents,
+              true,
+              initialCall ? 30 : 10
+            ),
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })) as GraphQLResult<GroupByTypeByTimeQuery>
+          processEvents(json, true)
+        }
+      } catch (e) {
+        console.error(e)
+      }
     } else {
       const listGroup = API.graphql({
         query: customQueries.groupByTypeForMyGroups,
@@ -441,14 +489,6 @@ export default class MyGroups extends JCComponent<Props, State> {
 
       const processList = (json: GraphQLResult<GroupByTypeQuery>) => {
         if (json.data?.groupByType == null) return
-        if (props.type === "event") {
-          // sorting events by date
-          if (json?.data?.groupByType?.items) {
-            json.data.groupByType.items = json.data.groupByType.items.sort((a: any, b: any) =>
-              a.time.localeCompare(b.time)
-            )
-          }
-        }
         console.log({ groupData: json })
         this.setCanPay(json.data.groupByType.items)
         this.setIsPaid(json.data.groupByType.items)
@@ -471,8 +511,8 @@ export default class MyGroups extends JCComponent<Props, State> {
     }
   }
 
-  canCourseQuickOpen(userActions: UserActions, id: string) {
-    if (this.isOwner(id)) return false
+  canCourseQuickOpen(userActions: UserActions, id: string): boolean {
+    if (this.state.isOwner[id]) return false
     else if (this.isCourseCoach(userActions, id)) return false
     else if (this.isCourseAdmin(userActions, id)) return false
     else if (this.canCoursePay(id)) return false
@@ -499,8 +539,12 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
   openMultiple(): void {
-    console.log({ "Navigate to": this.state.openMultiple })
-    this.props.navigation.push(this.state.openMultiple)
+    if (this.props.type === "event") {
+      this.setState({ showAllEvents: !this.state.showAllEvents, myFilter: false })
+    } else {
+      console.log({ "Navigate to": this.state.openMultiple })
+      this.props.navigation.push(this.state.openMultiple)
+    }
   }
   async setCanPay(data: any): Promise<void> {
     const courseTriadUserByUser: any = API.graphql({
@@ -552,7 +596,9 @@ export default class MyGroups extends JCComponent<Props, State> {
       groupMemberByUser
         .then((json: any) => {
           if (json.data.groupMemberByUser.items.length > 0) {
-            this.setState({ canLeave: this.state.canLeave.concat([item.id]) })
+            const canLeave = { ...this.state.canLeave }
+            canLeave[item.id] = true
+            this.setState({ canLeave })
           }
         })
         .catch((err: any) => {
@@ -571,28 +617,15 @@ export default class MyGroups extends JCComponent<Props, State> {
       getGroup
         .then((json: any) => {
           if (json.data.getGroup.owner === this.state.currentUser) {
-            this.setState({ isOwner: this.state.isOwner.concat([item.id]) })
+            const isOwner = { ...this.state.isOwner }
+            isOwner[item.id] = true
+            this.setState({ isOwner })
           }
         })
         .catch((err: any) => {
           console.log({ "Error query.getGroup": err })
         })
     })
-  }
-  canLeave(id: string): boolean {
-    const test = this.state.canLeave.filter((elem: any) => elem === id)
-    if (test.length > 0) return true
-    else return false
-  }
-  canJoin(id: string): boolean {
-    const test = this.state.canLeave.filter((elem: any) => elem === id)
-    if (test.length > 0) return false
-    else return true
-  }
-  isOwner(id: string): boolean {
-    const test = this.state.isOwner.filter((elem: any) => elem === id)
-    if (test.length > 0) return true
-    else return false
   }
 
   async join(userActions: UserActions, group: any, groupType: string): Promise<void> {
@@ -610,15 +643,15 @@ export default class MyGroups extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
       console.log({ "Success mutations.createGroupMember": createGroupMember })
-      this.setState({
-        canLeave: this.state.canLeave.concat([group.id]),
-      })
+      const canLeave = { ...this.state.canLeave }
+      canLeave[group.id] = true
+      this.setState({ canLeave })
       this.renderByType(userActions, group, groupType)
     } catch (err) {
       console.log({ "Error mutations.createGroupMember": err })
-      this.setState({
-        canLeave: this.state.canLeave.concat([group.id]),
-      })
+      const canLeave = { ...this.state.canLeave }
+      canLeave[group.id] = true
+      this.setState({ canLeave })
       this.renderByType(userActions, group, groupType)
     }
   }
@@ -651,22 +684,16 @@ export default class MyGroups extends JCComponent<Props, State> {
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })
           console.log({ "Success mutations.deleteGroupMember": deleteGroupMember })
+          const canLeave = { ...this.state.canLeave }
+          canLeave[group.id] = false
+          this.setState({ canLeave })
 
-          const index = this.state.canLeave.indexOf(group.id)
-          const canLeave = this.state.canLeave
-          canLeave.splice(index, 1)
-          this.setState({
-            canLeave: canLeave,
-          })
           this.renderByType(userActions, group, groupType)
         } catch (err) {
           console.log({ "Error mutations.deleteGroupMember": err })
-          const index = this.state.canLeave.indexOf(group.id)
-          const canLeave = this.state.canLeave
-          canLeave.splice(index, 1)
-          this.setState({
-            canLeave: canLeave,
-          })
+          const canLeave = { ...this.state.canLeave }
+          canLeave[group.id] = false
+          this.setState({ canLeave })
           this.renderByType(userActions, group, groupType)
         }
       }
@@ -787,7 +814,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               </Text>
             </CardItem>
           ) : null}
-          {this.canJoin(item.id) && !this.isOwner(item.id) ? (
+          {!this.state.canLeave[item.id] && !this.state.isOwner[item.id] ? (
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
@@ -800,7 +827,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <Right></Right>
             </CardItem>
           ) : null}
-          {this.canLeave(item.id) && !this.isOwner(item.id) ? (
+          {this.state.canLeave[item.id] && !this.state.isOwner[item.id] ? (
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
@@ -813,7 +840,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <Right></Right>
             </CardItem>
           ) : null}
-          {this.isOwner(item.id) ? (
+          {this.state.isOwner[item.id] ? (
             <CardItem>
               <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>
                 Owner
@@ -954,7 +981,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               </Text>
             )}
           </CardItem>
-          {this.canJoin(item.id) && !this.isOwner(item.id) ? (
+          {!this.state.canLeave[item.id] && !this.state.isOwner[item.id] ? (
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
@@ -967,7 +994,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <Right></Right>
             </CardItem>
           ) : null}
-          {this.canLeave(item.id) && !this.isOwner(item.id) ? (
+          {this.state.canLeave[item.id] && !this.state.isOwner[item.id] ? (
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
@@ -980,7 +1007,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <Right></Right>
             </CardItem>
           ) : null}
-          {this.isOwner(item.id) ? (
+          {this.state.isOwner[item.id] ? (
             <CardItem>
               <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>
                 Owner
@@ -1027,25 +1054,25 @@ export default class MyGroups extends JCComponent<Props, State> {
               Last Updated: {item.lastupdated}
             </Text>
           </CardItem>
-          {(!this.isOwner(item.id) && this.canJoin(item.id)) ||
-          (!this.isOwner(item.id) && this.canLeave(item.id)) ? (
+          {(!this.state.isOwner[item.id] && !this.state.canLeave[item.id]) ||
+          (!this.state.isOwner[item.id] && this.state.canLeave[item.id]) ? (
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={async () => {
-                  if (!this.isOwner(item.id) && this.canJoin(item.id)) {
+                  if (!this.state.isOwner[item.id] && !this.state.canLeave[item.id]) {
                     await this.join(userActions, item, "Resource")
-                  } else if (!this.isOwner(item.id) && this.canLeave(item.id)) {
+                  } else if (!this.state.isOwner[item.id] && this.state.canLeave[item.id]) {
                     await this.leave(userActions, item, "Resource")
                   }
                 }}
               >
-                {this.canJoin(item.id) ? "Join" : this.canLeave(item.id) ? "Leave" : null}
+                {this.state.canLeave[item.id] ? "Leave" : "Join"}
               </JCButton>
               <Right></Right>
             </CardItem>
           ) : null}
-          {this.isOwner(item.id) ? (
+          {this.state.isOwner[item.id] ? (
             <CardItem>
               <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>
                 Owner
@@ -1108,7 +1135,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     this.setState({ applyCourse: item })
   }
   renderCourseStatus(userActions: UserActions, item: any): React.ReactNode {
-    if (this.isOwner(item.id))
+    if (this.state.isOwner[item.id])
       return (
         <CardItem>
           <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Owner</Text>
@@ -1219,14 +1246,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     )
   }
   filterMy = (item: any): boolean => {
-    return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id)
-  }
-  filterEvent = (item: any): boolean => {
-    return (
-      !(this.props.type === "event") ||
-      (this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now(), "day")) ||
-      (!this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now(), "day"))
-    )
+    return !this.state.myFilter || this.state.canLeave[item.id] || this.state.isOwner[item.id]
   }
 
   renderJoinCourseModal() {
@@ -1265,10 +1285,12 @@ export default class MyGroups extends JCComponent<Props, State> {
     if (itemValue === "Previous Events") {
       this.setState({
         eventFilter: !this.state.eventFilter,
+        showAllEvents: false,
       })
     } else if (itemValue === "Upcoming Events") {
       this.setState({
         eventFilter: this.state.eventFilter,
+        showAllEvents: false,
       })
     } else if (itemValue === "Show All") {
       this.openMultiple()
@@ -1277,6 +1299,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     } else if (itemValue === this.state.myTitleScreen) {
       this.setState({
         myFilter: !this.state.myFilter,
+        showAllEvents: false,
       })
     } else if (itemValue === "Create") {
       this.createSingle()
@@ -1361,6 +1384,20 @@ export default class MyGroups extends JCComponent<Props, State> {
             return null
           } else if (this.state.titleString == null) return null
           else {
+            let data = [...this.state.data]
+
+            if (this.props.type === "event") {
+              if (this.state.showAllEvents || this.state.myFilter) {
+                data = [...this.state.data, ...this.state.pastEvents]
+                data.sort((a, b) => (b?.time ?? "").localeCompare(a?.time ?? ""))
+              } else if (this.state.eventFilter) {
+                data = [...this.state.pastEvents]
+                data.sort((a, b) => (b?.time ?? "").localeCompare(a?.time ?? ""))
+              } else {
+                data.sort((a, b) => (a?.time ?? "").localeCompare(b?.time ?? ""))
+              }
+            }
+
             return (
               <ErrorBoundry>
                 <StyleProvider style={getTheme()}>
@@ -1469,6 +1506,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                                     onPress={() => {
                                       this.setState({
                                         myFilter: !this.state.myFilter,
+                                        showAllEvents: false,
                                       })
                                     }}
                                   >
@@ -1484,6 +1522,8 @@ export default class MyGroups extends JCComponent<Props, State> {
                                     onPress={() => {
                                       this.setState({
                                         eventFilter: !this.state.eventFilter,
+                                        showAllEvents: false,
+                                        myFilter: false,
                                       })
                                     }}
                                   >
@@ -1519,33 +1559,24 @@ export default class MyGroups extends JCComponent<Props, State> {
                             : this.styles.style.ResourcesMyGroupsNoWrap
                         }
                       >
-                        {this.state.data ? (
-                          this.state.data.filter(this.filterMy).filter(this.filterEvent).length >
-                          0 ? (
-                            this.state.data
-                              .filter(this.filterMy)
-                              .filter(this.filterEvent)
-                              .sort((a: any, b: any) => {
-                                if (this.state.type == "event" && this.state.eventFilter)
-                                  return b.time.localeCompare(a.time)
-                                else return 0
-                              })
-                              .map((item: any, index: number) => {
-                                return (
-                                  <ErrorBoundry key={index}>
-                                    <ListItem
-                                      noBorder
-                                      style={this.styles.style.conversationsCard}
-                                      button
-                                      onPress={() => {
-                                        this.openSingle(userActions, item.id)
-                                      }}
-                                    >
-                                      {this.renderByType(userActions, item, this.state.type)}
-                                    </ListItem>
-                                  </ErrorBoundry>
-                                )
-                              })
+                        {data ? (
+                          data.filter(this.filterMy).length > 0 ? (
+                            data.filter(this.filterMy).map((item: any, index: number) => {
+                              return (
+                                <ErrorBoundry key={index}>
+                                  <ListItem
+                                    noBorder
+                                    style={this.styles.style.conversationsCard}
+                                    button
+                                    onPress={() => {
+                                      this.openSingle(userActions, item.id)
+                                    }}
+                                  >
+                                    {this.renderByType(userActions, item, this.state.type)}
+                                  </ListItem>
+                                </ErrorBoundry>
+                              )
+                            })
                           ) : (
                             <Text style={this.styles.style.noCardFontTitle}>
                               No{" "}
@@ -1562,7 +1593,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                             Loading {this.state.type}s
                           </Text>
                         )}
-                        {this.state.nextToken ? (
+                        {this.state.nextToken ||
+                        ((this.state.eventFilter || this.state.showAllEvents) &&
+                          this.state.nextTokenPastEvents) ? (
                           this.props.showMore ? (
                             this.state.type == "profile" ? (
                               <ListItem
@@ -1570,7 +1603,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                                 style={this.styles.style.conversationsCard}
                                 button
                                 onPress={() => {
-                                  this.setInitialData(this.props)
+                                  this.setData(this.props)
                                 }}
                               >
                                 <Card
@@ -1594,7 +1627,11 @@ export default class MyGroups extends JCComponent<Props, State> {
                               <TouchableOpacity
                                 style={{ top: 15, height: 80 }}
                                 onPress={() => {
-                                  this.setInitialData(this.props)
+                                  this.setData(
+                                    this.props,
+                                    false,
+                                    this.state.eventFilter || this.state.showAllEvents
+                                  )
                                 }}
                               >
                                 <Card
