@@ -1301,8 +1301,10 @@ export default class MainStyles {
         fontSize: 16,
         lineHeight: 24,
       },
-
       headerLeft: {
+        flex: 0,
+      },
+      courseHeaderLeft: {
         flex: 0,
       },
       headerMiddleBody: {
@@ -2055,6 +2057,13 @@ export default class MainStyles {
         },
         headerLeft: {
           flex: 0.3,
+        },
+        courseHeaderLeft: {
+          flex: 0.3,
+          alignSelf: "flex-start",
+          top: 15,
+          marginLeft: 15,
+          zIndex: 10000,
         },
         headerMiddleBody: {
           marginLeft: 0,

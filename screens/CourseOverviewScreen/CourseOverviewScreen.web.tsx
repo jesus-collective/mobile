@@ -1019,6 +1019,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                       style={{
                                         flexDirection: "row",
                                         justifyContent: "space-between",
+                                        width: "90%",
                                       }}
                                     >
                                       <Text

@@ -1386,6 +1386,7 @@ const courseStyles = EStyleSheet.create({
     },
     courseHomeCalendarLabels: {
       marginBottom: 30,
+      flexDirection: "row",
     },
     miniMessageBoardRight: {
       flex: 5,
