@@ -447,6 +447,7 @@ type Group
 
     ]
   )
+    @key(name: "byTypeByTime", fields: ["type", "time"], queryField: "groupByTypeByTime")
     @key(name: "byType", fields: ["type", "id"], queryField: "groupByType")
   @key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
  {
