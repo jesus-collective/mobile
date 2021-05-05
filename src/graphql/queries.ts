@@ -4184,6 +4184,125 @@ export const groupMemberByUser = /* GraphQL */ `
     }
   }
 `
+export const groupByTypeByTime = /* GraphQL */ `
+  query GroupByTypeByTime(
+    $type: String
+    $time: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupByTypeByTime(
+      type: $type
+      time: $time
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        readGroups
+        ownerOrgID
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+        }
+        image
+        time
+        lastUpdated
+        location
+        locationLatLong {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        length
+        effort
+        cost
+        promotionalText
+        messages {
+          nextToken
+        }
+        eventType
+        eventUrl
+        tz
+        isSponsored
+        createdAt
+        updatedAt
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
 export const groupByType = /* GraphQL */ `
   query GroupByType(
     $type: String
