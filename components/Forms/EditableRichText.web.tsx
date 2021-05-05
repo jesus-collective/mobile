@@ -27,7 +27,7 @@ export enum RichTextStyle {
 }
 
 interface Props {
-  value: string
+  value: string | null
   isEditable: boolean
   textStyle?: React.CSSProperties
   inputStyle?: any
@@ -37,14 +37,25 @@ interface Props {
   testID?: string
 }
 interface State extends JCState {
-  value: string
-
+  value: string | null
   isEditMode: boolean
   // textStyle: any,
   // inputStyle: any,
   //placeholder: string,
   editorState: EditorState
 }
+
+const emptyEditor = () => {
+  return {
+    json: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+    state: EditorState.createWithContent(
+      convertFromRaw(
+        JSON.parse(JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())))
+      )
+    ),
+  }
+}
+
 export default class EditableRichText extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
@@ -53,12 +64,9 @@ export default class EditableRichText extends JCComponent<Props, State> {
       initialValue = props.value
       initial = EditorState.createWithContent(convertFromRaw(JSON.parse(props.value)))
     } catch {
-      initialValue = JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
-      initial = EditorState.createWithContent(
-        convertFromRaw(
-          JSON.parse(JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())))
-        )
-      )
+      const { json, state } = emptyEditor()
+      initialValue = json
+      initial = state
     }
 
     this.state = {
@@ -74,12 +82,21 @@ export default class EditableRichText extends JCComponent<Props, State> {
   }
   componentDidUpdate(prevProps: Props): void {
     if (prevProps.value !== this.props.value) {
-      this.setState({
-        value: this.props.value,
-        editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value))),
-      })
+      try {
+        const editorState = EditorState.createWithContent(
+          convertFromRaw(JSON.parse(this.props.value))
+        )
+        this.setState({
+          value: this.props.value,
+          editorState,
+        })
+      } catch {
+        const { json: value, state: editorState } = emptyEditor()
+        this.setState({ value, editorState })
+      }
     }
   }
+
   onChanged(val: any): void {
     if (this.props.onChange) {
       this.props.onChange(val)
