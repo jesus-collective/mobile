@@ -748,6 +748,7 @@ const courseStyles = EStyleSheet.create({
     : {
         width: "100%",
         minHeight: "fit-content",
+        height: "unset",
       },
   courseHomeCourseActivityText: {
     fontSize: 16,
