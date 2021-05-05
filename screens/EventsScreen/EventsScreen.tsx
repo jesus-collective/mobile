@@ -1,4 +1,5 @@
-﻿import { Container, Content } from "native-base"
+﻿import { Route } from "@react-navigation/native"
+import { Container, Content } from "native-base"
 import React from "react"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -7,12 +8,11 @@ import MyMap from "../../components/MyMap/MyMap"
 
 interface Props {
   navigation: any
-  route: any
+  route: Route<any, { showAllEvents?: boolean; mine?: boolean }>
 }
 interface State extends JCState {
   showMap: boolean
   mapData: MapData[]
-  showMy: boolean
 }
 
 export default class HomeScreen extends JCComponent<Props, State> {
@@ -22,7 +22,6 @@ export default class HomeScreen extends JCComponent<Props, State> {
       ...super.getInitialState(),
       mapData: [],
       showMap: false,
-      showMy: this.props.route.params ? this.props.route.params.mine : false,
     }
   }
   mapChanged = (): void => {
@@ -52,7 +51,8 @@ export default class HomeScreen extends JCComponent<Props, State> {
           <Container style={this.styles.style.eventsScreenMainContainer}>
             <Container style={this.styles.style.eventsScreenLeftContainer}>
               <MyGroups
-                showMy={this.state.showMy}
+                showMy={!!this.props.route?.params?.mine}
+                showAllEvents={!!this.props.route?.params?.showAllEvents}
                 showMore={true}
                 type="event"
                 wrap={true}

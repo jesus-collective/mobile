@@ -34,6 +34,8 @@ interface Props {
   showMore: boolean
   onDataload(mapData: MapData[]): void
   showMy?: boolean
+  homeDashboard?: boolean
+  showAllEvents?: boolean
 }
 
 type GroupData =
@@ -78,23 +80,25 @@ export interface MapData {
 }
 
 export default class MyGroups extends JCComponent<Props, State> {
-  private commonInitialState = {
-    data: [],
-    pastEvents: [],
-    showCreateButton: false,
-    currentUser: null,
-    nextToken: null,
-    nextTokenPastEvents: null,
-    canLeave: {},
-    isOwner: {},
-    joinCourse: null,
-    canPay: [],
-    isPaid: [],
-    showAllEvents: false,
-  }
-
   constructor(props: Props) {
     super(props)
+
+    const commonInitialState = {
+      data: [],
+      pastEvents: [],
+      showCreateButton: false,
+      currentUser: null,
+      nextToken: null,
+      nextTokenPastEvents: null,
+      canLeave: {},
+      isOwner: {},
+      joinCourse: null,
+      canPay: [],
+      isPaid: [],
+      type: props.type,
+      showAllEvents: !!this.props.showAllEvents,
+    }
+
     if (props.type === "event") {
       this.state = {
         ...super.getInitialState(),
@@ -107,9 +111,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         openMultiple: "EventsScreen",
         createString: "+ Create Event",
         titleString: "Events",
-        type: props.type,
         cardWidth: 300,
-        ...this.commonInitialState,
+        ...commonInitialState,
       }
     } else if (props.type === "group") {
       this.state = {
@@ -122,9 +125,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         openMultiple: "GroupsScreen",
         createString: "+ Create Group",
         titleString: "Groups",
-        type: props.type,
         cardWidth: 300,
-        ...this.commonInitialState,
+        ...commonInitialState,
       }
     } else if (props.type === "resource") {
       this.state = {
@@ -137,9 +139,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         openMultiple: "ResourcesScreen",
         createString: "+ Create Resource",
         titleString: "Resources",
-        type: props.type,
         cardWidth: 215,
-        ...this.commonInitialState,
+        ...commonInitialState,
       }
     } else if (props.type === "organization") {
       this.state = {
@@ -152,9 +153,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         openMultiple: "OrganizationsScreen",
         createString: "+ Create Organization",
         titleString: "Organizations",
-        type: props.type,
         cardWidth: 215,
-        ...this.commonInitialState,
+        ...commonInitialState,
       }
     } else if (props.type === "course") {
       this.state = {
@@ -167,9 +167,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         openMultiple: "CoursesScreen",
         createString: "+ Create Course",
         titleString: "Courses",
-        type: props.type,
         cardWidth: 215,
-        ...this.commonInitialState,
+        ...commonInitialState,
       }
     } else if (props.type === "profile") {
       this.state = {
@@ -182,9 +181,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         openMultiple: "ProfilesScreen",
         createString: "+ Create Profile",
         titleString: "Profiles",
-        type: props.type,
         cardWidth: 215,
-        ...this.commonInitialState,
+        ...commonInitialState,
       }
     } else {
       this.state = {
@@ -195,11 +193,10 @@ export default class MyGroups extends JCComponent<Props, State> {
         openSingle: "",
         genericGroupType: null,
         openMultiple: "",
-        type: props.type,
         titleString: "",
         createString: "",
         cardWidth: 300,
-        ...this.commonInitialState,
+        ...commonInitialState,
       }
     }
   }
@@ -539,11 +536,14 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
   openMultiple(): void {
-    if (this.props.type === "event") {
+    if (this.props.type === "event" && !this.props.homeDashboard) {
       this.setState({ showAllEvents: !this.state.showAllEvents, myFilter: false })
     } else {
       console.log({ "Navigate to": this.state.openMultiple })
-      this.props.navigation.push(this.state.openMultiple)
+      this.props.navigation.push(
+        this.state.openMultiple,
+        this.props.type === "event" ? { showAllEvents: true } : {}
+      )
     }
   }
   async setCanPay(data: any): Promise<void> {
