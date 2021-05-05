@@ -896,16 +896,6 @@ export type Activity = {
   owner?: User
 }
 
-export type ModelIDKeyConditionInput = {
-  eq?: string | null
-  le?: string | null
-  lt?: string | null
-  ge?: string | null
-  gt?: string | null
-  between?: Array<string | null> | null
-  beginsWith?: string | null
-}
-
 export type ModelGroupFilterInput = {
   id?: ModelIDFilterInput | null
   owner?: ModelStringFilterInput | null
@@ -937,6 +927,16 @@ export type ModelUserGroupTypeListFilterInput = {
   ne?: Array<UserGroupType | null> | null
   contains?: UserGroupType | null
   notContains?: UserGroupType | null
+}
+
+export type ModelIDKeyConditionInput = {
+  eq?: string | null
+  le?: string | null
+  lt?: string | null
+  ge?: string | null
+  gt?: string | null
+  between?: Array<string | null> | null
+  beginsWith?: string | null
 }
 
 export type ModelDirectMessageUserFilterInput = {
@@ -1336,6 +1336,59 @@ export type GetGroupQuery = {
     __typename: "Group"
     id: string
     owner: string
+  } | null
+}
+
+export type GroupByTypeByTimeQueryVariables = {
+  type?: string | null
+  time?: ModelStringKeyConditionInput | null
+  sortDirection?: ModelSortDirection | null
+  filter?: ModelGroupFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type GroupByTypeByTimeQuery = {
+  groupByTypeByTime?: {
+    __typename: "ModelGroupConnection"
+    items?: Array<{
+      __typename: "Group"
+      id: string
+      owner: string
+      ownerUser?: {
+        __typename: "User"
+        id: string
+        given_name: string
+        family_name: string
+      } | null
+      type: string
+      name: string
+      readGroups?: Array<UserGroupType | null> | null
+      description: string
+      memberCount?: number | null
+      image: string
+      time?: string | null
+      lastUpdated?: string | null
+      location?: string | null
+      locationLatLong?: {
+        __typename: "LatLong"
+        latitude?: string | null
+        longitude?: string | null
+        geocodeFull?: string | null
+        geocodeCity?: string | null
+        geocodeRegion?: string | null
+      } | null
+      length?: string | null
+      effort?: string | null
+      cost?: string | null
+      eventType?: string | null
+      eventUrl?: string | null
+      tz?: string | null
+      isSponsored?: string | null
+      createdAt: string
+      updatedAt: string
+    } | null> | null
+    nextToken?: string | null
   } | null
 }
 

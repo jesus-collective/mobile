@@ -347,6 +347,63 @@ export const getGroupForOwner = /* GraphQL */ `
     }
   }
 `
+
+export const groupByTypeByTime = /* GraphQL */ `
+  query GroupByTypeByTime(
+    $type: String
+    $time: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupByTypeByTime(
+      type: $type
+      time: $time
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        ownerUser {
+          id
+          given_name
+          family_name
+        }
+        type
+        name
+        readGroups
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        locationLatLong {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        length
+        effort
+        cost
+        eventType
+        eventUrl
+        tz
+        isSponsored
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
+
 export const groupByTypeForMyGroups = /* GraphQL */ `
   query GroupByType(
     $type: String
