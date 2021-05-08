@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import Amplify, { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import { Linking } from "expo"
+import * as Linking from "expo-linking"
 import moment from "moment"
 import React from "react"
 import { Platform, Text } from "react-native"

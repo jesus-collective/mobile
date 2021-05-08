@@ -2,9 +2,9 @@ import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp } from "@react-navigation/native"
 import Amplify, { Auth, I18n } from "aws-amplify"
 import { Authenticator } from "aws-amplify-react-native"
-import { Linking } from "expo"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"
+import * as Linking from "expo-linking"
 import React, { lazy, Suspense } from "react"
 import { Dimensions, Platform, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -179,9 +179,9 @@ class AwesomeApp extends JCComponent<Props, State> {
     }
   }
   async getAuthInitialState() {
-    const initialUrl: string = await Linking.getInitialURL()
+    const initialUrl = await Linking.getInitialURL()
     console.log({ "INITIAL URL": initialUrl })
-    if (initialUrl.toLowerCase().includes("/auth/signup")) return "signUp"
+    if (initialUrl?.toLowerCase().includes("/auth/signup")) return "signUp"
     return "signIn"
   }
 

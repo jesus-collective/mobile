@@ -13,9 +13,17 @@
     "checkJs": true,
     "strict": true,
     "moduleResolution": "node",
-    "lib":  ["dom", "esnext"],
-    "typeRoots": ["node_modules/@types"],
-    "types": ["node", "react"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "react"
+    ],
     "resolveJsonModule": true,
     "noEmit": true,
     "skipLibCheck": true
@@ -35,5 +43,6 @@
     "native-base-theme/components/*.js",
     "native-base-theme/variables/*.js",
     "**/*.native.tsx"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }

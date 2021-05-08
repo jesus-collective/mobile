@@ -1,6 +1,6 @@
-import AsyncStorage from "@react-native-community/async-storage"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native"
-import { Linking } from "expo"
+import * as Linking from "expo-linking"
 import React from "react"
 import { Platform } from "react-native"
 import { AuthStateData } from "src/types"
