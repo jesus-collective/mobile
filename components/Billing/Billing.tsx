@@ -179,10 +179,10 @@ class BillingImpl extends JCComponent<Props, State> {
         query: mutations.createCustomer,
         variables: {
           idempotency: this.state.idempotency,
-          firstName: user.attributes.given_name,
-          lastName: user.attributes.family_name,
-          email: user.attributes.email,
-          phone: user.attributes.phone_number,
+          firstName: user?.attributes?.given_name,
+          lastName: user?.attributes?.family_name,
+          email: user?.attributes?.email,
+          phone: user?.attributes?.phone_number,
           billingAddress: this.state.userData?.billingAddress,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -639,9 +639,7 @@ class BillingImpl extends JCComponent<Props, State> {
                     source={require("../../assets/svg/checkmark-circle.svg")}
                   />
 
-                  <Text
-                    style={this.styles.style.SignUpScreenSetupText}
-                  >
+                  <Text style={this.styles.style.SignUpScreenSetupText}>
                     We&apos;ve received your payment.
                     <br />
                     <JCButton
@@ -669,14 +667,10 @@ class BillingImpl extends JCComponent<Props, State> {
                 <>
                   {this.state.processing == "processing" ? (
                     <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
-                      <Text
-                        style={this.styles.style.SignUpScreenSetupText}
-                      >
+                      <Text style={this.styles.style.SignUpScreenSetupText}>
                         Processing Payment
                       </Text>
-                      <Text
-                        style={this.styles.style.SignUpScreenSetupTextSmaller}
-                      >
+                      <Text style={this.styles.style.SignUpScreenSetupTextSmaller}>
                         Please wait while we process your payment. This may take several seconds.
                       </Text>
                       <ActivityIndicator />

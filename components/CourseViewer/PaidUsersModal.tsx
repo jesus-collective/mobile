@@ -24,7 +24,7 @@ interface Props {
 interface State {
   data: NonNullable<NonNullable<GraphQLResult<ListPaymentsQuery>["data"]>["listPayments"]>["items"]
   users: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  paymentNote: string
+  paymentNote: string | null
 }
 class PaidUsersModalImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -124,7 +124,7 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
             multiline={true}
             textStyle={this.styles.style.courseMktNameInput}
             inputStyle={this.styles.style.courseMktNameInput}
-            value={this.state.paymentNote}
+            value={this.state.paymentNote ?? ""}
             isEditable={true}
           ></EditableText>
           <JCButton
