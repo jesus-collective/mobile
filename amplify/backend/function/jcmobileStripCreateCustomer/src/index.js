@@ -118,6 +118,7 @@ exports.handler = async (event) => {
     const phone = event.arguments.phone
     const firstName = event.arguments.firstName
     const lastName = event.arguments.lastName
+    const orgName = event.arguments.orgName
     const billingAddress = event.arguments.billingAddress
     const userInfo = await getUser(userID)
     // TODO userID
@@ -125,9 +126,12 @@ exports.handler = async (event) => {
     // TODO determine if we have a user created in table (User/stripeCustomerID)
     var customer
     if (userInfo.stripeCustomerID == null) {
+      var concatName
+      if (orgName && orgName.length > 0) concatName = orgName + ": " + firstName + " " + lastName
+      else concatName = firstName + " " + lastName
       customer = await stripe.customers.create(
         {
-          name: firstName + " " + lastName,
+          name: concatName,
           phone: phone,
           address: billingAddress,
           description: "This is a description",

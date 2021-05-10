@@ -140,6 +140,7 @@ export const createCustomer = /* GraphQL */ `
     $email: String
     $firstName: String
     $lastName: String
+    $orgName: String
     $billingAddress: StripeAddressInput
   ) {
     createCustomer(
@@ -148,6 +149,7 @@ export const createCustomer = /* GraphQL */ `
       email: $email
       firstName: $firstName
       lastName: $lastName
+      orgName: $orgName
       billingAddress: $billingAddress
     ) {
       customer {

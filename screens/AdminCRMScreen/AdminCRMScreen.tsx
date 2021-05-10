@@ -613,6 +613,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           lastName: user.attributes.family_name,
           email: user.attributes.email,
           phone: user.attributes.phone_number,
+          orgName: user?.attributes!["custom:orgName"],
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })

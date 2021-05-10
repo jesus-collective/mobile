@@ -84,11 +84,12 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     try {
       const currentUser = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const userSession = currentUser.getSignInUserSession()
-      const refreshToken = userSession.getRefreshToken()
-      currentUser.refreshSession(refreshToken, (err: any, session: any) => {
-        console.log("UPDATED GROUPS!")
-        currentUser.setSignInUserSession(session)
-      })
+      const refreshToken = userSession?.getRefreshToken()
+      if (refreshToken)
+        currentUser.refreshSession(refreshToken, (err: any, session: any) => {
+          console.log("UPDATED GROUPS!")
+          currentUser.setSignInUserSession(session)
+        })
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       this.setState({
         groups: user.getSignInUserSession()?.getAccessToken().payload["cognito:groups"],
@@ -166,19 +167,19 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           console.log("User exists")
         }
 
-        if (attributes["custom:isOrg"] === "true" && getUser) {
+        if (attributes!["custom:isOrg"] === "true" && getUser) {
           this.setState({ isOrg: true })
           if (getUser?.data?.getUser?.organizations?.items?.length === 0) {
             console.log("creating Organization")
             const id = `organization-${Date.now()}`
             const orgInput: CreateOrganizationInput = {
               id: id,
-              orgName: attributes["custom:orgName"],
-              adminEmail: attributes["email"],
-              phone: attributes["phone_number"],
+              orgName: attributes!["custom:orgName"] ?? "",
+              adminEmail: attributes!["email"],
+              phone: attributes!["phone_number"],
               profileState: "Incomplete",
-              admins: [this.user["username"]],
-              superAdmin: this.user["username"],
+              admins: [this.user!["username"]],
+              superAdmin: this.user!["username"],
               parentOrganizationId: id,
               joined: moment().format(),
             }
@@ -204,7 +205,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
 
             const orgMember: CreateOrganizationMemberInput = {
               userRole: "superAdmin",
-              userId: this.user["username"],
+              userId: this.user!["username"],
               organizationId: orgId,
             }
 
@@ -249,11 +250,12 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         query: mutations.createCustomer,
         variables: {
           idempotency: this.state.idempotency,
-          firstName: user.attributes.given_name,
-          lastName: user.attributes.family_name,
-          email: user.attributes.email,
-          phone: user.attributes.phone_number,
+          firstName: user?.attributes?.given_name,
+          lastName: user?.attributes?.family_name,
+          email: user?.attributes?.email,
+          phone: user?.attributes?.phone_number,
           billingAddress: billingAddress,
+          orgName: user?.attributes!["custom:orgName"],
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
@@ -312,7 +314,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         }
       }
       const getUser: any = API.graphql(
-        graphqlOperation(queries.getUser, { id: this.user["username"] })
+        graphqlOperation(queries.getUser, { id: this.user!["username"] })
       )
       return await getUser.then(handleGetUser).catch(handleGetUser)
     } else {
@@ -357,7 +359,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           case ProfileStatus.Completed:
             const initialUrl = await Linking.getInitialURL()
             console.log(initialUrl)
-            if (Platform.OS == "web" && initialUrl.includes("auth/payment3")) {
+            if (Platform.OS == "web" && initialUrl?.includes("auth/payment3")) {
               if (
                 this.isMemberOf("friends") ||
                 this.isMemberOf("partners") ||
@@ -419,7 +421,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         else return ProfileStatus.Unknown
       }
       const getUser: any = API.graphql(
-        graphqlOperation(queries.getUser, { id: this.user["username"] })
+        graphqlOperation(queries.getUser, { id: this.user!["username"] })
       )
       return await getUser.then(handleUser).catch(handleUser)
     }
@@ -436,12 +438,16 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     try {
       const { attributes } = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const userAttributes = mapToArrayOfStrings(attributes)
-      console.log({ Email: attributes.email, Sub: attributes.sub, userAttributes: userAttributes })
+      console.log({
+        Email: attributes?.email,
+        Sub: attributes?.sub,
+        userAttributes: userAttributes,
+      })
       Analytics.updateEndpoint({
-        address: attributes.email,
+        address: attributes?.email,
         channelType: "EMAIL",
         optOut: "NONE",
-        userId: attributes.sub,
+        userId: attributes?.sub,
         userAttributes,
       })
     } catch (error) {
@@ -449,13 +455,13 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     }
   }
   async getAuthInitialState() {
-    const initialUrl: string = await Linking.getInitialURL()
-    const initialParams = Linking.parse(initialUrl).queryParams
+    const initialUrl = await Linking.getInitialURL()
+    const initialParams = Linking.parse(initialUrl ?? "").queryParams
 
-    this.setState({ initialUrl })
+    this.setState({ initialUrl: initialUrl ?? "" })
     console.log({ "INITIAL URL": initialUrl })
     console.log({ initialParams: initialParams })
-    if (initialUrl.toLowerCase().includes("/auth/signup"))
+    if (initialUrl?.toLowerCase().includes("/auth/signup"))
       this.setState({
         initialAuthType: "signup",
         initialParams,

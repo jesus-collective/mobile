@@ -3060,6 +3060,7 @@ export type CreateCustomerMutationVariables = {
   email?: string | null,
   firstName?: string | null,
   lastName?: string | null,
+  orgName?: string | null,
   billingAddress?: StripeAddressInput | null,
 };
 

@@ -169,7 +169,9 @@
         "jcmobileStripCreateCustomer": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
-          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/jcmobileStripCreateCustomer-697a62694f557552504f-build.zip"
         },
         "jcmobileStripListInvoices": {
           "userPoolId": "us-east-1_Bq1YZMmzA",

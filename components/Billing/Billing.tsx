@@ -8,7 +8,14 @@ import {
   Elements,
   ElementsConsumer,
 } from "@stripe/react-stripe-js"
-import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js"
+import {
+  loadStripe,
+  Stripe,
+  StripeCardCvcElementChangeEvent,
+  StripeCardExpiryElementChangeEvent,
+  StripeCardNumberElementChangeEvent,
+  StripeElements,
+} from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
@@ -52,6 +59,7 @@ const CARD_ELEMENT_OPTIONS = {
     },
   },
 }
+type KeysOfType<T, U> = { [k in keyof T]: T[k] extends U ? k : never }[keyof T]
 type Products = NonNullable<ListProductsQuery["listProducts"]>["items"]
 type Product = NonNullable<Products>[0]
 interface Props {
@@ -183,6 +191,7 @@ class BillingImpl extends JCComponent<Props, State> {
           lastName: user?.attributes?.family_name,
           email: user?.attributes?.email,
           phone: user?.attributes?.phone_number,
+          orgName: user?.attributes!["custom:orgName"],
           billingAddress: this.state.userData?.billingAddress,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -385,7 +394,13 @@ class BillingImpl extends JCComponent<Props, State> {
       </JCModal>
     )
   }
-  stripeFieldValidation = (element, name: string) => {
+  stripeFieldValidation = (
+    element:
+      | StripeCardNumberElementChangeEvent
+      | StripeCardExpiryElementChangeEvent
+      | StripeCardCvcElementChangeEvent,
+    name: string
+  ) => {
     if (!element.empty && element.complete) {
       this.setState({ stripeValidation: { ...this.state.stripeValidation, [name]: true } })
     } else {
@@ -532,8 +547,10 @@ class BillingImpl extends JCComponent<Props, State> {
       })
     }, 60000)
   }
-
-  async handleInputChange(value: string, field: string) {
+  async handleInputChange(
+    value: any,
+    field: keyof NonNullable<NonNullable<NonNullable<GetUserQuery>["getUser"]>["billingAddress"]>
+  ) {
     const release = await handleInputMutex.acquire()
     console.log({ field: field, value: value })
     try {
@@ -557,7 +574,9 @@ class BillingImpl extends JCComponent<Props, State> {
           this.setState({ userData: user.data.updateUser }, async () => {
             const temp = this.state.userData
 
-            temp.billingAddress[field] = value
+            if (temp?.billingAddress && temp?.billingAddress[field])
+              temp.billingAddress[field] = value
+
             const user = await API.graphql(
               graphqlOperation(mutations.updateUser, {
                 input: {
@@ -570,8 +589,8 @@ class BillingImpl extends JCComponent<Props, State> {
           })
       } else {
         const temp = this.state.userData
+        if (temp?.billingAddress && temp?.billingAddress[field]) temp.billingAddress[field] = value
 
-        temp.billingAddress[field] = value
         const user = await API.graphql(
           graphqlOperation(mutations.updateUser, {
             input: {
