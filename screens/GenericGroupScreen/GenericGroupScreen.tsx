@@ -493,7 +493,7 @@ export default class EventScreen extends JCComponent<Props, State> {
     console.log("Navigate to org")
     this.props.navigation.push("OrganizationScreen", { id: id, create: false })
   }
-  capitalize(str: string) {
+  capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
   renderPermissions(): React.ReactNode {

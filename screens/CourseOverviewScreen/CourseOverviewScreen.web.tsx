@@ -121,7 +121,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
     const key = Object.keys(myObject).filter((k) => k.includes(string))
     return key.length ? myObject[key[0]] : ""
   }*/
-  setMembers() {
+  setMembers(): void {
     this.state.memberIDs.map((id) => {
       const getUser: any = API.graphql({
         query: queries.getUser,
@@ -454,7 +454,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         console.log({ "Error mutations.deleteGroup": err })
       })
   }
-  purchase() {
+  purchase(): void {
     this.props.navigation.push("CoursePaymentScreen", { id: this.state.data.id })
   }
   updateValue(field: string, value: any): void {
@@ -466,7 +466,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
-  canPurchase(userActions: UserActions) {
+  canPurchase(userActions: UserActions): boolean {
     const id = this.state.data.id
     if (this.isOwner(id)) return false
     else if (this.isCourseCoach(userActions, id)) return false
@@ -476,16 +476,16 @@ export default class CourseScreen extends JCComponent<Props, State> {
     else if (this.canCourseApply(id)) return false
     else return false
   }
-  isCourseCoach(userActions: UserActions, id: string) {
+  isCourseCoach(userActions: UserActions, id: string): boolean {
     return userActions.isMemberOf("courseCoach")
   }
-  isCourseAdmin(userActions: UserActions, id: string) {
+  isCourseAdmin(userActions: UserActions, id: string): boolean {
     return userActions.isMemberOf("courseAdmin")
   }
-  canCourseApply(id: string) {
-    return this
+  canCourseApply(id: string): boolean {
+    return false
   }
-  isOwner(id: string) {
+  isOwner(id: string): boolean {
     return this.state.isEditable
   }
   async setCanPay(): Promise<void> {
@@ -526,7 +526,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         console.log({ "Error query.getPayment": err })
       })
   }
-  canGotoCourse(userActions: UserActions) {
+  canGotoCourse(userActions: UserActions): boolean {
     const id = this.state.data.id
     if (this.isOwner(id)) return true
     else if (this.isCourseCoach(userActions, id)) return true
@@ -536,7 +536,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
     else if (this.canCourseApply(id)) return false
     else return false
   }
-  isCourseClosed(userActions: UserActions) {
+  isCourseClosed(userActions: UserActions): boolean {
     const id = this.state.data.id
     if (this.isOwner(id)) return false
     else if (this.isCourseCoach(userActions, id)) return false
@@ -546,10 +546,10 @@ export default class CourseScreen extends JCComponent<Props, State> {
     else if (this.canCourseApply(id)) return false
     else return true
   }
-  canCoursePay(id: string) {
+  canCoursePay(id: string): boolean {
     return this.state.canPay && !this.isCoursePaid(id)
   }
-  isCoursePaid(id: string) {
+  isCoursePaid(id: string): boolean {
     return this.state.isPaid
   }
 
@@ -694,7 +694,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
     )
   }
   static UserConsumer = UserContext.Consumer
-  renderPaidUsersModal() {
+  renderPaidUsersModal(): React.ReactNode {
     return (
       <PaidUsersModal
         visible={this.state.showPaidUsersModal}

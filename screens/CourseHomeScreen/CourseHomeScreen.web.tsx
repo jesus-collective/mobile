@@ -477,7 +477,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })
     }
   }
-  removeDuplicates(originalArray, prop) {
+  removeDuplicates(originalArray, prop): any[] {
     const newArray = []
     const lookupObject = {}
 
@@ -783,7 +783,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
   }
 
-  getAssignmentList = () => {
+  getAssignmentList = (): CourseLesson => {
     return Object.values(this.state.courseWeeks)
       .map((week) => {
         return Object.values(week.lessons).map((lesson) => {

@@ -1113,28 +1113,28 @@ export default class MyGroups extends JCComponent<Props, State> {
       </Tooltip>
     )
   }
-  isCourseCoach(userActions: UserActions, id: string) {
+  isCourseCoach(userActions: UserActions, id: string): boolean {
     return userActions.isMemberOf("courseCoach")
   }
-  isCourseAdmin(userActions: UserActions, id: string) {
+  isCourseAdmin(userActions: UserActions, id: string): boolean {
     return userActions.isMemberOf("courseAdmin")
   }
-  canCourseApply(id: string) {
+  canCourseApply(id: string): boolean {
     return false
   }
 
-  canCoursePay(id: string) {
+  canCoursePay(id: string): boolean {
     const test = this.state.canPay.filter((elem: any) => elem === id)
     if (test.length > 0) return true && !this.isCoursePaid(id)
     else return false
   }
-  isCoursePaid(id: string) {
+  isCoursePaid(id: string): boolean {
     const test = this.state.isPaid.filter((elem: any) => elem === id)
     if (test.length > 0) return true
     else return false
   }
 
-  purchase(id: string) {
+  purchase(id: string): void {
     this.props.navigation.push("CoursePaymentScreen", { id: id })
   }
 
@@ -1253,7 +1253,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     return !this.state.myFilter || this.state.canLeave[item.id] || this.state.isOwner[item.id]
   }
 
-  renderJoinCourseModal() {
+  renderJoinCourseModal(): React.ReactNode {
     return this.state.joinCourse ? (
       <View style={this.styles.style.groupsJoinCourseModalContainer}>
         <Modal style={{ overflow: "hidden" }} transparent={true} visible={this.state.joinCourse}>
@@ -1284,7 +1284,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       </View>
     ) : null
   }
-  handlePickerChange(itemValue: string) {
+  handlePickerChange(itemValue: string): void {
     this.setState({ pickerState: itemValue })
     if (itemValue === "Previous Events") {
       this.setState({
@@ -1310,25 +1310,25 @@ export default class MyGroups extends JCComponent<Props, State> {
     }
   }
   static UserConsumer = UserContext.Consumer
-  icon = () => {
+  icon = (): React.ReactNode => {
     return <Ionicons name="md-eye-outline" style={this.styles.style.resourceIcon} />
   }
-  icon2 = () => {
+  icon2 = (): React.ReactNode => {
     return <Ionicons name="thumbs-up" style={this.styles.style.resourceIcon} />
   }
-  icon3 = () => {
+  icon3 = (): React.ReactNode => {
     return <Ionicons name="documents-outline" style={this.styles.style.resourceIcon} />
   }
-  icon4 = () => {
+  icon4 = (): React.ReactNode => {
     return <Ionicons name="arrow-forward-outline" style={this.styles.style.resourceIcon} />
   }
-  icon5 = () => {
+  icon5 = (): React.ReactNode => {
     return <Ionicons name="arrow-back-outline" style={this.styles.style.resourceIcon} />
   }
-  icon6 = () => {
+  icon6 = (): React.ReactNode => {
     return <Ionicons name="add-outline" style={this.styles.style.resourceIcon} />
   }
-  getButtonItems() {
+  getButtonItems(): any[] {
     const z = []
 
     z.push({

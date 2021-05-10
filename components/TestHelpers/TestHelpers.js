@@ -6,7 +6,7 @@ import * as queries from "../../src/graphql/queries.ts"
 Amplify.configure(awsconfig)
 
 export default class TestHelper {
-  static async DeleteUser(user, password) {
+  static async DeleteUser(user, password): Promise<any> {
     console.log("hello2")
     return Auth.signIn(user, password)
       .then(() => {

@@ -249,24 +249,24 @@ export default class AdminScreen extends JCComponent<Props, State> {
       console.error(err)
     }
   }
-  updateTierList(val: any) {
+  updateTierList(val: any): void {
     const tmp = this.state.groupsIncluded
     const index = tmp.indexOf(val)
     if (index !== -1) tmp.splice(index, 1)
     else tmp.push(val)
     this.setState({ groupsIncluded: tmp })
   }
-  addTier() {
+  addTier(): void {
     const temp = this.state.tiered ? this.state.tiered : []
     temp.push({ name: "", stripeIsTiered: "false", stripePaymentID: "" })
     this.setState({ tiered: temp })
   }
-  deleteTier(index) {
+  deleteTier(index): void {
     const temp = this.state.tiered
     temp.splice(index, 1)
     this.setState({ tiered: temp })
   }
-  updateTier(index: number, field: string, value) {
+  updateTier(index: number, field: string, value): void {
     const temp = this.state.tiered
     temp[index][field] = value
     this.setState({ tiered: temp })

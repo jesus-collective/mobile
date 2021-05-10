@@ -9,7 +9,7 @@ interface Props {
   displaySeries?: string
   displayEpisode?: string
 }
-interface State extends JCState {}
+type State = JCState
 class ResourceDisplay extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
   constructor(props: Props) {
@@ -25,7 +25,7 @@ class ResourceDisplay extends JCComponent<Props, State> {
       '","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
     )
   }
-  render() {
+  render(): React.ReactNode {
     return (
       <ResourceDisplay.Consumer>
         {({ resourceState, resourceActions }) => {

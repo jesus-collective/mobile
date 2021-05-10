@@ -76,9 +76,6 @@ export default class EditableDate extends JCComponent<Props, State> {
   onTzChanged(tz: string): void {
     this.onChanged(moment(this.props.value), tz)
   }
-  dateFormatter = (str) => {
-    return str
-  }
   render(): React.ReactNode {
     if (this.props.isEditable) {
       if (this.props.type == "datetime")

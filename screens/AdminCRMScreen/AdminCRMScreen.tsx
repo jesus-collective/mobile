@@ -83,7 +83,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     }
     this.setInitialData()
   }
-  async getUsers(nextToken: string | null) {
+  async getUsers(nextToken: string | null): Promise<void> {
     console.log("getUsers")
     const data = await this.listUsers(40, nextToken)
     console.log({ data: data })
@@ -120,7 +120,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     return { nextToken, ...rest }
   }
 
-  async removeUserFromGroup(user: string, groupName: string) {
+  async removeUserFromGroup(user: string, groupName: string): Promise<any> {
     console.log(user)
     console.log(groupName)
     const apiName = "AdminQueries"
@@ -138,7 +138,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     const { ...rest } = await API.post(apiName, path, myInit)
     return rest
   }
-  async addUserToGroup(user: string, groupName: string) {
+  async addUserToGroup(user: string, groupName: string): Promise<any> {
     console.log(user)
     console.log(groupName)
     const apiName = "AdminQueries"
@@ -156,7 +156,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     const { ...rest } = await API.post(apiName, path, myInit)
     return rest
   }
-  async adminUpdateUserAttributes(user: string, email: string) {
+  async adminUpdateUserAttributes(user: string, email: string): Promise<any> {
     console.log(user)
     console.log(email)
     const apiName = "AdminQueries"
@@ -368,7 +368,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       }
     )
   }
-  showProfile(id: string) {
+  showProfile(id: string): void {
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
   renderRow(item: any, index: number): React.ReactNode {
@@ -602,7 +602,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     await this.createUser(z.User)
     await this.createStripeUser(z.User)
   }
-  async createStripeUser(user) {
+  async createStripeUser(user): Promise<boolean> {
     try {
       console.log(user)
       const customer: any = await API.graphql({
@@ -782,7 +782,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       </JCModal>
     )
   }
-  async updateInviteDataList(nextToken: any) {
+  async updateInviteDataList(nextToken: any): Promise<void> {
     const listGroup: any = await API.graphql({
       query: customQueries.groupByTypeForMyGroups,
       variables: {

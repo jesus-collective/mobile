@@ -55,7 +55,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     })
     this.getInitialData(null)
   }
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props): void {
     if (prevProps.assignmentId !== this.props.assignmentId) {
       this.getInitialData(null)
     }
@@ -67,7 +67,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
           currentRoomId: "course-" + this.props.assignmentId + "-" + this.state.currentUser,
         })
         console.log({ Assignment: this.props.assignmentId })
-        const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+
         console.log({ AssignmentID: "course-" + this.props.assignmentId + "-" })
         try {
           const query = {
@@ -199,7 +199,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       }
     else return initialPostState.Unknown
   }
-  shouldShowMB = () => {
+  shouldShowMB = (): boolean => {
     if (this.state.currentUser == null) return false
     if (
       this.state.currentRoomId ==
@@ -241,7 +241,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     console.log(ids)
     return ids
   }
-  renderCourseReview() {
+  renderCourseReview(): React.ReactNode {
     return (
       <Container style={this.styles.style.courseAssignmentMainContainer}>
         <Container style={this.styles.style.courseAssignmentScreenLeftCard}>

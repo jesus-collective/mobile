@@ -38,7 +38,7 @@ class Nothing extends Component {
 }
 export default class MainAppRouter extends JCComponent {
   static UserConsumer = UserContext.Consumer
-  render() {
+  render(): React.ReactNode {
     return (
       <MainAppRouter.UserConsumer>
         {({ userState, userActions }) => {
