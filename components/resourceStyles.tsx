@@ -100,7 +100,7 @@ const resourceStyles = EStyleSheet.create({
     lineHeight: "21px",
     fontWeight: "600",
     color: "#404040",
-    textTransform: 'uppercase'
+    textTransform: "uppercase",
   },
   resourceRichTextH6Small: {
     fontFamily: "Graphik-Semibold-App",
@@ -112,7 +112,7 @@ const resourceStyles = EStyleSheet.create({
     lineHeight: "18px",
     fontWeight: "600",
     color: "#404040",
-    textTransform: 'uppercase'
+    textTransform: "uppercase",
   },
   resourceRichTextBody1: {
     fontFamily: "Graphik-Regular-App",
