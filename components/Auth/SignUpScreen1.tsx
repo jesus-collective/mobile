@@ -2,7 +2,7 @@
 import Amplify from "aws-amplify"
 import { Content } from "native-base"
 import React from "react"
-import { ActivityIndicator, Text, View, Image } from "react-native"
+import { ActivityIndicator, Image, Text, View } from "react-native"
 import Billing from "../../components/Billing/Billing"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -21,9 +21,9 @@ interface Props {
   route?: any
   authState?: string
 }
-interface State extends JCState {}
+//interface State extends JCState {}
 
-class SignUpScreen1Impl extends JCComponent<Props, State> {
+class SignUpScreen1Impl extends JCComponent<Props, JCState> {
   constructor(props: Props) {
     super(props)
   }
@@ -45,10 +45,8 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
 
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <Text
-                      style={this.styles.style.SignUpScreenSetupText}
-                    >
-                      We're getting you setup. This may takes several seconds.
+                    <Text style={this.styles.style.SignUpScreenSetupText}>
+                      We&apos;re getting you setup. This may takes several seconds.
                     </Text>
                     <ActivityIndicator />
                   </View>
@@ -68,18 +66,16 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <SignUpSidebar position="3"></SignUpSidebar>
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                  <Image
-                  style={{
-                    width: "22px",
-                    height: "22px",
-                    top: 6,
-                  }}
-                  source={require("../../assets/svg/checkmark.svg")}
-                ></Image>
-                    <Text
-                      style={this.styles.style.SignUpScreenSetupText}
-                    >
-                      We've received your payment.
+                    <Image
+                      style={{
+                        width: "22px",
+                        height: "22px",
+                        top: 6,
+                      }}
+                      source={require("../../assets/svg/checkmark.svg")}
+                    ></Image>
+                    <Text style={this.styles.style.SignUpScreenSetupText}>
+                      We&apos;ve received your payment.
                       <br />
                       <JCButton
                         onPress={() => {
@@ -100,9 +96,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <SignUpSidebar position="3"></SignUpSidebar>
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <Text
-                      style={this.styles.style.SignUpScreenSetupText}
-                    >
+                    <Text style={this.styles.style.SignUpScreenSetupText}>
                       Please wait a moment while we set up your account.
                       <br />
                     </Text>
@@ -116,9 +110,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <SignUpSidebar position="3"></SignUpSidebar>
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <Text
-                      style={this.styles.style.SignUpScreenSetupText}
-                    >
+                    <Text style={this.styles.style.SignUpScreenSetupText}>
                       There may have been a problem, please contact support!
                       <br />
                     </Text>
@@ -132,9 +124,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <SignUpSidebar position="3"></SignUpSidebar>
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <Text
-                      style={this.styles.style.SignUpScreenSetupText}
-                    >
+                    <Text style={this.styles.style.SignUpScreenSetupText}>
                       There has been a problem, please contact support!
                       <br />
                     </Text>
