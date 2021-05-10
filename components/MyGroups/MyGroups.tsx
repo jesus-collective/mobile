@@ -38,12 +38,19 @@ interface Props {
   showAllEvents?: boolean
 }
 
-type GroupData =
-  | NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
-  | NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
+type GroupData = (
   | NonNullable<
-      NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
-    >["items"]
+      NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
+    >[0]
+  | NonNullable<
+      NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
+    >[0]
+  | NonNullable<
+      NonNullable<
+        NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
+      >["items"]
+    >[0]
+)[]
 interface State extends JCState {
   myFilter: boolean
   eventFilter: boolean
@@ -60,7 +67,7 @@ interface State extends JCState {
   showAllEvents: boolean
   showCreateButton: boolean
   currentUser: string | null
-  nextToken: string | null
+  nextToken: string | null | undefined
   nextTokenPastEvents: string | null
   canLeave: Record<string, boolean>
   isOwner: Record<string, boolean>
@@ -358,12 +365,12 @@ export default class MyGroups extends JCComponent<Props, State> {
       }) as Promise<GraphQLResult<ListUsersQuery>>
       const processList = (json: GraphQLResult<ListUsersQuery>) => {
         let temp
-        if (this.state.data) temp = [...this.state.data, ...(json.data.listUsers.items ?? [])]
-        else temp = [...(json.data.listUsers.items ?? [])]
+        if (this.state.data) temp = [...this.state.data, ...(json.data?.listUsers?.items ?? [])]
+        else temp = [...(json.data?.listUsers?.items ?? [])]
         this.setState(
           {
             data: temp,
-            nextToken: json.data.listUsers.nextToken,
+            nextToken: json.data?.listUsers?.nextToken,
           },
           () => {
             this.props.onDataload(this.convertToMapData(this.state.data))
@@ -384,11 +391,11 @@ export default class MyGroups extends JCComponent<Props, State> {
 
       const processList = (json: GraphQLResult<ListOrganizationsQuery>) => {
         console.log({ profile: json })
-        const temp = [...this.state.data, ...(json.data.listOrganizations.items ?? [])]
+        const temp = [...this.state.data, ...(json.data?.listOrganizations?.items ?? [])]
         this.setState(
           {
             data: temp,
-            nextToken: json.data.listOrganizations.nextToken,
+            nextToken: json.data?.listOrganizations?.nextToken,
           },
           () => {
             this.props.onDataload(this.convertToMapData(this.state.data))
@@ -1131,9 +1138,6 @@ export default class MyGroups extends JCComponent<Props, State> {
     this.props.navigation.push("CoursePaymentScreen", { id: id })
   }
 
-  applyCourse(item, type) {
-    this.setState({ applyCourse: item })
-  }
   renderCourseStatus(userActions: UserActions, item: any): React.ReactNode {
     if (this.state.isOwner[item.id])
       return (
@@ -1183,7 +1187,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           <JCButton
             buttonType={ButtonTypes.Solid}
             onPress={() => {
-              this.applyCourse(item, "Course")
+              //this.applyCourse(item, "Course")
             }}
           >
             Apply

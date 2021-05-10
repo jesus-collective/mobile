@@ -4,7 +4,7 @@ else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"
 else if (window.location.hostname.includes("dev")) env = "dev"
 else env = "prod"
-export const constants = {
+export const constants: { [index: string]: boolean | string } = {
   SETTING_ISVISIBLE_course: true,
   SETTING_ISVISIBLE_organization: true,
   SETTING_ISVISIBLE_resource: true,

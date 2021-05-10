@@ -65,7 +65,7 @@ export default class GroupScreen extends JCComponent {
             // $('#nav-tool').hide();
             console.log("join meeting success")
           },
-          error(res) {
+          error(res: Error) {
             console.log(res)
           },
         })

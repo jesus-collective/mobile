@@ -27,7 +27,7 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
         const getProduct = (await API.graphql(
           graphqlOperation(queries.getProduct, { id: productId })
         )) as GraphQLResult<GetProductQuery>
-        setProduct(getProduct.data.getProduct)
+        setProduct(getProduct.data?.getProduct)
       } catch (e) {
         console.error(e)
       }

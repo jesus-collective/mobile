@@ -237,14 +237,14 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   ): Promise<void> => {
     console.log(this.state.courseData?.backOfficeStaff?.items)
     const del = this.state.courseData?.backOfficeStaff?.items?.filter(
-      (x) => !value.map((z) => z.id).includes(x?.userID)
+      (x) => !value?.map((z) => z.id).includes(x?.userID)
     )
-    const add = value.filter(
+    const add = value?.filter(
       (x) => !this.state.courseData?.backOfficeStaff?.items?.map((z) => z.userID).includes(x.id)
     )
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
     console.log({ del: del })
-    add.map(async (item) => {
+    add?.map(async (item) => {
       let createCourseBackOfficeStaff: any
       try {
         console.log({ Adding: item })
@@ -304,7 +304,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         const temp = this.state.courseData
         if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
           temp.backOfficeStaff.items = temp.backOfficeStaff.items.filter(
-            (user) => user.id !== item.id
+            (user) => user?.id !== item?.id
           )
           console.log(temp)
           this.setState({ courseData: temp })
@@ -498,23 +498,25 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       let cohortTemp = []
       let completeTriad = null
       if (
-        item.users.items.filter((user) => user.userID == this.state.currentUser).length > 0 ||
-        item.coaches.items.filter((user) => user.userID == this.state.currentUser).length > 0
+        (item?.users?.items?.filter((user) => user?.userID == this.state.currentUser).length ??
+          0 > 0) ||
+        (item?.coaches?.items?.filter((user) => user?.userID == this.state.currentUser).length ??
+          0 > 0)
       ) {
-        triadTemp = item.users.items
-          .filter((user) => user.userID != this.state.currentUser)
-          .map((item) => item.user)
-        coachTemp = item.coaches.items.map((item) => item.user)
-        completeTriad = { triad: triadTemp, coach: coachTemp, id: item.id }
+        triadTemp = item?.users?.items
+          ?.filter((user) => user?.userID != this.state.currentUser)
+          .map((item) => item?.user)
+        coachTemp = item?.coaches?.items?.map((item) => item?.user)
+        completeTriad = { triad: triadTemp, coach: coachTemp, id: item?.id }
       } else {
-        cohortTemp = item.users.items.map((item) => item.user)
-        cohortTemp = cohortTemp.concat(item.coaches.items.map((item) => item.user))
+        cohortTemp = item?.users?.items?.map((item) => item?.user)
+        cohortTemp = cohortTemp.concat(item?.coaches?.items?.map((item) => item?.user))
         // cohort.push(item.coaches.items)
       }
       return { completeTriad: completeTriad, cohort: cohortTemp }
     })
     let fromTriads = this.state.courseData?.triads?.items
-      .map((item) => {
+      ?.map((item) => {
         return [...item.users.items, ...item.coaches.items]
       })
       .flat()
@@ -526,13 +528,13 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })
     if (fromTriads == undefined) fromTriads = []
     const instructors = this.state.courseData
-      ? this.state.courseData.instructors.items.map((item) => {
-          return item.user
+      ? this.state.courseData?.instructors?.items?.map((item) => {
+          return item?.user
         })
       : []
     const backOfficeStaff = this.state.courseData
-      ? this.state.courseData.backOfficeStaff.items.map((item) => {
-          return item.user
+      ? this.state.courseData?.backOfficeStaff?.items?.map((item) => {
+          return item?.user
         })
       : []
     console.log(instructors)

@@ -16,7 +16,7 @@ type SubMenuItem = {
   name: string
   linkTo?: string | null
   webLink?: string
-  navProps?: { mine?: boolean; create?: boolean; id?: string }
+  navProps?: { mine?: boolean; create?: boolean; id?: string | boolean }
 }
 
 type MenuItem = {

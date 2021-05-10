@@ -44,7 +44,10 @@ export default class Utils {
     return fileName
   }
 
-  static async getAttachment(filePath?: string | null, owner): Promise<void> {
+  static async getAttachment(
+    owner: string | null | undefined,
+    filePath?: string | null
+  ): Promise<void> {
     if (!filePath) return
 
     try {
@@ -63,7 +66,7 @@ export default class Utils {
   }
   static renderFileDownloadBadge(item: DM | DMReply | Message | Reply): React.ReactNode {
     return (
-      <TouchableOpacity onPress={() => this.getAttachment(item?.attachment, item?.attachmentOwner)}>
+      <TouchableOpacity onPress={() => this.getAttachment(item?.attachmentOwner, item?.attachment)}>
         <Badge style={{ backgroundColor: "#EFF1F5", marginRight: 10, marginTop: 5, height: 30 }}>
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
             {this.renderFileIcon(item?.attachment)}

@@ -40,7 +40,7 @@ interface Props {
   replies?: boolean
 }
 interface State extends JCState {
-  nextToken: string | null
+  nextToken: string | null | undefined
 
   messages: Messages
   fetchingData: boolean

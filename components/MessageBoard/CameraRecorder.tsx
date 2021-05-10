@@ -2,17 +2,16 @@ import { Camera } from "expo-camera"
 import * as Permissions from "expo-permissions"
 import React from "react"
 import { Button, Text, TouchableOpacity, View } from "react-native"
+import { EmptyProps } from "src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-
-interface Props {}
 interface State extends JCState {
-  permissions: Permissions.PermissionResponse
+  permissions: Permissions.PermissionResponse | null
   video: any
   recording: boolean
   type: any
 }
-export default class MyCam extends JCComponent<Props, State> {
-  constructor(props: Props) {
+export default class MyCam extends JCComponent<EmptyProps, State> {
+  constructor(props: EmptyProps) {
     super(props)
     this.cam = React.createRef()
     this.state = {

@@ -40,7 +40,7 @@ interface Props {
   replies?: boolean
 }
 interface State extends JCState {
-  nextToken: string | null
+  nextToken: string | null | undefined
   dataAssignment: any
 
   dms: DMs
@@ -280,9 +280,9 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
   renderDirectMessageWithReplies(item: DM, index: number) {
     return (
       <View style={{ marginBottom: 20 }} key={index}>
-        {this.renderDirectMessage(item, index, false)}
+        {this.renderDirectMessage(item, index, false, false)}
         {item?.replies?.items?.map((reply, index) => {
-          return this.renderDirectMessage(reply, index, true)
+          return this.renderDirectMessage(reply, index, true, false)
         })}
       </View>
     )
@@ -374,7 +374,9 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
         <CardItem style={this.styles.style.coursePageMessageBoardInnerCard}>
           <div id="comment-div">
             <div
-              dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}
+              dangerouslySetInnerHTML={{
+                __html: this.convertCommentFromJSONToHTML(item?.content ?? null),
+              }}
             />
           </div>
         </CardItem>
@@ -426,7 +428,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
           }
           inverted={this.props.inputAt === "bottom"}
           onEndReached={!this.state.fetchingData ? () => this.getMoreDirectMessages() : undefined}
-          style={{ height: this.props.style == "courseResponse" ? null : 0.5 * height }}
+          style={{ height: this.props.style == "courseResponse" ? undefined : 0.5 * height }}
           ListFooterComponent={() => this.messagesLoader()}
           refreshing={this.state.fetchingData}
           onEndReachedThreshold={0.1}

@@ -29,7 +29,7 @@ export default class MyConversations extends JCComponent<Props> {
   }
 
   render(): React.ReactNode {
-    const items = []
+    const items: { id: string; role: string; name: string; message: string }[] = []
     if (!constants["SETTING_ISVISIBLE_conversation"]) return null
     else
       return (
