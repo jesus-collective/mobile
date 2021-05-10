@@ -51,7 +51,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       notSubscribedModal: false,
     }
   }
-  componentDidMount() {
+  componentDidMount(): void {
     this.setState({
       imageUrl: null,
       image: null,
@@ -266,7 +266,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderManualCard() {
+  renderManualCard(): React.ReactNode {
     if (
       this.props.pageItem &&
       (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
@@ -433,11 +433,11 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     if (youtube && youtube?.length && youtube?.length > 0) return youtube[0]!.value
     else return null
   }
-  icon = () => {
+  icon = (): React.ReactNode => {
     return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
   }
 
-  getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData) {
+  getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData): any {
     return items && items.details
       ? items.details
           .filter((e) => e?.type == ResourceDetailType.Button)
@@ -451,7 +451,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       : []
   }
 
-  renderLargeCard() {
+  renderLargeCard(): React.ReactNode {
     if (
       this.props.pageItem &&
       (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
@@ -745,7 +745,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderAutoCard() {
+  renderAutoCard(): React.ReactNode {
     return (
       <ResourceCardImpl.Consumer>
         {({ resourceState, resourceActions }) => {
@@ -964,7 +964,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       </ResourceCardImpl.Consumer>
     )
   }
-  renderRouter() {
+  renderRouter(): React.ReactNode {
     switch (this.props.pageItem.style) {
       case ResourcePageItemStyle.CardManual:
         return this.renderManualCard()
