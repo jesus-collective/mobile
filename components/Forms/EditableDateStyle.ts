@@ -1,7 +1,7 @@
-import EStyleSheet from 'react-native-extended-stylesheet';
+import EStyleSheet from "react-native-extended-stylesheet"
 
 export default EStyleSheet.create({
-    muiroot: {
-        width: "100%"
-    }
+  muiroot: {
+    width: "100%",
+  },
 })

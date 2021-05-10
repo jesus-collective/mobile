@@ -1,10 +1,6 @@
-import React from "react";
-import {
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
-} from "@stripe/react-stripe-js";
-import "./CardSectionStyles.css";
+import { CardCvcElement, CardExpiryElement, CardNumberElement } from "@stripe/react-stripe-js"
+import React from "react"
+import "./CardSectionStyles.css"
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -22,7 +18,7 @@ const CARD_ELEMENT_OPTIONS = {
       iconColor: "#fa755a",
     },
   },
-};
+}
 
 function CardSection() {
   return (
@@ -31,7 +27,7 @@ function CardSection() {
       <CardExpiryElement options={CARD_ELEMENT_OPTIONS} />
       <CardCvcElement options={CARD_ELEMENT_OPTIONS} />
     </label>
-  );
+  )
 }
 
-export default CardSection;
+export default CardSection

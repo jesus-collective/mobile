@@ -14,6 +14,7 @@
     "cSpell.words": [
       "ACCOUNTSETTINGS",
       "APEST",
+      "Activitys",
       "Birkman",
       "Boundry",
       "Bxjx",
@@ -24,6 +25,7 @@
       "Dekq",
       "Dones",
       "Enneagram",
+      "Entryowner",
       "Entypo",
       "Fieldscontainer",
       "Fontfamily",
@@ -95,6 +97,7 @@
       "datepicker",
       "datetime",
       "dmusers",
+      "draftjs",
       "dropdownoption",
       "dynamodump",
       "ellipsize",
@@ -143,6 +146,7 @@
       "resourcefile",
       "rlnxu",
       "selectedtext",
+      "setactivities",
       "setform",
       "setis",
       "setmap",
@@ -180,6 +184,7 @@
       ".vscode",
       ".vscode-insiders",
       "amplify"
-    ]
+    ],
+    "eslint.alwaysShowStatus": true
   }
 }
