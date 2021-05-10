@@ -20,7 +20,7 @@ const CARD_ELEMENT_OPTIONS = {
   },
 }
 
-function CardSection() {
+function CardSection(): React.ReactNode {
   return (
     <label>
       <CardNumberElement options={CARD_ELEMENT_OPTIONS} />

@@ -8,7 +8,7 @@ export default class ResourceSelector {
     page: PageItemSettings,
     resourceState: ResourceState,
     resourceActions: ResourceActions
-  ) {
+  ): React.ReactNode {
     console.log("RENDERING")
     return (
       <>

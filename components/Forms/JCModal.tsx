@@ -19,16 +19,16 @@ export default class JCModal extends JCComponent<Props> {
   }
   el: any
   modalRoot = document.getElementById("modal")
-  componentDidMount() {
+  componentDidMount(): void {
     this.modalRoot?.appendChild(this.el)
   }
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.modalRoot?.removeChild(this.el)
   }
-  render() {
+  render(): React.ReactNode {
     return ReactDOM.createPortal(this.renderModal(), this.el)
   }
-  renderModal() {
+  renderModal(): React.ReactNode {
     return this.props.visible ? (
       <Modal
         animationType="slide"

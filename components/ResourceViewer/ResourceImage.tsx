@@ -21,10 +21,10 @@ class ResourceImage extends JCComponent<Props, State> {
     super(props)
     this.getImage()
   }
-  componentDidMount() {
+  componentDidMount(): void {
     this.getImage()
   }
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props): void {
     if (prevProps.currentImage?.filenameUpload != this.props.currentImage?.filenameUpload)
       this.getImage()
   }
@@ -38,7 +38,7 @@ class ResourceImage extends JCComponent<Props, State> {
       this.setState({ imageUrl: z })
     }
   }
-  render() {
+  render(): React.ReactNode {
     return (
       <View style={{ alignSelf: "center", marginTop: 20 }}>
         {this.state.uploading ? (

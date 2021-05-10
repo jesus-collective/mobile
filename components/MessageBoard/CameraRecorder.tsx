@@ -21,7 +21,7 @@ export default class MyCam extends JCComponent<EmptyProps, State> {
     }
     this.askForPermission()
   }
-  async askForPermission() {
+  async askForPermission(): Promise<void> {
     const permissions: Permissions.PermissionResponse = await await Permissions.askAsync(
       Permissions.CAMERA,
       Permissions.AUDIO_RECORDING
@@ -29,7 +29,7 @@ export default class MyCam extends JCComponent<EmptyProps, State> {
     this.setState({ permissions: permissions })
   }
   cam: any
-  saveVideo = async () => {
+  saveVideo = async (): Promise<void> => {
     const { video } = this.state
     // const asset = await MediaLibrary.createAssetAsync(video.uri);
     //  if (asset) {
@@ -37,13 +37,13 @@ export default class MyCam extends JCComponent<EmptyProps, State> {
     //  }
   }
 
-  StopRecord = async () => {
+  StopRecord = async (): Promise<void> => {
     this.setState({ recording: false }, () => {
       this.cam.stopRecording()
     })
   }
 
-  StartRecord = async () => {
+  StartRecord = async (): Promise<void> => {
     if (this.cam) {
       this.setState({ recording: true }, async () => {
         const video = await this.cam.recordAsync()
@@ -52,7 +52,7 @@ export default class MyCam extends JCComponent<EmptyProps, State> {
     }
   }
   //    const [permission, askPermission, getPermission] = Permissions.usePermissions(Permissions.CAMERA, {});
-  toggleRecord = () => {
+  toggleRecord = (): void => {
     const { recording } = this.state
 
     if (recording) {
@@ -61,7 +61,7 @@ export default class MyCam extends JCComponent<EmptyProps, State> {
       this.StartRecord()
     }
   }
-  render() {
+  render(): React.ReactNode {
     if (!this.state.permissions || this.state.permissions.status !== "granted") {
       return (
         <View>

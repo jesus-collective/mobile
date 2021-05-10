@@ -1,17 +1,17 @@
-import React, { Suspense, lazy, Component } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
-import MainAppRouter from "./MainAppRouter";
-const SideBar = lazy(() => import("../../components/Sidebar/Sidebar"));
-const Drawer = createDrawerNavigator();
+import { createDrawerNavigator } from "@react-navigation/drawer"
+import React, { lazy } from "react"
+import JCComponent from "../../components/JCComponent/JCComponent"
+import MainAppRouter from "./MainAppRouter"
+const SideBar = lazy(() => import("../../components/Sidebar/Sidebar"))
+const Drawer = createDrawerNavigator()
 
 export default class MainDrawerRouter extends JCComponent {
-  render() {
+  render(): React.ReactNode {
     return (
       <Drawer.Navigator
         openByDefault={false}
         drawerContent={(props) => {
-          return <SideBar {...props}></SideBar>;
+          return <SideBar {...props}></SideBar>
         }}
       >
         <Drawer.Screen
@@ -20,6 +20,6 @@ export default class MainDrawerRouter extends JCComponent {
           options={{ title: "Jesus Collective" }}
         ></Drawer.Screen>
       </Drawer.Navigator>
-    );
+    )
   }
 }

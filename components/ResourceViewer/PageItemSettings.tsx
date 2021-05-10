@@ -27,10 +27,10 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
       settings: this.props.pageItem,
     }
   }
-  componentDidUpdate(prevProps: ResourceSetupProp) {
+  componentDidUpdate(prevProps: ResourceSetupProp): void {
     if (prevProps.pageItem != this.props.pageItem) this.setState({ settings: this.props.pageItem })
   }
-  save() {
+  save(): void {
     if (this.props.save)
       this.props.save(
         this.props.resourceActions,
@@ -40,7 +40,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
         this.state.settings
       )
   }
-  delete() {
+  delete(): void {
     if (this.props.delete)
       this.props.delete(
         this.props.resourceActions,
@@ -49,7 +49,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
         this.props.pageItemIndex
       )
   }
-  renderAdminRouter() {
+  renderAdminRouter(): React.ReactNode {
     switch (this.state.settings.type) {
       case ResourcePageItemType.Header:
         return ResourceHeader.renderAdmin(this)
@@ -69,7 +69,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
         return ResourceDropDownPicker.renderAdmin(this)
     }
   }
-  render() {
+  render(): React.ReactNode {
     return (
       <>
         {!this.props.hideEditButton && this.props.resourceState.isEditable && (

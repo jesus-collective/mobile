@@ -125,7 +125,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     return ""
   }
 
-  async updateState(state: string, data: AuthStateData) {
+  async updateState(state: string, data: AuthStateData): Promise<void> {
     console.log("updateState")
     this.setState({ authState: state })
     const params = RootNavigation.getRoot()?.params as {
@@ -178,7 +178,7 @@ class AwesomeApp extends JCComponent<Props, State> {
       }
     }
   }
-  async getAuthInitialState() {
+  async getAuthInitialState(): Promise<string> {
     const initialUrl = await Linking.getInitialURL()
     console.log({ "INITIAL URL": initialUrl })
     if (initialUrl?.toLowerCase().includes("/auth/signup")) return "signUp"

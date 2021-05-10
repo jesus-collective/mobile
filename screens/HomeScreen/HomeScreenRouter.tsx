@@ -80,7 +80,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     if (this.state.groups) return this.state.groups.includes(group)
     else return false
   }
-  updateGroups = async () => {
+  updateGroups = async (): Promise<void> => {
     try {
       const currentUser = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const userSession = currentUser.getSignInUserSession()
@@ -242,7 +242,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     }
   }
 
-  async createStripeUser(billingAddress: any) {
+  async createStripeUser(billingAddress: any): Promise<boolean> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
@@ -351,7 +351,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       }
     )
   }
-  async performNavigation() {
+  async performNavigation(): Promise<void> {
     console.log("NAVIGATING")
     switch (this.state.hasPaidState) {
       case PaidStatus.Success:
@@ -433,7 +433,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
   renderFallback(): React.ReactNode {
     return <Text>loading...</Text>
   }
-  trackUserId = async () => {
+  trackUserId = async (): Promise<void> => {
     console.log("Setting up Analytics")
     try {
       const { attributes } = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
@@ -454,7 +454,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       console.log(error)
     }
   }
-  async getAuthInitialState() {
+  async getAuthInitialState(): Promise<void> {
     const initialUrl = await Linking.getInitialURL()
     const initialParams = Linking.parse(initialUrl ?? "").queryParams
 

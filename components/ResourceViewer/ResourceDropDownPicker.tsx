@@ -62,10 +62,10 @@ class ResourceDropDownPicker extends JCComponent<ResourceSetupProp, State> {
     )
   }
 
-  icon = () => {
+  icon = (): React.ReactNode => {
     return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
   }
-  getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData) {
+  getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData): any {
     return items && items.details
       ? items.details
           .filter((e) => e?.type == ResourceDetailType.Button)

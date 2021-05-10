@@ -1,14 +1,12 @@
 //import { Auth } from 'aws-amplify';
-import React from 'react';
+import JCComponent from "components/JCComponent/JCComponent"
+import React from "react"
 import { Button, View } from "react-native"
-import JCComponent from 'components/JCComponent/JCComponent';
 //import * as Facebook from 'expo-facebook';
 //import { Authenticator } from 'aws-amplify-react-native';
 // To federated sign in from Facebook
 export default class FederatedSignin extends JCComponent {
-
-
-  async login() {
+  async login(): Promise<void> {
     /*       try {
              const {
                type,
@@ -31,7 +29,7 @@ export default class FederatedSignin extends JCComponent {
            }
            */
   }
-  async signIn() {
+  async signIn(): Promise<void> {
     /*
       console.log('test');
       const { type, token, expires } = await Facebook.logInWithReadPermissionsAsync('579712102531269', {
@@ -50,13 +48,12 @@ export default class FederatedSignin extends JCComponent {
       */
   }
 
-
-  render() {
+  render(): React.ReactNode {
     return (
       <View>
         <Button onPress={this.login} title="Use Facebook Account"></Button>
         <Button onPress={this.login} title="Use Google Account"></Button>
       </View>
-    );
+    )
   }
 }

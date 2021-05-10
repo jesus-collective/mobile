@@ -78,7 +78,7 @@ interface Props {
   authState?: any
   onStateChange(state: string, data: AuthStateData): Promise<void>
 }
-export default function Main(props: Props) {
+export default function Main(props: Props): React.ReactNode {
   // console.log(props)
   console.log("Main")
   const PERSISTENCE_KEY = "NAVIGATION_STATE"

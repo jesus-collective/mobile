@@ -1,7 +1,7 @@
-import { View, Row } from "native-base"
+import { View } from "native-base"
 import React, { Component } from "react"
-import { LayoutAnimation, Platform, TouchableOpacity, UIManager, Image } from "react-native"
-import { isMobile, isBrowser } from "react-device-detect"
+import { isBrowser, isMobile } from "react-device-detect"
+import { Image, LayoutAnimation, Platform, TouchableOpacity, UIManager } from "react-native"
 
 interface Props {
   header: any
@@ -21,7 +21,7 @@ export default class Accordion extends Component<Props, State> {
     }
   }
 
-  render() {
+  render(): React.ReactNode {
     return (
       <View style={{ width: isBrowser ? "30vw" : isMobile ? "100%" : "30vw" }}>
         <TouchableOpacity
@@ -58,7 +58,7 @@ export default class Accordion extends Component<Props, State> {
     )
   }
 
-  toggleExpand = () => {
+  toggleExpand = (): void => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     this.setState({ expanded: !this.state.expanded })
   }
