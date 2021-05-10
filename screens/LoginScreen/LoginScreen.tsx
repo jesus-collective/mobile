@@ -1,28 +1,26 @@
-﻿import React from 'react';
-import Amplify, { Auth } from 'aws-amplify';
-import awsConfig from '../../src/aws-exports';
-import { Button, View } from 'react-native'
-import MyProfile from '../../components/MyProfile/MyProfile'
-import Header from '../../components/Header/Header'
-import JCComponent from '../../components/JCComponent/JCComponent';
+﻿import Amplify, { Auth } from "aws-amplify"
+import React from "react"
+import { Button, View } from "react-native"
+import Header from "../../components/Header/Header"
+import JCComponent from "../../components/JCComponent/JCComponent"
+import MyProfile from "../../components/MyProfile/MyProfile"
+import awsConfig from "../../src/aws-exports"
 
-Amplify.configure(awsConfig);
+Amplify.configure(awsConfig)
 
 interface Props {
   navigation: any
 }
-export default class LoginScreen extends JCComponent<Props>{
+export default class LoginScreen extends JCComponent<Props> {
   logout(): void {
     Auth.signOut()
-      .then(data => {
-        console.log(data); console.log("Logged Out")
-      }
-
-      )
-      .catch(err => {
+      .then((data) => {
+        console.log(data)
+        console.log("Logged Out")
+      })
+      .catch((err) => {
         console.log(err)
-      });
-
+      })
   }
   render(): React.ReactNode {
     // const { navigate } = this.props.navigation;
@@ -32,7 +30,6 @@ export default class LoginScreen extends JCComponent<Props>{
         <MyProfile />
         <Button onPress={() => this.logout()} title="Logout"></Button>
       </View>
-
-    );
+    )
   }
 }

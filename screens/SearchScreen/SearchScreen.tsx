@@ -1,15 +1,13 @@
-﻿import React from 'react';
-import { StyleProvider, Container, Content } from 'native-base';
-import { Text } from 'react-native'
-
-import Header from '../../components/Header/Header'
-import MyMap from '../../components/MyMap/MyMap';
-import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
-import { API } from 'aws-amplify';
-import * as queries from '../../src/graphql/queries';
-import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
-
+﻿import { API } from "aws-amplify"
+import { Container, Content, StyleProvider } from "native-base"
+import React from "react"
+import { Text } from "react-native"
+import Header from "../../components/Header/Header"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import MyMap from "../../components/MyMap/MyMap"
+import getTheme from "../../native-base-theme/components"
+import material from "../../native-base-theme/variables/material"
+import * as queries from "../../src/graphql/queries"
 
 interface Props {
   navigation: any
@@ -19,15 +17,13 @@ interface State extends JCState {
   data: any
 }
 
-
-
-export default class GroupScreen extends JCComponent<Props, State>{
+export default class GroupScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       showMap: false,
-      data: []
+      data: [],
     }
   }
   mapChanged = (): void => {
@@ -37,38 +33,45 @@ export default class GroupScreen extends JCComponent<Props, State>{
     console.log(item.target.value)
     const searchGroups: any = API.graphql({
       query: queries.searchGroups,
-      variables: { filter: { name: { match: item.target.value } } }
-    });
+      variables: { filter: { name: { match: item.target.value } } },
+    })
 
-    searchGroups.then((json) => {
-      // console.log(json)
-      this.setState({ data: json.data.searchGroups.items })
-    }).catch((e: any) => {
-      console.log(e)
-    }
-
-    );
-
+    searchGroups
+      .then((json) => {
+        // console.log(json)
+        this.setState({ data: json.data.searchGroups.items })
+      })
+      .catch((e: any) => {
+        console.log(e)
+      })
   }
   render(): React.ReactNode {
     console.log("SearchScreen")
-    return <StyleProvider style={getTheme(material)}>
-      <Container >
-        <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <Content>
-          <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
-          <Container>
-            <input onChange={(item: any) => { this.search(item) }} placeholder="Search..."></input>
-            <Text>Results:</Text>
-            {this.state.data.map((item: any) => {
-              return (
-                <Text key={item.id}>{item.name}</Text>
-              )
-            })}
-          </Container>
-        </Content>
-      </Container>
-    </StyleProvider>
-
+    return (
+      <StyleProvider style={getTheme(material)}>
+        <Container>
+          <Header
+            title="Jesus Collective"
+            navigation={this.props.navigation}
+            onMapChange={this.mapChanged}
+          />
+          <Content>
+            <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
+            <Container>
+              <input
+                onChange={(item: any) => {
+                  this.search(item)
+                }}
+                placeholder="Search..."
+              ></input>
+              <Text>Results:</Text>
+              {this.state.data.map((item: any) => {
+                return <Text key={item.id}>{item.name}</Text>
+              })}
+            </Container>
+          </Content>
+        </Container>
+      </StyleProvider>
+    )
   }
 }

@@ -13,8 +13,8 @@ import { ResourceContext } from "./ResourceContext"
 
 Amplify.configure(awsconfig)
 
-interface Props extends ResourceSetupProp {}
-interface State extends JCState {}
+type Props = ResourceSetupProp
+type State = JCState
 class ResourceColumn extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
   constructor(props: Props) {
@@ -98,7 +98,7 @@ class ResourceColumn extends JCComponent<Props, State> {
               : isTablet
               ? this.getLeftColumnSize()
               : "100%",
-            marginTop: isBrowser ? undefined : isTablet ? undefined : 100
+            marginTop: isBrowser ? undefined : isTablet ? undefined : 100,
           }}
         >
           <ResourceContent
@@ -120,9 +120,9 @@ class ResourceColumn extends JCComponent<Props, State> {
         <View
           style={[
             {
-              width: isTablet ? '70%' : isMobile ? "100%" : this.getRightColumnSize()
+              width: isTablet ? "70%" : isMobile ? "100%" : this.getRightColumnSize(),
             },
-            this.props.resourceState.isEditable && border
+            this.props.resourceState.isEditable && border,
           ]}
         >
           <ResourceContent

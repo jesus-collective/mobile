@@ -1,44 +1,44 @@
-import React, { lazy } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
-import { UserContext } from "./UserContext";
-import SignUpScreen3 from "../../components/Auth/SignUpScreen3";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
+import React, { lazy } from "react"
+import SignUpScreen3 from "../../components/Auth/SignUpScreen3"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import { UserContext } from "./UserContext"
 
-const SignUpScreen1 = lazy(() => import("../../components/Auth/SignUpScreen1"));
-const SignUpScreen2 = lazy(() => import("../../components/Auth/SignUpScreen2"));
+const SignUpScreen1 = lazy(() => import("../../components/Auth/SignUpScreen1"))
+const SignUpScreen2 = lazy(() => import("../../components/Auth/SignUpScreen2"))
 
-const MySignIn = lazy(() => import("../Auth/MySignIn"));
-const MySignUp = lazy(() => import("../Auth/MySignUp"));
-const MyConfirmSignUp = lazy(() => import("../Auth/MyConfirmSignUp"));
-const MyForgotPassword = lazy(() => import("../Auth/MyForgotPassword"));
-const MyRequireNewPassword = lazy(() => import("../Auth/MyRequireNewPassword"));
-const MyLoading = lazy(() => import("../Auth/MyLoading"));
-const MyConfirmSignIn = lazy(() => import("../Auth/MyConfirmSignIn"));
-const MyVerifyContact = lazy(() => import("../Auth/MyVerifyContact"));
+const MySignIn = lazy(() => import("../Auth/MySignIn"))
+const MySignUp = lazy(() => import("../Auth/MySignUp"))
+const MyConfirmSignUp = lazy(() => import("../Auth/MyConfirmSignUp"))
+const MyForgotPassword = lazy(() => import("../Auth/MyForgotPassword"))
+const MyRequireNewPassword = lazy(() => import("../Auth/MyRequireNewPassword"))
+const MyLoading = lazy(() => import("../Auth/MyLoading"))
+const MyConfirmSignIn = lazy(() => import("../Auth/MyConfirmSignIn"))
+const MyVerifyContact = lazy(() => import("../Auth/MyVerifyContact"))
 
-interface MARState extends JCState {}
+type MARState = JCState
 interface MARProp {
-  navigation?: any;
-  route?: any;
+  navigation?: any
+  route?: any
 }
-const AuthStack = createStackNavigator();
+const AuthStack = createStackNavigator()
 
 class MainAuthRouterImpl extends JCComponent<MARProp, MARState> {
   constructor(props: MARProp) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
-    };
+    }
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
   render() {
-    console.log("MainAuthRouter");
+    console.log("MainAuthRouter")
     return (
       <MainAuthRouterImpl.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
           return (
             <AuthStack.Navigator
               headerMode="none"
@@ -108,16 +108,14 @@ class MainAuthRouterImpl extends JCComponent<MARProp, MARState> {
                 options={{ title: "Jesus Collective" }}
               />
             </AuthStack.Navigator>
-          );
+          )
         }}
       </MainAuthRouterImpl.UserConsumer>
-    );
+    )
   }
 }
 export default function MainAuthRouter(props: MARProp): JSX.Element {
-  const route = useRoute();
-  const navigation = useNavigation();
-  return (
-    <MainAuthRouterImpl {...props} navigation={navigation} route={route} />
-  );
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <MainAuthRouterImpl {...props} navigation={navigation} route={route} />
 }

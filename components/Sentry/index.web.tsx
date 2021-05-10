@@ -1,2 +1,2 @@
-import * as Sentry from '@sentry/browser';
-export default Sentry 
+import * as Sentry from "@sentry/browser"
+export default Sentry

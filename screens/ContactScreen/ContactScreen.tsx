@@ -1,14 +1,12 @@
-﻿import React from 'react';
-import Amplify from 'aws-amplify';
-import awsConfig from '../../src/aws-exports';
-import { Text } from 'react-native'
-import JCComponent from 'components/JCComponent/JCComponent';
+﻿import Amplify from "aws-amplify"
+import JCComponent from "components/JCComponent/JCComponent"
+import { Container } from "native-base"
+import React from "react"
+import { Text } from "react-native"
+import Header from "../../components/Header/Header"
+import awsConfig from "../../src/aws-exports"
 
-Amplify.configure(awsConfig);
-
-import { Container } from 'native-base';
-
-import Header from '../../components/Header/Header'
+Amplify.configure(awsConfig)
 
 interface Props {
   navigation: any
@@ -21,7 +19,6 @@ export default class ContactScreen extends JCComponent<Props> {
         <Header title="Contact" navigation={this.props.navigation} />
         <Text>Contact</Text>
       </Container>
-
-    );
+    )
   }
 }
