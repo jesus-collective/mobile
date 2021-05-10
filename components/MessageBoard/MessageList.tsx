@@ -62,16 +62,16 @@ class MessageListImpl extends JCComponent<Props, State> {
       nextToken: null,
       fetchingData: false,
     }
-    this.setInitialData(props)
+    this.setInitialData()
   }
-  async setInitialData(props: Props) {
+  async setInitialData() {
     if (this.props.groupId) {
       this.getMessages()
     }
   }
   componentDidUpdate(prevProps: Props) {
     if (this.props.groupId !== prevProps.groupId) {
-      this.setInitialData(this.props)
+      this.setInitialData()
     }
   }
 

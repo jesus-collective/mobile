@@ -103,15 +103,11 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </View>
     )
   }
-  renderResourceImage(
-    resourceState: ResourceState,
-    item: ResourceDetailInput | null,
-    index: number
-  ): React.ReactNode {
+  renderResourceImage(resourceState: ResourceState): React.ReactNode {
     return (
       <ResourceImage
         onUpdate={(image: ImageInput) => {
-          let tmp = this.state.currentResource
+          const tmp = this.state.currentResource
           tmp.image = image
           console.log({ currentResource: tmp })
           this.setState({ currentResource: tmp })
@@ -128,7 +124,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderResourceButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderResourceButton(resourceState: ResourceState) {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -149,7 +145,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     console.log("RENDER CONFIG")
     return (
       <ResourceContentImpl.Consumer>
-        {({ resourceState, resourceActions }) => {
+        {({ resourceState }) => {
           console.log({ resourceState: resourceState })
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
@@ -160,7 +156,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 <ResourceConfigSeries />
                 <ResourceConfigEpisodes />
               </View>
-              {this.renderResourceButton(resourceState, resourceActions)}
+              {this.renderResourceButton(resourceState)}
             </>
           )
         }}

@@ -247,16 +247,16 @@ export default class HandleStripePayment {
     )
   }
   static convertToJSONObj(convertToJson: any) {
-    var convertToJson1 = convertToJson.substring(
+    const convertToJson1 = convertToJson.substring(
       convertToJson.indexOf("{") + 1,
       convertToJson.lastIndexOf("}")
     )
-    var split1 = convertToJson1.split(",")
+    const split1 = convertToJson1.split(",")
     const obj: any = {}
-    var map = split1.map((row: string) => {
+    split1.map((row: string) => {
       row = row.toLowerCase().replaceAll("[\\[\\]\\{\\}]", "")
-      var key = row.split("=", 2)[0].trim()
-      var value = row.split("=", 2)[1].trim()
+      const key = row.split("=", 2)[0].trim()
+      const value = row.split("=", 2)[1].trim()
       obj[key] = value
     })
     return obj
@@ -288,7 +288,7 @@ export default class HandleStripePayment {
     console.log({ subscription: subscription })
     // If it's a first payment attempt, the payment intent is on the subscription latest invoice.
     // If it's a retry, the payment intent will be on the invoice itself.
-    let paymentIntent = invoice
+    const paymentIntent = invoice
       ? invoice.payment_intent
       : subscription?.latest_invoice?.payment_intent
     if (!paymentIntent?.status) {

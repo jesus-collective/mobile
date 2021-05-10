@@ -122,10 +122,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderDetailsResource(
-    resourceState: ResourceState,
-    resourceActions: ResourceActions
-  ): React.ReactNode {
+  renderDetailsResource(resourceState: ResourceState): React.ReactNode {
     return (
       <View style={{ width: "100%" }}>
         {this.state.currentResource.details?.map(
@@ -366,7 +363,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                         value={this.state.currentResource.description ?? ""}
                       ></TextInput>
                     </View>
-                    {this.renderDetailsResource(resourceState, resourceActions)}
+                    {this.renderDetailsResource(resourceState)}
                     <JCButton
                       buttonType={ButtonTypes.ResourceModalSolid}
                       onPress={() => {

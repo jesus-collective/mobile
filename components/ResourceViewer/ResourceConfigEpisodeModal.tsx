@@ -98,15 +98,11 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
       </View>
     )
   }
-  renderResourceImage(
-    resourceState: ResourceState,
-    item: ResourceDetailInput | null,
-    index: number
-  ): React.ReactNode {
+  renderResourceImage(resourceState: ResourceState): React.ReactNode {
     return (
       <ResourceImage
         onUpdate={(image: ImageInput) => {
-          let tmp = this.state.currentEpisode
+          const tmp = this.state.currentEpisode
           tmp.imageFile = image
           console.log({ currentEpisode: tmp })
           this.setState({ currentEpisode: tmp })
@@ -123,10 +119,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderDetailsEpisode(
-    resourceState: ResourceState,
-    resourceActions: ResourceActions
-  ): React.ReactNode {
+  renderDetailsEpisode(resourceState: ResourceState): React.ReactNode {
     return (
       <View style={{ width: "100%" }}>
         {this.state.currentEpisode.details?.map(
@@ -169,7 +162,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                     {this.renderResourceName(item, index)}
                     {this.renderResourceText(item, index)}
                     {this.renderResourceValue(item, index)}
-                    {this.renderResourceImage(resourceState, item, index)}
+                    {this.renderResourceImage(resourceState)}
                   </>
                 )}
               </>
@@ -259,7 +252,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                   </View>
                   <ResourceImage
                     onUpdate={(image: ImageInput) => {
-                      let tmp = this.state.currentEpisode
+                      const tmp = this.state.currentEpisode
                       tmp.imageFile = image
                       console.log({ currentEpisode: tmp })
                       this.setState({ currentEpisode: tmp })
@@ -274,7 +267,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                     currentImage={this.state.currentEpisode.imageFile}
                   ></ResourceImage>
 
-                  {this.renderDetailsEpisode(resourceState, resourceActions)}
+                  {this.renderDetailsEpisode(resourceState)}
                   <JCButton
                     buttonType={ButtonTypes.ResourceModalSolid}
                     onPress={() => {

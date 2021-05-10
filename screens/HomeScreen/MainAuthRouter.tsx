@@ -37,7 +37,7 @@ class MainAuthRouterImpl extends JCComponent<MARProp, MARState> {
     console.log("MainAuthRouter")
     return (
       <MainAuthRouterImpl.UserConsumer>
-        {({ userState, userActions }) => {
+        {({ userState }) => {
           if (!userState) return null
           return (
             <AuthStack.Navigator

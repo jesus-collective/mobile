@@ -27,7 +27,7 @@ import { PaidStatus, ProfileStatus, UserContext, UserState } from "./UserContext
 Amplify.configure(awsconfig)
 
 const MainStack = createStackNavigator()
-const PERSISTENCE_KEY = "NAVIGATION_STATE"
+//const PERSISTENCE_KEY = "NAVIGATION_STATE"
 interface Props {
   authState?: string | undefined
   onStateChange(state: string, data: AuthStateData): Promise<void>

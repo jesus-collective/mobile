@@ -494,7 +494,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       const processList = (json: GraphQLResult<GroupByTypeQuery>) => {
         if (json.data?.groupByType == null) return
         console.log({ groupData: json })
-        this.setCanPay(json.data.groupByType.items)
+        this.setCanPay()
         this.setIsPaid(json.data.groupByType.items)
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
@@ -517,8 +517,8 @@ export default class MyGroups extends JCComponent<Props, State> {
 
   canCourseQuickOpen(userActions: UserActions, id: string): boolean {
     if (this.state.isOwner[id]) return false
-    else if (this.isCourseCoach(userActions, id)) return false
-    else if (this.isCourseAdmin(userActions, id)) return false
+    else if (this.isCourseCoach(userActions)) return false
+    else if (this.isCourseAdmin(userActions)) return false
     else if (this.canCoursePay(id)) return false
     else if (this.isCoursePaid(id)) return true
     else if (this.canCourseApply(id)) return false
@@ -553,7 +553,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       )
     }
   }
-  async setCanPay(data: any): Promise<void> {
+  async setCanPay(): Promise<void> {
     const courseTriadUserByUser: any = API.graphql({
       query: queries.courseTriadUserByUser,
       variables: { userID: this.state.currentUser },
@@ -1113,13 +1113,13 @@ export default class MyGroups extends JCComponent<Props, State> {
       </Tooltip>
     )
   }
-  isCourseCoach(userActions: UserActions, id: string): boolean {
+  isCourseCoach(userActions: UserActions): boolean {
     return userActions.isMemberOf("courseCoach")
   }
-  isCourseAdmin(userActions: UserActions, id: string): boolean {
+  isCourseAdmin(userActions: UserActions): boolean {
     return userActions.isMemberOf("courseAdmin")
   }
-  canCourseApply(id: string): boolean {
+  canCourseApply(): boolean {
     return false
   }
 
@@ -1146,14 +1146,14 @@ export default class MyGroups extends JCComponent<Props, State> {
           <Right></Right>
         </CardItem>
       )
-    else if (this.isCourseCoach(userActions, item.id))
+    else if (this.isCourseCoach(userActions))
       return (
         <CardItem>
           <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Coach</Text>
           <Right></Right>
         </CardItem>
       )
-    else if (this.isCourseAdmin(userActions, item.id))
+    else if (this.isCourseAdmin(userActions))
       return (
         <CardItem>
           <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Admin</Text>
@@ -1181,7 +1181,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           <Right></Right>
         </CardItem>
       )
-    else if (this.canCourseApply(item.id))
+    else if (this.canCourseApply())
       return (
         <CardItem>
           <JCButton

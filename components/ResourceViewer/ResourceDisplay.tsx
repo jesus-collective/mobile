@@ -28,7 +28,7 @@ class ResourceDisplay extends JCComponent<Props, State> {
   render(): React.ReactNode {
     return (
       <ResourceDisplay.Consumer>
-        {({ resourceState, resourceActions }) => {
+        {({ resourceActions }) => {
           let title, subTitle, description: string
           const resource = resourceActions.getResourceByID(this.props.displayResource)
           const series = resourceActions.getSeriesByID(

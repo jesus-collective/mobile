@@ -436,7 +436,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                   key={index}
                   switchLabel={item}
                   initState={this.state.groupsIncluded?.includes(item)}
-                  onPress={(val) => {
+                  onPress={() => {
                     this.updateTierList(item)
                   }}
                 ></JCSwitch>

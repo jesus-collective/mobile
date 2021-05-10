@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import { GetResourceData, GetResourceSeriesData } from "src/types"
+import { GetResourceSeriesData } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import { UpdateResourceEpisodeInput } from "../../src/API"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -32,9 +32,9 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
           console.log({ resourceState: resourceState })
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
-          const resource: GetResourceData | null = resourceActions.getResource(
-            resourceState.currentResource
-          )
+          //  const resource: GetResourceData | null = resourceActions.getResource(
+          //    resourceState.currentResource
+          //  )
           const series: GetResourceSeriesData = resourceActions.getSeries(
             resourceState.currentResource,
             resourceState.currentSeries

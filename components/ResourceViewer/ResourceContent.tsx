@@ -92,7 +92,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   generateKey(state: ResourceState): string {
     return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
   }
-  showEditorModal(index: number): void {
+  showEditorModal(): void {
     this.setState({
       showEditorModal: true,
     })
@@ -200,7 +200,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       />
     )
   }
-  renderPageConfigButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderPageConfigButton() {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -215,7 +215,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </TouchableOpacity>
     )
   }
-  renderJCResourceConfigButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderJCResourceConfigButton() {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -230,7 +230,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </TouchableOpacity>
     )
   }
-  renderResourceConfigButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderResourceConfigButton(resourceState: ResourceState) {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -395,9 +395,9 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return resourceState?.isEditable ? (
       <View style={{ flexDirection: "row", zIndex: 5000 + this.props.pageItemIndex.length }}>
         {this.renderAddPageItemButton(resourceState, resourceActions, [])}
-        {this.renderPageConfigButton(resourceState, resourceActions)}
-        {this.renderResourceConfigButton(resourceState, resourceActions)}
-        {this.renderJCResourceConfigButton(resourceState, resourceActions)}
+        {this.renderPageConfigButton()}
+        {this.renderResourceConfigButton(resourceState)}
+        {this.renderJCResourceConfigButton()}
         <JCResourceConfigModal
           visible={this.state.showJCResourceConfigModal}
           onClose={() => {

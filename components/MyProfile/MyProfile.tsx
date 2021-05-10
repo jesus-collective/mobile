@@ -6,7 +6,6 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
-import { useContext } from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
@@ -441,14 +440,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
     //this.props.navigation.navigate("", null)
 
     Auth.signOut()
-      .then((data) => {
+      .then(() => {
         console.log("SIGNED OUT")
         actions.onStateChange("signedOut", null)
         Sentry.configureScope((scope) => {
           scope.setUser(null)
         })
       })
-      .catch((err) => {
+      .catch(() => {
         console.log("SIGNED OUT CATCH")
         actions.onStateChange("signedOut", null)
         Sentry.configureScope((scope) => {
@@ -1870,7 +1869,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
 export default function MyProfile(props: Props): JSX.Element {
   const route = useRoute()
   const navigation = useNavigation()
-  const { userActions } = useContext(UserContext)
 
   return (
     <MyProfile.UserConsumer>

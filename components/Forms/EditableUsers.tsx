@@ -1,7 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import React, { Component } from "react"
+import React from "react"
 import Chips, { Chip } from "react-chips"
 import { Text } from "react-native"
 import { SearchUsersQuery } from "src/API"
@@ -31,14 +31,14 @@ interface UserProps {
   children: any
   showProfileImages: boolean
 }
-class UserChip extends Component<UserProps> {
+/*class UserChip extends Component<UserProps> {
   constructor(props: UserProps) {
     super(props)
   }
   render() {
     return <Text>{this.props.children}</Text>
   }
-}
+}*/
 export default class EditableText extends JCComponent<Props> {
   constructor(props: Props) {
     super(props)

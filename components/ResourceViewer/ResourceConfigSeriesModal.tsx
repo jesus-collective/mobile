@@ -103,15 +103,11 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
       </View>
     )
   }
-  renderResourceImage(
-    resourceState: ResourceState,
-    item: ResourceDetailInput | null,
-    index: number
-  ): React.ReactNode {
+  renderResourceImage(resourceState: ResourceState): React.ReactNode {
     return (
       <ResourceImage
         onUpdate={(image: ImageInput) => {
-          let tmp = this.state.currentSeries
+          const tmp = this.state.currentSeries
           tmp.imageFile = image
           console.log({ currentSeries: tmp })
           this.setState({ currentSeries: tmp })
@@ -128,10 +124,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderDetailsSeries(
-    resourceState: ResourceState,
-    resourceActions: ResourceActions
-  ): React.ReactNode {
+  renderDetailsSeries(resourceState: ResourceState): React.ReactNode {
     return (
       <View style={{ width: "100%" }}>
         {this.state.currentSeries.details?.map(
@@ -174,7 +167,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                     {this.renderResourceName(item, index)}
                     {this.renderResourceText(item, index)}
                     {this.renderResourceValue(item, index)}
-                    {this.renderResourceImage(resourceState, item, index)}
+                    {this.renderResourceImage(resourceState)}
                   </>
                 )}
               </>
@@ -248,7 +241,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                   </View>
                   <ResourceImage
                     onUpdate={(image: ImageInput) => {
-                      let tmp = this.state.currentSeries
+                      const tmp = this.state.currentSeries
                       tmp.imageFile = image
                       console.log({ currentSeries: tmp })
                       this.setState({ currentSeries: tmp })
@@ -278,7 +271,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                       value={this.state.currentSeries.status ?? ""}
                     ></TextInput>
                   </View>
-                  {this.renderDetailsSeries(resourceState, resourceActions)}
+                  {this.renderDetailsSeries(resourceState)}
                   <JCButton
                     buttonType={ButtonTypes.ResourceModalSolid}
                     onPress={() => {

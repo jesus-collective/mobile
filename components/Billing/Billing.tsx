@@ -59,7 +59,7 @@ const CARD_ELEMENT_OPTIONS = {
     },
   },
 }
-type KeysOfType<T, U> = { [k in keyof T]: T[k] extends U ? k : never }[keyof T]
+//type KeysOfType<T, U> = { [k in keyof T]: T[k] extends U ? k : never }[keyof T]
 type Products = NonNullable<ListProductsQuery["listProducts"]>["items"]
 type Product = NonNullable<Products>[0]
 interface Props {
@@ -1157,7 +1157,7 @@ export default function Billing(props: Props): JSX.Element {
   const route = useRoute()
   const navigation = useNavigation()
 
-  const [stripePromise, setStripePromise] = useState(() =>
+  const [stripePromise] = useState(() =>
     loadStripe(
       env == "beta"
         ? "pk_live_51HlyrYLTzrDhiQ9282ydxEkzCmGQuJ6w6m2J7pvWL3DslQGdyZHhi6NFa7lLgErh9YjboGdEs09ce0y9c3H5SfVx00K1massZP"

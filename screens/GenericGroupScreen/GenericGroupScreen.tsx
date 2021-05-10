@@ -287,7 +287,7 @@ export default class EventScreen extends JCComponent<Props, State> {
         })
   }
   convertProfileToMapData(): MapData[] | null {
-    const data = this.state.data
+    //const data = this.state.data
 
     /* return data
       .map((dataItem) => {

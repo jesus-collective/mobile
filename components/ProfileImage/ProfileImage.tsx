@@ -5,7 +5,6 @@ import { Image, ImageStyle, TouchableOpacity } from "react-native"
 import awsconfig from "../../src/aws-exports"
 import * as customQueries from "../../src/graphql-custom/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { Tooltip } from "@material-ui/core"
 
 Amplify.configure(awsconfig)
 

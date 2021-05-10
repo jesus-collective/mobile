@@ -1,5 +1,5 @@
 import { FontAwesome5 } from "@expo/vector-icons"
-import { Auth, Storage } from "aws-amplify"
+import { Storage } from "aws-amplify"
 import { Badge } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
@@ -51,9 +51,6 @@ export default class Utils {
     if (!filePath) return
 
     try {
-      const user = await Auth.currentCredentials()
-      const userId = user.identityId
-
       const res = await Storage.get(filePath, {
         level: "protected",
         identityId: owner,

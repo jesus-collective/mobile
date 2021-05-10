@@ -279,9 +279,6 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
     if (!filePath) return
 
     try {
-      const user = await Auth.currentCredentials()
-      // const userId = user.identityId
-
       const res = await Storage.get(filePath, {
         level: "protected",
         identityId: owner,

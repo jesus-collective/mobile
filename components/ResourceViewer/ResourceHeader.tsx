@@ -58,7 +58,7 @@ class ResourceHeader extends JCComponent<Props, State> {
   static renderAdmin(page: PageItemSettings): React.ReactNode {
     return (
       <ResourceHeader.Consumer>
-        {({ resourceState, resourceActions }) => {
+        {({ resourceState }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
           return (
@@ -124,7 +124,7 @@ class ResourceHeader extends JCComponent<Props, State> {
   render(): React.ReactNode {
     return (
       <ResourceHeader.Consumer>
-        {({ resourceState, resourceActions }) => {
+        {({ resourceState }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
           if (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)

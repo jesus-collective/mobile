@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
 import {

@@ -30,7 +30,7 @@ export default class MyCam extends JCComponent<EmptyProps, State> {
   }
   cam: any
   saveVideo = async (): Promise<void> => {
-    const { video } = this.state
+    //const { video } = this.state
     // const asset = await MediaLibrary.createAssetAsync(video.uri);
     //  if (asset) {
     //      this.setState({ video: null });

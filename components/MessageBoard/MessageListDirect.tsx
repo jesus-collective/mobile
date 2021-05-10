@@ -64,9 +64,9 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
       nextToken: null,
       fetchingData: false,
     }
-    this.setInitialData(props)
+    this.setInitialData()
   }
-  async setInitialData(props: Props) {
+  async setInitialData() {
     if (this.props.roomId) {
       this.getDirectMessages()
       this.getCourseAssignment()

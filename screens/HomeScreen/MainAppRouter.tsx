@@ -41,7 +41,7 @@ export default class MainAppRouter extends JCComponent {
   render(): React.ReactNode {
     return (
       <MainAppRouter.UserConsumer>
-        {({ userState, userActions }) => {
+        {({ userState }) => {
           if (!userState) return null
           return (
             <Stack.Navigator

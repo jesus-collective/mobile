@@ -468,24 +468,24 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   canPurchase(userActions: UserActions): boolean {
     const id = this.state.data.id
-    if (this.isOwner(id)) return false
-    else if (this.isCourseCoach(userActions, id)) return false
-    else if (this.isCourseAdmin(userActions, id)) return false
+    if (this.isOwner()) return false
+    else if (this.isCourseCoach(userActions)) return false
+    else if (this.isCourseAdmin(userActions)) return false
     else if (this.canCoursePay(id)) return true
     else if (this.isCoursePaid(id)) return false
-    else if (this.canCourseApply(id)) return false
+    else if (this.canCourseApply()) return false
     else return false
   }
-  isCourseCoach(userActions: UserActions, id: string): boolean {
+  isCourseCoach(userActions: UserActions): boolean {
     return userActions.isMemberOf("courseCoach")
   }
-  isCourseAdmin(userActions: UserActions, id: string): boolean {
+  isCourseAdmin(userActions: UserActions): boolean {
     return userActions.isMemberOf("courseAdmin")
   }
-  canCourseApply(id: string): boolean {
+  canCourseApply(): boolean {
     return false
   }
-  isOwner(id: string): boolean {
+  isOwner(): boolean {
     return this.state.isEditable
   }
   async setCanPay(): Promise<void> {
@@ -528,28 +528,28 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   canGotoCourse(userActions: UserActions): boolean {
     const id = this.state.data.id
-    if (this.isOwner(id)) return true
-    else if (this.isCourseCoach(userActions, id)) return true
-    else if (this.isCourseAdmin(userActions, id)) return true
+    if (this.isOwner()) return true
+    else if (this.isCourseCoach(userActions)) return true
+    else if (this.isCourseAdmin(userActions)) return true
     else if (this.canCoursePay(id)) return false
-    else if (this.isCoursePaid(id)) return true
+    else if (this.isCoursePaid()) return true
     else if (this.canCourseApply(id)) return false
     else return false
   }
   isCourseClosed(userActions: UserActions): boolean {
-    const id = this.state.data.id
-    if (this.isOwner(id)) return false
-    else if (this.isCourseCoach(userActions, id)) return false
-    else if (this.isCourseAdmin(userActions, id)) return false
-    else if (this.canCoursePay(id)) return false
-    else if (this.isCoursePaid(id)) return false
-    else if (this.canCourseApply(id)) return false
+    // const id = this.state.data.id
+    if (this.isOwner()) return false
+    else if (this.isCourseCoach(userActions)) return false
+    else if (this.isCourseAdmin(userActions)) return false
+    else if (this.canCoursePay()) return false
+    else if (this.isCoursePaid()) return false
+    else if (this.canCourseApply()) return false
     else return true
   }
-  canCoursePay(id: string): boolean {
-    return this.state.canPay && !this.isCoursePaid(id)
+  canCoursePay(): boolean {
+    return this.state.canPay && !this.isCoursePaid()
   }
-  isCoursePaid(id: string): boolean {
+  isCoursePaid(): boolean {
     return this.state.isPaid
   }
 

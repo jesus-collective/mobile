@@ -148,7 +148,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   renderFileUploadBadge(): React.ReactNode {
-    const { attachment, attachmentOwner } = this.state
+    const { attachment } = this.state
 
     return (
       <View>
