@@ -59,7 +59,7 @@ interface State extends JCState {
   members: any
   mapData: MapData[]
   initCenter: any
-  ownsOrgs: GetUserQuery["getUser"]["organizations"]["items"]
+  ownsOrgs: NonNullable<NonNullable<GetUserQuery["getUser"]>["organizations"]>["items"]
 }
 
 export default class EventScreen extends JCComponent<Props, State> {
@@ -482,8 +482,10 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   updateValue(field: string, value: any): void {
     const temp = this.state.data
-    if (temp) temp[field] = value
-    this.setState({ data: temp })
+    if (temp) {
+      temp[field] = value
+      this.setState({ data: temp })
+    }
   }
   showProfile(id: string): void {
     console.log("Navigate to profileScreen")
@@ -603,13 +605,15 @@ export default class EventScreen extends JCComponent<Props, State> {
             }}
           >
             <Picker.Item label="None selected" value="" />
-            {this.state.ownsOrgs.map((org) => {
+            {this.state.ownsOrgs?.map((org) => {
               return (
-                <Picker.Item
-                  key={org.organizationId}
-                  label={org.organizationId}
-                  value={org.organizationId}
-                />
+                org && (
+                  <Picker.Item
+                    key={org.organizationId}
+                    label={org.organizationId}
+                    value={org.organizationId}
+                  />
+                )
               )
             })}
           </Picker>

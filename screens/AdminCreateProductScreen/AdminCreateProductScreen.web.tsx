@@ -29,7 +29,7 @@ interface Props {
   route: any
 }
 interface State extends JCState {
-  products: NonNullable<ListProductsQuery>["listProducts"]["items"]
+  products: NonNullable<NonNullable<ListProductsQuery>["listProducts"]>["items"]
   name: string
   description: string
   productId: string
@@ -525,7 +525,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         <Text style={{ alignSelf: "center" }}>Price (CAD)</Text>
                       </View>
                     </View>
-                    {this.state.products.map((product: any) => {
+                    {this.state.products?.map((product: any) => {
                       return (
                         <View key={product.id} style={{ display: "flex", flexDirection: "row" }}>
                           <View
