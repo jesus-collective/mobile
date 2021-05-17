@@ -53,7 +53,7 @@ export default function PaymentForm({
     }
   }
 
-  const description = convertCommentFromJSONToHTML(product.description)
+  const description = convertCommentFromJSONToHTML(product?.description ?? "{}")
 
   return (
     <View style={containerStyle}>
@@ -70,10 +70,10 @@ export default function PaymentForm({
       >
         <View style={{ display: "flex", flexDirection: "row" }}>
           <View style={{ flex: 7 }}>
-            <Text style={styles.productName}>{product.name}</Text>
+            <Text style={styles.productName}>{product?.name}</Text>
           </View>
           <View style={{ flex: 3, marginLeft: 20 }}>
-            <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
+            <Text style={styles.productPrice}>${product?.price?.toFixed(2)}</Text>
           </View>
         </View>
         <View style={{ marginTop: 22, width: "75%" }}>
@@ -98,20 +98,20 @@ export default function PaymentForm({
         }}
       >
         <Text style={[styles.totalPrice, { marginLeft: 24 }]}>Total</Text>
-        <Text style={styles.totalPrice}>${product.price.toFixed(2)}</Text>
+        <Text style={styles.totalPrice}>${product?.price?.toFixed(2)}</Text>
       </View>
 
       <View style={payPalWrapperStyle}>
-        {product.isPaypal == "true" ? (
+        {product?.isPaypal == "true" ? (
           <PayPal
-            cost={product.price}
+            cost={product.price ?? 0}
             productId={product.id}
             onSuccessCallback={onSuccessCallback}
             onFailureCallback={onFailureCallback}
             onErrorCallback={onErrorCallback}
           />
         ) : null}
-        {product.isStripe == "true" ? <Stripe></Stripe> : null}
+        {product?.isStripe == "true" ? <Stripe></Stripe> : null}
       </View>
     </View>
   )

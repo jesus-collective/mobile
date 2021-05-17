@@ -24,7 +24,6 @@ import {
 type WithoutKeys<T> = Omit<T, keyof T>
 
 export type EmptyProps = WithoutKeys<Record<string, never>>
-
 export type JCUserData = {
   sub: string
   given_name: string

@@ -98,7 +98,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
         variables: { limit: 50 },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as GraphQLResult<ListProductsQuery>
-      this.setState({ products: listProducts.data.listProducts.items })
+      this.setState({ products: listProducts.data?.listProducts?.items })
     } catch (err) {
       console.error(err)
     }
@@ -261,12 +261,12 @@ export default class AdminScreen extends JCComponent<Props, State> {
     temp.push({ name: "", stripeIsTiered: "false", stripePaymentID: "" })
     this.setState({ tiered: temp })
   }
-  deleteTier(index): void {
+  deleteTier(index: number): void {
     const temp = this.state.tiered
     temp.splice(index, 1)
     this.setState({ tiered: temp })
   }
-  updateTier(index: number, field: string, value): void {
+  updateTier(index: number, field: string, value: any): void {
     const temp = this.state.tiered
     temp[index][field] = value
     this.setState({ tiered: temp })

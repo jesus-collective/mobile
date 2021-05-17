@@ -43,7 +43,10 @@
     "native-base-theme/components/index.js",
     "native-base-theme/components/*.js",
     "native-base-theme/variables/*.js",
-    "**/*.native.tsx"
+    "**/*.native.tsx",
+    "webpack.config.js",
+    "src/version.js",
+    "src/aws-video-exports.js"
   ],
   "extends": "expo/tsconfig.base"
 }

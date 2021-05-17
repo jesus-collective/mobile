@@ -195,8 +195,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       }) as GetGroupQueryResultPromise
       const processResults = (json: GetGroupQueryResult) => {
         const isEditable =
-          json.data.getGroup.owner == this.state.currentUser ||
-          this.props.userAction.isMemberOf("admin")
+          (json.data?.getGroup?.owner == this.state.currentUser ||
+            this.props.userAction?.isMemberOf("admin")) ??
+          false
 
         this.setState(
           {
@@ -243,7 +244,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       query: queries.listResourceRoots,
       variables: {
         limit: 100,
-        filter: { groupId: { eq: this.state.groupData.id } },
+        filter: { groupId: { eq: this.state.groupData?.id } },
         nextToken: null,
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -528,7 +529,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   updateValueGroup = (field: string, value: any): void => {
     const temp = this.state.groupData
-    temp[field] = value
+    if (temp) temp[field] = value
     this.setState({ groupData: temp })
   }
 
@@ -1059,8 +1060,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       this.state.resourceData?.resources.items[resourceIndex]!.series.items.forEach(
         (item, index: number) => {
           const z = item
-          z.order = index
-          this.updateSeries(resourceIndex, index, z)
+          if (z) {
+            z.order = index
+            this.updateSeries(resourceIndex, index, z)
+          }
         }
       )
     } catch (e) {
@@ -1172,7 +1175,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         console.log(updateResourceEpisode)
         const temp = this.state.resourceData
         if (temp) {
-          temp.resources.items[resourceIndex]!.series.items[seriesIndex].episodes.items[
+          temp.resources.items![resourceIndex].series.items![seriesIndex].episodes.items![
             episodeIndex
           ] = value2
           this.setState({ resourceData: temp })
@@ -1212,7 +1215,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         console.log(deleteResource)
         const temp = this.state.resourceData
         if (temp) {
-          temp.resources.items[resourceIndex]!.series.items[seriesIndex].episodes.items.splice(
+          temp.resources?.items[resourceIndex]!.series?.items[seriesIndex]?.episodes?.items?.splice(
             episodeIndex,
             1
           )
@@ -1254,9 +1257,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     if (resource == undefined || resourceID == undefined) return undefined
     if (series == undefined || seriesID == undefined) return undefined
     if (episode == undefined) return undefined
-    return this.state.resourceData?.resources.items[resourceID]?.series?.items[
+    return this.state.resourceData?.resources?.items[resourceID]?.series?.items[
       seriesID
-    ].episodes.items
+    ].episodes?.items
       ?.map((item) => item?.id)
       .indexOf(episode)
   }

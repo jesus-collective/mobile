@@ -5,7 +5,12 @@ import * as Linking from "expo-linking"
 import moment from "moment"
 import React from "react"
 import { Platform, Text } from "react-native"
-import { AuthStateData, JCCognitoUser } from "src/types"
+import {
+  AuthStateData,
+  GetUserQueryResult,
+  GetUserQueryResultPromise,
+  JCCognitoUser,
+} from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Sentry from "../../components/Sentry"
@@ -119,7 +124,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     })
     if (this.user != null) {
       const { attributes } = this.user
-      const handleUser = async (getUser: any) => {
+      const handleUser = async (getUser: GetUserQueryResult) => {
         console.log(getUser)
         if (getUser.data == null || getUser.data == undefined) {
           Sentry.captureEvent(getUser)
@@ -234,7 +239,9 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
         }
       }
-      const z: any = API.graphql(graphqlOperation(queries.getUser, { id: this.user["username"] }))
+      const z: GetUserQueryResultPromise = API.graphql(
+        graphqlOperation(queries.getUser, { id: this.user["username"] })
+      ) as GetUserQueryResultPromise
       await z.then(handleUser).catch(handleUser)
 
       console.log({ userExists: userExists })
@@ -271,7 +278,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
   async checkIfPaid(): Promise<PaidStatus> {
     console.log("checkIfPaid")
     if (this.state.userExists) {
-      const handleGetUser = async (getUser: any) => {
+      const handleGetUser = async (getUser: GetUserQueryResult) => {
         const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
         if (
           user
@@ -313,9 +320,9 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
         }
       }
-      const getUser: any = API.graphql(
+      const getUser: GetUserQueryResultPromise = API.graphql(
         graphqlOperation(queries.getUser, { id: this.user!["username"] })
-      )
+      ) as GetUserQueryResultPromise
       return await getUser.then(handleGetUser).catch(handleGetUser)
     } else {
       return PaidStatus.Unknown
@@ -412,7 +419,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       hasPaidState: this.state.hasPaidState,
     })
     if (this.state.userExists) {
-      const handleUser = (getUser: any) => {
+      const handleUser = (getUser: GetUserQueryResult) => {
         const response = Validate.Profile(getUser.data.getUser)
         console.log({ Validate: response })
         console.debug({ checkIfCompletedProfileResult: response.result })
@@ -420,9 +427,9 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         else if (!response.result) return ProfileStatus.Incomplete
         else return ProfileStatus.Unknown
       }
-      const getUser: any = API.graphql(
+      const getUser: GetUserQueryResultPromise = API.graphql(
         graphqlOperation(queries.getUser, { id: this.user!["username"] })
-      )
+      ) as GetUserQueryResultPromise
       return await getUser.then(handleUser).catch(handleUser)
     }
     return ProfileStatus.Unknown

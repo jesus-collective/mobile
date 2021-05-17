@@ -151,11 +151,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
         )) as GraphQLResult<GetOrganizationQuery>
         this.setState(
           {
-            OrganizationDetails: getOrg.data.getOrganization,
-            isEditable: getOrg.data.getOrganization.admins.includes(this.state.currentUser),
+            OrganizationDetails: getOrg.data?.getOrganization,
+            isEditable: getOrg.data?.getOrganization?.admins.includes(this.state.currentUser),
             editMode:
-              getOrg.data.getOrganization.admins.includes(this.state.currentUser) &&
-              getOrg.data.getOrganization.profileState === "Incomplete",
+              getOrg.data?.getOrganization?.admins.includes(this.state.currentUser) &&
+              getOrg.data?.getOrganization?.profileState === "Incomplete",
           },
           () => {
             this.getProfileImage()

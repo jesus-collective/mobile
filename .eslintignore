@@ -7,3 +7,9 @@ native-base-theme/components
 node_modules
 **/*.d.ts
 **/*.native.tsx
+webpack.config.js
+src/version.js
+src/aws-video-exports.js
+src/types.ts
+rn-cli.config.js
+screens/HomeScreen/NavigationRoot.ts

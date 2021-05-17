@@ -2,13 +2,10 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import { MapData } from "components/MyGroups/MyGroups"
 import moment from "moment-timezone"
 import { Container, Content, StyleProvider, View } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity } from "react-native"
-import { UserActions, UserContext } from "screens/HomeScreen/UserContext"
-import { JCCognitoUser } from "src/types"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
 import EditableRichText from "../../components/Forms/EditableRichText"
@@ -17,10 +14,12 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import { MapData } from "../../components/MyGroups/MyGroups"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateCourseInfoInput,
   CreateGroupInput,
@@ -31,6 +30,7 @@ import {
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
+import { GetUserQueryResult, GetUserQueryResultPromise, JCCognitoUser } from "../../src/types"
 import Accordion from "./Accordion"
 
 interface Props {
@@ -118,13 +118,13 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }*/
   setMembers() {
     this.state.memberIDs.map((id) => {
-      const getUser: any = API.graphql({
+      const getUser: GetUserQueryResultPromise = API.graphql({
         query: queries.getUser,
         variables: { id: id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as GetUserQueryResultPromise
       getUser
-        .then((json: any) => {
+        .then((json: GetUserQueryResult) => {
           this.setState({ members: this.state.members.concat(json.data.getUser) }, () => {
             this.setState({
               mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)),
@@ -254,13 +254,13 @@ export default class CourseScreen extends JCComponent<Props, State> {
             this.setIsPaid()
             this.setMembers()
 
-            const getUser: any = API.graphql({
+            const getUser: GetUserQueryResultPromise = API.graphql({
               query: queries.getUser,
               variables: { id: this.state.data.owner },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
+            }) as GetUserQueryResultPromise
             getUser
-              .then((json: any) => {
+              .then((json: GetUserQueryResult) => {
                 this.setState({
                   mapData: this.state.mapData.concat(
                     this.convertProfileToMapData([json.data.getUser])

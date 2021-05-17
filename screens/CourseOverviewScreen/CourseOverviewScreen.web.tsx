@@ -8,7 +8,7 @@ import moment from "moment-timezone"
 import { Container, Content, Picker, StyleProvider, View } from "native-base"
 import React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
-import { JCCognitoUser } from "src/types"
+import { GetUserQueryResult, GetUserQueryResultPromise, JCCognitoUser } from "src/types"
 import PaidUsersModal from "../../components/CourseViewer/PaidUsersModal"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
@@ -103,7 +103,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         .then((json) => {
           this.setState(
             {
-              currentUserProfile: json.data.getUser,
+              currentUserProfile: json.data?.getUser,
             },
             () => {
               this.setInitialData(props)
@@ -123,13 +123,13 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }*/
   setMembers(): void {
     this.state.memberIDs.map((id) => {
-      const getUser: any = API.graphql({
+      const getUser: GetUserQueryResultPromise = API.graphql({
         query: queries.getUser,
         variables: { id: id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as GetUserQueryResultPromise
       getUser
-        .then((json: any) => {
+        .then((json: GetUserQueryResult) => {
           this.setState({ members: this.state.members.concat(json.data.getUser) }, () => {
             this.setState({
               mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)),
@@ -203,12 +203,12 @@ export default class CourseScreen extends JCComponent<Props, State> {
       }) as Promise<GraphQLResult<GetGroupQuery>>
 
       const processResults = (json: GraphQLResult<GetGroupQuery>) => {
-        const isEditable = json.data.getGroup.owner == this.state.currentUser
+        const isEditable = json.data?.getGroup?.owner == this.state.currentUser
 
         this.setState(
           {
-            data: json.data.getGroup,
-            memberIDs: json.data.getGroup.members.items.map((item) => item.userID),
+            data: json.data?.getGroup,
+            memberIDs: json.data?.getGroup?.members?.items?.map((item) => item?.userID),
             isEditable: isEditable,
             canLeave: true && !isEditable,
             canJoin: true && !isEditable,
@@ -254,7 +254,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
               .then((json) => {
                 this.setState({
                   mapData: this.state.mapData.concat(
-                    this.convertProfileToMapData([json.data.getUser])
+                    this.convertProfileToMapData([json.data?.getUser])
                   ),
                 })
               })
@@ -467,12 +467,11 @@ export default class CourseScreen extends JCComponent<Props, State> {
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
   canPurchase(userActions: UserActions): boolean {
-    const id = this.state.data.id
     if (this.isOwner()) return false
     else if (this.isCourseCoach(userActions)) return false
     else if (this.isCourseAdmin(userActions)) return false
-    else if (this.canCoursePay(id)) return true
-    else if (this.isCoursePaid(id)) return false
+    else if (this.canCoursePay()) return true
+    else if (this.isCoursePaid()) return false
     else if (this.canCourseApply()) return false
     else return false
   }
@@ -527,13 +526,12 @@ export default class CourseScreen extends JCComponent<Props, State> {
       })
   }
   canGotoCourse(userActions: UserActions): boolean {
-    const id = this.state.data.id
     if (this.isOwner()) return true
     else if (this.isCourseCoach(userActions)) return true
     else if (this.isCourseAdmin(userActions)) return true
-    else if (this.canCoursePay(id)) return false
+    else if (this.canCoursePay()) return false
     else if (this.isCoursePaid()) return true
-    else if (this.canCourseApply(id)) return false
+    else if (this.canCourseApply()) return false
     else return false
   }
   isCourseClosed(userActions: UserActions): boolean {

@@ -44,15 +44,10 @@ export default class HandleStripePayment {
     const latestInvoicePaymentIntentStatus = localStorage.getItem(
       "latestInvoicePaymentIntentStatus"
     )
-    const { error, paymentMethod } = await stripe.createPaymentMethod(
-      {
-        type: "card",
-        card: cardElement,
-      },
-      {
-        idempotency_key: idempotency + "CPM",
-      }
-    )
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    })
     //let priceItems = [{ price: "price_1HoU9MLTzrDhiQ927NZpKQjX", quantity: 5 }];
 
     if (error) {
@@ -225,7 +220,7 @@ export default class HandleStripePayment {
             stripe: stripe,
             paymentMethodId: paymentMethodId,
             priceItems: priceItems,
-            subscription: result.data.createSubscription.subscription,
+            subscription: result.data?.createSubscription?.subscription,
           }
         })
         // Some payment methods require a customer to be on session

@@ -68,7 +68,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                 query: mutations.createDirectMessageUser,
                 variables: {
                   input: {
-                    roomID: json.data.createDirectMessageRoom.id,
+                    roomID: json.data?.createDirectMessageRoom?.id,
                     userID: toUserID,
                     userName: toUserName,
                   },
@@ -92,7 +92,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
               query: mutations.createDirectMessageUser,
               variables: {
                 input: {
-                  roomID: json.data.createDirectMessageRoom.id,
+                  roomID: json.data?.createDirectMessageRoom?.id,
                   userID: user["username"],
                   userName: myUserName,
                 },
@@ -119,15 +119,15 @@ export default class ConversationScreen extends JCComponent<Props, State> {
               if (item.room.roomType == null || item.room.roomType == "directMessage")
                 if (
                   item.room.messageUsers?.items?.length == 2 &&
-                  (item.room.messageUsers?.items[0].userID ==
+                  (item.room.messageUsers?.items![0]?.userID ==
                     this.props.route.params.initialUserID ||
-                    item.room.messageUsers?.items[1].userID ==
+                    item.room.messageUsers?.items![1]?.userID ==
                       this.props.route.params.initialUserID)
                 ) {
                   console.log("Found")
                   this.setState({
                     selectedRoom: index,
-                    currentRoomId: this.state.data[index].roomID,
+                    currentRoomId: this.state.data[index]!.roomID,
                   })
                   return true
                 }
@@ -160,8 +160,8 @@ export default class ConversationScreen extends JCComponent<Props, State> {
       if (json?.data?.getDirectMessageUser) {
         console.log({ "customQueries.getDirectMessageUser": json.data.getDirectMessageUser })
         this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
-          const index = this.state.data.indexOf(json.data.getDirectMessageUser)
-          this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
+          const index = this.state.data.indexOf(json.data?.getDirectMessageUser)
+          this.setState({ selectedRoom: index, currentRoomId: this.state.data[index]?.roomID })
         })
       }
     } catch (err) {
@@ -234,14 +234,14 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     this.setState({ selectedRoom: index })
     this.setState({
       currentRoomId: this.state.data.filter(
-        (item) => item?.room?.roomType == "directMessage" || item.room.roomType == null
-      )[index].roomID,
+        (item) => item?.room?.roomType == "directMessage" || item?.room?.roomType == null
+      )[index]!.roomID,
     })
   }
   getCurrentRoomRecipients(): string[] {
     const ids: string[] = []
     console.log(this.state.data[this.state.selectedRoom])
-    this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items.forEach((user) => {
+    this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items?.forEach((user) => {
       if (user) ids.push(user.userID)
     })
     return ids
@@ -285,7 +285,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                 ? this.state.data
                     .filter(
                       (item) =>
-                        item?.room?.roomType == "directMessage" || item.room.roomType == null
+                        item?.room?.roomType == "directMessage" || item?.room?.roomType == null
                     )
                     .map((item, index: number) => {
                       if (item == null) return

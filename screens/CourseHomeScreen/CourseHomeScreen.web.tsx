@@ -317,14 +317,14 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   ): Promise<void> => {
     console.log(this.state.courseData?.instructors?.items)
     const del = this.state.courseData?.instructors?.items?.filter(
-      (x) => !value.map((z) => z.id).includes(x.userID)
+      (x) => !value?.map((z) => z?.id).includes(x?.userID)
     )
-    const add = value.filter(
+    const add = value?.filter(
       (x) => !this.state.courseData?.instructors?.items?.map((z) => z?.userID).includes(x.id)
     )
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
     console.log({ del: del })
-    add.map(async (item) => {
+    add?.map(async (item) => {
       let createCourseInstructors: any
       try {
         console.log({ Adding: item })
@@ -333,8 +333,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           query: mutations.createCourseInstructors,
           variables: {
             input: {
-              courseInfoID: this.state.courseData.id,
-              userID: item.id,
+              courseInfoID: this.state.courseData?.id,
+              userID: item?.id,
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -398,9 +398,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       )
       const add = value?.filter(
         (x) =>
-          !this.state.courseData.triads.items[index]!.users?.items?.map((z) => z.userID).includes(
-            x.id
-          )
+          !this.state.courseData?.triads
+            ?.items![index]!.users?.items?.map((z) => z?.userID)
+            ?.includes(x?.id)
       )
       // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
       console.log({ del: del })
@@ -413,8 +413,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             query: mutations.createCourseTriadUsers,
             variables: {
               input: {
-                triadID: this.state.courseData.triads.items[index].id,
-                userID: item.id,
+                triadID: this.state.courseData?.triads?.items![index]?.id,
+                userID: item?.id,
               },
             },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -467,7 +467,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           console.log(createCourseTriadUsers)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items && temp.triads.items[index]) {
-            temp.triads.items[index].users.items = temp.triads.items[index]!.users?.items?.filter(
+            temp.triads.items![index].users.items = temp.triads.items[index]!.users?.items?.filter(
               (user) => user.id !== item.id
             )
             console.log(temp)
@@ -517,7 +517,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     })
     let fromTriads = this.state.courseData?.triads?.items
       ?.map((item) => {
-        return [...item.users.items, ...item.coaches.items]
+        return [...item?.users?.items, ...item?.coaches?.items]
       })
       .flat()
       .filter((item) => {
@@ -562,13 +562,13 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   ): Promise<void> => {
     if (this.state.courseData?.triads?.items) {
       const del = this.state.courseData.triads.items[index]!.coaches?.items?.filter(
-        (x) => !value.map((z) => z.id).includes(x.userID)
+        (x) => !value?.map((z) => z?.id).includes(x?.userID)
       )
-      const add = value.filter(
+      const add = value?.filter(
         (x) =>
-          !this.state.courseData.triads.items[index]!.coaches?.items?.map((z) => z.userID).includes(
-            x.id
-          )
+          !this.state.courseData?.triads
+            ?.items![index]?.coaches?.items?.map((z) => z?.userID)
+            .includes(x?.id)
       )
 
       // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
@@ -580,7 +580,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             query: mutations.createCourseTriadCoaches,
             variables: {
               input: {
-                triadID: this.state.courseData.triads.items[index]!.id,
+                triadID: this.state.courseData?.triads?.items![index]?.id,
                 userID: item.id,
               },
             },
@@ -634,7 +634,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           console.log(deleteCourseTriadCoaches)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {
-            temp.triads.items[index].coaches.items = temp.triads.items[
+            temp.triads.items![index].coaches.items = temp.triads.items[
               index
             ]!.coaches?.items?.filter((user) => user?.id !== item?.id)
             console.log(temp)

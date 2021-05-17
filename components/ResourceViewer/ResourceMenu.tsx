@@ -14,11 +14,11 @@ import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext, ResourceState } from "./ResourceContext"
-interface Props extends ResourceSetupProp {}
+//interface Props extends ResourceSetupProp {}
 
-class ResourceMenu extends JCComponent<Props> {
+class ResourceMenu extends JCComponent<ResourceSetupProp> {
   static Consumer = ResourceContext.Consumer
-  constructor(props: Props) {
+  constructor(props: ResourceSetupProp) {
     super(props)
     //console.log(props.items)
   }
@@ -68,7 +68,7 @@ class ResourceMenu extends JCComponent<Props> {
   }
   headerStyles: HeaderStyles = new HeaderStyles()
 
-  renderTopMenu() {
+  renderTopMenu(): React.ReactNode {
     return (
       <Header style={this.headerStyles.style.resourceContainer}>
         <Left></Left>
@@ -77,14 +77,14 @@ class ResourceMenu extends JCComponent<Props> {
       </Header>
     )
   }
-  renderLeftMenu() {
+  renderLeftMenu(): React.ReactNode {
     return this.renderItems()
   }
   parentIsSelected(resourceState: ResourceState, index: number): boolean {
     console.log({ index: index })
     for (let z: number = index; z--; z >= resourceState.currentMenuItem) {
       console.log({ z: z })
-      let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
+      const menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
       console.log({ depth: menuItem.depth })
       if ((menuItem?.depth ?? "1") == "1") return z == resourceState.currentMenuItem
       if (z < 0) return false
@@ -95,28 +95,37 @@ class ResourceMenu extends JCComponent<Props> {
   siblingIsSelected(resourceState: ResourceState, index: number): boolean {
     if (index < resourceState.currentMenuItem)
       for (let z: number = index; z++; z <= resourceState.currentMenuItem) {
-        let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
+        const menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
         if ((menuItem?.depth ?? "1") == "1") return false
         if (z > resourceState.resourceData?.menuItems?.items.length)
           return z == resourceState.currentMenuItem
       }
     else
       for (let z: number = index; z--; z >= resourceState.currentMenuItem) {
-        let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
+        const menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
         if ((menuItem?.depth ?? "1") == "1") return z == resourceState.currentMenuItem
         if (z < 0) return false
       }
     return true
   }
   isMenuItemExpanded(resourceState: ResourceState, index: number): boolean {
-    let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[index]
+    const menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[index]
     if (menuItem?.depth == "1" || menuItem?.depth == null) return true
     if (this.parentIsSelected(resourceState, index)) return true
     else if (index == resourceState.currentMenuItem) return true
     else if (this.siblingIsSelected(resourceState, index)) return true
     else return false
   }
-  renderItems() {
+  MenuIcon1 = (): JSX.Element => (
+    <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
+  )
+  BreakIcon1 = (): JSX.Element => (
+    <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
+  )
+  ScheduleIcon1 = (): JSX.Element => (
+    <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
+  )
+  renderItems(): React.ReactNode {
     return (
       <ResourceMenu.Consumer>
         {({ resourceState, resourceActions }) => {
@@ -220,23 +229,17 @@ class ResourceMenu extends JCComponent<Props> {
                     {
                       label: "Menu Item",
                       value: "menuitem",
-                      icon: () => (
-                        <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
-                      ),
+                      icon: this.MenuIcon1,
                     },
                     {
                       label: "Break",
                       value: "break",
-                      icon: () => (
-                        <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
-                      ),
+                      icon: this.BreakIcon1,
                     },
                     {
                       label: "Schedule",
                       value: "schedule",
-                      icon: () => (
-                        <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
-                      ),
+                      icon: this.ScheduleIcon1,
                     },
                   ]}
                   placeholder="+"

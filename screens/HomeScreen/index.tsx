@@ -16,7 +16,7 @@ export default class App extends JCComponent<Props> {
     super(props)
   }
 
-  renderFallback(): {} {
+  renderFallback(): JSX.Element {
     return <Text>loading...</Text>
   }
   render(): React.ReactNode {

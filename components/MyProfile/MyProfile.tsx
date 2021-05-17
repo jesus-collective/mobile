@@ -8,7 +8,6 @@ import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
-import { JCCognitoUser } from "src/types"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
@@ -23,6 +22,7 @@ import { constants } from "../../src/constants"
 import { getCrmRoot } from "../../src/graphql-custom/crm"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
+import { GetUserQueryResult, JCCognitoUser } from "../../src/types"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { MapData } from "../MyGroups/MyGroups"
@@ -198,9 +198,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       if (this.props.loadId) {
         try {
-          const getUser: any = await API.graphql(
+          const getUser: GetUserQueryResult = (await API.graphql(
             graphqlOperation(queries.getUser, { id: this.props.loadId })
-          )
+          )) as GetUserQueryResult
           if (getUser.data.getUser != null)
             this.setState(
               {
@@ -233,9 +233,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
         }
       } else {
         try {
-          const getUser: any = await API.graphql(
+          const getUser: GetUserQueryResult = (await API.graphql(
             graphqlOperation(queries.getUser, { id: user["username"] })
-          )
+          )) as GetUserQueryResult
           this.setState(
             {
               UserDetails: getUser.data.getUser,

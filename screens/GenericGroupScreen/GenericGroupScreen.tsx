@@ -103,7 +103,7 @@ export default class EventScreen extends JCComponent<Props, State> {
             this.setState(
               {
                 currentUserProfile: json.data.getUser,
-                ownsOrgs: json.data.getUser.organizations.items.filter(
+                ownsOrgs: json.data?.getUser?.organizations?.items?.filter(
                   (item) => item?.userRole === "superAdmin" || item?.userRole === "admin"
                 ),
               },
@@ -118,7 +118,7 @@ export default class EventScreen extends JCComponent<Props, State> {
             this.setState(
               {
                 currentUserProfile: e.data.getUser,
-                ownsOrgs: e.data.getUser.organizations.items.filter(
+                ownsOrgs: e.data?.getUser?.organizations?.items?.filter(
                   (item) => item?.userRole === "superAdmin" || item?.userRole === "admin"
                 ),
               },
@@ -181,7 +181,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           this.setState(
             {
               data: json.data.getGroup,
-              memberIDs: json.data.getGroup.members.items.map((item) => item?.userID),
+              memberIDs: json.data?.getGroup?.members?.items?.map((item) => item?.userID),
               isEditable: isEditable,
               canLeave: true && !isEditable,
               canJoin: true && !isEditable,
@@ -204,7 +204,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                 }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
                 groupMemberByUser.then((json: GraphQLResult<GroupMemberByUserQuery>) => {
                   console.log({ groupMemberByUser: json })
-                  if (json.data.groupMemberByUser.items.length > 0)
+                  if (json.data?.groupMemberByUser?.items?.length > 0)
                     this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
                   else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
                 })
@@ -482,7 +482,7 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   updateValue(field: string, value: any): void {
     const temp = this.state.data
-    temp[field] = value
+    if (temp) temp[field] = value
     this.setState({ data: temp })
   }
   showProfile(id: string): void {
@@ -516,7 +516,7 @@ export default class EventScreen extends JCComponent<Props, State> {
             selectedValue={null}
             onValueChange={(value: string) => {
               console.log({ value: value })
-              let tmp = this.state.data.readGroups
+              let tmp = this.state.data?.readGroups
               if (!tmp) tmp = []
               tmp.push(value as UserGroupType)
               this.updateValue("readGroups", tmp)
@@ -597,7 +597,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               paddingTop: 3,
               paddingBottom: 3,
             }}
-            selectedValue={this.state.data.ownerOrgID}
+            selectedValue={this.state.data?.ownerOrgID}
             onValueChange={(value: any) => {
               this.updateValue("ownerOrgID", value)
             }}
@@ -871,7 +871,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                         : this.showProfile(
                             this.state.data.ownerUser
                               ? this.state.data.ownerUser.id
-                              : this.state.currentUserProfile.id
+                              : this.state.currentUserProfile?.id
                           )
                   }}
                 >

@@ -5,7 +5,6 @@ import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } 
 import * as React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Text, TouchableOpacity } from "react-native"
-import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
@@ -14,6 +13,7 @@ import { CreateMessageInput } from "../../src/API"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import * as subscriptions from "../../src/graphql/subscriptions"
+import { GetUserQueryResult, JCCognitoUser } from "../../src/types"
 //import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN'T WORK
 //import './MessageBoard.css';
@@ -63,9 +63,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   async setInitialData(props) {
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     try {
-      const getUser: any = await API.graphql(
+      const getUser: GetUserQueryResult = (await API.graphql(
         graphqlOperation(queries.getUser, { id: user["username"] })
-      )
+      )) as GetUserQueryResult
       this.setState({
         UserDetails: getUser.data.getUser,
       })

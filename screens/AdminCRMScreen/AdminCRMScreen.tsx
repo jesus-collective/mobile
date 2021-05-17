@@ -26,7 +26,7 @@ import {
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
-import { InviteType } from "../../src/types"
+import { GetUserQueryResult, GetUserQueryResultPromise, InviteType } from "../../src/types"
 
 interface Props {
   navigation: any
@@ -482,7 +482,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
 
     if (user != null) {
       const { attributes } = user
-      const handleUser = async (getUser: any) => {
+      const handleUser = async (getUser: GetUserQueryResult) => {
         if (getUser.data.getUser === null) {
           console.log("Trying to create")
           const inputData: CreateUserInput = {
@@ -586,7 +586,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
           }
         }
       }
-      const z: any = API.graphql(graphqlOperation(queries.getUser, { id: user["username"] }))
+      const z: GetUserQueryResultPromise = API.graphql(
+        graphqlOperation(queries.getUser, { id: user["username"] })
+      ) as GetUserQueryResultPromise
       await z.then(handleUser).catch(handleUser)
 
       console.log({ userExists: userExists })

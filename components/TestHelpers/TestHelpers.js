@@ -1,7 +1,7 @@
 import Amplify, { API, Auth } from "aws-amplify"
 import awsconfig from "../../src/aws-exports"
-import * as mutations from "../../src/graphql/mutations.ts"
-import * as queries from "../../src/graphql/queries.ts"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
 //import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 Amplify.configure(awsconfig)
 

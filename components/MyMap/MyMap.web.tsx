@@ -9,10 +9,10 @@ import moment from "moment"
 import { Body, Card, CardItem, View } from "native-base"
 import * as React from "react"
 import { ScrollView, Text, TouchableOpacity } from "react-native"
-import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import * as queries from "../../src/graphql/queries"
+import { GetUserQueryResult, GetUserQueryResultPromise, JCCognitoUser } from "../../src/types"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import JCSwitch from "../JCSwitch/JCSwitch"
@@ -35,8 +35,8 @@ interface State extends JCState {
   profilesEnabled: boolean
   organizationsEnabled: boolean
   eventsEnabled: boolean
-  currentUserLocation: { lat: string; lng: string }
-  currentUser: string
+  currentUserLocation: { lat: string; lng: string } | null
+  currentUser: string | null
   mapHeight: number
 }
 
@@ -59,13 +59,15 @@ class MyMapImpl extends JCComponent<Props, State> {
       this.setState({
         currentUser: user.username,
       })
-      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user["username"] }))
+      const getUser: GetUserQueryResultPromise = API.graphql(
+        graphqlOperation(queries.getUser, { id: user["username"] })
+      ) as GetUserQueryResultPromise
       getUser
-        .then((json) => {
+        .then((json: GetUserQueryResult) => {
           this.setState({
             currentUserLocation: {
-              lat: json.data.getUser.location.latitude,
-              lng: json.data.getUser.location.longitude,
+              lat: json.data?.getUser?.location?.latitude ?? "0",
+              lng: json.data?.getUser?.location?.longitude ?? "0",
             },
           })
         })
@@ -76,7 +78,7 @@ class MyMapImpl extends JCComponent<Props, State> {
         })
     })
   }
-  onMarkerClick = (props, marker) =>
+  onMarkerClick = (props: any, marker: any) =>
     this.setState({
       activeMarker: marker,
       selectedPlace: props,
@@ -89,7 +91,7 @@ class MyMapImpl extends JCComponent<Props, State> {
         showingInfoWindow: false,
       })
   }
-  openConversation(initialUser, name) {
+  openConversation(initialUser: string, name: string) {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", {
       initialUserID: initialUser,
@@ -100,15 +102,15 @@ class MyMapImpl extends JCComponent<Props, State> {
     console.log("Navigate to profilesScreen")
     this.props.navigation.push("ProfilesScreen")
   }
-  showProfile(id) {
+  showProfile(id: string) {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
-  showOrg(id) {
+  showOrg(id: string) {
     this.props.navigation.push("OrganizationScreen", { id: id, create: false })
   }
 
-  _mapLoaded(map) {
+  _mapLoaded(map: any) {
     map.setOptions({
       styles: mapStyle,
     })
@@ -374,7 +376,10 @@ class MyMapImpl extends JCComponent<Props, State> {
                   zoom={6}
                   center={
                     this.state.currentUserLocation
-                      ? this.state.currentUserLocation
+                      ? {
+                          lat: Number(this.state.currentUserLocation.lat),
+                          lng: Number(this.state.currentUserLocation.lng),
+                        }
                       : { lat: 44, lng: -78 }
                   }
                   mapTypeControl={false}

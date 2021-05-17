@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { API, graphqlOperation, Storage } from "aws-amplify"
 import * as React from "react"
 import { Image, ImageStyle, TouchableOpacity } from "react-native"
+import { GetUserQueryResult, GetUserQueryResultPromise } from "src/types"
 import awsconfig from "../../src/aws-exports"
 import * as customQueries from "../../src/graphql-custom/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -97,12 +98,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
     }
   }
   getProfileImageFromUserID(user: string): void {
-    const getUser: any = API.graphql(
+    const getUser: GetUserQueryResultPromise = API.graphql(
       graphqlOperation(customQueries.getUserForProfile, { id: user })
-    )
+    ) as GetUserQueryResultPromise
     getUser
-      .then((json) => {
-        this.getProfileImage(json.data.getUser.profileImage)
+      .then((json: GetUserQueryResult) => {
+        this.getProfileImage(json.data?.getUser?.profileImage)
       })
       .catch((e: any) => {
         if (e.data) {
@@ -112,10 +113,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
 
   getProfileImageFromOrgID(user: string): void {
-    const getUser: any = API.graphql(graphqlOperation(customQueries.getOrgForImage, { id: user }))
+    const getUser: GetUserQueryResultPromise = API.graphql(
+      graphqlOperation(customQueries.getOrgForImage, { id: user })
+    ) as GetUserQueryResultPromise
     getUser
-      .then((json) => {
-        this.getProfileImage(json.data.getUser.profileImage)
+      .then((json: GetUserQueryResult) => {
+        this.getProfileImage(json.data?.getUser?.profileImage)
       })
       .catch((e: any) => {
         if (e.data) {
