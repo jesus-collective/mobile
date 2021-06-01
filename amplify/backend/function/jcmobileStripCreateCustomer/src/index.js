@@ -127,8 +127,9 @@ exports.handler = async (event) => {
     var customer
     if (userInfo.stripeCustomerID == null) {
       var concatName
-      if (orgName && orgName.length > 0) concatName = orgName + ": " + firstName + " " + lastName
-      else concatName = firstName + " " + lastName
+      // if (orgName && orgName.length > 0) concatName = orgName + ": " + firstName + " " + lastName
+      // else concatName = firstName + " " + lastName
+      concatName = firstName + " " + lastName
       customer = await stripe.customers.create(
         {
           name: concatName,
