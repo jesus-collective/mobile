@@ -553,6 +553,7 @@ class BillingImpl extends JCComponent<Props, State> {
   ) {
     const release = await handleInputMutex.acquire()
     console.log({ field: field, value: value })
+    console.log({ userData: this.state.userData?.billingAddress })
     try {
       if (this.state.userData && this.state.userData.billingAddress == null) {
         const user = (await API.graphql(
@@ -570,6 +571,7 @@ class BillingImpl extends JCComponent<Props, State> {
             },
           })
         )) as GraphQLResult<UpdateUserMutation>
+        console.log("Billing Address added")
         if (user.data)
           this.setState({ userData: user.data.updateUser }, async () => {
             const temp = this.state.userData
@@ -589,7 +591,7 @@ class BillingImpl extends JCComponent<Props, State> {
           })
       } else {
         const temp = this.state.userData
-        if (temp?.billingAddress && temp?.billingAddress[field]) temp.billingAddress[field] = value
+        if (temp?.billingAddress) temp.billingAddress[field] = value
 
         const user = await API.graphql(
           graphqlOperation(mutations.updateUser, {
@@ -599,6 +601,7 @@ class BillingImpl extends JCComponent<Props, State> {
             },
           })
         )
+        console.log(user)
         this.setState({ userData: temp })
       }
     } catch (e) {
