@@ -660,7 +660,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return (
         <View style={this.styles.style.myProfileTopButtons}>
           {this.state.isEditable && (this.state.editMode || this.state.showPage != "profile") ? (
-            <Text style={this.styles.style.profileFontTitle}>
+            <Text accessibilityRole="header" style={this.styles.style.profileFontTitle}>
               {this.props.hideOrg ? "Create Administrator's Profile" : "Setup your profile"}
             </Text>
           ) : (
@@ -727,29 +727,45 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }}
             ></Image>
             {this.state.isEditable && this.state.editMode ? (
-              <View style={this.styles.style.fileInputWrapper}>
-                <JCButton
-                  buttonType={ButtonTypes.SolidProfile}
-                  onPress={() => {
-                    null
+              <View accessible={false} style={this.styles.style.fileInputWrapper}>
+                <TouchableOpacity
+                  accessible={false}
+                  style={{
+                    backgroundColor: "#F0493E",
+                    padding: 12,
+                    borderRadius: 4,
                   }}
                 >
-                  Set Profile Picture
-                </JCButton>
-                <input
-                  data-testId="profile-image"
-                  style={{
-                    cursor: "pointer",
-                    fontSize: 200,
-                    position: "absolute",
-                    top: "0px",
-                    right: "0px",
-                    opacity: "0",
-                  }}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => this.onProfileImageChange(e)}
-                />
+                  <Text
+                    style={{
+                      margin: "auto",
+                      fontSize: 16,
+                      color: "white",
+                      fontFamily: "Graphik-Regular-App",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Set Profile Picture
+                  </Text>
+                  <input
+                    aria-role="button"
+                    aria-label="Upload a profile picture"
+                    data-testId="profile-image"
+                    style={{
+                      cursor: "pointer",
+                      fontSize: 200,
+                      height: 50,
+                      width: 200,
+                      position: "absolute",
+                      top: "0px",
+                      right: "0px",
+                      opacity: "0",
+                    }}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => this.onProfileImageChange(e)}
+                  />
+                </TouchableOpacity>
               </View>
             ) : null}
             {/*<Text style={this.styles.style.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
@@ -1000,10 +1016,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
           )}
 
           <EditableText
+            accessibilityLabel="Describe yourself"
             onChange={(e) => {
               this.handleInputChange(e, "aboutMeLong")
             }}
-            placeholder="type here"
+            placeholder="Type here..."
             multiline={true}
             testID="profile-aboutMeLong"
             textStyle={this.styles.style.fontFormSmallDarkGrey}
@@ -1040,6 +1057,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
               <View style={this.styles.style.myprofilePickerContainer}>
                 <View style={this.styles.style.myprofilePickerContainerView}>
                   <Picker
+                    accessibilityLabel="Pick your personal interests"
+                    accessibilityHint="Pick an interest and then click the add button"
                     testID="profile-interest-picker"
                     style={this.styles.style.myprofilePicker}
                     onValueChange={(itemValue) => this.setState({ interest: itemValue })}
@@ -1051,9 +1070,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     })}
                   </Picker>
                   <JCButton
+                    accessibilityLabel={`${
+                      this.state.interest
+                        ? `Add ${this.state.interest} to list.`
+                        : `Add interest to list`
+                    }`}
                     testID="profile-interest-button"
                     buttonType={ButtonTypes.SolidAboutMe}
-                    onPress={() => this.handleAddInterest()}
+                    onPress={() => {
+                      this.handleAddInterest()
+                      console.log(this.state.interestsArray)
+                    }}
                   >
                     <Text>+ Add</Text>
                   </JCButton>
@@ -1094,7 +1121,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             >
                               {item}
                             </Text>
-                            <TouchableOpacity onPress={() => this.handleDeleteInterest(item)}>
+                            <TouchableOpacity
+                              accessibilityLabel={`Remove ${item} from interests`}
+                              accessibilityRole="button"
+                              onPress={() => this.handleDeleteInterest(item)}
+                            >
                               <AntDesign name="close" size={20} color="#979797" />
                             </TouchableOpacity>
                           </View>
@@ -1158,11 +1189,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
               Current Role
             </Label>
             <EditableText
+              accessibilityLabel="Current role"
               onChange={(e) => {
                 this.handleInputChange(e, "currentRole")
               }}
               multiline={false}
               testID="profile-currentRole"
+              placeholder="Type here..."
               textStyle={this.styles.style.fontFormSmallDarkGrey}
               inputStyle={{
                 borderWidth: 1,
@@ -1191,11 +1224,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <Text style={this.styles.style.fontFormSmall}>Current scope</Text>
           )}
           <EditableText
+            accessibilityLabel="Describe your current scope"
             onChange={(e) => {
               this.handleInputChange(e, "currentScope")
             }}
             multiline={true}
-            placeholder="Type here."
+            placeholder="Type here..."
             testID="profile-currentScope"
             textStyle={this.styles.style.fontFormSmallDarkGrey}
             inputStyle={{
@@ -1227,6 +1261,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             onChange={(e) => {
               this.handleInputChange(e, "personality")
             }}
+            accessibilityLabel="Identify personality type indicator"
             multiline={true}
             testID="profile-personality"
             placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
@@ -1263,11 +1298,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   <View>
                     <Label style={this.styles.style.fontFormSmall}>Organization Name</Label>
                     <EditableText
+                      accessibilityLabel="Organization name"
                       onChange={(e) => {
                         this.handleInputChange(e, "orgName")
                       }}
                       multiline={false}
                       testID="profile-orgName"
+                      placeholder="Type here..."
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       inputStyle={this.styles.style.myProfileOrgTypeInput}
                       value={this.state.UserDetails.orgName ?? ""}
@@ -1283,6 +1320,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     {this.state.isEditable && this.state.editMode ? (
                       <View style={this.styles.style.myProfileOrgView}>
                         <Picker
+                          accessibilityLabel="Organization type"
                           testID="profile-orgType"
                           style={this.styles.style.myprofilePicker}
                           onValueChange={(itemValue) => {
@@ -1309,10 +1347,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           !orgTypes.includes(this.state.UserDetails?.orgType) &&
                           this.state.UserDetails.orgType !== "None") ? (
                           <EditableText
+                            accessibilityLabel="Organization type"
                             onChange={(e) => {
                               this.handleInputChange(e, "orgType")
                             }}
                             multiline={false}
+                            placeholder="Type here..."
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={this.styles.style.myProfileOrgTypeInput}
                             value={this.state.UserDetails.orgType}
@@ -1342,6 +1382,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           How many employees are there in the organization?
                         </Label>
                         <Picker
+                          accessibilityLabel="Number of employees in organization"
                           testID="profile-orgSize"
                           style={this.styles.style.myprofilePicker}
                           onValueChange={(itemValue) => {
@@ -1380,6 +1421,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           Average Sunday morning attendance
                         </Label>
                         <Picker
+                          accessibilityLabel="Average Sunday morning attendance"
                           style={this.styles.style.myprofilePicker}
                           onValueChange={(itemValue) => {
                             this.handleInputChange(itemValue, "sundayAttendance")
@@ -1398,6 +1440,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           Average Sunday morning attendance
                         </Label>
                         <EditableText
+                          accessibilityLabel="Average Sunday morning attendance"
                           multiline={true}
                           textStyle={this.styles.style.fontFormSmallDarkGrey}
                           value={this.state.UserDetails.sundayAttendance}
@@ -1416,6 +1459,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <View>
                         <Label style={this.styles.style.fontFormSmall}>Number of volunteers</Label>
                         <Picker
+                          accessibilityLabel="Number of volunteers"
                           style={this.styles.style.myprofilePicker}
                           onValueChange={(itemValue) => {
                             this.handleInputChange(itemValue, "numberVolunteers")
@@ -1451,6 +1495,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       onChange={(e) => {
                         this.handleInputChange(e, "denomination")
                       }}
+                      accessibilityLabel="Denomination"
                       multiline={true}
                       testID="profile-denomination"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
@@ -1484,6 +1529,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         : "People impacted by our services"}
                     </Text>
                     <EditableText
+                      accessibilityLabel={
+                        this.state.editMode
+                          ? "How many people do you serve?"
+                          : "People impacted by our services"
+                      }
                       onChange={(e) => {
                         this.handleInputChange(e, "pplServed")
                       }}
@@ -1520,6 +1570,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         this.handleInputChange(e, "orgDescription")
                       }}
                       multiline={true}
+                      accessibilityLabel="Describe church or organization"
                       testID="profile-orgDescription"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       placeholder="Type here."

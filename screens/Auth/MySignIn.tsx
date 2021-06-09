@@ -257,6 +257,9 @@ class MySignInImpl extends React.Component<Props, State> {
                       {this.state.authError}
                     </Text>
                     <Text
+                      accessible
+                      accessibilityLiveRegion={"assertive"}
+                      accessibilityRole="alert"
                       style={{
                         alignSelf: "center",
                         alignItems: "center",

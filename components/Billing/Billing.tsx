@@ -387,9 +387,11 @@ class BillingImpl extends JCComponent<Props, State> {
         }}
       >
         <Content>
-          {EULA.map((item, index) => {
-            return <Text key={index}>{item}</Text>
-          })}
+          <View accessible>
+            {EULA.map((item, index) => {
+              return <Text key={index}>{item}</Text>
+            })}
+          </View>
         </Content>
       </JCModal>
     )
@@ -410,6 +412,7 @@ class BillingImpl extends JCComponent<Props, State> {
   renderProduct(item: Product, index: number) {
     return (
       <View
+        focusable={false}
         key={index}
         style={{
           borderWidth: 1,
@@ -458,6 +461,7 @@ class BillingImpl extends JCComponent<Props, State> {
                 {item2?.name ?? ""}
               </Text>
               <EditableText
+                accessibilityLabel={item2?.name ?? ""}
                 placeholder="Quantity"
                 multiline={false}
                 testID="course-weekTitle"
@@ -634,6 +638,9 @@ class BillingImpl extends JCComponent<Props, State> {
     console.log("10")
     if (!this.state.currentProduct) return false
     console.log("11")
+    {
+      this.renderEULA()
+    }
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
@@ -661,10 +668,11 @@ class BillingImpl extends JCComponent<Props, State> {
                     source={require("../../assets/svg/checkmark-circle.svg")}
                   />
 
-                  <Text style={this.styles.style.SignUpScreenSetupText}>
+                  <Text accessibilityRole="header" style={this.styles.style.SignUpScreenSetupText}>
                     We&apos;ve received your payment.
                     <br />
                     <JCButton
+                      accessibilityLabel="Navigate to profile"
                       testID={"billing-continueToProfile-button"}
                       onPress={() => {
                         this.completePaymentProcess(userActions, userState)
@@ -757,6 +765,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
+                            accessibilityLabel="Billing Address Line 1"
                             onChange={async (e) => {
                               await this.handleInputChange(e, "line1")
                             }}
@@ -788,6 +797,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
+                            accessibilityLabel="Billing Address Line 2"
                             onChange={async (e) => {
                               await this.handleInputChange(e, "line2")
                             }}
@@ -829,6 +839,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
+                            accessibilityLabel="City"
                             onChange={async (e) => {
                               await this.handleInputChange(e, "city")
                             }}
@@ -870,6 +881,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
+                            accessibilityLabel="State/Province"
                             onChange={async (e) => {
                               await this.handleInputChange(e, "state")
                             }}
@@ -911,6 +923,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
+                            accessibilityLabel="Country"
                             onChange={async (e) => {
                               await this.handleInputChange(e, "country")
                             }}
@@ -952,6 +965,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
+                            accessibilityLabel="Zip/Postal Code"
                             onChange={async (e) => {
                               await this.handleInputChange(e, "postal_code")
                             }}
@@ -1058,7 +1072,11 @@ class BillingImpl extends JCComponent<Props, State> {
                         .filter((item) => item.amount != 0)
                         .map((line, index: number) => {
                           return (
-                            <View key={index} style={this.styles.style.flexRow}>
+                            <View
+                              accessible={!this.state.showEULA}
+                              key={index}
+                              style={this.styles.style.flexRow}
+                            >
                               <Text
                                 style={{
                                   flex: 1,
@@ -1088,7 +1106,10 @@ class BillingImpl extends JCComponent<Props, State> {
                             </View>
                           )
                         })}
-                      <View style={[this.styles.style.flexRow, { marginBottom: 10 }]}>
+                      <View
+                        accessible={!this.state.showEULA}
+                        style={[this.styles.style.flexRow, { marginBottom: 10 }]}
+                      >
                         {!this.state.invoice ? (
                           <View style={{ paddingTop: 10, marginRight: 10 }}>
                             <ActivityIndicator></ActivityIndicator>
@@ -1126,6 +1147,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       </Text>
                       <View style={{ marginHorizontal: 10 }}>
                         <JCButton
+                          accessibilityLabel="Process Payment"
                           testID={"billing-processPayment-button"}
                           buttonType={ButtonTypes.Solid}
                           onPress={() => {

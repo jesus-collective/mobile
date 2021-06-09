@@ -83,7 +83,14 @@ export default class JCSwitch extends JCComponent<Props, State> {
         }}
       >
         <Text style={this.styles.style.fontMyMapOptions}>{this.props.switchLabel}</Text>
-        <TouchableWithoutFeedback testID={this.props.testId} onPress={() => this.onPress()}>
+        <TouchableWithoutFeedback
+          accessible
+          accessibilityState={{ checked: this.state.enabled }}
+          accessibilityLabel={this.props.switchLabel}
+          accessibilityRole="switch"
+          testID={this.props.testId}
+          onPress={() => this.onPress()}
+        >
           <View
             style={{
               backgroundColor: this.state.enabled ? this.state.onColor : this.state.offColor,

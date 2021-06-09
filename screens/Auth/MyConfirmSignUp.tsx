@@ -100,6 +100,9 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
+                      accessibilityLabel="Go back"
+                      accessibilityHint="Navigate to previous page"
+                      accessibilityRole="button"
                       testID="myConfirmSignup-back"
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signIn", null)
@@ -122,6 +125,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                   </View>
                   <View style={this.styles.style.authView2}>
                     <Text
+                      accessibilityRole="header"
                       style={{
                         width: "100%",
                         marginBottom: "5.5%",
@@ -178,6 +182,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                         }}
                       ></TextInput>
                       <JCButton
+                        accessibilityLabel="Submit verification code"
                         buttonType={ButtonTypes.SolidSignIn2}
                         onPress={() => this.handleConfirmSignUp(userActions)}
                       >
@@ -189,6 +194,9 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                       </JCButton>
                     </View>
                     <Text
+                      accessibilityLabel={this.state.authError}
+                      accessibilityLiveRegion={"assertive"}
+                      accessibilityRole="alert"
                       style={{
                         alignSelf: "center",
                         alignItems: "center",
@@ -199,8 +207,13 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                       }}
                     >
                       {this.state.authError ? (
-                        <Entypo name="warning" size={18} color="#F0493E" />
-                      ) : null}{" "}
+                        <Entypo
+                          style={{ marginRight: 4 }}
+                          name="warning"
+                          size={18}
+                          color="#F0493E"
+                        />
+                      ) : null}
                       {this.state.authError}
                     </Text>
                     <Copyright />
