@@ -412,7 +412,7 @@ class BillingImpl extends JCComponent<Props, State> {
   renderProduct(item: Product, index: number) {
     return (
       <View
-        focusable={false}
+        accessible
         key={index}
         style={{
           borderWidth: 1,
