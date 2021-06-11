@@ -201,7 +201,6 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                       </JCButton>
                     </View>
                     <Text
-                      accessibilityLabel={this.state.authError}
                       accessibilityLiveRegion={"assertive"}
                       accessibilityRole="alert"
                       style={{

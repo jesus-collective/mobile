@@ -333,7 +333,6 @@ class MyForgotPassword extends React.Component<Props, State> {
                       )}
                     </JCButton>
                     <Text
-                      accessibilityLabel={this.state.authError}
                       accessibilityLiveRegion={"assertive"}
                       accessibilityRole="alert"
                       style={{

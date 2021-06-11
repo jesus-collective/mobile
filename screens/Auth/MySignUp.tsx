@@ -426,7 +426,6 @@ class MySignUpImpl extends React.Component<Props, State> {
                         </View>
 
                         <Text
-                          accessibilityLabel={this.state.authError}
                           accessibilityLiveRegion={"assertive"}
                           accessibilityRole="alert"
                           style={{
@@ -646,7 +645,6 @@ class MySignUpImpl extends React.Component<Props, State> {
                           </TouchableOpacity>
                         </View>
                         <Text
-                          accessibilityLabel={this.state.authError}
                           accessibilityLiveRegion={"assertive"}
                           accessibilityRole="alert"
                           accessible

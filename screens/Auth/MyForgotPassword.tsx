@@ -230,7 +230,6 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                         </Text>
                       </TouchableOpacity>
                       <Text
-                        accessibilityLabel={this.state.authError}
                         accessibilityLiveRegion={"assertive"}
                         accessibilityRole="alert"
                         style={{
@@ -371,7 +370,6 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                         )}
                       </JCButton>
                       <Text
-                        accessibilityLabel={this.state.authError}
                         accessibilityLiveRegion={"assertive"}
                         accessibilityRole="alert"
                         style={{

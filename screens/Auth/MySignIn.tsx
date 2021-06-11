@@ -250,7 +250,6 @@ class MySignInImpl extends React.Component<Props, State> {
                       <Text style={this.styles.style.mySignInForgotPassword}>Forgot password?</Text>
                     </TouchableOpacity>
                     <Text
-                      accessibilityLabel={this.state.authError}
                       accessibilityLiveRegion={"assertive"}
                       accessibilityRole="alert"
                       style={{
@@ -268,7 +267,7 @@ class MySignInImpl extends React.Component<Props, State> {
                       {this.state.authError}
                     </Text>
                     <Text
-                      accessible
+                      accessible={this.state.fromVerified}
                       accessibilityLiveRegion={"assertive"}
                       accessibilityRole="alert"
                       style={{
