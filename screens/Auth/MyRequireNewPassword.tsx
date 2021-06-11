@@ -128,6 +128,9 @@ class MyForgotPassword extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
+                      accessibilityRole="button"
+                      accessibilityLabel="Go back"
+                      accessibilityHint="Navigate to previous page"
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signIn")
                       }}
@@ -170,6 +173,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                     >
                       <TextInput
                         placeholder="First Name"
+                        accessibilityLabel="First Name"
                         value={this.state.first}
                         onChange={(e) => this.setState({ first: e.nativeEvent.text })}
                         secureTextEntry={false}
@@ -190,6 +194,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                       ></TextInput>
                       <TextInput
                         placeholder="Last Name"
+                        accessibilityLabel="Last Name"
                         value={this.state.last}
                         onChange={(e) => this.setState({ last: e.nativeEvent.text })}
                         secureTextEntry={false}
@@ -216,6 +221,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                       }}
                     >
                       <Picker
+                        accessibilityLabel="Country code"
                         selectedValue={this.state.code}
                         onValueChange={(val) => this.setState({ code: val })}
                         style={{ marginRight: 5, borderColor: "#00000070" }}
@@ -235,6 +241,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                       </Text>
                       <TextInput
                         autoCompleteType="tel"
+                        accessibilityLabel="Telephone number"
                         textContentType="telephoneNumber"
                         onKeyPress={(e) => {
                           this.handleEnter(userActions, userState, e)
@@ -269,6 +276,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         onKeyPress={(e) => {
                           this.handleEnter(userActions, userState, e)
                         }}
+                        accessibilityLabel="New password"
                         placeholder="New password"
                         value={this.state.newPass}
                         onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
@@ -288,6 +296,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         }}
                       ></TextInput>
                       <TextInput
+                        accessibilityLabel="Confirm new password"
                         textContentType="newPassword"
                         onKeyPress={(e) => {
                           this.handleEnter(userActions, userState, e)
@@ -311,18 +320,22 @@ class MyForgotPassword extends React.Component<Props, State> {
                       ></TextInput>
                     </View>
                     <JCButton
+                      accessibilityLabel="Submit changes"
                       buttonType={ButtonTypes.SolidSignIn}
                       onPress={() => {
                         this.save(userActions, userState)
                       }}
                     >
                       {this.state.resetting ? (
-                        <ActivityIndicator animating color="#333333" />
+                        <ActivityIndicator accessibilityLabel="Loading" animating color="#333333" />
                       ) : (
                         "Submit"
                       )}
                     </JCButton>
                     <Text
+                      accessibilityLabel={this.state.authError}
+                      accessibilityLiveRegion={"assertive"}
+                      accessibilityRole="alert"
                       style={{
                         alignSelf: "center",
                         alignItems: "center",

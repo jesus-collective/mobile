@@ -138,6 +138,8 @@ class MySignInImpl extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.createAccountButtonWrapper}>
                     <JCButton
+                      accessibilityLabel="Create account"
+                      accessibilityHint="Navigate to account creation page"
                       buttonType={ButtonTypes.SolidCreateAccount}
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signUp")
@@ -148,6 +150,7 @@ class MySignInImpl extends React.Component<Props, State> {
                   </View>
                   <View style={this.styles.style.authView2}>
                     <Text
+                      accessibilityRole="header"
                       style={{
                         width: "100%",
                         marginBottom: "5.5%",
@@ -227,6 +230,8 @@ class MySignInImpl extends React.Component<Props, State> {
                       }}
                     ></TextInput>
                     <JCButton
+                      accessibilityLabel="Login"
+                      accessibilityHint="Navigate to platform"
                       buttonType={ButtonTypes.SolidSignIn}
                       onPress={async () => {
                         await this.handleSignIn(userActions)
@@ -235,6 +240,9 @@ class MySignInImpl extends React.Component<Props, State> {
                       Sign In
                     </JCButton>
                     <TouchableOpacity
+                      accessibilityLabel="Forgot password"
+                      accessibilityHint="Navigate to forgot password page"
+                      accessibilityRole="button"
                       onPress={async () => {
                         await this.changeAuthState(userActions, "forgotPassword")
                       }}
@@ -242,6 +250,9 @@ class MySignInImpl extends React.Component<Props, State> {
                       <Text style={this.styles.style.mySignInForgotPassword}>Forgot password?</Text>
                     </TouchableOpacity>
                     <Text
+                      accessibilityLabel={this.state.authError}
+                      accessibilityLiveRegion={"assertive"}
+                      accessibilityRole="alert"
                       style={{
                         alignSelf: "center",
                         alignItems: "center",

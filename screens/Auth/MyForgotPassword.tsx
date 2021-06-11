@@ -132,6 +132,9 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
+                      accessibilityLabel="Go back"
+                      accessibilityHint="Navigate to previous page"
+                      accessibilityRole="button"
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signIn")
                       }}
@@ -154,6 +157,7 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                   {!this.state.codeSent ? (
                     <View style={this.styles.style.authView2}>
                       <Text
+                        accessibilityRole="header"
                         style={{
                           width: "100%",
                           marginBottom: "5.5%",
@@ -190,15 +194,24 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                       ></TextInput>
                       <JCButton
                         buttonType={ButtonTypes.SolidSignIn}
+                        accessibilityLabel="Send security code"
                         onPress={() => this.sendCode()}
                       >
                         {this.state.sendingCode ? (
-                          <ActivityIndicator animating color="#333333" />
+                          <ActivityIndicator
+                            accessibilityLabel="Loading"
+                            accessibilityRole="alert"
+                            animating
+                            color="#333333"
+                          />
                         ) : (
                           "Send"
                         )}
                       </JCButton>
                       <TouchableOpacity
+                        accessibilityRole="button"
+                        accessibilityLabel="Verify your account"
+                        accessibilityHint="Navigate to account verification page"
                         onPress={() => this.setState({ codeSent: true, authError: "" })}
                       >
                         <Text
@@ -217,6 +230,9 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                         </Text>
                       </TouchableOpacity>
                       <Text
+                        accessibilityLabel={this.state.authError}
+                        accessibilityLiveRegion={"assertive"}
+                        accessibilityRole="alert"
                         style={{
                           alignSelf: "center",
                           alignItems: "center",
@@ -344,12 +360,20 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                         onPress={() => this.resetPass(userActions)}
                       >
                         {this.state.resetting ? (
-                          <ActivityIndicator animating color="#333333" />
+                          <ActivityIndicator
+                            accessibilityLabel="Loading"
+                            accessibilityRole="alert"
+                            animating
+                            color="#333333"
+                          />
                         ) : (
                           "Submit"
                         )}
                       </JCButton>
                       <Text
+                        accessibilityLabel={this.state.authError}
+                        accessibilityLiveRegion={"assertive"}
+                        accessibilityRole="alert"
                         style={{
                           alignSelf: "center",
                           alignItems: "center",

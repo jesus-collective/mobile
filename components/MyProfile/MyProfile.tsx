@@ -1666,6 +1666,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             </View>
           </View>
           <Text
+            accessibilityLabel={this.state.passError}
+            accessibilityLiveRegion={"assertive"}
+            accessibilityRole="alert"
             style={{
               ...this.styles.style.fontFormSmallDarkGrey,
               marginTop: 5,

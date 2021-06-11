@@ -682,14 +682,23 @@ class BillingImpl extends JCComponent<Props, State> {
                     >
                       {this.state.validatingUser ? (
                         <View style={{ flexDirection: "column", width: 177.7, top: 4 }}>
-                          <ActivityIndicator color="white"></ActivityIndicator>
+                          <ActivityIndicator
+                            accessibilityRole="alert"
+                            accessibilityLabel="Loading"
+                            color="white"
+                          ></ActivityIndicator>
                         </View>
                       ) : (
                         "Continue to your profile"
                       )}
                     </JCButton>
                   </Text>
-                  <Text style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+                  <Text
+                    accessibilityLabel={this.state.errorMsg}
+                    accessibilityLiveRegion={"assertive"}
+                    accessibilityRole="alert"
+                    style={{ textAlign: "center", color: "red", fontWeight: "bold" }}
+                  >
                     {this.state.errorMsg}
                   </Text>
                 </Content>
@@ -703,7 +712,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       <Text style={this.styles.style.SignUpScreenSetupTextSmaller}>
                         Please wait while we process your payment. This may take several seconds.
                       </Text>
-                      <ActivityIndicator />
+                      <ActivityIndicator accessibilityRole="alert" accessibilityLabel="Loading" />
                     </Content>
                   ) : null}
 
@@ -1112,7 +1121,10 @@ class BillingImpl extends JCComponent<Props, State> {
                       >
                         {!this.state.invoice ? (
                           <View style={{ paddingTop: 10, marginRight: 10 }}>
-                            <ActivityIndicator></ActivityIndicator>
+                            <ActivityIndicator
+                              accessibilityRole="alert"
+                              accessibilityLabel="Loading"
+                            ></ActivityIndicator>
                           </View>
                         ) : null}
                         <Text
@@ -1142,7 +1154,12 @@ class BillingImpl extends JCComponent<Props, State> {
                             : ""}
                         </Text>
                       </View>
-                      <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
+                      <Text
+                        accessibilityLabel={this.state.errorMsg}
+                        accessibilityLiveRegion={"assertive"}
+                        accessibilityRole="alert"
+                        style={{ color: "red", textAlign: "center", marginBottom: 4 }}
+                      >
                         {this.state.errorMsg}
                       </Text>
                       <View style={{ marginHorizontal: 10 }}>

@@ -361,6 +361,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             *
                           </Text>
                           <TextInput
+                            accessibilityLabel="Telephone number"
                             autoCompleteType="tel"
                             textContentType="telephoneNumber"
                             onKeyPress={(e) => this.handleEnter(userActions, e)}
@@ -388,7 +389,12 @@ class MySignUpImpl extends React.Component<Props, State> {
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (
-                                <ActivityIndicator animating color="#333333" />
+                                <ActivityIndicator
+                                  accessibilityRole="alert"
+                                  accessibilityLabel="Loading"
+                                  animating
+                                  color="#333333"
+                                />
                               ) : (
                                 "Continue"
                               )}
@@ -559,6 +565,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                         <View style={this.styles.style.mySignUpPhoneContainer}>
                           <Picker
                             selectedValue={this.state.user.code}
+                            accessibilityLabel="Select country code"
                             accessibilityRole="combobox"
                             onValueChange={(val) => this.handleChange("code", val)}
                             style={{
@@ -600,7 +607,12 @@ class MySignUpImpl extends React.Component<Props, State> {
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (
-                                <ActivityIndicator animating color="#333333" />
+                                <ActivityIndicator
+                                  accessibilityRole="alert"
+                                  accessibilityLabel="Loading"
+                                  animating
+                                  color="#333333"
+                                />
                               ) : (
                                 "Continue"
                               )}
@@ -637,6 +649,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                           accessibilityLabel={this.state.authError}
                           accessibilityLiveRegion={"assertive"}
                           accessibilityRole="alert"
+                          accessible
                           style={{
                             alignSelf: "center",
                             alignItems: "center",

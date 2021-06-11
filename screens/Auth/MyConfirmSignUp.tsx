@@ -139,6 +139,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                     </Text>
                     <TextInput
                       autoCompleteType="email"
+                      accessibilityLabel="Email"
                       textContentType="emailAddress"
                       keyboardType="email-address"
                       placeholder="Email Address"
@@ -161,6 +162,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                     <View style={this.styles.style.confirmationCodeWrapper}>
                       <TextInput
                         textContentType="oneTimeCode"
+                        accessibilityLabel="One time security code"
                         keyboardType="number-pad"
                         onKeyPress={(e) => this.handleEnter(userActions, e)}
                         placeholder="One-time security code"
@@ -187,7 +189,12 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                         onPress={() => this.handleConfirmSignUp(userActions)}
                       >
                         {this.state.sendingData ? (
-                          <ActivityIndicator animating color="#333333" />
+                          <ActivityIndicator
+                            accessibilityRole="alert"
+                            accessibilityLabel="Loading"
+                            animating
+                            color="#333333"
+                          />
                         ) : (
                           "Submit"
                         )}
