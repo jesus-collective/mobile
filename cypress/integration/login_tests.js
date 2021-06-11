@@ -26,10 +26,11 @@ const submitNewUserOrgScreen = () => {
   cy.get('input[placeholder="Organization Name"]').type("Test Org 1")
   cy.contains("Continue").click({ force: true })
 }
-const completeBillingScreen = () => {
+const completeBillingScreen = (coupon) => {
   cy.contains("One Story Curriculum", { timeout: 30000 })
   cy.contains("Total:", { timeout: 30000 })
-
+  cy.get('input[data-testId="billing-coupon"]').clear()
+  if (coupon != "") cy.get('input[data-testId="billing-coupon"]').type(coupon)
   cy.get('input[data-testId="billing-line1"]').type("123 Sesame Street", { force: true })
   cy.get('input[data-testId="billing-city"]').type("Toronto", { force: true })
   cy.get('input[data-testId="billing-state"]').type("Ontario", { force: true })
@@ -122,12 +123,10 @@ describe("Create User", () => {
         cy.viewport(size)
       }
 
-      cy.visit("/")
-        .then(() => {
-          TestHelper.DeleteUser(user, "TestTest#1")
-        })
-        .contains("Sign In")
-        .click()
+      cy.visit("/").then(() => {
+        TestHelper.DeleteUser(user, "TestTest#1")
+      })
+      cy.contains("Sign In").click()
       cy.contains("Email cannot be empty").get('input[placeholder="Email"]').type(user)
       cy.contains("Sign In").click()
       cy.contains("Password cannot be empty")
@@ -148,7 +147,7 @@ describe("Create User", () => {
       cy.get('input[placeholder="Password"]').type("TestTest#1")
       cy.contains("Sign In").click()
 
-      completeBillingScreen()
+      completeBillingScreen("")
       completeProfileScreen(true)
 
       cy.get('[data-testid="header-logo"]').should("be.visible")
@@ -190,7 +189,7 @@ describe("Create User + Org", () => {
       cy.get('input[placeholder="Password"]').type("TestTest#1")
       cy.contains("Sign In").click()
 
-      completeBillingScreen()
+      completeBillingScreen("JC20")
       completeProfileScreen(false)
       completeOrgScreen()
 

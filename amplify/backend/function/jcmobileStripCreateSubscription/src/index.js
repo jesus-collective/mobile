@@ -109,6 +109,8 @@ exports.handler = async (event) => {
     })
     const userID = event.identity.username
     const priceInfo = event.arguments.priceInfo.prices
+    const code = event.arguments.priceInfo.coupon
+    console.log({ code: code })
     let freeDays = event.arguments.freeDays
     if (freeDays > 90) freeDays = 90
     var stripeCustomerID = event.arguments.stripeCustomerID
@@ -155,35 +157,73 @@ exports.handler = async (event) => {
       try {
         var subscription = null
         if (stripeSubscriptionID == null) {
-          const sub = {
+          var promotionCodes = ""
+          if (code != "")
+            promotionCodes = await stripe.promotionCodes.list({
+              active: true,
+              code: code,
+              limit: 3,
+            })
+          console.log({ promotionCodes: promotionCodes })
+
+          var promotionCode = ""
+          if (
+            promotionCodes != "" &&
+            promotionCodes &&
+            promotionCodes.data &&
+            promotionCodes.data.length > 0
+          )
+            var promotionCode = promotionCodes.data[0].id
+          console.log({ promotionCode: promotionCode })
+          var sub = {
             customer: stripeCustomerID,
             items: priceInfo,
             expand: ["latest_invoice.payment_intent"],
             trial_period_days: freeDays,
           }
+          if (promotionCode != "") sub["promotion_code"] = promotionCode
           console.log({ "Creating subscription": sub })
           subscription = await stripe.subscriptions.create(sub, {
             idempotencyKey: idempotency + "SC",
           })
           await updateSubscription(userID, subscription.id)
         } else {
-          const sub = {
+          var promotionCodes = ""
+          if (code != "")
+            promotionCodes = await stripe.promotionCodes.list({
+              active: true,
+              code: code,
+              limit: 3,
+            })
+          console.log({ promotionCodes: promotionCodes })
+          var promotionCode = ""
+          if (
+            promotionCodes != "" &&
+            promotionCodes &&
+            promotionCodes.data &&
+            promotionCodes.data.length > 0
+          )
+            var promotionCode = promotionCodes.data[0].id
+          console.log({ promotionCode: promotionCode })
+          var sub = {
             customer: stripeCustomerID,
             items: priceInfo,
             expand: ["latest_invoice.payment_intent"],
           }
+          if (promotionCode != "") sub["promotion_code"] = promotionCode
           console.log({ "Updating subscription": sub })
           subscription = await stripe.subscriptions.update(stripeSubscriptionID, sub, {
             idempotencyKey: idempotency + "SC",
           })
         }
+
         const response = {
           statusCode: 200,
           subscription: subscription,
         }
         return response
       } catch (error) {
-        console.log(error)
+        console.log({ ERROR: error })
         return { statusCode: "402", error: { message: error.message } }
       }
     }
