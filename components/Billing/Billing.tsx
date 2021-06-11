@@ -638,9 +638,6 @@ class BillingImpl extends JCComponent<Props, State> {
     console.log("10")
     if (!this.state.currentProduct) return false
     console.log("11")
-    {
-      this.renderEULA()
-    }
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
@@ -705,7 +702,10 @@ class BillingImpl extends JCComponent<Props, State> {
                 <>
                   {this.state.processing == "processing" ? (
                     <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
-                      <Text style={this.styles.style.SignUpScreenSetupText}>
+                      <Text
+                        accessibilityRole="header"
+                        style={this.styles.style.SignUpScreenSetupText}
+                      >
                         Processing Payment
                       </Text>
                       <Text style={this.styles.style.SignUpScreenSetupTextSmaller}>
@@ -750,6 +750,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         </Text>
                       )}
                       <Text
+                        accessibilityRole="header"
                         style={{
                           fontFamily: "Graphik-Bold-App",
                         }}
