@@ -834,6 +834,7 @@ export type StripeInvoiceSettings = {
 
 export type StripePriceInput = {
   prices?: Array< StripePriceDetail | null > | null,
+  coupon?: string | null,
 };
 
 export type StripePriceDetail = {

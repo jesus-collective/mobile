@@ -24,6 +24,7 @@ input StripeAddressInput
   }
 input StripePriceInput{
   prices:[StripePriceDetail]
+  coupon:String
 }
 input StripePriceDetail{
   price:String

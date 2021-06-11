@@ -32,7 +32,12 @@ import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
-import { GetUserQuery, ListProductsQuery, UpdateUserMutation } from "../../src/API"
+import {
+  GetUserQuery,
+  ListProductsQuery,
+  StripePriceDetail,
+  UpdateUserMutation,
+} from "../../src/API"
 import awsConfig from "../../src/aws-exports"
 import * as customMutations from "../../src/graphql-custom/mutations"
 import * as mutations from "../../src/graphql/mutations"
@@ -85,6 +90,7 @@ interface State extends JCState {
   validatingUser: boolean
   invoiceQueue: Array<Promise<any>>
   freeDays: number
+  coupon: string
 }
 class BillingImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -98,6 +104,7 @@ class BillingImpl extends JCComponent<Props, State> {
         expiryDate: false,
         cvc: false,
       },
+      coupon: "",
       showEULA: false,
       errorMsg: "",
       currentProduct: [],
@@ -157,7 +164,7 @@ class BillingImpl extends JCComponent<Props, State> {
                 await this.createInvoice()
               }
             )
-            console.log(listProducts.data.listProducts.items[0])
+            console.log({ item0: listProducts.data.listProducts.items[0] })
           }
         } else {
           console.log("Bad")
@@ -203,20 +210,23 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log(e)
     }
   }
-  getPriceItems() {
+  getPriceItems(): StripePriceDetail[] {
     const priceItems = this.state.currentProduct
       ?.map((item, index: number) => {
         const priceItems2 = item?.tiered?.map((item2, index2: number) => {
           return {
             price: item2?.stripePaymentID,
             quantity: this.state.quantities[index][index2],
-          }
+          } as StripePriceDetail
         })
         return priceItems2
       })
       .flat()
     console.log({ priceItems: priceItems })
-    return priceItems?.filter((x) => x != undefined && x.quantity > 0)
+    if (priceItems == undefined) return []
+    return priceItems
+      .filter((x) => x != undefined && (x.quantity ?? 0) > 0)
+      .filter((e) => e) as StripePriceDetail[]
   }
   async createInvoice() {
     const priceItems = this.getPriceItems()
@@ -227,23 +237,29 @@ class BillingImpl extends JCComponent<Props, State> {
         variables: {
           idempotency: this.state.idempotency,
           priceInfo: {
+            coupon: this.state.coupon,
             prices: priceItems,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
+      console.log({ newInvoice: newInvoice })
       this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
         const currentIndex = this.state.invoiceQueue.length - 1
-        const invoice = await this.state.invoiceQueue[currentIndex]
-
-        if (currentIndex === this.state.invoiceQueue.length - 1) {
-          console.log({ invoice: invoice.data.previewInvoice?.invoice })
-          this.setState({ invoice: invoice.data.previewInvoice?.invoice })
+        try {
+          const invoice = await this.state.invoiceQueue[currentIndex]
+          console.log({ invoice1: invoice })
+          if (currentIndex === this.state.invoiceQueue.length - 1) {
+            console.log({ invoice: invoice.data.previewInvoice?.invoice })
+            this.setState({ invoice: invoice.data.previewInvoice?.invoice })
+          }
+        } catch (e) {
+          console.log({ ERRROR: e })
         }
       })
     } catch (e) {
       Sentry.captureException(e.errors || e)
-      console.log(e)
+      console.log({ error: e })
     }
   }
   selectProduct(product: Product) {
@@ -331,7 +347,10 @@ class BillingImpl extends JCComponent<Props, State> {
             stripe,
             elements,
             this.state.idempotency,
-            priceItems,
+            {
+              prices: priceItems,
+              coupon: this.state.coupon ?? "",
+            },
             this.state.freeDays,
             () => {
               this.setState({ processing: "complete" })
@@ -1155,10 +1174,42 @@ class BillingImpl extends JCComponent<Props, State> {
                         </Text>
                       </View>
                       <Text
-                        accessibilityLiveRegion={"assertive"}
-                        accessibilityRole="alert"
-                        style={{ color: "red", textAlign: "center", marginBottom: 4 }}
+                        style={{
+                          marginHorizontal: 10,
+                          fontFamily: "Graphik-Regular-App",
+                          fontSize: 12,
+                        }}
                       >
+                        Coupon
+                      </Text>
+                      <EditableText
+                        placeholder="Coupon Name"
+                        multiline={false}
+                        testID="billing-coupon"
+                        textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
+                        inputStyle={{
+                          borderWidth: 1,
+                          borderColor: "#dddddd",
+                          marginTop: 5,
+                          marginBottom: 5,
+                          width: "100%",
+                          paddingTop: 5,
+                          paddingRight: 5,
+                          paddingBottom: 5,
+                          paddingLeft: 5,
+                          fontFamily: "Graphik-Regular-App",
+                          fontSize: 10,
+                          lineHeight: 15,
+                        }}
+                        onChange={async (value) => {
+                          this.setState({ coupon: value }, async () => {
+                            await this.createInvoice()
+                          })
+                        }}
+                        value={this.state.coupon ?? ""}
+                        isEditable={true}
+                      ></EditableText>
+                      <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
                         {this.state.errorMsg}
                       </Text>
                       <View style={{ marginHorizontal: 10 }}>

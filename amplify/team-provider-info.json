@@ -57,7 +57,9 @@
         "jcmobileStripCreateCustomer": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
-          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
+          "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
+          "s3Key": "amplify-builds/jcmobileStripCreateCustomer-6e563963784945734276-build.zip"
         },
         "jcmobileStripListInvoices": {
           "userPoolId": "us-east-1_fe30GuOOt",
@@ -78,7 +80,7 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcProcessMessageAlerts-4a6e31374d776a6e4f4c-build.zip"
+          "s3Key": "amplify-builds/jcProcessMessageAlerts-7161796f773742767351-build.zip"
         },
         "jcmobile": {},
         "jcmobileStripeCreatePaymentIntent": {},
@@ -149,7 +151,9 @@
         "jcmobileStripPreviewInvoice": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
-          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-6c32466851797a515744-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
@@ -159,7 +163,9 @@
         "jcmobileStripCreateSubscription": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
-          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-552f3737632b51676d46-build.zip"
         },
         "jcmobileStripWebhook": {
           "userPoolId": "us-east-1_Bq1YZMmzA",

@@ -86,6 +86,7 @@ exports.handler = async (event) => {
     const idempotency = event.arguments.idempotency
     const prices = event.arguments.priceInfo.prices
     console.log({ prices: prices })
+    const code = event.arguments.priceInfo.coupon
     const userID = event.identity.username
     if (stripeCustomerID == null) {
       const userInfo = await getUser(userID)
@@ -97,16 +98,37 @@ exports.handler = async (event) => {
     // TODO determine if we have a user created in table (User/stripeCustomerID)
     var invoice
     if (stripeCustomerID != null) {
-      invoice = await stripe.invoices.retrieveUpcoming({
+      var promotionCodes = ""
+      if (code != "")
+        promotionCodes = await stripe.promotionCodes.list({
+          active: true,
+          code: code,
+          limit: 3,
+        })
+      console.log({ promotionCodes: promotionCodes })
+      var promotionCode = ""
+      if (
+        promotionCodes != "" &&
+        promotionCodes &&
+        promotionCodes.data &&
+        promotionCodes.data.length > 0
+      )
+        var promotionCode = promotionCodes.data[0].id
+      console.log({ promotionCode: promotionCode })
+      const sub = {
         customer: stripeCustomerID,
         subscription_items: prices,
         expand: ["lines"],
-      })
-    } else
-      return {
-        statusCode: 400,
-        invoice: invoice,
       }
+      if (promotionCode != "") sub["promotion_code"] = promotionCode
+      try {
+        invoice = await stripe.invoices.retrieveUpcoming(sub)
+      } catch (error) {
+        return { statusCode: "402", error: { message: error.message } }
+      }
+    } else {
+      return { statusCode: "402", error: { message: "Problem Creating User" } }
+    }
     const response = {
       statusCode: 200,
       invoice: invoice,
@@ -114,5 +136,6 @@ exports.handler = async (event) => {
     return response
   } catch (e) {
     console.log({ "Login Error": e })
+    return { statusCode: "402", error: { message: e.message } }
   }
 }
