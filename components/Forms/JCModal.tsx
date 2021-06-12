@@ -31,6 +31,7 @@ export default class JCModal extends JCComponent<Props> {
   renderModal(): React.ReactNode {
     return this.props.visible ? (
       <Modal
+        accessibilityViewIsModal
         animationType="slide"
         transparent={true}
         presentationStyle="pageSheet"
@@ -74,6 +75,7 @@ export default class JCModal extends JCComponent<Props> {
             >
               <Text style={this.styles.style.adminCRMModalHeading}>{this.props.title}</Text>
               <JCButton
+                accessibilityLabel="Close Modal"
                 buttonType={ButtonTypes.ResourceModal}
                 onPress={() => {
                   this.props.onHide()

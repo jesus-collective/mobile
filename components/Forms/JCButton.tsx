@@ -66,6 +66,8 @@ export interface Props {
   children: any
   buttonType: ButtonTypes
   testID?: any
+  accessibilityLabel?: string
+  accessibilityHint?: string
 }
 class JCButton extends JCComponent<Props> {
   static defaultProps = {
@@ -99,6 +101,11 @@ class JCButton extends JCComponent<Props> {
   render(): React.ReactNode {
     return (
       <Button
+        accessible
+        accessibilityState={{ disabled: !this.props.enabled || this.state.busy }}
+        accessibilityLabel={this.props.accessibilityLabel}
+        accessibilityHint={this.props.accessibilityHint}
+        accessibilityRole="button"
         disabled={!this.props.enabled || this.state.busy}
         testID={this.props.testID + "-" + this.props.enabled}
         style={[

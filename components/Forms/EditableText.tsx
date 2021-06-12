@@ -14,6 +14,7 @@ interface Props {
   testID?: string
   ellipsizeMode?: "head" | "middle" | "tail" | "clip"
   numberOfLines?: number
+  accessibilityLabel?: string
 }
 
 interface State extends JCState {
@@ -55,6 +56,7 @@ export default class EditableText extends JCComponent<Props, State> {
     if (this.state.isEditable)
       return (
         <TextInput
+          accessibilityLabel={this.props.accessibilityLabel}
           testID={this.props.testID}
           onBlur={(val: any) => {
             this.onChanged(val.target.value)

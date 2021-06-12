@@ -215,6 +215,9 @@ class MySignUpImpl extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
+                      accessibilityLabel="Go back"
+                      accessibilityHint="Navigate to previous page"
+                      accessibilityRole="button"
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signIn", {
                           joinedProduct: this.state.joinedProduct,
@@ -240,7 +243,9 @@ class MySignUpImpl extends React.Component<Props, State> {
                   {this.state.joinedAs ? (
                     this.state.joinedAs === "individual" ? (
                       <View style={this.styles.style.authView3}>
-                        <Text style={this.styles.style.mySignUpText}>Create your account</Text>
+                        <Text accessibilityRole="header" style={this.styles.style.mySignUpText}>
+                          Create your account
+                        </Text>
                         <View style={this.styles.style.mySignUpInputFieldscontainer}>
                           <Text
                             style={{
@@ -252,6 +257,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             *
                           </Text>
                           <TextInput
+                            accessibilityLabel="First Name"
                             textContentType="name"
                             placeholder="First Name"
                             value={this.state.user.first}
@@ -333,6 +339,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                         </View>
                         <View style={this.styles.style.mySignUpPhoneContainer}>
                           <Picker
+                            accessibilityLabel="Select country code"
                             selectedValue={this.state.user.code}
                             onValueChange={(val) => this.handleChange("code", val)}
                             style={{
@@ -354,6 +361,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             *
                           </Text>
                           <TextInput
+                            accessibilityLabel="Telephone number"
                             autoCompleteType="tel"
                             textContentType="telephoneNumber"
                             onKeyPress={(e) => this.handleEnter(userActions, e)}
@@ -381,13 +389,21 @@ class MySignUpImpl extends React.Component<Props, State> {
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (
-                                <ActivityIndicator animating color="#333333" />
+                                <ActivityIndicator
+                                  accessibilityRole="alert"
+                                  accessibilityLabel="Loading"
+                                  animating
+                                  color="#333333"
+                                />
                               ) : (
                                 "Continue"
                               )}
                             </JCButton>
                           </View>
                           <TouchableOpacity
+                            accessibilityRole="button"
+                            accessibilityLabel="Confirm your account"
+                            accessibilityHint="For users already registered"
                             style={this.styles.style.mySignUpConfirmCode}
                             onPress={async () =>
                               await this.changeAuthState(userActions, "confirmSignUp", {
@@ -410,6 +426,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                         </View>
 
                         <Text
+                          accessibilityLiveRegion={"assertive"}
+                          accessibilityRole="alert"
                           style={{
                             flex: 1,
                             alignSelf: "center",
@@ -421,16 +439,21 @@ class MySignUpImpl extends React.Component<Props, State> {
                           }}
                         >
                           {this.state.authError ? (
-                            <Entypo name="warning" size={18} color="#F0493E" />
-                          ) : null}{" "}
-                          {" " + this.state.authError}
+                            <Entypo
+                              style={{ marginRight: 4 }}
+                              name="warning"
+                              size={18}
+                              color="#F0493E"
+                            />
+                          ) : null}
+                          {this.state.authError}
                         </Text>
 
                         <Copyright />
                       </View>
                     ) : (
                       <View style={this.styles.style.authView3}>
-                        <Text style={this.styles.style.mySignUpText}>
+                        <Text accessibilityRole="header" style={this.styles.style.mySignUpText}>
                           Set up the account for the administrator of your organization first
                         </Text>
                         <View style={this.styles.style.mySignUpInputFieldscontainer}>
@@ -541,6 +564,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                         <View style={this.styles.style.mySignUpPhoneContainer}>
                           <Picker
                             selectedValue={this.state.user.code}
+                            accessibilityLabel="Select country code"
+                            accessibilityRole="combobox"
                             onValueChange={(val) => this.handleChange("code", val)}
                             style={{
                               marginRight: 5,
@@ -581,13 +606,21 @@ class MySignUpImpl extends React.Component<Props, State> {
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (
-                                <ActivityIndicator animating color="#333333" />
+                                <ActivityIndicator
+                                  accessibilityRole="alert"
+                                  accessibilityLabel="Loading"
+                                  animating
+                                  color="#333333"
+                                />
                               ) : (
                                 "Continue"
                               )}
                             </JCButton>
                           </View>
                           <TouchableOpacity
+                            accessibilityRole="button"
+                            accessibilityLabel="Verify your account"
+                            accessibilityHint="For already registered users"
                             onPress={async () =>
                               await this.changeAuthState(userActions, "confirmSignUp", {
                                 joinedProduct: this.state.joinedProduct,
@@ -612,6 +645,9 @@ class MySignUpImpl extends React.Component<Props, State> {
                           </TouchableOpacity>
                         </View>
                         <Text
+                          accessibilityLiveRegion={"assertive"}
+                          accessibilityRole="alert"
+                          accessible
                           style={{
                             alignSelf: "center",
                             alignItems: "center",
@@ -622,8 +658,13 @@ class MySignUpImpl extends React.Component<Props, State> {
                           }}
                         >
                           {this.state.authError ? (
-                            <Entypo name="warning" size={18} color="#F0493E" />
-                          ) : null}{" "}
+                            <Entypo
+                              style={{ marginRight: 4 }}
+                              name="warning"
+                              size={18}
+                              color="#F0493E"
+                            />
+                          ) : null}
                           {this.state.authError}
                         </Text>
                         <Copyright />
@@ -631,11 +672,12 @@ class MySignUpImpl extends React.Component<Props, State> {
                     )
                   ) : (
                     <View style={this.styles.style.authView3}>
-                      <Text style={this.styles.style.mySignUpText}>
+                      <Text accessibilityRole="header" style={this.styles.style.mySignUpText}>
                         Welcome. What type of account would you like to create?
                       </Text>
                       <View style={this.styles.style.mySignUpButton}>
                         <JCButton
+                          accessibilityLabel="Register as an individual"
                           buttonType={ButtonTypes.SolidSignIn2}
                           onPress={() => this.setState({ joinedAs: "individual" })}
                         >
@@ -643,6 +685,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                         </JCButton>
                         <Text style={this.styles.style.mySignUpOr}>{/* or */}</Text>
                         <JCButton
+                          accessibilityLabel="Register as an organization"
                           buttonType={ButtonTypes.SolidSignIn2}
                           onPress={() => this.setState({ joinedAs: "organization" })}
                         >

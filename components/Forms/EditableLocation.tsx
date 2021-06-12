@@ -71,6 +71,7 @@ export default class EditableLocation extends JCComponent<Props, State> {
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div>
               <input
+                aria-label="Search places"
                 style={{
                   width: 110,
                   paddingTop: 7,
