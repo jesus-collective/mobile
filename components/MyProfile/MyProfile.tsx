@@ -517,14 +517,18 @@ class MyProfileImpl extends JCComponent<Props, State> {
       deleteUser
         .then((c) => {
           console.log(c)
-          const delStat = user.deleteUser()
+          const delStat = user.deleteUser(() => {
+            null
+          })
           console.log(delStat)
           this.props.navigation.push("", null)
           // return delStat
         })
         .catch((e) => {
           console.log(e)
-          const delStat = user.deleteUser()
+          const delStat = user.deleteUser(() => {
+            null
+          })
           console.log(delStat)
           this.props.navigation.push("", null)
           //        this.props.navigation.navigate("/")

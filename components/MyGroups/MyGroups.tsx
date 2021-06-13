@@ -531,7 +531,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     else if (this.isCourseAdmin(userActions)) return false
     else if (this.canCoursePay(id)) return false
     else if (this.isCoursePaid(id)) return true
-    else if (this.canCourseApply(id)) return false
+    else if (this.canCourseApply()) return false
     else return false
   }
   openSingle(userActions: UserActions, id: string): void {

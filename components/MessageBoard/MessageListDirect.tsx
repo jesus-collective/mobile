@@ -86,7 +86,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
           fetchingData: false,
         },
         () => {
-          this.setInitialData(this.props)
+          this.setInitialData()
         }
       )
     }

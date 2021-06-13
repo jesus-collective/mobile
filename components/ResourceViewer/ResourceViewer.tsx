@@ -1147,18 +1147,20 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(e)
     }
   }
-  updateEpisodesOrder = (resourceIndex: number, seriesIndex: number): void => {
+  /*  updateEpisodesOrder = (resourceIndex: number, seriesIndex: number): void => {
     try {
       const series = this.getSeries(resourceIndex, seriesIndex)
       series?.episodes?.items?.forEach((item: UpdateResourceEpisodeInput | null, index: number) => {
         // item.epi = index.toString()
+        const z = { ...item }
+        z.order
         this.updateEpisode(resourceIndex, seriesIndex, index, "order", index.toString())
       })
     } catch (e) {
       Sentry.captureException(e.errors || e)
       console.log(e)
     }
-  }
+  }*/
 
   updateEpisode = async (
     resourceIndex: number,
