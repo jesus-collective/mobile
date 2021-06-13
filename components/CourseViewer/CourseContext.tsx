@@ -1,11 +1,11 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { JCState } from "components/JCComponent/JCComponent"
 import { Moment } from "moment"
 import * as React from "react"
+import { JCState } from "../../components/JCComponent/JCComponent"
 import { GetGroupQuery, SearchUsersQuery } from "../../src/API"
 import { GetCourseInfoQuery } from "../../src/API-courses"
 
-type CourseInfo = NonNullable<GetCourseInfoQuery>["getCourseInfo"]
+export type CourseInfo = NonNullable<GetCourseInfoQuery>["getCourseInfo"]
 
 export type CourseWeek = NonNullable<
   NonNullable<NonNullable<CourseInfo>["courseWeeks"]>["items"]
@@ -94,7 +94,7 @@ export interface CourseActions {
   setActiveMessageBoard: (messageBoard: string) => void
   setActiveCourseActivity: (courseActivity: string) => void
   myCourseGroups: () => { all: any[]; cohort: any[]; completeTriad: any[] }
-  getAssignmentList: () => any[] | undefined
+  getAssignmentList: () => (CourseLesson | null | undefined)[] | null | undefined
   getLessonById: (id: string) => CourseLesson | undefined
   myCourseDates: () => { markedDates: MarkedDates; items: AgendaItems }
   myCourseTodo: () => CourseToDo[]

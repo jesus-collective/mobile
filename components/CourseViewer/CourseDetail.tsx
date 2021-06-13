@@ -165,7 +165,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             >
               <Picker.Item label="Pick an assignment to Review" />
               {actions.getAssignmentList()?.map((item) => {
-                if (item) return <Picker.Item key={item.id} label={item.name} value={item.id} />
+                if (item)
+                  return <Picker.Item key={item.id} label={item.name ?? ""} value={item.id} />
               })}
             </Picker>
             <EditableText

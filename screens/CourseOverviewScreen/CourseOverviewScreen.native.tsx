@@ -21,10 +21,20 @@ import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
+  CourseTriadUserByUserQuery,
   CreateCourseInfoInput,
+  CreateCourseInfoMutation,
   CreateGroupInput,
+  CreateGroupMemberMutation,
+  CreateGroupMutation,
+  DeleteGroupMemberMutation,
+  DeleteGroupMutation,
+  GetCourseInfoQuery,
   GetGroupQuery,
+  GetPaymentQuery,
   GetUserQuery,
+  GroupMemberByUserQuery,
+  UpdateGroupMutation,
   UserGroupType,
 } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
@@ -211,33 +221,33 @@ export default class CourseScreen extends JCComponent<Props, State> {
           },
 
           () => {
-            const getCourseInfo: any = API.graphql({
+            const getCourseInfo = API.graphql({
               query: customQueries.getCourseInfoForOverview,
               variables: { id: props.route.params.id },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
+            }) as Promise<GraphQLResult<GetCourseInfoQuery>>
             getCourseInfo
-              .then((json: any) => {
+              .then((json) => {
                 this.setState({
                   canGotoActiveCourse: true,
                   courseData: json.data.getCourseInfo,
                 })
               })
-              .catch((e: any) => {
+              .catch((e) => {
                 this.setState({
                   canGotoActiveCourse: true,
                   courseData: e.data.getCourseInfo,
                 })
               })
-            const groupMemberByUser: any = API.graphql({
+            const groupMemberByUser = API.graphql({
               query: queries.groupMemberByUser,
               variables: {
                 userID: this.state.currentUser,
                 groupID: { eq: this.state.data.id },
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
-            groupMemberByUser.then((json: any) => {
+            }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+            groupMemberByUser.then((json) => {
               console.log({ groupMemberByUser: json })
               if (json.data.groupMemberByUser.items.length > 0)
                 this.setState({
@@ -310,17 +320,17 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   createNew(): void {
     if (this.validate()) {
-      const createGroup: any = API.graphql({
+      const createGroup = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      const createCourseInfo: any = API.graphql({
+      }) as Promise<GraphQLResult<CreateGroupMutation>>
+      const createCourseInfo = API.graphql({
         query: mutations.createCourseInfo,
         variables: { input: this.state.courseData },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      createCourseInfo.then((json2: any) => {
+      }) as Promise<GraphQLResult<CreateCourseInfoMutation>>
+      createCourseInfo.then((json2) => {
         console.log({ "Success mutations.createCourseInfo": json2 })
         createGroup
           .then((json: any) => {
@@ -339,7 +349,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
             )
             console.log({ "Success mutations.createGroup": json })
           })
-          .catch((err: any) => {
+          .catch((err) => {
             console.log({ "Error mutations.createGroup": err })
           })
       })
@@ -363,16 +373,16 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   save(): void {
     if (this.validate()) {
-      const updateGroup: any = API.graphql({
+      const updateGroup = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<UpdateGroupMutation>>
       updateGroup
-        .then((json: any) => {
+        .then((json) => {
           console.log({ "Success mutations.updateGroup": json })
         })
-        .catch((err: any) => {
+        .catch((err) => {
           console.log({ "Error mutations.updateGroup": err })
         })
     }
@@ -384,29 +394,29 @@ export default class CourseScreen extends JCComponent<Props, State> {
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name },
     })
-    const groupMemberByUser: any = API.graphql({
+    const groupMemberByUser = API.graphql({
       query: queries.groupMemberByUser,
       variables: {
         userID: this.state.currentUser,
         groupID: { eq: this.state.data.id },
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
     groupMemberByUser
-      .then((json: any) => {
+      .then((json) => {
         console.log({ "Success queries.groupMemberByUser": json })
 
         json.data.groupMemberByUser.items.map((item) => {
-          const deleteGroupMember: any = API.graphql({
+          const deleteGroupMember = API.graphql({
             query: mutations.deleteGroupMember,
             variables: { input: { id: item.id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
           deleteGroupMember
-            .then((json: any) => {
+            .then((json) => {
               console.log({ "Success mutations.deleteGroupMember": json })
             })
-            .catch((err: any) => {
+            .catch((err) => {
               console.log({ "Error mutations.deleteGroupMember": err })
             })
         })
@@ -431,18 +441,18 @@ export default class CourseScreen extends JCComponent<Props, State> {
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name },
     })
-    const createGroupMember: any = API.graphql({
+    const createGroupMember = API.graphql({
       query: mutations.createGroupMember,
       variables: {
         input: { groupID: this.state.data.id, userID: this.state.currentUser },
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as Promise<GraphQLResult<CreateGroupMemberMutation>>
     createGroupMember
-      .then((json: any) => {
+      .then((json) => {
         console.log({ "Success mutations.createGroupMember": json })
       })
-      .catch((err: any) => {
+      .catch((err) => {
         console.log({ "Error mutations.createGroupMember": err })
       })
 
@@ -461,17 +471,17 @@ export default class CourseScreen extends JCComponent<Props, State> {
     })
   }
   delete(): void {
-    const deleteGroup: any = API.graphql({
+    const deleteGroup = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as Promise<GraphQLResult<DeleteGroupMutation>>
     deleteGroup
-      .then((json: any) => {
+      .then((json) => {
         console.log({ "Success mutations.deleteGroup": json })
         this.props.navigation.push("HomeScreen")
       })
-      .catch((err: any) => {
+      .catch((err) => {
         console.log({ "Error mutations.deleteGroup": err })
       })
   }
@@ -512,40 +522,40 @@ export default class CourseScreen extends JCComponent<Props, State> {
     return this.state.isEditable
   }
   async setCanPay(): Promise<void> {
-    const courseTriadUserByUser: any = API.graphql({
+    const courseTriadUserByUser = API.graphql({
       query: queries.courseTriadUserByUser,
       variables: { userID: this.state.currentUser },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as Promise<GraphQLResult<CourseTriadUserByUserQuery>>
     courseTriadUserByUser
-      .then((json: any) => {
+      .then((json) => {
         console.log(json)
         const results = json.data.courseTriadUserByUser.items
-          .map((item: any) => {
+          .map((item) => {
             if (this.state.data.id == item.triad.courseInfoID) return true
             else return false
           })
-          .filter((item: any) => item == true)
+          .filter((item) => item == true)
         if (results.length > 0) this.setState({ canPay: true })
         else this.setState({ canPay: false })
       })
-      .catch((err: any) => {
+      .catch((err) => {
         console.log({ "Error query.getPayment": err })
       })
   }
   async setIsPaid(): Promise<void> {
-    const getPayment: any = API.graphql({
+    const getPayment = API.graphql({
       query: queries.getPayment,
       variables: { id: this.state.data.id + "-" + this.state.currentUser },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as Promise<GraphQLResult<GetPaymentQuery>>
     getPayment
-      .then((json: any) => {
+      .then((json) => {
         console.log(json)
         if (json.data.getPayment != null) this.setState({ isPaid: true })
         else this.setState({ isPaid: false })
       })
-      .catch((err: any) => {
+      .catch((err) => {
         console.log({ "Error query.getPayment": err })
       })
   }

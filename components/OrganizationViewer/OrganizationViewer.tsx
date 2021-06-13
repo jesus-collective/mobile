@@ -6,17 +6,21 @@ import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
-import { JCCognitoUser } from "src/types"
 import Sentry from "../../components/Sentry"
 import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
+  CreateOrganizationMemberMutation,
+  CreateOrganizationMutation,
+  DeleteOrganizationMutation,
   GetOrganizationQuery,
+  UpdateOrganizationMutation,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
+import { JCCognitoUser } from "../../src/types"
 import EditableLocation from "../Forms/EditableLocation"
 import EditableText from "../Forms/EditableText"
 import EditableUsers from "../Forms/EditableUsers"
@@ -189,11 +193,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
           parentOrganizationId: id,
           joined: moment().format(),
         }
-        const createOrg: any = await API.graphql({
+        const createOrg = (await API.graphql({
           query: mutations.createOrganization,
           variables: { input: orgInput },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<CreateOrganizationMutation>
 
         const orgMember: CreateOrganizationMemberInput = {
           userRole: "superAdmin",
@@ -202,13 +206,13 @@ class OrganizationImpl extends JCComponent<Props, State> {
         }
 
         try {
-          const createOrgMember: any = await API.graphql({
+          const createOrgMember = (await API.graphql({
             query: mutations.createOrganizationMember,
             variables: {
               input: orgMember,
             },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<CreateOrganizationMemberMutation>
           console.log({ createOrgMember: createOrgMember })
         } catch (e) {
           console.log({ error: e })
@@ -392,11 +396,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
     }
 
     try {
-      const addAdmins = await API.graphql(
+      const addAdmins = (await API.graphql(
         graphqlOperation(mutations.updateOrganization, {
           input: { id: this.state.OrganizationDetails.id, admins: newAdmins },
         })
-      )
+      )) as GraphQLResult<UpdateOrganizationMutation>
       console.log({ success: addAdmins })
     } catch (err) {
       Sentry.captureException(err)
@@ -413,13 +417,13 @@ class OrganizationImpl extends JCComponent<Props, State> {
         organizationId: this.state.OrganizationDetails.id,
       }
       try {
-        const createOrgMember: any = await API.graphql({
+        const createOrgMember = (await API.graphql({
           query: mutations.createOrganizationMember,
           variables: {
             input: orgMember,
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<CreateOrganizationMemberMutation>
         console.log({ createOrgMember: createOrgMember })
       } catch (e) {
         console.error(e)
@@ -439,11 +443,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
       (user) => !toRemove.includes(user)
     )
     try {
-      const addAdmins = await API.graphql(
+      const addAdmins = (await API.graphql(
         graphqlOperation(mutations.updateOrganization, {
           input: { id: this.state.OrganizationDetails.id, admins: remainingAdmins },
         })
-      )
+      )) as GraphQLResult<UpdateOrganizationMutation>
       console.log({ success: addAdmins })
     } catch (err) {
       Sentry.captureException(err)
@@ -474,19 +478,19 @@ class OrganizationImpl extends JCComponent<Props, State> {
   deleteOrg(): void {
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       if (this.state.OrganizationDetails.superAdmin === user["username"]) {
-        const deleteOrganization: any = API.graphql({
+        const deleteOrganization = API.graphql({
           query: mutations.deleteOrganization,
           variables: {
             input: { id: this.state.OrganizationDetails.id },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        }) as Promise<GraphQLResult<DeleteOrganizationMutation>>
         deleteOrganization
-          .then((c: any) => {
+          .then((c) => {
             console.log(c)
             this.props.navigation.navigate("HomeScreen")
           })
-          .catch((e: any) => {
+          .catch((e) => {
             console.log(e)
             this.props.navigation.navigate("HomeScreen")
           })

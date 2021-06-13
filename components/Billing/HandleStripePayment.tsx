@@ -191,16 +191,18 @@ export default class HandleStripePayment {
     handleError: (error: any) => void
   ): Promise<void> {
     return (
-      (API.graphql({
-        query: mutations.createSubscription,
-        variables: {
-          paymentMethodId: paymentMethodId,
-          priceInfo: priceInput,
-          idempotency: idempotency,
-          freeDays: freeDays,
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<CreateSubscriptionMutation>>)
+      (
+        API.graphql({
+          query: mutations.createSubscription,
+          variables: {
+            paymentMethodId: paymentMethodId,
+            priceInfo: priceInput,
+            idempotency: idempotency,
+            freeDays: freeDays,
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        }) as Promise<GraphQLResult<CreateSubscriptionMutation>>
+      )
         .then((response) => {
           return response
         })

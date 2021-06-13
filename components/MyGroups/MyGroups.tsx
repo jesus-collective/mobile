@@ -8,13 +8,21 @@ import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider }
 import * as React from "react"
 import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
-import { ListOrganizationsQuery, ListUsersQuery } from "src/API"
-import { JCCognitoUser } from "src/types"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import {
+  CourseTriadUserByUserQuery,
+  CreateGroupMemberMutation,
+  DeleteGroupMemberMutation,
+  GetGroupQuery,
+  GetPaymentQuery,
+  GroupMemberByUserQuery,
+  ListOrganizationsQuery,
+  ListUsersQuery,
+} from "../../src/API"
 import {
   GroupByTypeByTimeQuery,
   GroupByTypeByTimeQueryVariables,
@@ -25,6 +33,7 @@ import { constants } from "../../src/constants"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
+import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
@@ -554,13 +563,13 @@ export default class MyGroups extends JCComponent<Props, State> {
     }
   }
   async setCanPay(): Promise<void> {
-    const courseTriadUserByUser: any = API.graphql({
+    const courseTriadUserByUser = API.graphql({
       query: queries.courseTriadUserByUser,
       variables: { userID: this.state.currentUser },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as Promise<GraphQLResult<CourseTriadUserByUserQuery>>
     courseTriadUserByUser
-      .then((json: any) => {
+      .then((json) => {
         console.log(json)
         json.data.courseTriadUserByUser.items.map((item: any) => {
           console.log(item.triad.courseInfoID)
@@ -569,17 +578,17 @@ export default class MyGroups extends JCComponent<Props, State> {
           })
         })
       })
-      .catch((err: any) => {
+      .catch((err) => {
         console.log({ "Error query.getPayment": err })
       })
   }
   async setIsPaid(data: any): Promise<void> {
     data.forEach((item: any) => {
-      const getPayment: any = API.graphql({
+      const getPayment = API.graphql({
         query: queries.getPayment,
         variables: { id: item.id + "-" + this.state.currentUser },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<GetPaymentQuery>>
       getPayment
         .then((json: any) => {
           console.log(json)
@@ -595,20 +604,20 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   async setCanLeave(data: any): Promise<void> {
     data.forEach((item: any) => {
-      const groupMemberByUser: any = API.graphql({
+      const groupMemberByUser = API.graphql({
         query: queries.groupMemberByUser,
         variables: { userID: this.state.currentUser, groupID: { eq: item.id } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
       groupMemberByUser
-        .then((json: any) => {
+        .then((json) => {
           if (json.data.groupMemberByUser.items.length > 0) {
             const canLeave = { ...this.state.canLeave }
             canLeave[item.id] = true
             this.setState({ canLeave })
           }
         })
-        .catch((err: any) => {
+        .catch((err) => {
           console.log({ "Error query.groupMemberByUser": err })
         })
     })
@@ -616,20 +625,20 @@ export default class MyGroups extends JCComponent<Props, State> {
 
   async setIsOwner(data: any): Promise<void> {
     data.forEach((item: any) => {
-      const getGroup: any = API.graphql({
+      const getGroup = API.graphql({
         query: customQueries.getGroupForOwner,
         variables: { id: item.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<GetGroupQuery>>
       getGroup
-        .then((json: any) => {
+        .then((json) => {
           if (json.data.getGroup.owner === this.state.currentUser) {
             const isOwner = { ...this.state.isOwner }
             isOwner[item.id] = true
             this.setState({ isOwner })
           }
         })
-        .catch((err: any) => {
+        .catch((err) => {
           console.log({ "Error query.getGroup": err })
         })
     })
@@ -642,13 +651,13 @@ export default class MyGroups extends JCComponent<Props, State> {
       attributes: { id: group.id, name: group.name },
     })
     try {
-      const createGroupMember: any = await API.graphql({
+      const createGroupMember = (await API.graphql({
         query: mutations.createGroupMember,
         variables: {
           input: { groupID: group.id, userID: this.state.currentUser },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<CreateGroupMemberMutation>
       console.log({ "Success mutations.createGroupMember": createGroupMember })
       const canLeave = { ...this.state.canLeave }
       canLeave[group.id] = true
@@ -676,20 +685,20 @@ export default class MyGroups extends JCComponent<Props, State> {
         // Attribute values must be strings
         attributes: { id: group.id, name: group.name },
       })
-      const groupMemberByUser: any = await API.graphql({
+      const groupMemberByUser = (await API.graphql({
         query: queries.groupMemberByUser,
         variables: { userID: this.state.currentUser, groupID: { eq: group.id } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<GroupMemberByUserQuery>
       console.log({ "Success queries.groupMemberByUser": groupMemberByUser })
       const groupMember = groupMemberByUser?.data?.groupMemberByUser?.items
       for (let i = 0; i < groupMember?.length; i++) {
         try {
-          const deleteGroupMember: any = await API.graphql({
+          const deleteGroupMember = (await API.graphql({
             query: mutations.deleteGroupMember,
             variables: { input: { id: groupMember[i].id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<DeleteGroupMemberMutation>
           console.log({ "Success mutations.deleteGroupMember": deleteGroupMember })
           const canLeave = { ...this.state.canLeave }
           canLeave[group.id] = false

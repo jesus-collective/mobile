@@ -8,15 +8,22 @@ import { Container, Drawer, StyleProvider } from "native-base"
 import React from "react"
 import { Dimensions } from "react-native"
 import {
+  CreateCourseBackOfficeStaffMutation,
+  CreateCourseInstructorsMutation,
   CreateCourseLessonInput,
   CreateCourseLessonMutation,
+  CreateCourseTriadCoachesMutation,
   CreateCourseTriadsInput,
   CreateCourseTriadsMutation,
+  CreateCourseTriadUsersMutation,
   CreateCourseWeekInput,
   CreateCourseWeekMutation,
+  DeleteCourseBackOfficeStaffMutation,
+  DeleteCourseInstructorsMutation,
   DeleteCourseLessonMutation,
   DeleteCourseTriadCoachesMutation,
   DeleteCourseTriadsMutation,
+  DeleteCourseTriadUsersMutation,
   DeleteCourseWeekMutation,
   GetGroupQuery,
   SearchUsersQuery,
@@ -33,6 +40,7 @@ import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {
   AgendaItems,
   CourseContext,
+  CourseInfo,
   CourseLesson,
   CourseState,
   CourseToDo,
@@ -54,7 +62,17 @@ interface Props {
   navigation: any
   route: any
 }
-
+type CourseUser = NonNullable<
+  NonNullable<
+    NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<NonNullable<NonNullable<CourseInfo>["triads"]>["items"]>[0]
+        >["users"]
+      >["items"]
+    >[0]
+  >["user"]
+>
 export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState> {
   constructor(props: Props) {
     super(props)
@@ -249,7 +267,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Adding: item })
 
-        createCourseBackOfficeStaff = await API.graphql({
+        createCourseBackOfficeStaff = (await API.graphql({
           query: mutations.createCourseBackOfficeStaff,
           variables: {
             input: {
@@ -258,7 +276,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<CreateCourseBackOfficeStaffMutation>
         console.log(createCourseBackOfficeStaff)
         const temp = this.state.courseData
         temp?.backOfficeStaff?.items?.push(
@@ -281,7 +299,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Deleting: item })
 
-        const deleteCourseBackOfficeStaff: any = await API.graphql({
+        const deleteCourseBackOfficeStaff = (await API.graphql({
           query: mutations.deleteCourseBackOfficeStaff,
           variables: {
             input: {
@@ -289,7 +307,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<DeleteCourseBackOfficeStaffMutation>
         console.log(deleteCourseBackOfficeStaff)
         const temp = this.state.courseData
         if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
@@ -329,7 +347,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Adding: item })
 
-        createCourseInstructors = await API.graphql({
+        createCourseInstructors = (await API.graphql({
           query: mutations.createCourseInstructors,
           variables: {
             input: {
@@ -338,7 +356,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<CreateCourseInstructorsMutation>
         console.log(createCourseInstructors)
         const temp = this.state.courseData
         if (temp && temp.instructors && temp.instructors.items) {
@@ -361,7 +379,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Deleting: item })
 
-        const deleteCourseInstructors: any = await API.graphql({
+        const deleteCourseInstructors = (await API.graphql({
           query: mutations.deleteCourseInstructors,
           variables: {
             input: {
@@ -369,7 +387,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<DeleteCourseInstructorsMutation>
         console.log(deleteCourseInstructors)
         const temp = this.state.courseData
         if (temp && temp.instructors && temp.instructors.items) {
@@ -409,7 +427,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         try {
           console.log({ Adding: item })
 
-          createCourseTriadUsers = await API.graphql({
+          createCourseTriadUsers = (await API.graphql({
             query: mutations.createCourseTriadUsers,
             variables: {
               input: {
@@ -418,7 +436,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               },
             },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<CreateCourseTriadUsersMutation>
           console.log(createCourseTriadUsers)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {
@@ -445,7 +463,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         try {
           console.log({ Deleting: item })
 
-          const createCourseTriadUsers: any = await API.graphql({
+          const createCourseTriadUsers = (await API.graphql({
             query: mutations.deleteCourseTriadUsers,
             variables: {
               input: {
@@ -453,7 +471,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               },
             },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<DeleteCourseTriadUsersMutation>
           console.log(createCourseTriadUsers)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items && temp.triads.items[index]) {
@@ -477,7 +495,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })
     }
   }
-  removeDuplicates(originalArray, prop): any[] {
+  removeDuplicates(originalArray: CourseUser[], prop: string): any[] {
     const newArray = []
     const lookupObject = {}
 
@@ -490,13 +508,24 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
     return newArray
   }
-
-  myCourseGroups = (): { all: any[]; cohort: any[]; completeTriad: any[] } => {
-    const z: [{ cohort; completeTriad }] = this.state.courseData?.triads?.items?.map((item) => {
-      let triadTemp = []
-      let coachTemp = []
-      let cohortTemp = []
-      let completeTriad = null
+  myCourseGroups = (): { all: CourseUser[]; cohort: CourseUser[]; completeTriad: CourseUser[] } => {
+    const z:
+      | [
+          {
+            cohort: (CourseUser | null | undefined)[] | undefined | null
+            completeTriad: (CourseUser | null | undefined)[] | undefined | null
+          }
+        ]
+      | undefined
+      | null = this.state.courseData?.triads?.items?.map((item) => {
+      let triadTemp: (CourseUser | null | undefined)[] | undefined | null = []
+      let coachTemp: (CourseUser | null | undefined)[] | undefined | null = []
+      let cohortTemp: (CourseUser | null | undefined)[] | undefined | null = []
+      let completeTriad: {
+        triad: (CourseUser | null | undefined)[] | undefined | null
+        coach: (CourseUser | null | undefined)[] | undefined | null
+        id: string | undefined
+      } | null = null
       if (
         (item?.users?.items?.filter((user) => user?.userID == this.state.currentUser).length ??
           0 > 0) ||
@@ -510,30 +539,35 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         completeTriad = { triad: triadTemp, coach: coachTemp, id: item?.id }
       } else {
         cohortTemp = item?.users?.items?.map((item) => item?.user)
-        cohortTemp = cohortTemp.concat(item?.coaches?.items?.map((item) => item?.user))
+        cohortTemp = cohortTemp?.concat(item?.coaches?.items?.map((item) => item?.user))
         // cohort.push(item.coaches.items)
       }
       return { completeTriad: completeTriad, cohort: cohortTemp }
     })
-    let fromTriads = this.state.courseData?.triads?.items
-      ?.map((item) => {
-        return [...item?.users?.items, ...item?.coaches?.items]
-      })
-      .flat()
-      .filter((item) => {
-        return item.user != null
-      })
-      .map((item) => {
-        return item.user
-      })
+    let fromTriads: (CourseUser | null | undefined)[] | undefined | null =
+      this.state.courseData?.triads?.items
+        ?.map((item) => {
+          if (item?.users?.items && item?.coaches?.items)
+            return [...item.users.items, ...item.coaches.items]
+          else if (item?.users?.items) return [...item.users.items]
+          else if (item?.coaches?.items) return [...item.coaches.items]
+        })
+        .flat()
+        .filter((item) => {
+          return item?.user != null
+        })
+        .map((item) => {
+          return item?.user
+        })
     if (fromTriads == undefined) fromTriads = []
-    const instructors = this.state.courseData
-      ? this.state.courseData?.instructors?.items?.map((item) => {
+    const instructors: (CourseUser | null | undefined)[] = this.state.courseData?.instructors?.items
+      ? this.state.courseData.instructors.items.map((item) => {
           return item?.user
         })
       : []
-    const backOfficeStaff = this.state.courseData
-      ? this.state.courseData?.backOfficeStaff?.items?.map((item) => {
+    const backOfficeStaff: (CourseUser | null | undefined)[] = this.state.courseData
+      ?.backOfficeStaff?.items
+      ? this.state.courseData.backOfficeStaff.items.map((item) => {
           return item?.user
         })
       : []
@@ -576,7 +610,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         try {
           console.log({ Adding: item })
 
-          const createCourseTriadCoaches: any = await API.graphql({
+          const createCourseTriadCoaches = (await API.graphql({
             query: mutations.createCourseTriadCoaches,
             variables: {
               input: {
@@ -585,7 +619,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               },
             },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<CreateCourseTriadCoachesMutation>
           console.log(createCourseTriadCoaches)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {
@@ -783,7 +817,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
   }
 
-  getAssignmentList = (): CourseLesson => {
+  getAssignmentList = (): (CourseLesson | null | undefined)[] | null | undefined => {
     return Object.values(this.state.courseWeeks)
       .map((week) => {
         return Object.values(week.lessons).map((lesson) => {

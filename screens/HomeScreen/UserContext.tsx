@@ -1,6 +1,6 @@
-import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
-import { AuthStateData } from "src/types"
+import { JCState } from "../../components/JCComponent/JCComponent"
+import { AuthStateData } from "../../src/types"
 
 export interface UserState extends JCState {
   hasCompletedPersonalProfile: ProfileStatus

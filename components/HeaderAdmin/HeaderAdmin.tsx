@@ -4,7 +4,7 @@ import { Auth } from "aws-amplify"
 import { Body, Button, Header } from "native-base"
 import React from "react"
 import { Dimensions, Text } from "react-native"
-import { JCCognitoUser } from "src/types"
+import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
 

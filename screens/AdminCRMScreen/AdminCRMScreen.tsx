@@ -17,10 +17,17 @@ import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
+  CreateCustomerMutation,
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
+  CreateOrganizationMutation,
   CreateUserInput,
+  CreateUserMutation,
+  DeletePaymentMutation,
   GetProductQuery,
+  GroupByTypeQuery,
+  ListProductsQuery,
+  PaymentByUserQuery,
   UserGroupType,
 } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
@@ -93,10 +100,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
   async setInitialData(): Promise<void> {
     this.getUsers(null)
 
-    const listProducts: any = await API.graphql({
+    const listProducts = (await API.graphql({
       query: queries.listProducts,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    })) as GraphQLResult<ListProductsQuery>
     console.log(listProducts)
     this.setState({ productList: listProducts.data.listProducts.items })
   }
@@ -263,11 +270,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
       },
       async () => {
         try {
-          const payments: any = await API.graphql({
+          const payments = (await API.graphql({
             query: queries.paymentByUser,
             variables: { userID: id },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<PaymentByUserQuery>
           console.log(payments)
           this.setState({ paymentsData: payments.data.paymentByUser.items })
         } catch (e: any) {
@@ -288,9 +295,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
     console.log(group)
 
     try {
-      const saveResult = await API.graphql(
+      const saveResult = (await API.graphql(
         graphqlOperation(mutations.deletePayment, { input: { id: group } })
-      )
+      )) as GraphQLResult<DeletePaymentMutation>
       console.log(saveResult)
     } catch (e) {
       console.error(e)
@@ -507,13 +514,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
           }
 
           try {
-            const createUser: any = await API.graphql({
+            const createUser = (await API.graphql({
               query: mutations.createUser,
               variables: {
                 input: inputData,
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
+            })) as GraphQLResult<CreateUserMutation>
 
             userExists = true
             console.log({ createUser: createUser })
@@ -544,13 +551,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
             let orgId = ""
 
             try {
-              const createOrg: any = await API.graphql({
+              const createOrg = (await API.graphql({
                 query: mutations.createOrganization,
                 variables: {
                   input: orgInput,
                 },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })
+              })) as GraphQLResult<CreateOrganizationMutation>
               console.log({ createOrg: createOrg })
               orgId = createOrg.data.createOrganization.id
             } catch (e) {
@@ -565,13 +572,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
             }
 
             try {
-              const createOrgMember: any = await API.graphql({
+              const createOrgMember = (await API.graphql({
                 query: mutations.createOrganizationMember,
                 variables: {
                   input: orgMember,
                 },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })
+              })) as GraphQLResult<CreateOrganizationMutation>
               console.log({ createOrgMember: createOrgMember })
             } catch (e) {
               console.log({ error: e })
@@ -607,7 +614,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
   async createStripeUser(user): Promise<boolean> {
     try {
       console.log(user)
-      const customer: any = await API.graphql({
+      const customer = (await API.graphql({
         query: mutations.createCustomer,
         variables: {
           idempotency: uuidv4(),
@@ -618,7 +625,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           orgName: user?.attributes!["custom:orgName"],
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<CreateCustomerMutation>
       console.log({ customer: customer })
       return true
       //customerId = customer.data.createCustomer.customer.id;
@@ -785,7 +792,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     )
   }
   async updateInviteDataList(nextToken: any): Promise<void> {
-    const listGroup: any = await API.graphql({
+    const listGroup = (await API.graphql({
       query: customQueries.groupByTypeForMyGroups,
       variables: {
         limit: 20,
@@ -793,7 +800,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
         nextToken: nextToken,
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    })) as GraphQLResult<GroupByTypeQuery>
     console.log(listGroup)
     this.setState({ inviteDataList: listGroup.data.groupByType.items })
   }

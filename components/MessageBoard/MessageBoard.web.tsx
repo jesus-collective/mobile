@@ -544,14 +544,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   async sendReply() {
-    const {
-      editorState,
-      attachment,
-      attachmentName,
-      attachmentOwner,
-      replyToId,
-      replyToRoomId,
-    } = this.state
+    const { editorState, attachment, attachmentName, attachmentOwner, replyToId, replyToRoomId } =
+      this.state
     console.log(replyToRoomId)
     if (!editorState.getCurrentContent().hasText() || !replyToId || !replyToRoomId) {
       return

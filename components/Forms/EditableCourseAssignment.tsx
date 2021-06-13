@@ -1,16 +1,20 @@
-import { GraphQLResult } from "@aws-amplify/api"
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import { CourseActions } from "components/CourseViewer/CourseContext"
 import { Container } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity } from "react-native"
-import { JCCognitoUser } from "src/types"
+import { CourseActions } from "../../components/CourseViewer/CourseContext"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { CreateDirectMessageRoomMutation } from "../../src/API"
+import {
+  CreateDirectMessageRoomMutation,
+  CreateDirectMessageUserMutation,
+  ListDirectMessageRoomsQuery,
+} from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
+import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import MessageBoard from "../MessageBoard/MessageBoard"
 
@@ -78,11 +82,11 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
             nextToken: next,
           }
 
-          const json: any = await API.graphql({
+          const json = (await API.graphql({
             query: customQueries.listDirectMessageRooms,
             variables: query,
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<ListDirectMessageRoomsQuery>
           console.log({ MessageInfo: json })
           if (json.data.listDirectMessageRooms.nextToken !== null) {
             this.setState({
@@ -145,7 +149,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
           console.log("createDMUser")
           const userList = this.state.userList
           userList.map((item) => {
-            const createDirectMessageUser2: any = API.graphql({
+            const createDirectMessageUser2 = API.graphql({
               query: mutations.createDirectMessageUser,
               variables: {
                 input: {
@@ -155,12 +159,12 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                 },
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
+            }) as Promise<GraphQLResult<CreateDirectMessageUserMutation>>
             createDirectMessageUser2
-              .then((json2: any) => {
+              .then((json2) => {
                 console.log({ createDirectMessageUser: json2 })
               })
-              .catch((json2: any) => {
+              .catch((json2) => {
                 console.log({ Error: json2 })
               })
           })

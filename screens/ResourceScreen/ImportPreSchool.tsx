@@ -1,9 +1,10 @@
 /* eslint-disable */
-
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import Amplify, { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Button, Text } from "native-base"
 import React from "react"
+import { GetResourceQuery, GetResourceSeriesQuery, UpdateResourceSeriesMutation } from "src/API"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import awsmobile from "../../src/aws-exports"
 import * as mutations from "../../src/graphql/mutations"
@@ -34,8 +35,7 @@ const preschool = {
     "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2018/05/07-Preschool-Praise.png",
   "Good News":
     "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2018/06/07-Good_News.jpg",
-  Know:
-    "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2016/11/Preschool-Series-Nov.png",
+  Know: "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2016/11/Preschool-Series-Nov.png",
   Christmas:
     "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2016/12/Preschool-Series-Dec.png",
   Family:
@@ -50,8 +50,7 @@ const preschool = {
     "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2017/06/Preschool-Series-June.png",
   "What Does Love Look Like?":
     "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2017/07/Preschool-Series-July.png",
-  Live:
-    "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2017/08/Preschool-Series-August.png",
+  Live: "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2017/08/Preschool-Series-August.png",
   Beginnings:
     "http://kidsandyouth.themeetinghouse.com/wp-content/uploads/2017/08/Preschool-Series-Sept2017.png",
   Listen:
@@ -76,13 +75,13 @@ class IndexApp extends JCComponent<Props> {
 
   async getResources() {
     try {
-      const getResource: any = await API.graphql({
+      const getResource = (await API.graphql({
         query: queries.getResource,
         variables: { id: "b89126a4-4df8-4890-aca7-45bf857f03c7" },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      getResource.data.getResource.series.items.forEach((item) => {
-        this.getResourceSeries(item.id)
+      })) as GraphQLResult<GetResourceQuery>
+      getResource.data?.getResource?.series?.items?.forEach((item) => {
+        this.getResourceSeries(item?.id)
       })
     } catch (e) {
       console.error(e)
@@ -91,18 +90,20 @@ class IndexApp extends JCComponent<Props> {
 
   async getResourceSeries(id: string) {
     try {
-      const getResourceSeries: any = await API.graphql({
+      const getResourceSeries = (await API.graphql({
         query: queries.getResourceSeries,
         variables: { id: id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      let temp = getResourceSeries.data.getResourceSeries
-      temp["playlistImage"] = preschool[temp.title]
-      delete temp["episodes"]
-      delete temp["parentResource"]
-      delete temp["createdAt"]
-      delete temp["updatedAt"]
-      this.updateResourceSeries(temp)
+      })) as GraphQLResult<GetResourceSeriesQuery>
+      let temp = getResourceSeries.data?.getResourceSeries
+      if (temp) {
+        temp["playlistImage"] = preschool[temp?.title]
+        delete temp["episodes"]
+        delete temp["parentResource"]
+        delete temp["createdAt"]
+        delete temp["updatedAt"]
+        this.updateResourceSeries(temp)
+      }
     } catch (e) {
       console.error(e)
     }
@@ -110,11 +111,11 @@ class IndexApp extends JCComponent<Props> {
 
   async updateResourceSeries(data: any) {
     try {
-      const updateResourceSeries: any = await API.graphql({
+      const updateResourceSeries = (await API.graphql({
         query: mutations.updateResourceSeries,
         variables: { input: data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<UpdateResourceSeriesMutation>
       console.log(updateResourceSeries)
     } catch (e) {
       console.error(e)

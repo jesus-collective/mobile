@@ -429,12 +429,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
-          let pageItems:
-            | null
-            | undefined
-            | (ResourcePageItemInput | null)[] = resourceActions.getMenuItem(
-            resourceState.currentMenuItem
-          )?.pageItems
+          let pageItems: null | undefined | (ResourcePageItemInput | null)[] =
+            resourceActions.getMenuItem(resourceState.currentMenuItem)?.pageItems
           if (!this.props.isBase) pageItems = this.props.pageItems
           console.log({ pageItems: pageItems })
           return (

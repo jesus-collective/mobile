@@ -1,3 +1,4 @@
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { createStackNavigator } from "@react-navigation/stack"
 import Amplify, { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
@@ -17,9 +18,13 @@ import Sentry from "../../components/Sentry"
 import Validate from "../../components/Validate/Validate"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import {
+  CreateCustomerMutation,
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
+  CreateOrganizationMemberMutation,
+  CreateOrganizationMutation,
   CreateUserInput,
+  CreateUserMutation,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
@@ -154,13 +159,13 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
 
           try {
-            const createUser: any = await API.graphql({
+            const createUser = (await API.graphql({
               query: mutations.createUser,
               variables: {
                 input: inputData,
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
+            })) as GraphQLResult<CreateUserMutation>
 
             userExists = true
             console.log({ createUser: createUser })
@@ -192,13 +197,13 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             let orgId = ""
 
             try {
-              const createOrg: any = await API.graphql({
+              const createOrg = (await API.graphql({
                 query: mutations.createOrganization,
                 variables: {
                   input: orgInput,
                 },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })
+              })) as GraphQLResult<CreateOrganizationMutation>
               console.log({ createOrg: createOrg })
               orgId = createOrg.data.createOrganization.id
             } catch (e) {
@@ -215,13 +220,13 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             }
 
             try {
-              const createOrgMember: any = await API.graphql({
+              const createOrgMember = (await API.graphql({
                 query: mutations.createOrganizationMember,
                 variables: {
                   input: orgMember,
                 },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })
+              })) as GraphQLResult<CreateOrganizationMemberMutation>
               console.log({ createOrgMember: createOrgMember })
             } catch (e) {
               console.log({ error: e })
@@ -253,7 +258,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
-      const customer: any = await API.graphql({
+      const customer = (await API.graphql({
         query: mutations.createCustomer,
         variables: {
           idempotency: this.state.idempotency,
@@ -265,7 +270,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           orgName: user?.attributes!["custom:orgName"],
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<CreateCustomerMutation>
       console.log({ customer: customer })
       return true
       //customerId = customer.data.createCustomer.customer.id;
@@ -345,18 +350,16 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
 
   recheckUserState = async (): Promise<void> => {
     console.debug("recheckUserState")
-    await this.ensureUserExists(
-      async (): Promise<void> => {
-        const paidStatus = await this.checkIfPaid()
-        const profileStatus = await this.checkIfCompletedProfile()
-        this.setState(
-          { hasPaidState: paidStatus, hasCompletedPersonalProfile: profileStatus },
-          async () => {
-            await this.performNavigation()
-          }
-        )
-      }
-    )
+    await this.ensureUserExists(async (): Promise<void> => {
+      const paidStatus = await this.checkIfPaid()
+      const profileStatus = await this.checkIfCompletedProfile()
+      this.setState(
+        { hasPaidState: paidStatus, hasCompletedPersonalProfile: profileStatus },
+        async () => {
+          await this.performNavigation()
+        }
+      )
+    })
   }
   async performNavigation(): Promise<void> {
     console.log("NAVIGATING")

@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { CognitoUser } from "@aws-amplify/auth"
-import { ResourceActions, ResourceState } from "components/ResourceViewer/ResourceContext"
+import { ResourceActions, ResourceState } from "../../components/ResourceViewer/ResourceContext"
 import {
   CreateResourceMenuItemMutation,
   CreateResourceRootMutation,

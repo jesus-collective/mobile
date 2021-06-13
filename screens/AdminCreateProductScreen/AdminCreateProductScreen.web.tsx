@@ -16,9 +16,12 @@ import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateProductInput,
+  CreateProductMutation,
+  DeleteProductMutation,
   ListProductsQuery,
   TieredProductInput,
   UpdateProductInput,
+  UpdateProductMutation,
   UserGroupType,
 } from "../../src/API"
 import * as mutations from "../../src/graphql/mutations"
@@ -129,11 +132,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
   async deleteProduct(id: string): Promise<void> {
     if (window.confirm(`Delete ${id}?`)) {
       try {
-        const deleteProduct = await API.graphql({
+        const deleteProduct = (await API.graphql({
           query: mutations.deleteProduct,
           variables: { input: { id } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<DeleteProductMutation>
         console.log(deleteProduct)
         this.setInitialData()
       } catch (e) {
@@ -166,11 +169,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
             isPaypal: this.state.isPaypal,
             tiered: this.state.tiered,
           }
-          const createProduct = await API.graphql({
+          const createProduct = (await API.graphql({
             query: mutations.createProduct,
             variables: { input: newProduct },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<CreateProductMutation>
           console.log(createProduct)
           this.setInitialData()
           this.setState({
@@ -214,11 +217,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
             tiered: this.state.tiered,
             isPaypal: this.state.isPaypal,
           }
-          const updateProduct = await API.graphql({
+          const updateProduct = (await API.graphql({
             query: mutations.updateProduct,
             variables: { input: editProduct },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<UpdateProductMutation>
           console.log(updateProduct)
           this.setInitialData()
           this.setState({

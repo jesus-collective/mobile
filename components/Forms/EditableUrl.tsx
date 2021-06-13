@@ -28,16 +28,8 @@ export default class EditableUrlImpl extends JCComponent<Props, State> {
   }
 
   render(): JSX.Element | null {
-    const {
-      onChange,
-      isEditable,
-      placeholder,
-      multiline,
-      inputStyle,
-      textStyle,
-      value,
-      title,
-    } = this.props
+    const { onChange, isEditable, placeholder, multiline, inputStyle, textStyle, value, title } =
+      this.props
     const { url } = this.state
 
     if (isEditable) {

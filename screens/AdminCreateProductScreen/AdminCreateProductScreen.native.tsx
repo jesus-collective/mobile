@@ -11,7 +11,14 @@ import Header from "../../components/Header/Header"
 import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
-import { CreateProductInput, ListProductsQuery, UpdateProductInput } from "../../src/API"
+import {
+  CreateProductInput,
+  CreateProductMutation,
+  DeleteProductMutation,
+  ListProductsQuery,
+  UpdateProductInput,
+  UpdateProductMutation,
+} from "../../src/API"
 //import { EditorState, convertToRaw } from 'draft-js';
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
@@ -82,11 +89,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
   async deleteProduct(id: string): Promise<void> {
     if (window.confirm(`Delete ${id}?`)) {
       try {
-        const deleteProduct = await API.graphql({
+        const deleteProduct = (await API.graphql({
           query: mutations.deleteProduct,
           variables: { input: { id } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<DeleteProductMutation>
         console.log(deleteProduct)
         this.setInitialData()
       } catch (e) {
@@ -109,11 +116,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
           }
-          const createProduct = await API.graphql({
+          const createProduct = (await API.graphql({
             query: mutations.createProduct,
             variables: { input: newProduct },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<CreateProductMutation>
           console.log(createProduct)
           this.setInitialData()
           this.setState({
@@ -132,11 +139,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
           }
-          const updateProduct = await API.graphql({
+          const updateProduct = (await API.graphql({
             query: mutations.updateProduct,
             variables: { input: editProduct },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })
+          })) as GraphQLResult<UpdateProductMutation>
           console.log(updateProduct)
           this.setInitialData()
           this.setState({

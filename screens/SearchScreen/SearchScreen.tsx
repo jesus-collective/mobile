@@ -1,7 +1,9 @@
-﻿import { API } from "aws-amplify"
+﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { API } from "aws-amplify"
 import { Container, Content, StyleProvider } from "native-base"
 import React from "react"
 import { Text } from "react-native"
+import { SearchGroupsQuery } from "src/API"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyMap from "../../components/MyMap/MyMap"
@@ -29,17 +31,17 @@ export default class GroupScreen extends JCComponent<Props, State> {
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  search(item: any): void {
+  search(item: React.ChangeEvent<HTMLInputElement>): void {
     console.log(item.target.value)
-    const searchGroups: any = API.graphql({
+    const searchGroups = API.graphql({
       query: queries.searchGroups,
       variables: { filter: { name: { match: item.target.value } } },
-    })
+    }) as Promise<GraphQLResult<SearchGroupsQuery>>
 
     searchGroups
       .then((json) => {
         // console.log(json)
-        this.setState({ data: json.data.searchGroups.items })
+        this.setState({ data: json.data?.searchGroups?.items })
       })
       .catch((e: any) => {
         console.log(e)
@@ -59,7 +61,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
             <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
             <Container>
               <input
-                onChange={(item: any) => {
+                onChange={(item) => {
                   this.search(item)
                 }}
                 placeholder="Search..."

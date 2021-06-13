@@ -33,8 +33,11 @@ import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import {
+  CreateCustomerMutation,
   GetUserQuery,
   ListProductsQuery,
+  PreviewInvoiceMutation,
+  StripeInvoice,
   StripePriceDetail,
   UpdateUserMutation,
 } from "../../src/API"
@@ -84,7 +87,7 @@ interface State extends JCState {
   showEULA: boolean
   errorMsg: string | undefined
   quantities: number[][]
-  invoice: any
+  invoice: StripeInvoice | null
   processing: "entry" | "processing" | "complete"
   stripeValidation: any
   validatingUser: boolean
@@ -190,7 +193,7 @@ class BillingImpl extends JCComponent<Props, State> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
-      const customer: any = await API.graphql({
+      const customer = (await API.graphql({
         query: mutations.createCustomer,
         variables: {
           idempotency: this.state.idempotency,
@@ -202,7 +205,7 @@ class BillingImpl extends JCComponent<Props, State> {
           billingAddress: this.state.userData?.billingAddress,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<CreateCustomerMutation>
       console.log({ customer: customer })
       //customerId = customer.data.createCustomer.customer.id;
     } catch (e) {
@@ -232,7 +235,7 @@ class BillingImpl extends JCComponent<Props, State> {
     const priceItems = this.getPriceItems()
 
     try {
-      const newInvoice: any = API.graphql({
+      const newInvoice = API.graphql({
         query: customMutations.previewInvoice,
         variables: {
           idempotency: this.state.idempotency,
@@ -242,7 +245,7 @@ class BillingImpl extends JCComponent<Props, State> {
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<PreviewInvoiceMutation>>
       console.log({ newInvoice: newInvoice })
       this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
         const currentIndex = this.state.invoiceQueue.length - 1
@@ -254,7 +257,7 @@ class BillingImpl extends JCComponent<Props, State> {
             this.setState({ invoice: invoice.data.previewInvoice?.invoice })
           }
         } catch (e) {
-          console.log({ ERRROR: e })
+          console.log({ ERROR: e })
         }
       })
     } catch (e) {
@@ -602,28 +605,28 @@ class BillingImpl extends JCComponent<Props, State> {
             if (temp?.billingAddress && temp?.billingAddress[field])
               temp.billingAddress[field] = value
 
-            const user = await API.graphql(
+            const user = (await API.graphql(
               graphqlOperation(mutations.updateUser, {
                 input: {
                   id: this.state.userData?.id,
                   billingAddress: temp?.billingAddress,
                 },
               })
-            )
+            )) as GraphQLResult<UpdateUserMutation>
             this.setState({ userData: temp })
           })
       } else {
         const temp = this.state.userData
         if (temp?.billingAddress) temp.billingAddress[field] = value
 
-        const user = await API.graphql(
+        const user = (await API.graphql(
           graphqlOperation(mutations.updateUser, {
             input: {
               id: this.state.userData?.id,
               billingAddress: temp?.billingAddress,
             },
           })
-        )
+        )) as GraphQLResult<UpdateUserMutation>
         console.log(user)
         this.setState({ userData: temp })
       }
@@ -1097,7 +1100,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       </View>
 
                       {this.state.invoice?.lines?.data
-                        .filter((item) => item.amount != 0)
+                        ?.filter((item) => item?.amount != "0")
                         .map((line, index: number) => {
                           return (
                             <View
@@ -1116,9 +1119,9 @@ class BillingImpl extends JCComponent<Props, State> {
                                   paddingRight: 25,
                                 }}
                               >
-                                {line.description.split("(")?.[0]?.split("×")[1]?.trim() ??
-                                  line.description.split("(")[0] ??
-                                  line.description}
+                                {line?.description?.split("(")?.[0]?.split("×")[1]?.trim() ??
+                                  line?.description?.split("(")[0] ??
+                                  line?.description}
                               </Text>
                               <Text
                                 style={{
@@ -1129,7 +1132,7 @@ class BillingImpl extends JCComponent<Props, State> {
                                   paddingRight: 10,
                                 }}
                               >
-                                ${(line.amount / 100).toFixed(2)}
+                                ${line?.amount && (parseInt(line.amount) / 100).toFixed(2)}
                               </Text>
                             </View>
                           )
@@ -1168,8 +1171,8 @@ class BillingImpl extends JCComponent<Props, State> {
                             paddingRight: 10,
                           }}
                         >
-                          {this.state.invoice
-                            ? "$" + (this.state.invoice.total / 100).toFixed(2)
+                          {this.state.invoice?.total
+                            ? "$" + (parseInt(this.state.invoice.total) / 100).toFixed(2)
                             : ""}
                         </Text>
                       </View>

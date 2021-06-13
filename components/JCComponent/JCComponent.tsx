@@ -17,7 +17,7 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     })
   }
   protected getInitialState(): State {
-    return ({} as JCState) as State
+    return {} as JCState as State
   }
   styles = MainStyles.getInstance()
   componentWillUnmount(): void {

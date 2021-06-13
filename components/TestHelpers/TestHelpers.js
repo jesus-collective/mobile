@@ -33,14 +33,14 @@ export default class TestHelper {
                     console.log(delStat)
                     return delStat
                   })
-                  .catch((e: any) => {
+                  .catch((e) => {
                     console.log(e)
                     const delStat = user.deleteUser()
                     console.log(delStat)
                     return delStat
                   })
               })
-              .catch((e: any) => {
+              .catch((e) => {
                 console.log(e)
                 const delStat = user.deleteUser()
                 console.log(delStat)

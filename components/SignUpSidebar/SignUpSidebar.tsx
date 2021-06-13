@@ -13,9 +13,11 @@ export default class SignUpSidebar extends JCComponent<Props> {
   }
   render(): React.ReactNode {
     const brand =
-      (RootNavigation.getRoot()?.params as {
-        brand: "jc" | "oneStory" | null
-      })?.brand ?? "jc"
+      (
+        RootNavigation.getRoot()?.params as {
+          brand: "jc" | "oneStory" | null
+        }
+      )?.brand ?? "jc"
     return (
       <View style={this.styles.style.signUpSidebarView}>
         {this.props.text != null ? (

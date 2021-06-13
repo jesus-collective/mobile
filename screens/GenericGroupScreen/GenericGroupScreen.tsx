@@ -323,7 +323,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           query: mutations.createGroup,
           variables: { input: this.state.data },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<CreateGroupMutation>>
+        })) as GraphQLResult<CreateGroupMutation>
         this.setState(
           {
             createNew: false,
@@ -369,7 +369,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           query: mutations.updateGroup,
           variables: { input: this.clean(this.state.data) },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<UpdateGroupMutation>>
+        })) as GraphQLResult<UpdateGroupMutation>
         console.log({ "Success mutations.updateGroup": updateGroup })
       } catch (err) {
         console.log({ "Error mutations.updateGroup": err })
@@ -400,7 +400,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                   query: mutations.deleteGroupMember,
                   variables: { input: { id: responseArr[i]?.id } },
                   authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-                })) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
+                })) as GraphQLResult<DeleteGroupMemberMutation>
                 console.log({ "Success mutations.deleteGroupMember": deleteGroupMember })
                 const remainingUsers = this.state.memberIDs.filter(
                   (user) => user !== this.state.currentUser
@@ -442,7 +442,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           query: mutations.createGroupMember,
           variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<CreateGroupMemberMutation>>
+        })) as GraphQLResult<CreateGroupMemberMutation>
         console.log({ "Success mutations.createGroupMember": createGroupMember })
         this.setState({
           canJoin: false,
@@ -472,7 +472,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           query: mutations.deleteGroup,
           variables: { input: { id: this.state.data.id } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<DeleteGroupMutation>>
+        })) as GraphQLResult<DeleteGroupMutation>
         console.log({ "Success mutations.deleteGroup": deleteGroup })
         this.props.navigation.push("HomeScreen")
       } catch (err) {

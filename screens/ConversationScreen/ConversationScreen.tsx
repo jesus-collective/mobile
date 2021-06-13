@@ -4,7 +4,11 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container, Content } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import { CreateDirectMessageRoomMutation, CreateDirectMessageUserMutation } from "src/API"
+import {
+  CreateDirectMessageRoomMutation,
+  CreateDirectMessageUserMutation,
+  ListDirectMessageUsersQuery,
+} from "src/API"
 import { GetDirectMessageUserQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
 import EditableUsers from "../../components/Forms/EditableUsers"
@@ -174,11 +178,11 @@ export default class ConversationScreen extends JCComponent<Props, State> {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       try {
         const query = { limit: 20, filter: { userID: { eq: user["username"] } }, nextToken: next }
-        const json: any = await API.graphql({
+        const json = (await API.graphql({
           query: customQueries.listDirectMessageUsers,
           variables: query,
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<ListDirectMessageUsersQuery>
         if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
           console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
