@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Card, CardItem } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
@@ -21,7 +21,7 @@ import ResourceMenu from "./ResourceMenu"
 import ResourceRichText from "./ResourceRichText"
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
   pageItems?: (ResourcePageItemInput | null)[] | null | undefined
   pageItemIndex: PageItemIndex
@@ -234,7 +234,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation.navigate("ResourceConfigureScreen", {
+          this.props.navigation?.navigate("ResourceConfigureScreen", {
             id: resourceState.loadId,
           })
         }}

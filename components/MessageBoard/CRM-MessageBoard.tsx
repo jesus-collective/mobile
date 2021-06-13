@@ -1,6 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js"
@@ -45,7 +46,7 @@ interface Props {
   rootId?: string
   messages: Messages
   route?: RouteProp<any, any>
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
 }
 
 interface State extends JCState {
@@ -637,7 +638,7 @@ export default function CrmMessageBoard({
   messages,
 }: Pick<Props, "rootId" | "messages">): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
 
   return (
     <CrmMessageBoardImpl

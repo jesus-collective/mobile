@@ -1,5 +1,5 @@
 import { Entypo } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
 import { View } from "native-base"
@@ -26,7 +26,7 @@ import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 

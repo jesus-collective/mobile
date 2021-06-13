@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { Storage } from "aws-amplify"
 import { Card, CardItem, Picker, View } from "native-base"
 import React from "react"
@@ -26,7 +26,7 @@ import ResourceSelector from "./ResourceSelector"
 Amplify.configure(awsconfig)
 
 interface Props extends ResourceSetupProp {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 interface State extends JCState {
@@ -279,7 +279,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
             if (this.props.pageItem.url) {
               window.location.href = this.props.pageItem.url ?? ""
             } else {
-              this.props.navigation.navigate("ResourceDisplayScreen", {
+              this.props.navigation?.navigate("ResourceDisplayScreen", {
                 id: this.props.resourceState.groupData?.id,
                 resource: this.props.pageItem.resourceID,
                 series: this.props.pageItem.seriesID,
@@ -509,7 +509,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       } else {
                         console.log("NAVIGATE")
                         if (this.props.pageItem.episodeID == null)
-                          this.props.navigation.navigate("ResourceDisplayScreen", {
+                          this.props.navigation?.navigate("ResourceDisplayScreen", {
                             id: this.props.resourceState.groupData?.id,
                             resource: this.props.pageItem.resourceID,
                             series: this.props.pageItem.seriesID,
@@ -795,7 +795,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     window.location.href = this.props.pageItem.url ?? ""
                   } else {
                     console.log("NAVIGATE")
-                    this.props.navigation.navigate("ResourceDisplayScreen", {
+                    this.props.navigation?.navigate("ResourceDisplayScreen", {
                       id: this.props.resourceState.groupData?.id,
                       resource: this.props.pageItem.resourceID,
                       series: this.props.pageItem.seriesID,

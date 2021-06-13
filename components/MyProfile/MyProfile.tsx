@@ -1,6 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
@@ -47,7 +48,7 @@ Amplify.configure(awsconfig)
 
 interface Props {
   finalizeProfile?(): void
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
   loadId?: any
   hideOrg?: boolean
@@ -521,7 +522,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             null
           })
           console.log(delStat)
-          this.props.navigation.push("", null)
+          this.props.navigation?.push("", null)
           // return delStat
         })
         .catch((e) => {
@@ -530,7 +531,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             null
           })
           console.log(delStat)
-          this.props.navigation.push("", null)
+          this.props.navigation?.push("", null)
           //        this.props.navigation.navigate("/")
           // return delStat
         })
@@ -659,7 +660,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
-    this.props.navigation.push("ConversationScreen", {
+    this.props.navigation?.push("ConversationScreen", {
       initialUserID: initialUser,
       initialUserName: name,
     })
@@ -874,7 +875,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   testID="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                   onPress={() => {
-                    this.props.navigation.push("ConversationScreen", {
+                    this.props.navigation?.push("ConversationScreen", {
                       initialUserID: null,
                       initialUserName: null,
                     })
@@ -1931,7 +1932,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
 export default function MyProfile(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
 
   return (
     <MyProfile.UserConsumer>

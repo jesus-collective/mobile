@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import {
   CardCvcElement,
   CardExpiryElement,
@@ -71,7 +71,7 @@ const CARD_ELEMENT_OPTIONS = {
 type Products = NonNullable<ListProductsQuery["listProducts"]>["items"]
 type Product = NonNullable<Products>[0]
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
   authState?: string
 }

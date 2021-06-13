@@ -1,4 +1,4 @@
-﻿import { useNavigation, useRoute } from "@react-navigation/native"
+﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Card, Container, Content, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
 import { Image, Text } from "react-native"
@@ -9,7 +9,7 @@ import JCComponent from "../JCComponent/JCComponent"
 import { CourseContext } from "./CourseContext"
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 

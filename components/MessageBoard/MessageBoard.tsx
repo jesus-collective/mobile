@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
@@ -50,7 +50,7 @@ interface Props {
   groupId?: string
   roomId?: string
   route?: RouteProp<any, any>
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   style: "mini" | "regular" | "course" | "courseResponse"
   recipients?: string[]
   showWordCount?: boolean

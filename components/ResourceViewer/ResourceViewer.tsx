@@ -1,6 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import {} from "@material-ui/core"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
@@ -77,7 +78,7 @@ import ResourceDisplay from "./ResourceDisplay"
 Amplify.configure(awsconfig)
 
 interface Props {
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   groupId?: any
   route?: any
   showConfig?: "config" | "detail" | "regular"
@@ -532,7 +533,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       deleteGroup
         .then((json) => {
           console.log({ "Success mutations.deleteGroup": json })
-          this.props.navigation.push("HomeScreen")
+          this.props.navigation?.push("HomeScreen")
         })
         .catch((err) => {
           console.log({ "Error mutations.deleteGroup": err })
@@ -541,7 +542,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   showProfile = (id: string): void => {
     console.log("Navigate to profileScreen")
-    this.props.navigation.push("ProfileScreen", { id: id, create: false })
+    this.props.navigation?.push("ProfileScreen", { id: id, create: false })
   }
   updateValueGroup = (field: string, value: any): void => {
     const temp = this.state.groupData
@@ -725,7 +726,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   changeMenuItem = (index: number): void => {
     console.log({ changeResource: index })
-    this.props.navigation.navigate("ResourceScreen", {
+    this.props.navigation?.navigate("ResourceScreen", {
       create: false,
       id: this.state.groupData?.id,
     })
@@ -1385,7 +1386,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
 
 export default function ResourceViewer(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return (
     <UserContext.Consumer>
       {({ userActions, userState }) => (

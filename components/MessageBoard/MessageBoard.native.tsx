@@ -23,7 +23,7 @@ import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
   groupId: string
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
 }
 interface State extends JCState {
@@ -250,6 +250,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 }
 export default function MessageBoard(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <MessageBoardImpl {...props} navigation={navigation} route={route} />
 }

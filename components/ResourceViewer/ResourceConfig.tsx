@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Card, CardItem } from "native-base"
 import React from "react"
 import {
@@ -24,7 +24,7 @@ import { ResourceActions, ResourceContext, ResourceState } from "./ResourceConte
 import ResourceImage from "./ResourceImage"
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 
@@ -128,7 +128,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation.navigate("ResourceScreen", {
+          this.props.navigation?.navigate("ResourceScreen", {
             id: resourceState.loadId,
           })
         }}

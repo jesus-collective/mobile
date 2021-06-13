@@ -1,5 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
@@ -45,7 +46,7 @@ Amplify.configure(awsconfig)
 
 interface Props {
   finalizeProfile?(): void
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
   loadId?: string
   create: boolean
@@ -472,7 +473,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
   showProfile(id: string): void {
     console.log("Navigate to profileScreen")
-    this.props.navigation.push("ProfileScreen", { id: id, create: false })
+    this.props.navigation?.push("ProfileScreen", { id: id, create: false })
   }
 
   deleteOrg(): void {
@@ -488,11 +489,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
         deleteOrganization
           .then((c) => {
             console.log(c)
-            this.props.navigation.navigate("HomeScreen")
+            this.props.navigation?.navigate("HomeScreen")
           })
           .catch((e) => {
             console.log(e)
-            this.props.navigation.navigate("HomeScreen")
+            this.props.navigation?.navigate("HomeScreen")
           })
       } else {
         return false
@@ -1287,6 +1288,6 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
 export default function Organization(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <OrganizationImpl {...props} navigation={navigation} route={route} />
 }

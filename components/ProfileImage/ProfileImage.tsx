@@ -1,4 +1,5 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, graphqlOperation, Storage } from "aws-amplify"
 import * as React from "react"
 import { Image, ImageStyle, TouchableOpacity } from "react-native"
@@ -16,7 +17,7 @@ interface Props {
   inlineStyle?: ImageStyle
   isOrg?: boolean
   linkToProfile?: boolean
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
   showNameInTooltip?: boolean
 }
@@ -47,12 +48,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
     console.log("Navigate to profileScreen")
     if (typeof this.props.user === "string" && this.props.user !== "") {
       if (this.props.isOrg) {
-        this.props.navigation.push("OrganizationScreen", { id: this.props.user, create: false })
+        this.props.navigation?.push("OrganizationScreen", { id: this.props.user, create: false })
       } else {
-        this.props.navigation.push("ProfileScreen", { id: this.props.user, create: false })
+        this.props.navigation?.push("ProfileScreen", { id: this.props.user, create: false })
       }
     } else {
-      this.props.navigation.push("ProfileScreen", { id: this.props.user.id, create: false })
+      this.props.navigation?.push("ProfileScreen", { id: this.props.user.id, create: false })
     }
   }
 
@@ -254,6 +255,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
 }
 export default function MyProfile(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <MyProfileImpl {...props} navigation={navigation} route={route} />
 }

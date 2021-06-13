@@ -1,5 +1,6 @@
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation } from "aws-amplify"
 import { MapData } from "components/MyGroups/MyGroups"
 import { Map, Marker } from "google-maps-react"
@@ -19,7 +20,7 @@ import JCSwitch from "../JCSwitch/JCSwitch"
 import mapStyle from "./mapstyle.json"
 
 interface Props {
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
   visible: boolean
   google: any
@@ -93,21 +94,21 @@ class MyMapImpl extends JCComponent<Props, State> {
   }
   openConversation(initialUser: string, name: string) {
     console.log("Navigate to conversationScreen")
-    this.props.navigation.push("ConversationScreen", {
+    this.props.navigation?.push("ConversationScreen", {
       initialUserID: initialUser,
       initialUserName: name,
     })
   }
   showProfiles() {
     console.log("Navigate to profilesScreen")
-    this.props.navigation.push("ProfilesScreen")
+    this.props.navigation?.push("ProfilesScreen")
   }
   showProfile(id: string) {
     console.log("Navigate to profileScreen")
-    this.props.navigation.push("ProfileScreen", { id: id, create: false })
+    this.props.navigation?.push("ProfileScreen", { id: id, create: false })
   }
   showOrg(id: string) {
-    this.props.navigation.push("OrganizationScreen", { id: id, create: false })
+    this.props.navigation?.push("OrganizationScreen", { id: id, create: false })
   }
 
   _mapLoaded(map: any) {
@@ -566,6 +567,6 @@ class MyMapImpl extends JCComponent<Props, State> {
 
 export default function MyMap(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <MyMapImpl {...props} navigation={navigation} route={route} />
 }

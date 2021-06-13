@@ -1,5 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertFromRaw } from "draft-js"
@@ -36,7 +37,7 @@ interface Props {
   onHandlePressReply(item: Message | Reply): void
   onHandleCreated(): void
   route?: RouteProp<any, any>
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   replies?: boolean
 }
 interface State extends JCState {
@@ -447,6 +448,6 @@ class MessageListImpl extends JCComponent<Props, State> {
 
 export default function MessageList(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <MessageListImpl {...props} navigation={navigation} route={route} />
 }

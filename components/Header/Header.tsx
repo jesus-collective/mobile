@@ -15,7 +15,7 @@ import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 interface Props {
-  navigation: StackNavigationProp<any, any>
+  navigation?: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
 }
@@ -90,50 +90,50 @@ export default class HeaderJC extends JCComponent<Props, State> {
   }
 
   openDrawer = (): void => {
-    this.props.navigation.dispatch(DrawerActions.openDrawer())
+    this.props.navigation?.dispatch(DrawerActions.openDrawer())
   }
   openProfile = async (): Promise<void> => {
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    this.props.navigation.push("ProfileScreen", {
+    this.props.navigation?.push("ProfileScreen", {
       id: user["username"],
       create: false,
     })
   }
   openAdmin = async (): Promise<void> => {
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    this.props.navigation.push("AdminScreen", {
+    this.props.navigation?.push("AdminScreen", {
       id: user["username"],
       create: false,
     })
   }
   openSearch = (): void => {
-    this.props.navigation.push("SearchScreen")
+    this.props.navigation?.push("SearchScreen")
   }
   openEvents = (): void => {
-    this.props.navigation.push("EventsScreen")
+    this.props.navigation?.push("EventsScreen")
   }
   openResources = (): void => {
     this.handleResourcesDropdownClose()
-    this.props.navigation.push("ResourcesScreen")
+    this.props.navigation?.push("ResourcesScreen")
   }
   openMessages = (): void => {
-    this.props.navigation.push("ConversationScreen")
+    this.props.navigation?.push("ConversationScreen")
   }
   openKids = (): void => {
     this.handleResourcesDropdownClose()
-    this.props.navigation.push("ResourceScreen", {
+    this.props.navigation?.push("ResourceScreen", {
       create: false,
       id: constants["SETTING_KY_GROUP_ID"],
     })
   }
   openGroups = (): void => {
-    this.props.navigation.push("GroupsScreen")
+    this.props.navigation?.push("GroupsScreen")
   }
   openHome = (): void => {
-    this.props.navigation.push("HomeScreen")
+    this.props.navigation?.push("HomeScreen")
   }
   openCourses = (): void => {
-    this.props.navigation.push("CoursesScreen")
+    this.props.navigation?.push("CoursesScreen")
   }
   showMap = (): void => {
     if (this.props.onMapChange != null) this.props.onMapChange()

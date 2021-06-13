@@ -1,4 +1,5 @@
 ﻿import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Container, StyleProvider } from "native-base"
 import React from "react"
 import Header from "../../components/Header/Header"
@@ -9,7 +10,7 @@ import getTheme from "../../native-base-theme/components"
 import material from "../../native-base-theme/variables/material"
 
 interface Props {
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
 }
 interface State extends JCState {
@@ -48,6 +49,6 @@ class ResourceScreenImpl extends JCComponent<Props, State> {
 
 export default function ResourceScreen(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <ResourceScreenImpl {...props} navigation={navigation} route={route} />
 }

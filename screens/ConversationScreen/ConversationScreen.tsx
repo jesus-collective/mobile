@@ -1,4 +1,5 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container, Content } from "native-base"
@@ -21,7 +22,7 @@ import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 
 interface Props {
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
 }
 interface State extends JCState {

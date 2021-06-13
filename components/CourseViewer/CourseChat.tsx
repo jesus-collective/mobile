@@ -1,5 +1,5 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Button, Container, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
 import { Dimensions, Text } from "react-native"
@@ -11,7 +11,7 @@ import { CourseContext } from "./CourseContext"
 const MessageBoard = React.lazy(() => import("../MessageBoard/MessageBoard"))
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 

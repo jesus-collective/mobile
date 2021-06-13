@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Body, Button, Header, Right } from "native-base"
 import React from "react"
 import { Dimensions, Text } from "react-native"
@@ -11,7 +12,7 @@ import JCComponent from "../JCComponent/JCComponent"
 import { CourseContext } from "./CourseContext"
 
 interface Props {
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
 }
 class CourseDetailMenuImpl extends JCComponent<Props> {
@@ -20,7 +21,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
     super(props)
   }
   openMessages = (): void => {
-    this.props.navigation.push("ConversationScreen")
+    this.props.navigation?.push("ConversationScreen")
   }
 
   updateStyles = (): void => {
@@ -100,6 +101,6 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
 }
 export default function CourseDetailMenu(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <CourseDetailMenuImpl {...props} navigation={navigation} route={route} />
 }

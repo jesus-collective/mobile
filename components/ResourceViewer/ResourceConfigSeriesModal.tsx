@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import {
   NativeSyntheticEvent,
@@ -20,7 +20,7 @@ import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
   visible: boolean
   onHide(): void

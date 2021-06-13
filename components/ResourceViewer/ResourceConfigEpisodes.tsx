@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { GetResourceSeriesData } from "src/types"
@@ -9,7 +9,7 @@ import ResourceConfigEpisodeModal from "./ResourceConfigEpisodeModal"
 import { ResourceContext } from "./ResourceContext"
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 

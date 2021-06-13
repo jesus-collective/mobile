@@ -1,5 +1,5 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
@@ -17,7 +17,7 @@ import JCComponent from "../JCComponent/JCComponent"
 interface Props {
   visible: boolean
   onClose(): void
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
   groupId: string
 }

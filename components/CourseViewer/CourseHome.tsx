@@ -1,5 +1,6 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
 import {
   Body,
@@ -29,7 +30,7 @@ import JCComponent from "../JCComponent/JCComponent"
 import { AgendaItems, CourseActions, CourseContext, CourseToDo } from "./CourseContext"
 
 interface Props {
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   route?: any
 }
 
@@ -41,14 +42,14 @@ class CourseHomeImpl extends JCComponent<Props> {
 
   openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
-    this.props.navigation.push("ConversationScreen", {
+    this.props.navigation?.push("ConversationScreen", {
       initialUserID: initialUser,
       initialUserName: name,
     })
   }
   showProfile(id: string): void {
     console.log("Navigate to profileScreen")
-    this.props.navigation.push("ProfileScreen", { id: id, create: false })
+    this.props.navigation?.push("ProfileScreen", { id: id, create: false })
   }
   renderProfileCard(user: UserData): React.ReactNode {
     if (user)
@@ -810,6 +811,6 @@ class CourseHomeImpl extends JCComponent<Props> {
 
 export default function CourseHome(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <CourseHomeImpl {...props} navigation={navigation} route={route} />
 }

@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { lazy } from "react"
 import SignUpScreen3 from "../../components/Auth/SignUpScreen3"
@@ -19,7 +19,7 @@ const MyVerifyContact = lazy(() => import("../Auth/MyVerifyContact"))
 
 type MARState = JCState
 interface MARProp {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 const AuthStack = createStackNavigator()

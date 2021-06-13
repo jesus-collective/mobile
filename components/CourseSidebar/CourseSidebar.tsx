@@ -1,4 +1,5 @@
 import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Container } from "native-base"
 import React from "react"
 import { Dimensions, Image, Text } from "react-native"
@@ -9,7 +10,7 @@ import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
-  navigation?: any
+  navigation?: StackNavigationProp<any, any>
   courseId: any
   route?: any
   //  title:string,
@@ -34,35 +35,35 @@ class CourseSidebarImpl extends JCComponent<Props> {
     Dimensions.removeEventListener("change", this.updateStyles)
   }
   openDrawer = (): void => {
-    this.props.navigation.dispatch(DrawerActions.openDrawer())
+    this.props.navigation?.dispatch(DrawerActions.openDrawer())
   }
 
   openHome = (): void => {
-    this.props.navigation.push("HomeScreen")
+    this.props.navigation?.push("HomeScreen")
   }
   openCourseHome = (): void => {
-    this.props.navigation.push("CourseHomeScreen", {
+    this.props.navigation?.push("CourseHomeScreen", {
       id: this.props.courseId,
       screen: "Home",
       create: false,
     })
   }
   openCourseOverview = (): void => {
-    this.props.navigation.push("CourseOverviewScreen", {
+    this.props.navigation?.push("CourseOverviewScreen", {
       id: this.props.courseId,
       screen: "Home",
       create: false,
     })
   }
   openCourseDetails = (): void => {
-    this.props.navigation.push("CourseHomeScreen", {
+    this.props.navigation?.push("CourseHomeScreen", {
       id: this.props.courseId,
       screen: "Details",
       create: false,
     })
   }
   openCourseCoaching = (): void => {
-    this.props.navigation.push("CourseHomeScreen", {
+    this.props.navigation?.push("CourseHomeScreen", {
       id: this.props.courseId,
       screen: "Coaching",
       create: false,
@@ -174,6 +175,6 @@ class CourseSidebarImpl extends JCComponent<Props> {
 }
 export default function CourseSidebar(props: Props): JSX.Element {
   const route = useRoute()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   return <CourseSidebarImpl {...props} navigation={navigation} route={route} />
 }

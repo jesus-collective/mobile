@@ -1,6 +1,6 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { Tooltip } from "@material-ui/core"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
 import { Card, Container, Content, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
@@ -25,7 +25,7 @@ import {
 import CourseDetailMenu from "./CourseDetailMenu"
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 

@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment"
 import { Container } from "native-base"
 import React from "react"
@@ -7,7 +7,7 @@ import EditableText from "../Forms/EditableText"
 import JCComponent from "../JCComponent/JCComponent"
 interface Props {
   groupData: any
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 class CourseHeaderImpl extends JCComponent<Props> {

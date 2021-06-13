@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import { Picker, Text, TouchableOpacity, View } from "react-native"
 import JCModal from "../../components/Forms/JCModal"
@@ -10,7 +10,7 @@ import { ResourceContext } from "./ResourceContext"
 interface Props {
   visible: boolean
   onClose(): void
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 interface State {

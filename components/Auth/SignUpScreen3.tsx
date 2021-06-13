@@ -1,4 +1,4 @@
-﻿import { useNavigation, useRoute } from "@react-navigation/native"
+﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
 import { Container, View } from "native-base"
 import React from "react"
@@ -12,7 +12,7 @@ import awsConfig from "../../src/aws-exports"
 Amplify.configure(awsConfig)
 
 interface Props {
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
   authState?: string
 }

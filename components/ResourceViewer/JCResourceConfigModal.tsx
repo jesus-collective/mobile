@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import { Picker, Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -13,7 +13,7 @@ import { ResourceActions, ResourceContext, ResourceState } from "./ResourceConte
 interface Props {
   visible: boolean
   onClose(): void
-  navigation?: any
+  navigation?: NavigationProp<any, any>
   route?: any
 }
 
@@ -58,7 +58,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                   ? true
                   : false
               )
-                this.props.navigation.navigate("ResourceScreen", {
+                this.props.navigation?.navigate("ResourceScreen", {
                   create: false,
                   id: state.groupData?.id,
                 })
