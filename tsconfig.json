@@ -7,6 +7,7 @@
     "module": "commonjs",
     "outDir": "./output",
     "target": "ES6",
+    "esModuleInterop": true,
     "jsx": "react-native",
     "alwaysStrict": true,
     "allowJs": true,

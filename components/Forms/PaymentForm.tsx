@@ -5,7 +5,6 @@ import React from "react"
 import { StyleSheet, ViewStyle } from "react-native"
 import { GetProductQuery } from "../../src/API"
 import PayPal from "./Paypal/PayPal"
-import Stripe from "./Stripe/Stripe"
 
 interface Params {
   product: NonNullable<GetProductQuery>["getProduct"]
@@ -111,7 +110,6 @@ export default function PaymentForm({
             onErrorCallback={onErrorCallback}
           />
         ) : null}
-        {product?.isStripe == "true" ? <Stripe></Stripe> : null}
       </View>
     </View>
   )
