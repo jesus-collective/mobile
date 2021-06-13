@@ -1,4 +1,5 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API, graphqlOperation } from "aws-amplify"
 import { Container, Content, Text } from "native-base"
 import React, { useEffect, useState } from "react"
@@ -9,7 +10,7 @@ import { GetProductQuery } from "../../src/API"
 import * as queries from "../../src/graphql/queries"
 
 interface Params {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   route: any
 }
 

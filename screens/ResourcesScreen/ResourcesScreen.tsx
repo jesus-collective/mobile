@@ -1,4 +1,5 @@
-﻿import { Container, Content } from "native-base"
+﻿import { StackNavigationProp } from "@react-navigation/stack"
+import { Container, Content } from "native-base"
 import React from "react"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -6,7 +7,7 @@ import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
 import MyMap from "../../components/MyMap/MyMap"
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
 }
 interface State extends JCState {
   showMap: boolean

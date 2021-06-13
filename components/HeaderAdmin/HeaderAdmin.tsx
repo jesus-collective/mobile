@@ -1,4 +1,5 @@
 import { DrawerActions } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 //import styles from '../Header/style'
 import { Auth } from "aws-amplify"
 import { Body, Button, Header } from "native-base"
@@ -9,7 +10,7 @@ import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
 }

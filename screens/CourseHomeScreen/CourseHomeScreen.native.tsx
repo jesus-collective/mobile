@@ -1,4 +1,5 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
@@ -56,7 +57,7 @@ import { JCCognitoUser } from "../../src/types"
 //import { EditorState, convertToRaw } from 'draft-js';
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   route: any
 }
 type CourseUser = NonNullable<

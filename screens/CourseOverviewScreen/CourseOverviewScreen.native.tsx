@@ -1,5 +1,6 @@
 ﻿//import { EditorState, convertToRaw } from 'draft-js';
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
@@ -44,7 +45,7 @@ import { GetUserQueryResult, GetUserQueryResultPromise, JCCognitoUser } from "..
 import Accordion from "./Accordion"
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   route: any
 }
 interface State extends JCState {

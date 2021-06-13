@@ -1,4 +1,5 @@
-﻿import { Container } from "native-base"
+﻿import { StackNavigationProp } from "@react-navigation/stack"
+import { Container } from "native-base"
 import React, { lazy } from "react"
 import { Dimensions, Platform } from "react-native"
 import Cookies from "universal-cookie"
@@ -16,7 +17,7 @@ const FooterJC = lazy(() => import("../../components/Footer/Footer"))
 const MyMap = lazy(() => import("../../components/MyMap/MyMap"))
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
 }
 interface State extends JCState {
   showMap: boolean

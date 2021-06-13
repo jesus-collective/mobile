@@ -3,6 +3,7 @@ import Divider from "@material-ui/core/Divider"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import { DrawerActions } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 //import styles from '../Header/style'
 import { Auth } from "aws-amplify"
 import { Body, Button, Header, Left, Right } from "native-base"
@@ -14,7 +15,7 @@ import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
 }

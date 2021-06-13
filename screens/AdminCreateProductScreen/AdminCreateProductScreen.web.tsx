@@ -1,5 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
@@ -28,7 +29,7 @@ import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   route: any
 }
 interface State extends JCState {

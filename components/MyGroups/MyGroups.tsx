@@ -1,6 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Ionicons } from "@expo/vector-icons"
 import { Tooltip } from "@material-ui/core"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
@@ -37,7 +38,7 @@ import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   wrap: boolean
   type: string
   showMore: boolean

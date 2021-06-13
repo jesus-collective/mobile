@@ -1,4 +1,4 @@
-import { DrawerActions } from "@react-navigation/native"
+import { DrawerActions, NavigationProp } from "@react-navigation/native"
 import { Body, Button, Container } from "native-base"
 import React from "react"
 import { Image, Linking, Platform, Text } from "react-native"
@@ -7,7 +7,7 @@ import footerStyles from "../Footer/style"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
-  navigation: any
+  navigation: NavigationProp<any, any>
   title: string
   onMapChange?(): any
 }

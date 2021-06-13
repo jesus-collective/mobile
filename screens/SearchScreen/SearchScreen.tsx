@@ -1,4 +1,5 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API } from "aws-amplify"
 import { Container, Content, StyleProvider } from "native-base"
 import React from "react"
@@ -12,7 +13,7 @@ import material from "../../native-base-theme/variables/material"
 import * as queries from "../../src/graphql/queries"
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
 }
 interface State extends JCState {
   showMap: boolean

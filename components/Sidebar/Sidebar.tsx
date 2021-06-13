@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons"
+import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types"
 import { Container, Content, Header, List, ListItem } from "native-base"
 import * as React from "react"
 import { Text } from "react-native"
@@ -43,7 +44,7 @@ const resourceRoutes = [
 
 interface Props {
   route?: any
-  navigation: any
+  navigation: DrawerNavigationHelpers
 }
 interface State extends JCState {
   showResourcesSubMenu: boolean

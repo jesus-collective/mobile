@@ -1,4 +1,5 @@
-﻿import Amplify from "aws-amplify"
+﻿import { StackNavigationProp } from "@react-navigation/stack"
+import Amplify from "aws-amplify"
 import { Authenticator } from "aws-amplify-react-native"
 import React from "react"
 import { Button } from "react-native"
@@ -8,7 +9,7 @@ import awsConfig from "../../src/aws-exports"
 Amplify.configure(awsConfig)
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
 }
 export default class TeachingScreen extends JCComponent<Props> {
   static navigationOptions = {

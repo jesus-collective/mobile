@@ -1,3 +1,4 @@
+import { NavigationProp } from "@react-navigation/native"
 import {
   Body,
   Button,
@@ -16,7 +17,7 @@ import { constants } from "../../src/constants"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
-  navigation: any
+  navigation: NavigationProp<any, any>
 }
 
 export default class MyConversations extends JCComponent<Props> {

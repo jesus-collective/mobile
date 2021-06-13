@@ -1,4 +1,5 @@
-﻿import Amplify, { Auth } from "aws-amplify"
+﻿import { StackNavigationProp } from "@react-navigation/stack"
+import Amplify, { Auth } from "aws-amplify"
 import React from "react"
 import { Button, View } from "react-native"
 import Header from "../../components/Header/Header"
@@ -9,7 +10,7 @@ import awsConfig from "../../src/aws-exports"
 Amplify.configure(awsConfig)
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
 }
 export default class LoginScreen extends JCComponent<Props> {
   logout(): void {

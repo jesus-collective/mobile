@@ -1,5 +1,6 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { MapData } from "components/MyGroups/MyGroups"
@@ -46,7 +47,7 @@ import * as queries from "../../src/graphql/queries"
 import Accordion from "./Accordion"
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   route: any
 }
 interface State extends JCState {

@@ -1,4 +1,5 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Button, Card, CardItem, Container, Content, Left, StyleProvider } from "native-base"
@@ -13,7 +14,7 @@ import * as queries from "../../src/graphql/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { MapData } from "../MyGroups/MyGroups"
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<any, any>
   wrap: boolean
   onDataload(mapData: MapData[]): void
 }
