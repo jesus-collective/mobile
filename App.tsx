@@ -132,11 +132,12 @@ class AwesomeApp extends JCComponent<Props, State> {
       joinedAs: "individual" | "organization" | null
       brand: "jc" | "oneStory" | null
     }
-    if (state == "signUp") RootNavigation.navigate("signup", { joinedAs: null })
+    if (state == "signUp") RootNavigation.navigate("signup", { joinedAs: null, brand: data?.brand })
     else if (state == "signIn") {
       RootNavigation.navigate("auth", {
         screen: "signin",
         params: {
+          brand: data?.brand,
           email: data?.email,
           fromVerified: data?.fromVerified,
         },
@@ -164,7 +165,7 @@ class AwesomeApp extends JCComponent<Props, State> {
           screen: "Payment3",
           params: {
             joinedProduct: data?.joinedProduct,
-            productType: data?.productType,
+            brand: data?.brand,
           },
         })
       } else {
@@ -172,7 +173,7 @@ class AwesomeApp extends JCComponent<Props, State> {
           screen: "Payment1",
           params: {
             joinedProduct: data?.joinedProduct,
-            productType: data?.productType,
+            brand: data?.brand,
           },
         })
       }

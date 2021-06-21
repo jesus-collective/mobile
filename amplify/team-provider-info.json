@@ -164,7 +164,7 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcUpdateMainUserGroup-564b4f2f4b2f6e6d5438-build.zip"
+          "s3Key": "amplify-builds/jcUpdateMainUserGroup-477753546f6a54624656-build.zip"
         },
         "jcmobileStripCreateSubscription": {
           "userPoolId": "us-east-1_Bq1YZMmzA",

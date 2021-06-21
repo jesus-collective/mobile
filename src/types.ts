@@ -46,7 +46,7 @@ export type AuthStateData = {
   fromVerified?: boolean
   email?: string
   joinedProduct?: string
-  productType: "Partner" | "OneStory" | null
+  brand: "jc" | "oneStory" | null
 } | null
 export enum InviteType {
   course,

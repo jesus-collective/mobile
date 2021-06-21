@@ -44,7 +44,7 @@ interface State {
   authError: string
   joinedAs: "individual" | "organization" | null
   joinedProduct: string
-  productType: "Partner" | "OneStory" | null
+  brand: "jc" | "oneStory" | null
   sendingData: boolean
 }
 
@@ -66,7 +66,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       authError: "",
       joinedAs: props.route?.params.joinedAs,
       joinedProduct: props.route?.params.joinedProduct,
-      productType: props.route?.params.productType,
+      brand: props.route?.params.brand ?? "jc",
       sendingData: false,
     }
     console.log({ PARAMS: props.route })
@@ -88,7 +88,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       authError: "",
       joinedAs: null,
       joinedProduct: this.props.route?.params.joinedProduct,
-      productType: this.props.route?.params.productType,
+      brand: this.state.brand,
       sendingData: false,
     })
     if (actions.onStateChange) await actions.onStateChange(state, data)
@@ -161,7 +161,7 @@ class MySignUpImpl extends React.Component<Props, State> {
           async () =>
             await this.changeAuthState(actions, "confirmSignUp", {
               joinedProduct: this.state.joinedProduct,
-              productType: this.state.productType,
+              brand: this.state.brand,
               email: this.state.user.email.toLowerCase(),
             })
         )
@@ -221,7 +221,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signIn", {
                           joinedProduct: this.state.joinedProduct,
-                          productType: this.state.productType,
+                          brand: this.state.brand,
                         })
                       }}
                     >
@@ -408,7 +408,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             onPress={async () =>
                               await this.changeAuthState(userActions, "confirmSignUp", {
                                 joinedProduct: this.state.joinedProduct,
-                                productType: this.state.productType,
+                                brand: this.state.brand,
                               })
                             }
                           >
@@ -624,7 +624,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             onPress={async () =>
                               await this.changeAuthState(userActions, "confirmSignUp", {
                                 joinedProduct: this.state.joinedProduct,
-                                productType: this.state.productType,
+                                brand: this.state.brand,
                               })
                             }
                           >
@@ -672,8 +672,43 @@ class MySignUpImpl extends React.Component<Props, State> {
                     )
                   ) : (
                     <View style={this.styles.style.authView3}>
+                      <Text
+                        accessibilityRole="header"
+                        style={{
+                          width: "100%",
+                          marginBottom: "5.5%",
+                          fontFamily: "Graphik-Regular-App",
+                          fontWeight: "bold",
+                          fontSize: 22,
+                          lineHeight: 30,
+                        }}
+                      >
+                        {this.state.brand == "oneStory"
+                          ? "Welcome to One Story"
+                          : "Sign in to Jesus Collective"}
+                      </Text>
+                      {this.state.brand == "oneStory" && (
+                        <Text
+                          style={{
+                            width: "100%",
+                            marginBottom: "5.5%",
+                            fontFamily: "Graphik-Regular-App",
+
+                            fontSize: 14,
+                            lineHeight: 20,
+                          }}
+                        >
+                          We are looking forward to partnering with you as you introduce kids and
+                          youth in your community to Jesus. To access our content you will need to
+                          create a Jesus Collective account. One Story’s partnership with Jesus
+                          Collective allows us to not only make all of our resources available
+                          online in a convenient easy to assess way, but also provides you the
+                          benefit of connecting with other One Story users to give feedback, share
+                          ideas and ask questions.
+                        </Text>
+                      )}
                       <Text accessibilityRole="header" style={this.styles.style.mySignUpText}>
-                        Welcome. What type of account would you like to create?
+                        What type of account would you like to create?
                       </Text>
                       <View style={this.styles.style.mySignUpButton}>
                         <JCButton

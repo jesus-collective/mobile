@@ -81,7 +81,7 @@ interface State extends JCState {
   userData: NonNullable<GetUserQuery>["getUser"]
   currentProduct: Products
   joinedProduct: string[]
-  productType: "Partner" | "OneStory" | null
+  brand: "jc" | "oneStory" | null
   idempotency: string
   eula: boolean
   showEULA: boolean
@@ -117,14 +117,14 @@ class BillingImpl extends JCComponent<Props, State> {
       validatingUser: false,
       freeDays: 30,
       eula: false,
-      productType: props.route?.params?.productType,
+      brand: props.route?.params?.brand,
       joinedProduct: props.route?.params?.joinedProduct
         ? props.route?.params?.joinedProduct == "null"
           ? []
           : props.route?.params?.joinedProduct.split(",")
         : [],
     }
-    console.log({ productType: props.route?.params?.productType })
+    console.log({ brand: props.route?.params?.brand })
     console.log({ joinedProduct: this.state.joinedProduct })
     this.setInitialData()
   }
@@ -739,7 +739,7 @@ class BillingImpl extends JCComponent<Props, State> {
 
                   <Content style={{ display: this.state.processing == "entry" ? "flex" : "none" }}>
                     <View style={this.styles.style.signUpScreen1PaymentColumn1Form}>
-                      {this.state.productType == "OneStory" && (
+                      {this.state.brand == "oneStory" && (
                         <Text>
                           You are in the right place to sign up for One Story Curriculum! One Story
                           is excited to partner with Jesus Collective in this tangible way and

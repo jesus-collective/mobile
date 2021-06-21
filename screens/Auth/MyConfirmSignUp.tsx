@@ -63,7 +63,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
         await this.changeAuthState(actions, "signIn", {
           email: this.state.email.toLowerCase(),
           fromVerified: true,
-          productType: null,
+          brand: null,
         })
       })
     } catch (e) {

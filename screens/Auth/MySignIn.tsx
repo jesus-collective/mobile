@@ -12,6 +12,7 @@ import {
   TextInputKeyPressEventData,
   TouchableOpacity,
 } from "react-native"
+import { AuthStateData } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Sentry from "../../components/Sentry"
@@ -29,7 +30,8 @@ interface State {
   user: string
   authError: string
   fromVerified: boolean
-  brand: string
+  joinedProduct: string
+  brand: "jc" | "oneStory" | null
 }
 
 class MySignInImpl extends React.Component<Props, State> {
@@ -42,6 +44,7 @@ class MySignInImpl extends React.Component<Props, State> {
       authError: "",
       fromVerified: props.route?.params?.fromVerified ?? false,
       brand: props.route?.params?.brand ?? "jc",
+      joinedProduct: props.route?.params.joinedProduct,
     }
   }
   static UserConsumer = UserContext.Consumer
@@ -64,13 +67,20 @@ class MySignInImpl extends React.Component<Props, State> {
     }
   }
 
-  async changeAuthState(action: UserActions, state: string, user?: any): Promise<void> {
+  async changeAuthState(
+    action: UserActions,
+    state: string,
+    user?: any,
+    data?: AuthStateData
+  ): Promise<void> {
     this.setState({
       pass: "",
       user: "",
       authError: "",
+      joinedProduct: this.props.route?.params.joinedProduct,
+      brand: this.state.brand,
     })
-    await action.onStateChange(state, null)
+    if (action.onStateChange) await action.onStateChange(state, data ?? null)
     if (user) action.onSetUser(user)
   }
 
@@ -142,7 +152,10 @@ class MySignInImpl extends React.Component<Props, State> {
                       accessibilityHint="Navigate to account creation page"
                       buttonType={ButtonTypes.SolidCreateAccount}
                       onPress={async () => {
-                        await this.changeAuthState(userActions, "signUp")
+                        await this.changeAuthState(userActions, "signUp", null, {
+                          joinedProduct: this.state.joinedProduct,
+                          brand: this.state.brand,
+                        })
                       }}
                     >
                       Create an Account
@@ -160,7 +173,9 @@ class MySignInImpl extends React.Component<Props, State> {
                         lineHeight: 30,
                       }}
                     >
-                      Sign in to Jesus Collective
+                      {this.state.brand == "oneStory"
+                        ? "Welcome to One Story"
+                        : "Sign in to Jesus Collective"}
                     </Text>
                     {this.state.brand == "oneStory" && (
                       <Text
