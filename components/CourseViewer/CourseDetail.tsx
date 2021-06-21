@@ -507,7 +507,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               onChange={(val: string) => {
                 actions.updateWeek(state.activeWeek, "leader", val)
               }}
-              value={week.leader}
+              value={week.leader ?? null}
               isEditable={state.isEditable && state.editMode}
             ></EditableRichText>
           </Container>
@@ -839,7 +839,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             onChange={(val: string) => {
               actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
-            value={lesson?.description}
+            value={lesson?.description ?? null}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
         </Container>
@@ -920,7 +920,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             onChange={(val: string) => {
               actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
-            value={lesson?.description}
+            value={lesson?.description ?? null}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
         </Container>
@@ -995,7 +995,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             onChange={(val: string) => {
               actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
-            value={lesson?.description}
+            value={lesson?.description ?? null}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
           <CourseDetailImpl.UserConsumer>
@@ -1084,7 +1084,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             onChange={(val: string) => {
               actions.updateLesson(state.activeWeek, lesson?.id as string, "description", val)
             }}
-            value={lesson?.description}
+            value={lesson?.description ?? null}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
           <CourseDetailImpl.UserConsumer>

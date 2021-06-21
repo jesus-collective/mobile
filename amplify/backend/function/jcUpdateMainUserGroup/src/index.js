@@ -5,14 +5,56 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
+const aws = require("aws-sdk")
 const gql = require("graphql-tag")
 const graphql = require("graphql")
 const queries = require("./queries")
 const mutations = require("./mutations")
 const Amplify = require("aws-amplify")
 global.fetch = require("node-fetch")
-const { print } = graphql
 
+async function getGroups(id) {
+  const cognitoidentityserviceprovider = new aws.CognitoIdentityServiceProvider({
+    apiVersion: "2016-04-18",
+  })
+  var params = {
+    UserPoolId: process.env.userPoolId,
+    Username: id,
+  }
+  console.log(params)
+  var groups = await cognitoidentityserviceprovider.adminListGroupsForUser(params).promise()
+  console.log({ groups: groups })
+  return groups
+}
+async function updateUser(id, userType) {
+  var json2 = await Amplify.API.graphql({
+    query: mutations.updateUser,
+    variables: { input: { id: id, mainUserGroup: userType } },
+    authMode: "AMAZON_COGNITO_USER_POOLS",
+  })
+  console.log({ Updated: { id: id, mainUserGroup: userType } })
+}
+async function listUsers(nextToken) {
+  return await Amplify.API.graphql({
+    query: queries.listUsers,
+    variables: {
+      limit: 20,
+      filter: { profileState: { eq: "Complete" } },
+      nextToken: nextToken,
+    },
+    authMode: "AMAZON_COGNITO_USER_POOLS",
+  })
+}
+async function getAllUsers() {
+  var json = await listUsers(null)
+  var items = [json.data.listUsers.items]
+  while (json.data.listUsers.nextToken !== null) {
+    json = await listUsers(json.data.listUsers.nextToken)
+    console.log(json.data.listUsers.nextToken)
+    items = [...items, ...json.data.listUsers.items]
+  }
+  return items
+}
 exports.handler = async function (event, context) {
   var AWS = require("aws-sdk"),
     region = "us-east-1",
@@ -73,30 +115,49 @@ exports.handler = async function (event, context) {
         Authorization: currentSession.getIdToken().getJwtToken(),
       })
       console.log("Done Auth")
-      json = await Amplify.API.graphql({
-        query: queries.listUsers,
-        variables: {
-          limit: 20,
-          filter: { profileState: { eq: "Complete" } },
-          nextToken: null,
-        },
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-      })
+      const allUsers = await getAllUsers()
       console.log("Done List Users")
+      console.log({ allUsers: allUsers })
       await Promise.all(
-        json.data.listUsers.items.map(async (item) => {
+        allUsers.map(async (item) => {
           //TODO CHECK GROUPS FOR USER AND THEN UPDATE
           //ADMIN->ADMIN
           //Partner->Partner
           //Friend->Friend
           //Complete ProfileState->Verified
           //Everyone else ->UnVerified
-          var json2 = await Amplify.API.graphql({
-            query: mutations.updateUser,
-            variables: { input: { id: item.id, mainUserGroup: "Partner" } },
-            authMode: "AMAZON_COGNITO_USER_POOLS",
-          })
-          console.log({ Updated: { id: item.id, mainUserGroup: "Partner" } })
+          var groups
+          try {
+            groups = (await getGroups(item.id)).Groups
+            console.log({ groupRet: groups })
+          } catch (e) {
+            console.log({ error: e })
+          }
+          try {
+            var groupName = ""
+            if (groups == undefined || groups == null) groupName = "Inactive"
+            else if (groups.filter((z) => z.GroupName == "admin").length > 0) groupName = "Admin"
+            else if (
+              groups.filter((z) => z.GroupName == "partners" || z.GroupName == "legacyUserGroup1")
+                .length > 0
+            )
+              groupName = "Partner"
+            else if (groups.filter((z) => z.GroupName == "friends").length > 0) groupName = "Friend"
+            else if (
+              groups.filter(
+                (z) =>
+                  z.GroupName == "subscriptionkyearlyyears" ||
+                  z.GroupName == "subscriptionkykids" ||
+                  z.GroupName == "subscriptionkyyouth"
+              ).length > 0
+            )
+              groupName = "OneStory"
+            else groupName = "Verified"
+
+            await updateUser(item.id, groupName)
+          } catch (e) {
+            console.log({ error: e })
+          }
         })
       )
       console.log("Done")

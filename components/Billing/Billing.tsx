@@ -324,7 +324,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           ${product?.price?.toFixed(2)}/{product?.pricePer}
                         </Text>
                         <EditableRichText
-                          value={product?.marketingDescription}
+                          value={product?.marketingDescription ?? null}
                           isEditable={false}
                         ></EditableRichText>
                       </Body>

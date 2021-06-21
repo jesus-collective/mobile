@@ -1,16 +1,14 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Auth } from "aws-amplify"
 import { Body, Button, Card, CardItem, Container, Content, Left, StyleProvider } from "native-base"
 import * as React from "react"
 import { Text, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
+import { Data, UserGroupType } from "../../components/Data/Data"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { ListUsersQuery } from "../../src/API"
 import { constants } from "../../src/constants"
-import * as queries from "../../src/graphql/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { MapData } from "../MyGroups/MyGroups"
 interface Props {
@@ -21,6 +19,7 @@ interface Props {
 interface State extends JCState {
   openSingle: string
   openMultiple: string
+  userGroupType: UserGroupType
   // type: String
   //cardWidth: any
   //createString: String
@@ -39,13 +38,32 @@ export default class MyPeople extends JCComponent<Props, State> {
       //createString: "+ Create Event",
       //type: props.type,
       //cardWidth: 250,
+      userGroupType: UserGroupType.All,
       data: [],
       currentUser: null,
       // showCreateButton: false
     }
     const user = Auth.currentAuthenticatedUser()
     user.then((user: JCCognitoUser) => {
-      this.setState({ currentUser: user.username }, () => this.setInitialData())
+      const groupList: string[] = user.getSignInUserSession()?.getAccessToken().payload[
+        "cognito:groups"
+      ]
+      this.setState(
+        {
+          userGroupType:
+            groupList?.includes("partner") || groupList?.includes("legacyUserGroup1")
+              ? UserGroupType.Partners
+              : groupList?.includes("subscriptionkyyouth") ||
+                groupList?.includes("subscriptionkykids") ||
+                groupList?.includes("subscriptionkyearlyyears")
+              ? UserGroupType.OneStory
+              : groupList?.includes("Friend")
+              ? UserGroupType.Friends
+              : UserGroupType.All,
+          currentUser: user.username,
+        },
+        () => this.setInitialData()
+      )
     })
   }
   convertProfileToMapData(data: NonNullable<ListUsersQuery["listUsers"]>["items"]): MapData[] {
@@ -67,12 +85,7 @@ export default class MyPeople extends JCComponent<Props, State> {
   }
 
   setInitialData(): void {
-    const listUsers = API.graphql({
-      query: queries.listUsers,
-      variables: { filter: { profileState: { eq: "Complete" } } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<ListUsersQuery>>
-
+    const listUsers = Data.listUsers(this.state.userGroupType, null)
     listUsers
       .then((json) => {
         // console.log(json)

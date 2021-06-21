@@ -7,8 +7,18 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
 import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider } from "native-base"
 import * as React from "react"
-import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
+import {
+  Dimensions,
+  Image,
+  Modal,
+  Picker,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
+import { Data, UserGroupType } from "../../components/Data/Data"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -85,6 +95,7 @@ interface State extends JCState {
   isPaid: any
   pickerState: any
   joinCourse: any
+  userGroupType: UserGroupType
 }
 export interface MapData {
   latitude: any
@@ -114,6 +125,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       isPaid: [],
       type: props.type,
       showAllEvents: !!this.props.showAllEvents,
+      userGroupType: UserGroupType.All,
     }
 
     if (props.type === "event") {
@@ -223,31 +235,28 @@ export default class MyGroups extends JCComponent<Props, State> {
       const user: JCCognitoUser = await Auth.currentAuthenticatedUser()
       this.setState({ currentUser: user.username })
       if (this.props.type != "profile") {
+        const groupList: string[] = user.getSignInUserSession()?.getAccessToken().payload[
+          "cognito:groups"
+        ]
         this.setState({
+          userGroupType:
+            groupList?.includes("partner") || groupList?.includes("legacyUserGroup1")
+              ? UserGroupType.Partners
+              : groupList?.includes("subscriptionkyyouth") ||
+                groupList?.includes("subscriptionkykids") ||
+                groupList?.includes("subscriptionkyearlyyears")
+              ? UserGroupType.OneStory
+              : groupList?.includes("Friend")
+              ? UserGroupType.Friends
+              : UserGroupType.All,
           showCreateButton:
             this.props.type == "resource"
-              ? user
-                  .getSignInUserSession()
-                  ?.getAccessToken()
-                  .payload["cognito:groups"]?.includes("admin")
+              ? groupList?.includes("admin")
               : this.props.type == "course"
-              ? user
-                  .getSignInUserSession()
-                  ?.getAccessToken()
-                  .payload["cognito:groups"]?.includes("courseAdmin") ||
-                user
-                  .getSignInUserSession()
-                  ?.getAccessToken()
-                  .payload["cognito:groups"]?.includes("admin")
+              ? groupList?.includes("courseAdmin") || groupList?.includes("admin")
               : this.props.type == "organization"
-              ? user
-                  .getSignInUserSession()
-                  ?.getAccessToken()
-                  .payload["cognito:groups"]?.includes("admin")
-              : user
-                  .getSignInUserSession()
-                  ?.getAccessToken()
-                  .payload["cognito:groups"]?.includes("verifiedUsers"),
+              ? groupList?.includes("admin")
+              : groupList?.includes("verifiedUsers"),
         })
       }
     } catch (e) {
@@ -364,15 +373,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   async setData(props: Props, initialCall = false, pastEvents = false): Promise<void> {
     if (props.type == "profile") {
-      const listUsers = API.graphql({
-        query: queries.listUsers,
-        variables: {
-          limit: 20,
-          filter: { profileState: { eq: "Complete" } },
-          nextToken: this.state.nextToken,
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<ListUsersQuery>>
+      const listUsers = Data.listUsers(this.state.userGroupType, this.state.nextToken)
       const processList = (json: GraphQLResult<ListUsersQuery>) => {
         let temp
         if (this.state.data) temp = [...this.state.data, ...(json.data?.listUsers?.items ?? [])]
@@ -1493,6 +1494,32 @@ export default class MyGroups extends JCComponent<Props, State> {
                               />
                             ) : (
                               <>
+                                {this.state.type == "profile" && (
+                                  <Picker
+                                    mode="dropdown"
+                                    style={{
+                                      width: "10%",
+                                      marginTop: 12,
+                                      marginBottom: 20,
+                                      fontSize: 18,
+                                      height: 30,
+                                      flexGrow: 0,
+                                      paddingTop: 3,
+                                      paddingBottom: 3,
+                                    }}
+                                    selectedValue={this.state.userGroupType}
+                                    onValueChange={(value: UserGroupType) => {
+                                      console.log({ value: value })
+                                      this.setState({ data: [], userGroupType: value }, () => {
+                                        this.setData(this.props, false)
+                                      })
+                                    }}
+                                  >
+                                    {Object.keys(UserGroupType).map((org) => {
+                                      return <Picker.Item key={org} label={org} value={org} />
+                                    })}
+                                  </Picker>
+                                )}
                                 <JCButton
                                   buttonType={ButtonTypes.TransparentBoldOrange}
                                   testID={"mygroup-showall-" + this.state.titleString}
@@ -1513,7 +1540,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                                     Show Recommended
                                   </JCButton>
                                 ) : null}
-                                {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? (
+
+                                {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] &&
+                                this.state.type != "profile" ? (
                                   <JCButton
                                     buttonType={ButtonTypes.TransparentBoldOrange}
                                     testID={"mygroup-showmyfilter-" + this.state.titleString}

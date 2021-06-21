@@ -645,18 +645,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
 
   renderMainUserGroup(group: string) {
-    switch (group) {
-      case "verifiedUser":
-        return <Text style={this.styles.style.fontFormUserType}>Verified</Text>
-      case "friend":
-        return <Text style={this.styles.style.fontFormUserType}>Friend</Text>
-      case "partner":
-        return <Text style={this.styles.style.fontFormUserType}>Partner</Text>
-      case "admin":
-        return <Text style={this.styles.style.fontFormUserType}>Admin</Text>
-      default:
-        return <Text style={this.styles.style.fontFormUserType}>Un-Verified</Text>
-    }
+    return <Text style={this.styles.style.fontFormUserType}>{group}</Text>
   }
   openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
@@ -790,7 +779,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 ? this.state.UserDetails.currentRole
                 : "My Current Role not defined"}
             </Text>
-            {this.renderMainUserGroup(this.state.UserDetails?.mainUserGroup ?? "unverified")}
+            {this.renderMainUserGroup(this.state.UserDetails?.mainUserGroup ?? "Inactive")}
 
             {this.state.isEditable && this.state.editMode ? (
               <Text style={this.styles.style.fontFormSmall}>One sentence about me</Text>

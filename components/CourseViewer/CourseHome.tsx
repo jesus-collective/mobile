@@ -340,7 +340,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                   onChange={(val: string) => {
                                     actions.updateCourse("introduction", val)
                                   }}
-                                  value={state.courseData.introduction}
+                                  value={state.courseData.introduction ?? null}
                                   isEditable={state.isEditable && state.editMode}
                                 ></EditableRichText>
                               ) : null}
