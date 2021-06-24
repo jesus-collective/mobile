@@ -25,6 +25,12 @@ export const listDirectMessageRooms = /* GraphQL */ `
             id
             content
             attachment
+            author {
+              id
+              given_name
+              family_name
+              currentRole
+            }
             attachmentName
             attachmentOwner
             when

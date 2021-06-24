@@ -1,10 +1,11 @@
 import { convertFromRaw, EditorState } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import moment from "moment"
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
+import ProfileImage from "../ProfileImage/ProfileImage"
 
 const style = StyleSheet.create({
   container: {
@@ -100,8 +101,9 @@ export type Person = {
   name: string
   position: string
   comment: string
-  pictureUri: string
+  authorId: string
   createdAt?: string
+  replies?: Array<any>
 }
 interface CommentParams {
   comment: Person
@@ -109,16 +111,17 @@ interface CommentParams {
 }
 interface Props {
   person: Person
-  replies: Array<any>
 }
 
 type EntryType = "assignment" | "reply"
 
 export default function MessageThread(props: Props): JSX.Element {
-  const { replies, person } = props
+  const commentRef = useRef<any>(null)
+  const { person } = props
+  const { replies } = person
   const [open, setOpen] = useState(false)
   const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
-  console.log("createdAt", person.createdAt)
+
   const AssignmentBadge = (props: { type: EntryType }) => {
     const { type } = props
     return type === "assignment" ? (
@@ -139,12 +142,17 @@ export default function MessageThread(props: Props): JSX.Element {
       </View>
     ) : null
   }
-  const DateTag = ({ date }: { date: string }) => {
+  const DateTag = ({ type, date }: { date: string; type: EntryType }) => {
     const now = moment()
     const datePosted = moment(date)
     const daysSince = now.diff(datePosted, "days")
     return (
-      <Text style={[style.subHeaderText, { marginTop: 18, marginLeft: 8 }]}>
+      <Text
+        style={[
+          style.subHeaderText,
+          type === "assignment" ? { marginTop: 18, marginLeft: 8 } : { marginTop: 2 },
+        ]}
+      >
         {daysSince > 7
           ? datePosted.format("YYYY-MM-DD HH:mm a")
           : datePosted.format("dddd HH:mm a")}
@@ -153,13 +161,16 @@ export default function MessageThread(props: Props): JSX.Element {
   }
 
   const convertCommentFromJSONToHTML = (text: string | null) => {
-    return stateToHTML(convertFromRaw(JSON.parse(text)))
+    if (text) return stateToHTML(convertFromRaw(JSON.parse(text ?? "")))
+    return text
   }
   const ReplyCount = () => {
     let countString = ""
-    if (replies.length === 1) countString = "1 reply"
-    if (replies.length > 1) countString = `${replies.length} replies`
-    if (replies.length === 0) countString = "No replies"
+    if (replies) {
+      if (replies?.length === 1) countString = "1 reply"
+      if (replies?.length > 1) countString = `${replies.length} replies`
+    }
+    if (replies?.length === 0) countString = "No replies"
     return (
       <TouchableOpacity onPress={() => setOpen((prev) => !prev)}>
         <Text style={[style.subHeaderText, { marginTop: 4, textDecorationLine: "underline" }]}>
@@ -169,7 +180,7 @@ export default function MessageThread(props: Props): JSX.Element {
     )
   }
   const Comment = (props: CommentParams) => {
-    const { name, position, pictureUri, comment, createdAt } = props.comment
+    const { name, position, authorId, comment, createdAt } = props.comment
     const { type } = props
     return (
       <View style={{ flexDirection: "row", marginBottom: 30 }}>
@@ -184,7 +195,7 @@ export default function MessageThread(props: Props): JSX.Element {
           ) : (
             <View style={{ width: 38 }} />
           )}
-          <Image width={300} height={450} style={style.personImage} source={{ uri: pictureUri }} />
+          <ProfileImage size="small2" user={authorId ?? null} />
         </View>
         <View style={style.contentContainer}>
           <View style={{ flexDirection: "row" }}>
@@ -193,30 +204,34 @@ export default function MessageThread(props: Props): JSX.Element {
               <Text style={style.subHeaderText}>{position}</Text>
               <View style={{ flexDirection: "row" }}>
                 <AssignmentBadge type={type} />
-                {createdAt ? <DateTag date={createdAt} /> : null}
+                {createdAt ? <DateTag type={type} date={createdAt} /> : null}
               </View>
             </View>
             <CommentButton />
           </View>
-          {type === "assignment" ? (
-            <div
-              onClick={() => null}
-              dangerouslySetInnerHTML={{
-                __html: open
-                  ? convertCommentFromJSONToHTML(comment)
-                  : convertCommentFromJSONToHTML(comment)?.split("</p>")?.[0],
-              }}
-            />
-          ) : (
-            <Text>{comment}</Text>
-          )}
-          <ReplyCount />
+
+          <div
+            onClick={() => null}
+            dangerouslySetInnerHTML={{
+              __html: open
+                ? convertCommentFromJSONToHTML(comment)
+                : convertCommentFromJSONToHTML(comment)?.split("</p>")?.[0],
+            }}
+          />
+
+          {type === "assignment" && !open ? <ReplyCount /> : null}
         </View>
       </View>
     )
   }
+  useEffect(() => {
+    if (open)
+      commentRef?.current?.scrollIntoView({
+        behavior: "smooth",
+      })
+  }, [open])
   return (
-    <View style={style.container}>
+    <View ref={commentRef} style={style.container}>
       <Comment comment={person} type="assignment"></Comment>
       <View style={{ flexDirection: "column" }}>
         {open
@@ -228,12 +243,7 @@ export default function MessageThread(props: Props): JSX.Element {
           <View style={{ flexDirection: "row" }}>
             <View style={style.imageContainer}>
               <View style={{ width: 38 }} />
-              <Image
-                width={300}
-                height={450}
-                style={style.editorImage}
-                source={{ uri: props.person.pictureUri }}
-              />
+              <ProfileImage size="small2" user={props.person.authorId ?? null} />
             </View>
             <View style={{ flex: 1, paddingBottom: 16 }}>
               <Editor
@@ -272,7 +282,7 @@ export default function MessageThread(props: Props): JSX.Element {
                   null
                 }}
               >
-                Save
+                Post
               </JCButton>
             </View>
           </View>
