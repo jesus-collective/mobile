@@ -3,7 +3,8 @@ import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container } from "native-base"
 import React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { Text, TouchableHighlight, TouchableOpacity, View } from "react-native"
+import ActivityBoxStyles from "../../components/Activity/ActivityBoxStyles"
 import { CourseActions } from "../../components/CourseViewer/CourseContext"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
@@ -17,6 +18,7 @@ import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import MessageBoard from "../MessageBoard/MessageBoard"
+import Messages from "../MessageBoard/Messages"
 
 enum initialPostState {
   Yes,
@@ -37,6 +39,7 @@ interface State extends JCState {
   currentRoomId: string | null
   newToList: any
   userList: any
+  assignmentOption: string
 }
 export default class EditableCourseAssignment extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -51,6 +54,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       newToList: [],
       assignmentComplete: false,
       userList: [...z.all],
+      assignmentOption: "Assignments to Review",
     }
     console.log({ userList: this.state.userList })
 
@@ -245,76 +249,137 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     console.log(ids)
     return ids
   }
+  ButtonHeader({ optionState, changeOption }): JSX.Element {
+    return (
+      <View style={[ActivityBoxStyles.ActivityButtonContainer, { borderBottomWidth: 0 }]}>
+        {["Assignments to Review", "My Assignment"].map((option: string) => {
+          return (
+            <TouchableHighlight
+              underlayColor="rgba(255,255,255,0.2)"
+              key={option}
+              disabled={optionState === option}
+              onPress={() => changeOption(option)}
+              style={{
+                padding: 16,
+                borderBottomWidth: optionState === option ? 2 : 0,
+                borderBottomColor: optionState === option ? "#F0493E" : "none",
+              }}
+            >
+              <Text
+                style={[
+                  ActivityBoxStyles.ActivityButtonText,
+                  { fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Semibold-App" },
+                  optionState === option ? { color: "#F0493E" } : {},
+                ]}
+              >
+                {option}
+              </Text>
+            </TouchableHighlight>
+          )
+        })}
+      </View>
+    )
+  }
   renderCourseReview(): React.ReactNode {
     return (
-      <Container style={this.styles.style.courseAssignmentMainContainer}>
-        <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
-          <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
+      <Container style={{ width: "100%" }}>
+        <this.ButtonHeader
+          optionState={this.state.assignmentOption}
+          changeOption={(a) => this.setState({ assignmentOption: a })}
+        />
+        {/* Use a FlatList here */}
+        {console.log("data", this.state.data)}
+        {this.state.data != null && this.state.data.length != 0 && this.shouldShowMB() ? (
+          this.state.data != null && this.state.data.length != 0 ? (
+            this.state.assignmentOption === "My Assignment" ? (
+              <Messages
+                recipients={this.getCurrentRoomRecipients()}
+                open
+                room={this.state.data.find((a) => a?.id.includes(this.state.currentUser))}
+              />
+            ) : (
+              this.state.data
+                ?.filter(
+                  (item) =>
+                    item?.directMessage?.items.length > 0 &&
+                    !item?.id.includes(this.state.currentUser)
+                )
+                .map((item, index: number) => (
+                  <Messages recipients={this.getCurrentRoomRecipients()} room={item} key={index} />
+                ))
+            )
+          ) : null
+        ) : null}
 
-          {this.state.data != null && this.state.data.length != 0 ? (
-            this.state.data.map((item, index: number) => {
-              const otherUsers = this.getOtherUsers(item)
-              let stringOfNames = ""
-              otherUsers.names.forEach((name, index) => {
-                if (otherUsers.names.length === index + 1) stringOfNames += name
-                else stringOfNames += name + ", "
-              })
-              if (item.directMessage.items.length > 0)
-                return (
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset",
-                      borderRadius: 10,
-                      width: "100%",
-                      paddingTop: 8,
-                      paddingBottom: 8,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                    key={item.id}
-                    onPress={() => {
-                      this.switchRoom(index)
-                    }}
-                  >
-                    <Text
+        <Container style={this.styles.style.courseAssignmentMainContainer}>
+          <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
+            <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
+
+            {this.state.data != null && this.state.data.length != 0 ? (
+              this.state.data.map((item, index: number) => {
+                const otherUsers = this.getOtherUsers(item)
+                let stringOfNames = ""
+                otherUsers.names.forEach((name, index) => {
+                  if (otherUsers.names.length === index + 1) stringOfNames += name
+                  else stringOfNames += name + ", "
+                })
+                if (item.directMessage.items.length > 0)
+                  return (
+                    <TouchableOpacity
                       style={{
-                        fontSize: 20,
-                        lineHeight: 25,
-                        fontWeight: "normal",
-                        fontFamily: "Graphik-Regular-App",
+                        backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset",
+                        borderRadius: 10,
                         width: "100%",
+                        paddingTop: 8,
+                        paddingBottom: 8,
                         display: "flex",
                         alignItems: "center",
                       }}
+                      key={item.id}
+                      onPress={() => {
+                        this.switchRoom(index)
+                      }}
                     >
-                      <ProfileImage
-                        user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
-                        size="small2"
-                      ></ProfileImage>
-                      {item.name ? item.name : stringOfNames}
-                    </Text>
-                  </TouchableOpacity>
-                )
-            })
-          ) : (
-            <Text>Nothing to review</Text>
-          )}
-        </Container>
-
-        {this.state.data != null && this.state.data.length != 0 && this.shouldShowMB() ? (
-          <Container style={this.styles.style.courseAssignmentScreenRightCard}>
-            <MessageBoard
-              replies
-              inputAt="bottom"
-              showWordCount={true}
-              totalWordCount={this.props.wordCount}
-              style="courseResponse"
-              toolbar={true}
-              roomId={this.state.currentRoomId}
-              recipients={this.getCurrentRoomRecipients()}
-            ></MessageBoard>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          lineHeight: 25,
+                          fontWeight: "normal",
+                          fontFamily: "Graphik-Regular-App",
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <ProfileImage
+                          user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
+                          size="small2"
+                        ></ProfileImage>
+                        {item.name ? item.name : stringOfNames}
+                      </Text>
+                    </TouchableOpacity>
+                  )
+              })
+            ) : (
+              <Text>Nothing to review</Text>
+            )}
           </Container>
-        ) : null}
+
+          {this.state.data != null && this.state.data.length != 0 && this.shouldShowMB() ? (
+            <Container style={this.styles.style.courseAssignmentScreenRightCard}>
+              <MessageBoard
+                replies
+                inputAt="bottom"
+                showWordCount={true}
+                totalWordCount={this.props.wordCount}
+                style="courseResponse"
+                toolbar={true}
+                roomId={this.state.currentRoomId}
+                recipients={this.getCurrentRoomRecipients()}
+              ></MessageBoard>
+            </Container>
+          ) : null}
+        </Container>
       </Container>
     )
   }
@@ -355,30 +420,6 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
             </>
           ) : (
             <>
-              <div
-                style={{
-                  padding: 5,
-                  height: 25,
-                  width: "95%",
-                  marginTop: 20,
-                  backgroundColor:
-                    this.hasInitialPost() == initialPostState.Yes ? "#71C209" : "#71C209",
-                  borderRadius: 4,
-                }}
-              >
-                <span
-                  style={{
-                    color: "#ffffff",
-                    fontSize: 18,
-                    fontFamily: "Graphik-Bold-App",
-                    alignSelf: "center",
-                    paddingLeft: 10,
-                    paddingTop: 15,
-                  }}
-                >
-                  Assignment
-                </span>
-              </div>
               {this.hasInitialPost() == initialPostState.Yes ? (
                 this.renderCourseReview()
               ) : this.hasInitialPost() == initialPostState.No ? (
