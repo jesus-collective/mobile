@@ -16,6 +16,14 @@ const style = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: "#F9FAFC",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0.5,
+      height: 0.5,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 1,
     borderRadius: 4,
     flex: 1,
     paddingHorizontal: 22,
@@ -257,12 +265,10 @@ export default function MessageThread(props: Props): JSX.Element {
           : null}
         {open ? (
           <View style={{ flexDirection: "row" }}>
-            <View style={style.imageContainer}>
-              <View style={{ width: 38 }} />
-              {/* This needs to be pulled from Auth.currentAuthenticatedUser() */}
+            <View style={{ justifyContent: "center" }}>
               <ProfileImage size="small2" user={props.person.authorId ?? null} />
             </View>
-            <View style={{ flex: 1, paddingBottom: 16 }}>
+            <View style={{ flex: 1 }}>
               {roomId ? <MessageEditor recipients={recipients} roomId={roomId} /> : null}
             </View>
           </View>
