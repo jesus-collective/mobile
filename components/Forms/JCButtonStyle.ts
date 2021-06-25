@@ -290,13 +290,13 @@ export default EStyleSheet.create({
     borderColor: "#F0493E",
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
-    height: 36,
+    paddingHorizontal: 22,
+    height: 24,
   },
   OutlineSmallText: {
     color: "#F0493E",
     fontFamily: "Graphik-Regular-App",
-    fontSize: 16,
-    padding: 5,
+    fontSize: 12,
   },
   ProfileSmallButton: {
     paddingTop: 0,

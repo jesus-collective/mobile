@@ -1,18 +1,18 @@
-import { convertFromRaw, EditorState } from "draft-js"
+import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import moment from "moment"
 import React, { useEffect, useRef, useState } from "react"
-import { Editor } from "react-draft-wysiwyg"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import ProfileImage from "../ProfileImage/ProfileImage"
+import MessageEditor from "./MessageEditor"
 
 const style = StyleSheet.create({
   container: {
     zIndex: 1000000,
     flexDirection: "column",
     backgroundColor: "white",
-    width: "80%",
+    width: "85%",
   },
   contentContainer: {
     backgroundColor: "#F9FAFC",
@@ -20,6 +20,7 @@ const style = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 22,
     paddingVertical: 8,
+    paddingBottom: 40,
   },
   headerText: {
     fontSize: 16,
@@ -37,11 +38,10 @@ const style = StyleSheet.create({
     letterSpacing: -0.3,
   },
   contentText: {
-    fontSize: 12,
+    fontSize: 16,
     color: "#333",
-    fontFamily: "Graphik-Semibold-App",
-    lineHeight: 28,
-    marginLeft: 2,
+    fontFamily: "Graphik-Regular-App",
+    lineHeight: 26,
     letterSpacing: -0.3,
   },
   imageContainer: {
@@ -59,16 +59,6 @@ const style = StyleSheet.create({
   },
   arrowDown: {
     transform: [{ rotate: "-90deg" }],
-  },
-  personImage: {
-    borderTopWidth: 0.7,
-    borderBottomWidth: 0.7,
-    justifyContent: "center",
-    width: 60,
-    borderWidth: 1,
-    borderRadius: 50,
-    borderColor: "#E4E1E1",
-    height: 80,
   },
   assignmentBadge: {
     marginTop: 17,
@@ -102,8 +92,11 @@ export type Person = {
   position: string
   comment: string
   authorId: string
+  roomId?: string
   createdAt?: string
   replies?: Array<any>
+  updatedAt?: string
+  recipients: Array<string>
 }
 interface CommentParams {
   comment: Person
@@ -111,16 +104,16 @@ interface CommentParams {
 }
 interface Props {
   person: Person
+  open?: boolean
 }
 
-type EntryType = "assignment" | "reply"
+type EntryType = "assignment" | "reply" | "replyToReply"
 
 export default function MessageThread(props: Props): JSX.Element {
   const commentRef = useRef<any>(null)
   const { person } = props
-  const { replies } = person
-  const [open, setOpen] = useState(false)
-  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
+  const { replies, roomId, recipients } = person
+  const [open, setOpen] = useState(props.open)
 
   const AssignmentBadge = (props: { type: EntryType }) => {
     const { type } = props
@@ -135,27 +128,32 @@ export default function MessageThread(props: Props): JSX.Element {
     return !open ? (
       <View style={{ flexDirection: "column", flex: 1 }}>
         <View style={{ alignSelf: "flex-end", marginTop: 8 }}>
-          <JCButton onPress={() => setOpen((prev) => !prev)} buttonType={ButtonTypes.OutlineSmall}>
+          <JCButton
+            onPress={() => {
+              setOpen((prev) => !prev)
+            }}
+            buttonType={ButtonTypes.OutlineSmall}
+          >
             Comment
           </JCButton>
         </View>
       </View>
     ) : null
   }
-  const DateTag = ({ type, date }: { date: string; type: EntryType }) => {
+  const DateTag = ({ createdDate, updatedDate }: { updatedDate: string; createdDate: string }) => {
     const now = moment()
-    const datePosted = moment(date)
+    const datePosted = moment(createdDate)
     const daysSince = now.diff(datePosted, "days")
+    const edited = createdDate < updatedDate ? moment(updatedDate) : null
     return (
-      <Text
-        style={[
-          style.subHeaderText,
-          type === "assignment" ? { marginTop: 18, marginLeft: 8 } : { marginTop: 2 },
-        ]}
-      >
+      <Text style={[style.subHeaderText, { marginTop: 2 }]}>
         {daysSince > 7
           ? datePosted.format("YYYY-MM-DD HH:mm a")
           : datePosted.format("dddd HH:mm a")}
+
+        <Text style={{ fontSize: 11 }}>
+          {edited ? "  Last edited on " + edited.format("YYYY-MM-DD HH:mm a") : null}
+        </Text>
       </Text>
     )
   }
@@ -180,10 +178,18 @@ export default function MessageThread(props: Props): JSX.Element {
     )
   }
   const Comment = (props: CommentParams) => {
-    const { name, position, authorId, comment, createdAt } = props.comment
+    const { name, position, authorId, comment, createdAt, updatedAt } = props.comment as Person
     const { type } = props
     return (
-      <View style={{ flexDirection: "row", marginBottom: 30 }}>
+      <View
+        style={[
+          { flexDirection: "row", marginBottom: 30 },
+          type === "replyToReply" ? { marginLeft: 80 } : {},
+          {
+            /* This cannot be hard coded. needs to be the same size as the first column */
+          },
+        ]}
+      >
         <View style={style.imageContainer}>
           {type === "assignment" ? (
             <TouchableOpacity onPress={() => setOpen((prev) => !prev)}>
@@ -202,88 +208,62 @@ export default function MessageThread(props: Props): JSX.Element {
             <View style={{ flexDirection: "column" }}>
               <Text style={style.headerText}>{name}</Text>
               <Text style={style.subHeaderText}>{position}</Text>
-              <View style={{ flexDirection: "row" }}>
-                <AssignmentBadge type={type} />
-                {createdAt ? <DateTag type={type} date={createdAt} /> : null}
-              </View>
+              {createdAt ? <DateTag updatedDate={updatedAt ?? ""} createdDate={createdAt} /> : null}
+
+              <AssignmentBadge type={type} />
             </View>
             <CommentButton />
           </View>
-
-          <div
-            onClick={() => null}
-            dangerouslySetInnerHTML={{
-              __html: open
-                ? convertCommentFromJSONToHTML(comment)
-                : convertCommentFromJSONToHTML(comment)?.split("</p>")?.[0],
-            }}
-          />
-
+          <Text style={[style.contentText, open ? { marginTop: 20 } : {}]}>
+            <div
+              onClick={() => null}
+              dangerouslySetInnerHTML={{
+                __html: open
+                  ? convertCommentFromJSONToHTML(comment ?? "")
+                      ?.replaceAll("<p>", "")
+                      .replaceAll("</p>", "") ?? ""
+                  : convertCommentFromJSONToHTML(comment)?.split("</p>")?.[0] ?? "",
+              }}
+            />
+          </Text>
           {type === "assignment" && !open ? <ReplyCount /> : null}
         </View>
       </View>
     )
   }
+
   useEffect(() => {
     if (open)
       commentRef?.current?.scrollIntoView({
         behavior: "smooth",
       })
   }, [open])
+
   return (
     <View ref={commentRef} style={style.container}>
       <Comment comment={person} type="assignment"></Comment>
       <View style={{ flexDirection: "column" }}>
         {open
           ? replies?.map((comment: Person, index) => {
-              return <Comment key={index} type="reply" comment={comment} />
+              return (
+                <View key={index}>
+                  <Comment key={index} type="reply" comment={comment} />
+                  {comment?.replies?.map((a) => {
+                    return <Comment type="replyToReply" comment={a} key={a?.id}></Comment>
+                  })}
+                </View>
+              )
             })
           : null}
         {open ? (
           <View style={{ flexDirection: "row" }}>
             <View style={style.imageContainer}>
               <View style={{ width: 38 }} />
+              {/* This needs to be pulled from Auth.currentAuthenticatedUser() */}
               <ProfileImage size="small2" user={props.person.authorId ?? null} />
             </View>
             <View style={{ flex: 1, paddingBottom: 16 }}>
-              <Editor
-                wrapperStyle={{
-                  maxHeight: 150,
-                  marginTop: 0,
-                  flex: 1,
-                }}
-                placeholder={"Write a response...."}
-                editorState={editorState}
-                toolbarClassName="customToolbar"
-                wrapperClassName={"customWrapperSendmessageCourse"}
-                editorClassName={`customEditorSendmessage ${
-                  toolbar ? "has-toolbar" : "no-toolbar"
-                }`}
-                onEditorStateChange={(value) => {
-                  setEditorState(value)
-                }}
-                toolbarHidden={!toolbar}
-                toolbar={{
-                  options: ["inline", "list", "emoji"],
-                  inline: {
-                    options: ["bold", "italic", "underline"],
-                  },
-                  list: {
-                    options: ["unordered", "ordered"],
-                  },
-                  emoji: {
-                    popupClassName: "customEmojiModal",
-                  },
-                }}
-              />
-              <JCButton
-                buttonType={ButtonTypes.SolidRightJustifiedMini}
-                onPress={async () => {
-                  null
-                }}
-              >
-                Post
-              </JCButton>
+              {roomId ? <MessageEditor recipients={recipients} roomId={roomId} /> : null}
             </View>
           </View>
         ) : null}
