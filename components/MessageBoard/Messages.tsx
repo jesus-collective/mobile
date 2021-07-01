@@ -21,7 +21,7 @@ export default function Messages(props: Props): JSX.Element {
     updatedAt: currentRoom?.updatedAt,
     replies:
       room?.directMessage?.items
-        .filter(({ index }: { index: number }) => index > 0) // is first index always thread parent?
+        .filter((comment: DirectMessage, index: number) => index > 0) // is first index always thread parent?
         .map((comment: DirectMessage) => {
           const { createdAt, updatedAt, content, author } = comment
           return {

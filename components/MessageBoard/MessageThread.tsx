@@ -104,7 +104,7 @@ export type Person = {
   authorId: string
   roomId?: string
   createdAt?: string
-  replies?: Array<any>
+  replies?: Array<any> // <Person>? missing type id
   updatedAt?: string
   recipients: Array<string>
 }
@@ -274,13 +274,13 @@ export default function MessageThread(props: Props): JSX.Element {
               )
             })
           : null}
-        {open ? (
+        {open && user && roomId ? (
           <View style={{ flexDirection: "row" }}>
             <View style={{ justifyContent: "center" }}>
-              {user ? <ProfileImage size="small2" user={user} /> : null}
+              <ProfileImage size="small2" user={user} />
             </View>
             <View style={{ flex: 1 }}>
-              {roomId ? <MessageEditor recipients={recipients} roomId={roomId} /> : null}
+              <MessageEditor recipients={recipients} roomId={roomId} />
             </View>
           </View>
         ) : null}
