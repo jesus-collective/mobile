@@ -15,6 +15,7 @@ interface Props {
 export default function MessageEditor(props: Props): JSX.Element {
   const { roomId, recipients } = props
   const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
+  // TODO ATTACHMENTS
   const saveMessage = async (): Promise<void> => {
     if (!editorState.getCurrentContent().hasText()) {
       return

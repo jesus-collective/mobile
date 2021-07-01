@@ -17,7 +17,7 @@ export default function Messages(props: Props): JSX.Element {
       room?.directMessage?.items?.[0]?.author?.family_name,
     position: room?.directMessage?.items?.[0]?.author?.currentRole ?? "",
     comment: room?.directMessage?.items?.[0]?.content ?? "",
-    roomId: room?.directMessage?.items?.[0]?.id,
+    roomId: room?.id,
     createdAt: room?.directMessage?.items?.[0]?.createdAt,
     updatedAt: room?.directMessage?.items?.[0]?.updatedAt,
     replies:
