@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { DirectMessage } from "src/API"
 import MessageThread, { Person } from "./MessageThread"
 
 interface Props {
@@ -8,29 +9,28 @@ interface Props {
 }
 export default function Messages(props: Props): JSX.Element {
   const { room, recipients, open } = props
+  const currentRoom = room?.directMessage?.items?.[0]
   const personData: Person = {
     recipients,
-    authorId: room?.directMessage?.items?.[0]?.author?.id,
-    name:
-      room?.directMessage?.items?.[0]?.author?.given_name +
-      " " +
-      room?.directMessage?.items?.[0]?.author?.family_name,
-    position: room?.directMessage?.items?.[0]?.author?.currentRole ?? "",
-    comment: room?.directMessage?.items?.[0]?.content ?? "",
+    authorId: currentRoom?.author?.id,
+    name: currentRoom?.author?.given_name + " " + currentRoom?.author?.family_name,
+    position: currentRoom?.author?.currentRole ?? "",
+    comment: currentRoom?.content ?? "",
     roomId: room?.id,
-    createdAt: room?.directMessage?.items?.[0]?.createdAt,
-    updatedAt: room?.directMessage?.items?.[0]?.updatedAt,
+    createdAt: currentRoom?.createdAt,
+    updatedAt: currentRoom?.updatedAt,
     replies:
       room?.directMessage?.items
-        .filter((a, index) => index > 0) // is first index always thread parent?
-        .map((comment) => {
+        .filter(({ index }: { index: number }) => index > 0) // is first index always thread parent?
+        .map((comment: DirectMessage) => {
+          const { createdAt, updatedAt, content, author } = comment
           return {
-            name: comment?.author?.given_name + " " + comment?.author?.family_name,
-            position: comment?.author?.currentRole,
-            comment: comment?.content,
-            authorId: comment?.author?.id,
-            createdAt: comment?.createdAt,
-            updatedAt: comment?.updatedAt,
+            name: author?.given_name + " " + author?.family_name,
+            position: author?.currentRole,
+            comment: content,
+            authorId: author?.id,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
             replies: comment?.replies?.items?.map((rtr) => {
               return {
                 name: rtr?.author?.given_name + " " + rtr?.author?.family_name,
