@@ -1,8 +1,10 @@
+import { Auth } from "aws-amplify"
 import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import moment from "moment"
 import React, { useEffect, useRef, useState } from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import ProfileImage from "../ProfileImage/ProfileImage"
 import MessageEditor from "./MessageEditor"
@@ -121,6 +123,7 @@ export default function MessageThread(props: Props): JSX.Element {
   const commentRef = useRef<any>(null)
   const { person } = props
   const { replies, roomId, recipients } = person
+  const [user, setUser] = useState<JCCognitoUser["username"]>("")
   const [open, setOpen] = useState(props.open)
 
   const AssignmentBadge = (props: { type: EntryType }) => {
@@ -247,6 +250,14 @@ export default function MessageThread(props: Props): JSX.Element {
       })
   }, [open])
 
+  useEffect(() => {
+    const getUser = async () => {
+      const user: JCCognitoUser = await Auth.currentAuthenticatedUser()
+      setUser(user.username)
+    }
+    getUser()
+  }, [])
+
   return (
     <View ref={commentRef} style={style.container}>
       <Comment comment={person} type="assignment"></Comment>
@@ -266,7 +277,7 @@ export default function MessageThread(props: Props): JSX.Element {
         {open ? (
           <View style={{ flexDirection: "row" }}>
             <View style={{ justifyContent: "center" }}>
-              <ProfileImage size="small2" user={props.person.authorId ?? null} />
+              {user ? <ProfileImage size="small2" user={user} /> : null}
             </View>
             <View style={{ flex: 1 }}>
               {roomId ? <MessageEditor recipients={recipients} roomId={roomId} /> : null}
