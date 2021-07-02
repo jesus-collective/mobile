@@ -23,13 +23,15 @@ export default function Messages(props: Props): JSX.Element {
       room?.directMessage?.items
         .filter((comment: DirectMessage, index: number) => index > 0) // is first index always thread parent?
         .map((comment: DirectMessage) => {
-          const { createdAt, updatedAt, content, author } = comment
+          const { createdAt, updatedAt, content, author, id } = comment
           return {
             name: author?.given_name + " " + author?.family_name,
             position: author?.currentRole,
             comment: content,
             authorId: author?.id,
             createdAt: createdAt,
+            messageId: room?.id,
+            messageRoomId: id,
             updatedAt: updatedAt,
             replies: comment?.replies?.items?.map((rtr) => {
               return {
@@ -37,6 +39,8 @@ export default function Messages(props: Props): JSX.Element {
                 position: rtr?.author?.currentRole,
                 comment: rtr?.content,
                 authorId: rtr?.author?.id,
+                messageId: room?.id,
+                messageRoomId: rtr?.id,
                 createdAt: rtr?.createdAt,
                 updatedAt: rtr?.updatedAt,
               }

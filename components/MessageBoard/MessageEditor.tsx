@@ -3,17 +3,28 @@ import { API, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import React, { useState } from "react"
 import { Editor } from "react-draft-wysiwyg"
-import { View } from "react-native"
+import { Text, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import { CreateDirectMessageInput, CreateDirectMessageMutation } from "../../src/API"
+import {
+  CreateDirectMessageInput,
+  CreateDirectMessageMutation,
+  CreateDirectMessageReplyInput,
+  CreateDirectMessageReplyMutation,
+} from "../../src/API"
 import * as mutations from "../../src/graphql/mutations"
 interface Props {
   roomId: string
+  replyTo: {
+    name: string
+    messageId?: string
+    messageRoomId?: string
+  }
   recipients: Array<string>
 }
 export default function MessageEditor(props: Props): JSX.Element {
-  const { roomId, recipients } = props
+  const { roomId, recipients, replyTo } = props
+  const isReply = replyTo?.name && replyTo?.messageRoomId && replyTo?.messageId
   const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
   // TODO ATTACHMENTS
   const saveMessage = async (): Promise<void> => {
@@ -21,7 +32,6 @@ export default function MessageEditor(props: Props): JSX.Element {
       return
     }
     const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    console.log("msg", msg)
     if (msg) {
       try {
         const user = await Auth.currentAuthenticatedUser()
@@ -55,9 +65,38 @@ export default function MessageEditor(props: Props): JSX.Element {
       }
     }
   }
+  // missing some logic for setting the replyToId (?) see MessageBoard.tsx @ line 690
+  const saveReply = async () => {
+    // this will only run after checking reply fields
+    console.log("replying")
+    console.log("messageId", replyTo?.messageRoomId)
+    console.log("messageRoomID", replyTo?.messageId)
+    const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+    const user = await Auth.currentAuthenticatedUser()
+    const input: CreateDirectMessageReplyInput = {
+      id: uuidv4(),
+      content: msg,
+      when: Date.now().toString(),
+      attachment: "",
+      attachmentName: "",
+      attachmentOwner: "",
+      messageRoomID: replyTo?.messageId,
+      userId: user.username,
+      messageId: replyTo?.messageRoomId ?? "",
+      recipients: recipients ?? [],
+      parentReplyId: "0000-0000-0000-0000", // void value
+    }
+    const createReply = (await API.graphql({
+      query: mutations.createDirectMessageReply,
+      variables: { input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    })) as GraphQLResult<CreateDirectMessageReplyMutation>
+    console.log({ "Success mutations.createReply": createReply })
+  }
 
   return (
     <View>
+      {isReply ? <Text style={{ color: "black" }}>Replying to {props?.replyTo?.name}</Text> : null}
       <Editor
         wrapperStyle={{
           maxHeight: 150,
@@ -89,7 +128,7 @@ export default function MessageEditor(props: Props): JSX.Element {
       <JCButton
         buttonType={ButtonTypes.SolidRightJustifiedMini}
         onPress={async () => {
-          await saveMessage()
+          isReply ? await saveReply() : await saveMessage()
         }}
       >
         Post

@@ -3,7 +3,7 @@ import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import moment from "moment"
 import React, { useEffect, useRef, useState } from "react"
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import ProfileImage from "../ProfileImage/ProfileImage"
@@ -107,6 +107,8 @@ export type Person = {
   replies?: Array<any> // <Person>? missing type id
   updatedAt?: string
   recipients: Array<string>
+  messageId?: string
+  messageRoomId?: string
 }
 interface CommentParams {
   comment: Person
@@ -120,12 +122,18 @@ interface Props {
 type EntryType = "assignment" | "reply" | "replyToReply"
 
 export default function MessageThread(props: Props): JSX.Element {
+  // a reply is an assignment response
+  // a reply to a reply is a comment on a reply
   const commentRef = useRef<any>(null)
   const { person } = props
   const { replies, roomId, recipients } = person
   const [user, setUser] = useState<JCCognitoUser["username"]>("")
   const [open, setOpen] = useState(props.open)
-
+  const [replyTo, setReplyTo] = useState({
+    name: "",
+    messageRoomId: "",
+    messageId: "",
+  })
   const AssignmentBadge = (props: { type: EntryType }) => {
     const { type } = props
     return type === "assignment" ? (
@@ -135,22 +143,41 @@ export default function MessageThread(props: Props): JSX.Element {
     ) : null
   }
 
-  const CommentButton = () => {
-    return !open ? (
+  const CommentButton = (props: { comment: Person; type: EntryType }) => {
+    const isReply = props?.type === "reply" || props?.type === "replyToReply"
+    const { comment } = props
+    return isReply || !open ? (
       <View style={{ flexDirection: "column", flex: 1 }}>
         <View style={{ alignSelf: "flex-end", marginTop: 8 }}>
           <JCButton
             onPress={() => {
-              setOpen((prev) => !prev)
+              isReply
+                ? setReplyTo((prev) => {
+                    if (prev.messageRoomId === comment.messageRoomId) {
+                      return {
+                        name: "",
+                        messageId: "",
+                        messageRoomId: "",
+                      }
+                    } else {
+                      return {
+                        name: props?.comment?.name,
+                        messageId: props?.comment?.messageId ?? "",
+                        messageRoomId: props?.comment?.messageRoomId ?? "",
+                      }
+                    }
+                  })
+                : setOpen((prev) => !prev)
             }}
             buttonType={ButtonTypes.OutlineSmall}
           >
-            Comment
+            {isReply ? "Reply" : "Comment"}
           </JCButton>
         </View>
       </View>
     ) : null
   }
+
   const DateTag = ({ createdDate, updatedDate }: { updatedDate: string; createdDate: string }) => {
     const now = moment()
     const datePosted = moment(createdDate)
@@ -174,6 +201,7 @@ export default function MessageThread(props: Props): JSX.Element {
     return text
   }
   const ReplyCount = () => {
+    // should we include replies in this counter?
     let countString = ""
     if (replies) {
       if (replies?.length === 1) countString = "1 reply"
@@ -223,9 +251,10 @@ export default function MessageThread(props: Props): JSX.Element {
 
               <AssignmentBadge type={type} />
             </View>
-            <CommentButton />
+            <CommentButton comment={props?.comment} type={type} />
           </View>
           <Text style={[style.contentText, open ? { marginTop: 20 } : {}]}>
+            <Button title="Comment Info" onPress={() => console.log(props.comment)}></Button>
             <div
               onClick={() => null}
               dangerouslySetInnerHTML={{
@@ -263,11 +292,11 @@ export default function MessageThread(props: Props): JSX.Element {
       <Comment comment={person} type="assignment"></Comment>
       <View style={{ flexDirection: "column" }}>
         {open
-          ? replies?.map((comment: Person, index) => {
+          ? replies?.map((comm: Person, index) => {
               return (
                 <View key={index}>
-                  <Comment key={index} type="reply" comment={comment} />
-                  {comment?.replies?.map((a) => {
+                  <Comment key={index} type="reply" comment={comm} />
+                  {comm?.replies?.map((a) => {
                     return <Comment type="replyToReply" comment={a} key={a?.id}></Comment>
                   })}
                 </View>
@@ -280,7 +309,7 @@ export default function MessageThread(props: Props): JSX.Element {
               <ProfileImage size="small2" user={user} />
             </View>
             <View style={{ flex: 1 }}>
-              <MessageEditor recipients={recipients} roomId={roomId} />
+              <MessageEditor replyTo={replyTo} recipients={recipients} roomId={roomId} />
             </View>
           </View>
         ) : null}
