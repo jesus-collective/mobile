@@ -3,7 +3,7 @@ import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import moment from "moment"
 import React, { useEffect, useRef, useState } from "react"
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import ProfileImage from "../ProfileImage/ProfileImage"
@@ -201,13 +201,18 @@ export default function MessageThread(props: Props): JSX.Element {
     return text
   }
   const ReplyCount = () => {
-    // should we include replies in this counter?
     let countString = ""
     if (replies) {
-      if (replies?.length === 1) countString = "1 reply"
-      if (replies?.length > 1) countString = `${replies.length} replies`
+      if (replies?.length === 1) countString = "1 comment"
+      if (replies?.length > 1) {
+        let replyCounter: number = replies?.length
+        replies?.forEach((reply) => {
+          replyCounter += reply?.replies?.length ?? 0
+        })
+        countString = `${replyCounter} comments`
+      }
     }
-    if (replies?.length === 0) countString = "No replies"
+    if (replies?.length === 0) countString = "No comments"
     return (
       <TouchableOpacity onPress={() => setOpen((prev) => !prev)}>
         <Text style={[style.subHeaderText, { marginTop: 4, textDecorationLine: "underline" }]}>
@@ -254,7 +259,6 @@ export default function MessageThread(props: Props): JSX.Element {
             <CommentButton comment={props?.comment} type={type} />
           </View>
           <Text style={[style.contentText, open ? { marginTop: 20 } : {}]}>
-            <Button title="Comment Info" onPress={() => console.log(props.comment)}></Button>
             <div
               onClick={() => null}
               dangerouslySetInnerHTML={{
