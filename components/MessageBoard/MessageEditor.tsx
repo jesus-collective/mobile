@@ -65,7 +65,6 @@ export default function MessageEditor(props: Props): JSX.Element {
       }
     }
   }
-  // missing some logic for setting the replyToId (?) see MessageBoard.tsx @ line 690
   const saveReply = async () => {
     // this will only run after checking reply fields
     console.log("replying")

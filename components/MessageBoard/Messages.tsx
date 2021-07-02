@@ -24,6 +24,21 @@ export default function Messages(props: Props): JSX.Element {
         .filter((comment: DirectMessage, index: number) => index > 0) // is first index always thread parent?
         .map((comment: DirectMessage) => {
           const { createdAt, updatedAt, content, author, id } = comment
+          const replyCount = comment?.replies?.items?.length ?? 0
+          // if there is more than one reply to a response, reply will be directed to first reply
+          const repliesToReplies =
+            comment?.replies?.items?.map((rtr) => {
+              return {
+                name: rtr?.author?.given_name + " " + rtr?.author?.family_name,
+                position: rtr?.author?.currentRole,
+                comment: rtr?.content,
+                authorId: rtr?.author?.id,
+                messageId: room?.id,
+                messageRoomId: replyCount < 1 ? rtr?.id : comment?.id,
+                createdAt: rtr?.createdAt,
+                updatedAt: rtr?.updatedAt,
+              }
+            }) ?? []
           return {
             name: author?.given_name + " " + author?.family_name,
             position: author?.currentRole,
@@ -33,18 +48,7 @@ export default function Messages(props: Props): JSX.Element {
             messageId: room?.id,
             messageRoomId: id,
             updatedAt: updatedAt,
-            replies: comment?.replies?.items?.map((rtr) => {
-              return {
-                name: rtr?.author?.given_name + " " + rtr?.author?.family_name,
-                position: rtr?.author?.currentRole,
-                comment: rtr?.content,
-                authorId: rtr?.author?.id,
-                messageId: room?.id,
-                messageRoomId: rtr?.id,
-                createdAt: rtr?.createdAt,
-                updatedAt: rtr?.updatedAt,
-              }
-            }),
+            replies: repliesToReplies,
           }
         }) ?? [],
   }
