@@ -17,8 +17,8 @@ import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import Messages from "../MessageBoard/AssignmentMessageBoard/Messages"
 import MessageBoard from "../MessageBoard/MessageBoard"
-import Messages from "../MessageBoard/Messages"
 
 enum initialPostState {
   Yes,
@@ -310,7 +310,6 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
             )
           ) : null
         ) : null}
-
         <Container style={this.styles.style.courseAssignmentMainContainer}>
           <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
             <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
@@ -364,7 +363,6 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
               <Text>Nothing to review</Text>
             )}
           </Container>
-
           {this.state.data != null && this.state.data.length != 0 && this.shouldShowMB() ? (
             <Container style={this.styles.style.courseAssignmentScreenRightCard}>
               <MessageBoard
