@@ -96,11 +96,13 @@ const style = StyleSheet.create({
 })
 
 interface CommentParams {
+  active?: boolean
   comment: MessageComment
   openState: boolean
   setOpen: () => void
   setReplyTo: (a: any) => void
   type: EntryType
+  replyCount?: string
 }
 
 export default function Comment(props: CommentParams): JSX.Element {
@@ -112,7 +114,8 @@ export default function Comment(props: CommentParams): JSX.Element {
     createdAt,
     updatedAt,
   } = props.comment as MessageComment
-  const { type, openState, setOpen, setReplyTo } = props
+  const { type, openState, setOpen, setReplyTo, active, replyCount } = props
+  //console.log("openState", openState, " type ", type)
 
   const AssignmentBadge = (props: { type: EntryType }) => {
     const { type } = props
@@ -133,18 +136,23 @@ export default function Comment(props: CommentParams): JSX.Element {
             onPress={() => {
               isReply
                 ? setReplyTo((prev) => {
-                    if (prev.messageRoomId === comment.messageRoomId) {
+                    if (prev.messageId === comment.messageId) {
                       return {
                         name: "",
                         messageId: "",
                         messageRoomId: "",
+                        parentId: "",
                       }
                     } else {
-                      return {
+                      console.log("selecting the following object")
+                      const a = {
                         name: props?.comment?.name,
                         messageId: props?.comment?.messageId ?? "",
                         messageRoomId: props?.comment?.messageRoomId ?? "",
+                        parentId: props?.comment?.parentId ?? "",
                       }
+                      console.log(a)
+                      return a
                     }
                   })
                 : setOpen()
@@ -165,12 +173,10 @@ export default function Comment(props: CommentParams): JSX.Element {
     const edited = createdDate < updatedDate ? moment(updatedDate) : null
     return (
       <Text style={[style.subHeaderText, { marginTop: 2 }]}>
-        {daysSince > 7
-          ? datePosted.format("YYYY-MM-DD HH:mm a")
-          : datePosted.format("dddd HH:mm a")}
+        {daysSince > 7 ? datePosted.format("YYYY-MM-DD h:mm a") : datePosted.format("dddd h:mm a")}
 
         <Text style={{ fontSize: 11 }}>
-          {edited ? "  Last edited on " + edited.format("YYYY-MM-DD HH:mm a") : null}
+          {edited ? "  Last edited on " + edited.format("YYYY-MM-DD h:mm a") : null}
         </Text>
       </Text>
     )
@@ -179,27 +185,6 @@ export default function Comment(props: CommentParams): JSX.Element {
   const convertCommentFromJSONToHTML = (text: string | null) => {
     if (text) return stateToHTML(convertFromRaw(JSON.parse(text ?? "")))
     return text
-  }
-  const ReplyCount = (replies) => {
-    let countString = ""
-    if (replies) {
-      if (replies?.length === 1) countString = "1 comment"
-      if (replies?.length > 1) {
-        let replyCounter: number = replies?.length
-        replies?.forEach((reply) => {
-          replyCounter += reply?.replies?.length ?? 0
-        })
-        countString = `${replyCounter} comments`
-      }
-    }
-    if (replies?.length === 0) countString = "No comments"
-    return (
-      <TouchableOpacity onPress={() => setOpen()}>
-        <Text style={[style.subHeaderText, { marginTop: 4, textDecorationLine: "underline" }]}>
-          {countString}
-        </Text>
-      </TouchableOpacity>
-    )
   }
   return (
     <View
@@ -224,7 +209,23 @@ export default function Comment(props: CommentParams): JSX.Element {
         )}
         <ProfileImage size="small2" user={authorId ?? null} />
       </View>
-      <View style={style.contentContainer}>
+      <View
+        style={[
+          style.contentContainer,
+          active
+            ? {
+                backgroundColor: "rgba(113, 194, 9, 0.15)",
+                borderWidth: 1,
+                borderRadius: 4,
+                borderColor: "rgba(113, 194, 9, 0.8)",
+              }
+            : {
+                borderWidth: 1,
+                borderRadius: 4,
+                borderColor: "rgba(0, 0, 0, 0)",
+              },
+        ]}
+      >
         <View style={{ flexDirection: "row" }}>
           <View style={{ flexDirection: "column" }}>
             <Text style={style.headerText}>{name}</Text>
@@ -239,6 +240,12 @@ export default function Comment(props: CommentParams): JSX.Element {
               buttonType={ButtonTypes.OutlineSmall}
             >
               Debug
+            </JCButton>
+            <JCButton
+              onPress={() => console.log(props?.comment?.replies?.length)}
+              buttonType={ButtonTypes.OutlineSmall}
+            >
+              Check Replies
             </JCButton>
           </View>
           <CommentButton comment={props?.comment} type={type} />
@@ -255,7 +262,13 @@ export default function Comment(props: CommentParams): JSX.Element {
             }}
           />
         </Text>
-        {type === "assignment" && !openState ? <ReplyCount /> : null}
+        {type === "assignment" && !openState ? (
+          <TouchableOpacity onPress={() => setOpen()}>
+            <Text style={[style.subHeaderText, { marginTop: 4, textDecorationLine: "underline" }]}>
+              {replyCount}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   )
