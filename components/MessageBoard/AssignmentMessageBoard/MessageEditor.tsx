@@ -1,9 +1,10 @@
 import { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api/lib/types"
+import { AntDesign } from "@expo/vector-icons"
 import { API, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import React, { useState } from "react"
 import { Editor } from "react-draft-wysiwyg"
-import { Text, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import JCButton, { ButtonTypes } from "../../../components/Forms/JCButton"
 import {
@@ -19,15 +20,19 @@ interface Props {
     name: string
     messageId?: string
     messageRoomId?: string
+    parentId?: string
   }
+  clearReplyTo: () => void
   recipients: Array<string>
 }
 export default function MessageEditor(props: Props): JSX.Element {
-  const { roomId, recipients, replyTo } = props
+  const { roomId, recipients, replyTo, clearReplyTo } = props
   const isReply = replyTo?.name && replyTo?.messageRoomId && replyTo?.messageId
   const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
   // TODO ATTACHMENTS
   const saveMessage = async (): Promise<void> => {
+    console.log("Posting a response.")
+    console.log("messageRoomId", roomId)
     if (!editorState.getCurrentContent().hasText()) {
       return
     }
@@ -54,6 +59,7 @@ export default function MessageEditor(props: Props): JSX.Element {
           })) as Promise<GraphQLResult<CreateDirectMessageMutation>>
           console.log({ "Success mutations.createDirectMessage ": createDirectMessage })
           setEditorState(EditorState.createEmpty())
+          clearReplyTo()
         } catch (err) {
           console.error({ "Error mutations.createDirectMessage ": err })
           if (err.data.createDirectMessage) {
@@ -67,35 +73,38 @@ export default function MessageEditor(props: Props): JSX.Element {
   }
   const saveReply = async () => {
     // this will only run after checking reply fields
-    console.log("replying")
-    console.log("messageId", replyTo?.messageRoomId)
-    console.log("messageRoomID", replyTo?.messageId)
-    const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    const user = await Auth.currentAuthenticatedUser()
-    const input: CreateDirectMessageReplyInput = {
-      id: uuidv4(),
-      content: msg,
-      when: Date.now().toString(),
-      attachment: "",
-      attachmentName: "",
-      attachmentOwner: "",
-      messageRoomID: replyTo?.messageId,
-      userId: user.username,
-      messageId: replyTo?.messageRoomId ?? "",
-      recipients: recipients ?? [],
-      parentReplyId: "0000-0000-0000-0000", // void value
+
+    const replyToID = replyTo?.parentId !== "" ? replyTo.parentId : replyTo?.messageId
+    console.log("replyToID", replyToID)
+    if (!!replyToID) {
+      const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+      const user = await Auth.currentAuthenticatedUser()
+      const input: CreateDirectMessageReplyInput = {
+        id: uuidv4(),
+        content: msg,
+        when: Date.now().toString(),
+        attachment: "",
+        attachmentName: "",
+        attachmentOwner: "",
+        messageRoomID: replyTo?.messageRoomId,
+        userId: user.username,
+        messageId: replyToID ?? "",
+        recipients: recipients ?? [],
+        parentReplyId: "0000-0000-0000-0000", // void value
+      }
+      const createReply = (await API.graphql({
+        query: mutations.createDirectMessageReply,
+        variables: { input },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })) as GraphQLResult<CreateDirectMessageReplyMutation>
+      console.log({ "Success mutations.createReply": createReply })
+      setEditorState(EditorState.createEmpty())
+      clearReplyTo()
     }
-    const createReply = (await API.graphql({
-      query: mutations.createDirectMessageReply,
-      variables: { input },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })) as GraphQLResult<CreateDirectMessageReplyMutation>
-    console.log({ "Success mutations.createReply": createReply })
   }
 
   return (
-    <View>
-      {isReply ? <Text style={{ color: "black" }}>Replying to {props?.replyTo?.name}</Text> : null}
+    <View style={{ paddingBottom: 30 }}>
       <Editor
         wrapperStyle={{
           maxHeight: 150,
@@ -124,14 +133,41 @@ export default function MessageEditor(props: Props): JSX.Element {
           },
         }}
       />
-      <JCButton
-        buttonType={ButtonTypes.SolidRightJustifiedMini}
-        onPress={async () => {
-          isReply ? await saveReply() : await saveMessage()
-        }}
-      >
-        Post
-      </JCButton>
+      <View style={{ flexDirection: "row-reverse" }}>
+        <JCButton
+          buttonType={ButtonTypes.SolidRightJustifiedMini}
+          onPress={async () => {
+            isReply ? await saveReply() : await saveMessage()
+          }}
+        >
+          Post
+        </JCButton>
+        {isReply ? (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginRight: 16,
+            }}
+          >
+            <Text
+              style={{
+                color: "#333333",
+                fontFamily: "Graphik-Regular-App",
+                fontSize: 16,
+                fontWeight: "bold",
+                marginRight: 12,
+                marginBottom: 4,
+              }}
+            >
+              Replying to {props?.replyTo?.name}
+            </Text>
+            <TouchableOpacity onPress={clearReplyTo}>
+              <AntDesign name="closecircleo" size={20} color="#333333" />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+      </View>
     </View>
   )
 }
