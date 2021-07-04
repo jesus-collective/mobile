@@ -35,29 +35,39 @@ export default function Messages(props: Props): JSX.Element {
       .filter((comment: DirectMessage, index: number) => index > 0) // is first index always thread parent?
       .map((comment: DirectMessage) => {
         const { createdAt, updatedAt, content, author, id } = comment
-        const replyCount = comment?.replies?.items?.length ?? 0
         const repliesToReplies =
           comment?.replies?.items?.map((rtr) => {
+            /*
+            console.log("Logging a reply:")
+            console.log("messageId", comment?.id, rtr?.id)
+            console.log("messageRoomId", room?.id)
+            console.log("======================")*/
             return {
               id: rtr?.id,
               name: rtr?.author?.given_name + " " + rtr?.author?.family_name,
               position: rtr?.author?.currentRole,
               comment: rtr?.content,
               authorId: rtr?.author?.id,
-              messageId: replyCount < 1 ? comment?.id : rtr?.id, // if there is more than one reply to a response, reply will be directed to first reply
+              messageId: rtr?.id,
+              parentId: comment?.id,
               messageRoomId: room?.id,
               createdAt: rtr?.createdAt,
               updatedAt: rtr?.updatedAt,
             }
           }) ?? []
+        /*
+        console.log("Logging a response:")
+        console.log("messageId", id)
+        console.log("messageRoomId", room?.id)
+        console.log("======================")*/
         return {
           name: author?.given_name + " " + author?.family_name,
           position: author?.currentRole,
           comment: content,
           authorId: author?.id,
           createdAt: createdAt,
-          messageId: id, // thread id
-          messageRoomId: room?.id, // message id
+          messageId: id,
+          messageRoomId: room?.id,
           updatedAt: updatedAt,
           replies: repliesToReplies,
         }
@@ -81,52 +91,35 @@ export default function Messages(props: Props): JSX.Element {
       comment: rep?.content,
       authorId: rep?.author?.id,
       createdAt: rep?.createdAt,
-      messageId: room?.id, //thread id
-      messageRoomId: rep?.id, //message id
+      messageId: rep?.id, //message id
+      messageRoomId: room?.id, //thread id
       updatedAt: rep?.updatedAt,
-      replies: rep?.repliesToReplies,
+      replies: rep?.replies?.items ?? rep?.replies ?? [],
     }
   }
   const formatReply = (rep) => {
-    //console.log("inside formatReply(rep)", rep)
     return {
       name: rep?.author?.given_name + " " + rep?.author?.family_name,
       position: rep?.author?.currentRole,
       comment: rep?.content,
       authorId: rep?.author?.id,
       createdAt: rep?.createdAt,
-      messageId: room?.id, //thread id
-      messageRoomId: rep?.id, //message id
+      messageId: rep?.id, //thread id
+      messageRoomId: room?.id, //message id
       updatedAt: rep?.updatedAt,
     }
   }
   const appendNewResponse = (msg) => {
     setThread({ ...thread, replies: [...(thread.replies ?? []), formatResponse(msg)] })
   }
-  const updateReplies = (repliesArr, parent) => {
-    // update comment replies where reply was added.
-    setThread((prev) => {
-      return {
-        ...prev,
-        replies: prev.replies?.map((rep, index) => {
-          if (parent === rep?.messageRoomId) {
-            return {
-              ...rep,
-              replies: repliesArr.map((re) => {
-                //console.log("formatReply(re)", formatReply(re))
-                return formatReply(re)
-              }),
-            }
-            /*if (rep?.replies) rep.replies.push(formatReply(msg))
-            else rep.replies = [formatReply(msg)]
-            return rep*/
-          }
-          return rep
-        }),
-      }
-    })
+
+  const loadDirectMessageRoom = async () => {
+    // Make EditableCourseAssignment to only fetch room names and ids
+    // Fetch room data here
+    // This could make switching between "My Assignment" and "Assignments to Review" slower
+    // TODO: Improve data transformation code
   }
-  const connectDirectSubscriptions = () => {
+  useEffect(() => {
     const directMessageSubscription = (API.graphql({
       query: onCreateDirectMessage,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -135,11 +128,12 @@ export default function Messages(props: Props): JSX.Element {
       value: GraphQLResult<OnCreateDirectMessageSubscription>
     }>).subscribe({
       next: async (incoming) => {
+        //console.log("Received a subscription update.")
         if (
           incoming?.value?.data?.onCreateDirectMessage &&
           incoming?.value?.data?.onCreateDirectMessage?.messageRoomID === room?.id
         ) {
-          console.log("Received a response", incoming?.value?.data?.onCreateDirectMessage)
+          //console.log("Received a response", incoming?.value?.data?.onCreateDirectMessage)
           try {
             const directMessage = (await API.graphql({
               query: queries.getDirectMessage,
@@ -155,6 +149,13 @@ export default function Messages(props: Props): JSX.Element {
             console.log("Something went wrong. Exception caught")
             console.log(e)
           }
+        } else {
+          console.log("UPDATE IS NOT IN THE SAME ROOM (?)")
+          console.log(
+            "incoming?.value?.data?.onCreateDirectMessage?.messageRoomID",
+            incoming?.value?.data?.onCreateDirectMessage?.messageRoomID
+          )
+          console.log("room?.id", room?.id)
         }
       },
       error: (error) => console.log(error),
@@ -172,54 +173,62 @@ export default function Messages(props: Props): JSX.Element {
             room?.id &&
           incoming?.value?.data?.onCreateDirectMessageReply?.messageId
         ) {
-          console.log("Received a reply", incoming?.value?.data?.onCreateDirectMessageReply)
           try {
-            const parent = incoming.value.data?.onCreateDirectMessageReply?.messageId
-            /*const updatedMessage = (await API.graphql({
+            const parentId = incoming.value.data?.onCreateDirectMessageReply?.messageId
+            const updatedMessage = (await API.graphql({
               query: queries.getDirectMessage,
               variables: {
                 id: incoming.value.data.onCreateDirectMessageReply.messageId,
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })) as GraphQLResult<GetDirectMessageQuery>*/
-
-            //if (updatedMessage.data?.getDirectMessage) {
-            // replace old message/replies with incoming data
-            // MISTAKE: SENDING THE PARENT COMMENT INSTEAD OF THE NEW COMMENT.
-            /*console.log(
-                "updatedMessage.data.getDirectMessage",
-                updatedMessage.data.getDirectMessage
-            )
-
-            const repliesArr = updatedMessage.data.getDirectMessage
-            console.log("repliesArr", repliesArr)
-            updateReplies(repliesArr?.replies?.items ?? [], parent)
+            })) as GraphQLResult<GetDirectMessageQuery>
+            if (thread?.replies) {
+              /*
+                1. Find response that got replied to, lives in thread.replies
+                2. Get author data from incoming.value.data.onCreateDirectMessageReply
+                3. Get updatedMessage(this is the relevant thread), find the new message data, can be compared with messageId to simplify
+                4. Combine author data and new message data, format with formatReply to fit into reply array
+                5. Append message to replies that belong to the response
+                6. ... is parentId incorrect? cannot find thread response when it has no replies.
+                   parentId might not be actual parentId when replying to a response.
+              */
+              const indexInStaleThread = thread.replies.findIndex((r, ind) => {
+                console.log("finding index: r.messageId", r?.messageId, "parentId", parentId)
+                return r?.messageId === parentId
+              })
+              console.log("indexInStaleThread", indexInStaleThread)
+              const updatedReplies = updatedMessage?.data?.getDirectMessage?.replies?.items
+              console.log("updatedreplies", updatedReplies)
+              const oldReplies = thread?.replies?.[indexInStaleThread]?.replies ?? []
+              console.log("oldReplies", oldReplies)
+              const newReply: any = updatedReplies?.filter(
+                ({ id: newId }) => !oldReplies.some(({ messageId: oldId }) => oldId === newId)
+              )[0]
+              console.log("newReply is", newReply)
+              if (incoming.value.data?.onCreateDirectMessageReply?.author) {
+                newReply.author = incoming.value.data?.onCreateDirectMessageReply?.author
+              }
+              const a = [...(thread.replies ?? [])]
+              if (a) {
+                a[indexInStaleThread].replies.push(formatReply(newReply))
+                console.log("setting replies to:", a)
+                setThread({ ...thread, replies: a })
+              } else {
+                console.log("a is undefined")
+              }
             }
-            const updatedRoom = (await API.graphql({
-              query: queries.getDirectMessageRoom,
-              variables: { id: room?.id },
-            })) as GraphQLResult<GetDirectMessageRoomQuery>
-            console.log("updatedRoom", updatedRoom)*/
           } catch (e) {
             console.debug(e)
           }
+        } else {
+          console.log("wrong room!")
         }
       },
       error: (error) => console.log(error),
     })
-  }
-
-  const loadDirectMessageRoom = async () => {
-    // Make EditableCourseAssignment to only fetch room names and ids
-    // Fetch room data here
-    // This could make switching between "My Assignment" and "Assignments to Review" slower
-    // TODO: Improve data transformation code
-  }
-  useEffect(() => {
-    connectDirectSubscriptions()
-    loadDirectMessageRoom()
     return () => {
-      // unsubscribe here
+      directMessageSubscription.unsubscribe()
+      directmessageReplySubscription.unsubscribe()
     }
   }, [])
   if (thread?.name !== "" && thread?.comment !== "")

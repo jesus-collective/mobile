@@ -5,6 +5,7 @@ import { JCCognitoUser } from "src/types"
 import ProfileImage from "../../ProfileImage/ProfileImage"
 import MessageComment from "./MessageComment"
 import MessageEditor from "./MessageEditor"
+import { replyCounter } from "./MessageThreadUtils"
 const style = StyleSheet.create({
   container: {
     zIndex: 1000000,
@@ -18,6 +19,7 @@ export type MessageComment = {
   name: string
   position: string
   comment: string
+  parentId?: string
   authorId: string
   roomId?: string
   createdAt?: string
@@ -39,11 +41,13 @@ export default function MessageThread(props: Props): JSX.Element {
   const commentRef = useRef<any>(null)
   const { thread } = props
   const { replies, roomId, recipients } = thread
+  const replyCount = replyCounter(replies)
   const [user, setUser] = useState<JCCognitoUser["username"]>("")
   const [open, setOpen] = useState(props.open ?? false)
   const [replyTo, setReplyTo] = useState({
     name: "",
     messageRoomId: "",
+    parentId: "",
     messageId: "",
   })
 
@@ -61,12 +65,10 @@ export default function MessageThread(props: Props): JSX.Element {
     }
     getUser()
   }, [])
-  useEffect(() => {
-    console.log("thread has changed ", thread)
-  }, [thread])
   return (
     <View ref={commentRef} style={style.container}>
       <MessageComment
+        replyCount={replyCount}
         setOpen={() => setOpen((prev) => !prev)}
         setReplyTo={setReplyTo}
         openState={open}
@@ -79,6 +81,7 @@ export default function MessageThread(props: Props): JSX.Element {
               return (
                 <View key={index}>
                   <MessageComment
+                    active={replyTo?.messageId === response?.messageId}
                     setOpen={() => setOpen((prev) => !prev)}
                     setReplyTo={setReplyTo}
                     openState={open}
@@ -89,6 +92,7 @@ export default function MessageThread(props: Props): JSX.Element {
                   {response?.replies?.map((replyToReponse) => {
                     return (
                       <MessageComment
+                        active={replyTo?.messageId === replyToReponse?.messageId}
                         setOpen={() => setOpen((prev) => !prev)}
                         setReplyTo={setReplyTo}
                         openState={open}
@@ -108,7 +112,14 @@ export default function MessageThread(props: Props): JSX.Element {
               <ProfileImage size="small2" user={user} />
             </View>
             <View style={{ flex: 1 }}>
-              <MessageEditor replyTo={replyTo} recipients={recipients} roomId={roomId} />
+              <MessageEditor
+                clearReplyTo={() =>
+                  setReplyTo({ parentId: "", name: "", messageRoomId: "", messageId: "" })
+                }
+                replyTo={replyTo}
+                recipients={recipients}
+                roomId={roomId}
+              />
             </View>
           </View>
         ) : null}
