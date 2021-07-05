@@ -260,6 +260,48 @@ export const getCourseInfoForOverview = /* GraphQL */ `
   }
 `
 
+export const getDirectMessage = /* GraphQL */ `
+  query GetDirectMessage($id: ID!) {
+    getDirectMessage(id: $id) {
+      id
+      content
+      attachment
+      attachmentName
+      attachmentOwner
+      when
+      recipients
+      userId
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          attachmentOwner
+          recipients
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messageRoomID
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        currentRole
+      }
+    }
+  }
+`
+
 export const getDirectMessageUser = /* GraphQL */ `
   query GetDirectMessageUser($id: ID!) {
     getDirectMessageUser(id: $id) {
