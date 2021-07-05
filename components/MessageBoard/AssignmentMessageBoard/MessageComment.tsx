@@ -116,7 +116,7 @@ export default function Comment(props: CommentParams): JSX.Element {
   } = props.comment as MessageComment
   const { type, openState, setOpen, setReplyTo, active, replyCount } = props
   //console.log("openState", openState, " type ", type)
-
+  const dev = true
   const AssignmentBadge = (props: { type: EntryType }) => {
     const { type } = props
     return type === "assignment" ? (
@@ -136,12 +136,12 @@ export default function Comment(props: CommentParams): JSX.Element {
             onPress={() => {
               isReply
                 ? setReplyTo((prev) => {
-                    if (prev.messageId === comment.messageId) {
+                    if (prev.id === comment.messageId || prev.messageId === comment.messageId) {
                       return {
                         name: "",
                         messageId: "",
                         messageRoomId: "",
-                        parentId: "",
+                        id: "",
                       }
                     } else {
                       console.log("selecting the following object")
@@ -149,7 +149,7 @@ export default function Comment(props: CommentParams): JSX.Element {
                         name: props?.comment?.name,
                         messageId: props?.comment?.messageId ?? "",
                         messageRoomId: props?.comment?.messageRoomId ?? "",
-                        parentId: props?.comment?.parentId ?? "",
+                        id: props?.comment?.id ?? props?.comment?.messageId,
                       }
                       console.log(a)
                       return a
@@ -234,20 +234,22 @@ export default function Comment(props: CommentParams): JSX.Element {
 
             <AssignmentBadge type={type} />
           </View>
-          <View style={{ marginLeft: 16, marginTop: 8 }}>
-            <JCButton
-              onPress={() => console.log(props?.comment)}
-              buttonType={ButtonTypes.OutlineSmall}
-            >
-              Debug
-            </JCButton>
-            <JCButton
-              onPress={() => console.log(props?.comment?.replies?.length)}
-              buttonType={ButtonTypes.OutlineSmall}
-            >
-              Check Replies
-            </JCButton>
-          </View>
+          {dev ? (
+            <View style={{ marginLeft: 16, marginTop: 8 }}>
+              <JCButton
+                onPress={() => console.log(props?.comment)}
+                buttonType={ButtonTypes.OutlineSmall}
+              >
+                Debug
+              </JCButton>
+              <JCButton
+                onPress={() => console.log(props?.comment?.replies?.length)}
+                buttonType={ButtonTypes.OutlineSmall}
+              >
+                Check Replies
+              </JCButton>
+            </View>
+          ) : null}
           <CommentButton comment={props?.comment} type={type} />
         </View>
         <Text style={[style.contentText, openState ? { marginTop: 20 } : {}]}>
@@ -258,7 +260,8 @@ export default function Comment(props: CommentParams): JSX.Element {
                 ? convertCommentFromJSONToHTML(comment ?? "")
                     ?.replaceAll("<p>", "")
                     .replaceAll("</p>", "") ?? ""
-                : convertCommentFromJSONToHTML(comment)?.split("</p>")?.[0] ?? "",
+                : convertCommentFromJSONToHTML(comment)?.split("</p>")?.[0].slice(0, 250) + "..." ??
+                  "",
             }}
           />
         </Text>

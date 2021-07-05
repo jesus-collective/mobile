@@ -9,7 +9,7 @@ import {
   OnCreateDirectMessageReplySubscription,
   OnCreateDirectMessageSubscription,
 } from "../../../src/API-messages"
-import * as queries from "../../../src/graphql/queries"
+import * as queries from "../../../src/graphql-custom/queries"
 import {
   onCreateDirectMessage,
   onCreateDirectMessageReply,
@@ -29,7 +29,6 @@ interface Props {
 export default function Messages(props: Props): JSX.Element {
   const { room, recipients, open } = props
   const firstMessage = room?.directMessage?.items?.[0]
-  // messageId and messageRoomId could be mismatched in replies.
   const threadReplies =
     room?.directMessage?.items
       .filter((comment: DirectMessage, index: number) => index > 0) // is first index always thread parent?
@@ -48,8 +47,7 @@ export default function Messages(props: Props): JSX.Element {
               position: rtr?.author?.currentRole,
               comment: rtr?.content,
               authorId: rtr?.author?.id,
-              messageId: rtr?.id,
-              parentId: comment?.id,
+              messageId: comment?.id,
               messageRoomId: room?.id,
               createdAt: rtr?.createdAt,
               updatedAt: rtr?.updatedAt,
@@ -99,12 +97,13 @@ export default function Messages(props: Props): JSX.Element {
   }
   const formatReply = (rep) => {
     return {
+      id: rep?.id,
       name: rep?.author?.given_name + " " + rep?.author?.family_name,
       position: rep?.author?.currentRole,
       comment: rep?.content,
       authorId: rep?.author?.id,
       createdAt: rep?.createdAt,
-      messageId: rep?.id, //thread id
+      messageId: rep?.messageId, //thread id
       messageRoomId: room?.id, //message id
       updatedAt: rep?.updatedAt,
     }
@@ -128,12 +127,10 @@ export default function Messages(props: Props): JSX.Element {
       value: GraphQLResult<OnCreateDirectMessageSubscription>
     }>).subscribe({
       next: async (incoming) => {
-        //console.log("Received a subscription update.")
         if (
           incoming?.value?.data?.onCreateDirectMessage &&
           incoming?.value?.data?.onCreateDirectMessage?.messageRoomID === room?.id
         ) {
-          //console.log("Received a response", incoming?.value?.data?.onCreateDirectMessage)
           try {
             const directMessage = (await API.graphql({
               query: queries.getDirectMessage,
@@ -146,16 +143,10 @@ export default function Messages(props: Props): JSX.Element {
               appendNewResponse(directMessage.data?.getDirectMessage)
             }
           } catch (e) {
-            console.log("Something went wrong. Exception caught")
-            console.log(e)
+            console.log("Error. Exception caught", e)
           }
         } else {
-          console.log("UPDATE IS NOT IN THE SAME ROOM (?)")
-          console.log(
-            "incoming?.value?.data?.onCreateDirectMessage?.messageRoomID",
-            incoming?.value?.data?.onCreateDirectMessage?.messageRoomID
-          )
-          console.log("room?.id", room?.id)
+          console.log("Update is not in this room.")
         }
       },
       error: (error) => console.log(error),
@@ -169,8 +160,7 @@ export default function Messages(props: Props): JSX.Element {
     }>).subscribe({
       next: async (incoming) => {
         if (
-          incoming?.value?.data?.onCreateDirectMessageReply?.parentMessage?.messageRoomID ===
-            room?.id &&
+          room?.id === incoming?.value?.data?.onCreateDirectMessageReply?.messageRoomID &&
           incoming?.value?.data?.onCreateDirectMessageReply?.messageId
         ) {
           try {
@@ -183,45 +173,32 @@ export default function Messages(props: Props): JSX.Element {
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
             })) as GraphQLResult<GetDirectMessageQuery>
             if (thread?.replies) {
-              /*
-                1. Find response that got replied to, lives in thread.replies
-                2. Get author data from incoming.value.data.onCreateDirectMessageReply
-                3. Get updatedMessage(this is the relevant thread), find the new message data, can be compared with messageId to simplify
-                4. Combine author data and new message data, format with formatReply to fit into reply array
-                5. Append message to replies that belong to the response
-                6. ... is parentId incorrect? cannot find thread response when it has no replies.
-                   parentId might not be actual parentId when replying to a response.
-              */
               const indexInStaleThread = thread.replies.findIndex((r, ind) => {
-                console.log("finding index: r.messageId", r?.messageId, "parentId", parentId)
                 return r?.messageId === parentId
               })
-              console.log("indexInStaleThread", indexInStaleThread)
-              const updatedReplies = updatedMessage?.data?.getDirectMessage?.replies?.items
-              console.log("updatedreplies", updatedReplies)
-              const oldReplies = thread?.replies?.[indexInStaleThread]?.replies ?? []
-              console.log("oldReplies", oldReplies)
-              const newReply: any = updatedReplies?.filter(
-                ({ id: newId }) => !oldReplies.some(({ messageId: oldId }) => oldId === newId)
-              )[0]
-              console.log("newReply is", newReply)
-              if (incoming.value.data?.onCreateDirectMessageReply?.author) {
-                newReply.author = incoming.value.data?.onCreateDirectMessageReply?.author
-              }
-              const a = [...(thread.replies ?? [])]
-              if (a) {
+              //console.log("indexInStaleThread", indexInStaleThread)
+              if (indexInStaleThread > 0) {
+                const updatedReplies = updatedMessage?.data?.getDirectMessage?.replies?.items
+                //console.log("updatedReplies", updatedReplies)
+                const oldReplies = thread?.replies?.[indexInStaleThread]?.replies ?? []
+                //console.log("oldReplies", oldReplies)
+                const newReply: any = updatedReplies?.filter(
+                  ({ id: newId }) => !oldReplies.some(({ messageId: oldId }) => oldId === newId)
+                )[0]
+                //console.log("newReply is", newReply)
+                if (incoming.value.data?.onCreateDirectMessageReply?.author) {
+                  newReply.author = incoming.value.data?.onCreateDirectMessageReply?.author
+                }
+                const a = [...(thread.replies ?? [])]
                 a[indexInStaleThread].replies.push(formatReply(newReply))
-                console.log("setting replies to:", a)
                 setThread({ ...thread, replies: a })
-              } else {
-                console.log("a is undefined")
               }
             }
           } catch (e) {
             console.debug(e)
           }
         } else {
-          console.log("wrong room!")
+          console.log("Message not for this room.")
         }
       },
       error: (error) => console.log(error),
@@ -230,7 +207,7 @@ export default function Messages(props: Props): JSX.Element {
       directMessageSubscription.unsubscribe()
       directmessageReplySubscription.unsubscribe()
     }
-  }, [])
+  }, [thread])
   if (thread?.name !== "" && thread?.comment !== "")
     return <MessageThread open={open} thread={thread} />
   return <></> // dont return anything if data is missing

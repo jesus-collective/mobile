@@ -16,6 +16,7 @@ const style = StyleSheet.create({
 })
 
 export type MessageComment = {
+  id?: string
   name: string
   position: string
   comment: string
@@ -47,8 +48,8 @@ export default function MessageThread(props: Props): JSX.Element {
   const [replyTo, setReplyTo] = useState({
     name: "",
     messageRoomId: "",
-    parentId: "",
     messageId: "",
+    id: "",
   })
 
   useEffect(() => {
@@ -81,7 +82,7 @@ export default function MessageThread(props: Props): JSX.Element {
               return (
                 <View key={index}>
                   <MessageComment
-                    active={replyTo?.messageId === response?.messageId}
+                    active={replyTo?.id === response?.messageId}
                     setOpen={() => setOpen((prev) => !prev)}
                     setReplyTo={setReplyTo}
                     openState={open}
@@ -92,7 +93,7 @@ export default function MessageThread(props: Props): JSX.Element {
                   {response?.replies?.map((replyToReponse) => {
                     return (
                       <MessageComment
-                        active={replyTo?.messageId === replyToReponse?.messageId}
+                        active={replyTo?.id === replyToReponse?.id}
                         setOpen={() => setOpen((prev) => !prev)}
                         setReplyTo={setReplyTo}
                         openState={open}
@@ -114,7 +115,7 @@ export default function MessageThread(props: Props): JSX.Element {
             <View style={{ flex: 1 }}>
               <MessageEditor
                 clearReplyTo={() =>
-                  setReplyTo({ parentId: "", name: "", messageRoomId: "", messageId: "" })
+                  setReplyTo({ id: "", name: "", messageRoomId: "", messageId: "" })
                 }
                 replyTo={replyTo}
                 recipients={recipients}

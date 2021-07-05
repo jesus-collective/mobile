@@ -20,7 +20,7 @@ interface Props {
     name: string
     messageId?: string
     messageRoomId?: string
-    parentId?: string
+    id?: string
   }
   clearReplyTo: () => void
   recipients: Array<string>
@@ -74,7 +74,7 @@ export default function MessageEditor(props: Props): JSX.Element {
   const saveReply = async () => {
     // this will only run after checking reply fields
 
-    const replyToID = replyTo?.parentId !== "" ? replyTo.parentId : replyTo?.messageId
+    const replyToID = replyTo?.messageId ?? replyTo.id
     console.log("replyToID", replyToID)
     if (!!replyToID) {
       const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
@@ -106,6 +106,7 @@ export default function MessageEditor(props: Props): JSX.Element {
   return (
     <View style={{ paddingBottom: 30 }}>
       <Editor
+        spellCheck
         wrapperStyle={{
           maxHeight: 150,
           marginTop: 0,
