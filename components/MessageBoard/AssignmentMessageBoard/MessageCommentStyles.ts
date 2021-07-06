@@ -1,0 +1,86 @@
+import EStyleSheet from "react-native-extended-stylesheet"
+
+const MessageCommentStyles = EStyleSheet.create({
+  contentContainer: {
+    backgroundColor: "#F9FAFC",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0.5,
+      height: 0.5,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 1,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: "rgba(0, 0, 0, 0)",
+    flex: 1,
+    paddingHorizontal: 22,
+    paddingTop: 8,
+    paddingBottom: 16,
+  },
+  headerText: {
+    fontSize: 16,
+    color: "#333",
+    fontFamily: "Graphik-Bold-App",
+    lineHeight: 21,
+    letterSpacing: -0.3,
+  },
+  subHeaderText: {
+    fontSize: 12,
+    color: "#333",
+    fontFamily: "Graphik-Regular-App",
+    opacity: 0.6,
+    lineHeight: 16,
+    letterSpacing: -0.3,
+  },
+  contentText: {
+    fontSize: 16,
+    color: "#333",
+    fontFamily: "Graphik-Regular-App",
+    lineHeight: 26,
+    letterSpacing: -0.3,
+  },
+  imageContainer: {
+    flexDirection: "row",
+    marginVertical: 8,
+    marginRight: 8,
+  },
+  arrowImage: {
+    flexDirection: "column",
+    width: 22,
+    height: 22,
+    backgroundColor: "white",
+    marginTop: 28,
+    marginHorizontal: 8,
+  },
+  arrowDown: {
+    transform: [{ rotate: "-90deg" }],
+  },
+  assignmentBadge: {
+    marginTop: 17,
+    marginBottom: 10,
+    backgroundColor: "#71C209",
+    borderRadius: 16,
+    padding: 4,
+    width: "20ch",
+  },
+  assignmentBadgeText: {
+    color: "white",
+    textTransform: "uppercase",
+    fontFamily: "Graphik-Semibold-App",
+    fontSize: 11,
+    textAlign: "center",
+  },
+  editorImage: {
+    borderTopWidth: 0.7,
+    borderBottomWidth: 0.7,
+    alignSelf: "center",
+    width: 60,
+    borderWidth: 1,
+    borderRadius: 50,
+    borderColor: "#E4E1E1",
+    height: 80,
+  },
+})
+export default MessageCommentStyles

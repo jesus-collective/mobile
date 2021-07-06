@@ -4,6 +4,7 @@ import { Badge } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { DirectMessagesByRoomQuery, MessagesByRoomQuery } from "src/API-messages"
+import { MessageComment } from "./AssignmentMessageBoard/MessageThread"
 
 type DMs = NonNullable<DirectMessagesByRoomQuery["directMessagesByRoom"]>["items"]
 type DM = NonNullable<DMs>[0]
@@ -61,13 +62,15 @@ export default class Utils {
       console.error(e)
     }
   }
-  static renderFileDownloadBadge(item: DM | DMReply | Message | Reply): React.ReactNode {
+  static renderFileDownloadBadge(
+    item: DM | DMReply | Message | Reply | MessageComment
+  ): React.ReactNode {
     return (
       <TouchableOpacity onPress={() => this.getAttachment(item?.attachmentOwner, item?.attachment)}>
         <Badge style={{ backgroundColor: "#EFF1F5", marginRight: 10, marginTop: 5, height: 30 }}>
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
             {this.renderFileIcon(item?.attachment)}
-            <Text style={{ fontSize: 18, paddingHorizontal: 10 }}>
+            <Text style={{ fontSize: 16, paddingHorizontal: 10 }}>
               {this.processFileName(item?.attachment)}
             </Text>
           </View>

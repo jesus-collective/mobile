@@ -11,24 +11,27 @@ const style = StyleSheet.create({
     zIndex: 1000000,
     flexDirection: "column",
     backgroundColor: "white",
-    width: "85%",
+    width: "100%",
+    paddingRight: 15,
   },
 })
 
 export type MessageComment = {
-  id?: string
-  name: string
-  position: string
-  comment: string
-  parentId?: string
-  authorId: string
-  roomId?: string
-  createdAt?: string
-  replies?: Array<any> // <MessageComment>? missing type id
-  updatedAt?: string
-  recipients: Array<string>
-  messageId?: string
-  messageRoomId?: string
+  id?: string | null | undefined // Always the message's id
+  attachment: string | null | undefined
+  attachmentName: string | null | undefined
+  attachmentOwner: string | null | undefined
+  name: string | null | undefined // given_name + family_name
+  currentRole: string | null | undefined // currentRole
+  comment: string | null | undefined
+  authorId: string | null | undefined
+  roomId?: string | null | undefined
+  createdAt?: string | null | undefined
+  replies?: Array<MessageComment>
+  updatedAt?: string | null | undefined
+  recipients?: Array<string | null>
+  messageId?: string | null | undefined // Message's id, or parent message id if its a reply to a response
+  messageRoomId?: string | null | undefined
 }
 
 interface Props {
@@ -36,10 +39,9 @@ interface Props {
   open?: boolean
 }
 
-export type EntryType = "assignment" | "reply" | "replyToReply"
-
 export default function MessageThread(props: Props): JSX.Element {
   const commentRef = useRef<any>(null)
+  const textRef = useRef<any>(null)
   const { thread } = props
   const { replies, roomId, recipients } = thread
   const replyCount = replyCounter(replies)
@@ -51,13 +53,18 @@ export default function MessageThread(props: Props): JSX.Element {
     messageId: "",
     id: "",
   })
-
-  useEffect(() => {
-    if (open)
+  const focusTextInput = () => {
+    if (textRef?.current)
+      textRef?.current?.scrollIntoView({
+        behavior: "smooth",
+      })
+  }
+  const focusFirstComment = () => {
+    if (commentRef?.current)
       commentRef?.current?.scrollIntoView({
         behavior: "smooth",
       })
-  }, [open])
+  }
 
   useEffect(() => {
     const getUser = async () => {
@@ -69,6 +76,8 @@ export default function MessageThread(props: Props): JSX.Element {
   return (
     <View ref={commentRef} style={style.container}>
       <MessageComment
+        scrollToFirst={focusFirstComment}
+        scrollToBottom={focusTextInput}
         replyCount={replyCount}
         setOpen={() => setOpen((prev) => !prev)}
         setReplyTo={setReplyTo}
@@ -82,6 +91,7 @@ export default function MessageThread(props: Props): JSX.Element {
               return (
                 <View key={index}>
                   <MessageComment
+                    scrollToBottom={focusTextInput}
                     active={replyTo?.id === response?.messageId}
                     setOpen={() => setOpen((prev) => !prev)}
                     setReplyTo={setReplyTo}
@@ -93,6 +103,7 @@ export default function MessageThread(props: Props): JSX.Element {
                   {response?.replies?.map((replyToReponse) => {
                     return (
                       <MessageComment
+                        scrollToBottom={focusTextInput}
                         active={replyTo?.id === replyToReponse?.id}
                         setOpen={() => setOpen((prev) => !prev)}
                         setReplyTo={setReplyTo}
@@ -110,15 +121,15 @@ export default function MessageThread(props: Props): JSX.Element {
         {open && user && roomId ? (
           <View style={{ flexDirection: "row" }}>
             <View style={{ justifyContent: "center" }}>
-              <ProfileImage size="small2" user={user} />
+              <ProfileImage linkToProfile={true} size="small2" user={user} />
             </View>
-            <View style={{ flex: 1 }}>
+            <View ref={textRef} style={{ flex: 1 }}>
               <MessageEditor
                 clearReplyTo={() =>
                   setReplyTo({ id: "", name: "", messageRoomId: "", messageId: "" })
                 }
                 replyTo={replyTo}
-                recipients={recipients}
+                recipients={recipients ?? []}
                 roomId={roomId}
               />
             </View>

@@ -29,7 +29,7 @@ interface Props {
 export default function Messages(props: Props): JSX.Element {
   const { room, recipients, open } = props
   const firstMessage = room?.directMessage?.items?.[0]
-  const threadReplies =
+  const threadReplies: Array<MessageComment> =
     room?.directMessage?.items
       .filter((comment: DirectMessage, index: number) => index > 0) // is first index always thread parent?
       .map((comment: DirectMessage) => {
@@ -44,8 +44,11 @@ export default function Messages(props: Props): JSX.Element {
             return {
               id: rtr?.id,
               name: rtr?.author?.given_name + " " + rtr?.author?.family_name,
-              position: rtr?.author?.currentRole,
+              currentRole: rtr?.author?.currentRole,
               comment: rtr?.content,
+              attachment: rtr?.attachment,
+              attachmentName: rtr?.attachmentName,
+              attachmentOwner: rtr?.attachmentOwner,
               authorId: rtr?.author?.id,
               messageId: comment?.id,
               messageRoomId: room?.id,
@@ -59,8 +62,12 @@ export default function Messages(props: Props): JSX.Element {
         console.log("messageRoomId", room?.id)
         console.log("======================")*/
         return {
+          id: comment?.id,
           name: author?.given_name + " " + author?.family_name,
-          position: author?.currentRole,
+          currentRole: author?.currentRole,
+          attachment: comment?.attachment,
+          attachmentName: comment?.attachmentName,
+          attachmentOwner: comment?.attachmentOwner,
           comment: content,
           authorId: author?.id,
           createdAt: createdAt,
@@ -74,8 +81,11 @@ export default function Messages(props: Props): JSX.Element {
   const [thread, setThread] = useState<MessageComment>({
     recipients,
     authorId: firstMessage?.author?.id,
+    attachment: firstMessage?.attachment,
+    attachmentName: firstMessage?.attachmentName,
+    attachmentOwner: firstMessage?.attachmentOwner,
     name: firstMessage?.author?.given_name + " " + firstMessage?.author?.family_name,
-    position: firstMessage?.author?.currentRole ?? "",
+    currentRole: firstMessage?.author?.currentRole ?? "",
     comment: firstMessage?.content ?? "",
     roomId: room?.id, // thread id
     createdAt: firstMessage?.createdAt,
@@ -84,8 +94,12 @@ export default function Messages(props: Props): JSX.Element {
   })
   const formatResponse = (rep) => {
     return {
+      id: rep?.id,
       name: rep?.author?.given_name + " " + rep?.author?.family_name,
-      position: rep?.author?.currentRole,
+      currentRole: rep?.author?.currentRole,
+      attachment: rep?.attachment,
+      attachmentName: rep?.attachmentName,
+      attachmentOwner: rep?.attachmentOwner,
       comment: rep?.content,
       authorId: rep?.author?.id,
       createdAt: rep?.createdAt,
@@ -98,8 +112,11 @@ export default function Messages(props: Props): JSX.Element {
   const formatReply = (rep) => {
     return {
       id: rep?.id,
+      attachment: rep?.attachment,
+      attachmentName: rep?.attachmentName,
+      attachmentOwner: rep?.attachmentOwner,
       name: rep?.author?.given_name + " " + rep?.author?.family_name,
-      position: rep?.author?.currentRole,
+      currentRole: rep?.author?.currentRole,
       comment: rep?.content,
       authorId: rep?.author?.id,
       createdAt: rep?.createdAt,
@@ -108,16 +125,10 @@ export default function Messages(props: Props): JSX.Element {
       updatedAt: rep?.updatedAt,
     }
   }
-  const appendNewResponse = (msg) => {
+  const appendNewResponse = (msg: DirectMessage) => {
     setThread({ ...thread, replies: [...(thread.replies ?? []), formatResponse(msg)] })
   }
 
-  const loadDirectMessageRoom = async () => {
-    // Make EditableCourseAssignment to only fetch room names and ids
-    // Fetch room data here
-    // This could make switching between "My Assignment" and "Assignments to Review" slower
-    // TODO: Improve data transformation code
-  }
   useEffect(() => {
     const directMessageSubscription = (API.graphql({
       query: onCreateDirectMessage,
@@ -140,7 +151,7 @@ export default function Messages(props: Props): JSX.Element {
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
             })) as GraphQLResult<GetDirectMessageQuery>
             if (directMessage.data?.getDirectMessage) {
-              appendNewResponse(directMessage.data?.getDirectMessage)
+              appendNewResponse(directMessage.data?.getDirectMessage as DirectMessage)
             }
           } catch (e) {
             console.log("Error. Exception caught", e)
@@ -173,25 +184,32 @@ export default function Messages(props: Props): JSX.Element {
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
             })) as GraphQLResult<GetDirectMessageQuery>
             if (thread?.replies) {
-              const indexInStaleThread = thread.replies.findIndex((r, ind) => {
+              const indexInStaleThread = thread.replies.findIndex((r) => {
                 return r?.messageId === parentId
               })
               //console.log("indexInStaleThread", indexInStaleThread)
               if (indexInStaleThread > 0) {
                 const updatedReplies = updatedMessage?.data?.getDirectMessage?.replies?.items
-                //console.log("updatedReplies", updatedReplies)
-                const oldReplies = thread?.replies?.[indexInStaleThread]?.replies ?? []
-                //console.log("oldReplies", oldReplies)
-                const newReply: any = updatedReplies?.filter(
-                  ({ id: newId }) => !oldReplies.some(({ messageId: oldId }) => oldId === newId)
-                )[0]
-                //console.log("newReply is", newReply)
-                if (incoming.value.data?.onCreateDirectMessageReply?.author) {
-                  newReply.author = incoming.value.data?.onCreateDirectMessageReply?.author
+                console.log(
+                  "incoming.value.data?.onCreateDirectMessageReply",
+                  incoming.value.data?.onCreateDirectMessageReply
+                )
+                const newReply = updatedReplies?.filter(
+                  (reply) =>
+                    reply?.id === incoming.value.data?.onCreateDirectMessageReply?.messageId || // reply to response
+                    reply?.id === incoming.value.data?.onCreateDirectMessageReply?.id //reply to reply
+                )?.[0]
+                console.log(updatedReplies)
+                if (newReply) {
+                  console.log("newReply is", newReply)
+                  if (incoming.value.data?.onCreateDirectMessageReply?.author) {
+                    //doesn't it?
+                    newReply.author = incoming.value.data?.onCreateDirectMessageReply?.author
+                  }
+                  const a = [...(thread.replies ?? [])]
+                  a?.[indexInStaleThread]?.replies?.push(formatReply(newReply))
+                  setThread({ ...thread, replies: a })
                 }
-                const a = [...(thread.replies ?? [])]
-                a[indexInStaleThread].replies.push(formatReply(newReply))
-                setThread({ ...thread, replies: a })
               }
             }
           } catch (e) {
@@ -208,7 +226,5 @@ export default function Messages(props: Props): JSX.Element {
       directmessageReplySubscription.unsubscribe()
     }
   }, [thread])
-  if (thread?.name !== "" && thread?.comment !== "")
-    return <MessageThread open={open} thread={thread} />
-  return <></> // dont return anything if data is missing
+  return <MessageThread open={open} thread={thread} />
 }
