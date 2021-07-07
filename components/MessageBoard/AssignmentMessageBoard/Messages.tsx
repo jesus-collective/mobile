@@ -36,11 +36,6 @@ export default function Messages(props: Props): JSX.Element {
         const { createdAt, updatedAt, content, author, id } = comment
         const repliesToReplies =
           comment?.replies?.items?.map((rtr) => {
-            /*
-            console.log("Logging a reply:")
-            console.log("messageId", comment?.id, rtr?.id)
-            console.log("messageRoomId", room?.id)
-            console.log("======================")*/
             return {
               id: rtr?.id,
               name: rtr?.author?.given_name + " " + rtr?.author?.family_name,
@@ -56,11 +51,6 @@ export default function Messages(props: Props): JSX.Element {
               updatedAt: rtr?.updatedAt,
             }
           }) ?? []
-        /*
-        console.log("Logging a response:")
-        console.log("messageId", id)
-        console.log("messageRoomId", room?.id)
-        console.log("======================")*/
         return {
           id: comment?.id,
           name: author?.given_name + " " + author?.family_name,
@@ -120,8 +110,8 @@ export default function Messages(props: Props): JSX.Element {
       comment: rep?.content,
       authorId: rep?.author?.id,
       createdAt: rep?.createdAt,
-      messageId: rep?.messageId, //thread id
-      messageRoomId: room?.id, //message id
+      messageId: rep?.messageId, //message id
+      messageRoomId: room?.id, //thread id
       updatedAt: rep?.updatedAt,
     }
   }
@@ -190,10 +180,7 @@ export default function Messages(props: Props): JSX.Element {
               //console.log("indexInStaleThread", indexInStaleThread)
               if (indexInStaleThread >= 0) {
                 const updatedReplies = updatedMessage?.data?.getDirectMessage?.replies?.items
-                console.log(
-                  "incoming.value.data?.onCreateDirectMessageReply",
-                  incoming.value.data?.onCreateDirectMessageReply
-                )
+                //console.log("incoming.value.data?.onCreateDirectMessageReply",incoming.value.data?.onCreateDirectMessageReply)
                 const newReply = updatedReplies?.filter(
                   (reply) =>
                     reply?.id === incoming.value.data?.onCreateDirectMessageReply?.messageId || // reply to response
@@ -201,7 +188,7 @@ export default function Messages(props: Props): JSX.Element {
                 )?.[0]
                 console.log(updatedReplies)
                 if (newReply) {
-                  console.log("newReply is", newReply)
+                  //console.log("newReply is", newReply)
                   if (incoming.value.data?.onCreateDirectMessageReply?.author) {
                     //doesn't it?
                     newReply.author = incoming.value.data?.onCreateDirectMessageReply?.author
