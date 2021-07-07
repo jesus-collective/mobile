@@ -819,6 +819,7 @@ const courseStyles = EStyleSheet.create({
   },
   courseDetailAssignmentTime: {
     flex: 0.4,
+    height: "auto",
     flexDirection: "row",
     marginLeft: 20,
   },
