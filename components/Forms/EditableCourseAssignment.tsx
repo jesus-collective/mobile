@@ -361,8 +361,9 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
         style={{
           padding: 5,
           height: 25,
-          width: "95%",
+          flex: 1,
           marginTop: 20,
+          marginLeft: 30,
           backgroundColor: label === "Assignment" ? "#F0493E" : "#71C209",
           borderRadius: 4,
         }}
