@@ -27,10 +27,11 @@ interface Props {
   clearReplyTo?: () => void
   post?: () => void
   recipients: Array<string | null>
+  wordCount?: any
 }
 
 export default function MessageEditor(props: Props): JSX.Element {
-  const { post, roomId, recipients, replyTo, clearReplyTo } = props
+  const { post, roomId, recipients, replyTo, clearReplyTo, wordCount } = props
   const isReply = replyTo?.name && replyTo?.messageRoomId && replyTo?.messageId
   const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
   const [attachmentOptions, setAttachmentOptions] = useState({
@@ -240,6 +241,16 @@ export default function MessageEditor(props: Props): JSX.Element {
         >
           Post
         </JCButton>
+        {wordCount ? (
+          <Text style={{ textAlign: "right", marginRight: 8, alignSelf: "center" }}>
+            {console.log(editorState)}
+            Word count:{" "}
+            {editorState.getCurrentContent().getPlainText().length === 0
+              ? 0
+              : editorState.getCurrentContent().getPlainText().split(" ").length}
+            /{wordCount}
+          </Text>
+        ) : null}
         {isReply ? (
           <View
             style={{

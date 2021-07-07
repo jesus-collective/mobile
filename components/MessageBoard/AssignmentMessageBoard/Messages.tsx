@@ -25,9 +25,10 @@ interface Props {
   }
   open?: boolean
   recipients: Array<string>
+  wordCount: number
 }
 export default function Messages(props: Props): JSX.Element {
-  const { room, recipients, open } = props
+  const { room, recipients, open, wordCount } = props
   const firstMessage = room?.directMessage?.items?.[0]
   const threadReplies: Array<MessageComment> =
     room?.directMessage?.items
@@ -219,5 +220,5 @@ export default function Messages(props: Props): JSX.Element {
       directmessageReplySubscription.unsubscribe()
     }
   }, [thread])
-  return <MessageThread open={open} thread={thread} />
+  return <MessageThread wordCount={wordCount} open={open} thread={thread} />
 }

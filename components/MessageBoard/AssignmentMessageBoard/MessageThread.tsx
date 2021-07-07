@@ -37,12 +37,13 @@ export type MessageComment = {
 interface Props {
   thread: MessageComment
   open?: boolean
+  wordCount: number
 }
 
 export default function MessageThread(props: Props): JSX.Element {
   const commentRef = useRef<any>(null)
   const textRef = useRef<any>(null)
-  const { thread } = props
+  const { thread, wordCount } = props
   const { replies, roomId, recipients } = thread
   const replyCount = replyCounter(replies)
   const [user, setUser] = useState<JCCognitoUser["username"]>("")
@@ -125,6 +126,7 @@ export default function MessageThread(props: Props): JSX.Element {
             </View>
             <View ref={textRef} style={{ flex: 1 }}>
               <MessageEditor
+                wordCount={wordCount}
                 clearReplyTo={() =>
                   setReplyTo({ id: "", name: "", messageRoomId: "", messageId: "" })
                 }
