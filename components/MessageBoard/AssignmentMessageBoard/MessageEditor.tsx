@@ -18,18 +18,19 @@ import * as mutations from "../../../src/graphql/mutations"
 import FileUpload from "../FileUpload"
 interface Props {
   roomId: string
-  replyTo: {
-    name: string
+  replyTo?: {
+    name?: string
     messageId?: string
     messageRoomId?: string
     id?: string
   }
-  clearReplyTo: () => void
+  clearReplyTo?: () => void
+  post?: () => void
   recipients: Array<string | null>
 }
 
 export default function MessageEditor(props: Props): JSX.Element {
-  const { roomId, recipients, replyTo, clearReplyTo } = props
+  const { post, roomId, recipients, replyTo, clearReplyTo } = props
   const isReply = replyTo?.name && replyTo?.messageRoomId && replyTo?.messageId
   const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
   const [attachmentOptions, setAttachmentOptions] = useState({
@@ -137,19 +138,23 @@ export default function MessageEditor(props: Props): JSX.Element {
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })) as Promise<GraphQLResult<CreateDirectMessageMutation>>
           console.log({ "Success mutations.createDirectMessage ": createDirectMessage })
-          setEditorState(EditorState.createEmpty())
-          clearReplyTo()
         } catch (err) {
           console.error({ "Error mutations.createDirectMessage ": err })
           if (err.data.createDirectMessage) {
             //setEditorState(EditorState.createEmpty())
           }
         } finally {
+          setEditorState(EditorState.createEmpty())
+          if (clearReplyTo) clearReplyTo()
           clearAttachments()
+          if (post) post()
         }
       } catch (err) {
         console.log(err)
+        setEditorState(EditorState.createEmpty())
+        if (clearReplyTo) clearReplyTo()
         clearAttachments()
+        if (post) post()
       }
     }
   }
@@ -157,34 +162,39 @@ export default function MessageEditor(props: Props): JSX.Element {
   const saveReply = async () => {
     // this will only run after checking reply fields
 
-    const replyToID = replyTo?.messageId ?? replyTo.id
+    const replyToID = replyTo?.messageId ?? replyTo?.id
     console.log("replyToID", replyToID)
     if (!!replyToID) {
-      const { attachment, attachmentName, attachmentOwner } = attachmentOptions
-      const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-      const user = await Auth.currentAuthenticatedUser()
-      const input: CreateDirectMessageReplyInput = {
-        id: uuidv4(),
-        content: msg,
-        when: Date.now().toString(),
-        attachment: attachment,
-        attachmentName: attachmentName,
-        attachmentOwner: attachmentOwner,
-        messageRoomID: replyTo?.messageRoomId,
-        userId: user.username,
-        messageId: replyToID ?? "",
-        recipients: recipients ?? [],
-        parentReplyId: "0000-0000-0000-0000", // void value
+      try {
+        const { attachment, attachmentName, attachmentOwner } = attachmentOptions
+        const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+        const user = await Auth.currentAuthenticatedUser()
+        const input: CreateDirectMessageReplyInput = {
+          id: uuidv4(),
+          content: msg,
+          when: Date.now().toString(),
+          attachment: attachment,
+          attachmentName: attachmentName,
+          attachmentOwner: attachmentOwner,
+          messageRoomID: replyTo?.messageRoomId,
+          userId: user.username,
+          messageId: replyToID ?? "",
+          recipients: recipients ?? [],
+          parentReplyId: "0000-0000-0000-0000", // void value
+        }
+        const createReply = (await API.graphql({
+          query: mutations.createDirectMessageReply,
+          variables: { input },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as GraphQLResult<CreateDirectMessageReplyMutation>
+        console.log({ "Success mutations.createReply": createReply })
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setEditorState(EditorState.createEmpty())
+        if (clearReplyTo) clearReplyTo()
+        clearAttachments()
       }
-      const createReply = (await API.graphql({
-        query: mutations.createDirectMessageReply,
-        variables: { input },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateDirectMessageReplyMutation>
-      console.log({ "Success mutations.createReply": createReply })
-      setEditorState(EditorState.createEmpty())
-      clearReplyTo()
-      clearAttachments()
     }
   }
   return (

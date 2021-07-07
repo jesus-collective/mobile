@@ -6,6 +6,7 @@ import React from "react"
 import { Text, TouchableHighlight, View } from "react-native"
 import ActivityBoxStyles from "../../components/Activity/ActivityBoxStyles"
 import { CourseActions } from "../../components/CourseViewer/CourseContext"
+import MessageEditor from "../../components/MessageBoard/AssignmentMessageBoard/MessageEditor"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateDirectMessageRoomMutation,
@@ -17,7 +18,6 @@ import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import Messages from "../MessageBoard/AssignmentMessageBoard/Messages"
-import MessageBoard from "../MessageBoard/MessageBoard"
 
 enum initialPostState {
   Yes,
@@ -33,6 +33,7 @@ interface Props {
 interface State extends JCState {
   assignmentComplete: boolean
   selectedRoom: any
+  posted: boolean
   data: any
   currentUser: any
   currentRoomId: string | null
@@ -50,6 +51,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       selectedRoom: null,
       data: [],
       currentUser: null,
+      posted: false,
       currentThread: "",
       currentRoomId: null,
       newToList: [],
@@ -68,6 +70,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     if (prevProps.assignmentId !== this.props.assignmentId) {
       this.getInitialData(null)
     }
+    console.log(prevProps)
   }
   async getInitialData(next: string | null): Promise<void> {
     if (this.props.assignmentId)
@@ -287,7 +290,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
   }
   renderCourseReview(userActions?: UserActions): React.ReactNode {
     return (
-      <Container style={{ width: "100%" }}>
+      <Container style={{ width: "100%", paddingBottom: 250 }}>
         <this.ButtonHeader
           adminCoach={
             userActions?.isMemberOf("courseAdmin") || userActions?.isMemberOf("courseCoach")
@@ -387,7 +390,6 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       <EditableCourseAssignment.UserConsumer>
         {({ userState, userActions }) => {
           if (!userState) return null
-
           return userActions.isMemberOf("courseAdmin") || userActions.isMemberOf("courseCoach") ? (
             <>
               {this.renderIndicatorBar("Admin/Coach View")}
@@ -395,20 +397,21 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
             </>
           ) : (
             <>
-              {this.hasInitialPost() == initialPostState.Yes ? (
+              {this.hasInitialPost() == initialPostState.Yes || this.state.posted ? (
                 this.renderCourseReview(userActions)
               ) : this.hasInitialPost() == initialPostState.No ? (
                 <>
                   {this.renderIndicatorBar("Assignment")}
-                  <MessageBoard
-                    replies
-                    toolbar={true}
-                    showWordCount={true}
-                    totalWordCount={this.props.wordCount}
-                    style="course"
-                    roomId={this.state.currentRoomId}
-                    recipients={this.getCurrentRoomRecipients()}
-                  ></MessageBoard>
+                  <View style={{ paddingBottom: 150 }}>
+                    <MessageEditor
+                      post={async () => {
+                        await this.getInitialData(null)
+                        this.setState({ posted: true })
+                      }}
+                      recipients={this.getCurrentRoomRecipients()}
+                      roomId={this.state.currentRoomId ?? ""}
+                    />
+                  </View>
                 </>
               ) : null}
             </>

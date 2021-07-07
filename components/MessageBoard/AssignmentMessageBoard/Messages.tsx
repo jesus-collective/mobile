@@ -13,7 +13,7 @@ import * as queries from "../../../src/graphql-custom/queries"
 import {
   onCreateDirectMessage,
   onCreateDirectMessageReply,
-} from "../../../src/graphql/subscriptions"
+} from "../../../src/graphql-custom/subscriptions"
 import MessageThread, { MessageComment } from "./MessageThread"
 
 interface Props {
@@ -188,7 +188,7 @@ export default function Messages(props: Props): JSX.Element {
                 return r?.messageId === parentId
               })
               //console.log("indexInStaleThread", indexInStaleThread)
-              if (indexInStaleThread > 0) {
+              if (indexInStaleThread >= 0) {
                 const updatedReplies = updatedMessage?.data?.getDirectMessage?.replies?.items
                 console.log(
                   "incoming.value.data?.onCreateDirectMessageReply",
@@ -209,8 +209,14 @@ export default function Messages(props: Props): JSX.Element {
                   const a = [...(thread.replies ?? [])]
                   a?.[indexInStaleThread]?.replies?.push(formatReply(newReply))
                   setThread({ ...thread, replies: a })
+                } else {
+                  console.log("newReply doesnt exist")
                 }
+              } else {
+                console.log("indexInStaleThread: ", indexInStaleThread)
               }
+            } else {
+              console.log("thread.replies not found")
             }
           } catch (e) {
             console.debug(e)
