@@ -678,7 +678,7 @@ const courseStyles = EStyleSheet.create({
     alignSelf: "flex-start",
   },
   courseDetailLessonText: {
-    fontSize: 40,
+    fontSize: 36,
     lineHeight: 55,
     fontFamily: "Graphik-Bold-App",
     color: "#333333",
@@ -777,6 +777,7 @@ const courseStyles = EStyleSheet.create({
   },
   courseZoomMainContainer: {
     flexDirection: "row",
+    width: "100%",
     marginTop: 30,
     flex: 0.5,
   },
@@ -818,7 +819,6 @@ const courseStyles = EStyleSheet.create({
   },
   courseDetailAssignmentTime: {
     flex: 0.4,
-    height: "auto",
     flexDirection: "row",
     marginLeft: 20,
   },
@@ -847,7 +847,7 @@ const courseStyles = EStyleSheet.create({
     lineHeight: 21,
     fontFamily: "Graphik-Regular-App",
     color: "#333333",
-    marginTop: 45,
+    marginTop: 20,
   },
   courseDetailCalendarImage2: {
     width: "22px",
