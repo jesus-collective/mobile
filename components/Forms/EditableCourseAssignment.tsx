@@ -39,7 +39,6 @@ interface State extends JCState {
   currentRoomId: string | null
   newToList: any
   userList: any
-  currentThread: string
   assignmentOption: string
 }
 export default class EditableCourseAssignment extends JCComponent<Props, State> {
@@ -52,7 +51,6 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       data: [],
       currentUser: null,
       posted: false,
-      currentThread: "",
       currentRoomId: null,
       newToList: [],
       assignmentComplete: false,
@@ -332,7 +330,6 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                   return (
                     <>
                       <Messages
-                        open={this.state.currentThread === item?.id}
                         recipients={this.getCurrentRoomRecipients()}
                         room={item}
                         key={index}
