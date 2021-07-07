@@ -81,7 +81,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
         console.log({ AssignmentID: "course-" + this.props.assignmentId + "-" })
         try {
           const query = {
-            limit: 20,
+            limit: 50,
             filter: {
               id: { beginsWith: "course-" + this.props.assignmentId + "-" },
             },
@@ -300,6 +300,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
           this.state.data != null && this.state.data.length != 0 ? (
             this.state.assignmentOption === "My Assignment" ? (
               <Messages
+                wordCount={this.props.wordCount}
                 recipients={this.getCurrentRoomRecipients()}
                 open
                 room={this.state.data.find((a) => a?.id.includes(this.state.currentUser))}
@@ -330,6 +331,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                   return (
                     <>
                       <Messages
+                        wordCount={this.props.wordCount}
                         recipients={this.getCurrentRoomRecipients()}
                         room={item}
                         key={index}
@@ -402,9 +404,10 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                   {this.renderIndicatorBar("Assignment")}
                   <View style={{ paddingBottom: 150 }}>
                     <MessageEditor
+                      wordCount={this.props.wordCount}
                       post={async () => {
-                        await this.getInitialData(null)
-                        this.setState({ posted: true })
+                        this.setState({ posted: true, data: [] })
+                        this.getInitialData(null)
                       }}
                       recipients={this.getCurrentRoomRecipients()}
                       roomId={this.state.currentRoomId ?? ""}
