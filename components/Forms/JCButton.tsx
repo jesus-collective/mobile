@@ -7,6 +7,7 @@ import styles from "./JCButtonStyle"
 export enum ButtonTypes {
   AdminModal,
   AdminModalOrange,
+  OutlineSmallRounded,
   AdminOutline,
   AdminSmallOutline,
   AdminAdd,

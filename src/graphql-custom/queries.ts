@@ -25,8 +25,28 @@ export const listDirectMessageRooms = /* GraphQL */ `
             id
             content
             attachment
+            author {
+              id
+              given_name
+              family_name
+              currentRole
+            }
             attachmentName
             attachmentOwner
+            replies {
+              items {
+                id
+                author {
+                  id
+                  given_name
+                  family_name
+                  currentRole
+                }
+                content
+                createdAt
+                updatedAt
+              }
+            }
             when
             recipients
             userId
@@ -236,6 +256,48 @@ export const getCourseInfoForOverview = /* GraphQL */ `
       introduction
       createdAt
       updatedAt
+    }
+  }
+`
+
+export const getDirectMessage = /* GraphQL */ `
+  query GetDirectMessage($id: ID!) {
+    getDirectMessage(id: $id) {
+      id
+      content
+      attachment
+      attachmentName
+      attachmentOwner
+      when
+      recipients
+      userId
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          attachmentOwner
+          recipients
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messageRoomID
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        currentRole
+      }
     }
   }
 `

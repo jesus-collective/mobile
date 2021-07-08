@@ -3,9 +3,10 @@ import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container } from "native-base"
 import React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { Text, TouchableHighlight, View } from "react-native"
+import ActivityBoxStyles from "../../components/Activity/ActivityBoxStyles"
 import { CourseActions } from "../../components/CourseViewer/CourseContext"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import MessageEditor from "../../components/MessageBoard/AssignmentMessageBoard/MessageEditor"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateDirectMessageRoomMutation,
@@ -16,7 +17,7 @@ import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import MessageBoard from "../MessageBoard/MessageBoard"
+import Messages from "../MessageBoard/AssignmentMessageBoard/Messages"
 
 enum initialPostState {
   Yes,
@@ -32,11 +33,13 @@ interface Props {
 interface State extends JCState {
   assignmentComplete: boolean
   selectedRoom: any
+  posted: boolean
   data: any
   currentUser: any
   currentRoomId: string | null
   newToList: any
   userList: any
+  assignmentOption: string
 }
 export default class EditableCourseAssignment extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -47,10 +50,12 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       selectedRoom: null,
       data: [],
       currentUser: null,
+      posted: false,
       currentRoomId: null,
       newToList: [],
       assignmentComplete: false,
       userList: [...z.all],
+      assignmentOption: "Assignments to Review",
     }
     console.log({ userList: this.state.userList })
 
@@ -63,6 +68,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     if (prevProps.assignmentId !== this.props.assignmentId) {
       this.getInitialData(null)
     }
+    console.log(prevProps)
   }
   async getInitialData(next: string | null): Promise<void> {
     if (this.props.assignmentId)
@@ -75,7 +81,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
         console.log({ AssignmentID: "course-" + this.props.assignmentId + "-" })
         try {
           const query = {
-            limit: 20,
+            limit: 50,
             filter: {
               id: { beginsWith: "course-" + this.props.assignmentId + "-" },
             },
@@ -176,6 +182,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
   }
   shouldCreateRoom = async (userActions: UserActions): Promise<void> => {
     console.log({ "Number of rooms": this.state.data.length })
+    console.log("this.state.data", this.state.data)
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     if (
       this.state.data.filter(
@@ -245,152 +252,167 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     console.log(ids)
     return ids
   }
-  renderCourseReview(): React.ReactNode {
+  ButtonHeader({ optionState, changeOption, adminCoach }): JSX.Element {
+    const options = adminCoach
+      ? ["Assignments to Review"]
+      : ["Assignments to Review", "My Assignment"]
     return (
-      <Container style={this.styles.style.courseAssignmentMainContainer}>
-        <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
-          <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
-
-          {this.state.data != null && this.state.data.length != 0 ? (
-            this.state.data.map((item, index: number) => {
-              const otherUsers = this.getOtherUsers(item)
-              let stringOfNames = ""
-              otherUsers.names.forEach((name, index) => {
-                if (otherUsers.names.length === index + 1) stringOfNames += name
-                else stringOfNames += name + ", "
-              })
-              if (item.directMessage.items.length > 0)
-                return (
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset",
-                      borderRadius: 10,
-                      width: "100%",
-                      paddingTop: 8,
-                      paddingBottom: 8,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                    key={item.id}
-                    onPress={() => {
-                      this.switchRoom(index)
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        lineHeight: 25,
-                        fontWeight: "normal",
-                        fontFamily: "Graphik-Regular-App",
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <ProfileImage
-                        user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
-                        size="small2"
-                      ></ProfileImage>
-                      {item.name ? item.name : stringOfNames}
-                    </Text>
-                  </TouchableOpacity>
-                )
-            })
-          ) : (
-            <Text>Nothing to review</Text>
-          )}
-        </Container>
-
+      <View style={[ActivityBoxStyles.ActivityButtonContainer, { borderBottomWidth: 0 }]}>
+        {options.map((option: string) => {
+          return (
+            <TouchableHighlight
+              underlayColor="rgba(255,255,255,0.2)"
+              key={option}
+              disabled={optionState === option}
+              onPress={() => changeOption(option)}
+              style={{
+                padding: 16,
+                borderBottomWidth: optionState === option ? 2 : 0,
+                borderBottomColor: optionState === option ? "#F0493E" : "none",
+              }}
+            >
+              <Text
+                style={[
+                  ActivityBoxStyles.ActivityButtonText,
+                  { fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Semibold-App" },
+                  optionState === option ? { color: "#F0493E" } : {},
+                ]}
+              >
+                {option}
+              </Text>
+            </TouchableHighlight>
+          )
+        })}
+      </View>
+    )
+  }
+  renderCourseReview(userActions?: UserActions): React.ReactNode {
+    return (
+      <Container style={{ width: "100%", paddingBottom: 250 }}>
+        <this.ButtonHeader
+          adminCoach={
+            userActions?.isMemberOf("courseAdmin") || userActions?.isMemberOf("courseCoach")
+          }
+          optionState={this.state.assignmentOption}
+          changeOption={(a) => this.setState({ assignmentOption: a })}
+        />
         {this.state.data != null && this.state.data.length != 0 && this.shouldShowMB() ? (
-          <Container style={this.styles.style.courseAssignmentScreenRightCard}>
-            <MessageBoard
-              replies
-              inputAt="bottom"
-              showWordCount={true}
-              totalWordCount={this.props.wordCount}
-              style="courseResponse"
-              toolbar={true}
-              roomId={this.state.currentRoomId}
-              recipients={this.getCurrentRoomRecipients()}
-            ></MessageBoard>
-          </Container>
-        ) : null}
+          this.state.data != null && this.state.data.length != 0 ? (
+            this.state.assignmentOption === "My Assignment" ? (
+              <Messages
+                wordCount={this.props.wordCount}
+                recipients={this.getCurrentRoomRecipients()}
+                open
+                room={this.state.data.find((a) => a?.id.includes(this.state.currentUser))}
+              />
+            ) : this.state.data.filter(
+                (room) =>
+                  room?.directMessage?.items?.length && !room?.id.includes(this.state.currentUser)
+              ).length === 0 ? (
+              <Text
+                style={{
+                  paddingLeft: 16,
+                  fontSize: 18,
+                  lineHeight: 25,
+                  fontFamily: "Graphik-Semibold-App",
+                }}
+              >
+                No assignments to review
+              </Text>
+            ) : (
+              this.state.data
+                ?.filter(
+                  (item) =>
+                    item?.directMessage?.items.length > 0 &&
+                    !item?.id.includes(this.state.currentUser)
+                )
+                .map((item, index: number) => {
+                  console.log(item?.id)
+                  return (
+                    <>
+                      <Messages
+                        wordCount={this.props.wordCount}
+                        recipients={this.getCurrentRoomRecipients()}
+                        room={item}
+                        key={index}
+                      />
+                    </>
+                  )
+                })
+            )
+          ) : null
+        ) : (
+          <Text
+            style={{
+              paddingLeft: 16,
+              fontSize: 18,
+              lineHeight: 25,
+              fontFamily: "Graphik-Semibold-App",
+            }}
+          >
+            No assignments to review
+          </Text>
+        )}
       </Container>
     )
   }
   static UserConsumer = UserContext.Consumer
-
+  renderIndicatorBar(label: string): JSX.Element {
+    return (
+      <div
+        style={{
+          padding: 5,
+          height: 25,
+          marginTop: 20,
+          marginLeft: label === "Assignment" ? 30 : 0,
+          backgroundColor: label === "Assignment" ? "#F0493E" : "#71C209",
+          borderRadius: 4,
+        }}
+      >
+        <span
+          style={{
+            color: "#ffffff",
+            fontSize: 18,
+            fontFamily: "Graphik-Bold-App",
+            alignSelf: "center",
+            paddingLeft: 10,
+            paddingTop: 15,
+          }}
+        >
+          {label}
+        </span>
+      </div>
+    )
+  }
   render(): React.ReactNode {
     return (
       <EditableCourseAssignment.UserConsumer>
         {({ userState, userActions }) => {
           if (!userState) return null
-
           return userActions.isMemberOf("courseAdmin") || userActions.isMemberOf("courseCoach") ? (
             <>
-              <div
-                style={{
-                  padding: 5,
-                  height: 25,
-                  width: "95%",
-                  marginTop: 20,
-                  backgroundColor: "#71C209",
-                  borderRadius: 4,
-                }}
-              >
-                <span
-                  style={{
-                    color: "#ffffff",
-                    fontSize: 18,
-                    fontFamily: "Graphik-Bold-App",
-                    alignSelf: "center",
-                    paddingLeft: 10,
-                    paddingTop: 15,
-                  }}
-                >
-                  Admin/Coach View
-                </span>
-              </div>
-              {this.renderCourseReview()}
+              {this.renderIndicatorBar("Admin/Coach View")}
+              {this.renderCourseReview(userActions)}
             </>
           ) : (
             <>
-              <div
-                style={{
-                  padding: 5,
-                  height: 25,
-                  width: "95%",
-                  marginTop: 20,
-                  backgroundColor:
-                    this.hasInitialPost() == initialPostState.Yes ? "#71C209" : "#71C209",
-                  borderRadius: 4,
-                }}
-              >
-                <span
-                  style={{
-                    color: "#ffffff",
-                    fontSize: 18,
-                    fontFamily: "Graphik-Bold-App",
-                    alignSelf: "center",
-                    paddingLeft: 10,
-                    paddingTop: 15,
-                  }}
-                >
-                  Assignment
-                </span>
-              </div>
-              {this.hasInitialPost() == initialPostState.Yes ? (
-                this.renderCourseReview()
+              {this.hasInitialPost() == initialPostState.Yes || this.state.posted ? (
+                this.renderCourseReview(userActions)
               ) : this.hasInitialPost() == initialPostState.No ? (
-                <MessageBoard
-                  replies
-                  toolbar={true}
-                  showWordCount={true}
-                  totalWordCount={this.props.wordCount}
-                  style="course"
-                  roomId={this.state.currentRoomId}
-                  recipients={this.getCurrentRoomRecipients()}
-                ></MessageBoard>
+                <>
+                  {this.renderIndicatorBar("Assignment")}
+                  <View style={{ paddingBottom: 150 }}>
+                    <MessageEditor
+                      wordCount={this.props.wordCount}
+                      post={async () => {
+                        this.setState({ posted: true, data: [] })
+                        this.getInitialData(null)
+                      }}
+                      recipients={this.getCurrentRoomRecipients()}
+                      roomId={this.state.currentRoomId ?? ""}
+                    />
+                  </View>
+                </>
               ) : null}
             </>
           )

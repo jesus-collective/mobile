@@ -132,7 +132,6 @@ export const directMessagesByRoom = /* GraphQL */ `
               currentRole
               currentScope
               denomination
-              email
               family_name
               given_name
               hasPaidState
@@ -147,13 +146,10 @@ export const directMessagesByRoom = /* GraphQL */ `
               orgType
               owner
               personality
-              phone
               pplServed
               primaryOrganization
               updatedAt
               sundayAttendance
-              stripeCustomerID
-              stripeSubscriptionID
               profileState
             }
             content
@@ -181,12 +177,8 @@ export const directMessagesByRoom = /* GraphQL */ `
           id
           given_name
           family_name
-          email
-          phone
           owner
           mainUserGroup
-          stripeCustomerID
-          stripeSubscriptionID
           hasPaidState
           profileState
           aboutMeShort
