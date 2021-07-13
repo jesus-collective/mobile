@@ -65,7 +65,7 @@
     "react-google-maps": "^9.4.5",
     "react-input-color": "^3.0.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
-    "react-native-calendars": "^1.1260.0",
+    "react-native-calendars": "1.1260.0",
     "react-native-dev-menu": "^4.0.2",
     "react-native-dropdown-picker": "^3.7.1",
     "react-native-extended-stylesheet": "^0.12.0",
