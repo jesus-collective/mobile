@@ -14,7 +14,6 @@
     "categories": {
       "auth": {
         "jcmobile": {
-          "hostedUIProviderCreds": "[]",
           "facebookAppId": "373637213227697",
           "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
         },
@@ -44,7 +43,9 @@
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
-          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
+          "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
+          "s3Key": "amplify-builds/jcUpdateMainUserGroup-477753546f6a54624656-build.zip"
         },
         "jcmobileStripWebhook": {
           "userPoolId": "us-east-1_fe30GuOOt",
