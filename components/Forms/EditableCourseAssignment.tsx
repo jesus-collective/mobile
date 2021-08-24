@@ -346,6 +346,8 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                 })
             )
           ) : null
+        ) : this.state.isLoading ? (
+          this.renderSpinner()
         ) : (
           <Text
             style={{
@@ -389,6 +391,25 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       </div>
     )
   }
+  renderSpinner(): React.ReactNode {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          flexDirection: "column",
+          marginTop: 40,
+          minHeight: 400,
+        }}
+      >
+        <ActivityIndicator color="#F0493E" size="large"></ActivityIndicator>
+        <p style={{ marginTop: 12, fontFamily: "Graphik-Bold-App", fontSize: 16 }}>
+          Loading assignments...
+        </p>
+      </div>
+    )
+  }
   render(): React.ReactNode {
     const hasPost = this.hasInitialPost()
     return (
@@ -420,21 +441,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                   </View>
                 </>
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    marginTop: 40,
-                    minHeight: 400,
-                  }}
-                >
-                  <ActivityIndicator color="#F0493E" size="large"></ActivityIndicator>
-                  <p style={{ marginTop: 12, fontFamily: "Graphik-Bold-App", fontSize: 16 }}>
-                    Loading assignments...
-                  </p>
-                </div>
+                this.renderSpinner()
               )}
             </>
           )
