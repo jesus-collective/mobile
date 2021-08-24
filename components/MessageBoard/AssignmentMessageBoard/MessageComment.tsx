@@ -25,6 +25,7 @@ interface CommentParams {
 
 export default function Comment(props: CommentParams): JSX.Element {
   const style = MessageCommentStyles
+  const isReply = props?.type === "reply" || props?.type === "replyToReply"
   const { name, attachment, currentRole, authorId, comment, createdAt, updatedAt } =
     props.comment as MessageComment
   const { type, openState, setOpen, setReplyTo, active, replyCount, scrollToBottom } = props
@@ -36,40 +37,36 @@ export default function Comment(props: CommentParams): JSX.Element {
       </View>
     ) : null
   }
+  const handleReplyPress = () => {
+    return isReply
+      ? setReplyTo((prev) => {
+          if (prev.id === props.comment.id) {
+            return {
+              name: "",
+              messageId: "",
+              messageRoomId: "",
+              id: "",
+            }
+          } else {
+            scrollToBottom()
+            const a = {
+              name: props?.comment?.name,
+              messageId: props?.comment?.messageId ?? "",
+              messageRoomId: props?.comment?.messageRoomId ?? "",
+              id: props?.comment?.id,
+            }
+            return a
+          }
+        })
+      : setOpen() // scrollToBottom after opening
+  }
   const CommentButton = (props: { comment: MessageComment; type: EntryType }) => {
-    const isReply = props?.type === "reply" || props?.type === "replyToReply"
     const buttonText =
       props?.type === "reply" || props?.type === "replyToReply" ? "Reply" : "Responses"
-    const { comment } = props
     return isReply || !openState ? (
       <View style={{ flexDirection: "column", flex: 1 }}>
         <View style={{ alignSelf: "flex-end", marginTop: 8 }}>
-          <JCButton
-            onPress={() => {
-              isReply
-                ? setReplyTo((prev) => {
-                    if (prev.id === comment.id) {
-                      return {
-                        name: "",
-                        messageId: "",
-                        messageRoomId: "",
-                        id: "",
-                      }
-                    } else {
-                      scrollToBottom()
-                      const a = {
-                        name: props?.comment?.name,
-                        messageId: props?.comment?.messageId ?? "",
-                        messageRoomId: props?.comment?.messageRoomId ?? "",
-                        id: props?.comment?.id,
-                      }
-                      return a
-                    }
-                  })
-                : setOpen() // scrollToBottom after opening
-            }}
-            buttonType={ButtonTypes.OutlineSmall}
-          >
+          <JCButton onPress={handleReplyPress} buttonType={ButtonTypes.OutlineSmall}>
             {buttonText}
           </JCButton>
         </View>
@@ -97,7 +94,8 @@ export default function Comment(props: CommentParams): JSX.Element {
     return text
   }
   return (
-    <View
+    <TouchableOpacity
+      onPress={handleReplyPress}
       style={[
         { flexDirection: "row", marginBottom: 30 },
         type === "replyToReply" ? { marginLeft: 80 } : {},
@@ -159,6 +157,6 @@ export default function Comment(props: CommentParams): JSX.Element {
         ) : null}
         {openState && attachment ? MessageUtils.renderFileDownloadBadge(props?.comment) : null}
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
