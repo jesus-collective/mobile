@@ -840,8 +840,8 @@ const courseStyles = EStyleSheet.create({
   courseDetailCalendarImage: {
     width: "22px",
     height: "22px",
-    marginRight: 5,
-    marginTop: 43,
+    marginRight: 7,
+    marginTop: 20,
   },
   courseDetailCalendarText: {
     fontSize: 16,

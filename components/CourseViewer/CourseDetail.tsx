@@ -1058,7 +1058,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
           </Container>
-          <Container style={[this.styles.style.courseDetailAssignmentTime, , { top: -20 }]}>
+          <Container style={[this.styles.style.courseDetailAssignmentTime, { top: -20 }]}>
             <Image
               style={this.styles.style.courseDetailCalendarImage}
               source={require("../../assets/svg/calendar.svg")}
