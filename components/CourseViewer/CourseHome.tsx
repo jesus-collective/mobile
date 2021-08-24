@@ -713,7 +713,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                           </>
                         ) : null}
                         {constants["SETTING_ISVISIBLE_COURSE_CALENDAR"] ? (
-                          <>
+                          <View style={{ flex: 0 }}>
                             <Text
                               style={{
                                 fontSize: 20,
@@ -801,7 +801,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 </span>
                               </Text>
                             </Container>
-                          </>
+                          </View>
                         ) : null}
                         {constants["SETTING_ISVISIBLE_COURSE_ACTIVITY"] ? (
                           <Container style={this.styles.style.CourseHomeActivityContainer}>
