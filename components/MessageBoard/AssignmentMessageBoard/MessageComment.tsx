@@ -25,15 +25,8 @@ interface CommentParams {
 
 export default function Comment(props: CommentParams): JSX.Element {
   const style = MessageCommentStyles
-  const {
-    name,
-    attachment,
-    currentRole,
-    authorId,
-    comment,
-    createdAt,
-    updatedAt,
-  } = props.comment as MessageComment
+  const { name, attachment, currentRole, authorId, comment, createdAt, updatedAt } =
+    props.comment as MessageComment
   const { type, openState, setOpen, setReplyTo, active, replyCount, scrollToBottom } = props
   const AssignmentBadge = (props: { type: EntryType }) => {
     const { type } = props
@@ -46,7 +39,7 @@ export default function Comment(props: CommentParams): JSX.Element {
   const CommentButton = (props: { comment: MessageComment; type: EntryType }) => {
     const isReply = props?.type === "reply" || props?.type === "replyToReply"
     const buttonText =
-      props?.type === "reply" || props?.type === "replyToReply" ? "Reply" : "Comment"
+      props?.type === "reply" || props?.type === "replyToReply" ? "Reply" : "Responses"
     const { comment } = props
     return isReply || !openState ? (
       <View style={{ flexDirection: "column", flex: 1 }}>
