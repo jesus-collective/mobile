@@ -1,7 +1,7 @@
 import { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api/lib/types"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { API, Auth, Storage } from "aws-amplify"
-import { convertToRaw, EditorState } from "draft-js"
+import { convertFromRaw, convertToRaw, EditorState, RawDraftContentState } from "draft-js"
 import { Badge } from "native-base"
 import React, { useState } from "react"
 import { Editor } from "react-draft-wysiwyg"
@@ -13,11 +13,16 @@ import {
   CreateDirectMessageMutation,
   CreateDirectMessageReplyInput,
   CreateDirectMessageReplyMutation,
+  UpdateDirectMessageInput,
+  UpdateDirectMessageMutation,
 } from "../../../src/API"
+import * as customMutations from "../../../src/graphql-custom/mutations"
 import * as mutations from "../../../src/graphql/mutations"
 import FileUpload from "../FileUpload"
+import { MessageComment } from "./MessageThread"
 interface Props {
   roomId: string
+  newAssignment?: boolean
   replyTo?: {
     name?: string
     messageId?: string
@@ -28,18 +33,30 @@ interface Props {
   post?: () => void
   recipients: Array<string | null>
   wordCount?: any
+  assignment?: MessageComment
 }
 
 export default function MessageEditor(props: Props): JSX.Element {
-  const { post, roomId, recipients, replyTo, clearReplyTo, wordCount } = props
+  const { post, roomId, recipients, replyTo, clearReplyTo, wordCount, assignment, newAssignment } =
+    props
+  const editAssignment = assignment?.comment ? JSON.parse(assignment.comment) : null
+  const contentState: RawDraftContentState | null = editAssignment
+    ? { blocks: editAssignment?.blocks, entityMap: editAssignment?.entityMap }
+    : null
+  // Assignment.comment is saved as ContentState stringified
   const isReply = replyTo?.name && replyTo?.messageRoomId && replyTo?.messageId
-  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
+  const [editorState, setEditorState] = useState<EditorState>(
+    contentState
+      ? EditorState.createWithContent(convertFromRaw(contentState))
+      : EditorState.createEmpty()
+  )
   const [attachmentOptions, setAttachmentOptions] = useState({
     attachment: "",
     attachmentOwner: "",
     attachmentName: "",
   })
   // TODO ATTACHMENTS
+
   const clearAttachments = () => {
     setAttachmentOptions({ attachment: "", attachmentOwner: "", attachmentName: "" })
   }
@@ -109,7 +126,45 @@ export default function MessageEditor(props: Props): JSX.Element {
       }
     }
   }
-
+  const updateMessage = async (): Promise<void> => {
+    if (!editorState.getCurrentContent().hasText()) {
+      return
+    }
+    const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+    if (msg) {
+      try {
+        const input: UpdateDirectMessageInput = {
+          id: assignment?.id ?? "",
+          content: msg,
+        }
+        try {
+          const updateDirectMessage = (await API.graphql({
+            query: customMutations.updateDirectMessage,
+            variables: { input },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })) as Promise<GraphQLResult<UpdateDirectMessageMutation>>
+          console.log({ "Success mutations.updateDirectMessage ": updateDirectMessage })
+        } catch (err) {
+          console.error({ "Error mutations.updateDirectMessage ": err })
+          if (err.data.updateDirectMessage) {
+            console.log("An errorr occurred", err)
+            //setEditorState(EditorState.createEmpty())
+          }
+        } finally {
+          setEditorState(EditorState.createEmpty())
+          if (clearReplyTo) clearReplyTo()
+          clearAttachments()
+          if (post) post()
+        }
+      } catch (err) {
+        console.log(err)
+        setEditorState(EditorState.createEmpty())
+        if (clearReplyTo) clearReplyTo()
+        clearAttachments()
+        if (post) post()
+      }
+    }
+  }
   const saveMessage = async (): Promise<void> => {
     console.log("Posting a response.")
     console.log("messageRoomId", roomId)
@@ -202,11 +257,16 @@ export default function MessageEditor(props: Props): JSX.Element {
     <View style={{ paddingBottom: 30 }}>
       <Editor
         spellCheck
-        wrapperStyle={{
-          maxHeight: 150,
-          marginTop: 0,
-          flex: 1,
-        }}
+        wrapperStyle={
+          assignment || newAssignment
+            ? {
+                height: 300,
+                marginLeft: 0,
+                backgroundColor: "#F9FAFC",
+              }
+            : { height: 150, marginLeft: 46 }
+        }
+        editorStyle={assignment ? { backgroundColor: "#F9FAFC" } : {}}
         placeholder={"Write a response...."}
         editorState={editorState}
         toolbarClassName="customToolbar"
@@ -236,10 +296,10 @@ export default function MessageEditor(props: Props): JSX.Element {
         <JCButton
           buttonType={ButtonTypes.SolidRightJustifiedMini}
           onPress={async () => {
-            isReply ? await saveReply() : await saveMessage()
+            assignment ? await updateMessage() : isReply ? await saveReply() : await saveMessage()
           }}
         >
-          Post
+          {assignment ? "Update" : "Post"}
         </JCButton>
         {wordCount ? (
           <Text style={{ textAlign: "right", marginRight: 8, alignSelf: "center" }}>

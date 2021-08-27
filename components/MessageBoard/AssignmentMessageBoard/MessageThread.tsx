@@ -38,12 +38,13 @@ interface Props {
   thread: MessageComment
   open?: boolean
   wordCount: number
+  showEdit?: (assignment: MessageComment) => void
 }
 
 export default function MessageThread(props: Props): JSX.Element {
   const commentRef = useRef<any>(null)
   const textRef = useRef<any>(null)
-  const { thread, wordCount } = props
+  const { thread, wordCount, showEdit } = props
   const { replies, roomId, recipients } = thread
   const replyCount = replyCounter(replies)
   const [user, setUser] = useState<JCCognitoUser["username"]>("")
@@ -78,6 +79,7 @@ export default function MessageThread(props: Props): JSX.Element {
     <View ref={commentRef} style={style.container}>
       <MessageComment
         scrollToFirst={focusFirstComment}
+        showEdit={showEdit}
         scrollToBottom={focusTextInput}
         replyCount={replyCount}
         setOpen={() => setOpen((prev) => !prev)}

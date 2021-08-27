@@ -21,20 +21,16 @@ interface CommentParams {
   replyCount?: string
   scrollToBottom: () => void
   scrollToFirst?: () => void
+  showEdit?: (assignment: MessageComment) => void
 }
 
 export default function Comment(props: CommentParams): JSX.Element {
   const style = MessageCommentStyles
-  const {
-    name,
-    attachment,
-    currentRole,
-    authorId,
-    comment,
-    createdAt,
-    updatedAt,
-  } = props.comment as MessageComment
-  const { type, openState, setOpen, setReplyTo, active, replyCount, scrollToBottom } = props
+  console.log(props.comment, "comment data")
+  const { name, attachment, currentRole, authorId, comment, createdAt, updatedAt } =
+    props.comment as MessageComment
+  const { type, openState, setOpen, setReplyTo, active, replyCount, scrollToBottom, showEdit } =
+    props
   const AssignmentBadge = (props: { type: EntryType }) => {
     const { type } = props
     return type === "assignment" ? (
@@ -45,36 +41,42 @@ export default function Comment(props: CommentParams): JSX.Element {
   }
   const CommentButton = (props: { comment: MessageComment; type: EntryType }) => {
     const isReply = props?.type === "reply" || props?.type === "replyToReply"
+    const isMyAssignment = props?.type === "assignment" && showEdit
     const buttonText =
-      props?.type === "reply" || props?.type === "replyToReply" ? "Reply" : "Comment"
+      props?.type === "reply" || props?.type === "replyToReply"
+        ? "Reply"
+        : isMyAssignment
+        ? "Edit"
+        : "Comment"
     const { comment } = props
-    return isReply || !openState ? (
+    const buttonHandler = () => {
+      isReply
+        ? setReplyTo((prev) => {
+            if (prev.id === comment.id) {
+              return {
+                name: "",
+                messageId: "",
+                messageRoomId: "",
+                id: "",
+              }
+            } else {
+              scrollToBottom()
+              const a = {
+                name: props?.comment?.name,
+                messageId: props?.comment?.messageId ?? "",
+                messageRoomId: props?.comment?.messageRoomId ?? "",
+                id: props?.comment?.id,
+              }
+              return a
+            }
+          })
+        : setOpen() // scrollToBottom after opening
+    }
+    return isReply || !openState || isMyAssignment ? (
       <View style={{ flexDirection: "column", flex: 1 }}>
         <View style={{ alignSelf: "flex-end", marginTop: 8 }}>
           <JCButton
-            onPress={() => {
-              isReply
-                ? setReplyTo((prev) => {
-                    if (prev.id === comment.id) {
-                      return {
-                        name: "",
-                        messageId: "",
-                        messageRoomId: "",
-                        id: "",
-                      }
-                    } else {
-                      scrollToBottom()
-                      const a = {
-                        name: props?.comment?.name,
-                        messageId: props?.comment?.messageId ?? "",
-                        messageRoomId: props?.comment?.messageRoomId ?? "",
-                        id: props?.comment?.id,
-                      }
-                      return a
-                    }
-                  })
-                : setOpen() // scrollToBottom after opening
-            }}
+            onPress={isMyAssignment && showEdit ? () => showEdit(props.comment) : buttonHandler}
             buttonType={ButtonTypes.OutlineSmall}
           >
             {buttonText}

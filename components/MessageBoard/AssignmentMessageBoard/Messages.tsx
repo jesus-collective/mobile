@@ -26,9 +26,10 @@ interface Props {
   open?: boolean
   recipients: Array<string>
   wordCount: number
+  showEdit?: (assignment: MessageComment) => void
 }
 export default function Messages(props: Props): JSX.Element {
-  const { room, recipients, open, wordCount } = props
+  const { room, recipients, open, wordCount, showEdit } = props
   const firstMessage = room?.directMessage?.items?.[0]
   const threadReplies: Array<MessageComment> =
     room?.directMessage?.items
@@ -70,6 +71,7 @@ export default function Messages(props: Props): JSX.Element {
       }) ?? []
 
   const [thread, setThread] = useState<MessageComment>({
+    id: firstMessage?.id,
     recipients,
     authorId: firstMessage?.author?.id,
     attachment: firstMessage?.attachment,
@@ -121,13 +123,15 @@ export default function Messages(props: Props): JSX.Element {
   }
 
   useEffect(() => {
-    const directMessageSubscription = (API.graphql({
-      query: onCreateDirectMessage,
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Observable<{
-      provider: any
-      value: GraphQLResult<OnCreateDirectMessageSubscription>
-    }>).subscribe({
+    const directMessageSubscription = (
+      API.graphql({
+        query: onCreateDirectMessage,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateDirectMessageSubscription>
+      }>
+    ).subscribe({
       next: async (incoming) => {
         if (
           incoming?.value?.data?.onCreateDirectMessage &&
@@ -153,13 +157,15 @@ export default function Messages(props: Props): JSX.Element {
       },
       error: (error) => console.log(error),
     })
-    const directmessageReplySubscription = (API.graphql({
-      query: onCreateDirectMessageReply,
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Observable<{
-      provider: any
-      value: GraphQLResult<OnCreateDirectMessageReplySubscription>
-    }>).subscribe({
+    const directmessageReplySubscription = (
+      API.graphql({
+        query: onCreateDirectMessageReply,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateDirectMessageReplySubscription>
+      }>
+    ).subscribe({
       next: async (incoming) => {
         if (
           room?.id === incoming?.value?.data?.onCreateDirectMessageReply?.messageRoomID &&
@@ -220,5 +226,5 @@ export default function Messages(props: Props): JSX.Element {
       directmessageReplySubscription.unsubscribe()
     }
   }, [thread])
-  return <MessageThread wordCount={wordCount} open={open} thread={thread} />
+  return <MessageThread showEdit={showEdit} wordCount={wordCount} open={open} thread={thread} />
 }
