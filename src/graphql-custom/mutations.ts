@@ -2,6 +2,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const updateDirectMessage = /* GraphQL */ `
+  mutation UpdateDirectMessage($input: UpdateDirectMessageInput!) {
+    updateDirectMessage(input: $input) {
+      id
+      when
+    }
+  }
+`
+
 export const previewInvoice = /* GraphQL */ `
   mutation PreviewInvoice(
     $stripeCustomerID: String
@@ -60,7 +69,7 @@ export const previewInvoice = /* GraphQL */ `
         invoice_pdf
         last_finalization_error
         lines {
-          data{
+          data {
             id
             object
             amount
@@ -71,11 +80,11 @@ export const previewInvoice = /* GraphQL */ `
             discounts
             livemode
             metadata
-            period{
+            period {
               end
               start
             }
-            price{
+            price {
               id
               object
               active
@@ -87,7 +96,7 @@ export const previewInvoice = /* GraphQL */ `
               metadata
               nickname
               product
-              recurring{
+              recurring {
                 aggregate_usage
                 interval
                 interval_count
@@ -142,4 +151,4 @@ export const previewInvoice = /* GraphQL */ `
       }
     }
   }
-`;
+`

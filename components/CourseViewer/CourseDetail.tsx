@@ -979,7 +979,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             </Text>
           </Container>
         </Container>
-        <Container>
+        <Container style={{ width: "100%" }}>
           <Container
             style={{
               borderBottomColor: "#333333",

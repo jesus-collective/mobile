@@ -1,6 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { MessageComment } from "components/MessageBoard/AssignmentMessageBoard/MessageThread"
 import { Container } from "native-base"
 import React from "react"
 import { ActivityIndicator, Text, TouchableHighlight, View } from "react-native"
@@ -41,6 +42,7 @@ interface State extends JCState {
   newToList: any
   userList: any
   assignmentOption: string
+  showEdit: MessageComment | null
 }
 export default class EditableCourseAssignment extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -51,6 +53,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       selectedRoom: null,
       data: [],
       currentUser: null,
+      showEdit: null,
       posted: false,
       currentRoomId: null,
       isLoading: true,
@@ -305,6 +308,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
           this.state.data != null && this.state.data.length != 0 ? (
             this.state.assignmentOption === "My Assignment" ? (
               <Messages
+                showEdit={(assignment: MessageComment) => this.setState({ showEdit: assignment })}
                 wordCount={this.props.wordCount}
                 recipients={this.getCurrentRoomRecipients()}
                 open
@@ -365,14 +369,25 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
   }
   static UserConsumer = UserContext.Consumer
   renderIndicatorBar(label: string): JSX.Element {
+    let bgColor
+    switch (label) {
+      case "Assignment":
+        bgColor = "#F0493E"
+        break
+      case "Update Assignment":
+        bgColor = "#F0493E"
+        break
+      default:
+        bgColor = "#71C209"
+        break
+    }
     return (
       <div
         style={{
           padding: 5,
           height: 25,
           marginTop: 20,
-          marginLeft: label === "Assignment" ? 30 : 0,
-          backgroundColor: label === "Assignment" ? "#F0493E" : "#71C209",
+          backgroundColor: bgColor,
           borderRadius: 4,
         }}
       >
@@ -416,6 +431,22 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       <EditableCourseAssignment.UserConsumer>
         {({ userState, userActions }) => {
           if (!userState) return null
+          if (this.state.showEdit)
+            return (
+              <View style={{ paddingBottom: 150 }}>
+                {this.renderIndicatorBar("Update Assignment")}
+                <MessageEditor
+                  assignment={this.state.showEdit}
+                  wordCount={this.props.wordCount}
+                  post={async () => {
+                    this.setState({ posted: true, data: [], showEdit: null })
+                    this.getInitialData(null)
+                  }}
+                  recipients={this.getCurrentRoomRecipients()}
+                  roomId={this.state.currentRoomId ?? ""}
+                />
+              </View>
+            )
           return userActions.isMemberOf("courseAdmin") || userActions.isMemberOf("courseCoach") ? (
             <>
               {this.renderIndicatorBar("Admin/Coach View")}
@@ -427,13 +458,14 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                 this.renderCourseReview(userActions)
               ) : hasPost == initialPostState.No && !this.state.isLoading ? (
                 <>
-                  {this.renderIndicatorBar("Assignment")}
                   <View style={{ paddingBottom: 150 }}>
+                    {this.renderIndicatorBar("Assignment")}
                     <MessageEditor
                       wordCount={this.props.wordCount}
+                      newAssignment={true}
                       post={async () => {
-                        this.setState({ posted: true, data: [] })
-                        this.getInitialData(null)
+                        await this.getInitialData(null)
+                        this.setState({ posted: true, data: [], assignmentOption: "My Assignment" })
                       }}
                       recipients={this.getCurrentRoomRecipients()}
                       roomId={this.state.currentRoomId ?? ""}
