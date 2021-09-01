@@ -4,7 +4,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { MessageComment } from "components/MessageBoard/AssignmentMessageBoard/MessageThread"
 import { Container } from "native-base"
 import React from "react"
-import { Text, TouchableHighlight, View } from "react-native"
+import { ActivityIndicator, Text, TouchableHighlight, View } from "react-native"
 import ActivityBoxStyles from "../../components/Activity/ActivityBoxStyles"
 import { CourseActions } from "../../components/CourseViewer/CourseContext"
 import MessageEditor from "../../components/MessageBoard/AssignmentMessageBoard/MessageEditor"
@@ -38,6 +38,7 @@ interface State extends JCState {
   data: any
   currentUser: any
   currentRoomId: string | null
+  isLoading: boolean
   newToList: any
   userList: any
   assignmentOption: string
@@ -55,23 +56,27 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       showEdit: null,
       posted: false,
       currentRoomId: null,
+      isLoading: true,
       newToList: [],
       assignmentComplete: false,
       userList: [...z.all],
       assignmentOption: "Assignments to Review",
     }
     console.log({ userList: this.state.userList })
-
-    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
-      this.setState({ currentRoomId: null, currentUser: user.username })
-    })
-    this.getInitialData(null)
   }
   componentDidUpdate(prevProps: Props): void {
     if (prevProps.assignmentId !== this.props.assignmentId) {
       this.getInitialData(null)
     }
     console.log(prevProps)
+  }
+  async componentDidMount() {
+    const user: JCCognitoUser = await Auth.currentAuthenticatedUser()
+
+    this.setState({ currentRoomId: null, currentUser: user.username }, async () => {
+      await this.getInitialData(null)
+      this.setState({ isLoading: false })
+    })
   }
   async getInitialData(next: string | null): Promise<void> {
     if (this.props.assignmentId)
@@ -345,6 +350,8 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                 })
             )
           ) : null
+        ) : this.state.isLoading ? (
+          this.renderSpinner()
         ) : (
           <Text
             style={{
@@ -399,7 +406,27 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
       </div>
     )
   }
+  renderSpinner(): React.ReactNode {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          flexDirection: "column",
+          marginTop: 40,
+          minHeight: 400,
+        }}
+      >
+        <ActivityIndicator color="#F0493E" size="large"></ActivityIndicator>
+        <p style={{ marginTop: 12, fontFamily: "Graphik-Bold-App", fontSize: 16 }}>
+          Loading assignments...
+        </p>
+      </div>
+    )
+  }
   render(): React.ReactNode {
+    const hasPost = this.hasInitialPost()
     return (
       <EditableCourseAssignment.UserConsumer>
         {({ userState, userActions }) => {
@@ -427,9 +454,9 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
             </>
           ) : (
             <>
-              {this.hasInitialPost() == initialPostState.Yes || this.state.posted ? (
+              {hasPost == initialPostState.Yes || this.state.posted ? (
                 this.renderCourseReview(userActions)
-              ) : this.hasInitialPost() == initialPostState.No ? (
+              ) : hasPost == initialPostState.No && !this.state.isLoading ? (
                 <>
                   <View style={{ paddingBottom: 150 }}>
                     {this.renderIndicatorBar("Assignment")}
@@ -445,7 +472,9 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
                     />
                   </View>
                 </>
-              ) : null}
+              ) : (
+                this.renderSpinner()
+              )}
             </>
           )
         }}

@@ -22,6 +22,7 @@ import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableUsers from "../../components/Forms/EditableUsers"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
 import { UserData } from "../../src/types"
 import CourseHeader from "../CourseHeader/CourseHeader"
@@ -36,6 +37,7 @@ interface Props {
 
 class CourseHomeImpl extends JCComponent<Props> {
   static Consumer = CourseContext.Consumer
+  static UserConsumer = UserContext.Consumer
   constructor(props: Props) {
     super(props)
   }
@@ -577,36 +579,50 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 ?.completeTriad?.map((completeTriad, index: number) => {
                                   return (
                                     <React.Fragment key={index}>
-                                      <Text
-                                        style={{
-                                          fontSize: 20,
-                                          lineHeight: 25,
-                                          fontFamily: "Graphik-Bold-App",
-                                          marginTop: 70,
-                                          width: "90%",
+                                      <CourseHomeImpl.UserConsumer>
+                                        {({ userState, userActions }) => {
+                                          if (userActions.isMemberOf("courseCoach")) return null
+                                          return (
+                                            <>
+                                              <Text
+                                                style={{
+                                                  fontSize: 20,
+                                                  lineHeight: 25,
+                                                  fontFamily: "Graphik-Bold-App",
+                                                  marginTop: 70,
+                                                  width: "90%",
+                                                }}
+                                              >
+                                                My Facilitator
+                                              </Text>
+                                              <View
+                                                style={
+                                                  this.styles.style.courseMyFacilitatorContainer
+                                                }
+                                              >
+                                                {completeTriad.coach ? (
+                                                  completeTriad.coach.map((user: UserData) => {
+                                                    return this.renderProfileCard(user)
+                                                  })
+                                                ) : (
+                                                  <Text
+                                                    style={{
+                                                      fontSize: 16,
+                                                      lineHeight: 25,
+                                                      fontFamily: "Graphik-Regular-App",
+                                                      marginTop: 70,
+                                                      width: "90%",
+                                                    }}
+                                                  >
+                                                    You have not been assigned a facilitator yet
+                                                  </Text>
+                                                )}
+                                              </View>
+                                            </>
+                                          )
                                         }}
-                                      >
-                                        My Facilitator
-                                      </Text>
-                                      <View style={this.styles.style.courseMyFacilitatorContainer}>
-                                        {completeTriad.coach ? (
-                                          completeTriad.coach.map((user: UserData) => {
-                                            return this.renderProfileCard(user)
-                                          })
-                                        ) : (
-                                          <Text
-                                            style={{
-                                              fontSize: 16,
-                                              lineHeight: 25,
-                                              fontFamily: "Graphik-Regular-App",
-                                              marginTop: 70,
-                                              width: "90%",
-                                            }}
-                                          >
-                                            You have not been assigned a facilitator yet
-                                          </Text>
-                                        )}
-                                      </View>
+                                      </CourseHomeImpl.UserConsumer>
+
                                       <Text
                                         style={{
                                           fontSize: 20,
@@ -697,7 +713,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                           </>
                         ) : null}
                         {constants["SETTING_ISVISIBLE_COURSE_CALENDAR"] ? (
-                          <>
+                          <View style={{ flex: 0 }}>
                             <Text
                               style={{
                                 fontSize: 20,
@@ -785,7 +801,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 </span>
                               </Text>
                             </Container>
-                          </>
+                          </View>
                         ) : null}
                         {constants["SETTING_ISVISIBLE_COURSE_ACTIVITY"] ? (
                           <Container style={this.styles.style.CourseHomeActivityContainer}>
