@@ -51,9 +51,9 @@ export default function MessageEditor(props: Props): JSX.Element {
       : EditorState.createEmpty()
   )
   const [attachmentOptions, setAttachmentOptions] = useState({
-    attachment: "",
-    attachmentOwner: "",
-    attachmentName: "",
+    attachment: assignment?.attachment ?? "",
+    attachmentOwner: assignment?.attachmentOwner ?? "",
+    attachmentName: assignment?.attachmentName ?? "",
   })
   // TODO ATTACHMENTS
 
@@ -133,8 +133,12 @@ export default function MessageEditor(props: Props): JSX.Element {
     const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
     if (msg) {
       try {
+        const { attachment, attachmentName, attachmentOwner } = attachmentOptions
         const input: UpdateDirectMessageInput = {
           id: assignment?.id ?? "",
+          attachmentName,
+          attachmentOwner,
+          attachment,
           content: msg,
         }
         try {
