@@ -33,7 +33,6 @@ interface Props {
 }
 interface State extends JCState {
   assignmentComplete: boolean
-  selectedRoom: any
   posted: boolean
   data: any
   currentUser: any
@@ -50,7 +49,6 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     const z = this.props.actions?.myCourseGroups()
     this.state = {
       ...super.getInitialState(),
-      selectedRoom: null,
       data: [],
       currentUser: null,
       showEdit: null,
@@ -70,7 +68,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
     }
     console.log(prevProps)
   }
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     const user: JCCognitoUser = await Auth.currentAuthenticatedUser()
 
     this.setState({ currentRoomId: null, currentUser: user.username }, async () => {
@@ -246,12 +244,7 @@ export default class EditableCourseAssignment extends JCComponent<Props, State> 
 
     return { ids, names }
   }
-  switchRoom(index: number): void {
-    this.setState({ selectedRoom: index })
 
-    this.setState({ currentRoomId: this.state.data[index].id })
-    console.log(this.state.data[index])
-  }
   getCurrentRoomRecipients(): string[] {
     const ids: string[] = []
     this.state.userList.forEach((user) => {

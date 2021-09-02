@@ -29,7 +29,7 @@ interface State extends JCState {
   newToList: any[]
   showMap: boolean
   data: NonNullable<GraphQLResult<GetDirectMessageUserQuery>["data"]>["getDirectMessageUser"][]
-  selectedRoom: any
+
   currentUser: string | null
   currentRoomId: string | null
 }
@@ -39,7 +39,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     super(props)
     this.state = {
       ...super.getInitialState(),
-      selectedRoom: null,
+
       showMap: false,
       data: [],
       currentUser: null,
@@ -131,8 +131,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                 ) {
                   console.log("Found")
                   this.setState({
-                    selectedRoom: index,
-                    currentRoomId: this.state.data[index]!.roomID,
+                    currentRoomId: item.roomID,
                   })
                   return true
                 }
@@ -165,8 +164,9 @@ export default class ConversationScreen extends JCComponent<Props, State> {
       if (json?.data?.getDirectMessageUser) {
         console.log({ "customQueries.getDirectMessageUser": json.data.getDirectMessageUser })
         this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
-          const index = this.state.data.indexOf(json.data?.getDirectMessageUser)
-          this.setState({ selectedRoom: index, currentRoomId: this.state.data[index]?.roomID })
+          this.setState({
+            currentRoomId: json.data?.getDirectMessageUser?.roomID ?? null,
+          })
         })
       }
     } catch (err) {
@@ -235,20 +235,20 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     return { ids, names }
   }
 
-  switchRoom(index: number): void {
-    this.setState({ selectedRoom: index })
+  switchRoom(roomId: string): void {
     this.setState({
-      currentRoomId: this.state.data.filter(
-        (item) => item?.room?.roomType == "directMessage" || item?.room?.roomType == null
-      )[index]!.roomID,
+      currentRoomId: roomId,
     })
   }
   getCurrentRoomRecipients(): string[] {
     const ids: string[] = []
-    console.log(this.state.data[this.state.selectedRoom])
-    this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items?.forEach((user) => {
-      if (user) ids.push(user.userID)
-    })
+    console.log(this.state.data.filter((x) => x?.roomID == this.state.currentRoomId)[0])
+    if (this.state.currentRoomId == null) return []
+    this.state.data
+      .filter((x) => x?.roomID == this.state.currentRoomId)[0]
+      .room?.messageUsers?.items?.forEach((user) => {
+        if (user) ids.push(user.userID)
+      })
     return ids
   }
   render(): React.ReactNode {
@@ -307,11 +307,12 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                       return (
                         <TouchableOpacity
                           style={{
-                            backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset",
+                            backgroundColor:
+                              this.state.currentRoomId == item.roomID ? "#eeeeee" : "unset",
                             width: "100%",
                           }}
                           key={item.id}
-                          onPress={() => this.switchRoom(index)}
+                          onPress={() => this.switchRoom(item.roomID)}
                         >
                           <View
                             style={{
@@ -326,7 +327,9 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                           >
                             <Text
                               style={[
-                                this.state.selectedRoom == index ? { fontWeight: "700" } : {},
+                                this.state.currentRoomId == item.roomID
+                                  ? { fontWeight: "700" }
+                                  : {},
                                 {
                                   fontSize: 20,
                                   lineHeight: 25,
