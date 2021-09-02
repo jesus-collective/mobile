@@ -27,8 +27,18 @@ interface CommentParams {
 export default function Comment(props: CommentParams): JSX.Element {
   const style = MessageCommentStyles
   const isReply = props?.type === "reply" || props?.type === "replyToReply"
-  const { name, attachment, currentRole, authorId, comment, createdAt, updatedAt } =
-    props.comment as MessageComment
+  const {
+    id,
+    messageId,
+    messageRoomId,
+    name,
+    attachment,
+    currentRole,
+    authorId,
+    comment,
+    createdAt,
+    updatedAt,
+  } = props.comment as MessageComment
   const { type, openState, setOpen, setReplyTo, active, replyCount, scrollToBottom, showEdit } =
     props
 
@@ -40,8 +50,8 @@ export default function Comment(props: CommentParams): JSX.Element {
       </View>
     ) : null
   }
-  const handleReplyPress = () => {
-    return isReply
+  const handleButtonPress = () => {
+    isReply
       ? setReplyTo((prev) => {
           if (prev.id === props.comment.id) {
             return {
@@ -53,10 +63,10 @@ export default function Comment(props: CommentParams): JSX.Element {
           } else {
             scrollToBottom()
             const a = {
-              name: props?.comment?.name,
-              messageId: props?.comment?.messageId ?? "",
-              messageRoomId: props?.comment?.messageRoomId ?? "",
-              id: props?.comment?.id,
+              name,
+              messageId,
+              messageRoomId,
+              id,
             }
             return a
           }
@@ -64,43 +74,19 @@ export default function Comment(props: CommentParams): JSX.Element {
       : setOpen() // scrollToBottom after opening
   }
   const CommentButton = (props: { comment: MessageComment; type: EntryType }) => {
-    const isReply = props?.type === "reply" || props?.type === "replyToReply"
     const isMyAssignment = props?.type === "assignment" && showEdit
     const buttonText =
       props?.type === "reply" || props?.type === "replyToReply"
         ? "Reply"
         : isMyAssignment
         ? "Edit"
-        : "Comment"
+        : "Responses"
     const { comment } = props
-    const buttonHandler = () => {
-      isReply
-        ? setReplyTo((prev) => {
-            if (prev.id === comment.id) {
-              return {
-                name: "",
-                messageId: "",
-                messageRoomId: "",
-                id: "",
-              }
-            } else {
-              scrollToBottom()
-              const a = {
-                name: props?.comment?.name,
-                messageId: props?.comment?.messageId ?? "",
-                messageRoomId: props?.comment?.messageRoomId ?? "",
-                id: props?.comment?.id,
-              }
-              return a
-            }
-          })
-        : setOpen() // scrollToBottom after opening
-    }
     return isReply || !openState || isMyAssignment ? (
       <View style={{ flexDirection: "column", flex: 1 }}>
         <View style={{ alignSelf: "flex-end", marginTop: 8 }}>
           <JCButton
-            onPress={isMyAssignment && showEdit ? () => showEdit(props.comment) : buttonHandler}
+            onPress={isMyAssignment && showEdit ? () => showEdit(comment) : handleButtonPress}
             buttonType={ButtonTypes.OutlineSmall}
           >
             {buttonText}
@@ -131,7 +117,7 @@ export default function Comment(props: CommentParams): JSX.Element {
   }
   return (
     <TouchableOpacity
-      onPress={handleReplyPress}
+      onPress={handleButtonPress}
       style={[
         { flexDirection: "row", marginBottom: 30 },
         type === "replyToReply" ? { marginLeft: 80 } : {},
