@@ -1,3 +1,4 @@
+
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
@@ -101,6 +102,10 @@ Parameters:
       
         
   requiredAttributes:
+    Type: CommaDelimitedList
+      
+        
+  aliasAttributes:
     Type: CommaDelimitedList
       
   
@@ -295,7 +300,10 @@ Resources:
         
       
       
-      AutoVerifiedAttributes: !Ref autoVerifiedAttributes
+      AutoVerifiedAttributes:
+      
+        - email
+      
       
       
       EmailVerificationMessage: !Ref emailVerificationMessage
@@ -310,6 +318,7 @@ Resources:
           RequireUppercase: false
       
       UsernameAttributes: !Ref usernameAttributes
+      
       
       MfaConfiguration: !Ref mfaConfiguration
       SmsVerificationMessage: !Ref smsVerificationMessage
@@ -467,7 +476,7 @@ Resources:
             - '};'
       Handler: index.handler
       Runtime: nodejs12.x
-      Timeout: '300'
+      Timeout: 300
       Role: !GetAtt
         - UserPoolClientRole
         - Arn
@@ -551,6 +560,15 @@ Resources:
               Action:
                 - 'iam:PassRole'
               Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/jcmobi44a13962_totp_lambda_role', !Join ['',['arn:aws:iam:::role/jcmobi44a13962_totp_lambda_role', '-', !Ref env]]]
+      - PolicyName: jcmobi44a13962_sns_pass_role_policy
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:
+                - 'iam:PassRole'
+              Resource: !GetAtt SNSRole.Arn
+    DependsOn: SNSRole
   MFALambda:
   # Lambda which sets MFA config values
   # Depends on MFALambdaRole for role ARN
@@ -595,7 +613,7 @@ Resources:
             - '};'
       Handler: index.handler
       Runtime: nodejs12.x
-      Timeout: '300'
+      Timeout: 300
       Role: !GetAtt
         - MFALambdaRole
         - Arn
@@ -681,6 +699,7 @@ Resources:
         accounts.google.com: !Ref googleClientId
         
         
+        
       
       AllowUnauthenticatedIdentities: !Ref allowUnauthenticatedIdentities
       
@@ -714,6 +733,9 @@ Outputs :
   UserPoolId:
     Value: !Ref 'UserPool'
     Description:  Id for the user pool
+  UserPoolArn:
+    Value: !GetAtt UserPool.Arn
+    Description:  Arn for the user pool
   UserPoolName:
     Value: !Ref userPoolName
   AppClientIDWeb:
@@ -739,6 +761,7 @@ Outputs :
   
   FacebookWebClient:
     Value: !Ref facebookAppId
+  
   
   
   

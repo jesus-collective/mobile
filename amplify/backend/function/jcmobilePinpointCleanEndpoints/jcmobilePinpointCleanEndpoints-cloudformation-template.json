@@ -110,12 +110,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "jcmobileLambdaRole89653bae",
+            "jcmobileLambdaRole8a23a37b",
             {
               "Fn::Join": [
                 "",
                 [
-                  "jcmobileLambdaRole89653bae",
+                  "jcmobileLambdaRole8a23a37b",
                   "-",
                   {
                     "Ref": "env"

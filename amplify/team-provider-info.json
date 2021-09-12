@@ -138,7 +138,6 @@
     "categories": {
       "auth": {
         "jcmobile": {
-          "hostedUIProviderCreds": "[]",
           "facebookAppId": "373637213227697",
           "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
         },
@@ -235,6 +234,10 @@
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
           "s3Key": "amplify-builds/jcHandleActivity-486d71615965666d4876-build.zip"
+        },
+        "jcmobilePinpointCleanEndpoints": {
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/jcmobilePinpointCleanEndpoints-384e6e61734b43706373-build.zip"
         }
       },
       "video": {

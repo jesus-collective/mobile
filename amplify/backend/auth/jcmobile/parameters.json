@@ -24,6 +24,7 @@
         "given_name",
         "phone_number"
     ],
+    "aliasAttributes": [],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [

@@ -257,7 +257,10 @@
                                     "Action": [
                                         "iam:PassRole"
                                     ],
-                                    "Resource": "*"
+                                    "Resource": [
+                                        { "Ref": "AuthRoleArn" },
+                                        { "Ref": "UnauthRoleArn" }
+                                    ]
                                 }
                             ]
                         }
@@ -307,7 +310,6 @@
                                 "    cognitoidentity.setIdentityPoolRoles(params).promise();",
                                 "    response.send(event, context, response.SUCCESS, {message: 'Successfully updated identity pool.'})",
                                 "    } catch(err) {",
-
                                 "        response.send(event, context, response.FAILED, {message: 'Error updating identity pool'});",
                                 "    }",
                                 "   };",
@@ -319,7 +321,7 @@
                 },
                 "Handler": "index.handler",
                 "Runtime": "nodejs12.x",
-                "Timeout": "300",
+                "Timeout": 300,
                 "Role": {
                     "Fn::GetAtt": [
                         "LambdaExecutionRole",

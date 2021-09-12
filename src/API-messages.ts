@@ -980,7 +980,6 @@ export type DirectMessagesByRoomQuery = {
             currentRole?: string | null
             currentScope?: string | null
             denomination?: string | null
-            email?: string | null
             family_name: string
             given_name: string
             hasPaidState?: PaidState | null
@@ -995,13 +994,10 @@ export type DirectMessagesByRoomQuery = {
             orgType?: string | null
             owner?: string | null
             personality?: string | null
-            phone?: string | null
             pplServed?: string | null
             primaryOrganization?: string | null
             updatedAt: string
             sundayAttendance?: string | null
-            stripeCustomerID?: string | null
-            stripeSubscriptionID?: string | null
             profileState?: string | null
           } | null
           content?: string | null
@@ -1031,12 +1027,8 @@ export type DirectMessagesByRoomQuery = {
         id: string
         given_name: string
         family_name: string
-        email?: string | null
-        phone?: string | null
         owner?: string | null
         mainUserGroup?: string | null
-        stripeCustomerID?: string | null
-        stripeSubscriptionID?: string | null
         hasPaidState?: PaidState | null
         profileState?: string | null
         aboutMeShort?: string | null

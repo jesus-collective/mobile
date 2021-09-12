@@ -983,8 +983,32 @@ export type ListDirectMessageRoomsQuery = {
           id: string
           content?: string | null
           attachment?: string | null
+          author?: {
+            __typename: "User"
+            id: string
+            given_name: string
+            family_name: string
+            currentRole?: string | null
+          } | null
           attachmentName?: string | null
           attachmentOwner?: string | null
+          replies?: {
+            __typename: "ModelDirectMessageReplyConnection"
+            items?: Array<{
+              __typename: "DirectMessageReply"
+              id: string
+              author?: {
+                __typename: "User"
+                id: string
+                given_name: string
+                family_name: string
+                currentRole?: string | null
+              } | null
+              content?: string | null
+              createdAt: string
+              updatedAt: string
+            } | null> | null
+          } | null
           when: string
           recipients: Array<string | null>
           userId: string
@@ -1208,6 +1232,54 @@ export type GetCourseInfoQuery = {
     introduction?: string | null
     createdAt: string
     updatedAt: string
+  } | null
+}
+
+export type GetDirectMessageQueryVariables = {
+  id?: string
+}
+
+export type GetDirectMessageQuery = {
+  getDirectMessage?: {
+    __typename: "DirectMessage"
+    id: string
+    content?: string | null
+    attachment?: string | null
+    attachmentName?: string | null
+    attachmentOwner?: string | null
+    when: string
+    recipients: Array<string | null>
+    userId: string
+    replies?: {
+      __typename: "ModelDirectMessageReplyConnection"
+      items?: Array<{
+        __typename: "DirectMessageReply"
+        id: string
+        content?: string | null
+        when: string
+        attachment?: string | null
+        attachmentName?: string | null
+        attachmentOwner?: string | null
+        recipients: Array<string | null>
+        userId: string
+        messageId: string
+        messageRoomID?: string | null
+        parentReplyId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
+    messageRoomID: string
+    createdAt: string
+    updatedAt: string
+    author?: {
+      __typename: "User"
+      id: string
+      given_name: string
+      family_name: string
+      currentRole?: string | null
+    } | null
   } | null
 }
 
