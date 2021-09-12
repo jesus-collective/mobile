@@ -315,6 +315,28 @@
           ]
         }
       ]
+    },
+    "jcmobilePinpointCleanEndpoints": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "analytics",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "Id",
+            "Region"
+          ]
+        }
+      ]
     }
   },
   "auth": {
