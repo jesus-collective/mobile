@@ -10,6 +10,7 @@ export default class MainDrawerRouter extends JCComponent {
     return (
       <Drawer.Navigator
         openByDefault={false}
+        headerMode="none"
         drawerContent={(props) => {
           return <SideBar {...props}></SideBar>
         }}
@@ -17,7 +18,7 @@ export default class MainDrawerRouter extends JCComponent {
         <Drawer.Screen
           name="mainDrawer"
           component={MainAppRouter}
-          options={{ title: "Jesus Collective" }}
+          options={{ headerShown: false, title: "Jesus Collective" }}
         ></Drawer.Screen>
       </Drawer.Navigator>
     )

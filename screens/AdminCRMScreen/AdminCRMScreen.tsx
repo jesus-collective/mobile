@@ -40,6 +40,8 @@ interface Props {
   navigation: StackNavigationProp<any, any>
   route: any
 }
+type Products = NonNullable<ListProductsQuery["listProducts"]>["items"]
+type Payments = NonNullable<PaymentByUserQuery["paymentByUser"]>["items"]
 interface State extends JCState {
   showMap: boolean
   mapData: MapData[]
@@ -55,10 +57,10 @@ interface State extends JCState {
   showStatus: boolean
   groupToAdd: string | null
   groupList: any
-  paymentsData: []
+  paymentsData: Payments
   showPayments: boolean
   showPaymentsId: string | null
-  productList: []
+  productList: Products
   showInvite: boolean
   inviteType: InviteType | null
   inviteData: string | null
@@ -106,7 +108,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     })) as GraphQLResult<ListProductsQuery>
     console.log(listProducts)
-    this.setState({ productList: listProducts.data.listProducts.items })
+    if (listProducts.data?.listProducts)
+      this.setState({ productList: listProducts.data.listProducts.items })
   }
   async listUsers(limit: number, nextToken: string | null): Promise<any> {
     const apiName = "AdminQueries"
@@ -277,7 +280,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })) as GraphQLResult<PaymentByUserQuery>
           console.log(payments)
-          this.setState({ paymentsData: payments.data.paymentByUser.items })
+
+          this.setState({ paymentsData: payments.data?.paymentByUser?.items })
         } catch (e: any) {
           console.log(e)
           this.setState({ paymentsData: e.data.paymentByUser.items })
@@ -389,7 +393,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 this.showProfile(item.Username)
               }}
             >
-              {item.Attributes.find((e) => e.Name == "given_name")?.Value}
+              {item.Attributes.find((e: any) => e.Name == "given_name")?.Value}
             </TouchableOpacity>
           </Text>
         </View>
@@ -400,7 +404,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 this.showProfile(item.Username)
               }}
             >
-              {item.Attributes.find((e) => e.Name == "family_name")?.Value}
+              {item.Attributes.find((e: any) => e.Name == "family_name")?.Value}
             </TouchableOpacity>
           </Text>
         </View>
@@ -418,14 +422,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
         {this.state.showEmail ? (
           <View style={this.styles.style.adminCRMTableRow}>
             <Text style={this.styles.style.adminCRMTableParagraph}>
-              {item.Attributes.find((e) => e.Name == "email")?.Value}
+              {item.Attributes.find((e: any) => e.Name == "email")?.Value}
             </Text>
           </View>
         ) : null}
         {this.state.showPhone && !isMobile ? (
           <View style={this.styles.style.AdminPhoneTableRow}>
             <Text style={this.styles.style.adminCRMTableEmailStatus}>
-              {item.Attributes.find((e) => e.Name == "phone_number")?.Value}
+              {item.Attributes.find((e: any) => e.Name == "phone_number")?.Value}
             </Text>
           </View>
         ) : null}
@@ -485,13 +489,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
       </View>
     )
   }
-  async createUser(user): Promise<void> {
+  async createUser(user: any): Promise<void> {
     let userExists = false
 
     if (user != null) {
       const { attributes } = user
       const handleUser = async (getUser: GetUserQueryResult) => {
-        if (getUser.data.getUser === null) {
+        if (getUser?.data?.getUser === null) {
           console.log("Trying to create")
           const inputData: CreateUserInput = {
             id: user["username"],
@@ -534,7 +538,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
         }
 
         if (attributes["custom:isOrg"] === "true" && getUser) {
-          if (getUser?.data.getUser.organizations.items.length === 0) {
+          if (getUser?.data?.getUser?.organizations?.items?.length === 0) {
             console.log("creating Organization")
             const id = `organization-${Date.now()}`
             const orgInput: CreateOrganizationInput = {
@@ -560,8 +564,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
               })) as GraphQLResult<CreateOrganizationMutation>
               console.log({ createOrg: createOrg })
-              orgId = createOrg.data.createOrganization.id
-            } catch (e) {
+              orgId = createOrg?.data?.createOrganization?.id
+            } catch (e: any) {
               if (e?.data?.createOrganization) orgId = e.data.createOrganization.id
               console.error({ error: e })
             }
@@ -585,7 +589,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               console.log({ error: e })
             }
           } else if (
-            getUser?.data?.getUser?.organizations?.items[0]?.organizationId &&
+            getUser?.data?.getUser?.organizations?.items![0]?.organizationId &&
             getUser?.data.getUser.organizations.items.length === 1
           ) {
             console.log("Organization exists: setting organization id")
@@ -612,7 +616,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     await this.createUser(z.User)
     await this.createStripeUser(z.User)
   }
-  async createStripeUser(user): Promise<boolean> {
+  async createStripeUser(user: any): Promise<boolean> {
     try {
       console.log(user)
       const customer = (await API.graphql({
@@ -803,7 +807,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     })) as GraphQLResult<GroupByTypeQuery>
     console.log(listGroup)
-    this.setState({ inviteDataList: listGroup.data.groupByType.items })
+    this.setState({ inviteDataList: listGroup?.data?.groupByType?.items })
   }
   renderInviteModal(): React.ReactNode {
     return (

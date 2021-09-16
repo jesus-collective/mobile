@@ -46,9 +46,8 @@ export default class MainAppRouter extends JCComponent {
           return (
             <Stack.Navigator
               initialRouteName="HomeScreen"
-              headerMode="none"
-              mode="card"
               screenOptions={{
+                headerMode: "none",
                 animationEnabled: false,
                 gestureEnabled: false,
                 cardOverlayEnabled: false,

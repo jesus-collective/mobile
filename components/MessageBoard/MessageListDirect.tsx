@@ -123,7 +123,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
                   dms: [...[directMessage.data.getDirectMessage], ...(this.state.dms ?? [])],
                 })
               }
-            } catch (e) {
+            } catch (e: any) {
               console.debug(e)
               if (e.data?.getDirectMessage) {
                 this.setState({
@@ -175,7 +175,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
                 dms[index] = updatedMessage.data.getDirectMessage
                 this.setState({ dms })
               }
-            } catch (e) {
+            } catch (e: any) {
               console.debug(e)
               if (e.data?.getDirectMessage && index !== undefined && dms && dms[index]) {
                 // replace old message/replies with incoming data
@@ -215,7 +215,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
         })
         this.props.onHandleCreated()
       }
-    } catch (e) {
+    } catch (e: any) {
       console.debug(e)
       if (e.data?.directMessagesByRoom?.items) {
         this.setState({
@@ -248,7 +248,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
             nextToken: directMessages.data.directMessagesByRoom.nextToken,
           })
         }
-      } catch (e) {
+      } catch (e: any) {
         if (e.data?.directMessagesByRoom?.items) {
           this.setState({
             dms: [...(this.state.dms ?? []), ...e.data.directMessagesByRoom.items],

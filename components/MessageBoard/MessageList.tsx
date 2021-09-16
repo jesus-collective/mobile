@@ -162,7 +162,7 @@ class MessageListImpl extends JCComponent<Props, State> {
                 messages[index] = updatedMessage.data.getMessage
                 this.setState({ messages })
               }
-            } catch (e) {
+            } catch (e: any) {
               console.debug(e)
               if (e.data?.getMessage && index !== undefined && messages && messages[index]) {
                 // replace old message/replies with incoming data
@@ -202,7 +202,7 @@ class MessageListImpl extends JCComponent<Props, State> {
         })
         this.props.onHandleCreated()
       }
-    } catch (e) {
+    } catch (e: any) {
       console.debug(e)
       if (e.data?.messagesByRoom) {
         this.setState({
@@ -235,7 +235,7 @@ class MessageListImpl extends JCComponent<Props, State> {
             nextToken: messages.data.messagesByRoom.nextToken,
           })
         }
-      } catch (e) {
+      } catch (e: any) {
         if (e.data?.messagesByRoom) {
           this.setState({
             messages: [...(this.state.messages ?? []), ...e.data.messagesByRoom.items],

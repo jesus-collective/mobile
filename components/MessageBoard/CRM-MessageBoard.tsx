@@ -333,7 +333,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
         editorState: EditorState.createEmpty(),
         attachment: "",
       })
-    } catch (err) {
+    } catch (err: any) {
       console.error({ "Error mutations.createCrmMessage": err })
       if (err.data.createCrmMessage) {
         this.setState({
@@ -483,7 +483,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
         replyToParentId: "",
         replyToWho: "",
       })
-    } catch (e) {
+    } catch (e: any) {
       if (e.data?.createCrmReply) {
         console.log({ "Success mutations.createCrmReply": e.data })
         this.setState({

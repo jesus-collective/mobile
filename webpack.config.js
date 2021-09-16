@@ -12,7 +12,7 @@ module.exports = webpackConfig = async function (env, argv) {
     {
       ...env,
       // Passing true will enable the default Workbox + Expo SW configuration.
-      offline: false,
+      // offline: false,
     },
     argv
   )
