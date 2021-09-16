@@ -204,7 +204,7 @@ export default function Messages(props: Props): JSX.Element {
                   a?.[indexInStaleThread]?.replies?.push(formatReply(newReply))
                   setThread({ ...thread, replies: a })
                 } else {
-                  console.log("newReply doesnt exist")
+                  console.log("newReply doesn't exist")
                 }
               } else {
                 console.log("indexInStaleThread: ", indexInStaleThread)

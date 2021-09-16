@@ -163,7 +163,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       })) as GraphQLResult<ListInvoicesMutation>
       console.log({ invoice: invoice })
       this.setState({ invoices: invoice.data?.listInvoices?.data ?? [] })
-    } catch (e) {
+    } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log(e)
     }
@@ -223,7 +223,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             )
           else this.setState({ noUserFound: true })
-        } catch (e) {
+        } catch (e: any) {
           console.log({ Error: e })
           if (e.data?.getUser != null)
             this.setState(
@@ -318,7 +318,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               })
             )) as GraphQLResult<UpdateUserMutation>
             console.log(updateUser)
-          } catch (e) {
+          } catch (e: any) {
             Sentry.captureException(e.errors || e)
             console.log(e)
           }
@@ -378,7 +378,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ editMode: false })
-      } catch (e) {
+      } catch (e: any) {
         Sentry.captureException(e.errors || e)
         console.log(e)
       }
@@ -636,7 +636,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const result = await Auth.changePassword(user, this.state.oldPass, this.state.newPass)
       this.setState({ passError: result })
-    } catch (e) {
+    } catch (e: any) {
       console.error(e)
       if (e.message.includes("validation")) this.setState({ passError: e.message.split(":")[0] })
       else this.setState({ passError: e.message })

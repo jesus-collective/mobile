@@ -27,10 +27,7 @@ interface Props {
   ): void
   testID?: any
 }
-interface UserProps {
-  children: any
-  showProfileImages: boolean
-}
+
 /*class UserChip extends Component<UserProps> {
   constructor(props: UserProps) {
     super(props)
@@ -76,7 +73,7 @@ export default class EditableText extends JCComponent<Props> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as GraphQLResult<SearchUsersQuery>
       return searchUsers.data?.searchUsers?.items
-    } catch (e) {
+    } catch (e: any) {
       console.log({ Error: e })
       return e.data.searchUsers.items
     }

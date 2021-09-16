@@ -148,10 +148,10 @@ export default function MessageEditor(props: Props): JSX.Element {
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })) as Promise<GraphQLResult<UpdateDirectMessageMutation>>
           console.log({ "Success mutations.updateDirectMessage ": updateDirectMessage })
-        } catch (err) {
+        } catch (err: any) {
           console.error({ "Error mutations.updateDirectMessage ": err })
           if (err.data.updateDirectMessage) {
-            console.log("An errorr occurred", err)
+            console.log("An error occurred", err)
             //setEditorState(EditorState.createEmpty())
           }
         } finally {
@@ -198,7 +198,7 @@ export default function MessageEditor(props: Props): JSX.Element {
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })) as Promise<GraphQLResult<CreateDirectMessageMutation>>
           console.log({ "Success mutations.createDirectMessage ": createDirectMessage })
-        } catch (err) {
+        } catch (err: any) {
           console.error({ "Error mutations.createDirectMessage ": err })
           if (err.data.createDirectMessage) {
             //setEditorState(EditorState.createEmpty())

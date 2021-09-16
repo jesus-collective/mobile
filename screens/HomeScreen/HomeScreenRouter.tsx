@@ -206,7 +206,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
               })) as GraphQLResult<CreateOrganizationMutation>
               console.log({ createOrg: createOrg })
               orgId = createOrg.data.createOrganization.id
-            } catch (e) {
+            } catch (e: any) {
               if (e?.data?.createOrganization) orgId = e.data.createOrganization.id
               console.error({ error: e })
             }
@@ -228,7 +228,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
               })) as GraphQLResult<CreateOrganizationMemberMutation>
               console.log({ createOrgMember: createOrgMember })
-            } catch (e) {
+            } catch (e: any) {
               console.log({ error: e })
             }
           } else if (

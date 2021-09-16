@@ -248,7 +248,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             attachment: "",
             attachmentOwner: "",
           })
-        } catch (err) {
+        } catch (err: any) {
           console.error({ "Error mutations.createMessage": err })
           if (err.data.createMessage) {
             this.setState({
@@ -284,7 +284,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             attachment: "",
             attachmentOwner: "",
           })
-        } catch (err) {
+        } catch (err: any) {
           console.error({ "Error mutations.createDirectMessage ": err })
           if (err.data.createDirectMessage) {
             this.setState({
@@ -583,7 +583,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           replyToRoomId: "",
           replyToWho: [],
         })
-      } catch (e) {
+      } catch (e: any) {
         if (e.data?.createReply) {
           console.log({ "Success mutations.createReply": e.data })
           this.setState({
@@ -633,7 +633,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           replyToRoomId: "",
           replyToWho: [],
         })
-      } catch (e) {
+      } catch (e: any) {
         if (e.data?.createDirectMessageReply) {
           console.log({ "Success mutations.createReply": e.data })
           this.setState({

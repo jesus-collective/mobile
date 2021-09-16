@@ -5,7 +5,7 @@ import { Button, Text } from "react-native"
 import { JCCognitoUser } from "src/types"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
-import { UserContext } from "../../screens/HomeScreen/UserContext"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import awsConfig from "../../src/aws-exports"
 import * as mutations from "../../src/graphql/mutations"
 Amplify.configure(awsConfig)
@@ -16,7 +16,7 @@ interface Props {
 export default class SignUpScreen2 extends JCComponent<Props> {
   static UserConsumer = UserContext.Consumer
 
-  async makePayment(actions: any): Promise<void> {
+  async makePayment(actions: UserActions): Promise<void> {
     console.log("Finish Payment")
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser

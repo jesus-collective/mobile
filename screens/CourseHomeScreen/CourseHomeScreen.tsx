@@ -285,7 +285,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         )
         console.log(temp)
         this.setState({ courseData: temp })
-      } catch (createCourseBackOfficeStaff) {
+      } catch (createCourseBackOfficeStaff: any) {
         console.log(createCourseBackOfficeStaff)
         const temp = this.state.courseData
         temp?.backOfficeStaff?.items?.push(
@@ -365,7 +365,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           console.log(temp)
           this.setState({ courseData: temp })
         }
-      } catch (createCourseInstructors) {
+      } catch (createCourseInstructors: any) {
         console.log(createCourseInstructors)
         const temp = this.state.courseData
         if (temp && temp.instructors && temp.instructors.items) {
@@ -447,7 +447,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             console.log(temp)
             this.setState({ courseData: temp })
           }
-        } catch (createCourseTriadUsers) {
+        } catch (createCourseTriadUsers: any) {
           console.log(createCourseTriadUsers)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {
@@ -630,7 +630,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             console.log(temp)
             this.setState({ courseData: temp })
           }
-        } catch (createCourseTriadCoaches) {
+        } catch (createCourseTriadCoaches: any) {
           console.log(createCourseTriadCoaches)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {

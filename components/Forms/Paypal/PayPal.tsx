@@ -112,6 +112,7 @@ const PayPal = ({
       />
     )
   }
+  return <></>
 }
 
 export default PayPal

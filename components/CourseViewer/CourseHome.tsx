@@ -580,7 +580,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                   return (
                                     <React.Fragment key={index}>
                                       <CourseHomeImpl.UserConsumer>
-                                        {({ userState, userActions }) => {
+                                        {({ userActions }) => {
                                           if (userActions.isMemberOf("courseCoach")) return null
                                           return (
                                             <>

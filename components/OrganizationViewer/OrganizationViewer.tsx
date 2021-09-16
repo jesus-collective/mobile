@@ -167,7 +167,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
             this.convertProfileToMapData()
           }
         )
-      } catch (e) {
+      } catch (e: any) {
         if (e.data?.getOrganization) {
           this.setState(
             {
@@ -318,7 +318,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         await API.graphql(graphqlOperation(mutations.updateOrganization, { input: toSave }))
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ dirty: false, editMode: false })
-      } catch (e) {
+      } catch (e: any) {
         Sentry.captureException(e.errors || e)
         console.log(e)
       }

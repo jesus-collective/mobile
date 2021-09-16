@@ -97,7 +97,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
   }
 
-  onChanged(val: any): void {
+  onChanged(val: string): void {
     if (this.props.onChange) {
       this.props.onChange(val)
       this.setState({ isEditMode: false })

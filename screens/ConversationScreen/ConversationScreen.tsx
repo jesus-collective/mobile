@@ -119,7 +119,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     if (this.props.route?.params?.initialUserID)
       if (
         !this.state.data
-          .map((item, index: number) => {
+          .map((item) => {
             if (item && item.room)
               if (item.room.roomType == null || item.room.roomType == "directMessage")
                 if (
@@ -197,7 +197,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
             }
           )
         }
-      } catch (json) {
+      } catch (json: any) {
         if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
           console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
@@ -292,7 +292,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                       (item) =>
                         item?.room?.roomType == "directMessage" || item?.room?.roomType == null
                     )
-                    .map((item, index: number) => {
+                    .map((item) => {
                       if (item == null) return
                       const otherUsers = this.getOtherUsers(item)
                       let stringOfNames = ""

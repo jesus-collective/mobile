@@ -68,7 +68,7 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
       await Auth.forgotPassword(this.state.email.toLowerCase()).then(() =>
         this.setState({ codeSent: true })
       )
-    } catch (e) {
+    } catch (e: any) {
       this.setState({ authError: e.message, sendingCode: false })
       Sentry.configureScope((scope) => {
         scope.setUser(null)
@@ -76,7 +76,7 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
     }
   }
 
-  async resetPass(actions: any): Promise<void> {
+  async resetPass(actions: UserActions): Promise<void> {
     try {
       if (this.state.newPass !== this.state.newPass2) {
         this.setState({ authError: "Passwords do not match" })
@@ -92,7 +92,7 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
       ).then(async () => {
         await this.changeAuthState(actions, "signIn")
       })
-    } catch (e) {
+    } catch (e: any) {
       this.setState({ authError: e.message, resetting: false })
       Sentry.configureScope((scope) => {
         scope.setUser(null)
@@ -100,7 +100,10 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
     }
   }
 
-  handleEnter(actions: any, keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>): void {
+  handleEnter(
+    actions: UserActions,
+    keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>
+  ): void {
     if (keyEvent.nativeEvent.key === "Enter") {
       if (this.state.codeSent) {
         this.resetPass(actions)

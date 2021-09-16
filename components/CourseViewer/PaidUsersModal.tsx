@@ -74,10 +74,10 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       }) as Promise<GraphQLResult<ListPaymentsQuery>>
       addPayment
-        .then((json) => {
+        .then(() => {
           this.setInitialData()
         })
-        .catch((json) => {
+        .catch(() => {
           this.setInitialData()
         })
     }

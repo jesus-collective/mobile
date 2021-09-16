@@ -103,17 +103,17 @@ export default function MessageThread(props: Props): JSX.Element {
                     type="reply"
                     comment={response}
                   />
-                  {response?.replies?.map((replyToReponse) => {
+                  {response?.replies?.map((replyToResponse) => {
                     return (
                       <MessageComment
                         scrollToBottom={focusTextInput}
-                        active={replyTo?.id === replyToReponse?.id}
+                        active={replyTo?.id === replyToResponse?.id}
                         setOpen={() => setOpen((prev) => !prev)}
                         setReplyTo={setReplyTo}
                         openState={open}
                         type="replyToReply"
-                        comment={replyToReponse}
-                        key={replyToReponse?.id}
+                        comment={replyToResponse}
+                        key={replyToResponse?.id}
                       ></MessageComment>
                     )
                   })}

@@ -111,7 +111,7 @@ class MySignInImpl extends React.Component<Props, State> {
             await this.changeAuthState(actions, "signedIn")
           }
         })
-      } catch (err) {
+      } catch (err: any) {
         this.setState({ authError: err.message })
         Sentry.configureScope((scope) => {
           scope.setUser(null)

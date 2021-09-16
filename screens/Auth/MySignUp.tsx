@@ -165,7 +165,7 @@ class MySignUpImpl extends React.Component<Props, State> {
               email: this.state.user.email.toLowerCase(),
             })
         )
-      } catch (e) {
+      } catch (e: any) {
         this.setState({ authError: e.message, sendingData: false })
         Sentry.configureScope((scope) => {
           scope.setUser(null)

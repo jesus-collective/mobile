@@ -141,7 +141,7 @@ class BillingImpl extends JCComponent<Props, State> {
         this.setState({ userData: getUser.data.getUser })
         console.log({ USER: getUser.data?.getUser })
       }
-    } catch (e) {
+    } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log({ UserError: e })
     }
@@ -208,7 +208,7 @@ class BillingImpl extends JCComponent<Props, State> {
       })) as GraphQLResult<CreateCustomerMutation>
       console.log({ customer: customer })
       //customerId = customer.data.createCustomer.customer.id;
-    } catch (e) {
+    } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log(e)
     }
@@ -256,11 +256,11 @@ class BillingImpl extends JCComponent<Props, State> {
             console.log({ invoice: invoice.data.previewInvoice?.invoice })
             this.setState({ invoice: invoice.data.previewInvoice?.invoice })
           }
-        } catch (e) {
+        } catch (e: any) {
           console.log({ ERROR: e })
         }
       })
-    } catch (e) {
+    } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log({ error: e })
     }
@@ -364,7 +364,7 @@ class BillingImpl extends JCComponent<Props, State> {
           )
           console.log(status)
         }
-      } catch (e) {
+      } catch (e: any) {
         Sentry.captureException(e.errors || e)
         console.log({ "Payment Error": e })
       }
@@ -613,6 +613,7 @@ class BillingImpl extends JCComponent<Props, State> {
                 },
               })
             )) as GraphQLResult<UpdateUserMutation>
+            console.log(user)
             this.setState({ userData: temp })
           })
       } else {
@@ -630,7 +631,7 @@ class BillingImpl extends JCComponent<Props, State> {
         console.log(user)
         this.setState({ userData: temp })
       }
-    } catch (e) {
+    } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log({ errorUpdating: e })
     } finally {

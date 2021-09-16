@@ -1,4 +1,4 @@
-const replyCounter = (replies) => {
+const replyCounter = (replies): string => {
   let countString = "No comments"
   if (replies) {
     if (replies?.length > 0) {
