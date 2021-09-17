@@ -33,7 +33,7 @@ interface Props {
   post?: () => void
   recipients: Array<string | null>
   wordCount?: any
-  assignment?: MessageComment
+  assignment?: MessageComment | null
 }
 
 export default function MessageEditor(props: Props): JSX.Element {
@@ -257,6 +257,13 @@ export default function MessageEditor(props: Props): JSX.Element {
       }
     }
   }
+
+  const handleSubmit = async () => {
+    if (newAssignment) return await saveMessage()
+    if (isReply) return await saveReply()
+    if (assignment) return await updateMessage()
+    saveMessage()
+  }
   return (
     <View style={{ paddingBottom: 30 }}>
       <Editor
@@ -297,12 +304,7 @@ export default function MessageEditor(props: Props): JSX.Element {
         ]}
       />
       <View style={{ flexDirection: "row-reverse" }}>
-        <JCButton
-          buttonType={ButtonTypes.SolidRightJustifiedMini}
-          onPress={async () => {
-            assignment ? await updateMessage() : isReply ? await saveReply() : await saveMessage()
-          }}
-        >
+        <JCButton buttonType={ButtonTypes.SolidRightJustifiedMini} onPress={handleSubmit}>
           {assignment ? "Update" : "Post"}
         </JCButton>
         {wordCount ? (

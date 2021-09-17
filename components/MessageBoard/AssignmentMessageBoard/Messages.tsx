@@ -17,12 +17,7 @@ import {
 import MessageThread, { MessageComment } from "./MessageThread"
 
 interface Props {
-  room: {
-    directMessage: {
-      items: Array<any>
-    }
-    id: string
-  }
+  room: any
   open?: boolean
   recipients: Array<string>
   wordCount: number

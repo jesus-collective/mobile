@@ -7,7 +7,7 @@ import React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
-import EditableCourseAssignment from "../Forms/EditableCourseAssignment"
+import EditableCourseAssignment2 from "../Forms/EditableCourseAssignment2"
 import EditableDate from "../Forms/EditableDate"
 import EditableRichText from "../Forms/EditableRichText"
 import EditableText from "../Forms/EditableText"
@@ -1001,7 +1001,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           <CourseDetailImpl.UserConsumer>
             {({ userActions }) => {
               return (
-                <EditableCourseAssignment
+                <EditableCourseAssignment2
                   actions={actions}
                   userActions={userActions}
                   assignmentId={
@@ -1090,12 +1090,12 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           <CourseDetailImpl.UserConsumer>
             {({ userActions }) => {
               return (
-                <EditableCourseAssignment
+                <EditableCourseAssignment2
                   actions={actions}
                   userActions={userActions}
                   assignmentId={lesson?.id as string}
                   wordCount={parseInt(lesson?.wordCount as string, 10)}
-                ></EditableCourseAssignment>
+                ></EditableCourseAssignment2>
               )
             }}
           </CourseDetailImpl.UserConsumer>
