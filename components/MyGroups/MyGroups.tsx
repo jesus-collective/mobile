@@ -884,7 +884,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <JCButton
                 buttonType={ButtonTypes.ProfileSmall}
                 onPress={() => {
-                  this.openConversation(item.id, item.user.given_name + " " + item.user.family_name)
+                  this.openConversation(item.id, item.given_name + " " + item.family_name)
                 }}
               >
                 Start Conversation
