@@ -519,12 +519,13 @@ const courseStyles = EStyleSheet.create({
   },
   courseHomeMainTextContainer: {
     flex: 80,
-    height: 200,
+    height: "unset",
     marginRight: 50,
   },
   courseHomeSyllabusContainer: {
     flexDirection: "row",
-    minHeight: 200,
+    minHeight: "fit-content",
+    height: "unset",
   },
   CourseHomeActivityContainer:
     Platform.OS === "web"
@@ -558,9 +559,11 @@ const courseStyles = EStyleSheet.create({
     paddingBottom: 20,
   },
   courseHomeMainContainer: {
+    height: "unset",
     flex: 85,
   },
   courseProfileImageButtonsContainer: {
+    height: "unset",
     flexDirection: "column",
     marginTop: 30,
     flex: 20,
@@ -568,6 +571,7 @@ const courseStyles = EStyleSheet.create({
   courseHomeLeftContainer: {
     flex: 70,
     flexDirection: "column",
+    height: "unset",
     justifyContent: "flex-start",
   },
   courseHomeRightContainer: {
@@ -699,6 +703,7 @@ const courseStyles = EStyleSheet.create({
     flexDirection: "row",
   },
   courseHomeScreenSubMainContainer: {
+    height: "unset",
     flex: 80,
     display: "flex",
     flexDirection: "row",
@@ -706,6 +711,7 @@ const courseStyles = EStyleSheet.create({
     paddingLeft: "5%",
   },
   courseMyCohortContainer: {
+    paddingBottom: 40,
     flexDirection: "row",
     flexWrap: "wrap",
   },
@@ -1258,7 +1264,7 @@ const courseStyles = EStyleSheet.create({
       overflow: "scroll",
     },
     courseProfileImageContainer: {
-      marginTop: 700,
+      marginTop: 0,
     },
     courseHomeDescriptionText: {
       marginTop: 0,
@@ -1270,7 +1276,6 @@ const courseStyles = EStyleSheet.create({
     },
     courseProfileImageButtonsContainer: {
       marginRight: 0,
-      marginBottom: 200,
     },
     courseDetailMainContainer: {
       flexDirection: "column",
