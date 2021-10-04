@@ -1028,13 +1028,16 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                       style={{
                                         flexDirection: "row",
                                         justifyContent: "space-between",
+                                        width: "100%",
                                       }}
                                     >
                                       <Text
+                                        numberOfLines={1}
                                         style={{
                                           fontFamily: "Graphik-SemiBold-App",
                                           fontSize: 16,
                                           lineHeight: 24,
+                                          paddingRight: 4,
                                           letterSpacing: -0.3,
                                           color: "#ffffff",
                                           alignSelf: "center",
