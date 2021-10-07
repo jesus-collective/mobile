@@ -178,7 +178,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       try {
-        const query = { limit: 20, filter: { userID: { eq: user["username"] } }, nextToken: next }
+        const query = { limit: 200, filter: { userID: { eq: user["username"] } }, nextToken: next }
         const json = (await API.graphql({
           query: customQueries.listDirectMessageUsers,
           variables: query,
