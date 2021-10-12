@@ -6,11 +6,10 @@ import React from "react"
 import { isDesktop } from "react-device-detect"
 import { Dimensions, ScrollView, Text, View } from "react-native"
 import { constants } from "../../src/constants"
-import { EmptyProps } from "../../src/types"
 import EditableButton from "../Forms/EditableButton"
 import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
-import { CourseContext } from "./CourseContext"
+import { CourseActions, CourseContext, CourseState } from "./CourseContext"
 
 interface Props {
   navigation?: StackNavigationProp<any, any>
@@ -19,11 +18,11 @@ interface Props {
 }
 class CourseDetailMenuImpl extends JCComponent<Props> {
   static Consumer = CourseContext.Consumer
-  constructor(props: EmptyProps) {
+  constructor(props: Props) {
     super(props)
     this.state = {
       listEnd: false,
-      containerWidth: Dimensions.get("window").width * 0.85 - 20 - 34 - 46.6 - 26,
+      containerWidth: Dimensions.get("window").width * 0.85 - 116,
       listLength: 0,
     }
   }
@@ -51,6 +50,32 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
             return null
           }
           const menuListRef = React.createRef<ScrollView>()
+          const changeArrowState = () => {
+            this.setState({ listEnd: false })
+          }
+          const AddWeekButton = (
+            state: CourseState | undefined,
+            actions: CourseActions,
+            resetArrow: () => void
+          ) => {
+            return state?.isEditable ? (
+              <Button
+                testID="course-menu-createWeek"
+                transparent
+                onPress={async () => {
+                  actions.createWeek()
+                  resetArrow()
+                }}
+              >
+                <Text
+                  style={[this.headerStyles.style.centerMenuButtonsText, { marginHorizontal: 12 }]}
+                >
+                  +
+                </Text>
+              </Button>
+            ) : null
+          }
+          const Weeks = Object.values(state.courseWeeks).filter((item) => item)
           return (
             <Header style={this.headerStyles.style.resourceContainer}>
               <View
@@ -59,63 +84,47 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                   flexDirection: "row",
                   justifyContent: "flex-start",
                   alignItems: "center",
-                  marginLeft: 40,
+                  marginLeft: 30,
                 }}
               >
+                {!Weeks.length ? AddWeekButton(state, actions, changeArrowState) : null}
                 <ScrollView
                   onLayout={(e) => {
-                    this.setState({ listLength: e.nativeEvent.target.scrollWidth })
+                    // this probably only works for web
+                    this.setState({ listLength: e?.nativeEvent?.target?.scrollWidth })
                   }}
                   onContentSizeChange={(w) => {
+                    console.log("onContentSizeChange called")
                     w !== this.state.listLength ? this.setState({ listLength: w }) : null
                   }}
                   ref={menuListRef}
                   showsVerticalScrollIndicator={false}
                   horizontal
                 >
-                  {Object.values(state.courseWeeks)
-                    .filter((item) => item)
-                    .map((item, index) => (
-                      <EditableButton
-                        testID={"menu-item-" + index}
-                        onDelete={() => {
-                          actions.deleteWeek(item.id)
-                        }}
-                        onChange={(value) => {
-                          actions.updateWeek(item.id, "name", value)
-                        }}
-                        key={index}
-                        placeholder="temp"
-                        isEditable={state.isEditable}
-                        onPress={() => actions.setActiveWeek(item.id)}
-                        inputStyle={this.headerStyles.style.centerMenuButtonsText}
-                        textStyle={
-                          state.activeWeek == item.id
-                            ? this.headerStyles.style.centerMenuButtonsTextSelected
-                            : this.headerStyles.style.centerMenuButtonsText
-                        }
-                        value={item.name ?? ""}
-                      />
-                    ))}
+                  {Weeks.map((item, index) => (
+                    <EditableButton
+                      testID={"menu-item-" + index}
+                      onDelete={() => {
+                        actions.deleteWeek(item.id)
+                      }}
+                      onChange={(value) => {
+                        actions.updateWeek(item.id, "name", value)
+                      }}
+                      key={index}
+                      placeholder="temp"
+                      isEditable={state.isEditable}
+                      onPress={() => actions.setActiveWeek(item.id)}
+                      inputStyle={this.headerStyles.style.centerMenuButtonsText}
+                      textStyle={
+                        state.activeWeek == item.id
+                          ? this.headerStyles.style.centerMenuButtonsTextSelected
+                          : this.headerStyles.style.centerMenuButtonsText
+                      }
+                      value={item.name ?? ""}
+                    />
+                  ))}
                 </ScrollView>
-                {state.isEditable ? (
-                  <Button
-                    testID="course-menu-createWeek"
-                    transparent
-                    onPress={async () => {
-                      actions.createWeek()
-                    }}
-                  >
-                    <Text
-                      style={[
-                        this.headerStyles.style.centerMenuButtonsText,
-                        { marginHorizontal: 12 },
-                      ]}
-                    >
-                      +
-                    </Text>
-                  </Button>
-                ) : null}
+                {Weeks.length ? AddWeekButton(state, actions, changeArrowState) : null}
                 {this.state.listLength > this.state.containerWidth && isDesktop ? (
                   <Button
                     transparent
