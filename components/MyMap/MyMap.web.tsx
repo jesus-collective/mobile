@@ -9,7 +9,7 @@ import moment from "moment"
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Body, Card, CardItem, View } from "native-base"
 import * as React from "react"
-import { ScrollView, Text, TouchableOpacity } from "react-native"
+import { Dimensions, ScrollView, Text, TouchableOpacity } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import * as queries from "../../src/graphql/queries"
@@ -311,7 +311,10 @@ class MyMapImpl extends JCComponent<Props, State> {
       return (
         <ErrorBoundary>
           <View
-            style={{ display: "flex", height: this.props.visible ? "75%" : 0 }}
+            style={{
+              display: "flex",
+              height: this.props.visible ? Dimensions.get("window").height * 0.65 : 0,
+            }}
             onLayout={(e) => this.setState({ mapHeight: e.nativeEvent.layout.height })}
           >
             <View style={{ flex: 1, minHeight: 50, maxHeight: 75 }}>
