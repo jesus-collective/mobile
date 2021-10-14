@@ -118,6 +118,7 @@ export default function Comment(props: CommentParams): JSX.Element {
   return (
     <TouchableOpacity
       onPress={handleButtonPress}
+      delayPressIn={300}
       style={[
         { flexDirection: "row", marginBottom: 30 },
         type === "replyToReply" ? { marginLeft: 80 } : {},
@@ -158,7 +159,7 @@ export default function Comment(props: CommentParams): JSX.Element {
           </View>
           <CommentButton comment={props?.comment} type={type} />
         </View>
-        <Text style={[style.contentText, openState ? { marginTop: 20 } : {}]}>
+        <Text selectable style={[style.contentText, openState ? { marginTop: 20 } : {}]}>
           <div
             onClick={() => null}
             dangerouslySetInnerHTML={{
