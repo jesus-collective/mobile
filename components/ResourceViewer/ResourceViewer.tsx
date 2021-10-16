@@ -2,12 +2,13 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import {} from "@material-ui/core"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
+import Amplify, { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
 import { Container, Content } from "native-base"
 import * as React from "react"
 import { v4 as uuidv4 } from "uuid"
+import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import {
@@ -27,7 +28,6 @@ import {
   DeleteResourceEpisodeMutation,
   DeleteResourceMutation,
   DeleteResourceSeriesMutation,
-  GroupMemberByUserQuery,
   ResourceMenuItemType,
   ResourcePageItemInput,
   ResourcePageItemStyle,
@@ -50,14 +50,12 @@ import {
   CreateResourceRootMutationResult,
   DeleteResourceMenuItemMutationResult,
   GetGroupQueryResult,
-  GetGroupQueryResultPromise,
   GetResourceEpisodeData,
   GetResourceRootDataCustom,
   GetResourceRootQueryResult,
   GetResourceRootQueryResultPromise,
   GetResourceSeriesData,
   GetUserQueryResult,
-  GetUserQueryResultPromise,
   GroupMemberByUserQueryResult,
   GroupMemberByUserQueryResultPromise,
   JCCognitoUser,
@@ -147,9 +145,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       this.setState({
         currentUser: user.username,
       })
-      const getUser: GetUserQueryResultPromise = API.graphql(
-        graphqlOperation(queries.getUser, { id: user["username"] })
-      ) as GetUserQueryResultPromise
+      const getUser = Data.getUser(user["username"])
       getUser
         .then((json: GetUserQueryResult) => {
           this.setState(
@@ -205,11 +201,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         )
       })
     } else {
-      const getGroup: GetGroupQueryResultPromise = API.graphql({
-        query: queries.getGroup,
-        variables: { id: props.route.params.id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as GetGroupQueryResultPromise
+      const getGroup = Data.getGroup(props.route.params.id)
       const processResults = (json: GetGroupQueryResult) => {
         const isEditable =
           (json.data?.getGroup?.owner == this.state.currentUser ||
@@ -232,14 +224,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           },
           () => {
             this.setInitialResourceData()
-            const groupMemberByUser: GroupMemberByUserQueryResultPromise = API.graphql({
-              query: queries.groupMemberByUser,
-              variables: {
-                userID: this.state.currentUser,
-                groupID: { eq: this.state.groupData?.id },
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            }) as GroupMemberByUserQueryResultPromise
+            const groupMemberByUser: GroupMemberByUserQueryResultPromise = Data.groupMemberByUser(
+              this.state.currentUser,
+              this.state.groupData?.id
+            )
             groupMemberByUser.then((json: GroupMemberByUserQueryResult) => {
               console.log({ groupMemberByUser: json })
               if (
@@ -459,11 +447,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         // Attribute values must be strings
         attributes: { id: this.state.groupData.id, name: this.state.groupData.name },
       })
-      const groupMemberByUser = API.graphql({
-        query: queries.groupMemberByUser,
-        variables: { userID: this.state.currentUser, groupID: { eq: this.state.groupData.id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+      const groupMemberByUser = Data.groupMemberByUser(
+        this.state.currentUser,
+        this.state.groupData.id
+      )
       groupMemberByUser
         .then((json) => {
           console.log({ "Success queries.groupMemberByUser": json })

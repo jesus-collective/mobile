@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API, Auth, graphqlOperation } from "aws-amplify"
+import { Auth } from "aws-amplify"
 import { MapData } from "components/MyGroups/MyGroups"
 import { Map, Marker } from "google-maps-react"
 import moment from "moment"
@@ -10,10 +10,10 @@ import moment from "moment"
 import { Body, Card, CardItem, View } from "native-base"
 import * as React from "react"
 import { Dimensions, ScrollView, Text, TouchableOpacity } from "react-native"
+import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import * as queries from "../../src/graphql/queries"
-import { GetUserQueryResult, GetUserQueryResultPromise, JCCognitoUser } from "../../src/types"
+import { GetUserQueryResult, JCCognitoUser } from "../../src/types"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import JCSwitch from "../JCSwitch/JCSwitch"
@@ -60,9 +60,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       this.setState({
         currentUser: user.username,
       })
-      const getUser: GetUserQueryResultPromise = API.graphql(
-        graphqlOperation(queries.getUser, { id: user["username"] })
-      ) as GetUserQueryResultPromise
+      const getUser = Data.getUser(user["username"])
       getUser
         .then((json: GetUserQueryResult) => {
           this.setState({

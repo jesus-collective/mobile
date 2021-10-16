@@ -2,6 +2,132 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const eventBriteListEvents = /* GraphQL */ `
+  query EventBriteListEvents($page: String) {
+    eventBriteListEvents(page: $page) {
+      pagination {
+        object_count
+        page_number
+        page_size
+        page_count
+        has_more_items
+      }
+      events {
+        name {
+          text
+          html
+        }
+        description {
+          text
+          html
+        }
+        url
+        start {
+          timezone
+          local
+          utc
+        }
+        end {
+          timezone
+          local
+          utc
+        }
+        organization_id
+        created
+        changed
+        published
+        capacity
+        capacity_is_custom
+        status
+        currency
+        listed
+        shareable
+        invite_only
+        online_event
+        show_remaining
+        tx_time_limit
+        hide_start_date
+        hide_end_date
+        locale
+        is_locked
+        privacy_setting
+        is_series
+        is_series_parent
+        inventory_type
+        is_reserved_seating
+        show_pick_a_seat
+        show_seatmap_thumbnail
+        show_colors_in_seatmap_thumbnail
+        source
+        is_free
+        version
+        summary
+        facebook_event_id
+        logo_id
+        organizer_id
+        venue_id
+        category_id
+        subcategory_id
+        format_id
+        id
+        resource_uri
+        is_externally_ticketed
+        series_id
+      }
+    }
+  }
+`
+export const eventBriteListTicketClasses = /* GraphQL */ `
+  query EventBriteListTicketClasses($eventId: String, $page: String) {
+    eventBriteListTicketClasses(eventId: $eventId, page: $page) {
+      pagination {
+        object_count
+        page_number
+        page_size
+        page_count
+        has_more_items
+      }
+      ticket_classes {
+        resource_uri
+        display_name
+        name
+        description
+        donation
+        free
+        secondary_assignment_enabled
+        include_fee
+        minimum_quantity
+        maximum_quantity
+        maximum_quantity_per_order
+        maximum_quantity_per_order_without_pending
+        on_sale_status
+        category
+        event_id
+        id
+        sales_start
+        sales_end
+        variant_id
+        variant_input_type
+        sorting
+        has_pdf_ticket
+        image_id
+        delivery_methods
+        sales_channels
+        variants {
+          category
+          display_name
+          name
+          currency
+          checkout_group_id
+          on_sale_status
+          hide_sale_dates
+          free
+          include_fee
+        }
+      }
+    }
+  }
+`
 export const getApplicationProcess = /* GraphQL */ `
   query GetApplicationProcess($id: ID!) {
     getApplicationProcess(id: $id) {
@@ -4976,110 +5102,6 @@ export const searchGroups = /* GraphQL */ `
     }
   }
 `
-export const listUsers = /* GraphQL */ `
-  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        stripeCustomerID
-        stripeSubscriptionID
-        hasPaidState
-        profileState
-        billingAddress {
-          city
-          country
-          line1
-          line2
-          postal_code
-          state
-        }
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        messageReplies {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseBackOfficeStaff {
-          nextToken
-        }
-        payments {
-          nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -5297,6 +5319,110 @@ export const getUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+    }
+  }
+`
+export const listUsers = /* GraphQL */ `
+  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 `

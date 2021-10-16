@@ -10,6 +10,7 @@ import React from "react"
 import { isMobile } from "react-device-detect"
 import { Picker, TextInput, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
+import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
@@ -26,15 +27,13 @@ import {
   CreateUserMutation,
   DeletePaymentMutation,
   GetProductQuery,
-  GroupByTypeQuery,
   ListProductsQuery,
   PaymentByUserQuery,
   UserGroupType,
 } from "../../src/API"
-import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
-import { GetUserQueryResult, GetUserQueryResultPromise, InviteType } from "../../src/types"
+import { GetUserQueryResult, InviteType } from "../../src/types"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -598,9 +597,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           }
         }
       }
-      const z: GetUserQueryResultPromise = API.graphql(
-        graphqlOperation(queries.getUser, { id: user["username"] })
-      ) as GetUserQueryResultPromise
+      const z = Data.getUser(user["username"])
       await z.then(handleUser).catch(handleUser)
 
       console.log({ userExists: userExists })
@@ -797,15 +794,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     )
   }
   async updateInviteDataList(nextToken: any): Promise<void> {
-    const listGroup = (await API.graphql({
-      query: customQueries.groupByTypeForMyGroups,
-      variables: {
-        limit: 20,
-        type: this.state.inviteType,
-        nextToken: nextToken,
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })) as GraphQLResult<GroupByTypeQuery>
+    const listGroup = await Data.groupByTypeForMyGroups(this.state.inviteType, nextToken)
     console.log(listGroup)
     this.setState({ inviteDataList: listGroup?.data?.groupByType?.items })
   }

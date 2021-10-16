@@ -25,12 +25,11 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
-  CourseTriadUserByUserQuery,
   CreateGroupMemberMutation,
   DeleteGroupMemberMutation,
-  GetGroupQuery,
+  EventBriteEvent,
+  EventBriteListEventsQuery,
   GetPaymentQuery,
-  GroupMemberByUserQuery,
   ListOrganizationsQuery,
   ListUsersQuery,
 } from "../../src/API"
@@ -41,7 +40,6 @@ import {
   ModelSortDirection,
 } from "../../src/API-customqueries"
 import { constants } from "../../src/constants"
-import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import { JCCognitoUser } from "../../src/types"
@@ -82,13 +80,17 @@ interface State extends JCState {
   cardWidth: any
   createString: string
   titleString: string
-  data: GroupData
-  pastEvents: GroupData
+  data: GroupData[]
+  eventBriteEvents: EventBriteEvent[]
+  pastEventBriteEvents: EventBriteEvent[]
+  pastEvents: GroupData[]
   showAllEvents: boolean
   showCreateButton: boolean
   currentUser: string | null
   nextToken: string | null | undefined
   nextTokenPastEvents: string | null
+  nextEventBriteTokenPastEvents: number | null
+  nextEventBriteToken: number | null
   canLeave: Record<string, boolean>
   isOwner: Record<string, boolean>
   canPay: any
@@ -113,6 +115,8 @@ export default class MyGroups extends JCComponent<Props, State> {
 
     const commonInitialState = {
       data: [],
+      eventBriteEvents: [],
+      pastEventBriteEvents: [],
       pastEvents: [],
       showCreateButton: false,
       currentUser: null,
@@ -266,118 +270,90 @@ export default class MyGroups extends JCComponent<Props, State> {
     await this.setData(this.props, true)
   }
 
-  convertOrgToMapData(
-    data: NonNullable<
-      NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
-    >["items"]
-  ): MapData[] {
-    return data
-      ?.map((dataItem) => {
-        if (
-          dataItem &&
-          dataItem.location &&
-          dataItem.location.latitude &&
-          dataItem.location.longitude
-        )
-          return {
-            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-            longitude:
-              Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-            name: dataItem.orgName,
-            user: dataItem,
-            link: "",
-            type: "organization",
-          } as MapData
-        else return null
-      })
-      .filter((o) => o) as MapData[]
+  convertOrgToMapData(data: GroupData): MapData | null {
+    const dataItem = data as unknown as NonNullable<
+      NonNullable<
+        NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
+      >["items"]
+    >[0]
+    if (dataItem && dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
+      return {
+        latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+        longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
+        name: dataItem.orgName,
+        user: dataItem,
+        link: "",
+        type: "organization",
+      } as MapData
+    else return null
   }
-  convertProfileToMapData(
-    data: NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
-  ): MapData[] {
-    return data
-      ?.map((dataItem) => {
-        if (
-          dataItem &&
-          dataItem.location &&
-          dataItem.location.latitude &&
-          dataItem.location.longitude
-        )
-          return {
-            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-            longitude:
-              Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-            name: dataItem.given_name + " " + dataItem.family_name,
-            user: dataItem,
-            link: "",
-            type: "profile",
-          } as MapData
-        else return null
-      })
-      .filter((o) => o) as MapData[]
+  convertProfileToMapData(data: GroupData): MapData | null {
+    const dataItem = data as unknown as NonNullable<
+      NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
+    >[0]
+    if (dataItem && dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
+      return {
+        latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+        longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
+        name: dataItem.given_name + " " + dataItem.family_name,
+        user: dataItem,
+        link: "",
+        type: "profile",
+      } as MapData
+    else return null
   }
 
-  convertEventToMapData(
-    data: NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
-  ): MapData[] {
-    return data
-      ?.map((dataItem) => {
-        if (
-          dataItem &&
-          dataItem.locationLatLong &&
-          dataItem.locationLatLong.latitude &&
-          dataItem.locationLatLong.longitude &&
-          moment(dataItem.time).isAfter(moment().subtract(3, "day"))
-        )
-          return {
-            latitude: dataItem.locationLatLong.latitude,
-            longitude: dataItem.locationLatLong.longitude,
-            name: dataItem.name,
-            event: dataItem,
-            link: "",
-            type: "event",
-          } as MapData
-        else return null
-      })
-      .filter((o) => o) as MapData[]
+  convertEventToMapData(data: GroupData): MapData | null {
+    const dataItem = data as unknown as NonNullable<
+      NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
+    >[0]
+    if (
+      dataItem &&
+      dataItem.locationLatLong &&
+      dataItem.locationLatLong.latitude &&
+      dataItem.locationLatLong.longitude &&
+      moment(dataItem.time).isAfter(moment().subtract(3, "day"))
+    )
+      return {
+        latitude: dataItem.locationLatLong.latitude,
+        longitude: dataItem.locationLatLong.longitude,
+        name: dataItem.name,
+        event: dataItem,
+        link: "",
+        type: "event",
+      } as MapData
+    else return null
   }
-  convertToMapData(data: GroupData): MapData[] {
-    switch (this.state.type) {
-      case "group":
-        return []
-      case "event":
-        return this.convertEventToMapData(
-          data as NonNullable<
-            NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]
-          >["items"]
-        )
-      case "resource":
-        return []
-      case "organization":
-        return this.convertOrgToMapData(
-          data as NonNullable<
-            NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
-          >["items"]
-        )
-      case "course":
-        return []
-      case "profile":
-        return this.convertProfileToMapData(
-          data as NonNullable<
-            NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]
-          >["items"]
-        )
-      default:
-        return []
-    }
+
+  convertToMapData(data: GroupData[]): MapData[] {
+    return data
+      .map((z) => {
+        switch (this.state.type) {
+          case "group":
+            return null
+          case "event":
+            return this.convertEventToMapData(z)
+          case "resource":
+            return null
+          case "organization":
+            return this.convertOrgToMapData(z)
+          case "course":
+            return null
+          case "profile":
+            return this.convertProfileToMapData(z)
+          default:
+            return null
+        }
+      })
+      .filter((z) => z) as MapData[]
   }
   async setData(props: Props, initialCall = false, pastEvents = false): Promise<void> {
     if (props.type == "profile") {
       const listUsers = Data.listUsers(this.state.userGroupType, this.state.nextToken)
       const processList = (json: GraphQLResult<ListUsersQuery>) => {
-        let temp
-        if (this.state.data) temp = [...this.state.data, ...(json.data?.listUsers?.items ?? [])]
-        else temp = [...(json.data?.listUsers?.items ?? [])]
+        const temp = [...this.state.data, ...(json.data?.listUsers?.items ?? [])].filter(
+          (z) => z
+        ) as GroupData[]
         this.setState(
           {
             data: temp,
@@ -390,19 +366,12 @@ export default class MyGroups extends JCComponent<Props, State> {
       }
       listUsers.then(processList).catch(processList)
     } else if (props.type == "organization") {
-      const listOrgs = API.graphql({
-        query: queries.listOrganizations,
-        variables: {
-          limit: 20,
-          filter: { profileState: { eq: "Complete" } },
-          nextToken: this.state.nextToken,
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<ListOrganizationsQuery>>
-
+      const listOrgs = Data.listOrgs(this.state.nextToken)
       const processList = (json: GraphQLResult<ListOrganizationsQuery>) => {
         console.log({ profile: json })
-        const temp = [...this.state.data, ...(json.data?.listOrganizations?.items ?? [])]
+        const temp = [...this.state.data, ...(json.data?.listOrganizations?.items ?? [])].filter(
+          (z) => z
+        ) as GroupData[]
         this.setState(
           {
             data: temp,
@@ -415,6 +384,55 @@ export default class MyGroups extends JCComponent<Props, State> {
       }
       listOrgs.then(processList).catch(processList)
     } else if (props.type === "event") {
+      const processEventBrite = (json: GraphQLResult<EventBriteListEventsQuery>, past: boolean) => {
+        if (!json.data?.eventBriteListEvents) {
+          return
+        }
+        console.debug({ eventBriteData: json })
+        //  this.setCanLeave(json.data.eventBriteListEvents.events)
+        //  this.setIsOwner(json.data.eventBriteListEvents.events)
+
+        if (past) {
+          this.setState(
+            {
+              nextEventBriteTokenPastEvents:
+                json.data.eventBriteListEvents.pagination?.page_number ?? null,
+              pastEventBriteEvents: (
+                [
+                  ...this.state.pastEventBriteEvents,
+                  ...(json.data.eventBriteListEvents.events ?? []),
+                ].filter((z) => z) as EventBriteEvent[]
+              )
+                .filter((z) => moment(z.start?.utc).isBefore(moment()))
+                .filter((z) => z.status != "draft" && z.status != "canceled"),
+            },
+            async () => {
+              this.props.onDataload(
+                this.convertToMapData(this.state.pastEventBriteEvents.map(this.eventBriteToEvent))
+              )
+            }
+          )
+        } else {
+          this.setState(
+            {
+              nextEventBriteToken: json.data.eventBriteListEvents.pagination?.page_number ?? null,
+              eventBriteEvents: (
+                [
+                  ...this.state.eventBriteEvents,
+                  ...(json.data.eventBriteListEvents.events ?? []),
+                ].filter((z) => z) as EventBriteEvent[]
+              )
+                .filter((z) => moment(z.start?.utc).isAfter(moment()))
+                .filter((z) => z.status != "draft" && z.status != "canceled"),
+            },
+            async () => {
+              this.props.onDataload(
+                this.convertToMapData(this.state.eventBriteEvents.map(this.eventBriteToEvent))
+              )
+            }
+          )
+        }
+      }
       const processEvents = (json: GraphQLResult<GroupByTypeByTimeQuery>, past: boolean) => {
         if (!json.data?.groupByTypeByTime) {
           return
@@ -427,7 +445,10 @@ export default class MyGroups extends JCComponent<Props, State> {
           this.setState(
             {
               nextTokenPastEvents: json.data.groupByTypeByTime.nextToken ?? null,
-              pastEvents: [...this.state.pastEvents, ...(json.data.groupByTypeByTime.items ?? [])],
+              pastEvents: [
+                ...this.state.pastEvents,
+                ...(json.data.groupByTypeByTime.items ?? []),
+              ].filter((z) => z) as GroupData[],
             },
             async () => {
               this.props.onDataload(this.convertToMapData(this.state.pastEvents))
@@ -437,7 +458,9 @@ export default class MyGroups extends JCComponent<Props, State> {
           this.setState(
             {
               nextToken: json.data.groupByTypeByTime.nextToken ?? null,
-              data: [...this.state.data, ...(json.data.groupByTypeByTime.items ?? [])],
+              data: [...this.state.data, ...(json.data.groupByTypeByTime.items ?? [])].filter(
+                (z) => z
+              ) as GroupData[],
             },
             async () => {
               this.props.onDataload(this.convertToMapData(this.state.data))
@@ -467,41 +490,29 @@ export default class MyGroups extends JCComponent<Props, State> {
 
         if (initialCall || !pastEvents) {
           // future or current events
-          const json = (await API.graphql({
-            query: customQueries.groupByTypeByTime,
-            variables: makeQueryVariables(this.state.nextToken, false, initialCall ? 30 : 10),
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<GroupByTypeByTimeQuery>
+          const json = await Data.groupByTypeByTime(
+            makeQueryVariables(this.state.nextToken, false, initialCall ? 30 : 10)
+          )
           processEvents(json, false)
+          const eventBriteEvents = await Data.eventBriteListEvents({})
+          processEventBrite(eventBriteEvents, false)
         }
 
         if (initialCall || pastEvents) {
           // past events
-          const json = (await API.graphql({
-            query: customQueries.groupByTypeByTime,
-            variables: makeQueryVariables(
-              this.state.nextTokenPastEvents,
-              true,
-              initialCall ? 30 : 10
-            ),
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<GroupByTypeByTimeQuery>
+          const json = await Data.groupByTypeByTime(
+            makeQueryVariables(this.state.nextTokenPastEvents, true, initialCall ? 30 : 10)
+          )
           processEvents(json, true)
+
+          const pastEventBriteEvents = await Data.eventBriteListEvents({})
+          processEventBrite(pastEventBriteEvents, true)
         }
       } catch (e) {
         console.error(e)
       }
     } else {
-      const listGroup = API.graphql({
-        query: customQueries.groupByTypeForMyGroups,
-        variables: {
-          limit: 20,
-          type: props.type,
-          nextToken: this.state.nextToken,
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GroupByTypeQuery>>
-
+      const listGroup = Data.groupByTypeForMyGroups(props.type, this.state.nextToken)
       const processList = (json: GraphQLResult<GroupByTypeQuery>) => {
         if (json.data?.groupByType == null) return
         console.log({ groupData: json })
@@ -565,15 +576,11 @@ export default class MyGroups extends JCComponent<Props, State> {
     }
   }
   async setCanPay(): Promise<void> {
-    const courseTriadUserByUser = API.graphql({
-      query: queries.courseTriadUserByUser,
-      variables: { userID: this.state.currentUser },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<CourseTriadUserByUserQuery>>
+    const courseTriadUserByUser = Data.courseTriadUserByUser(this.state.currentUser)
     courseTriadUserByUser
       .then((json) => {
         console.log(json)
-        json.data.courseTriadUserByUser.items.map((item: any) => {
+        json.data?.courseTriadUserByUser?.items?.map((item: any) => {
           console.log(item.triad.courseInfoID)
           this.setState({
             canPay: this.state.canPay.concat([item.triad.courseInfoID]),
@@ -606,14 +613,10 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   async setCanLeave(data: any): Promise<void> {
     data.forEach((item: any) => {
-      const groupMemberByUser = API.graphql({
-        query: queries.groupMemberByUser,
-        variables: { userID: this.state.currentUser, groupID: { eq: item.id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+      const groupMemberByUser = Data.groupMemberByUser(this.state.currentUser, item.id)
       groupMemberByUser
         .then((json) => {
-          if (json.data.groupMemberByUser.items.length > 0) {
+          if ((json.data?.groupMemberByUser?.items?.length ?? 0) > 0) {
             const canLeave = { ...this.state.canLeave }
             canLeave[item.id] = true
             this.setState({ canLeave })
@@ -627,14 +630,10 @@ export default class MyGroups extends JCComponent<Props, State> {
 
   async setIsOwner(data: any): Promise<void> {
     data.forEach((item: any) => {
-      const getGroup = API.graphql({
-        query: customQueries.getGroupForOwner,
-        variables: { id: item.id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GetGroupQuery>>
+      const getGroup = Data.getGroupForOwner(item.id)
       getGroup
         .then((json) => {
-          if (json.data.getGroup.owner === this.state.currentUser) {
+          if (json.data?.getGroup?.owner === this.state.currentUser) {
             const isOwner = { ...this.state.isOwner }
             isOwner[item.id] = true
             this.setState({ isOwner })
@@ -687,18 +686,14 @@ export default class MyGroups extends JCComponent<Props, State> {
         // Attribute values must be strings
         attributes: { id: group.id, name: group.name },
       })
-      const groupMemberByUser = (await API.graphql({
-        query: queries.groupMemberByUser,
-        variables: { userID: this.state.currentUser, groupID: { eq: group.id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<GroupMemberByUserQuery>
+      const groupMemberByUser = await Data.groupMemberByUser(this.state.currentUser, group.id)
       console.log({ "Success queries.groupMemberByUser": groupMemberByUser })
       const groupMember = groupMemberByUser?.data?.groupMemberByUser?.items
-      for (let i = 0; i < groupMember?.length; i++) {
+      for (let i = 0; i < (groupMember?.length ?? 0); i++) {
         try {
           const deleteGroupMember = (await API.graphql({
             query: mutations.deleteGroupMember,
-            variables: { input: { id: groupMember[i].id } },
+            variables: { input: { id: groupMember![i]?.id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })) as GraphQLResult<DeleteGroupMemberMutation>
           console.log({ "Success mutations.deleteGroupMember": deleteGroupMember })
@@ -1214,6 +1209,17 @@ export default class MyGroups extends JCComponent<Props, State> {
         </CardItem>
       )
   }
+  eventBriteToEvent = (z: EventBriteEvent): GroupData => {
+    const r = {
+      id: "eventbrite-" + (z.id ?? "1"),
+      owner: "",
+      name: z.name?.text,
+      isSponsored: true,
+      eventType: "eventbrite",
+      time: z.start?.utc,
+    } as unknown as GroupData
+    return r
+  }
   renderCourse(userActions: UserActions, item: any): React.ReactNode {
     return (
       <Tooltip title={item.name}>
@@ -1399,17 +1405,32 @@ export default class MyGroups extends JCComponent<Props, State> {
             return null
           } else if (this.state.titleString == null) return null
           else {
-            let data = [...this.state.data]
+            let data: GroupData[] = [
+              ...this.state.data,
+              ...this.state.eventBriteEvents.map(this.eventBriteToEvent),
+            ]
+            const timeCompare = (a: GroupData, b: GroupData) =>
+              (b?.time ?? "").localeCompare(a?.time ?? "")
+            const timeCompareReverse = (a: GroupData, b: GroupData) =>
+              (a?.time ?? "").localeCompare(b?.time ?? "")
 
             if (this.props.type === "event") {
               if (this.state.showAllEvents || this.state.myFilter) {
-                data = [...this.state.data, ...this.state.pastEvents]
-                data.sort((a, b) => (b?.time ?? "").localeCompare(a?.time ?? ""))
+                data = [
+                  ...this.state.data,
+                  ...this.state.pastEvents,
+                  ...this.state.pastEventBriteEvents.map(this.eventBriteToEvent),
+                  ...this.state.eventBriteEvents.map(this.eventBriteToEvent),
+                ]
+                data.sort(timeCompare)
               } else if (this.state.eventFilter) {
-                data = [...this.state.pastEvents]
-                data.sort((a, b) => (b?.time ?? "").localeCompare(a?.time ?? ""))
+                data = [
+                  ...this.state.pastEvents,
+                  ...this.state.pastEventBriteEvents.map(this.eventBriteToEvent),
+                ]
+                data.sort(timeCompare)
               } else {
-                data.sort((a, b) => (a?.time ?? "").localeCompare(b?.time ?? ""))
+                data.sort(timeCompareReverse)
               }
             }
 

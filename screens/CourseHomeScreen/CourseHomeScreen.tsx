@@ -50,6 +50,7 @@ import {
 } from "../../components/CourseViewer/CourseContext"
 import CourseDetail from "../../components/CourseViewer/CourseDetail"
 import CourseHome from "../../components/CourseViewer/CourseHome"
+import { Data } from "../../components/Data/Data"
 import FloatingButton from "../../components/FloatingButton/FloatingButton"
 import FloatingButtonStyles from "../../components/FloatingButton/FloatingButtonStyles"
 import JCComponent from "../../components/JCComponent/JCComponent"
@@ -57,7 +58,6 @@ import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
 import * as courseQueries from "../../src/graphql-custom/courses"
 import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -109,11 +109,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   static Provider = CourseContext.Provider
 
   setInitialData(props: Props, groups: string[]): void {
-    const getGroup = API.graphql({
-      query: queries.getGroup,
-      variables: { id: props.route.params.id },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<GetGroupQuery>>
+    const getGroup = Data.getGroup(props.route.params.id)
     const getCourse = API.graphql({
       query: courseQueries.getCourseInfo,
       variables: { id: props.route.params.id },

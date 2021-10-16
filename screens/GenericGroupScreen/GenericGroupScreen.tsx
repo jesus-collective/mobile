@@ -1,13 +1,14 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
+import { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
 import { CardItem, Container, Content, Icon, Picker, StyleProvider, View } from "native-base"
 import React, { lazy } from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
+import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import EditableText from "../../components/Forms/EditableText"
@@ -33,9 +34,7 @@ import {
   UpdateGroupMutation,
   UserGroupType,
 } from "../../src/API"
-import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 const MessageBoard = lazy(() => import("../../components/MessageBoard/MessageBoard"))
 
 interface Props {
@@ -94,9 +93,7 @@ export default class EventScreen extends JCComponent<Props, State> {
       this.setState({
         currentUser: user.username,
       })
-      const getUser = API.graphql(
-        graphqlOperation(customQueries.getUserForGroupOrEvent, { id: user["username"] })
-      ) as Promise<GraphQLResult<GetUserQuery>>
+      const getUser = Data.getUser(user["username"])
       getUser
         .then((json) => {
           console.log(json)
@@ -171,11 +168,7 @@ export default class EventScreen extends JCComponent<Props, State> {
         })
       })
     } else {
-      const getGroup = API.graphql({
-        query: queries.getGroup,
-        variables: { id: props.route.params.id, messages: { sortDirection: "ASC" } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GetGroupQuery>>
+      const getGroup = Data.getGroup(props.route.params.id)
       const processResults = (json: GraphQLResult<GetGroupQuery>) => {
         if (json.data && json.data.getGroup) {
           const isEditable = json.data.getGroup.owner == this.state.currentUser
@@ -195,14 +188,11 @@ export default class EventScreen extends JCComponent<Props, State> {
               if (this.state.groupType == "event") this.convertEventToMapData()
               else this.convertProfileToMapData()
               if (this.state.data) {
-                const groupMemberByUser = API.graphql({
-                  query: queries.groupMemberByUser,
-                  variables: {
-                    userID: this.state.currentUser,
-                    groupID: { eq: this.state.data.id },
-                  },
-                  authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-                }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+                const groupMemberByUser = Data.groupMemberByUser(
+                  this.state.currentUser,
+                  this.state.data.id
+                )
+
                 groupMemberByUser.then((json: GraphQLResult<GroupMemberByUserQuery>) => {
                   console.log({ groupMemberByUser: json })
                   if (json.data?.groupMemberByUser?.items?.length > 0)
@@ -210,58 +200,6 @@ export default class EventScreen extends JCComponent<Props, State> {
                   else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
                 })
               }
-              /*
-            this.state.memberIDs.map((id) => {
-              const getUser: any = API.graphql({
-                query: queries.getUser,
-                variables: { id: id },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })
-              getUser
-                .then((json: any) => {
-                  this.setState({ members: this.state.members.concat(json.data.getUser) }, () => {
-                    this.setState({
-                      mapData: this.state.mapData.concat(
-                        this.convertProfileToMapData(this.state.members)
-                      ),
-                    })
-                  })
-                })
-                .catch((e: any) => {
-                  if (e.data) {
-                    this.setState({ members: this.state.members.concat(e.data.getUser) }, () => {
-                      this.setState({
-                        mapData: this.state.mapData.concat(
-                          this.convertProfileToMapData(this.state.members)
-                        ),
-                      })
-                    })
-                  }
-                })
-            })
-            const getUser: any = API.graphql({
-              query: queries.getUser,
-              variables: { id: this.state.data.owner },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
-            getUser
-              .then((json: any) => {
-                this.setState({
-                  mapData: this.state.mapData.concat(
-                    this.convertProfileToMapData([json.data.getUser])
-                  ),
-                })
-              })
-              .catch((e: any) => {
-                if (e.data) {
-                  this.setState({
-                    mapData: this.state.mapData.concat(
-                      this.convertProfileToMapData([e.data.getUser])
-                    ),
-                  })
-                }
-              })
-          */
             }
           )
         }
@@ -385,14 +323,12 @@ export default class EventScreen extends JCComponent<Props, State> {
           // Attribute values must be strings
           attributes: { id: this.state.data.id, name: this.state.data.name },
         })
-        const groupMemberByUser = (await await API.graphql({
-          query: queries.groupMemberByUser,
-          variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+        const groupMemberByUser = await Data.groupMemberByUser(
+          this.state.currentUser,
+          this.state.data.id
+        )
         console.log({ "Success queries.groupMemberByUser": groupMemberByUser })
-        const groupResponse = await groupMemberByUser
-        const responseArr = groupResponse?.data?.groupMemberByUser?.items
+        const responseArr = groupMemberByUser?.data?.groupMemberByUser?.items
         if (responseArr)
           for (let i = 0; i < responseArr?.length; i++) {
             if (responseArr?.[i]?.id) {

@@ -268,7 +268,7 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
     myRoom: GetDirectMessageRoomQuery["getDirectMessageRoom"]
     userActions?: UserActions
   }): JSX.Element => {
-    console.log("MYROOM", myRoom)
+    console.log("My Room", myRoom)
     const isAdminOrIsCoach =
       !!userActions?.isMemberOf("courseAdmin") || !!userActions?.isMemberOf("courseCoach")
     const assignmentsMinusMine = data.filter(

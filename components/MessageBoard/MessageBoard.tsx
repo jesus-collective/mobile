@@ -1,7 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { NavigationProp, RouteProp, useNavigation, useRoute } from "@react-navigation/native"
-import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
+import { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
 import { Badge, Container, StyleProvider } from "native-base"
@@ -10,6 +10,7 @@ import { Editor } from "react-draft-wysiwyg"
 import { Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
+import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
@@ -26,7 +27,6 @@ import {
 } from "../../src/API"
 import { DirectMessagesByRoomQuery, MessagesByRoomQuery } from "../../src/API-messages"
 import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import CameraRecorder from "./CameraRecorder"
 import FileUpload from "./FileUpload"
@@ -133,9 +133,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   async setInitialData(props: Props) {
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     try {
-      const getUser = (await API.graphql(
-        graphqlOperation(queries.getUser, { id: user["username"] })
-      )) as GraphQLResult<GetUserQuery>
+      const getUser = await Data.getUser(user["username"])
       this.setState({
         UserDetails: getUser.data?.getUser ?? null,
       })

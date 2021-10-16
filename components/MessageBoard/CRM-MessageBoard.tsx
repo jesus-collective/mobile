@@ -231,7 +231,11 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
 
   renderFileDownloadBadge(item: Message | Reply): React.ReactNode {
     return (
-      <TouchableOpacity onPress={() => this.getAttachment(item?.attachmentOwner, item?.attachment)}>
+      <TouchableOpacity
+        onPress={() =>
+          this.getAttachment(item?.attachmentOwner ?? undefined, item?.attachment ?? undefined)
+        }
+      >
         <Badge style={{ backgroundColor: "#EFF1F5", marginRight: 10, marginTop: 5, height: 30 }}>
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
             {this.renderFileIcon(item?.attachment)}
@@ -276,7 +280,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
     return fileName
   }
 
-  async getAttachment(owner: string | null | undefined, filePath?: string | null): Promise<void> {
+  async getAttachment(owner: string | undefined, filePath: string | undefined): Promise<void> {
     if (!filePath) return
 
     try {
