@@ -7,7 +7,78 @@ type Mutation {
   listInvoices(idempotency:String): StripeInvoicesListData @function(name: "jcmobileStripListInvoices-${env}")
   cancelSubscription(idempotency:String): StripeSubscriptionData @function(name: "jcmobileStripCancelSubscription-${env}")
   sendHelpRequest(email:String,body:String):sendHelpResponse @function(name:"jcmobileSendHelpRequest-${env}")
- 
+}
+type Query{
+ eventBriteListEvents(page:String):EventBriteEventList
+}
+type EventBriteEventList{
+  pagination:EventBritePagination
+  events:[EventBriteEvent]
+}
+type EventBritePagination{
+  object_count:Int
+  page_number:Int
+  page_size:Int
+  page_count:Int
+  has_more_items:Boolean
+}
+type EventBriteText{
+  text:String
+  html:String
+}
+type EventBriteTime{
+  timezone:String
+  local:String
+  utc:String
+}
+type EventBriteEvent{
+  name:EventBriteText
+  description:EventBriteText
+  url:String
+  start:EventBriteTime
+  end:EventBriteTime
+  organization_id:String
+  created:String
+  changed:String
+  published:String
+  capacity:Int
+  capacity_is_custom:Boolean
+  status:String
+  currency:String
+  listed:Boolean
+  shareable:Boolean
+  invite_only:Boolean
+  online_event:Boolean
+  show_remaining:Boolean
+  tx_time_limit:Int
+  hide_start_date:Boolean
+  hide_end_date:Boolean
+  locale:String
+  is_locked:Boolean
+  privacy_setting:String
+  is_series:Boolean
+  is_series_parent:Boolean
+  inventory_type:String
+  is_reserved_seating:Boolean
+  show_pick_a_seat:Boolean
+  show_seatmap_thumbnail:Boolean
+  show_colors_in_seatmap_thumbnail:Boolean
+  source:String
+  is_free:Boolean
+  version:String
+  summary:String
+  facebook_event_id:String
+  logo_id:String
+  organizer_id:String
+  venue_id:String
+  category_id:String
+  subcategory_id:String
+  format_id:String
+  id:String
+  resource_uri:String
+  is_externally_ticketed:Boolean
+  series_id:String
+
 }
 type sendHelpResponse {
   err:String

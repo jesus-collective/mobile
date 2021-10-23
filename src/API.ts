@@ -1088,7 +1088,7 @@ export type UpdateApplicationProcessInput = {
 };
 
 export type DeleteApplicationProcessInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateUserInput = {
@@ -1197,7 +1197,7 @@ export type UpdateUserInput = {
 };
 
 export type DeleteUserInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateGroupMemberInput = {
@@ -1213,7 +1213,7 @@ export type UpdateGroupMemberInput = {
 };
 
 export type DeleteGroupMemberInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateGroupInput = {
@@ -1265,7 +1265,7 @@ export type UpdateGroupInput = {
 };
 
 export type DeleteGroupInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateOrganizationMemberInput = {
@@ -1285,7 +1285,7 @@ export type UpdateOrganizationMemberInput = {
 };
 
 export type DeleteOrganizationMemberInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateOrganizationInput = {
@@ -1347,7 +1347,7 @@ export type UpdateOrganizationInput = {
 };
 
 export type DeleteOrganizationInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateActivityInput = {
@@ -1410,7 +1410,7 @@ export type UpdateActivityInput = {
 };
 
 export type DeleteActivityInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreatePaymentInput = {
@@ -1458,7 +1458,7 @@ export type UpdateCourseInfoInput = {
 };
 
 export type DeleteCourseInfoInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseTriadsInput = {
@@ -1472,7 +1472,7 @@ export type UpdateCourseTriadsInput = {
 };
 
 export type DeleteCourseTriadsInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseBackOfficeStaffInput = {
@@ -1488,7 +1488,7 @@ export type UpdateCourseBackOfficeStaffInput = {
 };
 
 export type DeleteCourseBackOfficeStaffInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseInstructorsInput = {
@@ -1504,7 +1504,7 @@ export type UpdateCourseInstructorsInput = {
 };
 
 export type DeleteCourseInstructorsInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseTriadCoachesInput = {
@@ -1520,7 +1520,7 @@ export type UpdateCourseTriadCoachesInput = {
 };
 
 export type DeleteCourseTriadCoachesInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseTriadUsersInput = {
@@ -1562,7 +1562,7 @@ export type UpdateCourseWeekInput = {
 };
 
 export type DeleteCourseWeekInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseLessonInput = {
@@ -1598,7 +1598,7 @@ export type UpdateCourseLessonInput = {
 };
 
 export type DeleteCourseLessonInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateDirectMessageUserInput = {
@@ -1616,7 +1616,7 @@ export type UpdateDirectMessageUserInput = {
 };
 
 export type DeleteDirectMessageUserInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateDirectMessageRoomInput = {
@@ -1632,7 +1632,7 @@ export type UpdateDirectMessageRoomInput = {
 };
 
 export type DeleteDirectMessageRoomInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateDirectMessageInput = {
@@ -1660,7 +1660,7 @@ export type UpdateDirectMessageInput = {
 };
 
 export type DeleteDirectMessageInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateDirectMessageReplyInput = {
@@ -1692,7 +1692,7 @@ export type UpdateDirectMessageReplyInput = {
 };
 
 export type DeleteDirectMessageReplyInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCRMRootInput = {
@@ -1756,7 +1756,7 @@ export type UpdateCRMRootInput = {
 };
 
 export type DeleteCRMRootInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCRMMessageInput = {
@@ -1782,7 +1782,7 @@ export type UpdateCRMMessageInput = {
 };
 
 export type DeleteCRMMessageInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCRMReplyInput = {
@@ -1810,7 +1810,7 @@ export type UpdateCRMReplyInput = {
 };
 
 export type DeleteCRMReplyInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateMessageInput = {
@@ -1840,7 +1840,7 @@ export type UpdateMessageInput = {
 };
 
 export type DeleteMessageInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateReplyInput = {
@@ -1870,7 +1870,7 @@ export type UpdateReplyInput = {
 };
 
 export type DeleteReplyInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateResourceRootInput = {
@@ -1890,7 +1890,7 @@ export type UpdateResourceRootInput = {
 };
 
 export type DeleteResourceRootInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateResourceMenuItemInput = {
@@ -1938,7 +1938,7 @@ export type UpdateResourceMenuItemInput = {
 };
 
 export type DeleteResourceMenuItemInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateResourceInput = {
@@ -1982,7 +1982,7 @@ export type UpdateResourceInput = {
 };
 
 export type DeleteResourceInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateResourceSeriesInput = {
@@ -2016,7 +2016,7 @@ export type UpdateResourceSeriesInput = {
 };
 
 export type DeleteResourceSeriesInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateResourceEpisodeInput = {
@@ -2046,7 +2046,7 @@ export type UpdateResourceEpisodeInput = {
 };
 
 export type DeleteResourceEpisodeInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateProductInput = {
@@ -2092,7 +2092,7 @@ export type UpdateProductInput = {
 };
 
 export type DeleteProductInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateVodAssetInput = {
@@ -2127,7 +2127,7 @@ export type UpdateVodAssetInput = {
 };
 
 export type DeleteVodAssetInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateVideoObjectInput = {
@@ -2139,7 +2139,85 @@ export type UpdateVideoObjectInput = {
 };
 
 export type DeleteVideoObjectInput = {
+  id: string,
+};
+
+export type EventBriteEventList = {
+  __typename: "EventBriteEventList",
+  pagination?: EventBritePagination,
+  events?:  Array<EventBriteEvent | null > | null,
+};
+
+export type EventBritePagination = {
+  __typename: "EventBritePagination",
+  object_count?: number | null,
+  page_number?: number | null,
+  page_size?: number | null,
+  page_count?: number | null,
+  has_more_items?: boolean | null,
+};
+
+export type EventBriteEvent = {
+  __typename: "EventBriteEvent",
+  name?: EventBriteText,
+  description?: EventBriteText,
+  url?: string | null,
+  start?: EventBriteTime,
+  end?: EventBriteTime,
+  organization_id?: string | null,
+  created?: string | null,
+  changed?: string | null,
+  published?: string | null,
+  capacity?: number | null,
+  capacity_is_custom?: boolean | null,
+  status?: string | null,
+  currency?: string | null,
+  listed?: boolean | null,
+  shareable?: boolean | null,
+  invite_only?: boolean | null,
+  online_event?: boolean | null,
+  show_remaining?: boolean | null,
+  tx_time_limit?: number | null,
+  hide_start_date?: boolean | null,
+  hide_end_date?: boolean | null,
+  locale?: string | null,
+  is_locked?: boolean | null,
+  privacy_setting?: string | null,
+  is_series?: boolean | null,
+  is_series_parent?: boolean | null,
+  inventory_type?: string | null,
+  is_reserved_seating?: boolean | null,
+  show_pick_a_seat?: boolean | null,
+  show_seatmap_thumbnail?: boolean | null,
+  show_colors_in_seatmap_thumbnail?: boolean | null,
+  source?: string | null,
+  is_free?: boolean | null,
+  version?: string | null,
+  summary?: string | null,
+  facebook_event_id?: string | null,
+  logo_id?: string | null,
+  organizer_id?: string | null,
+  venue_id?: string | null,
+  category_id?: string | null,
+  subcategory_id?: string | null,
+  format_id?: string | null,
   id?: string | null,
+  resource_uri?: string | null,
+  is_externally_ticketed?: boolean | null,
+  series_id?: string | null,
+};
+
+export type EventBriteText = {
+  __typename: "EventBriteText",
+  text?: string | null,
+  html?: string | null,
+};
+
+export type EventBriteTime = {
+  __typename: "EventBriteTime",
+  timezone?: string | null,
+  local?: string | null,
+  utc?: string | null,
 };
 
 export type ModelApplicationProcessFilterInput = {
@@ -16824,6 +16902,91 @@ export type DeleteVideoObjectMutation = {
   } | null,
 };
 
+export type EventBriteListEventsQueryVariables = {
+  page?: string | null,
+};
+
+export type EventBriteListEventsQuery = {
+  eventBriteListEvents?:  {
+    __typename: "EventBriteEventList",
+    pagination?:  {
+      __typename: "EventBritePagination",
+      object_count?: number | null,
+      page_number?: number | null,
+      page_size?: number | null,
+      page_count?: number | null,
+      has_more_items?: boolean | null,
+    } | null,
+    events?:  Array< {
+      __typename: "EventBriteEvent",
+      name?:  {
+        __typename: "EventBriteText",
+        text?: string | null,
+        html?: string | null,
+      } | null,
+      description?:  {
+        __typename: "EventBriteText",
+        text?: string | null,
+        html?: string | null,
+      } | null,
+      url?: string | null,
+      start?:  {
+        __typename: "EventBriteTime",
+        timezone?: string | null,
+        local?: string | null,
+        utc?: string | null,
+      } | null,
+      end?:  {
+        __typename: "EventBriteTime",
+        timezone?: string | null,
+        local?: string | null,
+        utc?: string | null,
+      } | null,
+      organization_id?: string | null,
+      created?: string | null,
+      changed?: string | null,
+      published?: string | null,
+      capacity?: number | null,
+      capacity_is_custom?: boolean | null,
+      status?: string | null,
+      currency?: string | null,
+      listed?: boolean | null,
+      shareable?: boolean | null,
+      invite_only?: boolean | null,
+      online_event?: boolean | null,
+      show_remaining?: boolean | null,
+      tx_time_limit?: number | null,
+      hide_start_date?: boolean | null,
+      hide_end_date?: boolean | null,
+      locale?: string | null,
+      is_locked?: boolean | null,
+      privacy_setting?: string | null,
+      is_series?: boolean | null,
+      is_series_parent?: boolean | null,
+      inventory_type?: string | null,
+      is_reserved_seating?: boolean | null,
+      show_pick_a_seat?: boolean | null,
+      show_seatmap_thumbnail?: boolean | null,
+      show_colors_in_seatmap_thumbnail?: boolean | null,
+      source?: string | null,
+      is_free?: boolean | null,
+      version?: string | null,
+      summary?: string | null,
+      facebook_event_id?: string | null,
+      logo_id?: string | null,
+      organizer_id?: string | null,
+      venue_id?: string | null,
+      category_id?: string | null,
+      subcategory_id?: string | null,
+      format_id?: string | null,
+      id?: string | null,
+      resource_uri?: string | null,
+      is_externally_ticketed?: boolean | null,
+      series_id?: string | null,
+    } | null > | null,
+  } | null,
+};
+
 export type GetApplicationProcessQueryVariables = {
   id?: string,
 };
@@ -22428,132 +22591,6 @@ export type SearchGroupsQuery = {
   } | null,
 };
 
-export type ListUsersQueryVariables = {
-  filter?: ModelUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUsersQuery = {
-  listUsers?:  {
-    __typename: "ModelUserConnection",
-    items?:  Array< {
-      __typename: "User",
-      id: string,
-      given_name: string,
-      family_name: string,
-      email?: string | null,
-      phone?: string | null,
-      owner?: string | null,
-      mainUserGroup?: string | null,
-      stripeCustomerID?: string | null,
-      stripeSubscriptionID?: string | null,
-      hasPaidState?: PaidState | null,
-      profileState?: string | null,
-      billingAddress?:  {
-        __typename: "Address",
-        city?: string | null,
-        country?: string | null,
-        line1?: string | null,
-        line2?: string | null,
-        postal_code?: string | null,
-        state?: string | null,
-      } | null,
-      location?:  {
-        __typename: "LatLong",
-        latitude?: string | null,
-        longitude?: string | null,
-        geocodeFull?: string | null,
-        geocodeCity?: string | null,
-        geocodeRegion?: string | null,
-        randomLatitude?: string | null,
-        randomLongitude?: string | null,
-      } | null,
-      profileImage?:  {
-        __typename: "Image",
-        userId?: string | null,
-        filenameSmall?: string | null,
-        filenameMedium?: string | null,
-        filenameLarge?: string | null,
-        filenameUpload?: string | null,
-      } | null,
-      aboutMeShort?: string | null,
-      aboutMeLong?: string | null,
-      interests?: Array< string | null > | null,
-      currentRole?: string | null,
-      currentScope?: string | null,
-      personality?: string | null,
-      orgName?: string | null,
-      orgType?: string | null,
-      orgSize?: string | null,
-      denomination?: string | null,
-      pplServed?: string | null,
-      sundayAttendance?: string | null,
-      numberVolunteers?: string | null,
-      orgDescription?: string | null,
-      joined?: string | null,
-      primaryOrganization?: string | null,
-      organizations?:  {
-        __typename: "ModelOrganizationMemberConnection",
-        nextToken?: string | null,
-      } | null,
-      owns?:  {
-        __typename: "ModelGroupConnection",
-        nextToken?: string | null,
-      } | null,
-      groups?:  {
-        __typename: "ModelGroupMemberConnection",
-        nextToken?: string | null,
-      } | null,
-      messages?:  {
-        __typename: "ModelMessageConnection",
-        nextToken?: string | null,
-      } | null,
-      directMessages?:  {
-        __typename: "ModelDirectMessageConnection",
-        nextToken?: string | null,
-      } | null,
-      messageReplies?:  {
-        __typename: "ModelReplyConnection",
-        nextToken?: string | null,
-      } | null,
-      coachingTriad?:  {
-        __typename: "ModelCourseTriadCoachesConnection",
-        nextToken?: string | null,
-      } | null,
-      userTriad?:  {
-        __typename: "ModelCourseTriadUsersConnection",
-        nextToken?: string | null,
-      } | null,
-      courseInstructing?:  {
-        __typename: "ModelCourseInstructorsConnection",
-        nextToken?: string | null,
-      } | null,
-      courseBackOfficeStaff?:  {
-        __typename: "ModelCourseBackOfficeStaffConnection",
-        nextToken?: string | null,
-      } | null,
-      payments?:  {
-        __typename: "ModelPaymentConnection",
-        nextToken?: string | null,
-      } | null,
-      alertConfig?:  {
-        __typename: "AlertConfig",
-        emailDirectMessage?: string | null,
-        emailGroupMessage?: string | null,
-        emailEventMessage?: string | null,
-        emailOrgMessage?: string | null,
-        emailResourceMessage?: string | null,
-        emailCourseMessage?: string | null,
-        emailPromotions?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetUserQueryVariables = {
   id?: string,
 };
@@ -22801,6 +22838,132 @@ export type GetUserQuery = {
     } | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
+    items?:  Array< {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email?: string | null,
+      phone?: string | null,
+      owner?: string | null,
+      mainUserGroup?: string | null,
+      stripeCustomerID?: string | null,
+      stripeSubscriptionID?: string | null,
+      hasPaidState?: PaidState | null,
+      profileState?: string | null,
+      billingAddress?:  {
+        __typename: "Address",
+        city?: string | null,
+        country?: string | null,
+        line1?: string | null,
+        line2?: string | null,
+        postal_code?: string | null,
+        state?: string | null,
+      } | null,
+      location?:  {
+        __typename: "LatLong",
+        latitude?: string | null,
+        longitude?: string | null,
+        geocodeFull?: string | null,
+        geocodeCity?: string | null,
+        geocodeRegion?: string | null,
+        randomLatitude?: string | null,
+        randomLongitude?: string | null,
+      } | null,
+      profileImage?:  {
+        __typename: "Image",
+        userId?: string | null,
+        filenameSmall?: string | null,
+        filenameMedium?: string | null,
+        filenameLarge?: string | null,
+        filenameUpload?: string | null,
+      } | null,
+      aboutMeShort?: string | null,
+      aboutMeLong?: string | null,
+      interests?: Array< string | null > | null,
+      currentRole?: string | null,
+      currentScope?: string | null,
+      personality?: string | null,
+      orgName?: string | null,
+      orgType?: string | null,
+      orgSize?: string | null,
+      denomination?: string | null,
+      pplServed?: string | null,
+      sundayAttendance?: string | null,
+      numberVolunteers?: string | null,
+      orgDescription?: string | null,
+      joined?: string | null,
+      primaryOrganization?: string | null,
+      organizations?:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken?: string | null,
+      } | null,
+      owns?:  {
+        __typename: "ModelGroupConnection",
+        nextToken?: string | null,
+      } | null,
+      groups?:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      directMessages?:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      messageReplies?:  {
+        __typename: "ModelReplyConnection",
+        nextToken?: string | null,
+      } | null,
+      coachingTriad?:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken?: string | null,
+      } | null,
+      userTriad?:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken?: string | null,
+      } | null,
+      courseInstructing?:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken?: string | null,
+      } | null,
+      courseBackOfficeStaff?:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken?: string | null,
+      } | null,
+      payments?:  {
+        __typename: "ModelPaymentConnection",
+        nextToken?: string | null,
+      } | null,
+      alertConfig?:  {
+        __typename: "AlertConfig",
+        emailDirectMessage?: string | null,
+        emailGroupMessage?: string | null,
+        emailEventMessage?: string | null,
+        emailOrgMessage?: string | null,
+        emailResourceMessage?: string | null,
+        emailCourseMessage?: string | null,
+        emailPromotions?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
   } | null,
 };
 

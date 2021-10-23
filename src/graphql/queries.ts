@@ -2,6 +2,81 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const eventBriteListEvents = /* GraphQL */ `
+  query EventBriteListEvents($page: String) {
+    eventBriteListEvents(page: $page) {
+      pagination {
+        object_count
+        page_number
+        page_size
+        page_count
+        has_more_items
+      }
+      events {
+        name {
+          text
+          html
+        }
+        description {
+          text
+          html
+        }
+        url
+        start {
+          timezone
+          local
+          utc
+        }
+        end {
+          timezone
+          local
+          utc
+        }
+        organization_id
+        created
+        changed
+        published
+        capacity
+        capacity_is_custom
+        status
+        currency
+        listed
+        shareable
+        invite_only
+        online_event
+        show_remaining
+        tx_time_limit
+        hide_start_date
+        hide_end_date
+        locale
+        is_locked
+        privacy_setting
+        is_series
+        is_series_parent
+        inventory_type
+        is_reserved_seating
+        show_pick_a_seat
+        show_seatmap_thumbnail
+        show_colors_in_seatmap_thumbnail
+        source
+        is_free
+        version
+        summary
+        facebook_event_id
+        logo_id
+        organizer_id
+        venue_id
+        category_id
+        subcategory_id
+        format_id
+        id
+        resource_uri
+        is_externally_ticketed
+        series_id
+      }
+    }
+  }
+`
 export const getApplicationProcess = /* GraphQL */ `
   query GetApplicationProcess($id: ID!) {
     getApplicationProcess(id: $id) {
@@ -4976,110 +5051,6 @@ export const searchGroups = /* GraphQL */ `
     }
   }
 `
-export const listUsers = /* GraphQL */ `
-  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        stripeCustomerID
-        stripeSubscriptionID
-        hasPaidState
-        profileState
-        billingAddress {
-          city
-          country
-          line1
-          line2
-          postal_code
-          state
-        }
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        messageReplies {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseBackOfficeStaff {
-          nextToken
-        }
-        payments {
-          nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -5297,6 +5268,110 @@ export const getUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+    }
+  }
+`
+export const listUsers = /* GraphQL */ `
+  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 `
