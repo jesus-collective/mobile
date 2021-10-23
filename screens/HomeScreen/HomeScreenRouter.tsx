@@ -1,18 +1,14 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { createStackNavigator } from "@react-navigation/stack"
-import Amplify, { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
+import Amplify, { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import * as Linking from "expo-linking"
 import moment from "moment"
 import React from "react"
 import { Platform, Text } from "react-native"
-import {
-  AuthStateData,
-  GetUserQueryResult,
-  GetUserQueryResultPromise,
-  JCCognitoUser,
-} from "src/types"
+import { AuthStateData, GetUserQueryResult, JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
+import { Data } from "../../components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Sentry from "../../components/Sentry"
 import Validate from "../../components/Validate/Validate"
@@ -29,7 +25,6 @@ import {
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
 import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import MainAuthRouter from "./MainAuthRouter"
 import MainDrawerRouter from "./MainDrawerRouter"
 import { PaidStatus, ProfileStatus, UserContext, UserState } from "./UserContext"
@@ -244,9 +239,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
         }
       }
-      const z: GetUserQueryResultPromise = API.graphql(
-        graphqlOperation(queries.getUser, { id: this.user["username"] })
-      ) as GetUserQueryResultPromise
+      const z = Data.getUser(this.user["username"])
       await z.then(handleUser).catch(handleUser)
 
       console.log({ userExists: userExists })
@@ -325,9 +318,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
         }
       }
-      const getUser: GetUserQueryResultPromise = API.graphql(
-        graphqlOperation(queries.getUser, { id: this.user!["username"] })
-      ) as GetUserQueryResultPromise
+      const getUser = Data.getUser(this.user!["username"])
       return await getUser.then(handleGetUser).catch(handleGetUser)
     } else {
       return PaidStatus.Unknown
@@ -366,7 +357,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     switch (this.state.hasPaidState) {
       case PaidStatus.Success:
         switch (this.state.hasCompletedPersonalProfile) {
-          case ProfileStatus.Completed:
+          case ProfileStatus.Completed: {
             const initialUrl = await Linking.getInitialURL()
             console.log(initialUrl)
             if (Platform.OS == "web" && initialUrl?.includes("auth/payment3")) {
@@ -399,7 +390,9 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
               }
             }
             RootNavigation.navigate("mainApp", {})
+
             break
+          }
           case ProfileStatus.Incomplete:
             RootNavigation.navigate("auth", {
               screen: "Payment3",
@@ -430,9 +423,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         else if (!response.result) return ProfileStatus.Incomplete
         else return ProfileStatus.Unknown
       }
-      const getUser: GetUserQueryResultPromise = API.graphql(
-        graphqlOperation(queries.getUser, { id: this.user!["username"] })
-      ) as GetUserQueryResultPromise
+      const getUser = Data.getUser(this.user!["username"])
       return await getUser.then(handleUser).catch(handleUser)
     }
     return ProfileStatus.Unknown

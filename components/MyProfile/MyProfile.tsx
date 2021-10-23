@@ -9,6 +9,7 @@ import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
+import { Data } from "../../components/Data/Data"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
@@ -28,8 +29,7 @@ import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
 import { getCrmRoot } from "../../src/graphql-custom/crm"
 import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
-import { GetUserQueryResult, JCCognitoUser } from "../../src/types"
+import { JCCognitoUser } from "../../src/types"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { MapData } from "../MyGroups/MyGroups"
@@ -205,10 +205,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       if (this.props.loadId) {
         try {
-          const getUser: GetUserQueryResult = (await API.graphql(
-            graphqlOperation(queries.getUser, { id: this.props.loadId })
-          )) as GetUserQueryResult
-          if (getUser.data.getUser != null)
+          const getUser = await Data.getUser(this.props.loadId)
+          if (getUser.data?.getUser != null)
             this.setState(
               {
                 UserDetails: getUser.data.getUser,
@@ -240,9 +238,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         }
       } else {
         try {
-          const getUser: GetUserQueryResult = (await API.graphql(
-            graphqlOperation(queries.getUser, { id: user["username"] })
-          )) as GetUserQueryResult
+          const getUser = await Data.getUser(user["username"])
           this.setState(
             {
               UserDetails: getUser.data.getUser,

@@ -1,12 +1,13 @@
 ﻿//import { EditorState, convertToRaw } from 'draft-js';
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
+import { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
 import { Container, Content, StyleProvider, View } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity } from "react-native"
+import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
 import EditableRichText from "../../components/Forms/EditableRichText"
@@ -22,7 +23,6 @@ import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
-  CourseTriadUserByUserQuery,
   CreateCourseInfoInput,
   CreateCourseInfoMutation,
   CreateGroupInput,
@@ -34,14 +34,13 @@ import {
   GetGroupQuery,
   GetPaymentQuery,
   GetUserQuery,
-  GroupMemberByUserQuery,
   UpdateGroupMutation,
   UserGroupType,
 } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
-import { GetUserQueryResult, GetUserQueryResultPromise, JCCognitoUser } from "../../src/types"
+import { GetUserQueryResult, JCCognitoUser } from "../../src/types"
 import Accordion from "./Accordion"
 
 interface Props {
@@ -102,9 +101,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
       this.setState({
         currentUser: user.username,
       })
-      const getUser = API.graphql(
-        graphqlOperation(queries.getUser, { id: user["username"] })
-      ) as Promise<GraphQLResult<GetUserQuery>>
+      const getUser = Data.getUser(user["username"])
       getUser
         .then((json) => {
           this.setState(
@@ -129,11 +126,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }*/
   setMembers() {
     this.state.memberIDs.map((id) => {
-      const getUser: GetUserQueryResultPromise = API.graphql({
-        query: queries.getUser,
-        variables: { id: id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as GetUserQueryResultPromise
+      const getUser = Data.getUser(id)
       getUser
         .then((json: GetUserQueryResult) => {
           this.setState({ members: this.state.members.concat(json.data.getUser) }, () => {
@@ -200,11 +193,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         })
       })
     else {
-      const getGroup = API.graphql({
-        query: queries.getGroup,
-        variables: { id: props.route.params.id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GetGroupQuery>>
+      const getGroup = Data.getGroup(props.route.params.id)
 
       const processResults = (json: GraphQLResult<GetGroupQuery>) => {
         const isEditable = json.data.getGroup.owner == this.state.currentUser
@@ -240,14 +229,10 @@ export default class CourseScreen extends JCComponent<Props, State> {
                   courseData: e.data.getCourseInfo,
                 })
               })
-            const groupMemberByUser = API.graphql({
-              query: queries.groupMemberByUser,
-              variables: {
-                userID: this.state.currentUser,
-                groupID: { eq: this.state.data.id },
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+            const groupMemberByUser = Data.groupMemberByUser(
+              this.state.currentUser,
+              this.state.data.id
+            )
             groupMemberByUser.then((json) => {
               console.log({ groupMemberByUser: json })
               if (json.data.groupMemberByUser.items.length > 0)
@@ -265,11 +250,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
             this.setIsPaid()
             this.setMembers()
 
-            const getUser: GetUserQueryResultPromise = API.graphql({
-              query: queries.getUser,
-              variables: { id: this.state.data.owner },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            }) as GetUserQueryResultPromise
+            const getUser = Data.getUser(this.state.data.owner)
             getUser
               .then((json: GetUserQueryResult) => {
                 this.setState({
@@ -395,14 +376,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name },
     })
-    const groupMemberByUser = API.graphql({
-      query: queries.groupMemberByUser,
-      variables: {
-        userID: this.state.currentUser,
-        groupID: { eq: this.state.data.id },
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+
+    const groupMemberByUser = Data.groupMemberByUser(this.state.currentUser, this.state.data.id)
+
     groupMemberByUser
       .then((json) => {
         console.log({ "Success queries.groupMemberByUser": json })
@@ -523,11 +499,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
     return this.state.isEditable
   }
   async setCanPay(): Promise<void> {
-    const courseTriadUserByUser = API.graphql({
-      query: queries.courseTriadUserByUser,
-      variables: { userID: this.state.currentUser },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<CourseTriadUserByUserQuery>>
+    const courseTriadUserByUser = Data.courseTriadUserByUser(this.state.currentUser)
     courseTriadUserByUser
       .then((json) => {
         console.log(json)

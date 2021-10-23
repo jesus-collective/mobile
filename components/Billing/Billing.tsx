@@ -24,6 +24,7 @@ import React, { useState } from "react"
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
+import { Data } from "../../components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -132,11 +133,7 @@ class BillingImpl extends JCComponent<Props, State> {
   async setInitialData(): Promise<void> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      const getUser = (await API.graphql({
-        query: queries.getUser,
-        variables: { id: user["username"] },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<GetUserQuery>
+      const getUser = await Data.getUser(user["username"])
       if (getUser.data) {
         this.setState({ userData: getUser.data.getUser })
         console.log({ USER: getUser.data?.getUser })
