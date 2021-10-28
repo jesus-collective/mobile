@@ -5,6 +5,8 @@ import { InviteType } from "src/types"
 import {
   CourseTriadUserByUserQuery,
   EventBriteListEventsQuery,
+  EventBriteListTicketClassesQuery,
+  EventBriteListTicketClassesQueryVariables,
   GetGroupQuery,
   GetUserQuery,
   GroupByTypeByTimeQuery,
@@ -86,11 +88,20 @@ export class Data {
     }) as Promise<GraphQLResult<GroupByTypeQuery>>
   }
   static async eventBriteListEvents(params: object | undefined) {
-    return (await API.graphql({
+    return API.graphql({
       query: queries.eventBriteListEvents,
       variables: params,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })) as GraphQLResult<EventBriteListEventsQuery>
+    }) as Promise<GraphQLResult<EventBriteListEventsQuery>>
+  }
+  static async eventBriteListTicketClasses(
+    params: EventBriteListTicketClassesQueryVariables | undefined
+  ) {
+    return API.graphql({
+      query: queries.eventBriteListTicketClasses,
+      variables: params,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<EventBriteListTicketClassesQuery>>
   }
   static async groupByTypeByTime(params: object | undefined) {
     return (await API.graphql({

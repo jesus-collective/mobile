@@ -29,6 +29,7 @@ import {
   DeleteGroupMemberMutation,
   EventBriteEvent,
   EventBriteListEventsQuery,
+  EventBriteListTicketClassesQuery,
   GetPaymentQuery,
   ListOrganizationsQuery,
   ListUsersQuery,
@@ -43,6 +44,7 @@ import { constants } from "../../src/constants"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import { JCCognitoUser } from "../../src/types"
+import EventbriteButton from "../EventBrite/EventBriteButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
@@ -69,7 +71,24 @@ type GroupData = (
       >["items"]
     >[0]
 )[]
+type EventBriteTicketClass = NonNullable<
+  NonNullable<
+    NonNullable<
+      NonNullable<
+        GraphQLResult<EventBriteListTicketClassesQuery>["data"]
+      >["eventBriteListTicketClasses"]
+    >["ticket_classes"]
+  >[0]
+>
+type EventBriteTicketEvent = NonNullable<
+  NonNullable<
+    NonNullable<GraphQLResult<EventBriteListEventsQuery>["data"]>["eventBriteListEvents"]
+  >["events"]
+>[0]
+
 interface State extends JCState {
+  eventBriteListTicketClass: Record<string, EventBriteTicketClass>
+  currentEventBriteID: string
   myFilter: boolean
   eventFilter: boolean
   myTitleScreen: string
@@ -114,6 +133,8 @@ export default class MyGroups extends JCComponent<Props, State> {
     super(props)
 
     const commonInitialState = {
+      eventBriteListTicketClass: {},
+      currentEventBriteID: "",
       data: [],
       eventBriteEvents: [],
       pastEventBriteEvents: [],
@@ -347,6 +368,19 @@ export default class MyGroups extends JCComponent<Props, State> {
       })
       .filter((z) => z) as MapData[]
   }
+  getTicketClasses = async (value: EventBriteTicketEvent): Promise<void> => {
+    const ticketClasses = await Data.eventBriteListTicketClasses({
+      eventId: value?.id,
+    })
+
+    const temp = this.state.eventBriteListTicketClass
+    ticketClasses.data?.eventBriteListTicketClasses?.ticket_classes?.map((item) => {
+      if (item) temp[item.event_id ?? ""] = item
+    })
+    this.setState({
+      eventBriteListTicketClass: temp,
+    })
+  }
   async setData(props: Props, initialCall = false, pastEvents = false): Promise<void> {
     if (props.type == "profile") {
       const listUsers = Data.listUsers(this.state.userGroupType, this.state.nextToken)
@@ -393,6 +427,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         //  this.setIsOwner(json.data.eventBriteListEvents.events)
 
         if (past) {
+          json.data.eventBriteListEvents.events?.map(this.getTicketClasses)
           this.setState(
             {
               nextEventBriteTokenPastEvents:
@@ -413,6 +448,7 @@ export default class MyGroups extends JCComponent<Props, State> {
             }
           )
         } else {
+          json.data.eventBriteListEvents.events?.map(this.getTicketClasses)
           this.setState(
             {
               nextEventBriteToken: json.data.eventBriteListEvents.pagination?.page_number ?? null,
@@ -644,7 +680,20 @@ export default class MyGroups extends JCComponent<Props, State> {
         })
     })
   }
-
+  getPromoCode(userActions: UserActions): string {
+    const promoCode =
+      userActions.isMemberOf("admin") ||
+      userActions.isMemberOf("partner") ||
+      userActions.isMemberOf("legacyUserGroup1")
+        ? "JesusCollectivePartners"
+        : userActions.isMemberOf("subscriptionkyyouth") ||
+          userActions.isMemberOf("subscriptionkykids") ||
+          userActions.isMemberOf("subscriptionkyearlyyears")
+        ? "JesusCollectiveOneStory"
+        : ""
+    console.log({ promoCode: promoCode })
+    return promoCode
+  }
   async join(userActions: UserActions, group: any, groupType: string): Promise<void> {
     Analytics.record({
       name: "joined" + groupType,
@@ -972,7 +1021,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                   {item.location}
                 </a>
               </Text>
-            ) : item.eventType == "eventbrite" ? (
+            ) : item.eventType == "eventbrite" || item.eventType == "eventbriteJC" ? (
               <Text
                 ellipsizeMode="tail"
                 numberOfLines={1}
@@ -996,14 +1045,55 @@ export default class MyGroups extends JCComponent<Props, State> {
           </CardItem>
           {!this.state.canLeave[item.id] && !this.state.isOwner[item.id] ? (
             <CardItem>
-              <JCButton
-                buttonType={ButtonTypes.Solid}
-                onPress={async () => {
-                  await this.join(userActions, item, "Event")
-                }}
-              >
-                Attend
-              </JCButton>
+              {item.eventType == "eventbrite" ? (
+                <JCButton
+                  buttonType={ButtonTypes.Solid}
+                  onPress={async () => {
+                    await this.join(userActions, item, "Event")
+                  }}
+                >
+                  Attend
+                </JCButton>
+              ) : (
+                <>
+                  <EventbriteButton
+                    componentProps={{
+                      style: {
+                        cursor: "pointer",
+                        paddingTop: 6,
+                        paddingBottom: 6,
+                        paddingLeft: 29,
+                        paddingRight: 29,
+                        marginBottom: 20,
+                        marginLeft: 0,
+                        marginRight: 0,
+                        //   color:"#F0493E",
+                        backgroundColor: "#F0493E",
+                        borderWidth: 1,
+                        borderColor: "#F0493E",
+                        shadowOffset: { height: 0, width: 0 },
+                        shadowOpacity: 0,
+                        borderRadius: 4,
+                      },
+                    }}
+                    isModal={true}
+                    promoCode={this.getPromoCode(userActions)}
+                    ebEventId={item.id.replace("eventbriteJC-", "")}
+                  >
+                    <div
+                      style={{
+                        color: "#ffffff",
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        padding: 10,
+                        fontWeight: 600,
+                      }}
+                    >
+                      Get Tickets
+                    </div>
+                  </EventbriteButton>
+                </>
+              )}
               <Right></Right>
             </CardItem>
           ) : null}
@@ -1209,13 +1299,26 @@ export default class MyGroups extends JCComponent<Props, State> {
         </CardItem>
       )
   }
+  eventBriteFilter = (z: EventBriteEvent): boolean => {
+    const item = this.state.eventBriteListTicketClass[z?.id ?? ""]
+    const ticketClassesOneStory = item?.variants?.map((item2) =>
+      item2?.display_name?.includes("One Story")
+    )
+
+    const ticketClassesPartners = item?.variants?.map((item2) =>
+      item2?.display_name?.includes("Partners")
+    )
+    if (ticketClassesOneStory?.includes(true) || ticketClassesPartners?.includes(true)) return true
+    return false
+  }
   eventBriteToEvent = (z: EventBriteEvent): GroupData => {
     const r = {
-      id: "eventbrite-" + (z.id ?? "1"),
+      id: "eventbriteJC-" + (z.id ?? "1"),
+      type: "event",
       owner: "",
       name: z.name?.text,
       isSponsored: true,
-      eventType: "eventbrite",
+      eventType: "eventbriteJC",
       time: z.start?.utc,
     } as unknown as GroupData
     return r
@@ -1407,7 +1510,9 @@ export default class MyGroups extends JCComponent<Props, State> {
           else {
             let data: GroupData[] = [
               ...this.state.data,
-              ...this.state.eventBriteEvents.map(this.eventBriteToEvent),
+              ...this.state.eventBriteEvents
+                .filter(this.eventBriteFilter, userActions)
+                .map(this.eventBriteToEvent),
             ]
             const timeCompare = (a: GroupData, b: GroupData) =>
               (b?.time ?? "").localeCompare(a?.time ?? "")
@@ -1419,14 +1524,20 @@ export default class MyGroups extends JCComponent<Props, State> {
                 data = [
                   ...this.state.data,
                   ...this.state.pastEvents,
-                  ...this.state.pastEventBriteEvents.map(this.eventBriteToEvent),
-                  ...this.state.eventBriteEvents.map(this.eventBriteToEvent),
+                  ...this.state.pastEventBriteEvents
+                    .filter(this.eventBriteFilter)
+                    .map(this.eventBriteToEvent),
+                  ...this.state.eventBriteEvents
+                    .filter(this.eventBriteFilter)
+                    .map(this.eventBriteToEvent),
                 ]
                 data.sort(timeCompare)
               } else if (this.state.eventFilter) {
                 data = [
                   ...this.state.pastEvents,
-                  ...this.state.pastEventBriteEvents.map(this.eventBriteToEvent),
+                  ...this.state.pastEventBriteEvents
+                    .filter(this.eventBriteFilter)
+                    .map(this.eventBriteToEvent),
                 ]
                 data.sort(timeCompare)
               } else {
@@ -1628,16 +1739,29 @@ export default class MyGroups extends JCComponent<Props, State> {
                             data.filter(this.filterMy).map((item: any, index: number) => {
                               return (
                                 <ErrorBoundry key={index}>
-                                  <ListItem
-                                    noBorder
-                                    style={this.styles.style.conversationsCard}
-                                    button
-                                    onPress={() => {
-                                      this.openSingle(userActions, item.id)
-                                    }}
-                                  >
-                                    {this.renderByType(userActions, item, this.state.type)}
-                                  </ListItem>
+                                  {item.eventType == "eventbriteJC" ? (
+                                    <ListItem
+                                      noBorder
+                                      style={[
+                                        this.styles.style.conversationsCard,
+                                        { cursor: "default" },
+                                      ]}
+                                      button
+                                    >
+                                      {this.renderByType(userActions, item, this.state.type)}
+                                    </ListItem>
+                                  ) : (
+                                    <ListItem
+                                      noBorder
+                                      style={this.styles.style.conversationsCard}
+                                      button
+                                      onPress={() => {
+                                        this.openSingle(userActions, item.id)
+                                      }}
+                                    >
+                                      {this.renderByType(userActions, item, this.state.type)}
+                                    </ListItem>
+                                  )}
                                 </ErrorBoundry>
                               )
                             })
