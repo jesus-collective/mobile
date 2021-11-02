@@ -4,6 +4,10 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { InviteType } from "src/types"
 import {
   CourseTriadUserByUserQuery,
+  CreateStripeCustomerAdminMutation,
+  CreateStripeCustomerAdminMutationVariables,
+  CreateStripeCustomerMutation,
+  CreateStripeCustomerMutationVariables,
   EventBriteListEventsQuery,
   EventBriteListTicketClassesQuery,
   EventBriteListTicketClassesQueryVariables,
@@ -16,8 +20,11 @@ import {
   ListUsersQuery,
   ListUsersQueryVariables,
   ModelStringFilterInput,
+  UpdateUserInput,
+  UpdateUserMutation,
 } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
+import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 
 export enum UserGroupType {
@@ -27,6 +34,31 @@ export enum UserGroupType {
   OneStory = "OneStory",
 }
 export class Data {
+  static createStripeCustomer(input: CreateStripeCustomerMutationVariables) {
+    return API.graphql({
+      query: mutations.createStripeCustomer,
+      variables: input,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<CreateStripeCustomerMutation>>
+  }
+  static createStripeCustomerAdmin(input: CreateStripeCustomerAdminMutationVariables) {
+    return API.graphql({
+      query: mutations.createStripeCustomerAdmin,
+      variables: input,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<CreateStripeCustomerAdminMutation>>
+  }
+
+  static updateUser(input: UpdateUserInput) {
+    return API.graphql({
+      query: mutations.updateUser,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateUserMutation>>
+  }
+
   static getGroup(groupId: string) {
     return API.graphql({
       query: queries.getGroup,
@@ -74,7 +106,7 @@ export class Data {
     }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
   }
   static groupByTypeForMyGroups(
-    type: string | InviteType | null,
+    type: string | InviteType | undefined,
     nextToken: string | null | undefined
   ) {
     return API.graphql({

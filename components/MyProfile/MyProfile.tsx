@@ -2,7 +2,7 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
+import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
@@ -305,14 +305,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
       async () => {
         if (this.state.UserDetails)
           try {
-            const updateUser = (await API.graphql(
-              graphqlOperation(mutations.updateUser, {
-                input: {
-                  id: this.state.UserDetails.id,
-                  alertConfig: this.state.UserDetails.alertConfig,
-                },
-              })
-            )) as GraphQLResult<UpdateUserMutation>
+            const updateUser = await Data.updateUser({
+              id: this.state.UserDetails.id,
+              alertConfig: this.state.UserDetails.alertConfig,
+            })
             console.log(updateUser)
           } catch (e: any) {
             Sentry.captureException(e.errors || e)
@@ -367,9 +363,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       try {
         const toSave = this.clean(this.state.UserDetails)
         toSave["profileState"] = "Complete"
-        const updateUser = (await API.graphql(
-          graphqlOperation(mutations.updateUser, { input: toSave })
-        )) as GraphQLResult<UpdateUserMutation>
+        const updateUser = await Data.updateUser(toSave)
         this.setState({ dirty: false })
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile) this.props.finalizeProfile()

@@ -691,7 +691,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           userActions.isMemberOf("subscriptionkyearlyyears")
         ? "JesusCollectiveOneStory"
         : ""
-    console.log({ promoCode: promoCode })
+
     return promoCode
   }
   async join(userActions: UserActions, group: any, groupType: string): Promise<void> {

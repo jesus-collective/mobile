@@ -113,7 +113,10 @@ exports.handler = async (event) => {
       maxNetworkRetries: 5,
     })
     const idempotency = event.arguments.idempotency
-    const userID = event.identity.username
+    let userID
+    if (event.identity.claims["cognito:groups"].includes("admin") && event.arguments.userId != null)
+      userID = event.arguments.userId
+    else userID = event.identity.username
     const email = event.arguments.email
     const phone = event.arguments.phone
     const firstName = event.arguments.firstName

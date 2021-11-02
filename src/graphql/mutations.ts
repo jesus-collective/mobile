@@ -133,8 +133,8 @@ export const createPaymentIntent = /* GraphQL */ `
     }
   }
 `
-export const createCustomer = /* GraphQL */ `
-  mutation CreateCustomer(
+export const createStripeCustomer = /* GraphQL */ `
+  mutation CreateStripeCustomer(
     $idempotency: String
     $phone: String
     $email: String
@@ -143,7 +143,7 @@ export const createCustomer = /* GraphQL */ `
     $orgName: String
     $billingAddress: StripeAddressInput
   ) {
-    createCustomer(
+    createStripeCustomer(
       idempotency: $idempotency
       phone: $phone
       email: $email
@@ -151,6 +151,57 @@ export const createCustomer = /* GraphQL */ `
       lastName: $lastName
       orgName: $orgName
       billingAddress: $billingAddress
+    ) {
+      customer {
+        id
+        object
+        address
+        balance
+        created
+        currency
+        default_source
+        delinquent
+        description
+        discount
+        email
+        invoice_prefix
+        invoice_settings {
+          custom_fields
+          default_payment_method
+          footer
+        }
+        livemode
+        metadata
+        name
+        next_invoice_sequence
+        phone
+        preferred_locales
+        shipping
+        tax_exempt
+      }
+    }
+  }
+`
+export const createStripeCustomerAdmin = /* GraphQL */ `
+  mutation CreateStripeCustomerAdmin(
+    $idempotency: String
+    $phone: String
+    $email: String
+    $firstName: String
+    $lastName: String
+    $orgName: String
+    $billingAddress: StripeAddressInput
+    $userId: String
+  ) {
+    createStripeCustomerAdmin(
+      idempotency: $idempotency
+      phone: $phone
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      orgName: $orgName
+      billingAddress: $billingAddress
+      userId: $userId
     ) {
       customer {
         id

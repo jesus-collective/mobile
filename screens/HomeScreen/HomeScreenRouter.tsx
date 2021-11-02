@@ -14,7 +14,6 @@ import Sentry from "../../components/Sentry"
 import Validate from "../../components/Validate/Validate"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import {
-  CreateCustomerMutation,
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
   CreateOrganizationMemberMutation,
@@ -251,19 +250,15 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
-      const customer = (await API.graphql({
-        query: mutations.createCustomer,
-        variables: {
-          idempotency: this.state.idempotency,
-          firstName: user?.attributes?.given_name,
-          lastName: user?.attributes?.family_name,
-          email: user?.attributes?.email,
-          phone: user?.attributes?.phone_number,
-          billingAddress: billingAddress,
-          orgName: user?.attributes!["custom:orgName"],
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCustomerMutation>
+      const customer = await Data.createStripeCustomer({
+        idempotency: this.state.idempotency,
+        firstName: user?.attributes?.given_name,
+        lastName: user?.attributes?.family_name,
+        email: user?.attributes?.email,
+        phone: user?.attributes?.phone_number,
+        billingAddress: billingAddress,
+        orgName: user?.attributes!["custom:orgName"],
+      })
       console.log({ customer: customer })
       return true
       //customerId = customer.data.createCustomer.customer.id;

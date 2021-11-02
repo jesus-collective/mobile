@@ -3182,7 +3182,7 @@ export type CreatePaymentIntentMutation = {
   } | null,
 };
 
-export type CreateCustomerMutationVariables = {
+export type CreateStripeCustomerMutationVariables = {
   idempotency?: string | null,
   phone?: string | null,
   email?: string | null,
@@ -3192,8 +3192,54 @@ export type CreateCustomerMutationVariables = {
   billingAddress?: StripeAddressInput | null,
 };
 
-export type CreateCustomerMutation = {
-  createCustomer?:  {
+export type CreateStripeCustomerMutation = {
+  createStripeCustomer?:  {
+    __typename: "StripeCustomerData",
+    customer?:  {
+      __typename: "StripeCustomer",
+      id?: string | null,
+      object?: string | null,
+      address?: string | null,
+      balance?: string | null,
+      created?: string | null,
+      currency?: string | null,
+      default_source?: string | null,
+      delinquent?: string | null,
+      description?: string | null,
+      discount?: string | null,
+      email?: string | null,
+      invoice_prefix?: string | null,
+      invoice_settings?:  {
+        __typename: "StripeInvoiceSettings",
+        custom_fields?: string | null,
+        default_payment_method?: string | null,
+        footer?: string | null,
+      } | null,
+      livemode?: string | null,
+      metadata?: string | null,
+      name?: string | null,
+      next_invoice_sequence?: string | null,
+      phone?: string | null,
+      preferred_locales?: string | null,
+      shipping?: string | null,
+      tax_exempt?: string | null,
+    } | null,
+  } | null,
+};
+
+export type CreateStripeCustomerAdminMutationVariables = {
+  idempotency?: string | null,
+  phone?: string | null,
+  email?: string | null,
+  firstName?: string | null,
+  lastName?: string | null,
+  orgName?: string | null,
+  billingAddress?: StripeAddressInput | null,
+  userId?: string | null,
+};
+
+export type CreateStripeCustomerAdminMutation = {
+  createStripeCustomerAdmin?:  {
     __typename: "StripeCustomerData",
     customer?:  {
       __typename: "StripeCustomer",
