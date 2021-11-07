@@ -5,8 +5,9 @@ import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
 import { Container, Content, Icon, Picker, Text } from "native-base"
-import React from "react"
+import * as React from "react"
 import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, View } from "react-native"
+import { Data } from "../../Components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
@@ -17,8 +18,6 @@ import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateProductInput,
-  CreateProductMutation,
-  DeleteProductMutation,
   ListProductsQuery,
   TieredProductInput,
   UpdateProductInput,
@@ -26,7 +25,6 @@ import {
   UserGroupType,
 } from "../../src/API"
 import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -97,11 +95,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
   }
   async setInitialData(): Promise<void> {
     try {
-      const listProducts = (await API.graphql({
-        query: queries.listProducts,
-        variables: { limit: 50 },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<ListProductsQuery>
+      const listProducts = await Data.listProducts(null)
       this.setState({ products: listProducts.data?.listProducts?.items })
     } catch (err) {
       console.error(err)
@@ -133,11 +127,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
   async deleteProduct(id: string): Promise<void> {
     if (window.confirm(`Delete ${id}?`)) {
       try {
-        const deleteProduct = (await API.graphql({
-          query: mutations.deleteProduct,
-          variables: { input: { id } },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<DeleteProductMutation>
+        const deleteProduct = await Data.deleteProduct(id)
         console.log(deleteProduct)
         this.setInitialData()
       } catch (e) {
@@ -152,7 +142,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     if (isNaN(parseInt(this.state.price))) return
     try {
       switch (this.state.mode) {
-        case "save":
+        case "save": {
           const newProduct: CreateProductInput = {
             id: this.state.productId,
             price: parseFloat(this.state.price),
@@ -170,11 +160,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             isPaypal: this.state.isPaypal,
             tiered: this.state.tiered,
           }
-          const createProduct = (await API.graphql({
-            query: mutations.createProduct,
-            variables: { input: newProduct },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<CreateProductMutation>
+          const createProduct = await Data.createProduct(newProduct)
           console.log(createProduct)
           this.setInitialData()
           this.setState({
@@ -200,7 +186,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
             showAddProductModal: false,
           })
           break
-        case "edit":
+        }
+        case "edit": {
           const editProduct: UpdateProductInput = {
             id: this.state.productId,
             price: parseFloat(this.state.price),
@@ -248,6 +235,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             showAddProductModal: false,
           })
           break
+        }
       }
     } catch (err) {
       console.error(err)

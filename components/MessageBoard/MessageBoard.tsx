@@ -1,8 +1,6 @@
-import { GraphQLResult } from "@aws-amplify/api"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { NavigationProp, RouteProp, useNavigation, useRoute } from "@react-navigation/native"
-import { API, Auth, Storage } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Auth, Storage } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import { Badge, Container, StyleProvider } from "native-base"
 import React from "react"
@@ -16,17 +14,12 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import {
   CreateDirectMessageInput,
-  CreateDirectMessageMutation,
   CreateDirectMessageReplyInput,
-  CreateDirectMessageReplyMutation,
   CreateMessageInput,
-  CreateMessageMutation,
   CreateReplyInput,
-  CreateReplyMutation,
   GetUserQuery,
 } from "../../src/API"
 import { DirectMessagesByRoomQuery, MessagesByRoomQuery } from "../../src/API-messages"
-import * as mutations from "../../src/graphql/mutations"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import CameraRecorder from "./CameraRecorder"
 import FileUpload from "./FileUpload"
@@ -234,12 +227,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           //authorOrgId: "0"
         }
         try {
-          const createMessage = (await API.graphql({
-            query: mutations.createMessage,
-            variables: { input },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as Promise<GraphQLResult<CreateMessageMutation>>
-          console.log({ "Success mutations.createMessage": createMessage })
+          const createMessage = await Data.createMessage(input)
+          console.log({ "Success Data.createMessage": createMessage })
           this.setState({
             editorState: EditorState.createEmpty(),
             attachmentName: "",
@@ -247,7 +236,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             attachmentOwner: "",
           })
         } catch (err: any) {
-          console.error({ "Error mutations.createMessage": err })
+          console.error({ "Error Data.createMessage": err })
           if (err.data.createMessage) {
             this.setState({
               editorState: EditorState.createEmpty(),
@@ -270,12 +259,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           recipients: this.props.recipients ?? [],
         }
         try {
-          const createDirectMessage = (await API.graphql({
-            query: mutations.createDirectMessage,
-            variables: { input },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as Promise<GraphQLResult<CreateDirectMessageMutation>>
-          console.log({ "Success mutations.createDirectMessage ": createDirectMessage })
+          const createDirectMessage = await Data.createDirectMessage(input)
+          console.log({ "Success Data.createDirectMessage ": createDirectMessage })
           this.setState({
             editorState: EditorState.createEmpty(),
             attachmentName: "",
@@ -283,7 +268,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             attachmentOwner: "",
           })
         } catch (err: any) {
-          console.error({ "Error mutations.createDirectMessage ": err })
+          console.error({ "Error Data.createDirectMessage ": err })
           if (err.data.createDirectMessage) {
             this.setState({
               editorState: EditorState.createEmpty(),
@@ -566,12 +551,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           parentReplyId: "0000-0000-0000-0000", // void value
         }
 
-        const createReply = (await API.graphql({
-          query: mutations.createReply,
-          variables: { input },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateReplyMutation>
-        console.log({ "Success mutations.createReply": createReply })
+        const createReply = await Data.createReply(input)
+        console.log({ "Success Data.createReply": createReply })
         this.setState({
           editorState: EditorState.createEmpty(),
           attachmentName: "",
@@ -583,7 +564,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         })
       } catch (e: any) {
         if (e.data?.createReply) {
-          console.log({ "Success mutations.createReply": e.data })
+          console.log({ "Success Data.createReply": e.data })
           this.setState({
             editorState: EditorState.createEmpty(),
             attachmentName: "",
@@ -594,7 +575,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             replyToWho: [],
           })
         } else {
-          console.error({ "Error mutations.createReply": e })
+          console.error({ "Error Data.createReply": e })
         }
       }
     } else if (this.props.roomId) {
@@ -616,12 +597,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           parentReplyId: "0000-0000-0000-0000", // void value
         }
 
-        const createReply = (await API.graphql({
-          query: mutations.createDirectMessageReply,
-          variables: { input },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateDirectMessageReplyMutation>
-        console.log({ "Success mutations.createReply": createReply })
+        const createReply = await Data.createDirectMessageReply(input)
+        console.log({ "Success Data.createReply": createReply })
         this.setState({
           editorState: EditorState.createEmpty(),
           attachmentName: "",
@@ -633,7 +610,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         })
       } catch (e: any) {
         if (e.data?.createDirectMessageReply) {
-          console.log({ "Success mutations.createReply": e.data })
+          console.log({ "Success Data.createReply": e.data })
           this.setState({
             editorState: EditorState.createEmpty(),
             attachmentName: "",
@@ -644,7 +621,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             replyToWho: [],
           })
         } else {
-          console.error({ "Error mutations.createReply": e })
+          console.error({ "Error Data.createReply": e })
         }
       }
     }

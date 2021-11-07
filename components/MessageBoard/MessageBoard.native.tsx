@@ -1,8 +1,6 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } from "native-base"
 import * as React from "react"
 import { Editor } from "react-draft-wysiwyg"
@@ -12,9 +10,7 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import material from "../../native-base-theme/variables/material"
-import { CreateMessageInput, CreateMessageMutation, MessagesByRoomQuery } from "../../src/API"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
+import { CreateMessageInput, ModelSortDirection } from "../../src/API"
 import * as subscriptions from "../../src/graphql/subscriptions"
 import { JCCognitoUser } from "../../src/types"
 //import './react-draft-wysiwyg.css';
@@ -77,11 +73,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     if (props.route.params.create === "true" || props.route.params.create === true)
       this.setState({ created: false })
     else {
-      const messagesByRoom = API.graphql({
-        query: queries.messagesByRoom,
-        variables: { roomId: this.props.groupId, sortDirection: "DESC" },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<MessagesByRoomQuery>>
+      const messagesByRoom = Data.messagesByRoom({
+        roomId: this.props.groupId,
+        sortDirection: ModelSortDirection.DESC,
+      })
       const processMessages = (json) => {
         this.setState({
           created: true,
@@ -109,19 +104,14 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         owner: user.username,
         authorOrgId: "0",
       }
-      const createMessage = API.graphql({
-        query: mutations.createMessage,
-        variables: { input: z },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<CreateMessageMutation>>
-
+      const createMessage = Data.createMessage(z)
       createMessage
         .then((json) => {
-          console.log({ "Success mutations.createMessage": json })
+          console.log({ "Success Data.createMessage": json })
           this.setState({ message: "" })
         })
         .catch((err) => {
-          console.log({ "Error mutations.createMessage": err })
+          console.log({ "Error Data.createMessage": err })
         })
     })
   }

@@ -1,4 +1,3 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import {
@@ -17,8 +16,7 @@ import {
   StripeElements,
 } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
-import Amplify, { API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import Amplify, { Auth } from "aws-amplify"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
@@ -33,16 +31,8 @@ import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
-import {
-  GetUserQuery,
-  ListProductsQuery,
-  PreviewInvoiceMutation,
-  StripeInvoice,
-  StripePriceDetail,
-} from "../../src/API"
+import { GetUserQuery, ListProductsQuery, StripeInvoice, StripePriceDetail } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
-import * as customMutations from "../../src/graphql-custom/mutations"
-import * as queries from "../../src/graphql/queries"
 import "./CardSectionStyles.css"
 import EULA from "./eula.json"
 import HandleStripePayment from "./HandleStripePayment"
@@ -141,11 +131,10 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log({ UserError: e })
     }
     try {
-      const listProducts = (await API.graphql({
-        query: queries.listProducts,
-        variables: { filter: { enabled: { eq: "true" }, isLogin: { eq: "true" } }, limit: 50 },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<ListProductsQuery>
+      const listProducts = await Data.listProducts({
+        enabled: { eq: "true" },
+        isLogin: { eq: "true" },
+      })
       if (listProducts.data?.listProducts)
         this.setState({ products: listProducts.data.listProducts.items })
       if (this.state.currentProduct?.length == 0)
@@ -226,17 +215,13 @@ class BillingImpl extends JCComponent<Props, State> {
     const priceItems = this.getPriceItems()
 
     try {
-      const newInvoice = API.graphql({
-        query: customMutations.previewInvoice,
-        variables: {
-          idempotency: this.state.idempotency,
-          priceInfo: {
-            coupon: this.state.coupon,
-            prices: priceItems,
-          },
+      const newInvoice = Data.previewInvoice({
+        idempotency: this.state.idempotency,
+        priceInfo: {
+          coupon: this.state.coupon,
+          prices: priceItems,
         },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<PreviewInvoiceMutation>>
+      })
       console.log({ newInvoice: newInvoice })
       this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
         const currentIndex = this.state.invoiceQueue.length - 1

@@ -7,10 +7,8 @@ import {
   StripeElements,
   StripeError,
 } from "@stripe/stripe-js"
-import { API } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { CreateSubscriptionMutation, StripePriceInput } from "src/API"
-import * as mutations from "../../src/graphql/mutations"
+import { Data } from "../../components/Data/Data"
 type Subscription = NonNullable<
   NonNullable<NonNullable<GraphQLResult<CreateSubscriptionMutation>>["data"]>["createSubscription"]
 >["subscription"]
@@ -191,18 +189,12 @@ export default class HandleStripePayment {
     handleError: (error: any) => void
   ): Promise<void> {
     return (
-      (
-        API.graphql({
-          query: mutations.createSubscription,
-          variables: {
-            paymentMethodId: paymentMethodId,
-            priceInfo: priceInput,
-            idempotency: idempotency,
-            freeDays: freeDays,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        }) as Promise<GraphQLResult<CreateSubscriptionMutation>>
-      )
+      Data.createSubscription({
+        paymentMethodId: paymentMethodId,
+        priceInfo: priceInput,
+        idempotency: idempotency,
+        freeDays: freeDays,
+      })
         .then((response) => {
           return response
         })

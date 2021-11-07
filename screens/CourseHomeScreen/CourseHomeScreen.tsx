@@ -9,23 +9,9 @@ import { Container, Drawer, StyleProvider } from "native-base"
 import React from "react"
 import { Dimensions } from "react-native"
 import {
-  CreateCourseBackOfficeStaffMutation,
-  CreateCourseInstructorsMutation,
   CreateCourseLessonInput,
-  CreateCourseLessonMutation,
-  CreateCourseTriadCoachesMutation,
   CreateCourseTriadsInput,
-  CreateCourseTriadsMutation,
-  CreateCourseTriadUsersMutation,
   CreateCourseWeekInput,
-  CreateCourseWeekMutation,
-  DeleteCourseBackOfficeStaffMutation,
-  DeleteCourseInstructorsMutation,
-  DeleteCourseLessonMutation,
-  DeleteCourseTriadCoachesMutation,
-  DeleteCourseTriadsMutation,
-  DeleteCourseTriadUsersMutation,
-  DeleteCourseWeekMutation,
   GetGroupQuery,
   SearchUsersQuery,
   UpdateCourseInfoMutation,
@@ -56,7 +42,6 @@ import FloatingButtonStyles from "../../components/FloatingButton/FloatingButton
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
-import * as courseQueries from "../../src/graphql-custom/courses"
 import * as mutations from "../../src/graphql/mutations"
 
 interface Props {
@@ -110,11 +95,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
 
   setInitialData(props: Props, groups: string[]): void {
     const getGroup = Data.getGroup(props.route.params.id)
-    const getCourse = API.graphql({
-      query: courseQueries.getCourseInfo,
-      variables: { id: props.route.params.id },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<GetCourseInfoQuery>>
+    const getCourse = Data.getCourseInfo(props.route.params.id)
     const processResults2 = (json: GraphQLResult<GetCourseInfoQuery>) => {
       console.log({ courseData: json })
       this.setState({ courseData: json.data?.getCourseInfo })
@@ -264,16 +245,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Adding: item })
 
-        createCourseBackOfficeStaff = (await API.graphql({
-          query: mutations.createCourseBackOfficeStaff,
-          variables: {
-            input: {
-              courseInfoID: this.state.courseData?.id,
-              userID: item.id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateCourseBackOfficeStaffMutation>
+        createCourseBackOfficeStaff = await Data.createCourseBackOfficeStaff({
+          courseInfoID: this.state.courseData?.id,
+          userID: item.id,
+        })
         console.log(createCourseBackOfficeStaff)
         const temp = this.state.courseData
         temp?.backOfficeStaff?.items?.push(
@@ -296,15 +271,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Deleting: item })
 
-        const deleteCourseBackOfficeStaff = (await API.graphql({
-          query: mutations.deleteCourseBackOfficeStaff,
-          variables: {
-            input: {
-              id: item?.id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<DeleteCourseBackOfficeStaffMutation>
+        const deleteCourseBackOfficeStaff = await Data.deleteCourseBackOfficeStaff(item?.id)
         console.log(deleteCourseBackOfficeStaff)
         const temp = this.state.courseData
         if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
@@ -344,16 +311,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Adding: item })
 
-        createCourseInstructors = (await API.graphql({
-          query: mutations.createCourseInstructors,
-          variables: {
-            input: {
-              courseInfoID: this.state.courseData?.id,
-              userID: item?.id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateCourseInstructorsMutation>
+        createCourseInstructors = await Data.createCourseInstructors({
+          courseInfoID: this.state.courseData?.id,
+          userID: item?.id,
+        })
         console.log(createCourseInstructors)
         const temp = this.state.courseData
         if (temp && temp.instructors && temp.instructors.items) {
@@ -376,15 +337,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Deleting: item })
 
-        const deleteCourseInstructors = (await API.graphql({
-          query: mutations.deleteCourseInstructors,
-          variables: {
-            input: {
-              id: item.id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<DeleteCourseInstructorsMutation>
+        const deleteCourseInstructors = await Data.deleteCourseInstructors(item.id)
         console.log(deleteCourseInstructors)
         const temp = this.state.courseData
         if (temp && temp.instructors && temp.instructors.items) {
@@ -424,16 +377,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         try {
           console.log({ Adding: item })
 
-          createCourseTriadUsers = (await API.graphql({
-            query: mutations.createCourseTriadUsers,
-            variables: {
-              input: {
-                triadID: this.state.courseData?.triads?.items![index]?.id,
-                userID: item?.id,
-              },
-            },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<CreateCourseTriadUsersMutation>
+          createCourseTriadUsers = await Data.createCourseTriadUsers({
+            triadID: this.state.courseData?.triads?.items![index]?.id,
+            userID: item?.id,
+          })
           console.log(createCourseTriadUsers)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {
@@ -460,15 +407,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         try {
           console.log({ Deleting: item })
 
-          const createCourseTriadUsers = (await API.graphql({
-            query: mutations.deleteCourseTriadUsers,
-            variables: {
-              input: {
-                id: item.id,
-              },
-            },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<DeleteCourseTriadUsersMutation>
+          const createCourseTriadUsers = await Data.deleteCourseTriadUsers(item.id)
           console.log(createCourseTriadUsers)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items && temp.triads.items[index]) {
@@ -607,16 +546,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         try {
           console.log({ Adding: item })
 
-          const createCourseTriadCoaches = (await API.graphql({
-            query: mutations.createCourseTriadCoaches,
-            variables: {
-              input: {
-                triadID: this.state.courseData?.triads?.items![index]?.id,
-                userID: item.id,
-              },
-            },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<CreateCourseTriadCoachesMutation>
+          const createCourseTriadCoaches = await Data.createCourseTriadCoaches({
+            triadID: this.state.courseData?.triads?.items![index]?.id,
+            userID: item.id,
+          })
           console.log(createCourseTriadCoaches)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {
@@ -643,15 +576,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         try {
           console.log({ Deleting: item })
 
-          const deleteCourseTriadCoaches = (await API.graphql({
-            query: mutations.deleteCourseTriadCoaches,
-            variables: {
-              input: {
-                id: item?.id,
-              },
-            },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<DeleteCourseTriadCoachesMutation>
+          const deleteCourseTriadCoaches = await Data.deleteCourseTriadCoaches(item?.id)
           console.log(deleteCourseTriadCoaches)
           const temp = this.state.courseData
           if (temp && temp.triads && temp.triads.items) {
@@ -703,13 +628,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log("Deleting Triad")
 
-      const createTriad = (await API.graphql({
-        query: mutations.deleteCourseTriads,
-        variables: {
-          input: { id: this.state.courseData?.triads?.items?.[index]?.id },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<DeleteCourseTriadsMutation>
+      const createTriad = await Data.deleteCourseTriads(
+        this.state.courseData?.triads?.items?.[index]?.id
+      )
       console.log(createTriad)
       const temp = this.state.courseData
       temp?.triads?.items?.splice(index, 1)
@@ -725,11 +646,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log("Creating Triad")
 
-      const createTriad = (await API.graphql({
-        query: mutations.createCourseTriads,
-        variables: { input: triad },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCourseTriadsMutation>
+      const createTriad = await Data.createCourseTriads(triad)
       console.log(createTriad)
       if (createTriad?.data?.createCourseTriads) {
         const temp = this.state.courseData
@@ -754,11 +671,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log("Creating Resource")
 
-      const createCourseWeek = (await API.graphql({
-        query: mutations.createCourseWeek,
-        variables: { input },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCourseWeekMutation>
+      const createCourseWeek = await Data.createCourseWeek(input)
       console.log(createCourseWeek)
 
       const newWeek = createCourseWeek?.data?.createCourseWeek
@@ -786,11 +699,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log("Creating Resource")
 
-      const createCourse = (await API.graphql({
-        query: mutations.createCourseLesson,
-        variables: { input: resource },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCourseLessonMutation>
+      const createCourse = await Data.createCourseLesson(resource)
       console.log(createCourse)
       if (createCourse?.data?.createCourseLesson?.id) {
         const newLesson = createCourse.data.createCourseLesson
@@ -1024,13 +933,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   deleteWeek = async (week: string): Promise<void> => {
     try {
       console.log({ "Deleting Course Week": week })
-      const deleteCourseWeek = (await API.graphql({
-        query: mutations.deleteCourseWeek,
-        variables: {
-          input: { id: week },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<DeleteCourseWeekMutation>
+      const deleteCourseWeek = await Data.deleteCourseWeek(week)
       console.log(deleteCourseWeek)
       const temp = this.state.courseWeeks
       delete temp[week]
@@ -1043,15 +946,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   deleteLesson = async (week: string, lesson: string): Promise<void> => {
     try {
       console.log({ "Deleting Course lesson": week + " " + lesson })
-      const deleteResource = (await API.graphql({
-        query: mutations.deleteCourseLesson,
-        variables: {
-          input: {
-            id: lesson,
-          },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<DeleteCourseLessonMutation>
+      const deleteResource = await Data.deleteCourseLesson(lesson)
       console.log(deleteResource)
       const temp = this.state.courseWeeks
       delete temp[week].lessons[lesson]

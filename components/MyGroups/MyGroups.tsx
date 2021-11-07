@@ -2,8 +2,7 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Ionicons } from "@expo/vector-icons"
 import { Tooltip } from "@material-ui/core"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Analytics, API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
 import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider } from "native-base"
 import * as React from "react"
@@ -25,12 +24,9 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
-  CreateGroupMemberMutation,
-  DeleteGroupMemberMutation,
   EventBriteEvent,
   EventBriteListEventsQuery,
   EventBriteListTicketClassesQuery,
-  GetPaymentQuery,
   ListOrganizationsQuery,
   ListUsersQuery,
 } from "../../src/API"
@@ -41,8 +37,6 @@ import {
   ModelSortDirection,
 } from "../../src/API-customqueries"
 import { constants } from "../../src/constants"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import { JCCognitoUser } from "../../src/types"
 import EventbriteButton from "../EventBrite/EventBriteButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -629,11 +623,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   async setIsPaid(data: any): Promise<void> {
     data.forEach((item: any) => {
-      const getPayment = API.graphql({
-        query: queries.getPayment,
-        variables: { id: item.id + "-" + this.state.currentUser },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GetPaymentQuery>>
+      const getPayment = Data.getPayment(item.id + "-" + this.state.currentUser)
       getPayment
         .then((json: any) => {
           console.log(json)
@@ -701,20 +691,18 @@ export default class MyGroups extends JCComponent<Props, State> {
       attributes: { id: group.id, name: group.name },
     })
     try {
-      const createGroupMember = (await API.graphql({
-        query: mutations.createGroupMember,
-        variables: {
-          input: { groupID: group.id, userID: this.state.currentUser },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateGroupMemberMutation>
-      console.log({ "Success mutations.createGroupMember": createGroupMember })
+      const createGroupMember = await Data.createGroupMember({
+        groupID: group.id,
+        userID: this.state.currentUser,
+      })
+
+      console.log({ "Success Data.createGroupMember": createGroupMember })
       const canLeave = { ...this.state.canLeave }
       canLeave[group.id] = true
       this.setState({ canLeave })
       this.renderByType(userActions, group, groupType)
     } catch (err) {
-      console.log({ "Error mutations.createGroupMember": err })
+      console.log({ "Error Data.createGroupMember": err })
       const canLeave = { ...this.state.canLeave }
       canLeave[group.id] = true
       this.setState({ canLeave })
@@ -736,23 +724,19 @@ export default class MyGroups extends JCComponent<Props, State> {
         attributes: { id: group.id, name: group.name },
       })
       const groupMemberByUser = await Data.groupMemberByUser(this.state.currentUser, group.id)
-      console.log({ "Success queries.groupMemberByUser": groupMemberByUser })
+      console.log({ "Success Data.groupMemberByUser": groupMemberByUser })
       const groupMember = groupMemberByUser?.data?.groupMemberByUser?.items
       for (let i = 0; i < (groupMember?.length ?? 0); i++) {
         try {
-          const deleteGroupMember = (await API.graphql({
-            query: mutations.deleteGroupMember,
-            variables: { input: { id: groupMember![i]?.id } },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<DeleteGroupMemberMutation>
-          console.log({ "Success mutations.deleteGroupMember": deleteGroupMember })
+          const deleteGroupMember = await Data.deleteGroupMember(groupMember![i]?.id)
+          console.log({ "Success Data.deleteGroupMember": deleteGroupMember })
           const canLeave = { ...this.state.canLeave }
           canLeave[group.id] = false
           this.setState({ canLeave })
 
           this.renderByType(userActions, group, groupType)
         } catch (err) {
-          console.log({ "Error mutations.deleteGroupMember": err })
+          console.log({ "Error Data.deleteGroupMember": err })
           const canLeave = { ...this.state.canLeave }
           canLeave[group.id] = false
           this.setState({ canLeave })
@@ -760,7 +744,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         }
       }
     } catch (err) {
-      console.log({ "Error queries.groupMemberByUser": err })
+      console.log({ "Error Data.groupMemberByUser": err })
     }
   }
 

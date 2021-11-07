@@ -1,20 +1,12 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Auth } from "aws-amplify"
 import { MessageComment } from "components/MessageBoard/AssignmentMessageBoard/MessageThread"
 import { Container } from "native-base"
 import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, Text, TouchableHighlight, View } from "react-native"
+import { Data } from "../../components/Data/Data"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import {
-  CreateDirectMessageRoomMutation,
-  CreateDirectMessageUserMutation,
-  GetDirectMessageRoomQuery,
-  ListDirectMessageRoomsQuery,
-} from "../../src/API"
-import * as customQueries from "../../src/graphql-custom/queries"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
+import { CreateDirectMessageUserMutation, GetDirectMessageRoomQuery } from "../../src/API"
 import { JCCognitoUser } from "../../src/types"
 import ActivityBoxStyles from "../Activity/ActivityBoxStyles"
 import { CourseActions } from "../CourseViewer/CourseContext"
@@ -95,18 +87,14 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
     const data: Array<GetDirectMessageRoomQuery["getDirectMessageRoom"]> = []
     const fetchNext = async (next: string | null) => {
       try {
-        const json = (await API.graphql({
-          query: customQueries.listDirectMessageRooms,
-          variables: {
-            limit: 200,
-            filter: {
-              id: { beginsWith: "course-" + props.assignmentId + "-" },
-            },
-            roomType: "assignment",
-            nextToken: next,
+        const json = await Data.listDirectMessageRooms({
+          limit: 200,
+          filter: {
+            id: { beginsWith: "course-" + props.assignmentId + "-" },
+            roomType: { eq: "assignment" },
           },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<ListDirectMessageRoomsQuery>
+          nextToken: next,
+        })
         if (json?.data?.listDirectMessageRooms?.items?.length) {
           json?.data?.listDirectMessageRooms?.items?.forEach((item) => {
             data.push(item)
@@ -137,32 +125,19 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
 
   const createRoom = async (user: JCCognitoUser): Promise<void> => {
     try {
-      const createDirectMessageRoom = (await API.graphql({
-        query: mutations.createDirectMessageRoom,
-        variables: {
-          input: {
-            id: "course-" + props.assignmentId + "-" + user["username"],
-            roomType: "assignment",
-            name:
-              user.attributes?.given_name + " " + user.attributes?.family_name + "'s assignment",
-          },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateDirectMessageRoomMutation>
+      const createDirectMessageRoom = await Data.createDirectMessageRoom({
+        id: "course-" + props.assignmentId + "-" + user["username"],
+        roomType: "assignment",
+        name: user.attributes?.given_name + " " + user.attributes?.family_name + "'s assignment",
+      })
       if (createDirectMessageRoom.data?.createDirectMessageRoom) {
         const userPromises: Array<Promise<GraphQLResult<CreateDirectMessageUserMutation>>> = []
         state.userList.forEach((item: any) => {
-          const a = API.graphql({
-            query: mutations.createDirectMessageUser,
-            variables: {
-              input: {
-                roomID: "course-" + props.assignmentId + "-" + user["username"],
-                userID: item.id,
-                userName: item.name,
-              },
-            },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          }) as Promise<GraphQLResult<CreateDirectMessageUserMutation>>
+          const a = Data.createDirectMessageUser({
+            roomID: "course-" + props.assignmentId + "-" + user["username"],
+            userID: item.id,
+            userName: item.name,
+          })
           userPromises.push(a)
         })
         await Promise.all(userPromises)
@@ -190,10 +165,9 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
 
   const shouldCreateRoom = async (userActions: UserActions): Promise<void> => {
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    const userAssignment = (await API.graphql({
-      query: queries.getDirectMessageRoom,
-      variables: { id: "course-" + props.assignmentId + "-" + user["username"] },
-    })) as GraphQLResult<GetDirectMessageRoomQuery>
+    const userAssignment = await Data.getDirectMessageRoom(
+      "course-" + props.assignmentId + "-" + user["username"]
+    )
     if (userAssignment?.data?.getDirectMessageRoom) console.log("Assignment room already exists")
     else {
       if (!userActions.isMemberOf("courseAdmin") && !userActions.isMemberOf("courseCoach"))

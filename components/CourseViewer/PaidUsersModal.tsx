@@ -1,17 +1,14 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { API } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import React from "react"
 import { Text, View } from "react-native"
+import { Data } from "../../components/Data/Data"
 import EditableText from "../../components/Forms/EditableText"
 import EditableUsers from "../../components/Forms/EditableUsers"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import { ListPaymentsQuery, SearchUsersQuery } from "../../src/API"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
@@ -34,11 +31,7 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
     this.setInitialData()
   }
   setInitialData() {
-    const listPayment = API.graphql({
-      query: queries.listPayments,
-      variables: { filter: { id: { beginsWith: this.props.groupId } } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<ListPaymentsQuery>>
+    const listPayment = Data.listPayments({ id: { beginsWith: this.props.groupId } })
     listPayment
       .then((json) => {
         console.log(json)
@@ -59,20 +52,14 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
   }
   addUser() {
     if (this.state.users) {
-      const addPayment = API.graphql({
-        query: mutations.createPayment,
-        variables: {
-          input: {
-            id: this.props.groupId + "-" + this.state.users[0]!.id,
-            productID: this.props.groupId,
-            userID: this.state.users[0]!.id,
-            dateCompleted: moment().toString(),
-            paymentType: "manual",
-            paymentInfo: this.state.paymentNote,
-          },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<ListPaymentsQuery>>
+      const addPayment = Data.createPayment({
+        id: this.props.groupId + "-" + this.state.users[0]!.id,
+        productID: this.props.groupId,
+        userID: this.state.users[0]!.id,
+        dateCompleted: moment().toString(),
+        paymentType: "manual",
+        paymentInfo: this.state.paymentNote,
+      })
       addPayment
         .then(() => {
           this.setInitialData()

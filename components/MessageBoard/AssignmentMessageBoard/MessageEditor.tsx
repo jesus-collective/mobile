@@ -7,17 +7,15 @@ import React, { useState } from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Text, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
+import { Data } from "../../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../../components/Forms/JCButton"
 import {
   CreateDirectMessageInput,
-  CreateDirectMessageMutation,
   CreateDirectMessageReplyInput,
-  CreateDirectMessageReplyMutation,
   UpdateDirectMessageInput,
   UpdateDirectMessageMutation,
 } from "../../../src/API"
 import * as customMutations from "../../../src/graphql-custom/mutations"
-import * as mutations from "../../../src/graphql/mutations"
 import FileUpload from "../FileUpload"
 import { MessageComment } from "./MessageThread"
 interface Props {
@@ -192,14 +190,10 @@ export default function MessageEditor(props: Props): JSX.Element {
           recipients: recipients,
         }
         try {
-          const createDirectMessage = (await API.graphql({
-            query: mutations.createDirectMessage,
-            variables: { input },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as Promise<GraphQLResult<CreateDirectMessageMutation>>
-          console.log({ "Success mutations.createDirectMessage ": createDirectMessage })
+          const createDirectMessage = await Data.createDirectMessage(input)
+          console.log({ "Success Data.createDirectMessage ": createDirectMessage })
         } catch (err: any) {
-          console.error({ "Error mutations.createDirectMessage ": err })
+          console.error({ "Error Data.createDirectMessage ": err })
           if (err.data.createDirectMessage) {
             //setEditorState(EditorState.createEmpty())
           }
@@ -224,7 +218,7 @@ export default function MessageEditor(props: Props): JSX.Element {
 
     const replyToID = replyTo?.messageId ?? replyTo?.id
     console.log("replyToID", replyToID)
-    if (!!replyToID) {
+    if (replyToID) {
       try {
         const { attachment, attachmentName, attachmentOwner } = attachmentOptions
         const msg = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
@@ -242,12 +236,8 @@ export default function MessageEditor(props: Props): JSX.Element {
           recipients: recipients ?? [],
           parentReplyId: "0000-0000-0000-0000", // void value
         }
-        const createReply = (await API.graphql({
-          query: mutations.createDirectMessageReply,
-          variables: { input },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateDirectMessageReplyMutation>
-        console.log({ "Success mutations.createReply": createReply })
+        const createReply = await Data.createDirectMessageReply(input)
+        console.log({ "Success Data.createReply": createReply })
       } catch (err) {
         console.log(err)
       } finally {

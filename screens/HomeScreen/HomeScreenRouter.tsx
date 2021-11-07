@@ -1,7 +1,5 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { createStackNavigator } from "@react-navigation/stack"
-import Amplify, { Analytics, API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import Amplify, { Analytics, Auth } from "aws-amplify"
 import * as Linking from "expo-linking"
 import moment from "moment"
 import React from "react"
@@ -16,14 +14,10 @@ import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
-  CreateOrganizationMemberMutation,
-  CreateOrganizationMutation,
   CreateUserInput,
-  CreateUserMutation,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
-import * as mutations from "../../src/graphql/mutations"
 import MainAuthRouter from "./MainAuthRouter"
 import MainDrawerRouter from "./MainDrawerRouter"
 import { PaidStatus, ProfileStatus, UserContext, UserState } from "./UserContext"
@@ -153,14 +147,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
 
           try {
-            const createUser = (await API.graphql({
-              query: mutations.createUser,
-              variables: {
-                input: inputData,
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })) as GraphQLResult<CreateUserMutation>
-
+            const createUser = await Data.createUser(inputData)
             userExists = true
             console.log({ createUser: createUser })
           } catch (e) {
@@ -191,13 +178,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             let orgId = ""
 
             try {
-              const createOrg = (await API.graphql({
-                query: mutations.createOrganization,
-                variables: {
-                  input: orgInput,
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })) as GraphQLResult<CreateOrganizationMutation>
+              const createOrg = await Data.createOrganization(orgInput)
               console.log({ createOrg: createOrg })
               orgId = createOrg.data.createOrganization.id
             } catch (e: any) {
@@ -214,13 +195,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             }
 
             try {
-              const createOrgMember = (await API.graphql({
-                query: mutations.createOrganizationMember,
-                variables: {
-                  input: orgMember,
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })) as GraphQLResult<CreateOrganizationMemberMutation>
+              const createOrgMember = await Data.createOrganizationMember(orgMember)
               console.log({ createOrgMember: createOrgMember })
             } catch (e: any) {
               console.log({ error: e })
