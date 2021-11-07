@@ -1,7 +1,6 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
+import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
@@ -12,11 +11,9 @@ import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
   GetOrganizationQuery,
-  UpdateOrganizationMutation,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
-import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import EditableLocation from "../Forms/EditableLocation"
 import EditableText from "../Forms/EditableText"
@@ -258,7 +255,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       try {
         const toSave = this.clean(this.state.OrganizationDetails)
         toSave["profileState"] = "Complete"
-        await API.graphql(graphqlOperation(mutations.updateOrganization, { input: toSave }))
+        await Data.updateOrganization(toSave)
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ dirty: false, editMode: false })
       } catch (e: any) {
@@ -340,11 +337,10 @@ class OrganizationImpl extends JCComponent<Props, State> {
     }
 
     try {
-      const addAdmins = (await API.graphql(
-        graphqlOperation(mutations.updateOrganization, {
-          input: { id: this.state.OrganizationDetails.id, admins: newAdmins },
-        })
-      )) as GraphQLResult<UpdateOrganizationMutation>
+      const addAdmins = await Data.updateOrganization({
+        id: this.state.OrganizationDetails.id,
+        admins: newAdmins,
+      })
       console.log({ success: addAdmins })
     } catch (err) {
       Sentry.captureException(err)
@@ -381,11 +377,10 @@ class OrganizationImpl extends JCComponent<Props, State> {
       (user) => !toRemove.includes(user)
     )
     try {
-      const addAdmins = (await API.graphql(
-        graphqlOperation(mutations.updateOrganization, {
-          input: { id: this.state.OrganizationDetails.id, admins: remainingAdmins },
-        })
-      )) as GraphQLResult<UpdateOrganizationMutation>
+      const addAdmins = await Data.updateOrganization({
+        id: this.state.OrganizationDetails.id,
+        admins: remainingAdmins,
+      })
       console.log({ success: addAdmins })
     } catch (err) {
       Sentry.captureException(err)

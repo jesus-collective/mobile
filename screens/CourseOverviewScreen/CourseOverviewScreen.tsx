@@ -1,8 +1,7 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Analytics, API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Analytics, Auth } from "aws-amplify"
 import { MapData } from "components/MyGroups/MyGroups"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
@@ -30,10 +29,8 @@ import {
   CreateGroupInput,
   GetGroupQuery,
   GetUserQuery,
-  UpdateGroupMutation,
   UserGroupType,
 } from "../../src/API"
-import * as mutations from "../../src/graphql/mutations"
 import Accordion from "./Accordion"
 
 interface Props {
@@ -330,17 +327,13 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   save(): void {
     if (this.validate()) {
-      const updateGroup = API.graphql({
-        query: mutations.updateGroup,
-        variables: { input: this.clean(this.state.data) },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<UpdateGroupMutation>>
+      const updateGroup = Data.updateGroup(this.clean(this.state.data))
       updateGroup
         .then((json) => {
-          console.log({ "Success mutations.updateGroup": json })
+          console.log({ "Success Data.updateGroup": json })
         })
         .catch((err) => {
-          console.log({ "Error mutations.updateGroup": err })
+          console.log({ "Error Data.updateGroup": err })
         })
     }
   }

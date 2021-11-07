@@ -1,8 +1,7 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import { Container, Drawer, StyleProvider } from "native-base"
@@ -14,10 +13,6 @@ import {
   CreateCourseWeekInput,
   GetGroupQuery,
   SearchUsersQuery,
-  UpdateCourseInfoMutation,
-  UpdateCourseLessonMutation,
-  UpdateCourseTriadsMutation,
-  UpdateCourseWeekMutation,
 } from "src/API"
 import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
@@ -42,7 +37,6 @@ import FloatingButtonStyles from "../../components/FloatingButton/FloatingButton
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
-import * as mutations from "../../src/graphql/mutations"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -604,16 +598,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Triad": index })
 
-      const updateCourseTriads = (await API.graphql({
-        query: mutations.updateCourseTriads,
-        variables: {
-          input: {
-            id: this.state.courseData?.triads?.items?.[index]?.id,
-            [item]: value,
-          },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<UpdateCourseTriadsMutation>
+      const updateCourseTriads = await Data.updateCourseTriads({
+        id: this.state.courseData?.triads?.items?.[index]?.id,
+        [item]: value,
+      })
       console.log(updateCourseTriads)
       const temp = this.state.courseData
       if (temp && temp.triads && temp.triads.items) {
@@ -749,16 +737,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Lesson": lesson })
 
-      const updateWeek = (await API.graphql({
-        query: mutations.updateCourseLesson,
-        variables: {
-          input: {
-            id: lesson,
-            [item]: value,
-          },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<UpdateCourseLessonMutation>
+      const updateWeek = await Data.updateCourseLesson({
+        id: lesson,
+        [item]: value,
+      })
       console.log(updateWeek)
       const temp = this.state.courseWeeks
       temp[week].lessons[lesson][item] = value
@@ -771,16 +753,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Course": item })
 
-      const updateCourseInfo = (await API.graphql({
-        query: mutations.updateCourseInfo,
-        variables: {
-          input: {
-            id: this.state.courseData?.id,
-            [item]: value,
-          },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<UpdateCourseInfoMutation>
+      const updateCourseInfo = await Data.updateCourseInfo({
+        id: this.state.courseData?.id,
+        [item]: value,
+      })
       console.log(updateCourseInfo)
       const temp = this.state.courseData
       if (temp) {
@@ -795,16 +771,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Week": week })
 
-      const updateWeek = (await API.graphql({
-        query: mutations.updateCourseWeek,
-        variables: {
-          input: {
-            id: week,
-            [item]: value,
-          },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<UpdateCourseWeekMutation>
+      const updateWeek = await Data.updateCourseWeek({
+        id: week,
+        [item]: value,
+      })
       console.log(updateWeek)
       const temp = this.state.courseWeeks
       if (temp) {

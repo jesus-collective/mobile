@@ -1,6 +1,5 @@
-import { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api/lib/types"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
-import { API, Auth, Storage } from "aws-amplify"
+import { Auth, Storage } from "aws-amplify"
 import { convertFromRaw, convertToRaw, EditorState, RawDraftContentState } from "draft-js"
 import { Badge } from "native-base"
 import React, { useState } from "react"
@@ -13,9 +12,7 @@ import {
   CreateDirectMessageInput,
   CreateDirectMessageReplyInput,
   UpdateDirectMessageInput,
-  UpdateDirectMessageMutation,
 } from "../../../src/API"
-import * as customMutations from "../../../src/graphql-custom/mutations"
 import FileUpload from "../FileUpload"
 import { MessageComment } from "./MessageThread"
 interface Props {
@@ -140,14 +137,10 @@ export default function MessageEditor(props: Props): JSX.Element {
           content: msg,
         }
         try {
-          const updateDirectMessage = (await API.graphql({
-            query: customMutations.updateDirectMessage,
-            variables: { input },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as Promise<GraphQLResult<UpdateDirectMessageMutation>>
-          console.log({ "Success mutations.updateDirectMessage ": updateDirectMessage })
+          const updateDirectMessage = await Data.updateDirectMessage(input)
+          console.log({ "Success Data.updateDirectMessage ": updateDirectMessage })
         } catch (err: any) {
-          console.error({ "Error mutations.updateDirectMessage ": err })
+          console.error({ "Error Data.updateDirectMessage ": err })
           if (err.data.updateDirectMessage) {
             console.log("An error occurred", err)
             //setEditorState(EditorState.createEmpty())

@@ -1,9 +1,7 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import {} from "@material-ui/core"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { Analytics, API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import Amplify, { Analytics, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import { Container, Content } from "native-base"
 import * as React from "react"
@@ -22,17 +20,12 @@ import {
   ResourcePageItemInput,
   ResourcePageItemStyle,
   ResourcePageItemType,
-  UpdateGroupMutation,
   UpdateResourceEpisodeInput,
-  UpdateResourceEpisodeMutation,
   UpdateResourceInput,
-  UpdateResourceMutation,
   UpdateResourceSeriesInput,
-  UpdateResourceSeriesMutation,
   UserGroupType,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
-import * as mutations from "../../src/graphql/mutations"
 import {
   GetGroupQueryResult,
   GetResourceEpisodeData,
@@ -44,7 +37,6 @@ import {
   JCCognitoUser,
   ListResourceRootsQueryResult,
   PageItemIndex,
-  UpdateResourceMenuItemMutationResult,
 } from "../../src/types"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent from "../JCComponent/JCComponent"
@@ -348,7 +340,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         })
     }
   }
-  clean(item): void {
+  clean(item) {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -365,19 +357,15 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   saveGroup = (): void => {
     if (this.validateGroup()) {
-      const updateGroup = API.graphql({
-        query: mutations.updateGroup,
-        variables: { input: this.clean(this.state.groupData) },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<UpdateGroupMutation>>
+      const updateGroup = Data.updateGroup(this.clean(this.state.groupData))
       updateGroup
         .then((json) => {
           // this.setState({ canDelete: true, canSave: true, createNew: false })
-          console.log({ "Success mutations.updateGroup": json })
+          console.log({ "Success Data.updateGroup": json })
         })
         .catch((err) => {
           Sentry.captureException(err)
-          console.log({ "Error mutations.updateGroup": err })
+          console.log({ "Error Data.updateGroup": err })
         })
     }
   }
@@ -645,16 +633,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log({ "Updating MenuItem": menuItemIndex })
       const menuItem = this.getMenuItem(menuItemIndex)
       if (menuItem) {
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              [item]: value,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          [item]: value,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems) {
@@ -767,16 +749,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         if (!rootPageItems) rootPageItems = []
         rootPageItems = this.addToRoot(rootPageItems, pageItem, pageItemIndex)
         console.log({ rootPageItems: rootPageItems })
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              pageItems: rootPageItems,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          pageItems: rootPageItems,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
@@ -801,16 +777,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         let rootPageItems: ResourcePageItemInput[] = menuItem.pageItems
         rootPageItems = this.updateToRoot(rootPageItems, pageItemIndex, value)
 
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              pageItems: rootPageItems,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          pageItems: rootPageItems,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
@@ -830,16 +800,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       if (menuItem) {
         let rootPageItems: ResourcePageItemInput[] = menuItem.pageItems
         rootPageItems = this.deleteToRoot(rootPageItems, pageItemIndex)
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              pageItems: rootPageItems,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          pageItems: rootPageItems,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
@@ -863,13 +827,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         delete value.createdAt
         delete value.updatedAt
 
-        const updateResource = (await API.graphql({
-          query: mutations.updateResource,
-          variables: {
-            input: value,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<UpdateResourceMutation>
+        const updateResource = await Data.updateResource(value)
         console.log(updateResource)
         const temp = this.state.resourceData
         if (temp && temp.resources && temp.resources.items) {
@@ -997,13 +955,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       delete value.episodes
       if (value.parentResource) delete value.parentResource
       if (series) {
-        const updateResource = (await API.graphql({
-          query: mutations.updateResourceSeries,
-          variables: {
-            input: value,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<UpdateResourceSeriesMutation>
+        const updateResource = await Data.updateResourceSeries(value)
         console.log(updateResource)
         const temp = this.state.resourceData
         if (temp && temp.resources && temp.resources.items) {
@@ -1071,13 +1023,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       if (value.parentSeries) delete value.parentSeries
       const episode = this.getEpisode(resourceIndex, seriesIndex, episodeIndex)
       if (episode) {
-        const updateResourceEpisode = (await API.graphql({
-          query: mutations.updateResourceEpisode,
-          variables: {
-            input: value,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<UpdateResourceEpisodeMutation>
+        const updateResourceEpisode = await Data.updateResourceEpisode(value)
         console.log(updateResourceEpisode)
         const temp = this.state.resourceData
         if (temp) {

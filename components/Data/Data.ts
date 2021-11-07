@@ -126,6 +126,30 @@ import {
   SearchableUserFilterInput,
   SearchGroupsQuery,
   SearchUsersQuery,
+  UpdateCourseInfoInput,
+  UpdateCourseInfoMutation,
+  UpdateCourseLessonInput,
+  UpdateCourseLessonMutation,
+  UpdateCourseTriadsInput,
+  UpdateCourseTriadsMutation,
+  UpdateCourseWeekInput,
+  UpdateCourseWeekMutation,
+  UpdateDirectMessageInput,
+  UpdateDirectMessageMutation,
+  UpdateGroupInput,
+  UpdateGroupMutation,
+  UpdateOrganizationInput,
+  UpdateOrganizationMutation,
+  UpdateProductInput,
+  UpdateProductMutation,
+  UpdateResourceEpisodeInput,
+  UpdateResourceEpisodeMutation,
+  UpdateResourceInput,
+  UpdateResourceMenuItemInput,
+  UpdateResourceMenuItemMutation,
+  UpdateResourceMutation,
+  UpdateResourceSeriesInput,
+  UpdateResourceSeriesMutation,
   UpdateUserInput,
   UpdateUserMutation,
 } from "../../src/API"
@@ -142,6 +166,106 @@ export enum UserGroupType {
   OneStory = "OneStory",
 }
 export class Data {
+  static updateDirectMessage(input: UpdateDirectMessageInput) {
+    return API.graphql({
+      query: customMutations.updateDirectMessage,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateDirectMessageMutation>>
+  }
+  static updateOrganization(input: UpdateOrganizationInput) {
+    return API.graphql({
+      query: mutations.updateOrganization,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateOrganizationMutation>>
+  }
+  static updateGroup(input: UpdateGroupInput) {
+    return API.graphql({
+      query: mutations.updateGroup,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateGroupMutation>>
+  }
+  static updateResourceMenuItem(input: UpdateResourceMenuItemInput) {
+    return API.graphql({
+      query: mutations.updateResourceMenuItem,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateResourceMenuItemMutation>>
+  }
+  static updateResource(input: UpdateResourceInput) {
+    return API.graphql({
+      query: mutations.updateResource,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateResourceMutation>>
+  }
+  static updateResourceSeries(input: UpdateResourceSeriesInput) {
+    return API.graphql({
+      query: mutations.updateResourceSeries,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateResourceSeriesMutation>>
+  }
+  static updateResourceEpisode(input: UpdateResourceEpisodeInput) {
+    return API.graphql({
+      query: mutations.updateResourceEpisode,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateResourceEpisodeMutation>>
+  }
+  static updateProduct(input: UpdateProductInput) {
+    return API.graphql({
+      query: mutations.updateProduct,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateProductMutation>>
+  }
+  static updateCourseTriads(input: UpdateCourseTriadsInput) {
+    return API.graphql({
+      query: mutations.updateCourseTriads,
+      variables: input,
+
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateCourseTriadsMutation>>
+  }
+  static updateCourseLesson(input: UpdateCourseLessonInput) {
+    return API.graphql({
+      query: mutations.updateCourseLesson,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateCourseLessonMutation>>
+  }
+  static updateCourseInfo(input: UpdateCourseInfoInput) {
+    return API.graphql({
+      query: mutations.updateCourseInfo,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateCourseInfoMutation>>
+  }
+  static updateCourseWeek(input: UpdateCourseWeekInput) {
+    return API.graphql({
+      query: mutations.updateCourseWeek,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateCourseWeekMutation>>
+  }
+
   static deleteGroupMember(id: string) {
     return API.graphql({
       query: mutations.deleteGroupMember,

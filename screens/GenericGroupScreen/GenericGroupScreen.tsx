@@ -1,8 +1,7 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Analytics, API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
 import { CardItem, Container, Content, Icon, Picker, StyleProvider, View } from "native-base"
 import React, { lazy } from "react"
@@ -27,10 +26,8 @@ import {
   GetGroupQuery,
   GetUserQuery,
   GroupMemberByUserQuery,
-  UpdateGroupMutation,
   UserGroupType,
 } from "../../src/API"
-import * as mutations from "../../src/graphql/mutations"
 const MessageBoard = lazy(() => import("../../components/MessageBoard/MessageBoard"))
 
 interface Props {
@@ -296,14 +293,10 @@ export default class EventScreen extends JCComponent<Props, State> {
   async save(): Promise<void> {
     if (this.validate()) {
       try {
-        const updateGroup = (await API.graphql({
-          query: mutations.updateGroup,
-          variables: { input: this.clean(this.state.data) },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<UpdateGroupMutation>
-        console.log({ "Success mutations.updateGroup": updateGroup })
+        const updateGroup = await Data.updateGroup(this.clean(this.state.data))
+        console.log({ "Success Data.updateGroup": updateGroup })
       } catch (err) {
-        console.log({ "Error mutations.updateGroup": err })
+        console.log({ "Error Data.updateGroup": err })
       }
     }
   }

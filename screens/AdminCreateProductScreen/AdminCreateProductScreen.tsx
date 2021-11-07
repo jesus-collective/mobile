@@ -1,8 +1,5 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
 import { Container, Content, Icon, Picker, Text } from "native-base"
 import * as React from "react"
@@ -21,10 +18,8 @@ import {
   ListProductsQuery,
   TieredProductInput,
   UpdateProductInput,
-  UpdateProductMutation,
   UserGroupType,
 } from "../../src/API"
-import * as mutations from "../../src/graphql/mutations"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -205,11 +200,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             tiered: this.state.tiered,
             isPaypal: this.state.isPaypal,
           }
-          const updateProduct = (await API.graphql({
-            query: mutations.updateProduct,
-            variables: { input: editProduct },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<UpdateProductMutation>
+          const updateProduct = await Data.updateProduct(editProduct)
           console.log(updateProduct)
           this.setInitialData()
           this.setState({
