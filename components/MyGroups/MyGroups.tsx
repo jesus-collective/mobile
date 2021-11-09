@@ -1012,7 +1012,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                 style={this.styles.style.fontDetailBottom}
               >
                 <a target="_blank" rel="noreferrer" href={item.eventUrl}>
-                  Eventbrite
+                  Online
                 </a>
               </Text>
             ) : (
@@ -1073,7 +1073,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                         fontWeight: 600,
                       }}
                     >
-                      Get Tickets
+                      Register
                     </div>
                   </EventbriteButton>
                 </>
