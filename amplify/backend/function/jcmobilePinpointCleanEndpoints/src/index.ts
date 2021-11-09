@@ -83,7 +83,12 @@ export const handler = async (event) => {
     }
     return response
   } catch (error) {
-    console.log({ ERROR: error })
-    return { statusCode: "402", error: { message: error.message } }
+    if (error instanceof Error) {
+      console.log({ ERROR: error })
+      return {
+        statusCode: "402",
+        error: { message: error.message },
+      }
+    }
   }
 }
