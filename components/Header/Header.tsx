@@ -2,18 +2,17 @@ import { Ionicons } from "@expo/vector-icons"
 import Divider from "@material-ui/core/Divider"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
-import { DrawerActions } from "@react-navigation/native"
+import { DrawerActions, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-//import styles from '../Header/style'
 import { Auth } from "aws-amplify"
-import { Body, Button, Header, Left, Right } from "native-base"
-import React, { HTMLAttributes } from "react"
-import { Dimensions, Image, Text } from "react-native"
+import React, { HTMLAttributes, useContext, useEffect, useState } from "react"
+import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { JCState } from "../JCComponent/JCComponent"
 interface Props {
   navigation?: StackNavigationProp<any, any>
   title: string
@@ -24,6 +23,7 @@ interface State extends JCState {
   resourcesDropdown: HTMLElement | null
   resourcesStyle: HTMLAttributes<HTMLButtonElement>["style"]
   chevronStyle: HTMLAttributes<HTMLImageElement>["style"]
+  user: JCCognitoUser | null
 }
 
 const chevronStyle1 = { paddingLeft: 8, paddingTop: 2 }
@@ -33,250 +33,261 @@ const chevronStyle2 = { paddingLeft: 8, paddingTop: 2, display: "none" }
 const resourcesStyle1 = {
   backgroundColor: "transparent",
   borderWidth: 0,
-  height: 45,
-  paddingBottom: 12,
-  paddingTop: 6,
+  display: "flex",
   marginRight: 30,
 }
 
 const resourcesStyle2 = {
   backgroundColor: "transparent",
   borderWidth: 0,
-  height: 45,
-  paddingBottom: 12,
-  paddingTop: 6,
+  display: "flex",
   marginRight: 30,
   cursor: "pointer",
 }
 
-export default class HeaderJC extends JCComponent<Props, State> {
-  headerStyles: HeaderStyles = HeaderStyles.getInstance()
-
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      resourcesDropdown: null,
-      resourcesStyle: resourcesStyle1,
-      chevronStyle: Dimensions.get("window").width > 720 ? chevronStyle1 : chevronStyle2,
-    }
-  }
-
-  updateStyles = (): void => {
-    this.headerStyles.update()
-    this.updateResourceStyles()
-    this.forceUpdate()
-  }
-  componentDidMount(): void {
-    Dimensions.addEventListener("change", this.updateStyles)
-  }
-  componentWillUnmount(): void {
-    // Important to stop updating state after unmount
-    Dimensions.removeEventListener("change", this.updateStyles)
-  }
-
-  updateResourceStyles = (): void => {
+export default function HeaderJCC(props: Props) {
+  /* 
+    On mobile devices the header should only show:
+      - back button
+      - page title
+      - page actions
+      TODOS:
+        - Refactor styles, remove media queries (?)
+        - Bottom Tav Navigation for mobile devices
+        - Implement mobile header
+  */
+  const [state, setState] = useState<State>({
+    resourcesDropdown: null,
+    resourcesStyle: resourcesStyle1,
+    chevronStyle: Dimensions.get("window").width > 720 ? chevronStyle1 : chevronStyle2,
+    user: null,
+  })
+  const headerStyles = HeaderStyles.getInstance()
+  const navigation = useNavigation<any>()
+  const { userActions } = useContext(UserContext)
+  const updateResourceStyles = (): void => {
     const bigScreen = Dimensions.get("window").width > 720
     if (bigScreen)
-      this.setState({
+      setState({
+        ...state,
         resourcesStyle: resourcesStyle1,
         chevronStyle: chevronStyle1,
       })
     else
-      this.setState({
-        resourcesStyle: { display: "none" },
+      setState({
+        ...state,
+        resourcesStyle: { ...state.resourcesStyle, display: "none" },
         chevronStyle: chevronStyle2,
       })
   }
+  const updateStyles = (): void => {
+    headerStyles.update()
+    updateResourceStyles()
+  }
+  const openDrawer = (): void => {
+    navigation?.dispatch(DrawerActions.openDrawer())
+  }
 
-  openDrawer = (): void => {
-    this.props.navigation?.dispatch(DrawerActions.openDrawer())
-  }
-  openProfile = async (): Promise<void> => {
+  const openAdmin = async (): Promise<void> => {
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    this.props.navigation?.push("ProfileScreen", {
+    navigation?.push("AdminScreen", {
       id: user["username"],
       create: false,
     })
   }
-  openAdmin = async (): Promise<void> => {
-    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    this.props.navigation?.push("AdminScreen", {
-      id: user["username"],
-      create: false,
-    })
+  const openSearch = (): void => {
+    navigation?.push("SearchScreen")
   }
-  openSearch = (): void => {
-    this.props.navigation?.push("SearchScreen")
+  const openEvents = (): void => {
+    navigation?.push("EventsScreen")
   }
-  openEvents = (): void => {
-    this.props.navigation?.push("EventsScreen")
+  const openResources = (): void => {
+    handleResourcesDropdownClose()
+    navigation?.push("ResourcesScreen")
   }
-  openResources = (): void => {
-    this.handleResourcesDropdownClose()
-    this.props.navigation?.push("ResourcesScreen")
+  const openMessages = (): void => {
+    navigation?.push("ConversationScreen")
   }
-  openMessages = (): void => {
-    this.props.navigation?.push("ConversationScreen")
-  }
-  openKids = (): void => {
-    this.handleResourcesDropdownClose()
-    this.props.navigation?.push("ResourceScreen", {
+  const openKids = (): void => {
+    handleResourcesDropdownClose()
+    navigation?.push("ResourceScreen", {
       create: false,
       id: constants["SETTING_KY_GROUP_ID"],
     })
   }
-  openGroups = (): void => {
-    this.props.navigation?.push("GroupsScreen")
+  const openGroups = (): void => {
+    navigation?.push("GroupsScreen")
   }
-  openHome = (): void => {
-    this.props.navigation?.push("HomeScreen")
+  const openHome = (): void => {
+    navigation?.push("HomeScreen")
   }
-  openCourses = (): void => {
-    this.props.navigation?.push("CoursesScreen")
+  const openCourses = (): void => {
+    navigation?.push("CoursesScreen")
   }
-  showMap = (): void => {
-    if (this.props.onMapChange != null) this.props.onMapChange()
+  const handleResourcesDropdownClick = (event: React.MouseEvent<HTMLElement>): void => {
+    setState({ ...state, resourcesDropdown: event.currentTarget })
   }
-  handleResourcesDropdownClick = (event: React.MouseEvent<HTMLElement>): void => {
-    this.setState({ resourcesDropdown: event.currentTarget })
+  const handleResourcesDropdownClose = (): void => {
+    setState({ ...state, resourcesDropdown: null })
   }
-  handleResourcesDropdownClose = (): void => {
-    this.setState({ resourcesDropdown: null })
-  }
-  static UserConsumer = UserContext.Consumer
+  useEffect(() => {
+    const loadUser = async () => {
+      const userData = await Auth.currentAuthenticatedUser()
+      setState((prev) => ({ ...prev, user: userData }))
+    }
+    loadUser()
 
-  render(): React.ReactNode {
-    return (
-      <HeaderJC.UserConsumer>
-        {({ userState, userActions }) => {
-          if (!userState) return null
-          return (
-            <Header style={this.headerStyles.style.container}>
-              <Left style={this.styles.style.headerLeft}>
-                <Button
-                  testID="header-hamburger"
-                  style={this.headerStyles.style.leftButtons}
-                  transparent
-                  onPress={this.openDrawer}
-                >
-                  <Ionicons name="md-menu" style={this.headerStyles.style.icon} />
-                </Button>
-              </Left>
-              <Body style={this.styles.style.headerMiddleBody}>
-                <Button transparent onPress={this.openHome} testID="header-logo">
-                  <Image
-                    style={this.headerStyles.style.logo}
-                    source={require("../../assets/header/icon.png")}
-                  />
-                </Button>
-                {constants["SETTING_ISVISIBLE_event"] ? (
-                  <Button
-                    transparent
-                    testID="header-events"
-                    onPress={this.openEvents}
-                    style={this.headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={this.headerStyles.style.centerMenuButtonsText}>Events</Text>
-                  </Button>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_group"] ? (
-                  <Button
-                    transparent
-                    testID="header-groups"
-                    onPress={this.openGroups}
-                    style={this.headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={this.headerStyles.style.centerMenuButtonsText}>Groups</Text>
-                  </Button>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_resource"] ? (
-                  <button
-                    data-testid="header-resources"
-                    onClick={this.handleResourcesDropdownClick}
-                    onMouseEnter={() => this.setState({ resourcesStyle: resourcesStyle2 })}
-                    onMouseLeave={() => this.setState({ resourcesStyle: resourcesStyle1 })}
-                    style={this.state.resourcesStyle}
-                  >
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                      <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>
-                        Resources
-                      </Text>
-                      <img
-                        src={require("../../assets/svg/dropdown.svg")}
-                        style={this.state.chevronStyle}
-                      ></img>
-                    </div>
-                  </button>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_resource"] ? (
-                  <Menu
-                    keepMounted
-                    anchorEl={this.state.resourcesDropdown}
-                    open={Boolean(this.state.resourcesDropdown)}
-                    onClose={this.handleResourcesDropdownClose}
-                    style={{ marginTop: 40 }}
-                  >
-                    <MenuItem onClick={this.openResources}>
-                      <Text
-                        testID="header-resources-all"
-                        style={this.headerStyles.style.dropdownText}
-                      >
-                        All Resources
-                      </Text>
-                    </MenuItem>
-                    <Divider style={{ backgroundColor: "black" }} />
-                    <MenuItem onClick={this.openKids}>
-                      <Text style={this.headerStyles.style.dropdownText}>One Story Curriculum</Text>
-                    </MenuItem>
-                  </Menu>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_course"] &&
-                (userActions.isMemberOf("courseUser") ||
-                  userActions.isMemberOf("courseCoach") ||
-                  userActions.isMemberOf("courseAdmin")) ? (
-                  <Button
-                    transparent
-                    testID="header-courses"
-                    onPress={this.openCourses}
-                    style={this.headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={this.headerStyles.style.centerMenuButtonsText}>Courses</Text>
-                  </Button>
-                ) : null}
-              </Body>
-              <Right style={this.headerStyles.style.headerRightContainer}>
-                {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
-                  <Button transparent testID="header-map" onPress={this.openAdmin}>
-                    <Ionicons name="ios-rocket" style={this.headerStyles.style.icon} />
-                  </Button>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
-                  <Button transparent testID="header-messages" onPress={this.openMessages}>
-                    <Ionicons name="mail-outline" style={this.headerStyles.style.icon} />
-                  </Button>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_MAP"] ? (
-                  this.props.onMapChange != null ? (
-                    <Button transparent testID="header-map" onPress={this.showMap}>
-                      <Ionicons name="md-map" style={this.headerStyles.style.icon} />
-                    </Button>
-                  ) : null
-                ) : null}
-                {constants["SETTING_ISVISIBLE_SEARCH"] ? (
-                  <Button transparent testID="header-search" onPress={this.openSearch}>
-                    <Ionicons name="md-search" style={this.headerStyles.style.icon} />
-                  </Button>
-                ) : null}
+    Dimensions.addEventListener("change", updateStyles)
+    return () => {
+      Dimensions.removeEventListener("change", updateStyles)
+    }
+  }, [])
+  return (
+    <View style={headerStyles.style.container}>
+      <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+        <TouchableOpacity style={{ paddingTop: 6 }} onPress={openHome} testID="header-logo">
+          <Image
+            style={headerStyles.style.logo}
+            source={require(`../../assets/header/${
+              Dimensions.get("window").width < 1300 ? "JCLogo.png" : "newicon.png"
+            }`)}
+          />
+        </TouchableOpacity>
+        {constants["SETTING_ISVISIBLE_people"] ? (
+          <TouchableOpacity onPress={() => null} style={headerStyles.style.centerMenuButtons}>
+            <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
+          </TouchableOpacity>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_orgs"] ? (
+          <TouchableOpacity onPress={() => null} style={headerStyles.style.centerMenuButtons}>
+            <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
+          </TouchableOpacity>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_event"] ? (
+          <TouchableOpacity
+            testID="header-events"
+            onPress={openEvents}
+            style={headerStyles.style.centerMenuButtons}
+          >
+            <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
+          </TouchableOpacity>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_group"] ? (
+          <TouchableOpacity
+            testID="header-groups"
+            onPress={openGroups}
+            style={headerStyles.style.centerMenuButtons}
+          >
+            <Text style={headerStyles.style.centerMenuButtonsText}>Groups</Text>
+          </TouchableOpacity>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_resource"] ? (
+          <button
+            data-testid="header-resources"
+            onClick={handleResourcesDropdownClick}
+            onMouseEnter={() => setState({ ...state, resourcesStyle: resourcesStyle2 })}
+            onMouseLeave={() => setState({ ...state, resourcesStyle: resourcesStyle1 })}
+            style={state.resourcesStyle}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Text style={headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
+              <img src={require("../../assets/svg/dropdown.svg")} style={state.chevronStyle}></img>
+            </div>
+          </button>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_resource"] ? (
+          <Menu
+            style={{ marginTop: 40, marginLeft: 6 }}
+            keepMounted
+            anchorEl={state.resourcesDropdown}
+            open={Boolean(state.resourcesDropdown)}
+            onClose={handleResourcesDropdownClose}
+          >
+            <MenuItem onClick={openResources}>
+              <Text testID="header-resources-all" style={headerStyles.style.dropdownText}>
+                All Resources
+              </Text>
+            </MenuItem>
+            <Divider style={{ backgroundColor: "black" }} />
+            <MenuItem onClick={openKids}>
+              <Text style={headerStyles.style.dropdownText}>One Story Curriculum</Text>
+            </MenuItem>
+          </Menu>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_course"] &&
+        (userActions.isMemberOf("courseUser") ||
+          userActions.isMemberOf("courseCoach") ||
+          userActions.isMemberOf("courseAdmin")) ? (
+          <TouchableOpacity
+            testID="header-courses"
+            onPress={openCourses}
+            style={headerStyles.style.centerMenuButtons}
+          >
+            <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
+      <View style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}>
+        {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
+          <View style={{ marginHorizontal: 12 }}>
+            <TouchableOpacity testID="header-map" onPress={openAdmin}>
+              <Ionicons name="ios-rocket" style={headerStyles.style.icon} />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_SEARCH"] ? (
+          <View style={{ marginHorizontal: 12 }}>
+            <TouchableOpacity testID="header-search" onPress={openSearch}>
+              <Ionicons name="md-search" style={headerStyles.style.icon} />
+            </TouchableOpacity>
+          </View>
+        ) : null}
 
-                <Button transparent testID="header-profile" onPress={this.openProfile}>
-                  <Ionicons name="md-person" style={this.headerStyles.style.icon} />
-                </Button>
-              </Right>
-            </Header>
-          )
-        }}
-      </HeaderJC.UserConsumer>
-    )
-  }
+        {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
+          <View style={{ marginHorizontal: 12 }}>
+            <TouchableOpacity testID="header-messages" onPress={openMessages}>
+              <Image
+                style={headerStyles.style.icon}
+                source={require("../../assets/header/Airplane.png")}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+        {constants["SETTING_ISVISIBLE_BELL"] ? (
+          <View style={{ marginHorizontal: 12 }}>
+            <TouchableOpacity onPress={openMessages}>
+              <Image
+                style={headerStyles.style.icon}
+                source={require("../../assets/header/Bell.png")}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+        <View
+          style={{
+            transform: [{ scale: Dimensions.get("window").width > 1300 ? 0.95 : 0.5 }],
+          }}
+        >
+          <ProfileImage size="small2" linkToProfile user={state?.user?.username} />
+        </View>
+        <View style={{ marginHorizontal: 12 }}>
+          <TouchableOpacity onPress={openMessages}>
+            <Image
+              style={headerStyles.style.icon}
+              source={require("../../assets/header/Cog.png")}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
+        <TouchableOpacity
+          testID="header-hamburger"
+          style={headerStyles.style.leftButtons}
+          onPress={openDrawer}
+        >
+          <Ionicons name="md-menu" style={headerStyles.style.icon} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
 }
