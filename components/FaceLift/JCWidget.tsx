@@ -1,6 +1,6 @@
 import moment from "moment"
-import React, { useEffect, useState } from "react"
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
+import React, { useCallback, useEffect, useState } from "react"
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native"
 
 const UpcomingCardStyle = StyleSheet.create({
   CardContainer: {
@@ -11,16 +11,101 @@ const UpcomingCardStyle = StyleSheet.create({
   },
 })
 
-export default function JCWidget({
-  title,
-  emptyMessage,
-  loadData,
-}: {
+export enum WidgetType {
+  Event = "event",
+  Group = "group",
+  Resource = "resouce",
+}
+
+type Props = {
   title: string
   emptyMessage: string
   loadData: () => Promise<Array<any>>
-}) {
+  widgetType: WidgetType
+}
+export default function JCWidget(props: Props) {
+  const { title, emptyMessage, loadData, widgetType } = props
   const [data, setData] = useState<Array<any>>([])
+  const WidgetIcon = useCallback((item) => {
+    switch (widgetType) {
+      case WidgetType.Event:
+        return (
+          <View
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: 64,
+              backgroundColor: "#FF4438",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Text
+              style={{
+                color: "#fff",
+                fontSize: 12,
+                lineHeight: 12,
+                fontFamily: "Graphik-Regular-App",
+              }}
+            >
+              {moment(item.time).format("MMM")}
+            </Text>
+            <Text
+              style={{
+                color: "#fff",
+                letterSpacing: -0.3,
+                textAlign: "center",
+                fontSize: 32,
+                fontFamily: "Graphik-Regular-App",
+                fontWeight: "600",
+                lineHeight: 32,
+              }}
+            >
+              {moment(item.time).format("DD")}
+            </Text>
+          </View>
+        )
+      case WidgetType.Group:
+        console.log("It's a group")
+        return (
+          <View
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: 64,
+              backgroundColor: "#FF4438",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Image
+              style={{ width: 48, height: 48 }}
+              source={require("../../assets/Facelift/People.png")}
+            ></Image>
+          </View>
+        )
+      case WidgetType.Resource:
+        return (
+          <View
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: 64,
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Image
+              style={{ width: 64, height: 64 }}
+              source={require("../../assets/Facelift/JC-Logo.png")}
+            ></Image>
+          </View>
+        )
+    }
+  }, [])
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const load = async () => {
@@ -59,42 +144,7 @@ export default function JCWidget({
                   flexDirection: "row",
                 }}
               >
-                <View
-                  style={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 64,
-                    backgroundColor: "#FF4438",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "#fff",
-                      fontSize: 12,
-                      lineHeight: 12,
-                      fontFamily: "Graphik-Regular-App",
-                    }}
-                  >
-                    {moment(item.time).format("MMM")}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "#fff",
-                      letterSpacing: -0.3,
-                      textAlign: "center",
-                      fontSize: 32,
-                      fontFamily: "Graphik-Regular-App",
-                      fontWeight: "600",
-                      lineHeight: 32,
-                    }}
-                  >
-                    {moment(item.time).format("DD")}
-                  </Text>
-                </View>
-
+                <WidgetIcon item={item}></WidgetIcon>
                 <View style={{ marginLeft: 16, flex: 1, flexWrap: "wrap" }}>
                   <Text
                     style={{
