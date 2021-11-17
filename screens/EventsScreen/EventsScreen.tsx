@@ -9,10 +9,10 @@ import { Data } from "../../components/Data/Data"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
 import GenericContainer from "../../components/FaceLift/GenericContainer"
+import JCWidget, { WidgetType } from "../../components/FaceLift/JCWidget"
 import Header from "../../components/Header/Header"
 import { GroupByTypeByTimeQueryVariables, ModelSortDirection } from "../../src/API"
 import EventsList from "./EventsList"
-import JCWidget from "./JCWidget"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -137,6 +137,7 @@ export default function EventsScreen(props: Props) {
           MinorContentComponent={() => (
             <>
               <JCWidget
+                widgetType={WidgetType.Event}
                 emptyMessage="No upcoming events"
                 loadData={loadUpcoming}
                 title="Your Upcoming Events"
