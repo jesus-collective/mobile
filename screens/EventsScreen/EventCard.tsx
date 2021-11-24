@@ -17,7 +17,6 @@ const EventCardStyle = StyleSheet.create({
 })
 
 export default function EventCard({
-  title,
   time,
   location,
   date,
@@ -26,7 +25,6 @@ export default function EventCard({
   handleEventAction,
   item,
 }: {
-  title: string
   time: string
   location: string
   date: string
@@ -35,8 +33,9 @@ export default function EventCard({
   handleEventAction: any
   item: any
 }) {
+  const { name } = item
   return (
-    <Tooltip title={title}>
+    <Tooltip title={name}>
       <TouchableOpacity style={EventCardStyle.CardContainer}>
         <Text style={{ paddingTop: 8 }}>
           <Text
@@ -53,8 +52,9 @@ export default function EventCard({
             {date}
           </Text>
         </Text>
-        <View style={{ padding: 16, marginTop: 32, flex: 1 }}>
+        <View style={{ padding: 16, paddingTop: 0, marginTop: 32, flex: 1 }}>
           <Text
+            numberOfLines={3}
             style={{
               fontSize: 15,
               fontFamily: "Graphik-Regular-App",
@@ -64,7 +64,7 @@ export default function EventCard({
               paddingBottom: 2,
             }}
           >
-            {title}
+            {name}
           </Text>
           <Text
             style={{
@@ -79,6 +79,7 @@ export default function EventCard({
             {time}
           </Text>
           <Text
+            numberOfLines={1}
             style={{
               fontSize: 15,
               fontFamily: "Graphik-Regular-App",
@@ -97,6 +98,7 @@ export default function EventCard({
                 LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
                 custom: {
                   width: 96,
+                  height: 32,
                   alignSelf: "flex-end",
                 },
               }}
