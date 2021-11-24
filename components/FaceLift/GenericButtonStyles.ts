@@ -34,7 +34,8 @@ export const GenericButtonStyles = StyleSheet.create({
     textAlign: "center",
   },
   TertiaryButtonStyle: {
-    height: 32,
+    alignItems: "center",
+    height: 48,
     paddingHorizontal: 16,
     paddingVertical: 4,
     backgroundColor: "#483938",
@@ -44,7 +45,6 @@ export const GenericButtonStyles = StyleSheet.create({
     color: "#FFFFFF",
     fontFamily: "Graphik-Regular-App",
     fontSize: 15,
-    textTransform: "capitalize",
     textAlign: "center",
   },
 })
