@@ -154,7 +154,10 @@ export default function HeaderJCC(props: Props) {
           />
         </TouchableOpacity>
         {constants["SETTING_ISVISIBLE_people"] ? (
-          <TouchableOpacity onPress={() => null} style={headerStyles.style.centerMenuButtons}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ProfilesScreen")}
+            style={headerStyles.style.centerMenuButtons}
+          >
             <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
           </TouchableOpacity>
         ) : null}
@@ -265,7 +268,7 @@ export default function HeaderJCC(props: Props) {
         ) : null}
         <View
           style={{
-            transform: [{ scale: Dimensions.get("window").width > 1300 ? 0.95 : 0.5 }],
+            transform: [{ scale: Dimensions.get("window").width > 1300 ? 0.7 : 0.4175 }],
           }}
         >
           <ProfileImage size="small2" linkToProfile user={state?.user?.username} />
