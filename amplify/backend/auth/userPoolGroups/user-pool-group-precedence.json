@@ -2,28 +2,5 @@
     {
         "groupName": "userpool",
         "precedence": 1
-    },
-    {
-        "groupName": "Admin",
-        "precedence": 2,
-        "customPolicies": [
-            {
-                "PolicyName": "jcmobile-admin-group-policy",
-                "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "VisualEditor0",
-                            "Effect": "Allow",
-                            "Action": [
-                                "s3:PutObject",
-                                "s3:DeleteObject"
-                            ],
-                            "Resource": "arn:aws:s3:::jesuscollectivecourses-beta-input-zgyka8ke/public/*"
-                        }
-                    ]
-                }
-            }
-        ]
     }
 ]
