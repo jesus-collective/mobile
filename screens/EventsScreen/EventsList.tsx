@@ -214,7 +214,6 @@ export default function EventsList(props: Props) {
           const eventTime = moment(item.time)
           return (
             <EventCard
-              title={item.description}
               item={item}
               time={eventTime.format("hh:mm")}
               date={eventTime.format("MMMM DD, YYYY")}
