@@ -1,12 +1,12 @@
 import moment from "moment"
 import React, { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
 const UpcomingCardStyle = StyleSheet.create({
   CardContainer: {
     backgroundColor: "#F6F5F5",
     borderRadius: 8,
-    marginLeft: 16,
     marginBottom: 32,
   },
 })
@@ -15,6 +15,7 @@ export enum WidgetType {
   Event = "event",
   Group = "group",
   Resource = "resouce",
+  People = "people",
 }
 
 type Props = {
@@ -26,7 +27,30 @@ type Props = {
 export default function JCWidget(props: Props) {
   const { title, emptyMessage, loadData, widgetType } = props
   const [data, setData] = useState<Array<any>>([])
-  const WidgetIcon = useCallback((item) => {
+  const WidgetTitle = useCallback((item) => {
+    console.log({ item })
+    switch (widgetType) {
+      case WidgetType.Event:
+        return item.name
+      case WidgetType.Group:
+        return item.name
+      case WidgetType.Resource:
+        return item.description
+    }
+  }, [])
+
+  const WidgetSubtitle = useCallback((item) => {
+    switch (widgetType) {
+      case WidgetType.Event:
+        return moment(item.time).format("hh:mm")
+      case WidgetType.Group:
+        return item.description
+      case WidgetType.Resource:
+        return item.description
+    }
+  }, [])
+  const WidgetIcon = useCallback((entry) => {
+    const { item } = entry
     switch (widgetType) {
       case WidgetType.Event:
         return (
@@ -104,8 +128,80 @@ export default function JCWidget(props: Props) {
             ></Image>
           </View>
         )
+      case WidgetType.People:
+        return <></>
+      default:
+        return <></>
     }
   }, [])
+  const WidgetItem = ({ item, index }: { item: any; index: number }) => {
+    switch (widgetType) {
+      case WidgetType.People:
+        return (
+          <View
+            key={item.title}
+            style={{
+              marginBottom: index !== data.length - 1 ? 32 : 0,
+              flexDirection: "row",
+            }}
+          >
+            <ProfileImage size="small2" user={item.id} style="personCard"></ProfileImage>
+          </View>
+        )
+      default:
+        return (
+          <View
+            key={item.title}
+            style={{
+              marginBottom: index !== data.length - 1 ? 32 : 0,
+              flexDirection: "row",
+            }}
+          >
+            <WidgetIcon item={item}></WidgetIcon>
+            <View style={{ marginLeft: 16, flex: 1, flexWrap: "wrap" }}>
+              <Text
+                numberOfLines={3}
+                style={{
+                  fontFamily: "Graphik-Regular-App",
+                  fontWeight: "600",
+                  fontSize: 16,
+                  color: "#1a0706",
+                  paddingBottom: 2,
+                }}
+              >
+                {WidgetTitle(item)}
+              </Text>
+              <Text
+                numberOfLines={2}
+                style={{
+                  fontSize: 15,
+                  fontFamily: "Graphik-Regular-App",
+                  fontWeight: "400",
+                  lineHeight: 24,
+                  paddingBottom: 2,
+                  color: "#6A5E5D",
+                }}
+              >
+                {WidgetSubtitle(item)}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: "Graphik-Regular-App",
+                  fontWeight: "400",
+                  lineHeight: 24,
+                  paddingBottom: 2,
+                  color: "#6A5E5D",
+                  textTransform: "capitalize",
+                }}
+              >
+                {item.eventType === "location" ? item.location : item.eventType}
+              </Text>
+            </View>
+          </View>
+        )
+    }
+  }
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const load = async () => {
@@ -136,54 +232,7 @@ export default function JCWidget(props: Props) {
       <View style={{ padding: 16 }}>
         {data?.length ? (
           data?.map((item: any, index: number) => {
-            return (
-              <View
-                key={item.title}
-                style={{
-                  marginBottom: index !== data.length - 1 ? 32 : 0,
-                  flexDirection: "row",
-                }}
-              >
-                <WidgetIcon item={item}></WidgetIcon>
-                <View style={{ marginLeft: 16, flex: 1, flexWrap: "wrap" }}>
-                  <Text
-                    style={{
-                      fontFamily: "Graphik-Regular-App",
-                      fontWeight: "600",
-                      fontSize: 16,
-                      color: "#1a0706",
-                    }}
-                  >
-                    {item.description}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontFamily: "Graphik-Regular-App",
-                      fontWeight: "400",
-                      lineHeight: 24,
-                      paddingBottom: 2,
-                      color: "#6A5E5D",
-                    }}
-                  >
-                    {moment(item.time).format("hh:mm")}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontFamily: "Graphik-Regular-App",
-                      fontWeight: "400",
-                      lineHeight: 24,
-                      paddingBottom: 2,
-                      color: "#6A5E5D",
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    {item.eventType === "location" ? item.location : item.eventType}
-                  </Text>
-                </View>
-              </View>
-            )
+            return <WidgetItem item={item} index={index} />
           })
         ) : isLoading ? (
           <View style={{ paddingVertical: 40 }}>
