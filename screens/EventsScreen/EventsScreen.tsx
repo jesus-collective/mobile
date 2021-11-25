@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { View } from "react-native"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import GenericDirectoryScreen from "../../screens/GenericDirectoryScreen/GenericDirectoryScreen"
+import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
 import EventsList from "./EventsList"
 import EventWidgets from "./EventWidgets"
 export default function EventsScreen() {

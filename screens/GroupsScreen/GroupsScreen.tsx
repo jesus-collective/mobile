@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { View } from "react-native"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import GenericDirectoryScreen from "../../screens/GenericDirectoryScreen/GenericDirectoryScreen"
+import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
 import GroupsList from "./GroupsList"
 import GroupWidgets from "./GroupWidgets"
 export default function GroupsScreen() {
