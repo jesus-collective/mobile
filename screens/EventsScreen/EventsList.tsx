@@ -3,11 +3,13 @@ import { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
+import { isMobile } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import { WidgetItem, WidgetType } from "../../components/FaceLift/JCWidget"
 import {
   CreateGroupMemberMutation,
   DeleteGroupMemberMutation,
@@ -31,7 +33,7 @@ export default function EventsList(props: Props) {
   const [user, setUser] = useState<JCCognitoUser["username"]>("")
   const loadEvents = async () => {
     setRefreshing(true)
-    const newData = [...data]
+    const newData = [...data, ...data, ...data, ...data, ...data]
     const makeQueryVariables = (
       nextToken: GroupByTypeByTimeQueryVariables["nextToken"],
       past: boolean,
@@ -156,81 +158,104 @@ export default function EventsList(props: Props) {
       console.log({ "Error queries.groupMemberByUser": err })
     }
   }
+  const centerOffset = isMobile ? 0 : -32
   return (
-    <>
-      <FlatList
-        style={{ minHeight: 662 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
-        ListFooterComponent={() => (
-          <View
+    <FlatList
+      style={{ minHeight: 662 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+      ListFooterComponent={() => (
+        <View
+          style={{
+            marginLeft: centerOffset,
+            marginTop: isMobile ? 32 : 0,
+            marginBottom: 30,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <GenericButton
             style={{
-              marginLeft: -32,
-              marginBottom: 30,
-              justifyContent: "center",
-              alignItems: "center",
+              ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
+              LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
+            }}
+            label="Load More"
+            action={() => loadEvents()}
+          />
+        </View>
+      )}
+      ListHeaderComponent={() =>
+        refreshing ? (
+          <ActivityIndicator
+            style={{
+              marginTop: isMobile ? 32 : 0,
+              marginLeft: centerOffset,
+              position: "absolute",
+              alignSelf: "center",
+            }}
+            size="large"
+            color="#FF4438"
+          />
+        ) : null
+      }
+      ListFooterComponentStyle={
+        (data?.length % 4 !== 0 && !nextToken) || !data.length ? { display: "none" } : {}
+      }
+      ListEmptyComponent={() =>
+        !refreshing && !data.length ? (
+          <Text
+            style={{
+              fontSize: 15,
+              fontFamily: "Graphik-Regular-App",
+              fontWeight: "400",
+              lineHeight: 24,
+              paddingBottom: 2,
+              color: "#6A5E5D",
             }}
           >
-            <GenericButton
-              style={{
-                ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
-                LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
-              }}
-              label="Load More"
-              action={() => loadEvents()}
-            />
+            No upcoming events
+          </Text>
+        ) : null
+      }
+      data={filter ? data.filter((a) => a.id === isOwnerEvents.find((b) => b === a.id)) : data}
+      numColumns={isMobile ? 1 : 2}
+      refreshing={refreshing}
+      renderItem={({ item, index }) => {
+        const eventTime = moment(item.time)
+        return !isMobile ? (
+          <EventCard
+            item={item}
+            time={eventTime.format("hh:mm")}
+            date={eventTime.format("MMMM DD, YYYY")}
+            handleEventAction={
+              isOwnerEvents.find((a) => a === item.id)
+                ? null
+                : joinedEvents.find((a) => a === item.id)
+                ? leaveEvent
+                : joinEvent
+            }
+            isOwner={isOwnerEvents.find((a) => a === item.id)}
+            location={item.location}
+            joined={joinedEvents.find((a) => a === item.id)}
+          />
+        ) : (
+          <View
+            style={{
+              marginTop: index === 0 && isMobile ? 16 : 0,
+              padding: 12,
+              paddingBottom: 0,
+              flex: 1,
+            }}
+          >
+            <View style={{ borderBottomColor: "#E4E1E1", borderBottomWidth: 1, paddingBottom: 12 }}>
+              <WidgetItem
+                len={data.length - 1}
+                item={item}
+                index={index}
+                widgetType={"event" as WidgetType}
+              />
+            </View>
           </View>
-        )}
-        ListHeaderComponent={() =>
-          refreshing ? (
-            <ActivityIndicator
-              style={{ marginLeft: -32, position: "absolute", alignSelf: "center" }}
-              size="large"
-              color="#FF4438"
-            />
-          ) : null
-        }
-        ListFooterComponentStyle={
-          (data?.length % 4 !== 0 && !nextToken) || !data.length ? { display: "none" } : {}
-        }
-        ListEmptyComponent={() =>
-          !refreshing && !data.length ? (
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: "Graphik-Regular-App",
-                fontWeight: "400",
-                lineHeight: 24,
-                paddingBottom: 2,
-                color: "#6A5E5D",
-              }}
-            >
-              No upcoming events
-            </Text>
-          ) : null
-        }
-        data={filter ? data.filter((a) => a.id === isOwnerEvents.find((b) => b === a.id)) : data}
-        numColumns={2}
-        refreshing={refreshing}
-        renderItem={({ item, index }) => {
-          const eventTime = moment(item.time)
-          return (
-            <EventCard
-              item={item}
-              time={eventTime.format("hh:mm")}
-              date={eventTime.format("MMMM DD, YYYY")}
-              handleEventAction={
-                isOwnerEvents.find((a) => a === item.id)
-                  ? null
-                  : joinedEvents.find((a) => a === item.id)
-                  ? leaveEvent
-                  : joinEvent
-              }
-              isOwner={isOwnerEvents.find((a) => a === item.id)}
-              location={item.location}
-              joined={joinedEvents.find((a) => a === item.id)}
-            />
-          )
-        }}
-      />
-    </>
+        )
+      }}
+    />
   )
 }
