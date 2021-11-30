@@ -20,7 +20,7 @@ export const constants: { [index: string]: boolean | string } = {
   SETTING_ISVISIBLE_CREATE_conversation: false,
   SETTING_ISVISIBLE_orgs: false,
   SETTING_ISVISIBLE_people: true,
-  SETTING_ISVISIBLE_BELL: true,
+  SETTING_ISVISIBLE_BELL: false,
   SETTING_ISVISIBLE_SHOWRECOMMENDED: false,
   SETTING_ISVISIBLE_SHOWMY: false,
   SETTING_ISVISIBLE_SEARCH: false,
