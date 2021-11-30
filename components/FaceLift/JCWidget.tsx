@@ -1,13 +1,12 @@
 import moment from "moment"
 import React, { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
 const UpcomingCardStyle = StyleSheet.create({
   CardContainer: {
     backgroundColor: "#F6F5F5",
     borderRadius: 8,
-    marginBottom: 32,
   },
 })
 
@@ -24,9 +23,18 @@ type Props = {
   loadData: () => Promise<Array<any>>
   widgetType: WidgetType
 }
-export default function JCWidget(props: Props) {
-  const { title, emptyMessage, loadData, widgetType } = props
-  const [data, setData] = useState<Array<any>>([])
+
+export const WidgetItem = ({
+  len,
+  widgetType,
+  item,
+  index,
+}: {
+  len: number
+  widgetType: WidgetType
+  item: any
+  index: number
+}) => {
   const WidgetTitle = useCallback((item) => {
     console.log({ item })
     switch (widgetType) {
@@ -134,74 +142,76 @@ export default function JCWidget(props: Props) {
         return <></>
     }
   }, [])
-  const WidgetItem = ({ item, index }: { item: any; index: number }) => {
-    switch (widgetType) {
-      case WidgetType.People:
-        return (
-          <View
-            key={item.title}
-            style={{
-              marginBottom: index !== data.length - 1 ? 32 : 0,
-              flexDirection: "row",
-            }}
-          >
-            <ProfileImage size="small2" user={item.id} style="personCard"></ProfileImage>
+  switch (widgetType) {
+    case WidgetType.People:
+      return (
+        <View
+          key={item.title}
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <ProfileImage size="small2" user={item.id} style="personCard"></ProfileImage>
+        </View>
+      )
+    default:
+      return (
+        <TouchableOpacity
+          key={item.title}
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <WidgetIcon item={item}></WidgetIcon>
+          <View style={{ marginLeft: 16, flex: 1, flexWrap: "wrap" }}>
+            <Text
+              numberOfLines={3}
+              style={{
+                fontFamily: "Graphik-Regular-App",
+                fontWeight: "600",
+                fontSize: 16,
+                color: "#1a0706",
+                paddingBottom: 2,
+              }}
+            >
+              {WidgetTitle(item)}
+            </Text>
+            <Text
+              numberOfLines={2}
+              style={{
+                fontSize: 15,
+                fontFamily: "Graphik-Regular-App",
+                fontWeight: "400",
+                lineHeight: 24,
+                paddingBottom: 2,
+                color: "#6A5E5D",
+              }}
+            >
+              {WidgetSubtitle(item)}
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontFamily: "Graphik-Regular-App",
+                fontWeight: "400",
+                lineHeight: 24,
+                paddingBottom: 2,
+                color: "#6A5E5D",
+                textTransform: "capitalize",
+              }}
+            >
+              {item.eventType === "location" ? item.location : item.eventType}
+            </Text>
           </View>
-        )
-      default:
-        return (
-          <View
-            key={item.title}
-            style={{
-              marginBottom: index !== data.length - 1 ? 32 : 0,
-              flexDirection: "row",
-            }}
-          >
-            <WidgetIcon item={item}></WidgetIcon>
-            <View style={{ marginLeft: 16, flex: 1, flexWrap: "wrap" }}>
-              <Text
-                numberOfLines={3}
-                style={{
-                  fontFamily: "Graphik-Regular-App",
-                  fontWeight: "600",
-                  fontSize: 16,
-                  color: "#1a0706",
-                  paddingBottom: 2,
-                }}
-              >
-                {WidgetTitle(item)}
-              </Text>
-              <Text
-                numberOfLines={2}
-                style={{
-                  fontSize: 15,
-                  fontFamily: "Graphik-Regular-App",
-                  fontWeight: "400",
-                  lineHeight: 24,
-                  paddingBottom: 2,
-                  color: "#6A5E5D",
-                }}
-              >
-                {WidgetSubtitle(item)}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontFamily: "Graphik-Regular-App",
-                  fontWeight: "400",
-                  lineHeight: 24,
-                  paddingBottom: 2,
-                  color: "#6A5E5D",
-                  textTransform: "capitalize",
-                }}
-              >
-                {item.eventType === "location" ? item.location : item.eventType}
-              </Text>
-            </View>
-          </View>
-        )
-    }
+        </TouchableOpacity>
+      )
   }
+}
+
+export default function JCWidget(props: Props) {
+  const { title, emptyMessage, loadData, widgetType } = props
+  const [data, setData] = useState<Array<any>>([])
+
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const load = async () => {
@@ -232,7 +242,16 @@ export default function JCWidget(props: Props) {
       <View style={{ padding: 16 }}>
         {data?.length ? (
           data?.map((item: any, index: number) => {
-            return <WidgetItem item={item} index={index} />
+            return (
+              <View style={index === data.length - 1 ? {} : { marginBottom: 32 }}>
+                <WidgetItem
+                  len={data.length - 1}
+                  widgetType={widgetType}
+                  item={item}
+                  index={index}
+                />
+              </View>
+            )
           })
         ) : isLoading ? (
           <View style={{ paddingVertical: 40 }}>
