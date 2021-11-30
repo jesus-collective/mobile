@@ -12,8 +12,6 @@ import {
 } from "src/API"
 import { GetDirectMessageUserQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
-import EditableUsers from "../../components/Forms/EditableUsers"
-import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
@@ -256,11 +254,6 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     console.log({ StateData: this.state.data })
     return (
       <Container>
-        <Header
-          title="Jesus Collective"
-          navigation={this.props.navigation}
-          onMapChange={this.mapChanged}
-        />
         <Content>
           <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
           <Container style={this.styles.style.conversationScreenMainContainer}>
@@ -269,7 +262,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                 Direct Messages
               </Text>
 
-              {false ? (
+              {/*false ? (
                 <div>
                   <EditableUsers
                     onChange={(value: any[]) => {
@@ -284,7 +277,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                     isEditable={true}
                   ></EditableUsers>
                 </div>
-              ) : null}
+                  ) : null*/}
 
               {this.state.data != null
                 ? this.state.data

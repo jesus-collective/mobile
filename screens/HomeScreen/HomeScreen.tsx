@@ -1,7 +1,6 @@
 ﻿import { StackNavigationProp } from "@react-navigation/stack"
-import { Container } from "native-base"
 import React, { lazy } from "react"
-import { Dimensions, Platform } from "react-native"
+import { Dimensions, Platform, View } from "react-native"
 import Cookies from "universal-cookie"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
@@ -38,10 +37,10 @@ class HomeScreen extends JCComponent<Props, State> {
       width: Dimensions.get("window").width,
       height: Dimensions.get("window").height,
     }
-    Dimensions.addEventListener("change", (e) => {
-      const { width, height } = e.window
-      this.setState({ width, height })
-    })
+    // Dimensions.addEventListener("change", (e) => {
+    //   const { width, height } = e.window
+    //   this.setState({ width, height })
+    // })
   }
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap }, () => {
@@ -58,18 +57,12 @@ class HomeScreen extends JCComponent<Props, State> {
   render(): React.ReactNode {
     console.log("Homepage")
     return (
-      <Container testID="homepage">
-        <Header
-          title="Jesus Collective"
-          navigation={this.props.navigation}
-          onMapChange={this.mapChanged}
-        />
-
-        <Container style={{ flexGrow: 1, overflow: "scroll" }}>
+      <View testID="homepage">
+        <View style={{ flexGrow: 1, overflow: "scroll" }}>
           <MyMap type={"filters"} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
-          <Container style={this.styles.style.dashboardPrimaryContainer}>
-            <Container style={this.styles.style.dashboardMainContainer}>
-              <Container style={this.styles.style.dashboardLeftCard}>
+          <View style={this.styles.style.dashboardPrimaryContainer}>
+            <View style={this.styles.style.dashboardMainContainer}>
+              <View style={this.styles.style.dashboardLeftCard}>
                 <MyGroups
                   showMore={false}
                   type="event"
@@ -120,8 +113,8 @@ class HomeScreen extends JCComponent<Props, State> {
                   }}
                   homeDashboard
                 ></MyGroups>
-              </Container>
-              <Container style={this.styles.style.dashboardRightCard}>
+              </View>
+              <View style={this.styles.style.dashboardRightCard}>
                 <MyPeople
                   wrap={false}
                   navigation={this.props.navigation}
@@ -130,16 +123,16 @@ class HomeScreen extends JCComponent<Props, State> {
                   }}
                 ></MyPeople>
                 <MyConversations navigation={this.props.navigation}></MyConversations>
-                <Container style={{ flex: 10 }}></Container>
-              </Container>
-            </Container>
+                <View style={{ flex: 10 }}></View>
+              </View>
+            </View>
 
             {Platform.OS == "web" && this.state.width > 720 ? (
               <FooterJC title="Jesus Collective" navigation={this.props.navigation}></FooterJC>
             ) : null}
-          </Container>
-        </Container>
-      </Container>
+          </View>
+        </View>
+      </View>
     )
   }
 }
