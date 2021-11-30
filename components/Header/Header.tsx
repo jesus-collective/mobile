@@ -6,6 +6,7 @@ import { DrawerActions, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { HTMLAttributes, useContext, useEffect, useState } from "react"
+import { BrowserView, MobileView } from "react-device-detect"
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
@@ -17,6 +18,7 @@ interface Props {
   navigation?: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
+  drawerState?: boolean
 }
 
 interface State extends JCState {
@@ -41,11 +43,14 @@ const resourcesStyle2 = {
   backgroundColor: "transparent",
   borderWidth: 0,
   display: "flex",
+
   marginRight: 30,
   cursor: "pointer",
 }
 
 export default function HeaderJCC(props: Props) {
+  const { width } = Dimensions.get("window")
+  const isOpen = props?.drawerState // useDrawerStatus() is needed when in a drawer navigator to determine hamburger icon state
   /* 
     On mobile devices the header should only show:
       - back button
@@ -85,7 +90,7 @@ export default function HeaderJCC(props: Props) {
     updateResourceStyles()
   }
   const openDrawer = (): void => {
-    navigation?.dispatch(DrawerActions.openDrawer())
+    navigation?.dispatch(DrawerActions.toggleDrawer())
   }
 
   const openAdmin = async (): Promise<void> => {
@@ -143,154 +148,209 @@ export default function HeaderJCC(props: Props) {
     }
   }, [])
   return (
-    <View style={headerStyles.style.container}>
-      <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-        <TouchableOpacity style={{ paddingTop: 6 }} onPress={openHome} testID="header-logo">
-          <Image
-            style={headerStyles.style.logo}
-            source={require(`../../assets/header/${
-              Dimensions.get("window").width < 1300 ? "JCLogo.png" : "newicon.png"
-            }`)}
-          />
-        </TouchableOpacity>
-        {constants["SETTING_ISVISIBLE_people"] ? (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ProfilesScreen")}
-            style={headerStyles.style.centerMenuButtons}
-          >
-            <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
-          </TouchableOpacity>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_orgs"] ? (
-          <TouchableOpacity onPress={() => null} style={headerStyles.style.centerMenuButtons}>
-            <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
-          </TouchableOpacity>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_event"] ? (
-          <TouchableOpacity
-            testID="header-events"
-            onPress={openEvents}
-            style={headerStyles.style.centerMenuButtons}
-          >
-            <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
-          </TouchableOpacity>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_group"] ? (
-          <TouchableOpacity
-            testID="header-groups"
-            onPress={openGroups}
-            style={headerStyles.style.centerMenuButtons}
-          >
-            <Text style={headerStyles.style.centerMenuButtonsText}>Groups</Text>
-          </TouchableOpacity>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_resource"] ? (
-          <button
-            data-testid="header-resources"
-            onClick={handleResourcesDropdownClick}
-            onMouseEnter={() => setState({ ...state, resourcesStyle: resourcesStyle2 })}
-            onMouseLeave={() => setState({ ...state, resourcesStyle: resourcesStyle1 })}
-            style={state.resourcesStyle}
-          >
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <Text style={headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
-              <img src={require("../../assets/svg/dropdown.svg")} style={state.chevronStyle}></img>
-            </div>
-          </button>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_resource"] ? (
-          <Menu
-            style={{ marginTop: 40, marginLeft: 6 }}
-            keepMounted
-            anchorEl={state.resourcesDropdown}
-            open={Boolean(state.resourcesDropdown)}
-            onClose={handleResourcesDropdownClose}
-          >
-            <MenuItem onClick={openResources}>
-              <Text testID="header-resources-all" style={headerStyles.style.dropdownText}>
-                All Resources
-              </Text>
-            </MenuItem>
-            <Divider style={{ backgroundColor: "black" }} />
-            <MenuItem onClick={openKids}>
-              <Text style={headerStyles.style.dropdownText}>One Story Curriculum</Text>
-            </MenuItem>
-          </Menu>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_course"] &&
-        (userActions.isMemberOf("courseUser") ||
-          userActions.isMemberOf("courseCoach") ||
-          userActions.isMemberOf("courseAdmin")) ? (
-          <TouchableOpacity
-            testID="header-courses"
-            onPress={openCourses}
-            style={headerStyles.style.centerMenuButtons}
-          >
-            <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
-          </TouchableOpacity>
-        ) : null}
-      </View>
-      <View style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}>
-        {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
-          <View style={{ marginHorizontal: 12 }}>
-            <TouchableOpacity testID="header-map" onPress={openAdmin}>
-              <Ionicons name="ios-rocket" style={headerStyles.style.icon} />
+    <>
+      <BrowserView>
+        <View style={headerStyles.style.container}>
+          <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity style={{ paddingTop: 6 }} onPress={openHome} testID="header-logo">
+              <Image
+                style={headerStyles.style.logo}
+                source={require(`../../assets/header/${
+                  Dimensions.get("window").width < 1300 ? "JCLogo.png" : "newicon.png"
+                }`)}
+              />
             </TouchableOpacity>
+            {constants["SETTING_ISVISIBLE_people"] ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ProfilesScreen")}
+                style={headerStyles.style.centerMenuButtons}
+              >
+                <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
+              </TouchableOpacity>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_orgs"] ? (
+              <TouchableOpacity onPress={() => null} style={headerStyles.style.centerMenuButtons}>
+                <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
+              </TouchableOpacity>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_event"] ? (
+              <TouchableOpacity
+                testID="header-events"
+                onPress={openEvents}
+                style={headerStyles.style.centerMenuButtons}
+              >
+                <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
+              </TouchableOpacity>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_group"] ? (
+              <TouchableOpacity
+                testID="header-groups"
+                onPress={openGroups}
+                style={headerStyles.style.centerMenuButtons}
+              >
+                <Text style={headerStyles.style.centerMenuButtonsText}>Groups</Text>
+              </TouchableOpacity>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_resource"] ? (
+              <button
+                data-testid="header-resources"
+                onClick={handleResourcesDropdownClick}
+                onMouseEnter={() => setState({ ...state, resourcesStyle: resourcesStyle2 })}
+                onMouseLeave={() => setState({ ...state, resourcesStyle: resourcesStyle1 })}
+                style={{ ...state.resourcesStyle, display: width > 750 ? "flex" : "none" }}
+              >
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <Text style={headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
+                  <img
+                    src={require("../../assets/svg/dropdown.svg")}
+                    style={state.chevronStyle}
+                  ></img>
+                </div>
+              </button>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_resource"] ? (
+              <Menu
+                style={{ marginTop: 40, marginLeft: 6 }}
+                keepMounted
+                anchorEl={state.resourcesDropdown}
+                open={Boolean(state.resourcesDropdown)}
+                onClose={handleResourcesDropdownClose}
+              >
+                <MenuItem onClick={openResources}>
+                  <Text testID="header-resources-all" style={headerStyles.style.dropdownText}>
+                    All Resources
+                  </Text>
+                </MenuItem>
+                <Divider style={{ backgroundColor: "black" }} />
+                <MenuItem onClick={openKids}>
+                  <Text style={headerStyles.style.dropdownText}>One Story Curriculum</Text>
+                </MenuItem>
+              </Menu>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_course"] &&
+            (userActions.isMemberOf("courseUser") ||
+              userActions.isMemberOf("courseCoach") ||
+              userActions.isMemberOf("courseAdmin")) ? (
+              <TouchableOpacity
+                testID="header-courses"
+                onPress={openCourses}
+                style={headerStyles.style.centerMenuButtons}
+              >
+                <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_SEARCH"] ? (
-          <View style={{ marginHorizontal: 12 }}>
-            <TouchableOpacity testID="header-search" onPress={openSearch}>
-              <Ionicons name="md-search" style={headerStyles.style.icon} />
-            </TouchableOpacity>
-          </View>
-        ) : null}
+          <View style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}>
+            {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
+              <View style={{ marginHorizontal: 12 }}>
+                <TouchableOpacity testID="header-map" onPress={openAdmin}>
+                  <Ionicons name="ios-rocket" style={headerStyles.style.icon} />
+                </TouchableOpacity>
+              </View>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_SEARCH"] ? (
+              <View style={{ marginHorizontal: 12 }}>
+                <TouchableOpacity testID="header-search" onPress={openSearch}>
+                  <Ionicons name="md-search" style={headerStyles.style.icon} />
+                </TouchableOpacity>
+              </View>
+            ) : null}
 
-        {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
-          <View style={{ marginHorizontal: 12 }}>
-            <TouchableOpacity testID="header-messages" onPress={openMessages}>
-              <Image
-                style={headerStyles.style.icon}
-                source={require("../../assets/header/Airplane.png")}
-              />
+            {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
+              <View style={{ marginHorizontal: 12 }}>
+                <TouchableOpacity testID="header-messages" onPress={openMessages}>
+                  <Image
+                    style={headerStyles.style.icon}
+                    source={require("../../assets/header/Airplane.png")}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : null}
+            {constants["SETTING_ISVISIBLE_BELL"] ? (
+              <View style={{ marginHorizontal: 12 }}>
+                <TouchableOpacity onPress={openMessages}>
+                  <Image
+                    style={headerStyles.style.icon}
+                    source={require("../../assets/header/Bell.png")}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : null}
+            <View
+              style={{
+                transform: [{ scale: Dimensions.get("window").width > 1300 ? 0.7 : 0.4175 }],
+              }}
+            >
+              <ProfileImage size="small2" linkToProfile user={state?.user?.username} />
+            </View>
+            <View style={{ marginHorizontal: 12 }}>
+              <TouchableOpacity onPress={openMessages}>
+                <Image
+                  style={headerStyles.style.icon}
+                  source={require("../../assets/header/Cog.png")}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
+            <TouchableOpacity
+              testID="header-hamburger"
+              style={headerStyles.style.leftButtons}
+              onPress={openDrawer}
+            >
+              {isOpen ? (
+                <Image
+                  style={headerStyles.style.icon}
+                  source={require("../../assets/header/X.png")}
+                />
+              ) : (
+                <Image
+                  style={headerStyles.style.icon}
+                  source={require("../../assets/header/Boxes.png")}
+                />
+              )}
             </TouchableOpacity>
           </View>
-        ) : null}
-        {constants["SETTING_ISVISIBLE_BELL"] ? (
-          <View style={{ marginHorizontal: 12 }}>
-            <TouchableOpacity onPress={openMessages}>
-              <Image
-                style={headerStyles.style.icon}
-                source={require("../../assets/header/Bell.png")}
-              />
-            </TouchableOpacity>
-          </View>
-        ) : null}
+        </View>
+      </BrowserView>
+      <MobileView>
         <View
           style={{
-            transform: [{ scale: Dimensions.get("window").width > 1300 ? 0.7 : 0.4175 }],
+            flexDirection: "column",
+            flex: 1,
+            borderBottomWidth: 1,
+            borderBottomColor: "#E4E1E1",
+            paddingTop: 16,
+            paddingHorizontal: 16,
           }}
         >
-          <ProfileImage size="small2" linkToProfile user={state?.user?.username} />
+          <View
+            style={{
+              flexDirection: "row",
+              paddingBottom: 12,
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image
+                source={require("../../assets/header/Left-Arrow.png")}
+                style={{ width: 24, height: 24 }}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                flex: 1,
+                fontFamily: "Graphik-Semibold-App",
+                fontSize: 15,
+                lineHeight: 24,
+                color: "#1A0706",
+                textAlign: "center",
+              }}
+            >
+              {props.title}
+            </Text>
+          </View>
         </View>
-        <View style={{ marginHorizontal: 12 }}>
-          <TouchableOpacity onPress={openMessages}>
-            <Image
-              style={headerStyles.style.icon}
-              source={require("../../assets/header/Cog.png")}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
-        <TouchableOpacity
-          testID="header-hamburger"
-          style={headerStyles.style.leftButtons}
-          onPress={openDrawer}
-        >
-          <Ionicons name="md-menu" style={headerStyles.style.icon} />
-        </TouchableOpacity>
-      </View>
-    </View>
+      </MobileView>
+    </>
   )
 }

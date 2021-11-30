@@ -21,7 +21,7 @@ export default class HeaderStyles {
         backgroundColor: "#ffffff",
         paddingLeft: 24,
         flexDirection: "row",
-        paddingVertical: 8,
+        paddingVertical: width > 750 ? 8 : 0,
         borderBottomColor: "#E4E1E1",
         borderBottomWidth: 1,
       },
