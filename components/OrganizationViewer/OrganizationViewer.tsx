@@ -1,26 +1,19 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
+import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
 import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
-  CreateOrganizationMemberMutation,
-  CreateOrganizationMutation,
-  DeleteOrganizationMutation,
   GetOrganizationQuery,
-  UpdateOrganizationMutation,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import { JCCognitoUser } from "../../src/types"
 import EditableLocation from "../Forms/EditableLocation"
 import EditableText from "../Forms/EditableText"
@@ -151,9 +144,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
     if (this.props.loadId && this.props.create === false) {
       try {
-        const getOrg = (await API.graphql(
-          graphqlOperation(queries.getOrganization, { id: this.props.loadId })
-        )) as GraphQLResult<GetOrganizationQuery>
+        const getOrg = await Data.getOrganization(this.props.loadId)
         this.setState(
           {
             OrganizationDetails: getOrg.data?.getOrganization,
@@ -194,11 +185,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
           parentOrganizationId: id,
           joined: moment().format(),
         }
-        const createOrg = (await API.graphql({
-          query: mutations.createOrganization,
-          variables: { input: orgInput },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateOrganizationMutation>
+        const createOrg = await Data.createOrganization(orgInput)
 
         const orgMember: CreateOrganizationMemberInput = {
           userRole: "superAdmin",
@@ -207,13 +194,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         }
 
         try {
-          const createOrgMember = (await API.graphql({
-            query: mutations.createOrganizationMember,
-            variables: {
-              input: orgMember,
-            },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<CreateOrganizationMemberMutation>
+          const createOrgMember = await Data.createOrganizationMember(orgMember)
           console.log({ createOrgMember: createOrgMember })
         } catch (e) {
           console.log({ error: e })
@@ -236,47 +217,6 @@ class OrganizationImpl extends JCComponent<Props, State> {
     }
   }
 
-  /*handleAlertInputChange(event: any, name: string): void {
-
-    const value = event.target === undefined ? event : event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    console.log(value)
-    const updateData = { ...this.state.OrganizationDetails }
-    if (updateData.alertConfig == null) {
-      const z: {
-        __typename: "AlertConfig";
-        emailDirectMessage: string;
-        emailGroupMessage: string;
-        emailEventMessage: string;
-        emailOrgMessage: string;
-        emailResourceMessage: string;
-        emailCourseMessage: string;
-        emailPromotions: string;
-      } = {
-        __typename: "AlertConfig",
-        emailDirectMessage: "false",
-        emailGroupMessage: "false",
-        emailEventMessage: "false",
-        emailOrgMessage: "false",
-        emailResourceMessage: "false",
-        emailCourseMessage: "false",
-        emailPromotions: "false"
-      }
-      updateData.alertConfig = z
-      delete updateData.alertConfig.__typename
-    }
-    updateData.alertConfig[name] = value.toString()
-    this.setState({
-      OrganizationDetails: updateData,
-      dirty: true
-    }, async () => {
-      try {
-        const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: { id: this.state.OrganizationDetails.id, alertConfig: this.state.OrganizationDetails.alertConfig } }));
-        console.log(updateUser)
-      } catch (e) {
-        console.log(e)
-      }
-    });
-  }*/
   handleInputChange(event: any, name: string): void {
     const value =
       event.target === undefined
@@ -315,7 +255,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       try {
         const toSave = this.clean(this.state.OrganizationDetails)
         toSave["profileState"] = "Complete"
-        await API.graphql(graphqlOperation(mutations.updateOrganization, { input: toSave }))
+        await Data.updateOrganization(toSave)
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ dirty: false, editMode: false })
       } catch (e: any) {
@@ -397,11 +337,10 @@ class OrganizationImpl extends JCComponent<Props, State> {
     }
 
     try {
-      const addAdmins = (await API.graphql(
-        graphqlOperation(mutations.updateOrganization, {
-          input: { id: this.state.OrganizationDetails.id, admins: newAdmins },
-        })
-      )) as GraphQLResult<UpdateOrganizationMutation>
+      const addAdmins = await Data.updateOrganization({
+        id: this.state.OrganizationDetails.id,
+        admins: newAdmins,
+      })
       console.log({ success: addAdmins })
     } catch (err) {
       Sentry.captureException(err)
@@ -418,13 +357,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         organizationId: this.state.OrganizationDetails.id,
       }
       try {
-        const createOrgMember = (await API.graphql({
-          query: mutations.createOrganizationMember,
-          variables: {
-            input: orgMember,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateOrganizationMemberMutation>
+        const createOrgMember = await Data.createOrganizationMember(orgMember)
         console.log({ createOrgMember: createOrgMember })
       } catch (e) {
         console.error(e)
@@ -444,11 +377,10 @@ class OrganizationImpl extends JCComponent<Props, State> {
       (user) => !toRemove.includes(user)
     )
     try {
-      const addAdmins = (await API.graphql(
-        graphqlOperation(mutations.updateOrganization, {
-          input: { id: this.state.OrganizationDetails.id, admins: remainingAdmins },
-        })
-      )) as GraphQLResult<UpdateOrganizationMutation>
+      const addAdmins = await Data.updateOrganization({
+        id: this.state.OrganizationDetails.id,
+        admins: remainingAdmins,
+      })
       console.log({ success: addAdmins })
     } catch (err) {
       Sentry.captureException(err)
@@ -479,13 +411,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
   deleteOrg(): void {
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       if (this.state.OrganizationDetails.superAdmin === user["username"]) {
-        const deleteOrganization = API.graphql({
-          query: mutations.deleteOrganization,
-          variables: {
-            input: { id: this.state.OrganizationDetails.id },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        }) as Promise<GraphQLResult<DeleteOrganizationMutation>>
+        const deleteOrganization = Data.deleteOrganization(this.state.OrganizationDetails.id)
         deleteOrganization
           .then((c) => {
             console.log(c)

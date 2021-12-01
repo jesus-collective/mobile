@@ -2,7 +2,7 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
+import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
@@ -17,13 +17,7 @@ import CrmMessageBoard from "../../components/MessageBoard/CRM-MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import {
-  CreateCrmRootMutation,
-  DeleteUserMutation,
-  GetUserQuery,
-  ListInvoicesMutation,
-  UpdateUserMutation,
-} from "../../src/API"
+import { GetUserQuery, ListInvoicesMutation } from "../../src/API"
 import { GetCrmRootQuery } from "../../src/API-crm"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
@@ -136,11 +130,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           this.setState({ messages: crmRoot.data?.getCRMRoot?.messages?.items ?? [] })
         } else {
           // if CRM does not exist, create it
-          const createCrmRoot = (await API.graphql({
-            query: mutations.createCrmRoot,
-            variables: { input: variables },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<CreateCrmRootMutation>
+          const createCrmRoot = await Data.createCrmRoot(variables)
 
           console.debug("crmRoot created:", createCrmRoot.data?.createCRMRoot)
           // recursive call to fetch data after CRM root is created
@@ -305,14 +295,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
       async () => {
         if (this.state.UserDetails)
           try {
-            const updateUser = (await API.graphql(
-              graphqlOperation(mutations.updateUser, {
-                input: {
-                  id: this.state.UserDetails.id,
-                  alertConfig: this.state.UserDetails.alertConfig,
-                },
-              })
-            )) as GraphQLResult<UpdateUserMutation>
+            const updateUser = await Data.updateUser({
+              id: this.state.UserDetails.id,
+              alertConfig: this.state.UserDetails.alertConfig,
+            })
             console.log(updateUser)
           } catch (e: any) {
             Sentry.captureException(e.errors || e)
@@ -367,9 +353,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       try {
         const toSave = this.clean(this.state.UserDetails)
         toSave["profileState"] = "Complete"
-        const updateUser = (await API.graphql(
-          graphqlOperation(mutations.updateUser, { input: toSave })
-        )) as GraphQLResult<UpdateUserMutation>
+        const updateUser = await Data.updateUser(toSave)
         this.setState({ dirty: false })
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile) this.props.finalizeProfile()
@@ -504,13 +488,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   deleteUser(): void {
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
-      const deleteUser = API.graphql({
-        query: mutations.deleteUser,
-        variables: {
-          input: { id: user["username"] },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<DeleteUserMutation>>
+      const deleteUser = Data.deleteUser(user["username"])
       deleteUser
         .then((c) => {
           console.log(c)
@@ -608,13 +586,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
       console.debug({ updateCognito: updateCognitoUser })
 
-      const updateUser = (await API.graphql({
-        query: mutations.updateUser,
-        variables: {
-          input: this.clean(UserDetails),
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<UpdateUserMutation>
+      const updateUser = await Data.updateUser(this.clean(UserDetails))
 
       console.debug({ updateUser: updateUser })
       this.setState({ passError: "" })

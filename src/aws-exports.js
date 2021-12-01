@@ -9,11 +9,10 @@ const awsmobile = {
     "aws_user_pools_web_client_id": "3jrk6b5qnnper8p4osnaptfa65",
     "oauth": {},
     "federationTarget": "COGNITO_IDENTITY_POOLS",
-    "aws_cognito_login_mechanisms": [
-        "EMAIL",
-        "FACEBOOK",
-        "GOOGLE"
+    "aws_cognito_username_attributes": [
+        "EMAIL"
     ],
+    "aws_cognito_social_providers": [],
     "aws_cognito_signup_attributes": [
         "EMAIL",
         "FAMILY_NAME",
@@ -53,7 +52,12 @@ const awsmobile = {
     "aws_content_delivery_bucket_region": "us-east-1",
     "aws_content_delivery_url": "https://ddy0xjuoytpqt.cloudfront.net",
     "aws_user_files_s3_bucket": "jc-profilebeta-beta",
-    "aws_user_files_s3_bucket_region": "us-east-1"
+    "aws_user_files_s3_bucket_region": "us-east-1",
+    "aws_cognito_login_mechanisms": [
+        "EMAIL",
+        "FACEBOOK",
+        "GOOGLE"
+    ]
 };
 
 

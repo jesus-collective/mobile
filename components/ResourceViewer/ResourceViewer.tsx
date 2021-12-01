@@ -1,9 +1,7 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import {} from "@material-ui/core"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { Analytics, API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import Amplify, { Analytics, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import { Container, Content } from "native-base"
 import * as React from "react"
@@ -13,56 +11,32 @@ import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import {
   CreateGroupInput,
-  CreateGroupMemberMutation,
-  CreateGroupMutation,
   CreateResourceEpisodeInput,
-  CreateResourceEpisodeMutation,
   CreateResourceInput,
   CreateResourceMenuItemInput,
-  CreateResourceMutation,
   CreateResourceRootInput,
   CreateResourceSeriesInput,
-  CreateResourceSeriesMutation,
-  DeleteGroupMemberMutation,
-  DeleteGroupMutation,
-  DeleteResourceEpisodeMutation,
-  DeleteResourceMutation,
-  DeleteResourceSeriesMutation,
   ResourceMenuItemType,
   ResourcePageItemInput,
   ResourcePageItemStyle,
   ResourcePageItemType,
-  UpdateGroupMutation,
   UpdateResourceEpisodeInput,
-  UpdateResourceEpisodeMutation,
   UpdateResourceInput,
-  UpdateResourceMutation,
   UpdateResourceSeriesInput,
-  UpdateResourceSeriesMutation,
   UserGroupType,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
-import * as customQueries from "../../src/graphql-custom/queries"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import {
-  CreateResourceMenuItemMutationResult,
-  CreateResourceRootMutationResult,
-  DeleteResourceMenuItemMutationResult,
   GetGroupQueryResult,
   GetResourceEpisodeData,
   GetResourceRootDataCustom,
-  GetResourceRootQueryResult,
-  GetResourceRootQueryResultPromise,
   GetResourceSeriesData,
   GetUserQueryResult,
   GroupMemberByUserQueryResult,
   GroupMemberByUserQueryResultPromise,
   JCCognitoUser,
   ListResourceRootsQueryResult,
-  ListResourceRootsQueryResultPromise,
   PageItemIndex,
-  UpdateResourceMenuItemMutationResult,
 } from "../../src/types"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent from "../JCComponent/JCComponent"
@@ -245,15 +219,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   async setInitialResourceData(): Promise<void> {
     console.log({ groupData: this.state.groupData })
-    const listResourceRoots: ListResourceRootsQueryResultPromise = API.graphql({
-      query: queries.listResourceRoots,
-      variables: {
-        limit: 100,
-        filter: { groupId: { eq: this.state.groupData?.id } },
-        nextToken: null,
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as ListResourceRootsQueryResultPromise
+    const listResourceRoots = Data.listResourceRoots({ groupId: { eq: this.state.groupData?.id } })
 
     listResourceRoots
       .then((json: ListResourceRootsQueryResult) => {
@@ -266,11 +232,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           console.log({ json: json })
           if (json.data?.listResourceRoots?.items && json.data?.listResourceRoots?.items[0]) {
             console.log({ id: json.data?.listResourceRoots?.items[0].id })
-            const getResourceRoot: GetResourceRootQueryResultPromise = API.graphql({
-              query: customQueries.getResourceRoot,
-              variables: { id: json.data?.listResourceRoots?.items[0].id },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            }) as GetResourceRootQueryResultPromise
+            const getResourceRoot = Data.getResourceRoot(json.data?.listResourceRoots?.items[0].id)
 
             getResourceRoot
               .then((json) => {
@@ -306,11 +268,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         groupId: this.state.groupData?.id,
         organizationId: "0",
       }
-      const createResourceRoot: CreateResourceRootMutationResult = (await API.graphql({
-        query: mutations.createResourceRoot,
-        variables: { input: resourceRoot },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as CreateResourceRootMutationResult
+      const createResourceRoot = await Data.createResourceRoot(resourceRoot)
       console.log({ createResourceRoot: createResourceRoot })
       if (createResourceRoot.data?.createResourceRoot) {
         const menuItem: CreateResourceMenuItemInput = {
@@ -322,18 +280,12 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           resourceRootID: createResourceRoot.data.createResourceRoot.id,
         }
 
-        const createMenuItem: CreateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.createResourceMenuItem,
-          variables: { input: menuItem },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as CreateResourceMenuItemMutationResult
+        const createMenuItem = await Data.createResourceMenuItem(menuItem)
         console.log({ createMenuItem: createMenuItem })
 
-        const getResourceRoot: GetResourceRootQueryResult = (await API.graphql({
-          query: customQueries.getResourceRoot,
-          variables: { id: createResourceRoot.data.createResourceRoot.id },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GetResourceRootQueryResult
+        const getResourceRoot = await Data.getResourceRoot(
+          createResourceRoot.data.createResourceRoot.id
+        )
 
         console.log({ createResourceRoot: createResourceRoot })
         console.log({ resourceRoot: getResourceRoot })
@@ -350,21 +302,6 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
 
-  /*    async DeleteAll(): Promise<void> {
-            try {
-                const listResourceRoots: any = API.graphql({
-                    query: queries.listResourceRoots,
-                    variables: { limit: 20, filter: { groupId: { eq: this.props.groupId } }, nextToken: null },
-                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                });
-                // Promise.all(q)
-                return true
-            }
-            catch (e) {
-                console.log(e)
-            }
-        }*/
-
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
@@ -375,11 +312,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   createGroup = (): void => {
     if (this.validateGroup()) {
-      const createGroup = API.graphql({
-        query: mutations.createGroup,
-        variables: { input: this.state.groupData },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<CreateGroupMutation>>
+      const createGroup = Data.createGroup(this.state.groupData)
       createGroup
         .then((json) => {
           this.setState(
@@ -400,14 +333,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               )
             }
           )
-          console.log({ "Success mutations.createGroup": json })
+          console.log({ "Success Data.createGroup": json })
         })
         .catch((err) => {
-          console.log({ "Error mutations.createGroup": err })
+          console.log({ "Error Data.createGroup": err })
         })
     }
   }
-  clean(item): void {
+  clean(item) {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -424,19 +357,15 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   saveGroup = (): void => {
     if (this.validateGroup()) {
-      const updateGroup = API.graphql({
-        query: mutations.updateGroup,
-        variables: { input: this.clean(this.state.groupData) },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<UpdateGroupMutation>>
+      const updateGroup = Data.updateGroup(this.clean(this.state.groupData))
       updateGroup
         .then((json) => {
           // this.setState({ canDelete: true, canSave: true, createNew: false })
-          console.log({ "Success mutations.updateGroup": json })
+          console.log({ "Success Data.updateGroup": json })
         })
         .catch((err) => {
           Sentry.captureException(err)
-          console.log({ "Error mutations.updateGroup": err })
+          console.log({ "Error Data.updateGroup": err })
         })
     }
   }
@@ -453,20 +382,16 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       )
       groupMemberByUser
         .then((json) => {
-          console.log({ "Success queries.groupMemberByUser": json })
+          console.log({ "Success Data.groupMemberByUser": json })
 
           json.data.groupMemberByUser.items.map((item) => {
-            const deleteGroupMember = API.graphql({
-              query: mutations.deleteGroupMember,
-              variables: { input: { id: item.id } },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
+            const deleteGroupMember = Data.deleteGroupMember(item.id)
             deleteGroupMember
               .then((json) => {
-                console.log({ "Success mutations.deleteGroupMember": json })
+                console.log({ "Success Data.deleteGroupMember": json })
               })
               .catch((err) => {
-                console.log({ "Error mutations.deleteGroupMember": err })
+                console.log({ "Error Data.deleteGroupMember": err })
               })
           })
 
@@ -477,7 +402,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           // this.renderButtons()
         })
         .catch((err) => {
-          console.log({ "Error queries.groupMemberByUser": err })
+          console.log({ "Error Data.groupMemberByUser": err })
         })
     }
   }
@@ -488,17 +413,16 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         // Attribute values must be strings
         attributes: { id: this.state.groupData.id, name: this.state.groupData.name },
       })
-      const createGroupMember = API.graphql({
-        query: mutations.createGroupMember,
-        variables: { input: { groupID: this.state.groupData.id, userID: this.state.currentUser } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<CreateGroupMemberMutation>>
+      const createGroupMember = Data.createGroupMember({
+        groupID: this.state.groupData.id,
+        userID: this.state.currentUser,
+      })
       createGroupMember
         .then((json) => {
-          console.log({ "Success mutations.createGroupMember": json })
+          console.log({ "Success Data.createGroupMember": json })
         })
         .catch((err) => {
-          console.log({ "Error mutations.createGroupMember": err })
+          console.log({ "Error Data.createGroupMember": err })
         })
 
       this.setState({
@@ -512,18 +436,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   deleteGroup = (): void => {
     if (this.state.groupData) {
-      const deleteGroup = API.graphql({
-        query: mutations.deleteGroup,
-        variables: { input: { id: this.state.groupData.id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<DeleteGroupMutation>>
+      const deleteGroup = Data.deleteGroup(this.state.groupData.id)
       deleteGroup
         .then((json) => {
-          console.log({ "Success mutations.deleteGroup": json })
+          console.log({ "Success Data.deleteGroup": json })
           this.props.navigation?.push("HomeScreen")
         })
         .catch((err) => {
-          console.log({ "Error mutations.deleteGroup": err })
+          console.log({ "Error Data.deleteGroup": err })
         })
     }
   }
@@ -561,11 +481,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       try {
         console.log("Creating Resource")
 
-        const createMenuItem: CreateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.createResourceMenuItem,
-          variables: { input: menuItem },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as CreateResourceMenuItemMutationResult
+        const createMenuItem = await Data.createResourceMenuItem(menuItem)
         console.log({ createMenuItem: createMenuItem })
         const temp = this.state.resourceData
         if (createMenuItem.data?.createResourceMenuItem) {
@@ -594,11 +510,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       try {
         console.log("Creating Resource")
 
-        const createResource = (await API.graphql({
-          query: mutations.createResource,
-          variables: { input: resource },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateResourceMutation>
+        const createResource = await Data.createResource(resource)
         console.log({ createResource: createResource })
         const temp = this.state.resourceData
         temp.resources?.items?.push(createResource.data.createResource)
@@ -627,11 +539,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       try {
         console.log("Creating Resource")
 
-        const createResource = (await API.graphql({
-          query: mutations.createResourceSeries,
-          variables: { input: series },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateResourceSeriesMutation>
+        const createResource = await Data.createResourceSeries(series)
         console.log({ createResource: createResource })
         const temp = this.state.resourceData
         if (this.state.currentResource != null && temp) {
@@ -681,11 +589,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       try {
         console.log("Creating Resource")
 
-        const createResource = (await API.graphql({
-          query: mutations.createResourceEpisode,
-          variables: { input: episode },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<CreateResourceEpisodeMutation>
+        const createResource = await Data.createResourceEpisode(episode)
         console.log(createResource)
         const temp = this.state.resourceData
         if (temp && this.state.currentResource != null && this.state.currentSeries != null) {
@@ -729,16 +633,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log({ "Updating MenuItem": menuItemIndex })
       const menuItem = this.getMenuItem(menuItemIndex)
       if (menuItem) {
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              [item]: value,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          [item]: value,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems) {
@@ -851,16 +749,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         if (!rootPageItems) rootPageItems = []
         rootPageItems = this.addToRoot(rootPageItems, pageItem, pageItemIndex)
         console.log({ rootPageItems: rootPageItems })
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              pageItems: rootPageItems,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          pageItems: rootPageItems,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
@@ -885,16 +777,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         let rootPageItems: ResourcePageItemInput[] = menuItem.pageItems
         rootPageItems = this.updateToRoot(rootPageItems, pageItemIndex, value)
 
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              pageItems: rootPageItems,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          pageItems: rootPageItems,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
@@ -914,16 +800,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       if (menuItem) {
         let rootPageItems: ResourcePageItemInput[] = menuItem.pageItems
         rootPageItems = this.deleteToRoot(rootPageItems, pageItemIndex)
-        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.updateResourceMenuItem,
-          variables: {
-            input: {
-              id: menuItem.id,
-              pageItems: rootPageItems,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as UpdateResourceMenuItemMutationResult
+        const updateMenuItem = await Data.updateResourceMenuItem({
+          id: menuItem.id,
+          pageItems: rootPageItems,
+        })
         console.log(updateMenuItem)
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
@@ -947,13 +827,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         delete value.createdAt
         delete value.updatedAt
 
-        const updateResource = (await API.graphql({
-          query: mutations.updateResource,
-          variables: {
-            input: value,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<UpdateResourceMutation>
+        const updateResource = await Data.updateResource(value)
         console.log(updateResource)
         const temp = this.state.resourceData
         if (temp && temp.resources && temp.resources.items) {
@@ -1024,11 +898,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log({ "Deleting MenuItem": menuItemIndex })
       const menuItem = this.getMenuItem(menuItemIndex)
       if (menuItem) {
-        const deleteMenuItem: DeleteResourceMenuItemMutationResult = (await API.graphql({
-          query: mutations.deleteResourceMenuItem,
-          variables: { input: { id: menuItem.id } },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as DeleteResourceMenuItemMutationResult
+        const deleteMenuItem = await Data.deleteResourceMenuItem(menuItem.id)
         console.log(deleteMenuItem)
         const temp = this.state.resourceData
         temp?.menuItems?.items?.splice(menuItemIndex, 1)
@@ -1044,11 +914,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     try {
       const resource = this.getResource(index)
       if (resource) {
-        const deleteResource = (await API.graphql({
-          query: mutations.deleteResource,
-          variables: { input: { id: resource.id } },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<DeleteResourceMutation>
+        const deleteResource = await Data.deleteResource(resource.id)
         console.log(deleteResource)
         const temp = this.state.resourceData
         temp?.resources.items.splice(index, 1)
@@ -1089,13 +955,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       delete value.episodes
       if (value.parentResource) delete value.parentResource
       if (series) {
-        const updateResource = (await API.graphql({
-          query: mutations.updateResourceSeries,
-          variables: {
-            input: value,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<UpdateResourceSeriesMutation>
+        const updateResource = await Data.updateResourceSeries(value)
         console.log(updateResource)
         const temp = this.state.resourceData
         if (temp && temp.resources && temp.resources.items) {
@@ -1114,15 +974,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log({ "Deleting Series": { resource: resourceIndex, series: seriesIndex } })
       const series = this.getSeries(resourceIndex, seriesIndex)
       if (series) {
-        const deleteResource = (await API.graphql({
-          query: mutations.deleteResourceSeries,
-          variables: {
-            input: {
-              id: series.id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<DeleteResourceSeriesMutation>
+        const deleteResource = await Data.deleteResourceSeries(series.id)
         console.log(deleteResource)
         const temp = this.state.resourceData
         temp?.resources.items[resourceIndex]!.series.items.splice(seriesIndex, 1)
@@ -1171,13 +1023,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       if (value.parentSeries) delete value.parentSeries
       const episode = this.getEpisode(resourceIndex, seriesIndex, episodeIndex)
       if (episode) {
-        const updateResourceEpisode = (await API.graphql({
-          query: mutations.updateResourceEpisode,
-          variables: {
-            input: value,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<UpdateResourceEpisodeMutation>
+        const updateResourceEpisode = await Data.updateResourceEpisode(value)
         console.log(updateResourceEpisode)
         const temp = this.state.resourceData
         if (temp) {
@@ -1209,15 +1055,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       })
       const episode = this.getEpisode(resourceIndex, seriesIndex, episodeIndex)
       if (episode) {
-        const deleteResource = (await API.graphql({
-          query: mutations.deleteResourceEpisode,
-          variables: {
-            input: {
-              id: episode.id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<DeleteResourceEpisodeMutation>
+        const deleteResource = await Data.deleteResourceEpisode(episode.id)
         console.log(deleteResource)
         const temp = this.state.resourceData
         if (temp) {

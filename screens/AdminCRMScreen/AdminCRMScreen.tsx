@@ -1,8 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API, Auth, graphqlOperation } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { API, Auth } from "aws-amplify"
 import { MapData } from "components/MyGroups/MyGroups"
 import moment from "moment"
 import { Button, Container, Content, Text } from "native-base"
@@ -11,6 +10,7 @@ import { isMobile } from "react-device-detect"
 import { Picker, TextInput, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
+import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
@@ -19,26 +19,23 @@ import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
-  CreateCustomerMutation,
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
-  CreateOrganizationMutation,
+  CreateStripeCustomerAdminMutationVariables,
   CreateUserInput,
-  CreateUserMutation,
-  DeletePaymentMutation,
-  GetProductQuery,
+  GetUserQuery,
+  GroupByTypeQuery,
   ListProductsQuery,
   PaymentByUserQuery,
   UserGroupType,
 } from "../../src/API"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import { GetUserQueryResult, InviteType } from "../../src/types"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
   route: any
 }
+type StringPair = { Name: string; Value: string }
 type Products = NonNullable<ListProductsQuery["listProducts"]>["items"]
 type Payments = NonNullable<PaymentByUserQuery["paymentByUser"]>["items"]
 interface State extends JCState {
@@ -47,6 +44,9 @@ interface State extends JCState {
   showMy: boolean
   data: any
   invite: string
+  showEdit: boolean
+  showEditId: string | null
+  showEditUserExists: boolean
   showGroups: boolean
   showGroupsId: string | null
   groupData: []
@@ -54,16 +54,19 @@ interface State extends JCState {
   showEmail: boolean
   showPhone: boolean
   showStatus: boolean
-  groupToAdd: string | null
-  groupList: any
+  groupToAdd: string | undefined
+  groupList: string[]
   paymentsData: Payments
   showPayments: boolean
   showPaymentsId: string | null
   productList: Products
   showInvite: boolean
-  inviteType: InviteType | null
-  inviteData: string | null
-  inviteDataList: any
+  inviteType: InviteType | undefined
+  inviteData: string | undefined
+  showEditEmail: string
+  inviteDataList: NonNullable<
+    NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]
+  >["items"]
 }
 
 export default class AdminScreen extends JCComponent<Props, State> {
@@ -75,16 +78,20 @@ export default class AdminScreen extends JCComponent<Props, State> {
       showMap: false,
       showMy: this.props.route.params ? this.props.route.params.mine : false,
       data: [],
+      showEdit: false,
+      showEditId: null,
+      showEditUserExists: false,
       showGroups: false,
       showGroupsId: null,
       showUid: false,
       showEmail: true,
       showPhone: true,
+      showEditEmail: "",
       showStatus: true,
-      groupToAdd: null,
+      groupToAdd: undefined,
       showInvite: false,
       inviteType: InviteType.JC,
-      inviteData: null,
+      inviteData: undefined,
       inviteDataList: [],
       groupList: Object.keys(UserGroupType).map((org: string) => {
         return org
@@ -95,17 +102,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
   async getUsers(nextToken: string | null): Promise<void> {
     console.log("getUsers")
     const data = await this.listUsers(40, nextToken)
-    console.log({ data: data })
     this.setState({ data: this.state.data.concat(data.Users) })
     if (data.nextToken) this.getUsers(data.nextToken)
   }
   async setInitialData(): Promise<void> {
     this.getUsers(null)
 
-    const listProducts = (await API.graphql({
-      query: queries.listProducts,
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })) as GraphQLResult<ListProductsQuery>
+    const listProducts = await Data.listProducts(null)
     console.log(listProducts)
     if (listProducts.data?.listProducts)
       this.setState({ productList: listProducts.data.listProducts.items })
@@ -166,6 +169,22 @@ export default class AdminScreen extends JCComponent<Props, State> {
     const { ...rest } = await API.post(apiName, path, myInit)
     return rest
   }
+  async adminGetUser(user: string) {
+    const apiName = "AdminQueries"
+    const path = "/getUser"
+    const myInit = {
+      queryStringParameters: {
+        username: user,
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+      },
+    }
+    const z = await API.get(apiName, path, myInit)
+    console.log({ adminGetUser: z })
+    return z
+  }
   async adminUpdateUserAttributes(user: string, email: string): Promise<any> {
     console.log(user)
     console.log(email)
@@ -224,42 +243,78 @@ export default class AdminScreen extends JCComponent<Props, State> {
   renderHeader(): React.ReactNode {
     return (
       <View style={this.styles.style.adminCRMTableContainer}>
-        <View style={this.styles.style.AdminFirstNameTableHeader}>
-          <Text style={this.styles.style.adminCRMTableHeading}>First Name</Text>
-        </View>
-        <View style={this.styles.style.AdminLastNameTableHeader}>
-          <Text style={this.styles.style.adminCRMTableHeading}>Last Name</Text>
+        <View
+          style={[
+            this.styles.style.AdminFirstNameTableHeader,
+            this.styles.style.adminCRMTableHeading,
+          ]}
+        >
+          <Text>Name</Text>
         </View>
         {this.state.showUid ? (
-          <View style={this.styles.style.AdminUserIdTableHeader}>
-            <Text style={this.styles.style.adminCRMTableHeading}>User id</Text>
+          <View
+            style={[
+              this.styles.style.AdminUserIdTableHeader,
+              this.styles.style.adminCRMTableHeading,
+            ]}
+          >
+            <Text>User id</Text>
           </View>
         ) : null}
         {this.state.showEmail ? (
-          <View style={this.styles.style.adminCRMTableHeader}>
-            <Text style={this.styles.style.adminCRMTableHeading}>Email</Text>
+          <View
+            style={[this.styles.style.adminCRMTableHeader, this.styles.style.adminCRMTableHeading]}
+          >
+            <Text>Email</Text>
           </View>
         ) : null}
         {this.state.showPhone && !isMobile ? (
-          <View style={this.styles.style.AdminPhoneTableHeader}>
-            <Text style={this.styles.style.adminCRMTableHeading}>Phone</Text>
+          <View
+            style={[
+              this.styles.style.AdminPhoneTableHeader,
+              this.styles.style.adminCRMTableHeading,
+            ]}
+          >
+            <Text>Phone</Text>
           </View>
         ) : null}
         {this.state.showStatus && !isMobile ? (
-          <View style={this.styles.style.AdminStatusTableHeader}>
-            <Text style={this.styles.style.adminCRMTableHeading}>Status</Text>
+          <View
+            style={[
+              this.styles.style.AdminStatusTableHeader,
+              this.styles.style.adminCRMTableHeading,
+            ]}
+          >
+            <Text>Status</Text>
           </View>
         ) : null}
         {!isMobile ? (
-          <View style={this.styles.style.AdminEnabledTableHeader}>
-            <Text style={this.styles.style.adminCRMTableHeading}>Enabled</Text>
+          <View
+            style={[
+              this.styles.style.AdminEnabledTableHeader,
+              this.styles.style.adminCRMTableHeading,
+            ]}
+          >
+            <Text>Enabled</Text>
           </View>
         ) : null}
-        <View style={this.styles.style.AdminGroupsTableHeader}>
-          <Text style={this.styles.style.adminCRMTableHeading}>Groups</Text>
+        <View
+          style={[this.styles.style.AdminGroupsTableHeader, this.styles.style.adminCRMTableHeading]}
+        >
+          <Text>Edit</Text>
         </View>
-        <View style={this.styles.style.AdminPaymentsTableHeader}>
-          <Text style={this.styles.style.adminCRMTableHeading}>Payments</Text>
+        <View
+          style={[this.styles.style.AdminGroupsTableHeader, this.styles.style.adminCRMTableHeading]}
+        >
+          <Text>Groups</Text>
+        </View>
+        <View
+          style={[
+            this.styles.style.AdminPaymentsTableHeader,
+            this.styles.style.adminCRMTableHeading,
+          ]}
+        >
+          <Text>Payments</Text>
         </View>
       </View>
     )
@@ -273,11 +328,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       },
       async () => {
         try {
-          const payments = (await API.graphql({
-            query: queries.paymentByUser,
-            variables: { userID: id },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          })) as GraphQLResult<PaymentByUserQuery>
+          const payments = await Data.paymentByUser(id)
           console.log(payments)
 
           this.setState({ paymentsData: payments.data?.paymentByUser?.items })
@@ -299,9 +350,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     console.log(group)
 
     try {
-      const saveResult = (await API.graphql(
-        graphqlOperation(mutations.deletePayment, { input: { id: group } })
-      )) as GraphQLResult<DeletePaymentMutation>
+      const saveResult = await Data.deletePayment(group)
       console.log(saveResult)
     } catch (e) {
       console.error(e)
@@ -317,18 +366,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
     console.log(group)
 
     try {
-      const saveResult = (await API.graphql(
-        graphqlOperation(mutations.createPayment, {
-          input: {
-            id: group + "-" + user,
-            productID: group,
-            userID: user,
-            dateCompleted: Date.now(),
-            paymentType: "Admin/CRM",
-            paymentInfo: "By: ",
-          },
-        })
-      )) as GraphQLResult<GetProductQuery>
+      const saveResult = await Data.createPayment({
+        id: group + "-" + user,
+        productID: group,
+        userID: user,
+        dateCompleted: Date.now().toString(),
+        paymentType: "Admin/CRM",
+        paymentInfo: "By: ",
+      })
       console.log(saveResult)
     } catch (e) {
       console.error(e)
@@ -352,6 +397,41 @@ export default class AdminScreen extends JCComponent<Props, State> {
       showInvite: true,
     })
   }
+
+  async saveEdit(id: string, email: string): Promise<void> {
+    try {
+      const a1 = await this.adminUpdateUserAttributes(id, email)
+      console.log({ adminUpdateUserAttributes: a1 })
+      const a2 = await Data.updateUser({ id: id, email: email })
+      console.log({ updateUser: a2 })
+      const user = await this.adminGetUser(id)
+      console.log({ adminGetUser: user })
+      const a3 = await this.createStripeUser({
+        idempotency: uuidv4(),
+        userId: user.Username,
+        firstName: user.UserAttributes.find((z: StringPair) => z.Name == "given_name").Value,
+        lastName: user.UserAttributes.find((z: StringPair) => z.Name == "family_name").Value,
+        email: user.UserAttributes.find((z: StringPair) => z.Name == "email").Value,
+        phone: user.UserAttributes.find((z: StringPair) => z.Name == "phone_number").Value,
+        orgName: user?.UserAttributes.find((z: StringPair) => z.Name == "custom:orgName").Value,
+      })
+      console.log({ createStripeUser: a3 })
+    } catch (e) {
+      console.log({ "Error Updating": e })
+    }
+    this.setState({ data: [] }, async () => {
+      this.getUsers(null)
+    })
+    this.closeEdit()
+  }
+  closeEdit(): void {
+    this.setState({
+      showEdit: false,
+      showEditId: null,
+      showEditEmail: "",
+      showEditUserExists: false,
+    })
+  }
   closeGroups(): void {
     this.setState({
       showGroups: false,
@@ -365,6 +445,23 @@ export default class AdminScreen extends JCComponent<Props, State> {
   async addGroup(user: string, group: string): Promise<void> {
     await this.addUserToGroup(user, group)
     if (this.state.showGroupsId) this.showGroups(this.state.showGroupsId)
+  }
+  async showEdit(id: string, email: string): Promise<void> {
+    console.log({ id: id })
+    let z
+    try {
+      z = await Data.getUser(id)
+      console.log(z)
+    } catch (e) {
+      z = e as GraphQLResult<GetUserQuery>
+      console.log(e)
+    }
+    this.setState({
+      showEdit: true,
+      showEditId: id,
+      showEditEmail: email,
+      showEditUserExists: z?.data?.getUser != null,
+    })
   }
   async showGroups(id: string): Promise<void> {
     this.setState(
@@ -385,64 +482,100 @@ export default class AdminScreen extends JCComponent<Props, State> {
   renderRow(item: any, index: number): React.ReactNode {
     return (
       <View key={index} style={this.styles.style.AdminTableRowContainer}>
-        <View style={this.styles.style.AdminFirstNameTableRow}>
-          <Text style={this.styles.style.adminCRMTableParagraph}>
-            <TouchableOpacity
-              onPress={() => {
-                this.showProfile(item.Username)
-              }}
-            >
-              {item.Attributes.find((e: any) => e.Name == "given_name")?.Value}
-            </TouchableOpacity>
-          </Text>
-        </View>
-        <View style={this.styles.style.AdminLastNameTableRow}>
-          <Text style={this.styles.style.adminCRMTableParagraph}>
-            <TouchableOpacity
-              onPress={() => {
-                this.showProfile(item.Username)
-              }}
-            >
+        <View
+          style={[
+            this.styles.style.AdminFirstNameTableRow,
+            this.styles.style.adminCRMTableParagraph,
+          ]}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              this.showProfile(item.Username)
+            }}
+          >
+            <Text>
+              {item.Attributes.find((e: any) => e.Name == "given_name")?.Value}{" "}
               {item.Attributes.find((e: any) => e.Name == "family_name")?.Value}
-            </TouchableOpacity>
-          </Text>
+            </Text>
+          </TouchableOpacity>
         </View>
         {this.state.showUid ? (
-          <View style={this.styles.style.AdminUserIdTableRow}>
+          <View
+            style={[
+              this.styles.style.AdminUserIdTableRow,
+              this.styles.style.adminCRMTableParagraph,
+            ]}
+          >
             <TouchableOpacity
               onPress={() => {
                 this.showProfile(item.Username)
               }}
             >
-              <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
+              <Text>{item.Username}</Text>
             </TouchableOpacity>
           </View>
         ) : null}
         {this.state.showEmail ? (
-          <View style={this.styles.style.adminCRMTableRow}>
-            <Text style={this.styles.style.adminCRMTableParagraph}>
-              {item.Attributes.find((e: any) => e.Name == "email")?.Value}
-            </Text>
+          <View
+            style={[this.styles.style.adminCRMTableRow, this.styles.style.adminCRMTableParagraph]}
+          >
+            <Text>{item.Attributes.find((e: any) => e.Name == "email")?.Value}</Text>
           </View>
         ) : null}
         {this.state.showPhone && !isMobile ? (
-          <View style={this.styles.style.AdminPhoneTableRow}>
-            <Text style={this.styles.style.adminCRMTableEmailStatus}>
-              {item.Attributes.find((e: any) => e.Name == "phone_number")?.Value}
-            </Text>
+          <View
+            style={[this.styles.style.AdminPhoneTableRow, this.styles.style.adminCRMTableParagraph]}
+          >
+            <Text>{item.Attributes.find((e: any) => e.Name == "phone_number")?.Value}</Text>
           </View>
         ) : null}
         {this.state.showStatus && !isMobile ? (
-          <View style={this.styles.style.AdminStatusTableRow}>
-            <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.UserStatus}</Text>
+          <View
+            style={[
+              this.styles.style.AdminStatusTableRow,
+              this.styles.style.adminCRMTableParagraph,
+            ]}
+          >
+            <Text>{item.UserStatus}</Text>
           </View>
         ) : null}
         {!isMobile ? (
-          <View style={this.styles.style.AdminEnabledTableRow}>
-            <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
+          <View
+            style={[
+              this.styles.style.AdminEnabledTableRow,
+              this.styles.style.adminCRMTableParagraph,
+            ]}
+          >
+            <Text>{item.Enabled.toString()}</Text>
           </View>
         ) : null}
-
+        <View style={this.styles.style.AdminGroupBTTableRow}>
+          {!isMobile ? (
+            <JCButton
+              buttonType={ButtonTypes.AdminSmallOutline}
+              onPress={() => {
+                this.showEdit(
+                  item.Username,
+                  item.Attributes.find((e: any) => e.Name == "email")?.Value
+                )
+              }}
+            >
+              Edit
+            </JCButton>
+          ) : (
+            <Button
+              transparent
+              onPress={() => {
+                this.showEdit(
+                  item.Username,
+                  item.Attributes.find((e: any) => e.Name == "email")?.Value
+                )
+              }}
+            >
+              <Ionicons name="create-outline" style={this.styles.style.icon} />
+            </Button>
+          )}
+        </View>
         <View style={this.styles.style.AdminGroupBTTableRow}>
           {!isMobile ? (
             <JCButton
@@ -518,13 +651,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           }
 
           try {
-            const createUser = (await API.graphql({
-              query: mutations.createUser,
-              variables: {
-                input: inputData,
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })) as GraphQLResult<CreateUserMutation>
+            const createUser = await Data.createUser(inputData)
 
             userExists = true
             console.log({ createUser: createUser })
@@ -555,15 +682,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
             let orgId = ""
 
             try {
-              const createOrg = (await API.graphql({
-                query: mutations.createOrganization,
-                variables: {
-                  input: orgInput,
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })) as GraphQLResult<CreateOrganizationMutation>
+              const createOrg = await Data.createOrganization(orgInput)
               console.log({ createOrg: createOrg })
-              orgId = createOrg?.data?.createOrganization?.id
+              orgId = createOrg?.data?.createOrganization?.id ?? ""
             } catch (e: any) {
               if (e?.data?.createOrganization) orgId = e.data.createOrganization.id
               console.error({ error: e })
@@ -576,13 +697,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             }
 
             try {
-              const createOrgMember = (await API.graphql({
-                query: mutations.createOrganizationMember,
-                variables: {
-                  input: orgMember,
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })) as GraphQLResult<CreateOrganizationMutation>
+              const createOrgMember = await Data.createOrganizationMember(orgMember)
               console.log({ createOrgMember: createOrgMember })
             } catch (e) {
               console.log({ error: e })
@@ -611,23 +726,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
       await this.addUserToGroup(z.User.Username, "courseUser")
     }
     await this.createUser(z.User)
-    await this.createStripeUser(z.User)
+    await this.createStripeUser({
+      idempotency: uuidv4(),
+      userId: z.User.Username,
+      firstName: z.User.attributes.given_name,
+      lastName: z.User.attributes.family_name,
+      email: z.User.attributes.email,
+      phone: z.User.attributes.phone_number,
+      orgName: z.User?.attributes["custom:orgName"],
+    })
   }
-  async createStripeUser(user: any): Promise<boolean> {
+  async createStripeUser(userData: CreateStripeCustomerAdminMutationVariables): Promise<boolean> {
     try {
-      console.log(user)
-      const customer = (await API.graphql({
-        query: mutations.createCustomer,
-        variables: {
-          idempotency: uuidv4(),
-          firstName: user.attributes.given_name,
-          lastName: user.attributes.family_name,
-          email: user.attributes.email,
-          phone: user.attributes.phone_number,
-          orgName: user?.attributes!["custom:orgName"],
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCustomerMutation>
+      const customer = await Data.createStripeCustomerAdmin(userData)
       console.log({ customer: customer })
       return true
       //customerId = customer.data.createCustomer.customer.id;
@@ -635,6 +746,42 @@ export default class AdminScreen extends JCComponent<Props, State> {
       console.log(e)
       return false
     }
+  }
+  renderEditModal(): React.ReactNode {
+    return (
+      <JCModal
+        visible={this.state.showEdit}
+        title="Edit"
+        onHide={() => {
+          this.closeEdit()
+        }}
+      >
+        <EditableText
+          isEditable={true}
+          value={this.state.showEditEmail}
+          placeholder="Email"
+          onChange={(value) => {
+            this.setState({ showEditEmail: value })
+          }}
+          textStyle={{}}
+          multiline={false}
+        />
+        {this.state.showEditUserExists ? (
+          <>User Profile exists</>
+        ) : (
+          <>User Profile Does not exist</>
+        )}
+        <JCButton
+          buttonType={ButtonTypes.AdminAdd}
+          onPress={async () => {
+            if (this.state.showEditId && this.state.showEditEmail)
+              await this.saveEdit(this.state.showEditId, this.state.showEditEmail)
+          }}
+        >
+          Save Change
+        </JCButton>
+      </JCModal>
+    )
   }
   renderGroupsModal(): React.ReactNode {
     return (
@@ -695,7 +842,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
             >
               {" "}
-              <Picker.Item value={null} label="pick a group to add" />
+              <Picker.Item value={undefined} label="pick a group to add" />
               {this.state.groupList.map((item, index: number) => {
                 return <Picker.Item key={index} value={item} label={item} />
               })}
@@ -773,7 +920,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
             >
               {" "}
-              <Picker.Item value={null} label="pick a group to add" />
+              <Picker.Item value={undefined} label="pick a group to add" />
               {this.state.productList?.map((item: any, index) => {
                 console.log(item)
                 return <Picker.Item key={index} value={item.id} label={item.name} />
@@ -825,19 +972,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
               paddingRight: 10,
               marginTop: 10,
             }}
-            selectedValue={this.state.inviteType}
+            selectedValue={this.state.inviteType?.toString()}
             onValueChange={(val) => {
-              this.setState({ inviteType: val, inviteData: null, inviteDataList: [] }, () => {
+              this.setState({ inviteType: val, inviteData: undefined, inviteDataList: [] }, () => {
                 this.updateInviteDataList(null)
               })
             }}
           >
-            <Picker.Item value={null} label="pick a group to add" />
-            <Picker.Item value={InviteType.JC} label="Invite to Jesus Collective" />
-            <Picker.Item value={InviteType.course} label="Invite to Course" />
-            <Picker.Item value={InviteType.group} label="Invite to Group" />
-            <Picker.Item value={InviteType.event} label="Invite to Event" />
-            <Picker.Item value={InviteType.resource} label="Invite to Resource" />
+            <Picker.Item value={undefined} label="pick a group to add" />
+            <Picker.Item value={InviteType.JC.toString()} label="Invite to Jesus Collective" />
+            <Picker.Item value={InviteType.course.toString()} label="Invite to Course" />
+            <Picker.Item value={InviteType.group.toString()} label="Invite to Group" />
+            <Picker.Item value={InviteType.event.toString()} label="Invite to Event" />
+            <Picker.Item value={InviteType.resource.toString()} label="Invite to Resource" />
           </Picker>
 
           {this.state.inviteType != null && this.state.inviteType != InviteType.JC ? (
@@ -847,9 +994,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 this.setState({ inviteData: val })
               }}
             >
-              <Picker.Item value={null} label="pick a group to add" />
-              {this.state.inviteDataList.map((item, index: number) => {
-                return <Picker.Item key={index} value={item.value} label={item.name} />
+              <Picker.Item value={undefined} label="pick a group to add" />
+              {this.state.inviteDataList?.map((item, index: number) => {
+                return <Picker.Item key={index} value={item?.id} label={item?.name ?? ""} />
               })}
             </Picker>
           ) : null}
@@ -954,8 +1101,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                           </JCButton>
                         </View>
                       </View>
-
-                      <Content style={{ width: "100%" }}>
+                      <View style={{ width: "100%" }}>
                         {this.renderHeader()}
                         {this.state.data
                           ? this.state.data.map((item: any, index: number) => {
@@ -963,7 +1109,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                               return this.renderRow(item, index)
                             })
                           : null}
-                      </Content>
+                      </View>
                     </View>
                   </Container>
                 </Content>
@@ -979,6 +1125,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               {this.renderGroupsModal()}
               {this.renderPaymentsModal()}
               {this.renderInviteModal()}
+              {this.renderEditModal()}
             </Container>
           )
         }}

@@ -38,7 +38,7 @@ async function listUsers(nextToken) {
   return await Amplify.API.graphql({
     query: queries.listUsers,
     variables: {
-      limit: 20,
+      limit: 100,
       filter: { profileState: { eq: "Complete" } },
       nextToken: nextToken,
     },
@@ -47,7 +47,7 @@ async function listUsers(nextToken) {
 }
 async function getAllUsers() {
   var json = await listUsers(null)
-  var items = [json.data.listUsers.items]
+  var items = json.data.listUsers.items
   while (json.data.listUsers.nextToken !== null) {
     json = await listUsers(json.data.listUsers.nextToken)
     console.log(json.data.listUsers.nextToken)

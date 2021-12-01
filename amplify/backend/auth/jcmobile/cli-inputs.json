@@ -1,0 +1,163 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "jc_mobile44a13962_identitypool_44a13962",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "jcmobi44a13962",
+    "userPoolName": "jc_mobile44a13962_userpool_44a13962",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
+    "mfaConfiguration": "OPTIONAL",
+    "mfaTypes": [
+      "SMS Text Message",
+      "TOTP"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+      "email",
+      "family_name",
+      "given_name",
+      "phone_number"
+    ],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+      "address",
+      "birthdate",
+      "middle_name",
+      "gender",
+      "locale",
+      "name",
+      "nickname",
+      "preferred_username",
+      "picture",
+      "profile",
+      "updated_at",
+      "website",
+      "zoneinfo",
+      "email",
+      "family_name",
+      "given_name",
+      "phone_number",
+      "custom:orgName",
+      "custom:isOrg"
+    ],
+    "userpoolClientReadAttributes": [
+      "address",
+      "birthdate",
+      "email",
+      "family_name",
+      "middle_name",
+      "gender",
+      "locale",
+      "given_name",
+      "name",
+      "nickname",
+      "phone_number",
+      "preferred_username",
+      "picture",
+      "profile",
+      "updated_at",
+      "website",
+      "zoneinfo",
+      "email_verified",
+      "phone_number_verified",
+      "custom:orgName",
+      "custom:isOrg"
+    ],
+    "userpoolClientLambdaRole": "jcmobi44a13962_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
+    "authSelections": "identityPoolAndUserPool",
+    "resourceName": "jcmobile",
+    "serviceName": "Cognito",
+    "useDefault": "manual",
+    "userPoolGroupList": [
+      "userpool"
+    ],
+    "userPoolGroups": true,
+    "usernameAttributes": [
+      "email"
+    ],
+    "adminQueries": true,
+    "adminQueryGroup": "admin",
+    "hostedUI": false,
+    "thirdPartyAuth": true,
+    "authProviders": [
+      "graph.facebook.com",
+      "accounts.google.com"
+    ],
+    "triggers": {
+      "PostConfirmation": [
+        "add-to-group"
+      ],
+      "PreSignup": [
+        "custom"
+      ],
+      "PreTokenGeneration": [
+        "custom"
+      ]
+    },
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": false,
+    "useEnabledMfas": false,
+    "dependsOn": [
+      {
+        "category": "function",
+        "resourceName": "jcmobilePostConfirmation",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      },
+      {
+        "category": "function",
+        "resourceName": "jcmobilePreSignup",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      },
+      {
+        "category": "function",
+        "resourceName": "jcmobilePreTokenGeneration",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      }
+    ],
+    "permissions": [
+      "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
+    ],
+    "authTriggerConnections": [
+      "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"jcmobilePostConfirmation\"}",
+      "{\"triggerType\":\"PreSignUp\",\"lambdaFunctionName\":\"jcmobilePreSignup\"}",
+      "{\"triggerType\":\"PreTokenGeneration\",\"lambdaFunctionName\":\"jcmobilePreTokenGeneration\"}"
+    ],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    }
+  }
+}

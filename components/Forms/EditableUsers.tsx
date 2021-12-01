@@ -1,12 +1,10 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { API } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import React from "react"
 import Chips, { Chip } from "react-chips"
 import { Text } from "react-native"
+import { Data } from "../../components/Data/Data"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { SearchUsersQuery } from "../../src/API"
-import * as queries from "../../src/graphql/queries"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
@@ -59,19 +57,12 @@ export default class EditableText extends JCComponent<Props> {
   > {
     let searchUsers
     try {
-      searchUsers = (await API.graphql({
-        query: queries.searchUsers,
-        variables: {
-          filter: {
-            or: [
-              { given_name: { wildcard: value.toLowerCase() + "*" } },
-              { family_name: { wildcard: value.toLowerCase() + "*" } },
-            ],
-          },
-          limit: 10,
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<SearchUsersQuery>
+      searchUsers = await Data.searchUsers({
+        or: [
+          { given_name: { wildcard: value.toLowerCase() + "*" } },
+          { family_name: { wildcard: value.toLowerCase() + "*" } },
+        ],
+      })
       return searchUsers.data?.searchUsers?.items
     } catch (e: any) {
       console.log({ Error: e })

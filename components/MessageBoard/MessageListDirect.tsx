@@ -9,6 +9,7 @@ import { Body, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
 import { ActivityIndicator, Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
 import Observable, { ZenObservable } from "zen-observable-ts"
+import { Data } from "../../components/Data/Data"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import {
   DirectMessagesByRoomQuery,
@@ -21,7 +22,6 @@ import {
   getDirectMessage,
   onCreateDirectMessageReply,
 } from "../../src/graphql-custom/messages"
-import * as queries from "../../src/graphql/queries"
 import { onCreateDirectMessage } from "../../src/graphql/subscriptions"
 import ProfileImage from "../ProfileImage/ProfileImage"
 import MessageUtils from "./MessageUtils"
@@ -110,13 +110,9 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
             incoming.value?.data?.onCreateDirectMessage?.messageRoomID === this.props.roomId
           ) {
             try {
-              const directMessage = (await API.graphql({
-                query: queries.getDirectMessage,
-                variables: {
-                  id: incoming.value.data.onCreateDirectMessage.id,
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })) as GraphQLResult<GetDirectMessageQuery>
+              const directMessage = await Data.getDirectMessage(
+                incoming.value.data.onCreateDirectMessage.id
+              )
 
               if (directMessage.data?.getDirectMessage) {
                 this.setState({

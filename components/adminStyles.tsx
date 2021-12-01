@@ -7,6 +7,7 @@ const adminStyles = EStyleSheet.create({
   },
   adminCRMTableParagraph: {
     fontFamily: "Graphik-Regular-App",
+    fontSize: 10,
     color: "#000000",
     paddingLeft: 10,
   },
@@ -61,7 +62,7 @@ const adminStyles = EStyleSheet.create({
     paddingTop: 10,
     paddingRight: 10,
     paddingLeft: 10,
-    width: 1300,
+    width: "100%",
     justifyContent: "center",
   },
   adminCRMTableRow: {
@@ -193,7 +194,7 @@ const adminStyles = EStyleSheet.create({
       overscrollX: "auto",
     },
     adminCRMTableContainer: {
-      width: 768,
+      width: "100%",
       alignSelf: "center",
       height: "auto",
       paddingLeft: 50,
@@ -217,6 +218,7 @@ const adminStyles = EStyleSheet.create({
     },
     adminCRMTableParagraph: {
       paddingRight: 20,
+      fontSize: 10,
     },
     AdminUserIdTableHeader: {
       flex: 1,
@@ -237,7 +239,7 @@ const adminStyles = EStyleSheet.create({
     },
 
     adminCRMTableParagraph: {
-      fontSize: 14,
+      fontSize: 10,
     },
     adminCRMTableEmailStatus: {
       fontSize: 14,
@@ -283,6 +285,7 @@ const adminStyles = EStyleSheet.create({
     },
     adminCRMTableParagraph: {
       paddingRight: 10,
+      fontSize: 10,
     },
     adminCRMTableHeader: {
       alignSelf: "center",

@@ -1,13 +1,14 @@
-﻿import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
+﻿import Amplify, { Auth } from "aws-amplify"
 import { View } from "native-base"
 import React from "react"
 import { Button, Text } from "react-native"
 import { JCCognitoUser } from "src/types"
+import { Data } from "../../Components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { PaidState } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
-import * as mutations from "../../src/graphql/mutations"
 Amplify.configure(awsConfig)
 
 interface Props {
@@ -20,14 +21,11 @@ export default class SignUpScreen2 extends JCComponent<Props> {
     console.log("Finish Payment")
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      await API.graphql(
-        graphqlOperation(mutations.updateUser, {
-          input: {
-            id: user["username"],
-            hasPaidState: "Success",
-          },
-        })
-      )
+      await Data.updateUser({
+        id: user["username"],
+        hasPaidState: PaidState.Success,
+      })
+
       actions.recheckUserState()
     } catch (e) {
       console.log({ Error: e })

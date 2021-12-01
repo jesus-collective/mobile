@@ -1,13 +1,10 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API, graphqlOperation } from "aws-amplify"
 import { Container, Content, Text } from "native-base"
 import React, { useEffect, useState } from "react"
 import { Image } from "react-native"
+import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Header from "../../components/Header/Header"
-import { GetProductQuery } from "../../src/API"
-import * as queries from "../../src/graphql/queries"
 
 interface Params {
   navigation: StackNavigationProp<any, any>
@@ -24,9 +21,7 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
   useEffect(() => {
     async function getProduct() {
       try {
-        const getProduct = (await API.graphql(
-          graphqlOperation(queries.getProduct, { id: productId })
-        )) as GraphQLResult<GetProductQuery>
+        const getProduct = await Data.getProduct(productId)
         setProductExists(Boolean(getProduct.data.getProduct))
         setMessage(getProduct.data.getProduct?.confirmationMsg)
       } catch (e) {

@@ -3,13 +3,12 @@ import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import React, { useEffect, useState } from "react"
 import Observable from "zen-observable-ts"
+import { Data } from "../../../components/Data/Data"
 import { DirectMessage } from "../../../src/API"
 import {
-  GetDirectMessageQuery,
   OnCreateDirectMessageReplySubscription,
   OnCreateDirectMessageSubscription,
 } from "../../../src/API-messages"
-import * as queries from "../../../src/graphql-custom/queries"
 import {
   onCreateDirectMessage,
   onCreateDirectMessageReply,
@@ -133,13 +132,9 @@ export default function Messages(props: Props): JSX.Element {
           incoming?.value?.data?.onCreateDirectMessage?.messageRoomID === room?.id
         ) {
           try {
-            const directMessage = (await API.graphql({
-              query: queries.getDirectMessage,
-              variables: {
-                id: incoming.value.data.onCreateDirectMessage.id,
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })) as GraphQLResult<GetDirectMessageQuery>
+            const directMessage = await Data.getDirectMessage(
+              incoming.value.data.onCreateDirectMessage.id
+            )
             if (directMessage.data?.getDirectMessage) {
               appendNewResponse(directMessage.data?.getDirectMessage as DirectMessage)
             }
@@ -168,13 +163,9 @@ export default function Messages(props: Props): JSX.Element {
         ) {
           try {
             const parentId = incoming.value.data?.onCreateDirectMessageReply?.messageId
-            const updatedMessage = (await API.graphql({
-              query: queries.getDirectMessage,
-              variables: {
-                id: incoming.value.data.onCreateDirectMessageReply.messageId,
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })) as GraphQLResult<GetDirectMessageQuery>
+            const updatedMessage = await Data.getDirectMessage(
+              incoming.value.data.onCreateDirectMessageReply.messageId
+            )
             if (thread?.replies) {
               const indexInStaleThread = thread.replies.findIndex((r) => {
                 return r?.messageId === parentId

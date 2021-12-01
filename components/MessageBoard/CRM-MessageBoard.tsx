@@ -12,20 +12,18 @@ import { Editor } from "react-draft-wysiwyg"
 import { Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import Observable, { ZenObservable } from "zen-observable-ts"
+import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import {
   CreateCRMMessageInput,
-  CreateCrmMessageMutation,
   CreateCRMReplyInput,
-  CreateCrmReplyMutation,
   GetUserQuery,
   OnCreateCrmMessageByRootIdSubscription,
   OnCreateCrmReplyByRootIdSubscription,
 } from "../../src/API"
 import { GetCrmRootQuery } from "../../src/API-crm"
-import { createCrmMessage, createCrmReply } from "../../src/graphql/mutations"
 import { getUser } from "../../src/graphql/queries"
 import {
   onCreateCrmMessageByRootId,
@@ -327,18 +325,14 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
     }
 
     try {
-      const createMessage = (await API.graphql({
-        query: createCrmMessage,
-        variables: { input },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCrmMessageMutation>
-      console.log({ "Success mutations.createCrmMessage": createMessage })
+      const createMessage = await Data.createCrmMessage(input)
+      console.log({ "Success Data.createCrmMessage": createMessage })
       this.setState({
         editorState: EditorState.createEmpty(),
         attachment: "",
       })
     } catch (err: any) {
-      console.error({ "Error mutations.createCrmMessage": err })
+      console.error({ "Error Data.createCrmMessage": err })
       if (err.data.createCrmMessage) {
         this.setState({
           editorState: EditorState.createEmpty(),
@@ -474,13 +468,9 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
         parentId: replyToParentId,
       }
 
-      const createReply = (await API.graphql({
-        query: createCrmReply,
-        variables: { input },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCrmReplyMutation>
+      const createReply = await Data.createCrmReply(input)
 
-      console.log({ "Success mutations.createCrmReply": createReply })
+      console.log({ "Success Data.createCrmReply": createReply })
       this.setState({
         editorState: EditorState.createEmpty(),
         attachment: "",
@@ -489,7 +479,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
       })
     } catch (e: any) {
       if (e.data?.createCrmReply) {
-        console.log({ "Success mutations.createCrmReply": e.data })
+        console.log({ "Success Data.createCrmReply": e.data })
         this.setState({
           editorState: EditorState.createEmpty(),
           attachment: "",
@@ -497,7 +487,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
           replyToWho: "",
         })
       } else {
-        console.error({ "Error mutations.createCrmReply": e })
+        console.error({ "Error Data.createCrmReply": e })
       }
     }
   }

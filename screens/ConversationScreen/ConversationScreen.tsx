@@ -1,23 +1,17 @@
-﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Auth } from "aws-amplify"
 import { Container, Content } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import {
-  CreateDirectMessageRoomMutation,
-  CreateDirectMessageUserMutation,
-  ListDirectMessageUsersQuery,
-} from "src/API"
+import { CreateDirectMessageUserMutation } from "src/API"
 import { GetDirectMessageUserQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
+import { Data } from "../../components/Data/Data"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import * as customQueries from "../../src/graphql-custom/queries"
-import * as mutations from "../../src/graphql/mutations"
 
 interface Props {
   navigation?: StackNavigationProp<any, any>
@@ -56,28 +50,21 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser()
       .then((user: JCCognitoUser) => {
-        const createDirectMessageRoom = API.graphql({
-          query: mutations.createDirectMessageRoom,
-          variables: { input: { name: "", roomType: "directMessage" } },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        }) as Promise<GraphQLResult<CreateDirectMessageRoomMutation>>
+        const createDirectMessageRoom = Data.createDirectMessageRoom({
+          name: "",
+          roomType: "directMessage",
+        })
         createDirectMessageRoom
           .then((json) => {
             console.log({ createDirectMessageRoom: json })
             console.log("createDMUser")
             const addDM2 = (json2: GraphQLResult<CreateDirectMessageUserMutation>) => {
               console.log({ Dm2: json2 })
-              const createDirectMessageUser2 = API.graphql({
-                query: mutations.createDirectMessageUser,
-                variables: {
-                  input: {
-                    roomID: json.data?.createDirectMessageRoom?.id,
-                    userID: toUserID,
-                    userName: toUserName,
-                  },
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              }) as Promise<GraphQLResult<CreateDirectMessageUserMutation>>
+              const createDirectMessageUser2 = Data.createDirectMessageUser({
+                roomID: json.data?.createDirectMessageRoom?.id,
+                userID: toUserID,
+                userName: toUserName,
+              })
               createDirectMessageUser2
                 .then(() => {
                   console.log(json2)
@@ -91,18 +78,11 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                 })
             }
             const myUserName = user.attributes?.given_name + " " + user.attributes?.family_name
-            const createDirectMessageUser1 = API.graphql({
-              query: mutations.createDirectMessageUser,
-              variables: {
-                input: {
-                  roomID: json.data?.createDirectMessageRoom?.id,
-                  userID: user["username"],
-                  userName: myUserName,
-                },
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            }) as Promise<GraphQLResult<CreateDirectMessageUserMutation>>
-
+            const createDirectMessageUser1 = Data.createDirectMessageUser({
+              roomID: json.data?.createDirectMessageRoom?.id,
+              userID: user["username"],
+              userName: myUserName,
+            })
             createDirectMessageUser1.then(addDM2).catch(addDM2)
           })
           .catch((e: any) => {
@@ -154,13 +134,9 @@ export default class ConversationScreen extends JCComponent<Props, State> {
 
   async getNewUser(id: string): Promise<void> {
     try {
-      const json = (await API.graphql({
-        query: customQueries.getDirectMessageUser,
-        variables: { id: id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<GetDirectMessageUserQuery>
+      const json = await Data.getDirectMessageUser(id)
       if (json?.data?.getDirectMessageUser) {
-        console.log({ "customQueries.getDirectMessageUser": json.data.getDirectMessageUser })
+        console.log({ "Data.getDirectMessageUser": json.data.getDirectMessageUser })
         this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
           this.setState({
             currentRoomId: json.data?.getDirectMessageUser?.roomID ?? null,
@@ -177,17 +153,13 @@ export default class ConversationScreen extends JCComponent<Props, State> {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       try {
         const query = { limit: 200, filter: { userID: { eq: user["username"] } }, nextToken: next }
-        const json = (await API.graphql({
-          query: customQueries.listDirectMessageUsers,
-          variables: query,
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<ListDirectMessageUsersQuery>
+        const json = await Data.listDirectMessageUsers(query)
         if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
-          console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
+          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
           this.getInitialData(json.data.listDirectMessageUsers.nextToken)
         } else if (json?.data?.listDirectMessageUsers) {
-          console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
+          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState(
             { data: this.state.data.concat(json.data.listDirectMessageUsers.items) },
             () => {
@@ -197,11 +169,11 @@ export default class ConversationScreen extends JCComponent<Props, State> {
         }
       } catch (json: any) {
         if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
-          console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
+          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
           this.getInitialData(json.data.listDirectMessageUsers.nextToken)
         } else if (json?.data?.listDirectMessageUsers) {
-          console.log({ "customQueries.listDirectMessageUsers": json.data.listDirectMessageUsers })
+          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
           this.setState(
             { data: this.state.data.concat(json.data.listDirectMessageUsers.items) },
             () => {

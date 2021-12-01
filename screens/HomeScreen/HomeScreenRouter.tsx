@@ -1,7 +1,5 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { createStackNavigator } from "@react-navigation/stack"
-import Amplify, { Analytics, API, Auth } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import Amplify, { Analytics, Auth } from "aws-amplify"
 import * as Linking from "expo-linking"
 import moment from "moment"
 import React from "react"
@@ -15,17 +13,12 @@ import Sentry from "../../components/Sentry"
 import Validate from "../../components/Validate/Validate"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import {
-  CreateCustomerMutation,
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
-  CreateOrganizationMemberMutation,
-  CreateOrganizationMutation,
   CreateUserInput,
-  CreateUserMutation,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
-import * as mutations from "../../src/graphql/mutations"
 import MainAuthRouter from "./MainAuthRouter"
 import MainBottomTabsRouter from "./MainBottomTabsRouter"
 import MainDrawerRouter from "./MainDrawerRouter"
@@ -156,14 +149,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
 
           try {
-            const createUser = (await API.graphql({
-              query: mutations.createUser,
-              variables: {
-                input: inputData,
-              },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })) as GraphQLResult<CreateUserMutation>
-
+            const createUser = await Data.createUser(inputData)
             userExists = true
             console.log({ createUser: createUser })
           } catch (e) {
@@ -194,13 +180,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             let orgId = ""
 
             try {
-              const createOrg = (await API.graphql({
-                query: mutations.createOrganization,
-                variables: {
-                  input: orgInput,
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })) as GraphQLResult<CreateOrganizationMutation>
+              const createOrg = await Data.createOrganization(orgInput)
               console.log({ createOrg: createOrg })
               orgId = createOrg.data.createOrganization.id
             } catch (e: any) {
@@ -217,13 +197,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             }
 
             try {
-              const createOrgMember = (await API.graphql({
-                query: mutations.createOrganizationMember,
-                variables: {
-                  input: orgMember,
-                },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              })) as GraphQLResult<CreateOrganizationMemberMutation>
+              const createOrgMember = await Data.createOrganizationMember(orgMember)
               console.log({ createOrgMember: createOrgMember })
             } catch (e: any) {
               console.log({ error: e })
@@ -253,19 +227,15 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
-      const customer = (await API.graphql({
-        query: mutations.createCustomer,
-        variables: {
-          idempotency: this.state.idempotency,
-          firstName: user?.attributes?.given_name,
-          lastName: user?.attributes?.family_name,
-          email: user?.attributes?.email,
-          phone: user?.attributes?.phone_number,
-          billingAddress: billingAddress,
-          orgName: user?.attributes!["custom:orgName"],
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCustomerMutation>
+      const customer = await Data.createStripeCustomer({
+        idempotency: this.state.idempotency,
+        firstName: user?.attributes?.given_name,
+        lastName: user?.attributes?.family_name,
+        email: user?.attributes?.email,
+        phone: user?.attributes?.phone_number,
+        billingAddress: billingAddress,
+        orgName: user?.attributes!["custom:orgName"],
+      })
       console.log({ customer: customer })
       return true
       //customerId = customer.data.createCustomer.customer.id;

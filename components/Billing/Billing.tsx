@@ -1,4 +1,3 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import {
@@ -17,8 +16,7 @@ import {
   StripeElements,
 } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
-import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import Amplify, { Auth } from "aws-amplify"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
@@ -33,22 +31,12 @@ import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
-import {
-  CreateCustomerMutation,
-  GetUserQuery,
-  ListProductsQuery,
-  PreviewInvoiceMutation,
-  StripeInvoice,
-  StripePriceDetail,
-  UpdateUserMutation,
-} from "../../src/API"
+import { GetUserQuery, ListProductsQuery, StripeInvoice, StripePriceDetail } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
-import * as customMutations from "../../src/graphql-custom/mutations"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 import "./CardSectionStyles.css"
 import EULA from "./eula.json"
 import HandleStripePayment from "./HandleStripePayment"
+
 Amplify.configure(awsConfig)
 const handleInputMutex = new Mutex()
 const CARD_ELEMENT_OPTIONS = {
@@ -143,11 +131,10 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log({ UserError: e })
     }
     try {
-      const listProducts = (await API.graphql({
-        query: queries.listProducts,
-        variables: { filter: { enabled: { eq: "true" }, isLogin: { eq: "true" } }, limit: 50 },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<ListProductsQuery>
+      const listProducts = await Data.listProducts({
+        enabled: { eq: "true" },
+        isLogin: { eq: "true" },
+      })
       if (listProducts.data?.listProducts)
         this.setState({ products: listProducts.data.listProducts.items })
       if (this.state.currentProduct?.length == 0)
@@ -190,19 +177,15 @@ class BillingImpl extends JCComponent<Props, State> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
-      const customer = (await API.graphql({
-        query: mutations.createCustomer,
-        variables: {
-          idempotency: this.state.idempotency,
-          firstName: user?.attributes?.given_name,
-          lastName: user?.attributes?.family_name,
-          email: user?.attributes?.email,
-          phone: user?.attributes?.phone_number,
-          orgName: user?.attributes!["custom:orgName"],
-          billingAddress: this.state.userData?.billingAddress,
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateCustomerMutation>
+      const customer = await Data.createStripeCustomer({
+        idempotency: this.state.idempotency,
+        firstName: user?.attributes?.given_name,
+        lastName: user?.attributes?.family_name,
+        email: user?.attributes?.email,
+        phone: user?.attributes?.phone_number,
+        orgName: user?.attributes!["custom:orgName"],
+        billingAddress: this.state.userData?.billingAddress,
+      })
       console.log({ customer: customer })
       //customerId = customer.data.createCustomer.customer.id;
     } catch (e: any) {
@@ -232,17 +215,13 @@ class BillingImpl extends JCComponent<Props, State> {
     const priceItems = this.getPriceItems()
 
     try {
-      const newInvoice = API.graphql({
-        query: customMutations.previewInvoice,
-        variables: {
-          idempotency: this.state.idempotency,
-          priceInfo: {
-            coupon: this.state.coupon,
-            prices: priceItems,
-          },
+      const newInvoice = Data.previewInvoice({
+        idempotency: this.state.idempotency,
+        priceInfo: {
+          coupon: this.state.coupon,
+          prices: priceItems,
         },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<PreviewInvoiceMutation>>
+      })
       console.log({ newInvoice: newInvoice })
       this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
         const currentIndex = this.state.invoiceQueue.length - 1
@@ -579,21 +558,17 @@ class BillingImpl extends JCComponent<Props, State> {
     console.log({ userData: this.state.userData?.billingAddress })
     try {
       if (this.state.userData && this.state.userData.billingAddress == null) {
-        const user = (await API.graphql(
-          graphqlOperation(mutations.updateUser, {
-            input: {
-              id: this.state.userData.id,
-              billingAddress: {
-                country: "",
-                line1: "",
-                line2: "",
-                state: "",
-                postal_code: "",
-                city: "",
-              },
-            },
-          })
-        )) as GraphQLResult<UpdateUserMutation>
+        const user = await Data.updateUser({
+          id: this.state.userData.id,
+          billingAddress: {
+            country: "",
+            line1: "",
+            line2: "",
+            state: "",
+            postal_code: "",
+            city: "",
+          },
+        })
         console.log("Billing Address added")
         if (user.data)
           this.setState({ userData: user.data.updateUser }, async () => {
@@ -602,14 +577,11 @@ class BillingImpl extends JCComponent<Props, State> {
             if (temp?.billingAddress && temp?.billingAddress[field])
               temp.billingAddress[field] = value
 
-            const user = (await API.graphql(
-              graphqlOperation(mutations.updateUser, {
-                input: {
-                  id: this.state.userData?.id,
-                  billingAddress: temp?.billingAddress,
-                },
-              })
-            )) as GraphQLResult<UpdateUserMutation>
+            const user = await Data.updateUser({
+              id: this.state.userData?.id,
+              billingAddress: temp?.billingAddress,
+            })
+
             console.log(user)
             this.setState({ userData: temp })
           })
@@ -617,14 +589,11 @@ class BillingImpl extends JCComponent<Props, State> {
         const temp = this.state.userData
         if (temp?.billingAddress) temp.billingAddress[field] = value
 
-        const user = (await API.graphql(
-          graphqlOperation(mutations.updateUser, {
-            input: {
-              id: this.state.userData?.id,
-              billingAddress: temp?.billingAddress,
-            },
-          })
-        )) as GraphQLResult<UpdateUserMutation>
+        const user = await Data.updateUser({
+          id: this.state.userData?.id,
+          billingAddress: temp?.billingAddress,
+        })
+
         console.log(user)
         this.setState({ userData: temp })
       }

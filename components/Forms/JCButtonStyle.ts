@@ -103,12 +103,15 @@ export default EStyleSheet.create({
     padding: 5,
   },
   AdminSmallOutlineButton: {
-    paddingTop: 7,
-    paddingBottom: 7,
-    paddingLeft: 7,
-    paddingRight: 7,
+    height: "unset",
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 4,
+    paddingRight: 4,
     marginLeft: 0,
     marginRight: 0,
+    marginTop: 2,
+    marginBottom: 2,
     //    color:"#F0493E",
     backgroundColor: "#ffffff",
     borderWidth: 1,
@@ -119,8 +122,8 @@ export default EStyleSheet.create({
   AdminSmallOutlineText: {
     color: "#F0493E",
     fontFamily: "Graphik-Regular-App",
-    fontSize: 16,
-    padding: 5,
+    fontSize: 12,
+    padding: 2,
   },
   AdminAddButton: {
     paddingTop: 7,
@@ -1199,6 +1202,8 @@ export default EStyleSheet.create({
     AdminSmallOutlineButton: {
       paddingLeft: 3,
       paddingRight: 3,
+      paddingTop: 3,
+      paddingBottom: 3,
     },
     SolidSignIn2Button: {
       paddingTop: 6,

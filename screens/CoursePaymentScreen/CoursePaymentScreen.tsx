@@ -1,15 +1,13 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { API, Auth, graphqlOperation } from "aws-amplify"
+import { Auth } from "aws-amplify"
 import { Container, Content, Text } from "native-base"
 import React, { useEffect, useState } from "react"
 import { JCCognitoUser } from "src/types"
+import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import PaymentFrom from "../../components/Forms/PaymentForm"
 import Header from "../../components/Header/Header"
 import { GetProductQuery } from "../../src/API"
-import * as mutations from "../../src/graphql/mutations"
-import * as queries from "../../src/graphql/queries"
 
 interface Params {
   navigation: StackNavigationProp<any, any>
@@ -25,9 +23,7 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
   useEffect(() => {
     async function getProduct() {
       try {
-        const getProduct = (await API.graphql(
-          graphqlOperation(queries.getProduct, { id: productId })
-        )) as GraphQLResult<GetProductQuery>
+        const getProduct = await Data.getProduct(productId)
         setProduct(getProduct.data?.getProduct)
       } catch (e) {
         console.error(e)
@@ -43,18 +39,15 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
 
     try {
-      const saveResult = (await API.graphql(
-        graphqlOperation(mutations.createPayment, {
-          input: {
-            id: productId + "-" + user["username"],
-            productID: productId,
-            userID: user["username"],
-            dateCompleted: create_time,
-            paymentType: "Paypal",
-            paymentInfo: details,
-          },
-        })
-      )) as GraphQLResult<GetProductQuery>
+      const saveResult = await Data.createPayment({
+        id: productId + "-" + user["username"],
+        productID: productId,
+        userID: user["username"],
+        dateCompleted: create_time,
+        paymentType: "Paypal",
+        paymentInfo: details,
+      })
+
       console.log(saveResult)
     } catch (e) {
       console.error(e)

@@ -1,11 +1,10 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { API, graphqlOperation, Storage } from "aws-amplify"
+import Amplify, { Storage } from "aws-amplify"
 import * as React from "react"
 import { Image, ImageStyle, TouchableOpacity } from "react-native"
-import { GetUserQueryResult, GetUserQueryResultPromise } from "src/types"
+import { Data } from "../../components/Data/Data"
 import awsconfig from "../../src/aws-exports"
-import * as customQueries from "../../src/graphql-custom/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 Amplify.configure(awsconfig)
@@ -108,14 +107,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
     }
   }
   getProfileImageFromUserID(user: string): void {
-    const getUser: GetUserQueryResultPromise = API.graphql(
-      graphqlOperation(customQueries.getUserForProfile, { id: user })
-    ) as GetUserQueryResultPromise
+    const getUser = Data.getUserForProfile(user)
     getUser
-      .then((json: GetUserQueryResult) => {
+      .then((json) => {
         this.getProfileImage(json.data?.getUser?.profileImage)
       })
-      .catch((e: any) => {
+      .catch((e) => {
         if (e.data) {
           this.getProfileImage(e.data?.getUser?.profileImage)
         }
@@ -123,16 +120,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
 
   getProfileImageFromOrgID(user: string): void {
-    const getUser: GetUserQueryResultPromise = API.graphql(
-      graphqlOperation(customQueries.getOrgForImage, { id: user })
-    ) as GetUserQueryResultPromise
+    const getUser = Data.getOrgForImage(user)
     getUser
-      .then((json: GetUserQueryResult) => {
-        this.getProfileImage(json.data?.getUser?.profileImage)
+      .then((json) => {
+        this.getProfileImage(json.data?.getOrganization?.profileImage)
       })
       .catch((e: any) => {
         if (e.data) {
-          this.getProfileImage(e.data?.getUser?.profileImage)
+          this.getProfileImage(e.data?.getOrganization?.profileImage)
         }
       })
   }

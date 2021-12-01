@@ -1,16 +1,13 @@
-﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { API } from "aws-amplify"
+﻿import { StackNavigationProp } from "@react-navigation/stack"
 import { Container, Content, StyleProvider } from "native-base"
 import React from "react"
 import { Text } from "react-native"
-import { SearchGroupsQuery } from "src/API"
+import { Data } from "../../components/Data/Data"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyMap from "../../components/MyMap/MyMap"
 import getTheme from "../../native-base-theme/components"
 import material from "../../native-base-theme/variables/material"
-import * as queries from "../../src/graphql/queries"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -34,10 +31,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
   }
   search(item: React.ChangeEvent<HTMLInputElement>): void {
     console.log(item.target.value)
-    const searchGroups = API.graphql({
-      query: queries.searchGroups,
-      variables: { filter: { name: { match: item.target.value } } },
-    }) as Promise<GraphQLResult<SearchGroupsQuery>>
+    const searchGroups = Data.searchGroups({ name: { match: item.target.value } })
 
     searchGroups
       .then((json) => {
