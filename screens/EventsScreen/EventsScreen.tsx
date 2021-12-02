@@ -1,10 +1,11 @@
 ﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState } from "react"
+import React, { useLayoutEffect, useState } from "react"
 import { View } from "react-native"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
 import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
+import Header from "../../components/Header/Header"
 import EventsList from "./EventsList"
 import EventWidgets from "./EventWidgets"
 export default function EventsScreen() {
@@ -12,7 +13,46 @@ export default function EventsScreen() {
   const route = useRoute()
   const [reverse, setReverse] = useState(false)
   const [filter, setFilter] = useState("")
-
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        return (
+          <Header
+            subnav={[
+              {
+                title: "All Events",
+                action: () => {
+                  setFilter("")
+                },
+              },
+              {
+                title: "Your Events",
+                action: () => {
+                  console.log("setting to your events")
+                  if (filter) setFilter("")
+                  else setFilter(": Your Events")
+                },
+              },
+            ]}
+            title={"Events"}
+            controls={[
+              {
+                icon: "Sort",
+                action: () => {
+                  setReverse((prev) => !prev)
+                },
+              },
+              {
+                icon: "Plus",
+                action: () => null,
+              },
+            ]}
+            navigation={props.navigation}
+          />
+        )
+      },
+    })
+  }, [])
   const EventsControlButtons = () => {
     return (
       <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>

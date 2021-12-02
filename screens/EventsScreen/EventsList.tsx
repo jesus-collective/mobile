@@ -31,9 +31,10 @@ export default function EventsList(props: Props) {
   const [joinedEvents, setJoinedEvents] = useState<Array<any>>([])
   const [isOwnerEvents, setIsOwnerEvents] = useState<Array<any>>([])
   const [user, setUser] = useState<JCCognitoUser["username"]>("")
+
   const loadEvents = async () => {
     setRefreshing(true)
-    const newData = [...data, ...data, ...data, ...data, ...data]
+    const newData = [...data]
     const makeQueryVariables = (
       nextToken: GroupByTypeByTimeQueryVariables["nextToken"],
       past: boolean,
@@ -50,7 +51,7 @@ export default function EventsList(props: Props) {
       }
     }
 
-    const json = await Data.groupByTypeByTime(makeQueryVariables(nextToken, filter, 4))
+    const json = await Data.groupByTypeByTime(makeQueryVariables(nextToken, filter, 10))
     console.log({ json })
     if (json.data?.groupByTypeByTime?.items?.length)
       setData([...newData, ...(json.data?.groupByTypeByTime?.items ?? [])])
@@ -197,7 +198,7 @@ export default function EventsList(props: Props) {
         ) : null
       }
       ListFooterComponentStyle={
-        (data?.length % 4 !== 0 && !nextToken) || !data.length ? { display: "none" } : {}
+        (data?.length % 10 !== 0 && !nextToken) || !data.length ? { display: "none" } : {}
       }
       ListEmptyComponent={() =>
         !refreshing && !data.length ? (
