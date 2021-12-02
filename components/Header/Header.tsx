@@ -14,10 +14,14 @@ import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
 import { JCState } from "../JCComponent/JCComponent"
+import { HeaderControls } from "./HeaderControls"
+import { SubHeader } from "./SubHeader"
 interface Props {
   navigation?: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
+  subnav?: any
+  controls?: any
   drawerState?: boolean
 }
 
@@ -338,6 +342,7 @@ export default function HeaderJCC(props: Props) {
             </TouchableOpacity>
             <Text
               style={{
+                marginLeft: -24, // offset back button icon width
                 flex: 1,
                 fontFamily: "Graphik-Semibold-App",
                 fontSize: 15,
@@ -348,7 +353,9 @@ export default function HeaderJCC(props: Props) {
             >
               {props.title}
             </Text>
+            {props.controls ? <HeaderControls controls={props.controls} /> : null}
           </View>
+          {props.subnav ? <SubHeader navItems={props.subnav} /> : null}
         </View>
       </MobileView>
     </>
