@@ -1,5 +1,6 @@
 import React from "react"
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { isMobile } from "react-device-detect"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -24,10 +25,61 @@ export default function GroupCard(props: Props) {
   const { item } = props
   const { given_name, family_name, id, currentRole, aboutMeLong, aboutMeShort, location } = item
   console.log(item)
-  return (
+  return isMobile ? (
+    <TouchableOpacity
+      style={{
+        flexDirection: "row",
+        flex: 1,
+        paddingLeft: 12,
+        paddingTop: 16,
+        paddingRight: 24,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          paddingBottom: 12,
+          flexDirection: "row",
+          borderBottomWidth: 1,
+          borderBottomColor: "#E4E1E1",
+        }}
+      >
+        <ProfileImage size="small6" user={id} />
+        <View style={{ flexDirection: "column", flex: 1, marginLeft: 12 }}>
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: "Graphik-Semibold-App",
+              lineHeight: 21,
+              color: "#1A0706",
+            }}
+          >
+            {given_name} {family_name}
+          </Text>
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: "Graphik-Regular-App",
+              lineHeight: 21,
+              color: "#6A5E5D",
+            }}
+          >
+            {currentRole}
+          </Text>
+        </View>
+        <TouchableOpacity style={{ alignSelf: "center" }}>
+          <Image
+            style={{ width: 24, height: 24 }}
+            source={require("../../assets/Facelift/Airplane-dark.png")}
+          />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
+  ) : (
     <TouchableOpacity style={GroupCardStyle.CardContainer}>
       <ProfileImage style="personCard" user={id} />
-
       <View style={{ padding: 16, paddingTop: 0, flex: 1 }}>
         <Text
           style={{

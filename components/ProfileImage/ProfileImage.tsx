@@ -21,6 +21,7 @@ interface Props {
     | "small4"
     | "smallReply"
     | "small5"
+    | "small6"
   style?: "map" | "my-people" | "courseProfile" | "personCard"
   inlineStyle?: ImageStyle
   isOrg?: boolean
@@ -163,6 +164,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginHorizontal: 0,
                 top: 0,
               }
+            : this.props.size == "small6"
+            ? {
+                width: "32px",
+                height: "40px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                alignSelf: "flex-start",
+                top: 0,
+              }
             : this.props.style === "personCard"
             ? {
                 width: "64px",
@@ -235,6 +246,24 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginRight: 10,
                 marginBottom: 0,
                 marginLeft: 10,
+                top: 0,
+              }
+            : this.props.size == "small6"
+            ? {
+                width: "32px",
+                height: "40px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                top: 0,
+              }
+            : this.props.size == "small5"
+            ? {
+                width: "57.6px",
+                height: "72px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
                 top: 0,
               }
             : this.props.style === "personCard"
