@@ -1,5 +1,6 @@
 import Tooltip from "@material-ui/core/Tooltip"
 import React from "react"
+import { isMobile } from "react-device-detect"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
@@ -7,11 +8,11 @@ const GroupCardStyle = StyleSheet.create({
   CardContainer: {
     border: "1px solid #E4E1E1",
     borderRadius: 8,
-    height: 308,
+    minHeight: isMobile ? 200 : "unset",
     flex: 1,
-    marginBottom: 32,
-    marginRight: 32,
-    maxWidth: "calc(50% - 32px)",
+    marginBottom: isMobile ? "unset" : 32,
+    marginRight: isMobile ? "unset" : 32,
+    maxWidth: isMobile ? "unset" : "calc(50% - 32px)",
   },
 })
 type Props = {
@@ -63,8 +64,7 @@ export default function GroupCard(props: Props) {
               color: "#1A0706",
             }}
           >
-            {description} {description} {description} {description} {description} {description}{" "}
-            {description} {description} {description} {description}
+            {description}
           </Text>
           <View
             style={{
@@ -82,8 +82,14 @@ export default function GroupCard(props: Props) {
                 flexDirection: "row",
               }}
             >
-              <View style={{ flexDirection: "column", marginLeft: -10 }}>
-                <ProfileImage size="small2" user={owner} />
+              <View
+                style={{
+                  flexDirection: "column",
+                  marginLeft: isMobile ? 0 : -10,
+                  marginRight: isMobile ? 8 : 0,
+                }}
+              >
+                <ProfileImage size={isMobile ? "small6" : "small2"} user={owner} />
               </View>
               <View style={{ flexDirection: "column", flex: 1 }}>
                 <Text

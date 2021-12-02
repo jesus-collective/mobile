@@ -1,5 +1,6 @@
 import { Auth } from "aws-amplify"
 import React, { useEffect, useState } from "react"
+import { isMobile } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
@@ -68,14 +69,16 @@ export default function GroupsList(props: Props) {
       loadJoinedData()
     }
   }, [data])
+  const centerOffset = isMobile ? 0 : -32
   return (
     <>
       <FlatList
         style={{ minHeight: 662 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+        contentContainerStyle={isMobile ? { paddingHorizontal: 12, paddingTop: 16 } : {}}
         ListFooterComponent={() => (
           <View
             style={{
-              marginLeft: -32,
+              marginLeft: centerOffset,
               marginBottom: 30,
               justifyContent: "center",
               alignItems: "center",
@@ -94,7 +97,12 @@ export default function GroupsList(props: Props) {
         ListHeaderComponent={() =>
           refreshing ? (
             <ActivityIndicator
-              style={{ marginLeft: -32, position: "absolute", alignSelf: "center" }}
+              style={{
+                marginTop: isMobile ? 32 : 0,
+                marginLeft: centerOffset,
+                position: "absolute",
+                alignSelf: "center",
+              }}
               size="large"
               color="#FF4438"
             />
@@ -120,7 +128,7 @@ export default function GroupsList(props: Props) {
           ) : null
         }
         data={filter ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)) : data}
-        numColumns={2}
+        numColumns={isMobile ? 1 : 2}
         refreshing={refreshing}
         renderItem={({ item, index }) => {
           return <GroupCard item={item} />
