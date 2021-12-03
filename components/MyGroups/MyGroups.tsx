@@ -46,7 +46,6 @@ interface Props {
   wrap: boolean
   type: string
   showMore: boolean
-  onDataload(mapData: MapData[]): void
   showMy?: boolean
   homeDashboard?: boolean
   showAllEvents?: boolean
@@ -113,6 +112,7 @@ interface State extends JCState {
   userGroupType: UserGroupType
 }
 export interface MapData {
+  id: string
   latitude: any
   longitude: any
   name: string
@@ -285,83 +285,6 @@ export default class MyGroups extends JCComponent<Props, State> {
     await this.setData(this.props, true)
   }
 
-  convertOrgToMapData(data: GroupData): MapData | null {
-    const dataItem = data as unknown as NonNullable<
-      NonNullable<
-        NonNullable<GraphQLResult<ListOrganizationsQuery>["data"]>["listOrganizations"]
-      >["items"]
-    >[0]
-    if (dataItem && dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
-      return {
-        latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-        longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-        name: dataItem.orgName,
-        user: dataItem,
-        link: "",
-        type: "organization",
-      } as MapData
-    else return null
-  }
-  convertProfileToMapData(data: GroupData): MapData | null {
-    const dataItem = data as unknown as NonNullable<
-      NonNullable<NonNullable<GraphQLResult<ListUsersQuery>["data"]>["listUsers"]>["items"]
-    >[0]
-    if (dataItem && dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
-      return {
-        latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-        longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-        name: dataItem.given_name + " " + dataItem.family_name,
-        user: dataItem,
-        link: "",
-        type: "profile",
-      } as MapData
-    else return null
-  }
-
-  convertEventToMapData(data: GroupData): MapData | null {
-    const dataItem = data as unknown as NonNullable<
-      NonNullable<NonNullable<GraphQLResult<GroupByTypeQuery>["data"]>["groupByType"]>["items"]
-    >[0]
-    if (
-      dataItem &&
-      dataItem.locationLatLong &&
-      dataItem.locationLatLong.latitude &&
-      dataItem.locationLatLong.longitude &&
-      moment(dataItem.time).isAfter(moment().subtract(3, "day"))
-    )
-      return {
-        latitude: dataItem.locationLatLong.latitude,
-        longitude: dataItem.locationLatLong.longitude,
-        name: dataItem.name,
-        event: dataItem,
-        link: "",
-        type: "event",
-      } as MapData
-    else return null
-  }
-
-  convertToMapData(data: GroupData[]): MapData[] {
-    return data
-      .map((z) => {
-        switch (this.state.type) {
-          case "group":
-            return null
-          case "event":
-            return this.convertEventToMapData(z)
-          case "resource":
-            return null
-          case "organization":
-            return this.convertOrgToMapData(z)
-          case "course":
-            return null
-          case "profile":
-            return this.convertProfileToMapData(z)
-          default:
-            return null
-        }
-      })
-      .filter((z) => z) as MapData[]
-  }
   getTicketClasses = async (value: EventBriteTicketEvent): Promise<void> => {
     const ticketClasses = await Data.eventBriteListTicketClasses({
       eventId: value?.id,
@@ -382,15 +305,10 @@ export default class MyGroups extends JCComponent<Props, State> {
         const temp = [...this.state.data, ...(json.data?.listUsers?.items ?? [])].filter(
           (z) => z
         ) as GroupData[]
-        this.setState(
-          {
-            data: temp,
-            nextToken: json.data?.listUsers?.nextToken,
-          },
-          () => {
-            this.props.onDataload(this.convertToMapData(this.state.data))
-          }
-        )
+        this.setState({
+          data: temp,
+          nextToken: json.data?.listUsers?.nextToken,
+        })
       }
       listUsers.then(processList).catch(processList)
     } else if (props.type == "organization") {
@@ -400,15 +318,10 @@ export default class MyGroups extends JCComponent<Props, State> {
         const temp = [...this.state.data, ...(json.data?.listOrganizations?.items ?? [])].filter(
           (z) => z
         ) as GroupData[]
-        this.setState(
-          {
-            data: temp,
-            nextToken: json.data?.listOrganizations?.nextToken,
-          },
-          () => {
-            this.props.onDataload(this.convertToMapData(this.state.data))
-          }
-        )
+        this.setState({
+          data: temp,
+          nextToken: json.data?.listOrganizations?.nextToken,
+        })
       }
       listOrgs.then(processList).catch(processList)
     } else if (props.type === "event") {
@@ -422,45 +335,31 @@ export default class MyGroups extends JCComponent<Props, State> {
 
         if (past) {
           json.data.eventBriteListEvents.events?.map(this.getTicketClasses)
-          this.setState(
-            {
-              nextEventBriteTokenPastEvents:
-                json.data.eventBriteListEvents.pagination?.page_number ?? null,
-              pastEventBriteEvents: (
-                [
-                  ...this.state.pastEventBriteEvents,
-                  ...(json.data.eventBriteListEvents.events ?? []),
-                ].filter((z) => z) as EventBriteEvent[]
-              )
-                .filter((z) => moment(z.start?.utc).isBefore(moment()))
-                .filter((z) => z.status != "draft" && z.status != "canceled"),
-            },
-            async () => {
-              this.props.onDataload(
-                this.convertToMapData(this.state.pastEventBriteEvents.map(this.eventBriteToEvent))
-              )
-            }
-          )
+          this.setState({
+            nextEventBriteTokenPastEvents:
+              json.data.eventBriteListEvents.pagination?.page_number ?? null,
+            pastEventBriteEvents: (
+              [
+                ...this.state.pastEventBriteEvents,
+                ...(json.data.eventBriteListEvents.events ?? []),
+              ].filter((z) => z) as EventBriteEvent[]
+            )
+              .filter((z) => moment(z.start?.utc).isBefore(moment()))
+              .filter((z) => z.status != "draft" && z.status != "canceled"),
+          })
         } else {
           json.data.eventBriteListEvents.events?.map(this.getTicketClasses)
-          this.setState(
-            {
-              nextEventBriteToken: json.data.eventBriteListEvents.pagination?.page_number ?? null,
-              eventBriteEvents: (
-                [
-                  ...this.state.eventBriteEvents,
-                  ...(json.data.eventBriteListEvents.events ?? []),
-                ].filter((z) => z) as EventBriteEvent[]
-              )
-                .filter((z) => moment(z.start?.utc).isAfter(moment()))
-                .filter((z) => z.status != "draft" && z.status != "canceled"),
-            },
-            async () => {
-              this.props.onDataload(
-                this.convertToMapData(this.state.eventBriteEvents.map(this.eventBriteToEvent))
-              )
-            }
-          )
+          this.setState({
+            nextEventBriteToken: json.data.eventBriteListEvents.pagination?.page_number ?? null,
+            eventBriteEvents: (
+              [
+                ...this.state.eventBriteEvents,
+                ...(json.data.eventBriteListEvents.events ?? []),
+              ].filter((z) => z) as EventBriteEvent[]
+            )
+              .filter((z) => moment(z.start?.utc).isAfter(moment()))
+              .filter((z) => z.status != "draft" && z.status != "canceled"),
+          })
         }
       }
       const processEvents = (json: GraphQLResult<GroupByTypeByTimeQuery>, past: boolean) => {
@@ -472,30 +371,20 @@ export default class MyGroups extends JCComponent<Props, State> {
         this.setIsOwner(json.data.groupByTypeByTime.items)
 
         if (past) {
-          this.setState(
-            {
-              nextTokenPastEvents: json.data.groupByTypeByTime.nextToken ?? null,
-              pastEvents: [
-                ...this.state.pastEvents,
-                ...(json.data.groupByTypeByTime.items ?? []),
-              ].filter((z) => z) as GroupData[],
-            },
-            async () => {
-              this.props.onDataload(this.convertToMapData(this.state.pastEvents))
-            }
-          )
+          this.setState({
+            nextTokenPastEvents: json.data.groupByTypeByTime.nextToken ?? null,
+            pastEvents: [
+              ...this.state.pastEvents,
+              ...(json.data.groupByTypeByTime.items ?? []),
+            ].filter((z) => z) as GroupData[],
+          })
         } else {
-          this.setState(
-            {
-              nextToken: json.data.groupByTypeByTime.nextToken ?? null,
-              data: [...this.state.data, ...(json.data.groupByTypeByTime.items ?? [])].filter(
-                (z) => z
-              ) as GroupData[],
-            },
-            async () => {
-              this.props.onDataload(this.convertToMapData(this.state.data))
-            }
-          )
+          this.setState({
+            nextToken: json.data.groupByTypeByTime.nextToken ?? null,
+            data: [...this.state.data, ...(json.data.groupByTypeByTime.items ?? [])].filter(
+              (z) => z
+            ) as GroupData[],
+          })
         }
       }
 
@@ -553,15 +442,10 @@ export default class MyGroups extends JCComponent<Props, State> {
         let temp: any[]
         if (this.state.data) temp = [...this.state.data, ...(json.data.groupByType.items ?? [])]
         else temp = [...(json.data.groupByType.items ?? [])]
-        this.setState(
-          {
-            data: temp,
-            nextToken: json.data.groupByType.nextToken,
-          },
-          async () => {
-            this.props.onDataload(this.convertToMapData(this.state.data))
-          }
-        )
+        this.setState({
+          data: temp,
+          nextToken: json.data.groupByType.nextToken,
+        })
       }
       listGroup.then(processList).catch(processList)
     }

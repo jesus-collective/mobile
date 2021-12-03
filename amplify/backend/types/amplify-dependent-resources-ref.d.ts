@@ -199,4 +199,17 @@ export type AmplifyDependentResourcesAttributes = {
       oVodOutputUrl: "string"
     }
   }
+  geo: {
+    jcMap: {
+      Name: "string"
+      Style: "string"
+      Region: "string"
+      Arn: "string"
+    }
+    jcPeople: {
+      Name: "string"
+      Region: "string"
+      Arn: "string"
+    }
+  }
 }

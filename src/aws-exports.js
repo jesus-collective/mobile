@@ -53,6 +53,25 @@ const awsmobile = {
     "aws_content_delivery_url": "https://ddy0xjuoytpqt.cloudfront.net",
     "aws_user_files_s3_bucket": "jc-profilebeta-beta",
     "aws_user_files_s3_bucket_region": "us-east-1",
+    "geo": {
+        "amazon_location_service": {
+            "region": "us-east-1",
+            "maps": {
+                "items": {
+                    "jcMap-beta": {
+                        "style": "VectorEsriLightGrayCanvas"
+                    }
+                },
+                "default": "jcMap-beta"
+            },
+            "search_indices": {
+                "items": [
+                    "jcPeople-beta"
+                ],
+                "default": "jcPeople-beta"
+            }
+        }
+    },
     "aws_cognito_login_mechanisms": [
         "EMAIL",
         "FACEBOOK",

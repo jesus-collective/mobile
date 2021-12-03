@@ -9,6 +9,7 @@ import {
   ListDirectMessageRoomsQueryVariables,
   ListDirectMessageUsersQuery,
   ListDirectMessageUsersQueryVariables,
+  ModelGroupFilterInput,
 } from "src/API-customqueries"
 import { InviteType } from "src/types"
 import {
@@ -107,6 +108,7 @@ import {
   GroupByTypeByTimeQuery,
   GroupByTypeQuery,
   GroupMemberByUserQuery,
+  ListGroupsQuery,
   ListOrganizationsQuery,
   ListPaymentsQuery,
   ListProductsQuery,
@@ -842,6 +844,20 @@ export class Data {
       variables: { id: userId },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<GetUserQuery>>
+  }
+  static listEvents(nextToken: string | null | undefined) {
+    const z: ModelGroupFilterInput = {
+      type: { eq: "event" },
+    }
+    return API.graphql({
+      query: queries.listGroups,
+      variables: {
+        limit: 100,
+        filter: z,
+        nextToken: nextToken,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListGroupsQuery>>
   }
   static listOrgs(nextToken: string | null | undefined) {
     return API.graphql({

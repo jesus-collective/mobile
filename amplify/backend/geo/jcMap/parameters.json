@@ -1,0 +1,12 @@
+{
+  "authRoleName": {
+    "Ref": "AuthRoleName"
+  },
+  "unauthRoleName": {
+    "Ref": "UnauthRoleName"
+  },
+  "mapName": "jcMap",
+  "mapStyle": "VectorEsriLightGrayCanvas",
+  "pricingPlan": "RequestBasedUsage",
+  "isDefault": true
+}

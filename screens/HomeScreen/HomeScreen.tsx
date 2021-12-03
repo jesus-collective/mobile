@@ -48,12 +48,6 @@ class HomeScreen extends JCComponent<Props, State> {
       cookies.set("showMap", this.state.showMap, { path: "/" })
     })
   }
-  mergeMapData(mapData: MapData[]): void {
-    console.log({ MergedMapData: mapData })
-    //    console.log(mapData)
-    const data = this.state.mapData.concat(mapData)
-    this.setState({ mapData: data })
-  }
 
   render(): React.ReactNode {
     console.log("Homepage")
@@ -75,9 +69,6 @@ class HomeScreen extends JCComponent<Props, State> {
                   type="event"
                   wrap={false}
                   navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
                   homeDashboard
                 ></MyGroups>
                 <MyGroups
@@ -85,9 +76,6 @@ class HomeScreen extends JCComponent<Props, State> {
                   type="group"
                   wrap={false}
                   navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
                   homeDashboard
                 ></MyGroups>
                 <MyGroups
@@ -95,9 +83,6 @@ class HomeScreen extends JCComponent<Props, State> {
                   type="resource"
                   wrap={false}
                   navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
                   homeDashboard
                 ></MyGroups>
                 <MyGroups
@@ -105,9 +90,6 @@ class HomeScreen extends JCComponent<Props, State> {
                   type="organization"
                   wrap={false}
                   navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
                   homeDashboard
                 ></MyGroups>
                 <MyGroups
@@ -115,20 +97,11 @@ class HomeScreen extends JCComponent<Props, State> {
                   type="course"
                   wrap={false}
                   navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
                   homeDashboard
                 ></MyGroups>
               </Container>
               <Container style={this.styles.style.dashboardRightCard}>
-                <MyPeople
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                ></MyPeople>
+                <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>
                 <MyConversations navigation={this.props.navigation}></MyConversations>
                 <Container style={{ flex: 10 }}></Container>
               </Container>
