@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { Component, lazy } from "react"
-import { isMobile } from "react-device-detect"
 import Header from "../../components/Header/Header"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import { PaidStatus, ProfileStatus, UserContext } from "./UserContext"
@@ -49,11 +48,10 @@ export default class MainAppRouter extends JCComponent {
             <Stack.Navigator
               initialRouteName="HomeScreen"
               screenOptions={({ route, navigation }) => ({
-                cardStyle: { flexGrow: 1 },
-                headerShown: isMobile,
                 animationEnabled: false,
                 gestureEnabled: false,
                 cardOverlayEnabled: false,
+                headerMode: "screen",
                 presentation: "card",
                 header: (props) => {
                   return (

@@ -6,7 +6,7 @@ import { DrawerActions, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { HTMLAttributes, useContext, useEffect, useState } from "react"
-import { BrowserView, MobileView } from "react-device-detect"
+import { BrowserView, MobileOnlyView } from "react-device-detect"
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
@@ -146,9 +146,9 @@ export default function HeaderJCC(props: Props) {
     }
     loadUser()
 
-    Dimensions.addEventListener("change", updateStyles)
+    //Dimensions.addEventListener("change", updateStyles)
     return () => {
-      Dimensions.removeEventListener("change", updateStyles)
+      //Dimensions.removeEventListener("change", updateStyles)
     }
   }, [])
   return (
@@ -317,7 +317,7 @@ export default function HeaderJCC(props: Props) {
           </View>
         </View>
       </BrowserView>
-      <MobileView>
+      <MobileOnlyView>
         <View
           style={{
             flexDirection: "column",
@@ -334,15 +334,17 @@ export default function HeaderJCC(props: Props) {
               paddingBottom: 12,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image
-                source={require("../../assets/header/Left-Arrow.png")}
-                style={{ width: 24, height: 24 }}
-              />
-            </TouchableOpacity>
+            {props.title !== "Home" ? (
+              <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
+                <Image
+                  source={require("../../assets/header/Left-Arrow.png")}
+                  style={{ width: 24, height: 24 }}
+                />
+              </TouchableOpacity>
+            ) : null}
             <Text
               style={{
-                marginLeft: -24, // offset back button icon width
+                marginLeft: props.title !== "Home" ? -24 : 0, // offset back button icon width
                 flex: 1,
                 fontFamily: "Graphik-Semibold-App",
                 fontSize: 15,
@@ -357,7 +359,7 @@ export default function HeaderJCC(props: Props) {
           </View>
           {props.subnav ? <SubHeader navItems={props.subnav} /> : null}
         </View>
-      </MobileView>
+      </MobileOnlyView>
     </>
   )
 }

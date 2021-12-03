@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
-import { BrowserView, MobileView } from "react-device-detect"
+import { BrowserView, MobileOnlyView } from "react-device-detect"
 import { StyleSheet, Text, View } from "react-native"
 
 interface Props {
@@ -72,9 +72,9 @@ export default function GenericDirectoryScreen(props: Props) {
           </View>
         </View>
       </BrowserView>
-      <MobileView>
+      <MobileOnlyView style={{ overflow: "scroll" }}>
         <MainContent />
-      </MobileView>
+      </MobileOnlyView>
     </>
   )
 }

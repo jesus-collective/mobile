@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import React from "react"
-import { isMobile } from "react-device-detect"
 import { Image } from "react-native"
 import Header from "../../components/Header/Header"
 import MyProfile from "../../components/ProfileImage/ProfileImage"
@@ -13,6 +12,7 @@ export default function MainBottomTabsRouter() {
   return (
     <Tab.Navigator
       screenOptions={({ route, navigation }) => ({
+        headerShown: false,
         header: (props) => {
           let screenTitle
           switch (props.route.name) {
@@ -57,30 +57,34 @@ export default function MainBottomTabsRouter() {
       })}
     >
       <Tab.Screen
-        options={{ title: "Jesus Collective", headerShown: !isMobile }}
+        options={{ title: "Jesus Collective", headerShown: false }}
         name="mainDrawer"
         component={MainAppRouter}
       />
       {constants.SETTING_ISVISIBLE_SEARCH ? (
         <Tab.Screen
-          options={{ title: "Jesus Collective" }}
+          options={{ title: "Jesus Collective", headerShown: true }}
           name="search"
           component={MainAppRouter}
         />
       ) : null}
       <Tab.Screen
-        options={{ title: "Jesus Collective" }}
+        options={{ title: "Jesus Collective", headerShown: true }}
         name="dms"
         component={ConversationScreen}
       />
       {constants.SETTING_ISVISIBLE_BELL ? (
         <Tab.Screen
-          options={{ title: "Jesus Collective" }}
+          options={{ title: "Jesus Collective", headerShown: true }}
           name="notifs"
           component={MainAppRouter}
         />
       ) : null}
-      <Tab.Screen options={{ title: "Jesus Collective" }} name="profile" component={MyProfile} />
+      <Tab.Screen
+        options={{ title: "Jesus Collective", headerShown: true }}
+        name="profile"
+        component={MyProfile}
+      />
     </Tab.Navigator>
   )
 }
