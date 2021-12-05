@@ -1,4 +1,4 @@
-﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import { Container, Content } from "native-base"
@@ -8,7 +8,6 @@ import { CreateDirectMessageUserMutation } from "src/API"
 import { GetDirectMessageUserQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
-import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
@@ -227,11 +226,6 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     console.log({ StateData: this.state.data })
     return (
       <Container>
-        <Header
-          title="Jesus Collective"
-          navigation={this.props.navigation}
-          onMapChange={this.mapChanged}
-        />
         <Content>
           <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
           <Container style={this.styles.style.conversationScreenMainContainer}>

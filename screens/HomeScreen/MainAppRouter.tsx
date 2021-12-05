@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { Component, lazy } from "react"
+import Header from "../../components/Header/Header"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import { PaidStatus, ProfileStatus, UserContext } from "./UserContext"
 const Stack = createStackNavigator()
@@ -46,12 +47,21 @@ export default class MainAppRouter extends JCComponent {
           return (
             <Stack.Navigator
               initialRouteName="HomeScreen"
-              screenOptions={{
-                headerMode: "none",
+              screenOptions={({ route, navigation }) => ({
                 animationEnabled: false,
                 gestureEnabled: false,
                 cardOverlayEnabled: false,
-              }}
+                headerMode: "screen",
+                presentation: "card",
+                header: (props) => {
+                  return (
+                    <Header
+                      title={(props.options.headerTitle as string) ?? "" ?? props.route.name}
+                      navigation={navigation}
+                    />
+                  )
+                },
+              })}
             >
               {userState.hasPaidState == PaidStatus.Success &&
               userState.hasCompletedPersonalProfile == ProfileStatus.Completed ? (
@@ -59,7 +69,7 @@ export default class MainAppRouter extends JCComponent {
                   <Stack.Screen
                     name="HomeScreen"
                     component={HomeScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Home", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="GenericGroupScreen"
@@ -69,17 +79,17 @@ export default class MainAppRouter extends JCComponent {
                   <Stack.Screen
                     name="GroupsScreen"
                     component={GroupsScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Groups", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="EventsScreen"
                     component={EventsScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Events", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="ResourcesScreen"
                     component={ResourcesScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Resources", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="ResourceScreen"
@@ -99,7 +109,7 @@ export default class MainAppRouter extends JCComponent {
                   <Stack.Screen
                     name="OrganizationsScreen"
                     component={OrganizationsScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Organizations", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="OrganizationScreen"
@@ -114,7 +124,7 @@ export default class MainAppRouter extends JCComponent {
                   <Stack.Screen
                     name="CoursesScreen"
                     component={CoursesScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Courses", title: "Jesus Collective" }}
                   />
 
                   <Stack.Screen
@@ -126,13 +136,13 @@ export default class MainAppRouter extends JCComponent {
                   <Stack.Screen
                     name="ConversationScreen"
                     component={ConversationScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Messages", title: "Jesus Collective" }}
                   />
 
                   <Stack.Screen
                     name="SearchScreen"
                     component={SearchScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "Search", title: "Jesus Collective" }}
                   />
 
                   <Stack.Screen
@@ -144,7 +154,7 @@ export default class MainAppRouter extends JCComponent {
                   <Stack.Screen
                     name="ProfilesScreen"
                     component={ProfilesScreen}
-                    options={{ title: "Jesus Collective" }}
+                    options={{ headerTitle: "People", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="AdminScreen"

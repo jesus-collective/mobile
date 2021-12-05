@@ -1,68 +1,111 @@
-﻿import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content } from "native-base"
-import React from "react"
+﻿import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import React, { useLayoutEffect, useState } from "react"
+import { View } from "react-native"
+import GenericButton from "../../components/FaceLift/GenericButton"
+import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
 import Header from "../../components/Header/Header"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
-
-interface Props {
-  navigation: StackNavigationProp<any, any>
-  route: any
-}
-interface State extends JCState {
-  showMap: boolean
-  mapData: MapData[]
-  showMy: boolean
-}
-
-export default class HomeScreen extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      mapData: [],
-      showMap: false,
-      showMy: this.props.route.params ? this.props.route.params.mine : false,
-    }
-  }
-  mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap })
-  }
-  mergeMapData(mapData: MapData[]): void {
-    //    console.log(mapData)
-    const data = this.state.mapData.concat(mapData)
-    this.setState({ mapData: data })
-  }
-  render(): React.ReactNode {
-    console.log("GroupsScreen")
+import GroupsList from "./GroupsList"
+import GroupWidgets from "./GroupWidgets"
+export default function GroupsScreen() {
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  const route = useRoute()
+  const [reverse, setReverse] = useState(false)
+  const [filter, setFilter] = useState("")
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        return (
+          <Header
+            subnav={[
+              {
+                title: "All Groups",
+                action: () => {
+                  setFilter("")
+                },
+              },
+              {
+                title: "Your Groups",
+                action: () => {
+                  if (filter) setFilter("")
+                  else setFilter(": Your Groups")
+                },
+              },
+            ]}
+            title={"Groups"}
+            controls={[
+              {
+                icon: "Sort",
+                action: () => {
+                  setReverse((prev) => !prev)
+                },
+              },
+              {
+                icon: "Plus",
+                action: () => null,
+              },
+            ]}
+            navigation={props.navigation}
+          />
+        )
+      },
+    })
+  }, [])
+  const GroupsControlButtons = () => {
     return (
-      <Container testID="groups">
-        <Header title="Jesus Collective" navigation={this.props.navigation} />
-        <Content>
-          {/*Map not displayed since Groups currently don't have location data need to re-add onMapChange to <Header/>
-          <MyMap size={'50%'} type={"no-filters"}  mapData={this.state.mapData} visible={this.state.showMap}></MyMap>*/}
-          <Container style={this.styles.style.groupsScreenMainContainer}>
-            <Container style={this.styles.style.groupsScreenLeftContainer}>
-              <MyGroups
-                showMy={this.state.showMy}
-                showMore={true}
-                type="group"
-                wrap={true}
-                navigation={this.props.navigation}
-                onDataload={(mapData) => {
-                  this.mergeMapData(mapData)
-                }}
-              ></MyGroups>
-            </Container>
-            {/*
-            <Container style={style.groupsScreenRightContainer}>
-              <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
-              <MyConversations navigation={this.props.navigation}> </MyConversations>
-              <Container ></Container>
-            </Container>*/}
-          </Container>
-        </Content>
-      </Container>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
+        <GenericButton
+          label="SORT"
+          action={() => setReverse((prev) => !prev)}
+          style={{
+            ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
+            LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
+            custom: {
+              marginRight: 32,
+            },
+          }}
+          icon="Sort"
+        ></GenericButton>
+        <GenericButton
+          label={`FILTER${filter ? ": My Groups" : ""}`}
+          action={() => {
+            if (filter) setFilter("")
+            else setFilter(": Your Groups")
+          }}
+          style={{
+            ButtonStyle: filter
+              ? GenericButtonStyles.PrimaryButtonStyle
+              : GenericButtonStyles.SecondaryButtonStyle,
+            LabelStyle: filter
+              ? GenericButtonStyles.PrimaryLabelStyle
+              : GenericButtonStyles.SecondaryLabelStyle,
+            custom: {
+              marginRight: 32,
+            },
+          }}
+          icon={filter ? "X" : "Filter"}
+        ></GenericButton>
+        <GenericButton
+          label="NEW GROUP"
+          action={() => null}
+          style={{
+            ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
+            LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
+          }}
+          icon="Plus"
+        ></GenericButton>
+      </View>
     )
   }
+  return (
+    <GenericDirectoryScreen
+      navigation={navigation}
+      ControlButtons={GroupsControlButtons}
+      MainContent={() => <GroupsList filter={filter} reverse={reverse} />}
+      Widgets={GroupWidgets}
+      route={route}
+      pageTitle="Groups"
+    />
+  )
 }

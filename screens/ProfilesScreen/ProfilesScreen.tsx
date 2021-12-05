@@ -1,71 +1,98 @@
-﻿import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content } from "native-base"
-import React from "react"
+﻿import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import React, { useLayoutEffect, useState } from "react"
+import { View } from "react-native"
+import GenericButton from "../../components/FaceLift/GenericButton"
+import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
 import Header from "../../components/Header/Header"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
-import MyMap from "../../components/MyMap/MyMap"
-interface Props {
-  navigation: StackNavigationProp<any, any>
-}
-interface State extends JCState {
-  showMap: boolean
-  mapData: MapData[]
-}
+import ProfilesList from "./ProfilesList"
+import ProfileWidgets from "./ProfileWidgets"
+export default function ProfilesScreen() {
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  const route = useRoute()
+  const [reverse, setReverse] = useState(false)
+  const [filter, setFilter] = useState("")
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        return (
+          <Header
+            subnav={[
+              {
+                title: "Everybody",
+                action: () => null,
+              },
+              {
+                title: "In Your Org",
+                action: () => null,
+              },
 
-export default class HomeScreen extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      mapData: [],
-      showMap: false,
-    }
-  }
-  mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap })
-  }
-  mergeMapData(mapData: MapData[]): void {
-    //    console.log(mapData)
-    const data = this.state.mapData.concat(mapData)
-    this.setState({ mapData: data })
-  }
-  render(): React.ReactNode {
-    console.log("Profiles")
+              {
+                title: "In Your Groups",
+                action: () => null,
+              },
+            ]}
+            title={"People"}
+            controls={[
+              {
+                icon: "Sort",
+                action: () => {
+                  setReverse((prev) => !prev)
+                },
+              },
+            ]}
+            navigation={props.navigation}
+          />
+        )
+      },
+    })
+  }, [])
+  const PeopleControlButtons = () => {
     return (
-      <Container testID="profiles">
-        <Header
-          title="Jesus Collective"
-          navigation={this.props.navigation}
-          onMapChange={this.mapChanged}
-        />
-        <Content>
-          <MyMap
-            type={"no-filters"}
-            mapData={this.state.mapData}
-            visible={this.state.showMap}
-          ></MyMap>
-          <Container style={this.styles.style.profilesScreenMainContainer}>
-            <Container style={this.styles.style.profilesScreenLeftContainer}>
-              <MyGroups
-                showMore={true}
-                type="profile"
-                wrap={true}
-                navigation={this.props.navigation}
-                onDataload={(mapData) => {
-                  this.mergeMapData(mapData)
-                }}
-              ></MyGroups>
-            </Container>
-            {/*
-            <Container style={this.styles.style.profilesScreensRightContainer}>
-              <MyConversations navigation={this.props.navigation}> </MyConversations>
-              <Container ></Container>
-            </Container>
-            */}
-          </Container>
-        </Content>
-      </Container>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
+        <GenericButton
+          label="SORT"
+          action={() => setReverse((prev) => !prev)}
+          style={{
+            ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
+            LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
+            custom: {
+              marginRight: 32,
+            },
+          }}
+          icon="Sort"
+        ></GenericButton>
+        <GenericButton
+          label={`FILTER${filter ? ": My People" : ""}`}
+          action={() => {
+            if (filter) setFilter("")
+            else setFilter(": My People")
+          }}
+          style={{
+            ButtonStyle: filter
+              ? GenericButtonStyles.PrimaryButtonStyle
+              : GenericButtonStyles.SecondaryButtonStyle,
+            LabelStyle: filter
+              ? GenericButtonStyles.PrimaryLabelStyle
+              : GenericButtonStyles.SecondaryLabelStyle,
+            custom: {
+              marginRight: 32,
+            },
+          }}
+          icon={filter ? "X" : "Filter"}
+        ></GenericButton>
+      </View>
     )
   }
+  return (
+    <GenericDirectoryScreen
+      navigation={navigation}
+      ControlButtons={PeopleControlButtons}
+      MainContent={() => <ProfilesList filter={filter} reverse={reverse} />}
+      Widgets={ProfileWidgets}
+      route={route}
+      pageTitle="People"
+    />
+  )
 }
