@@ -44,13 +44,11 @@ export default function EventWidgets() {
   }
 
   return (
-    <>
-      <JCWidget
-        widgetType={WidgetType.Event}
-        emptyMessage="No upcoming events"
-        loadData={loadUpcoming}
-        title="Your Upcoming Events"
-      />
-    </>
+    <JCWidget
+      widgetType={WidgetType.Event}
+      emptyMessage="No upcoming events"
+      loadData={loadUpcoming}
+      title="Your Upcoming Events"
+    />
   )
 }

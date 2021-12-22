@@ -2,83 +2,42 @@ import React, { useEffect, useState } from "react"
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import { GetGroupQuery } from "../../src/API"
 
-const UpcomingCardStyle = StyleSheet.create({
-  CardContainer: {
-    backgroundColor: "#F6F5F5",
-    borderRadius: 8,
-    marginBottom: 32,
-  },
-})
-
-type Props = {
-  title: string
-  emptyMessage: string
-  loadData: () => Promise<Array<any>>
-}
 export default function JCWidget(props: Props) {
-  const { title, emptyMessage, loadData } = props
-  const [data, setData] = useState<Array<any>>([])
+  const { title, emptyMessage, loadData, userData, buttonAction } = props
+  const [data, setData] = useState<
+    Array<any> | NonNullable<NonNullable<GetGroupQuery["getGroup"]>["members"]>["items"]
+  >(userData ?? [])
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const load = async () => {
-      const items = await loadData()
-      setData(items)
+      if (loadData) {
+        const items = await loadData()
+        setData(items)
+      }
       setIsLoading(false)
     }
     load()
   }, [])
   return (
     <View key={title} style={UpcomingCardStyle.CardContainer}>
-      <View
-        style={{
-          padding: 16,
-          borderBottomColor: "#E4E1E1",
-          borderBottomWidth: 1,
-          flexDirection: "row",
-        }}
-      >
-        <Text
-          style={{
-            flex: 1,
-            textTransform: "uppercase",
-            fontSize: 12,
-            lineHeight: 16,
-            color: "#483938",
-            letterSpacing: 1,
-            fontFamily: "Graphik-Regular-App",
-          }}
-        >
-          {title}
-        </Text>
-        <TouchableOpacity>
-          <Text
-            style={{
-              color: "#483938",
-              textTransform: "uppercase",
-              fontSize: 12,
-              lineHeight: 16,
-              letterSpacing: 1,
-              fontFamily: "Graphik-Regular-App",
-            }}
-          >
-            SEE ALL
-          </Text>
+      <View style={UpcomingCardStyle.HeaderContainer}>
+        <Text style={[UpcomingCardStyle.HeaderText, { flex: 1 }]}>{title}</Text>
+        <TouchableOpacity onPress={buttonAction ?? (() => null)}>
+          <Text style={UpcomingCardStyle.HeaderText}>SEE ALL</Text>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          padding: 16,
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "flex-start",
-        }}
-      >
+      <View style={UpcomingCardStyle.MembersContainer}>
         {data?.length ? (
-          data?.map((item: any, index: number) => {
+          data?.map((item) => {
             return (
-              <View style={{ marginBottom: 8, marginRight: 8 }}>
-                <ProfileImage linkToProfile size="small5" user={item.id} />
+              <View key={item?.id} style={UpcomingCardStyle.MemberItemContainer}>
+                <ProfileImage
+                  linkToProfile
+                  size={userData ? "small6" : "small5"}
+                  user={userData ? item?.userID : item.id}
+                />
               </View>
             )
           })
@@ -87,20 +46,57 @@ export default function JCWidget(props: Props) {
             <ActivityIndicator size="large" color="#ff4438"></ActivityIndicator>
           </View>
         ) : (
-          <Text
-            style={{
-              fontSize: 15,
-              fontFamily: "Graphik-Regular-App",
-              fontWeight: "400",
-              lineHeight: 24,
-              paddingBottom: 2,
-              color: "#6A5E5D",
-            }}
-          >
-            {emptyMessage}
-          </Text>
+          <Text style={UpcomingCardStyle.EmptyListText}>{emptyMessage}</Text>
         )}
       </View>
     </View>
   )
 }
+
+type Props = {
+  title: string
+  emptyMessage: string
+  loadData?: () => Promise<Array<any>>
+  userData?: NonNullable<NonNullable<GetGroupQuery["getGroup"]>["members"]>["items"]
+  buttonAction?: () => void
+}
+
+const UpcomingCardStyle = StyleSheet.create({
+  CardContainer: {
+    backgroundColor: "#F6F5F5",
+    borderRadius: 8,
+    marginBottom: 32,
+  },
+  HeaderContainer: {
+    padding: 16,
+    borderBottomColor: "#E4E1E1",
+    borderBottomWidth: 1,
+    flexDirection: "row",
+  },
+  EmptyListText: {
+    fontSize: 15,
+    fontFamily: "Graphik-Regular-App",
+    fontWeight: "400",
+    lineHeight: 24,
+    paddingBottom: 2,
+    color: "#6A5E5D",
+  },
+  HeaderText: {
+    color: "#483938",
+    textTransform: "uppercase",
+    fontSize: 12,
+    lineHeight: 16,
+    letterSpacing: 1,
+    fontFamily: "Graphik-Medium-App",
+  },
+  MembersContainer: {
+    padding: 16,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+  },
+  MemberItemContainer: {
+    marginBottom: 8,
+    marginRight: 8,
+  },
+})

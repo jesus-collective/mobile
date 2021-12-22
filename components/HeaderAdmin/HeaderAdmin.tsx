@@ -110,27 +110,7 @@ export default class HeaderJC extends JCComponent<Props> {
           >
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Products</Text>
           </Button>
-          <Button
-            transparent
-            testID="header-events"
-            onPress={this.openEvents}
-            style={this.headerStyles.style.centerMenuButtonsSubNav}
-          >
-            <Text style={this.headerStyles.style.centerMenuButtonsText}>Stats</Text>
-          </Button>
-          <Button
-            transparent
-            testID="header-events"
-            onPress={this.openEvents}
-            style={this.headerStyles.style.centerMenuButtonsSubNav}
-          >
-            <Text style={this.headerStyles.style.centerMenuButtonsText}>Config</Text>
-          </Button>
         </Body>
-        {/* <Right>
-
-
-        </Right> */}
       </Header>
     )
   }

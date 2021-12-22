@@ -10,6 +10,21 @@ export const updateDirectMessage = /* GraphQL */ `
     }
   }
 `
+export const createGroupMember = /* GraphQL */ `
+  mutation CreateGroupMember($input: CreateGroupMemberInput!) {
+    createGroupMember(input: $input) {
+      id
+    }
+  }
+`
+
+export const deleteGroupMember = /* GraphQL */ `
+  mutation DeleteGroupMember($input: DeleteGroupMemberInput!) {
+    deleteGroupMember(input: $input) {
+      id
+    }
+  }
+`
 
 export const previewInvoice = /* GraphQL */ `
   mutation PreviewInvoice(

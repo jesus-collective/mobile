@@ -3,11 +3,10 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Container, Content, Icon, Picker, Text } from "native-base"
 import * as React from "react"
 import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, View } from "react-native"
-import { Data } from "../../Components/Data/Data"
+import { Data } from "../../components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
-import Header from "../../components/Header/Header"
 import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
@@ -446,8 +445,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
           if (!userState) return null
           return (
             <Container>
-              <Header title="Jesus Collective" navigation={this.props.navigation} />
-
               <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
               {userActions.isMemberOf("admin") ? (
                 <Content>

@@ -22,6 +22,13 @@ interface Props {
     | "smallReply"
     | "small5"
     | "small6"
+    | "small7"
+    | "nav"
+    | "miniNav"
+    | "tiny"
+    | "profile"
+    | "mobileProfile"
+    | "roundEvent"
   style?: "map" | "my-people" | "courseProfile" | "personCard"
   inlineStyle?: ImageStyle
   isOrg?: boolean
@@ -132,7 +139,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
         }
       })
   }
-
   renderImage(): React.ReactNode {
     return this.state.profileImage ? (
       <Image
@@ -155,6 +161,42 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginHorizontal: 10,
                 top: 0,
               }
+            : this.props.size === "nav"
+            ? {
+                width: "48px",
+                height: "60px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 12,
+                top: 0,
+              }
+            : this.props.size === "miniNav"
+            ? {
+                width: "24px",
+                height: "30px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 12,
+                top: 0,
+              }
+            : this.props.size === "profile"
+            ? {
+                width: "205px",
+                height: "256px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                alignSelf: "flex-start",
+              }
+            : this.props.size === "mobileProfile"
+            ? {
+                width: "77px",
+                height: "96px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                alignSelf: "flex-start",
+              }
             : this.props.size == "small5"
             ? {
                 width: "57.6px",
@@ -168,6 +210,27 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ? {
                 width: "32px",
                 height: "40px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                alignSelf: "flex-start",
+                top: 0,
+              }
+            : this.props.size == "small7"
+            ? {
+                width: "48px",
+                height: "60px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                marginRight: 8,
+                alignSelf: "flex-start",
+                top: 0,
+              }
+            : this.props.size == "roundEvent"
+            ? {
+                width: "32px",
+                height: "32px",
                 borderRadius: 120,
                 marginBottom: 0,
                 marginHorizontal: 0,
@@ -193,6 +256,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginBottom: 0,
                 marginLeft: 20,
                 top: 0,
+              }
+            : this.props.size === "tiny"
+            ? {
+                width: "26px",
+                height: "32px",
+                borderRadius: 120,
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
               }
             : this.props.style === "map" || this.props.style === "my-people"
             ? {
@@ -238,10 +309,28 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginLeft: 10,
                 top: 30,
               }
+            : this.props.size === "nav"
+            ? {
+                width: "48px",
+                height: "60px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 12,
+                top: 0,
+              }
+            : this.props.size === "miniNav"
+            ? {
+                width: "24px",
+                height: "30px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 12,
+                top: 0,
+              }
             : this.props.size == "small2"
             ? {
-                width: "50px",
-                height: "66px",
+                width: "48px",
+                height: "60px",
                 borderRadius: 120,
                 marginRight: 10,
                 marginBottom: 0,
@@ -264,6 +353,53 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 borderRadius: 120,
                 marginBottom: 0,
                 marginHorizontal: 0,
+                top: 0,
+              }
+            : this.props.size === "mobileProfile"
+            ? {
+                width: "77px",
+                height: "96px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                alignSelf: "flex-start",
+              }
+            : this.props.size === "tiny"
+            ? {
+                width: "26px",
+                height: "32px",
+                borderRadius: 120,
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+              }
+            : this.props.size === "profile"
+            ? {
+                width: "205px",
+                height: "256px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                alignSelf: "flex-start",
+              }
+            : this.props.size == "roundEvent"
+            ? {
+                width: "32px",
+                height: "32px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                alignSelf: "flex-start",
+                top: 0,
+              }
+            : this.props.size == "small7"
+            ? {
+                width: "48px",
+                height: "60px",
+                borderRadius: 120,
+                marginBottom: 0,
+                marginHorizontal: 0,
+                marginRight: 8,
+                alignSelf: "flex-start",
                 top: 0,
               }
             : this.props.style === "personCard"

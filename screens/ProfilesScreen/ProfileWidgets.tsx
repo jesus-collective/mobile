@@ -6,18 +6,7 @@ export default function ProfileWidgets() {
     <>
       <PeopleListWidget
         emptyMessage="No members in your org"
-        loadData={() =>
-          Promise.resolve([
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-            { id: "1d9eed76-82ff-4ddc-b2ae-3eb5c597cc52" },
-          ])
-        }
+        loadData={() => Promise.resolve([])}
         title="In Your org"
       />
 

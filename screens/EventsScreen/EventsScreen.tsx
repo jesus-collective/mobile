@@ -13,40 +13,42 @@ export default function EventsScreen() {
   const route = useRoute()
   const [reverse, setReverse] = useState(false)
   const [filter, setFilter] = useState("")
+  const subNav = [
+    {
+      title: "All Events",
+      action: () => {
+        setFilter("")
+      },
+    },
+    {
+      title: "Your Events",
+      action: () => {
+        console.log("setting to your events")
+        if (filter) setFilter("")
+        else setFilter(": Your Events")
+      },
+    },
+  ]
+  const controls = [
+    {
+      icon: "Sort",
+      action: () => {
+        setReverse((prev) => !prev)
+      },
+    },
+    {
+      icon: "Plus",
+      action: () => null,
+    },
+  ]
   useLayoutEffect(() => {
     navigation.setOptions({
       header: (props) => {
         return (
           <Header
-            subnav={[
-              {
-                title: "All Events",
-                action: () => {
-                  setFilter("")
-                },
-              },
-              {
-                title: "Your Events",
-                action: () => {
-                  console.log("setting to your events")
-                  if (filter) setFilter("")
-                  else setFilter(": Your Events")
-                },
-              },
-            ]}
+            subnav={subNav}
             title={"Events"}
-            controls={[
-              {
-                icon: "Sort",
-                action: () => {
-                  setReverse((prev) => !prev)
-                },
-              },
-              {
-                icon: "Plus",
-                action: () => null,
-              },
-            ]}
+            controls={controls}
             navigation={props.navigation}
           />
         )
