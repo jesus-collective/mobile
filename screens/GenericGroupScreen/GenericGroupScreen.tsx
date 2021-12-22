@@ -13,7 +13,6 @@ import EditableLocation from "../../components/Forms/EditableLocation"
 import EditableText from "../../components/Forms/EditableText"
 import EditableUrl from "../../components/Forms/EditableUrl"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { MapData } from "../../components/MyGroups/MyGroups"
@@ -572,16 +571,6 @@ export default class EventScreen extends JCComponent<Props, State> {
     return this.state.data ? (
       <StyleProvider style={getTheme()}>
         <Container>
-          <Header
-            title="Jesus Collective"
-            navigation={this.props.navigation}
-            onMapChange={() => {
-              if (this.state.data)
-                !this.state.createNew && this.state.data.eventType === "location"
-                  ? this.mapChanged
-                  : null
-            }}
-          />
           <Content>
             <MyMap
               initCenter={this.state.initCenter}

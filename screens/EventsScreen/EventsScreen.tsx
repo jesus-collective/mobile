@@ -91,7 +91,12 @@ export default function EventsScreen() {
         ></GenericButton>
         <GenericButton
           label="NEW EVENT"
-          action={() => null}
+          action={() =>
+            navigation.navigate("GenericGroupScreen", {
+              groupType: "event",
+              create: true,
+            })
+          }
           style={{
             ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
             LabelStyle: GenericButtonStyles.PrimaryLabelStyle,

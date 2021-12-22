@@ -88,7 +88,12 @@ export default function GroupsScreen() {
         ></GenericButton>
         <GenericButton
           label="NEW GROUP"
-          action={() => null}
+          action={() =>
+            navigation.navigate("GenericGroupScreen", {
+              groupType: "group",
+              create: true,
+            })
+          }
           style={{
             ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
             LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
