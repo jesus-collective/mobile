@@ -16,6 +16,7 @@ import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyl
 import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
+import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
 import { GetGroupQuery, GetUserQuery } from "../../src/API"
@@ -201,7 +202,7 @@ export default function EventScreen(props: Props) {
             <View style={style.ContentContainer}>
               <View style={style.MainContent}>
                 {currentTab === EventTabType.DISCUSSION ? (
-                  <Text>Discussion</Text>
+                  <MessageBoard replies style="regular" groupId={id}></MessageBoard>
                 ) : currentTab === EventTabType.ATTENDEES ? (
                   <View>
                     <FlatList

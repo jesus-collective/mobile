@@ -13,6 +13,7 @@ import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyl
 import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
+import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { GetGroupQuery, GetUserQuery } from "../../src/API"
 import { GetUser2Query } from "../../src/API-customqueries"
@@ -247,24 +248,25 @@ export default function GroupScreen(props: Props) {
           <View style={style.MainContainer}>
             <View style={style.ContentContainer}>
               <View style={style.MainContent}>
-                {currentTab === GroupTabType.DISCUSSION ? (
-                  <Text style={style.NoMembersText}>Discussions</Text>
-                ) : currentTab === GroupTabType.MEMBERS ? (
-                  <View>
-                    <FlatList
-                      ListEmptyComponent={() =>
-                        !attendees?.length ? (
-                          <Text style={style.NoMembersText}>No members</Text>
-                        ) : null
-                      }
-                      numColumns={2}
-                      data={attendees}
-                      keyExtractor={({ item }) => item?.id}
-                      renderItem={({ item }) => <ProfileCard item={item} />}
-                    />
-                  </View>
-                ) : currentTab === GroupTabType.EVENTS ? // </View> //   /> //     renderItem={({ item }) => <EventCard item={item} />} //     keyExtractor={({ item }) => item?.id} //     data={[]} //     numColumns={2} //     } //       ) : null //         <Text style={style.NoMembersText}>No events</Text> //       !attendees?.length ? ( //     ListEmptyComponent={() => //   <FlatList // <View>
-                null : null}
+                {
+                  currentTab === GroupTabType.DISCUSSION ? (
+                    <MessageBoard replies style="regular" groupId={id}></MessageBoard>
+                  ) : currentTab === GroupTabType.MEMBERS ? (
+                    <View>
+                      <FlatList
+                        ListEmptyComponent={() =>
+                          !attendees?.length ? (
+                            <Text style={style.NoMembersText}>No members</Text>
+                          ) : null
+                        }
+                        numColumns={2}
+                        data={attendees}
+                        keyExtractor={({ item }) => item?.id}
+                        renderItem={({ item }) => <ProfileCard item={item} />}
+                      />
+                    </View>
+                  ) : currentTab === GroupTabType.EVENTS ? null : null // </View> //   /> //     renderItem={({ item }) => <EventCard item={item} />} //     keyExtractor={({ item }) => item?.id} //     data={[]} //     numColumns={2} //     } //       ) : null //         <Text style={style.NoMembersText}>No events</Text> //       !attendees?.length ? ( //     ListEmptyComponent={() => //   <FlatList // <View>
+                }
               </View>
               <View style={style.MinorContent}>
                 <View style={{ marginBottom: 32 }}>
