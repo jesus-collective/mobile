@@ -133,7 +133,8 @@ const EventCardStyle = StyleSheet.create({
     fontSize: 15,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 8,
+    borderBottomRightRadius: 8,
+    borderTopLeftRadius: 8,
     marginTop: 32,
   },
   NameText: {
