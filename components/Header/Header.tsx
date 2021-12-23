@@ -7,7 +7,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { HTMLAttributes, useContext, useEffect, useState } from "react"
 import { BrowserView, MobileOnlyView } from "react-device-detect"
-import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
@@ -23,6 +23,7 @@ interface Props {
   subnav?: any
   controls?: any
   drawerState?: boolean
+  showAdmin?: boolean
 }
 
 interface State extends JCState {
@@ -53,18 +54,21 @@ const resourcesStyle2 = {
 }
 
 export default function HeaderJCC(props: Props) {
-  const { width } = Dimensions.get("window")
+  const { width } = useWindowDimensions()
   const isOpen = props?.drawerState // useDrawerStatus() is needed when in a drawer navigator to determine hamburger icon state
   /* 
-    On mobile devices the header should only show:
-      - back button
-      - page title
-      - page actions
       TODOS:
         - Refactor styles, remove media queries (?)
-        - Bottom Tav Navigation for mobile devices
-        - Implement mobile header
   */
+  const determineTitleMarginLeft = (controlCount = 0) => {
+    // this is based on current header button sizes
+    // if sizes change this will also need to be changed in order for the header title to be centered
+    if (controlCount === 1) return 8
+    if (controlCount === 2) return 56
+    if (controlCount === 3) return 88
+    // We might want to cap control at 2 especially if page titles get long
+    return 0
+  }
   const [state, setState] = useState<State>({
     resourcesDropdown: null,
     resourcesStyle: resourcesStyle1,
@@ -186,6 +190,7 @@ export default function HeaderJCC(props: Props) {
                 <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
               </TouchableOpacity>
             ) : null}
+
             {constants["SETTING_ISVISIBLE_group"] ? (
               <TouchableOpacity
                 testID="header-groups"
@@ -243,7 +248,45 @@ export default function HeaderJCC(props: Props) {
                 <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
               </TouchableOpacity>
             ) : null}
+            {props?.showAdmin ? (
+              <>
+                <TouchableOpacity
+                  testID="header-groups"
+                  onPress={() =>
+                    navigation.navigate("AdminScreen", { id: state.user?.username, create: false })
+                  }
+                  style={headerStyles.style.centerMenuButtons}
+                >
+                  <Text style={headerStyles.style.centerMenuButtonsText}>Admin</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  testID="header-groups"
+                  onPress={() =>
+                    navigation.navigate("AdminCRMScreen", {
+                      id: state.user?.username,
+                      create: false,
+                    })
+                  }
+                  style={headerStyles.style.centerMenuButtons}
+                >
+                  <Text style={headerStyles.style.centerMenuButtonsText}>CRM</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  testID="header-groups"
+                  onPress={() =>
+                    navigation.navigate("AdminCreateProductScreen", {
+                      id: state.user?.username,
+                      create: false,
+                    })
+                  }
+                  style={headerStyles.style.centerMenuButtons}
+                >
+                  <Text style={headerStyles.style.centerMenuButtonsText}>Products</Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
           </View>
+
           <View style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}>
             {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
               <View style={{ marginHorizontal: 12 }}>
@@ -280,13 +323,12 @@ export default function HeaderJCC(props: Props) {
                 </TouchableOpacity>
               </View>
             ) : null}
-            <View
-              style={{
-                transform: [{ scale: Dimensions.get("window").width > 1300 ? 0.7 : 0.4175 }],
-              }}
-            >
-              <ProfileImage size="small2" linkToProfile user={state?.user?.username} />
-            </View>
+
+            <ProfileImage
+              size={width <= 1300 ? "miniNav" : "nav"}
+              linkToProfile
+              user={state?.user?.username}
+            />
             <View style={{ marginHorizontal: 12 }}>
               <TouchableOpacity onPress={openMessages}>
                 <Image
@@ -326,6 +368,7 @@ export default function HeaderJCC(props: Props) {
             borderBottomColor: "#E4E1E1",
             paddingTop: 16,
             paddingHorizontal: 16,
+            backgroundColor: "#fff",
           }}
         >
           <View
@@ -335,7 +378,11 @@ export default function HeaderJCC(props: Props) {
             }}
           >
             {props.title !== "Home" ? (
-              <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack()
+                }}
+              >
                 <Image
                   source={require("../../assets/header/Left-Arrow.png")}
                   style={{ width: 24, height: 24 }}
@@ -343,14 +390,15 @@ export default function HeaderJCC(props: Props) {
               </TouchableOpacity>
             ) : null}
             <Text
+              numberOfLines={1}
               style={{
-                marginLeft: props.title !== "Home" ? -24 : 0, // offset back button icon width
-                flex: 1,
+                marginLeft: determineTitleMarginLeft(props?.controls?.length),
                 fontFamily: "Graphik-Semibold-App",
                 fontSize: 15,
                 lineHeight: 24,
                 color: "#1A0706",
                 textAlign: "center",
+                flex: 1,
               }}
             >
               {props.title}

@@ -1,11 +1,12 @@
 import { Auth } from "aws-amplify"
 import React, { useEffect, useState } from "react"
-import { isMobile } from "react-device-detect"
+import { isMobile, isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import LastListItem from "../../components/FaceLift/LastListItem"
 import GroupCard from "./GroupCard"
 
 type Props = {
@@ -69,12 +70,14 @@ export default function GroupsList(props: Props) {
       loadJoinedData()
     }
   }, [data])
-  const centerOffset = isMobile ? 0 : -32
+  const centerOffset = isMobileOnly ? 0 : -32
   return (
     <>
       <FlatList
-        style={{ minHeight: 662 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
-        contentContainerStyle={isMobile ? { paddingHorizontal: 12, paddingTop: 16 } : {}}
+        style={isMobileOnly ? { paddingBottom: 16 } : { minHeight: 662, marginRight: 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+        contentContainerStyle={isMobileOnly ? { paddingHorizontal: 12, paddingTop: 16 } : {}}
+        ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
+        columnWrapperStyle={isMobileOnly ? null : { gap: 32 }}
         ListFooterComponent={() => (
           <View
             style={{
@@ -131,7 +134,14 @@ export default function GroupsList(props: Props) {
         numColumns={isMobile ? 1 : 2}
         refreshing={refreshing}
         renderItem={({ item, index }) => {
-          return <GroupCard item={item} />
+          const isLastAndOdd = data.length - 1 === index && index % 2 === 0
+          return isMobileOnly ? (
+            <GroupCard item={item} />
+          ) : (
+            <LastListItem isLastAndOdd={isLastAndOdd}>
+              <GroupCard item={item} />
+            </LastListItem>
+          )
         }}
       />
     </>

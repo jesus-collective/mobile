@@ -22,7 +22,45 @@ const linking = {
   config: {
     screens: {
       mainApp: {
+        // points to mobile
         path: "app",
+        screens: {
+          //missing tab navigator screen configs (?)
+          mainDrawer: {
+            path: "",
+            screens: {
+              HomeScreen: "home",
+              GenericGroupScreen: "group/:groupType/:id/:create",
+              GroupsScreen: "groups",
+              GroupScreen: "groups/:id",
+              EventsScreen: "events",
+              EventScreen: "events/:id",
+              ResourceScreen: "resource",
+              ResourceConfigureScreen: "resourceconfig/:id",
+              ResourceDisplayScreen: "resourcedisplay/:id",
+              ResourcesScreen: "resources",
+              OrganizationScreen: "organization",
+              OrganizationsScreen: "organizations",
+              CourseOverviewScreen: "courseoverview",
+              CoursesScreen: "courses",
+              CourseHomeScreen: "course",
+              CourseDetailScreen: "coursedetail",
+              CourseCoachingScreen: "coursecoaching",
+              ConversationScreen: "conversation",
+              SearchScreen: "search",
+              ProfileScreen: "profile",
+              ProfilesScreen: "profiles",
+              AdminScreen: "admin",
+              AdminCRMScreen: "admin-crm",
+              AdminCreateProductScreen: "admin-products",
+              CoursePaymentScreen: "coursepayment",
+              PurchaseConfirmationScreen: "success",
+            },
+          },
+        },
+      },
+      mainApp2: {
+        path: "web",
         screens: {
           mainDrawer: {
             path: "",
@@ -30,7 +68,9 @@ const linking = {
               HomeScreen: "home",
               GenericGroupScreen: "group/:groupType/:id/:create",
               GroupsScreen: "groups",
+              GroupScreen: "groups/:id",
               EventsScreen: "events",
+              EventScreen: "events/:id",
               ResourceScreen: "resource",
               ResourceConfigureScreen: "resourceconfig/:id",
               ResourceDisplayScreen: "resourcedisplay/:id",

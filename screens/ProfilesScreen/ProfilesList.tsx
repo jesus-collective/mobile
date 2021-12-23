@@ -1,11 +1,12 @@
 import { Auth } from "aws-amplify"
 import React, { useEffect, useState } from "react"
-import { isMobile } from "react-device-detect"
+import { isMobile, isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data, UserGroupType } from "../../components/Data/Data"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import LastListItem from "../../components/FaceLift/LastListItem"
 import ProfileCard from "./ProfileCard"
 
 type Props = {
@@ -20,7 +21,7 @@ export default function ProfilesList(props: Props) {
   const [joinedGroups, setJoinedGroups] = useState<Array<any>>([])
   const [isOwnerGroups, setIsOwnerGroups] = useState<Array<any>>([])
   const loadProfiles = async () => {
-    const listUsers = await Data.listUsers(UserGroupType.All, null)
+    const listUsers = await Data.listUsersForProfile(UserGroupType.All, null)
     setData(
       listUsers?.data?.listUsers?.items?.sort((userA, userB) => {
         if (reverse && userA?.family_name && userB?.family_name)
@@ -45,7 +46,6 @@ export default function ProfilesList(props: Props) {
       const loadJoinedData = async () => {
         const user = await loadUser()
         data.forEach((item: any) => {
-          console.log("setting joined data")
           const groupMemberByUser = Data.groupMemberByUser(user, item.id)
           groupMemberByUser.then((json) => {
             if ((json.data?.groupMemberByUser?.items?.length ?? 0) > 0) {
@@ -70,69 +70,80 @@ export default function ProfilesList(props: Props) {
     }
   }, [data])
   const centerOffset = isMobile ? 0 : -32
+  const filteredData = filter
+    ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id))
+    : data
   return (
-    <>
-      <FlatList
-        style={{ minHeight: 662 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
-        ListFooterComponent={() => (
-          <View
+    <FlatList
+      style={{ minHeight: 662, marginRight: isMobileOnly ? 0 : 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+      ListFooterComponent={() => (
+        <View
+          style={{
+            marginLeft: centerOffset,
+            marginBottom: 30,
+            marginTop: 30,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <GenericButton
             style={{
+              ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
+              LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
+            }}
+            label="Load More"
+            action={() => loadProfiles()}
+          />
+        </View>
+      )}
+      ListHeaderComponent={() =>
+        refreshing ? (
+          <ActivityIndicator
+            style={{
+              marginTop: isMobile ? 32 : 0,
               marginLeft: centerOffset,
-              marginBottom: 30,
-              justifyContent: "center",
-              alignItems: "center",
+              position: "absolute",
+              alignSelf: "center",
+            }}
+            size="large"
+            color="#FF4438"
+          />
+        ) : null
+      }
+      ListFooterComponentStyle={
+        !nextToken || (filteredData?.length % 4 !== 0 && !nextToken) || !filteredData.length
+          ? { display: "none" }
+          : {}
+      }
+      ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
+      columnWrapperStyle={isMobileOnly ? null : ({ gap: 32 } as any)}
+      ListEmptyComponent={() =>
+        !refreshing && !filteredData.length ? (
+          <Text
+            style={{
+              fontSize: 15,
+              fontFamily: "Graphik-Regular-App",
+              fontWeight: "400",
+              lineHeight: 24,
+              paddingBottom: 2,
+              color: "#6A5E5D",
             }}
           >
-            <GenericButton
-              style={{
-                ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
-                LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
-              }}
-              label="Load More"
-              action={() => loadProfiles()}
-            />
-          </View>
-        )}
-        ListHeaderComponent={() =>
-          refreshing ? (
-            <ActivityIndicator
-              style={{
-                marginTop: isMobile ? 32 : 0,
-                marginLeft: centerOffset,
-                position: "absolute",
-                alignSelf: "center",
-              }}
-              size="large"
-              color="#FF4438"
-            />
-          ) : null
-        }
-        ListFooterComponentStyle={
-          (data?.length % 4 !== 0 && !nextToken) || !data.length ? { display: "none" } : {}
-        }
-        ListEmptyComponent={() =>
-          !refreshing && !data.length ? (
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: "Graphik-Regular-App",
-                fontWeight: "400",
-                lineHeight: 24,
-                paddingBottom: 2,
-                color: "#6A5E5D",
-              }}
-            >
-              No groups found
-            </Text>
-          ) : null
-        }
-        data={filter ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)) : data}
-        numColumns={isMobile ? 1 : 2}
-        refreshing={refreshing}
-        renderItem={({ item, index }) => {
-          return <ProfileCard item={item} />
-        }}
-      />
-    </>
+            No groups found
+          </Text>
+        ) : null
+      }
+      data={filteredData}
+      numColumns={isMobile ? 1 : 2}
+      refreshing={refreshing}
+      renderItem={({ item, index }) => {
+        const isLastAndOdd = filteredData.length - 1 === index && index % 2 === 0
+        return (
+          <LastListItem isLastAndOdd={isLastAndOdd}>
+            <ProfileCard item={item} />
+          </LastListItem>
+        )
+      }}
+    />
   )
 }

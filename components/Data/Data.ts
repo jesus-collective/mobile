@@ -104,6 +104,7 @@ import {
   GetPaymentQuery,
   GetProductQuery,
   GetUserQuery,
+  Group,
   GroupByTypeByTimeQuery,
   GroupByTypeQuery,
   GroupMemberByUserQuery,
@@ -829,6 +830,14 @@ export class Data {
     }) as Promise<GraphQLResult<UpdateUserMutation>>
   }
 
+  static getGroupForItemPage(groupId: Group["id"]) {
+    return API.graphql({
+      query: customQueries.getGroupForProfile,
+      variables: { id: groupId, messages: { sortDirection: "ASC" } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<GetGroupQuery>>
+  }
+
   static getGroup(groupId: string) {
     return API.graphql({
       query: queries.getGroup,
@@ -875,6 +884,17 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
   }
+  static getUserProfileGroups(
+    user: string | null,
+    nextToken: string | null | undefined,
+    type = "group"
+  ) {
+    return API.graphql({
+      query: customQueries.groupsJoinedByUser,
+      variables: { userID: user, groupID: { beginsWith: `${type}-` }, nextToken },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+  }
   static groupByTypeForMyGroups(
     type: string | InviteType | undefined,
     nextToken: string | null | undefined
@@ -883,6 +903,20 @@ export class Data {
       query: customQueries.groupByTypeForMyGroups,
       variables: {
         limit: 20,
+        type: type,
+        nextToken: nextToken,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<GroupByTypeQuery>>
+  }
+  static groupByTypeForProfile(
+    type: string | InviteType | undefined,
+    nextToken: string | null | undefined
+  ) {
+    return API.graphql({
+      query: customQueries.groupByTypeForMyGroups,
+      variables: {
+        limit: 200,
         type: type,
         nextToken: nextToken,
       },
@@ -911,6 +945,36 @@ export class Data {
       variables: params,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<GroupByTypeByTimeQuery>>
+  }
+  static listUsersForProfile(
+    userGroupType: UserGroupType,
+    nextToken: string | null | undefined
+  ): Promise<GraphQLResult<ListUsersQuery>> {
+    let mainUserGroups
+    if (userGroupType == UserGroupType.All)
+      mainUserGroups = ["Inactive", "Partner", "Admin", "Friend", "OneStory", "Verified"]
+    else if (userGroupType == UserGroupType.Friends)
+      mainUserGroups = ["Admin", "Friend", "Verified"]
+    else if (userGroupType == UserGroupType.OneStory)
+      mainUserGroups = ["Admin", "OneStory", "Verified"]
+    else mainUserGroups = ["Partner", "Admin"]
+    const userGroupList = mainUserGroups?.map((i) => {
+      return {
+        mainUserGroup: {
+          eq: i,
+        } as ModelStringFilterInput | null | undefined,
+      }
+    })
+    const query: ListUsersQueryVariables = {
+      limit: 100,
+      filter: { profileState: { eq: "Complete" }, or: userGroupList },
+      nextToken: nextToken,
+    }
+    return API.graphql({
+      query: customQueries.listUsersForProfiles,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListUsersQuery>>
   }
   static listUsers(
     userGroupType: UserGroupType,

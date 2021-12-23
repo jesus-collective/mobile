@@ -1,32 +1,34 @@
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
-import { isMobile } from "react-device-detect"
+import { isMobileOnly } from "react-device-detect"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
-const GroupCardStyle = StyleSheet.create({
-  CardContainer: {
-    height: 308,
+const ProfileCardStyle = StyleSheet.create({
+  Container: {
+    minHeight: 308,
     flex: 1,
-    marginBottom: 64,
     marginTop: 32,
-    marginRight: 32,
-    maxWidth: "calc(50% - 32px)",
     borderWidth: 1,
     borderColor: "#E4E1E1",
+    backgroundColor: "#FFFFFF",
     borderRadius: 8,
   },
 })
 type Props = {
   item: any
+  forceDesktop?: boolean
 }
-export default function GroupCard(props: Props) {
+export default function ProfileCard(props: Props) {
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  console.log(props.item)
   const { item } = props
-  const { given_name, family_name, id, currentRole, aboutMeLong, aboutMeShort, location } = item
-  console.log(item)
-  return isMobile ? (
+  return !props.forceDesktop && isMobileOnly ? (
     <TouchableOpacity
+      onPress={() => navigation.push("ProfileScreen", { id: item?.id })}
       style={{
         flexDirection: "row",
         flex: 1,
@@ -46,9 +48,10 @@ export default function GroupCard(props: Props) {
           borderBottomColor: "#E4E1E1",
         }}
       >
-        <ProfileImage size="small6" user={id} />
+        <ProfileImage size="small6" user={item?.id} />
         <View style={{ flexDirection: "column", flex: 1, marginLeft: 12 }}>
           <Text
+            selectable
             style={{
               fontSize: 14,
               fontFamily: "Graphik-Semibold-App",
@@ -56,9 +59,10 @@ export default function GroupCard(props: Props) {
               color: "#1A0706",
             }}
           >
-            {given_name} {family_name}
+            {item?.given_name} {item?.family_name}
           </Text>
           <Text
+            selectable
             style={{
               fontSize: 14,
               fontFamily: "Graphik-Regular-App",
@@ -66,7 +70,7 @@ export default function GroupCard(props: Props) {
               color: "#6A5E5D",
             }}
           >
-            {currentRole}
+            {item?.currentRole}
           </Text>
         </View>
         <TouchableOpacity style={{ alignSelf: "center" }}>
@@ -78,52 +82,57 @@ export default function GroupCard(props: Props) {
       </View>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity style={GroupCardStyle.CardContainer}>
-      <ProfileImage style="personCard" user={id} />
+    <TouchableOpacity
+      onPress={() => navigation.push("ProfileScreen", { id: item?.id })}
+      style={ProfileCardStyle.Container}
+    >
+      <ProfileImage style="personCard" user={item?.id} />
       <View style={{ padding: 16, paddingTop: 0, flex: 1 }}>
         <Text
+          selectable
           style={{
+            marginTop: -16,
             fontSize: 15,
-            fontFamily: "Graphik-Regular-App",
-            fontWeight: "600",
+            fontFamily: "Graphik-Semibold-App",
             lineHeight: 24,
             color: "#1A0706",
             paddingBottom: 2,
           }}
         >
-          {given_name} {family_name}
+          {item?.given_name} {item?.family_name}
         </Text>
         <Text
+          selectable
           style={{
             fontSize: 15,
             fontFamily: "Graphik-Regular-App",
-            fontWeight: "400",
             lineHeight: 24,
             color: "#6A5E5D",
             paddingBottom: 16,
           }}
         >
-          {currentRole} {location?.geocodeFull ? `| ${location?.geocodeFull}` : null}
+          {item?.currentRole}{" "}
+          {item?.location?.geocodeFull ? `| ${item?.location?.geocodeFull}` : null}
         </Text>
         <Text
+          selectable
           numberOfLines={4}
           style={{
             fontSize: 15,
             fontFamily: "Graphik-Regular-App",
-            fontWeight: "400",
             lineHeight: 24,
             color: "#1A0706",
-            paddingBottom: 32,
           }}
         >
-          {aboutMeShort ?? aboutMeLong}
+          {item?.aboutMeShort ?? item?.aboutMeLong}
         </Text>
-        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <View style={{ paddingTop: 32, flex: 1, justifyContent: "flex-end" }}>
           <GenericButton
             style={{
               ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
               LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
               custom: { width: 124, height: 40 },
+              customLabel: { fontFamily: "Graphik-Medium-App" },
             }}
             label={"Message"}
             action={() => null}

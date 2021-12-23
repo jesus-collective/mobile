@@ -15,6 +15,8 @@ const CourseOverviewScreen = lazy(() => import("../CourseOverviewScreen/CourseOv
 const CourseHomeScreen = lazy(() => import("../CourseHomeScreen/CourseHomeScreen"))
 const GroupsScreen = lazy(() => import("../GroupsScreen/GroupsScreen"))
 const EventsScreen = lazy(() => import("../EventsScreen/EventsScreen"))
+const EventScreen = lazy(() => import("../EventScreen/EventScreen"))
+const GroupScreen = lazy(() => import("../GroupScreen/GroupScreen"))
 const ResourceScreen = lazy(() => import("../ResourceScreen/ResourceScreen"))
 const ResourceConfigureScreen = lazy(() => import("../ResourceScreen/ResourceConfigureScreen"))
 const ResourceDisplayScreen = lazy(() => import("../ResourceScreen/ResourceDisplayScreen"))
@@ -25,6 +27,7 @@ const SearchScreen = lazy(() => import("../SearchScreen/SearchScreen"))
 const AdminScreen = lazy(() => import("../AdminScreen/AdminScreen"))
 const AdminCRMScreen = lazy(() => import("../AdminCRMScreen/AdminCRMScreen"))
 const CoursePaymentScreen = lazy(() => import("../CoursePaymentScreen/CoursePaymentScreen"))
+
 const PurchaseConfirmationScreen = lazy(
   () => import("../PurchaseConfirmationScreen/PurchaseConfirmationScreen")
 )
@@ -52,6 +55,7 @@ export default class MainAppRouter extends JCComponent {
                 gestureEnabled: false,
                 cardOverlayEnabled: false,
                 headerMode: "screen",
+                cardStyle: { flex: 1, backgroundColor: "#fffdfc" },
                 presentation: "card",
                 header: (props) => {
                   return (
@@ -82,9 +86,19 @@ export default class MainAppRouter extends JCComponent {
                     options={{ headerTitle: "Groups", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
+                    name="GroupScreen"
+                    component={GroupScreen}
+                    options={{ headerTitle: "Group", title: "Jesus Collective" }}
+                  />
+                  <Stack.Screen
                     name="EventsScreen"
                     component={EventsScreen}
                     options={{ headerTitle: "Events", title: "Jesus Collective" }}
+                  />
+                  <Stack.Screen
+                    name="EventScreen"
+                    component={EventScreen}
+                    options={{ headerTitle: "Event", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="ResourcesScreen"
@@ -201,7 +215,17 @@ export default class MainAppRouter extends JCComponent {
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
+                    name="GroupScreen"
+                    component={Nothing}
+                    options={{ title: "Jesus Collective" }}
+                  />
+                  <Stack.Screen
                     name="EventsScreen"
+                    component={Nothing}
+                    options={{ title: "Jesus Collective" }}
+                  />
+                  <Stack.Screen
+                    name="EventScreen"
                     component={Nothing}
                     options={{ title: "Jesus Collective" }}
                   />

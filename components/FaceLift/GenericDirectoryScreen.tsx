@@ -15,56 +15,27 @@ interface Props {
 }
 
 export default function GenericDirectoryScreen(props: Props) {
-  const { pageTitle, Widgets, ControlButtons, MainContent, navigation, oneColumn, reverseContent } =
-    props
-  const style = StyleSheet.create({
-    MainContainer: {
-      flexDirection: "column",
-    },
-    ContentContainer: {
-      flexDirection: reverseContent ? "row-reverse" : "row",
-    },
-    MinorContent: {
-      flex: oneColumn ? 0 : 0.3,
-    },
-    MainContent: {
-      flex: oneColumn ? 1 : 0.7,
-    },
-  })
+  const { pageTitle, Widgets, ControlButtons, MainContent, oneColumn, reverseContent } = props
 
   return (
     <>
       <BrowserView>
-        <View style={{ marginHorizontal: "7.778vw" }}>
-          <Text
-            style={{
-              marginTop: 160,
-              marginBottom: 80,
-              fontFamily: "Graphik-Medium-App",
-              fontSize: 96,
-              lineHeight: 96,
-              letterSpacing: -0.5,
-              color: "#483938",
-            }}
-          >
-            {pageTitle}
-          </Text>
-
-          <View
-            style={{
-              borderBottomColor: "#E4E1E1",
-              borderBottomWidth: 1,
-              marginBottom: 24,
-            }}
-          />
+        <View style={style.TopContainer}>
+          <Text style={style.PageTitle}>{pageTitle}</Text>
+          <View style={style.HorizontalLine} />
           <ControlButtons />
           <View style={style.MainContainer}>
-            <View style={style.ContentContainer}>
-              <View style={style.MainContent}>
+            <View
+              style={[
+                style.ContentContainer,
+                reverseContent ? { flexDirection: "row-reverse" } : {},
+              ]}
+            >
+              <View style={[style.MainContent, oneColumn ? { flex: 1 } : {}]}>
                 <MainContent />
               </View>
               {!oneColumn ? (
-                <View style={style.MinorContent}>
+                <View style={[style.MinorContent, oneColumn ? { flex: 0 } : {}]}>
                   <Widgets />
                 </View>
               ) : null}
@@ -78,3 +49,34 @@ export default function GenericDirectoryScreen(props: Props) {
     </>
   )
 }
+const style = StyleSheet.create({
+  TopContainer: {
+    marginHorizontal: "7.778vw",
+  },
+  MainContainer: {
+    flexDirection: "column",
+  },
+  ContentContainer: {
+    flexDirection: "row",
+  },
+  MinorContent: {
+    flex: 0.3,
+  },
+  MainContent: {
+    flex: 0.7,
+  },
+  PageTitle: {
+    marginTop: 160,
+    marginBottom: 80,
+    fontFamily: "Graphik-Medium-App",
+    fontSize: 96,
+    lineHeight: 96,
+    letterSpacing: -0.5,
+    color: "#483938",
+  },
+  HorizontalLine: {
+    borderBottomColor: "#E4E1E1",
+    borderBottomWidth: 1,
+    marginBottom: 24,
+  },
+})

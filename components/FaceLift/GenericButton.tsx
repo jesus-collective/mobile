@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
+import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native"
 interface Props {
   label: string
   action: () => void
@@ -7,17 +7,19 @@ interface Props {
     ButtonStyle: any
     LabelStyle: any
     custom?: any
+    customLabel?: any
   }
   icon?: any
   disabled?: boolean
+  spinner?: boolean
 }
 
 export default function GenericButton(props: Props) {
-  const { label, action, style, icon, disabled } = props
+  const { label, action, style, icon, disabled, spinner } = props
 
   return (
     <TouchableOpacity
-      disabled={disabled}
+      disabled={disabled || spinner}
       onPress={action}
       style={[{ flexDirection: "row", justifyContent: "center" }, style.ButtonStyle, style.custom]}
     >
@@ -27,7 +29,11 @@ export default function GenericButton(props: Props) {
           source={require(`../../assets/Facelift/${icon}.png`)}
         />
       ) : null}
-      <Text style={style.LabelStyle}>{label}</Text>
+      {spinner ? (
+        <ActivityIndicator color="white" />
+      ) : (
+        <Text style={[style.LabelStyle, style.customLabel]}>{label}</Text>
+      )}
     </TouchableOpacity>
   )
 }

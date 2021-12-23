@@ -47,4 +47,19 @@ export const GenericButtonStyles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
   },
+  QuarternaryButtonStyle: {
+    backgroundColor: "#FF4438",
+    boxShadow: "inset 0px -1px 0px #D1382E",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    borderRadius: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+  },
+  QuarternaryLabelStyle: {
+    color: "white",
+    fontFamily: "Graphik-Semibold-App",
+    fontSize: 15,
+    lineHeight: 24,
+  },
 })

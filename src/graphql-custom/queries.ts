@@ -401,6 +401,76 @@ export const getDirectMessageUser = /* GraphQL */ `
     }
   }
 `
+
+export const getGroupForProfile = /* GraphQL */ `
+  query GetGroup($id: ID!) {
+    getGroup(id: $id) {
+      id
+      owner
+      readGroups
+      type
+      name
+      description
+      ownerUser {
+        id
+        given_name
+        family_name
+      }
+      memberCount
+      members {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      image
+      time
+      lastUpdated
+      location
+      locationLatLong {
+        latitude
+        longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
+        randomLatitude
+        randomLongitude
+      }
+      length
+      effort
+      cost
+      promotionalText
+      messages {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          attachmentOwner
+          roomId
+          userId
+          postingAs
+          owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      eventType
+      eventUrl
+      tz
+      isSponsored
+      createdAt
+      updatedAt
+    }
+  }
+`
+
 export const getGroupForOwner = /* GraphQL */ `
   query GetGroup($id: ID!) {
     getGroup(id: $id) {
@@ -451,6 +521,13 @@ export const groupByTypeByTime = /* GraphQL */ `
           geocodeCity
           geocodeRegion
         }
+        members {
+          items {
+            id
+            userID
+            createdAt
+          }
+        }
         length
         effort
         cost
@@ -460,6 +537,31 @@ export const groupByTypeByTime = /* GraphQL */ `
         isSponsored
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`
+
+export const groupsJoinedByUser = /* GraphQL */ `
+  query GroupMemberByUser(
+    $userID: ID
+    $groupID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupMemberFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupMemberByUser(
+      userID: $userID
+      groupID: $groupID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        groupID
       }
       nextToken
     }
@@ -537,6 +639,34 @@ export const getOrgForImage = /* GraphQL */ `
   }
 `
 
+export const listUsersForProfiles = /* GraphQL */ `
+  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        given_name
+        family_name
+        owner
+        profileState
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        aboutMeShort
+        aboutMeLong
+        currentRole
+        currentScope
+      }
+      nextToken
+    }
+  }
+`
+
 export const getUserForProfile = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -546,7 +676,19 @@ export const getUserForProfile = /* GraphQL */ `
       owner
       mainUserGroup
       hasPaidState
+      currentScope
+      interests
+      personality
       profileState
+      location {
+        latitude
+        longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
+        randomLatitude
+        randomLongitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -555,6 +697,7 @@ export const getUserForProfile = /* GraphQL */ `
         filenameUpload
       }
       aboutMeShort
+      aboutMeLong
       currentRole
       orgName
       createdAt

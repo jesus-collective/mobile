@@ -13,6 +13,7 @@ export default function MainBottomTabsRouter() {
     <Tab.Navigator
       screenOptions={({ route, navigation }) => ({
         headerShown: false,
+        cardStyle: { flex: 1, backgroundColor: "#fffdfc" },
         header: (props) => {
           let screenTitle
           switch (props.route.name) {

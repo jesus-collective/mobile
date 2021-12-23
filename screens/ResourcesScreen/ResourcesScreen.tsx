@@ -1,7 +1,6 @@
 ﻿import { StackNavigationProp } from "@react-navigation/stack"
 import { Container, Content } from "native-base"
 import React from "react"
-import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
 import MyMap from "../../components/MyMap/MyMap"
@@ -36,7 +35,6 @@ export default class HomeScreen extends JCComponent<Props, State> {
     console.log("ResourcesScreen")
     return (
       <Container testID="resources">
-        <Header title="Jesus Collective" navigation={this.props.navigation} />
         <Content>
           <MyMap
             type={"no-filters"}

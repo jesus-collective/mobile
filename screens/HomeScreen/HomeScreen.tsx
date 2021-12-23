@@ -1,202 +1,137 @@
-﻿import { StackNavigationProp } from "@react-navigation/stack"
-import React, { lazy } from "react"
+﻿import React, { lazy } from "react"
 import { BrowserView, MobileOnlyView } from "react-device-detect"
-import { Dimensions, Platform, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, Text, View } from "react-native"
 import Cookies from "universal-cookie"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
+import EventCarousel from "../../components/FaceLift/EventCarousel"
+import GroupCarousel from "../../components/FaceLift/GroupCarousel"
+import PeopleCarousel from "../../components/FaceLift/PeopleCarousel"
 
 const cookies = new Cookies()
-
-const MyConversations = lazy(() => import("../../components/MyConversations/MyConversations"))
-//const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
-const MyPeople = lazy(() => import("../../components/MyPeople/MyPeople"))
-
-const Header = lazy(() => import("../../components/Header/Header"))
-const FooterJC = lazy(() => import("../../components/Footer/Footer"))
 const MyMap = lazy(() => import("../../components/MyMap/MyMap"))
 
-interface Props {
-  navigation: StackNavigationProp<any, any>
-}
-interface State extends JCState {
-  showMap: boolean
-  width: number
-  height: number
-  mapData: MapData[]
-}
+export default function HomeScreen() {
+  const { width } = Dimensions.get("window")
+  return (
+    <>
+      <BrowserView style={{ overflowX: "hidden", overflowY: "scroll" }}>
+        <View style={{ marginHorizontal: "7.778vw" }}>
+          <EventCarousel />
+          <PeopleCarousel />
+          <GroupCarousel />
 
-class HomeScreen extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      mapData: [],
-      showMap: cookies.get("showMap")
-        ? cookies.get("showMap") == "true"
-        : Dimensions.get("window").width > 720,
-      width: Dimensions.get("window").width,
-      height: Dimensions.get("window").height,
-    }
-    // Dimensions.addEventListener("change", (e) => {
-    //   const { width, height } = e.window
-    //   this.setState({ width, height })
-    // })
-  }
-  mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap }, () => {
-      cookies.set("showMap", this.state.showMap, { path: "/" })
-    })
-  }
-  mergeMapData(mapData: MapData[]): void {
-    console.log({ MergedMapData: mapData })
-    //    console.log(mapData)
-    const data = this.state.mapData.concat(mapData)
-    this.setState({ mapData: data })
-  }
-
-  render(): React.ReactNode {
-    const windowHeight = Dimensions.get("window").height
-    console.log("Homepage")
-    return (
-      <SafeAreaView style={Platform.OS === "web" ? { height: windowHeight, flexGrow: 1 } : {}}>
-        <BrowserView>
-          {Platform.OS == "web" && this.state.width > 720 ? (
+          <View style={{ marginBottom: 80 }}>
+            <Text
+              style={{
+                fontFamily: "Graphik-Semibold-App",
+                color: "#1A0706",
+                fontSize: 32,
+                lineHeight: 38,
+                letterSpacing: -0.3,
+                marginTop: 80,
+              }}
+            >
+              Explore The Map
+            </Text>
             <MyMap
               type={"filters"}
-              mapData={this.state.mapData}
-              visible={this.state.showMap}
+              mapData={[]}
+              visible={
+                cookies.get("showMap")
+                  ? cookies.get("showMap") == "true"
+                  : Dimensions.get("window").width > 720
+              }
             ></MyMap>
-          ) : null}
-          <View style={this.styles.style.dashboardPrimaryContainer}>
-            <View style={this.styles.style.dashboardMainContainer}>
-              <View style={this.styles.style.dashboardLeftCard}>
-                <MyGroups
-                  showMore={false}
-                  type="event"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                  homeDashboard
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="group"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                  homeDashboard
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="resource"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                  homeDashboard
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="organization"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                  homeDashboard
-                ></MyGroups>
-                <MyGroups
-                  showMore={false}
-                  type="course"
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                  homeDashboard
-                ></MyGroups>
-              </View>
-              <View style={this.styles.style.dashboardRightCard}>
-                <MyPeople
-                  wrap={false}
-                  navigation={this.props.navigation}
-                  onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData)
-                  }}
-                ></MyPeople>
-                <MyConversations navigation={this.props.navigation}></MyConversations>
-                <View style={{ flex: 10 }}></View>
-              </View>
-            </View>
-
-            {Platform.OS == "web" && this.state.width > 720 ? (
-              <FooterJC title="Jesus Collective" navigation={this.props.navigation}></FooterJC>
-            ) : null}
           </View>
-        </BrowserView>
-        <MobileOnlyView style={{ marginTop: 30 }}>
-          <TouchableOpacity
+        </View>
+      </BrowserView>
+
+      <MobileOnlyView
+        style={{
+          overflowX: "hidden",
+          overflowY: "scroll",
+          paddingTop: 24,
+          paddingLeft: 12,
+          paddingRight: 12,
+        }} // fix margins
+      >
+        <EventCarousel />
+
+        <PeopleCarousel />
+        <GroupCarousel />
+
+        <View style={{ marginBottom: 60, marginTop: 48 }}>
+          <Text
             style={{
-              borderBottomWidth: 2,
-              borderTopWidth: 2,
-              borderTopColor: "#E4E1E1",
-              borderBottomColor: "#E4E1E1",
+              fontFamily: "Graphik-Medium-App",
+              color: "#6A5E5D",
+              fontSize: 12,
+              lineHeight: 16,
+              letterSpacing: 1,
+              textTransform: "uppercase",
+              marginBottom: 16,
             }}
-            onPress={() => this.props.navigation.navigate("EventsScreen")}
           >
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "700",
-                padding: 16,
-                backgroundColor: "white",
-                color: "black",
-              }}
-            >
-              Events
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ borderBottomWidth: 2, borderBottomColor: "#E4E1E1" }}
-            onPress={() => this.props.navigation.navigate("GroupsScreen")}
-          >
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "700",
-                padding: 16,
-                backgroundColor: "white",
-                color: "black",
-              }}
-            >
-              Groups
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ borderBottomWidth: 2, borderBottomColor: "#E4E1E1" }}
-            onPress={() => this.props.navigation.navigate("ProfilesScreen")}
-          >
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "700",
-                padding: 16,
-                backgroundColor: "white",
-                color: "black",
-              }}
-            >
-              People
-            </Text>
-          </TouchableOpacity>
-        </MobileOnlyView>
-      </SafeAreaView>
-    )
-  }
+            Explore The Map
+          </Text>
+          <View style={{ borderRadius: 8, borderWidth: 1, borderColor: "#E4E1E1" }}>
+            <MyMap type={"filters"} mapData={[]} visible={true}></MyMap>
+          </View>
+        </View>
+      </MobileOnlyView>
+    </>
+  )
 }
-export default HomeScreen
+
+/* <TouchableOpacity
+          style={{
+            borderBottomWidth: 2,
+            borderTopWidth: 2,
+            borderTopColor: "#E4E1E1",
+            borderBottomColor: "#E4E1E1",
+          }}
+          onPress={() => navigation.navigate("EventsScreen")}
+        >
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "700",
+              padding: 16,
+              backgroundColor: "white",
+              color: "black",
+            }}
+          >
+            Events
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ borderBottomWidth: 2, borderBottomColor: "#E4E1E1" }}
+          onPress={() => navigation.navigate("GroupsScreen")}
+        >
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "700",
+              padding: 16,
+              backgroundColor: "white",
+              color: "black",
+            }}
+          >
+            Groups
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ borderBottomWidth: 2, borderBottomColor: "#E4E1E1" }}
+          onPress={() => navigation.navigate("ProfilesScreen")}
+        >
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "700",
+              padding: 16,
+              backgroundColor: "white",
+              color: "black",
+            }}
+          >
+            People
+          </Text>
+        </TouchableOpacity> */

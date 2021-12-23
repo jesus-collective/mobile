@@ -24,13 +24,11 @@ export default function GroupWidgets() {
   }
 
   return (
-    <>
-      <JCWidget
-        widgetType={WidgetType.Group}
-        emptyMessage="No joined groups"
-        loadData={loadUpcoming}
-        title="Groups you are in"
-      />
-    </>
+    <JCWidget
+      widgetType={WidgetType.Group}
+      emptyMessage="No joined groups"
+      loadData={loadUpcoming}
+      title="Groups you are in"
+    />
   )
 }
