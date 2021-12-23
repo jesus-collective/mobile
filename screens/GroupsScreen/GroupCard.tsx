@@ -14,7 +14,7 @@ export default function GroupCard({ item }: { item: Group }) {
     navigation.navigate("GroupScreen", { id: item.id })
   }
   return (
-    <TouchableOpacity delayPressIn={100} onPress={navigateToGroupScreen} style={Card.Container}>
+    <TouchableOpacity delayPressIn={150} onPress={navigateToGroupScreen} style={Card.Container}>
       <View style={Card.ContentContainer}>
         <Text numberOfLines={3} style={Card.NameText}>
           {name}

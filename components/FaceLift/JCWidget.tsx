@@ -160,6 +160,7 @@ export const WidgetItem = ({
       return (
         <TouchableOpacity
           key={item.title}
+          delayPressIn={150}
           style={{
             flexDirection: "row",
           }}

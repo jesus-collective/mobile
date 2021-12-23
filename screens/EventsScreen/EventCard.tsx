@@ -44,7 +44,7 @@ export default function EventCard({
   }
   return (
     <TouchableOpacity
-      delayPressIn={100}
+      delayPressIn={150}
       onPress={navigateToEventScreen}
       style={EventCardStyle.Container}
     >
