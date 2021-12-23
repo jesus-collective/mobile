@@ -138,7 +138,9 @@ export default function ProfilesList(props: Props) {
       refreshing={refreshing}
       renderItem={({ item, index }) => {
         const isLastAndOdd = filteredData.length - 1 === index && index % 2 === 0
-        return (
+        return isMobileOnly ? (
+          <ProfileCard item={item} />
+        ) : (
           <LastListItem isLastAndOdd={isLastAndOdd}>
             <ProfileCard item={item} />
           </LastListItem>
