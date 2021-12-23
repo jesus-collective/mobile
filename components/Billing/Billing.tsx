@@ -144,7 +144,7 @@ class BillingImpl extends JCComponent<Props, State> {
               {
                 currentProduct: [listProducts.data.listProducts.items[0]],
                 quantities: [
-                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(1),
+                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(25),
                 ],
               },
               async () => {
