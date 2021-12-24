@@ -74,7 +74,7 @@ export default function GroupsList(props: Props) {
   return (
     <>
       <FlatList
-        style={isMobileOnly ? { paddingBottom: 16 } : { minHeight: 662, marginRight: 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+        style={isMobileOnly ? { paddingBottom: 16 } : { minHeight: 300, marginRight: 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
         contentContainerStyle={isMobileOnly ? { paddingHorizontal: 12, paddingTop: 16 } : {}}
         ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
         columnWrapperStyle={isMobileOnly ? null : { gap: 32 }}

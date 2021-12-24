@@ -51,6 +51,7 @@ export enum ProfileTabType {
 const style = StyleSheet.create({
   MainContainer: {
     flexDirection: "column",
+    paddingBottom: 68, // 120px - 52px from twoitem carousel
   },
   ContentContainer: {
     flexDirection: "row-reverse",

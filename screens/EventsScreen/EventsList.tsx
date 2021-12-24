@@ -18,7 +18,7 @@ export type JCEvent = Group
 
 const EventList = StyleSheet.create({
   Container: {
-    minHeight: 662,
+    minHeight: 300,
     marginRight: isMobileOnly ? 0 : 32,
   },
   FooterContainer: {

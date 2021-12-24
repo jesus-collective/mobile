@@ -52,6 +52,7 @@ export default function GenericDirectoryScreen(props: Props) {
 const style = StyleSheet.create({
   TopContainer: {
     marginHorizontal: "7.778vw",
+    paddingBottom: 120,
   },
   MainContainer: {
     flexDirection: "column",

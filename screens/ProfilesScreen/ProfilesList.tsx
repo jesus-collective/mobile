@@ -75,7 +75,7 @@ export default function ProfilesList(props: Props) {
     : data
   return (
     <FlatList
-      style={{ minHeight: 662, marginRight: isMobileOnly ? 0 : 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+      style={{ minHeight: 300, marginRight: isMobileOnly ? 0 : 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
       ListFooterComponent={() => (
         <View
           style={{

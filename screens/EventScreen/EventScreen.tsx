@@ -329,6 +329,7 @@ export enum EventTabType {
 const style = StyleSheet.create({
   MainContainer: {
     flexDirection: "column",
+    paddingBottom: 120,
   },
   ContentContainer: {
     flexDirection: "row-reverse",
