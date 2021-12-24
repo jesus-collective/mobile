@@ -10,6 +10,7 @@ import { Data } from "../../components/Data/Data"
 import BottomMenuModal, { ModalMenuItem } from "../../components/FaceLift/BottomMenuModal"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import LastListItem from "../../components/FaceLift/LastListItem"
 import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
@@ -142,7 +143,7 @@ export default function GroupScreen(props: Props) {
           return (
             <Header
               subnav={subNavItems}
-              title={isLoading ? "Loading..." : group?.name ?? "Event"}
+              title={"Group"}
               controls={controls}
               navigation={props.navigation}
             />
@@ -259,10 +260,18 @@ export default function GroupScreen(props: Props) {
                             <Text style={style.NoMembersText}>No members</Text>
                           ) : null
                         }
+                        columnWrapperStyle={{ gap: 32 } as any}
                         numColumns={2}
                         data={attendees}
                         keyExtractor={({ item }) => item?.id}
-                        renderItem={({ item }) => <ProfileCard item={item} />}
+                        renderItem={({ item, index }) => {
+                          const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
+                          return (
+                            <LastListItem isLastAndOdd={isLastAndOdd}>
+                              <ProfileCard item={item} />
+                            </LastListItem>
+                          )
+                        }}
                       />
                     </View>
                   ) : currentTab === GroupTabType.EVENTS ? null : null // </View> //   /> //     renderItem={({ item }) => <EventCard item={item} />} //     keyExtractor={({ item }) => item?.id} //     data={[]} //     numColumns={2} //     } //       ) : null //         <Text style={style.NoMembersText}>No events</Text> //       !attendees?.length ? ( //     ListEmptyComponent={() => //   <FlatList // <View>
