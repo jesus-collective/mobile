@@ -17,7 +17,7 @@ type Props = {
   showMore?: () => void
   data: Group[]
   type: CarouselType
-  updateEvents: (action: string, id: string) => void
+  updateEvents: (action: string, id: string) => Promise<void>
   joinedGroups?: string[]
   ownedGroups?: string[]
 }
