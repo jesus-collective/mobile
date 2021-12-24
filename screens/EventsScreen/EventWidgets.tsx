@@ -38,7 +38,7 @@ export default function EventWidgets() {
       if (item?.ownerUser?.id === user) {
         ownedEvents.push(item.id)
       }
-      if (ownedEvents.length >= 2) break
+      //if (ownedEvents.length >= 2) break
     }
     return returnedEvents.filter((event) => ownedEvents.find((a) => a === event?.id))
   }
