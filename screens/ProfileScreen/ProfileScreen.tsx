@@ -314,7 +314,7 @@ export default function ProfileScreen(props: Props) {
                   <>
                     <TwoItemCarousel
                       data={groups}
-                      updateEvents={() => null}
+                      updateEvents={() => Promise.resolve()}
                       type={CarouselType.Group}
                       title="Group Memberships"
                       showMore={navigateToGroups}
