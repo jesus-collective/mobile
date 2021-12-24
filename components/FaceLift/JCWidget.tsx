@@ -96,7 +96,7 @@ export const WidgetItem = ({
                 lineHeight: 32,
               }}
             >
-              {moment(item.time).format("DD")}
+              {moment(item.time).format("D")}
             </Text>
           </View>
         )
