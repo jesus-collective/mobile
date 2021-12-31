@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Auth } from "aws-amplify"
+import { Auth, Storage } from "aws-amplify"
 import { MapData } from "components/MyGroups/MyGroups"
 import { Map, Marker } from "google-maps-react"
 import maplibregl from "maplibre-gl"
@@ -171,26 +171,88 @@ class MyMapImpl extends JCComponent<Props, State> {
       </Card>
     )
   }
-  renderProfileHTML(mapItem: MapData) {
+
+  async getProfileImage(user: any): Promise<string | null> {
+    if (user == "" || user == null) {
+      return null
+    } else {
+      try {
+        return await Storage.get(user.filenameSmall, {
+          level: "protected",
+          contentType: "image/png",
+          identityId: user.userId,
+        })
+      } catch (e) {
+        return null
+      }
+    }
+  }
+  async getProfileImageFromUserID(user: string): Promise<string | null> {
+    try {
+      const getUser = await Data.getUserForProfile(user)
+
+      return await this.getProfileImage(getUser.data?.getUser?.profileImage)
+    } catch (e) {
+      return await this.getProfileImage(e.data?.getUser?.profileImage)
+    }
+  }
+
+  async getProfileImageFromOrgID(user: string): Promise<string | null> {
+    try {
+      const getUser = await Data.getOrgForImage(user)
+      return await this.getProfileImage(getUser.data?.getOrganization?.profileImage)
+    } catch (e) {
+      return await this.getProfileImage(e.data?.getOrganization?.profileImage)
+    }
+  }
+  async getImageUrl(mapItem: MapData): Promise<string | null> {
+    if (mapItem.type == "organization") {
+      return (
+        (await this.getProfileImageFromOrgID(mapItem.user.id)) ||
+        require("../../assets/profile-placeholder.png")
+      )
+    } else {
+      return (
+        (await this.getProfileImageFromUserID(mapItem.user.id)) ||
+        require("../../assets/profile-placeholder.png")
+      )
+    }
+  }
+  async renderProfileHTML(mapItem: MapData) {
     return (
-      "<div style='display: flex;flex-direction:row'><div><img src='x.jpg'/></div><div><div>" +
+      "<div style='margin:30px;display: flex;flex-direction:row'><div><img style='border:solid;border-color:#ffffff;border-radius:120px;margin-right:10px' width='80' height='96' src='" +
+      (await this.getImageUrl(mapItem)) +
+      "'/></div><div><div style='font-size:20px;font-family:Graphik-Bold-App;'>" +
       mapItem.name +
-      " </div><div>" +
+      " </div><div style='color:rgb(51,51,51);opacity:0.6;text-transform:uppercase;font-size:12px;font-family:Graphik-Regular-App;'>" +
       mapItem.user.currentRole +
       "</div>" +
-      (mapItem.user.aboutMeShort ? "<div>" + mapItem.user.aboutMeShort + "</div>" : "") +
-      "<div><button>Start Conversation</button><button>View Profile</button></div>" +
+      (mapItem.user.aboutMeShort
+        ? "<div style='margin-top:10px;font-size:16px;font-weight:600;font-family:Graphik-Regular-App;'>" +
+          mapItem.user.aboutMeShort +
+          "</div>"
+        : "") +
+      "<div style='margin-top:10px;'><button onclick='window.location.href=\"/app/conversation?initialUserID=" +
+      mapItem.user.id +
+      "&initialUserName=" +
+      mapItem.name +
+      "\"' style='font-family:Graphik-Regular-App;font-size:16px;padding:10px;background-color:rgb(240, 73, 62);color:#ffffff;border:none;border-radius:4px'>Start Conversation</button>" +
+      "<button onclick='window.location.href=\"/app/profile?id=" +
+      mapItem.user.id +
+      "&create=false\"' style='font-family:Graphik-Regular-App;font-size:16px;padding:10px;background-color:rgb(240, 73, 62);color:#ffffff;border:none;border-radius:4px'>View Profile</button></div>" +
       "</div>"
     )
   }
-  renderEventHTML(mapItem: MapData) {
+  async renderEventHTML(mapItem: MapData) {
     if (mapItem.event)
       return (
-        "<div style='display: flex;flex-direction:row'><div><img src='x.jpg'/></div><div><div>" +
+        "<div style='display: flex;flex-direction:row'><div><img style='margin-right:10px' width='50' height='66' src='" +
+        (await this.getImageUrl(mapItem)) +
+        "'/></div><div><div style='font-size:10px;font-family:Graphik-Bold-App;'>" +
         moment(mapItem.event.time).format("MMMM Do YYYY, h:mm a") +
-        " </div><div>" +
+        " </div><div style='font-size:20px;font-family:Graphik-Bold-App;'>" +
         mapItem.event.name +
-        " </div><div>" +
+        " </div><div style='font-size:16px;font-family:Graphik-Bold-App;'>" +
         mapItem.event.description +
         "</div>" +
         (mapItem.event.eventType == "location"
@@ -204,21 +266,28 @@ class MyMapImpl extends JCComponent<Props, State> {
           : "<a target='_blank' rel='noreferrer' href='" +
             this.state.selectedPlace.mapItem.event.eventUrl +
             "'>Eventbrite</a>") +
-        "<div><button>Start Conversation</button><button>View Profile</button></div>" +
         "</div>"
       )
     else return ""
   }
 
-  renderOrgHTML(mapItem: MapData) {
+  async renderOrgHTML(mapItem: MapData) {
     return (
-      "<div style='display: flex;flex-direction:row'><div><img src='x.jpg'/></div><div><div>" +
+      "<div style='margin:30px;display: flex;flex-direction:row'><div><img style='border:solid;border-color:#ffffff;border-radius:120px;margin-right:10px' width='80' height='96' src='" +
+      (await this.getImageUrl(mapItem)) +
+      "'/></div><div><div style='font-size:20px;font-family:Graphik-Bold-App;'>" +
       mapItem.user.orgName +
-      " </div><div>" +
+      " </div><div style='color:rgb(51,51,51);opacity:0.6;text-transform:uppercase;font-size:12px;font-family:Graphik-Regular-App;'>" +
       mapItem.user.orgType +
       "</div>" +
-      (mapItem.user.aboutMeShort ? "<div>" + mapItem.user.aboutMeShort + "</div>" : "") +
-      "<div><button>Start Conversation</button><button>View Profile</button></div>" +
+      (mapItem.user.aboutMeShort
+        ? "<div style='margin-top:10px;font-size:16px;font-weight:600;font-family:Graphik-Regular-App;'>" +
+          mapItem.user.aboutMeShort +
+          "</div>"
+        : "") +
+      "<button onclick='window.location.href=\"/app/organization?groupType=null&id=" +
+      mapItem.user.id +
+      "&create=false\"' style='font-family:Graphik-Regular-App;font-size:16px;padding:10px;background-color:rgb(240, 73, 62);color:#ffffff;border:none;border-radius:4px'>View Profile</button></div>" +
       "</div>"
     )
   }
@@ -470,13 +539,13 @@ class MyMapImpl extends JCComponent<Props, State> {
 
   markers: any = {}
   markersOnScreen: any = {}
-  renderPopup(item: MapData) {
+  async renderPopup(item: MapData): Promise<string | null> {
     return item.type == "profile"
-      ? this.renderProfileHTML(item)
+      ? await this.renderProfileHTML(item)
       : item.type == "event"
-      ? this.renderEventHTML(item)
+      ? await this.renderEventHTML(item)
       : item.type == "organization"
-      ? this.renderOrgHTML(item)
+      ? await this.renderOrgHTML(item)
       : null
   }
 
@@ -493,8 +562,8 @@ class MyMapImpl extends JCComponent<Props, State> {
       if (!props.cluster) {
         let popup = undefined
         if (props.item) {
-          popup = new maplibregl.Popup({ offset: 25 }).setHTML(
-            this.renderPopup(JSON.parse(props.item) as MapData)
+          popup = new maplibregl.Popup({ maxWidth: "500", offset: 25 }).setHTML(
+            await this.renderPopup(JSON.parse(props.item) as MapData)
           )
         }
         //.setText(
@@ -676,7 +745,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   paddingLeft: "4.5%",
                 }}
               >
-                <JCSwitch
+                {/* <JCSwitch
                   switchLabel="Show Events"
                   initState={false}
                   onPress={() =>
@@ -684,7 +753,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                       this.updateSource()
                     })
                   }
-                ></JCSwitch>
+                ></JCSwitch>*/}
                 <JCSwitch
                   switchLabel="Show Profiles"
                   initState={true}
