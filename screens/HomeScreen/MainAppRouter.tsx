@@ -1,6 +1,12 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { Component, lazy } from "react"
+import { ListGroupsQuery, ListOrganizationsQuery, ListUsersQuery } from "src/API"
+import { EmptyProps } from "src/types"
+import { Data, UserGroupType } from "../../components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"
+import { MapContext, MapState } from "./MapContext"
+import { MapConverter } from "./MapConverter"
 import { PaidStatus, ProfileStatus, UserContext } from "./UserContext"
 const Stack = createStackNavigator()
 
@@ -36,267 +42,350 @@ class Nothing extends Component {
     return null
   }
 }
-export default class MainAppRouter extends JCComponent {
+
+export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
+  constructor(props: EmptyProps) {
+    super(props)
+    this.state = { MapItems: [] }
+  }
+  async componentDidMount() {
+    await this.reload()
+  }
+  async loadAllEvents(nextToken: string | null) {
+    const process = async (z: GraphQLResult<ListGroupsQuery>) => {
+      console.log({ z: z })
+      this.setState(
+        {
+          MapItems: [
+            ...this.state.MapItems,
+            ...MapConverter.convertEventToMapData(z.data?.listGroups?.items),
+          ],
+        },
+        async () => {
+          if (z.data?.listGroups?.nextToken != null)
+            await this.loadAllEvents(z.data?.listGroups?.nextToken)
+        }
+      )
+    }
+    await Data.listEvents(nextToken).then(process).catch(process)
+  }
+  async loadAllOrgs(nextToken: string | null) {
+    const process = async (z: GraphQLResult<ListOrganizationsQuery>) => {
+      console.log({ z: z })
+      this.setState(
+        {
+          MapItems: [
+            ...this.state.MapItems,
+            ...MapConverter.convertOrgToMapData(z.data?.listOrganizations?.items),
+          ],
+        },
+        async () => {
+          if (z.data?.listOrganizations?.nextToken != null)
+            await this.loadAllOrgs(z.data?.listOrganizations?.nextToken)
+        }
+      )
+    }
+    await Data.listOrgs(nextToken).then(process).catch(process)
+  }
+  async loadAllUsers(nextToken: string | null) {
+    const process = async (z: GraphQLResult<ListUsersQuery>) => {
+      console.log({ z: z })
+      this.setState(
+        {
+          MapItems: [
+            ...this.state.MapItems,
+            ...MapConverter.convertProfileToMapData(z.data?.listUsers?.items),
+          ],
+        },
+        async () => {
+          if (z.data?.listUsers?.nextToken != null)
+            await this.loadAllUsers(z.data?.listUsers?.nextToken)
+        }
+      )
+    }
+    await Data.listUsers(UserGroupType.All, nextToken).then(process).catch(process)
+  }
+  reload = async (): Promise<void> => {
+    this.setState({ MapItems: [] }, async () => {
+      console.log("LOAD ALL S")
+
+      await this.loadAllUsers(null)
+      await this.loadAllOrgs(null)
+      await this.loadAllEvents(null)
+    })
+  }
   static UserConsumer = UserContext.Consumer
+  static MapProvider = MapContext.Provider
   render(): React.ReactNode {
     return (
-      <MainAppRouter.UserConsumer>
-        {({ userState }) => {
-          if (!userState) return null
-          return (
-            <Stack.Navigator
-              initialRouteName="HomeScreen"
-              screenOptions={{
-                headerMode: "none",
-                animationEnabled: false,
-                gestureEnabled: false,
-                cardOverlayEnabled: false,
-              }}
-            >
-              {userState.hasPaidState == PaidStatus.Success &&
-              userState.hasCompletedPersonalProfile == ProfileStatus.Completed ? (
-                <>
-                  <Stack.Screen
-                    name="HomeScreen"
-                    component={HomeScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="GenericGroupScreen"
-                    component={GenericGroupScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="GroupsScreen"
-                    component={GroupsScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="EventsScreen"
-                    component={EventsScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourcesScreen"
-                    component={ResourcesScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourceScreen"
-                    component={ResourceScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourceConfigureScreen"
-                    component={ResourceConfigureScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourceDisplayScreen"
-                    component={ResourceDisplayScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="OrganizationsScreen"
-                    component={OrganizationsScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="OrganizationScreen"
-                    component={OrganizationScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="CourseOverviewScreen"
-                    component={CourseOverviewScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="CoursesScreen"
-                    component={CoursesScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="CourseHomeScreen"
-                    component={CourseHomeScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="ConversationScreen"
-                    component={ConversationScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="SearchScreen"
-                    component={SearchScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="ProfileScreen"
-                    component={ProfileScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="ProfilesScreen"
-                    component={ProfilesScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="AdminScreen"
-                    component={AdminScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="AdminCRMScreen"
-                    component={AdminCRMScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="CoursePaymentScreen"
-                    component={CoursePaymentScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="PurchaseConfirmationScreen"
-                    component={PurchaseConfirmationScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="AdminCreateProductScreen"
-                    component={AdminCreateProductScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen
-                    name="HomeScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="GenericGroupScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="GroupsScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="EventsScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourcesScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourceScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourceDisplayScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="ResourceConfigureScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="OrganizationsScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="OrganizationScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="CourseOverviewScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="CoursesScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="CourseHomeScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="ConversationScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="SearchScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="ProfileScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="ProfilesScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="AdminScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="AdminCRMScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-
-                  <Stack.Screen
-                    name="CoursePaymentScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="PurchaseConfirmationScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="AdminCreateProductScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                </>
-              )}
-            </Stack.Navigator>
-          )
+      <MainAppRouter.MapProvider
+        value={{
+          mapState: {
+            ...this.state,
+          },
+          mapActions: {
+            reload: this.reload,
+          },
         }}
-      </MainAppRouter.UserConsumer>
+      >
+        <MainAppRouter.UserConsumer>
+          {({ userState }) => {
+            if (!userState) return null
+            return (
+              <Stack.Navigator
+                initialRouteName="HomeScreen"
+                screenOptions={{
+                  headerMode: "none",
+                  animationEnabled: false,
+                  gestureEnabled: false,
+                  cardOverlayEnabled: false,
+                }}
+              >
+                {userState.hasPaidState == PaidStatus.Success &&
+                userState.hasCompletedPersonalProfile == ProfileStatus.Completed ? (
+                  <>
+                    <Stack.Screen
+                      name="HomeScreen"
+                      component={HomeScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="GenericGroupScreen"
+                      component={GenericGroupScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="GroupsScreen"
+                      component={GroupsScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="EventsScreen"
+                      component={EventsScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourcesScreen"
+                      component={ResourcesScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourceScreen"
+                      component={ResourceScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourceConfigureScreen"
+                      component={ResourceConfigureScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourceDisplayScreen"
+                      component={ResourceDisplayScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="OrganizationsScreen"
+                      component={OrganizationsScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="OrganizationScreen"
+                      component={OrganizationScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="CourseOverviewScreen"
+                      component={CourseOverviewScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="CoursesScreen"
+                      component={CoursesScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="CourseHomeScreen"
+                      component={CourseHomeScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="ConversationScreen"
+                      component={ConversationScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="SearchScreen"
+                      component={SearchScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="ProfileScreen"
+                      component={ProfileScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="ProfilesScreen"
+                      component={ProfilesScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminScreen"
+                      component={AdminScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminCRMScreen"
+                      component={AdminCRMScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="CoursePaymentScreen"
+                      component={CoursePaymentScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="PurchaseConfirmationScreen"
+                      component={PurchaseConfirmationScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminCreateProductScreen"
+                      component={AdminCreateProductScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Stack.Screen
+                      name="HomeScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="GenericGroupScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="GroupsScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="EventsScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourcesScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourceScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourceDisplayScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="ResourceConfigureScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="OrganizationsScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="OrganizationScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="CourseOverviewScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="CoursesScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="CourseHomeScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="ConversationScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="SearchScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="ProfileScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="ProfilesScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminCRMScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+
+                    <Stack.Screen
+                      name="CoursePaymentScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="PurchaseConfirmationScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminCreateProductScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                  </>
+                )}
+              </Stack.Navigator>
+            )
+          }}
+        </MainAppRouter.UserConsumer>
+      </MainAppRouter.MapProvider>
     )
   }
 }

@@ -481,5 +481,24 @@
       "serviceType": "video-on-demand",
       "providerPlugin": "awscloudformation"
     }
+  },
+  "geo": {
+    "jcMap": {
+      "isDefault": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Map",
+      "mapStyle": "VectorEsriLightGrayCanvas",
+      "pricingPlan": "RequestBasedUsage",
+      "accessType": "AuthorizedUsers"
+    },
+    "jcPeople": {
+      "isDefault": true,
+      "providerPlugin": "awscloudformation",
+      "service": "PlaceIndex",
+      "dataProvider": "Esri",
+      "dataSourceIntendedUse": "SingleUse",
+      "pricingPlan": "RequestBasedUsage",
+      "accessType": "AuthorizedUsers"
+    }
   }
 }

@@ -25,11 +25,7 @@ export default class HomeScreen extends JCComponent<Props, State> {
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  mergeMapData(mapData: MapData[]): void {
-    //    console.log(mapData)
-    const data = this.state.mapData.concat(mapData)
-    this.setState({ mapData: data })
-  }
+
   render(): React.ReactNode {
     console.log("Profiles")
     return (
@@ -52,9 +48,6 @@ export default class HomeScreen extends JCComponent<Props, State> {
                 type="profile"
                 wrap={true}
                 navigation={this.props.navigation}
-                onDataload={(mapData) => {
-                  this.mergeMapData(mapData)
-                }}
               ></MyGroups>
             </Container>
             {/*

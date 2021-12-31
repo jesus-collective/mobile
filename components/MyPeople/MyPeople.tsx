@@ -10,11 +10,9 @@ import getTheme from "../../native-base-theme/components"
 import { ListUsersQuery } from "../../src/API"
 import { constants } from "../../src/constants"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { MapData } from "../MyGroups/MyGroups"
 interface Props {
   navigation: StackNavigationProp<any, any>
   wrap: boolean
-  onDataload(mapData: MapData[]): void
 }
 interface State extends JCState {
   openSingle: string
@@ -66,38 +64,17 @@ export default class MyPeople extends JCComponent<Props, State> {
       )
     })
   }
-  convertProfileToMapData(data: NonNullable<ListUsersQuery["listUsers"]>["items"]): MapData[] {
-    return data
-      ?.map((dataItem) => {
-        if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude)
-          return {
-            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-            longitude:
-              Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-            name: dataItem.given_name + " " + dataItem.family_name,
-            user: dataItem,
-            link: "",
-            type: "profile",
-          } as MapData
-        else return null
-      })
-      .filter((o) => o) as MapData[]
-  }
 
   setInitialData(): void {
     const listUsers = Data.listUsers(this.state.userGroupType, null)
     listUsers
       .then((json) => {
         // console.log(json)
-        this.setState({ data: json.data?.listUsers?.items ?? [] }, () => {
-          this.props.onDataload(this.convertProfileToMapData(this.state.data))
-        })
+        this.setState({ data: json.data?.listUsers?.items ?? [] })
       })
       .catch((e) => {
         console.log(e)
-        this.setState({ data: e.data.listUsers.items }, () => {
-          this.props.onDataload(this.convertProfileToMapData(this.state.data))
-        })
+        this.setState({ data: e.data.listUsers.items })
       })
   }
 

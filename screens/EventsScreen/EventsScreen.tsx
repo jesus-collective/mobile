@@ -28,11 +28,7 @@ export default class HomeScreen extends JCComponent<Props, State> {
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  mergeMapData(mapData: MapData[]): void {
-    //    console.log(mapData)
-    const data = this.state.mapData.concat(mapData)
-    this.setState({ mapData: data })
-  }
+
   render(): React.ReactNode {
     console.log("EventsScreen")
     return (
@@ -58,9 +54,6 @@ export default class HomeScreen extends JCComponent<Props, State> {
                 type="event"
                 wrap={true}
                 navigation={this.props.navigation}
-                onDataload={(mapData: MapData[]) => {
-                  this.mergeMapData(mapData)
-                }}
               ></MyGroups>
             </Container>
             {/*

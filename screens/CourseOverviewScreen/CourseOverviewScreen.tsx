@@ -664,7 +664,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                 <Header
                   title="Jesus Collective"
                   navigation={this.props.navigation}
-                  onMapChange={this.state.createNew ? null : this.mapChanged}
+                  onMapChange={this.state.createNew ? undefined : this.mapChanged}
                 />
                 <Content>
                   <MyMap
