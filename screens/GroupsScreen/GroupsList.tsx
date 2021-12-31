@@ -83,6 +83,7 @@ export default function GroupsList(props: Props) {
             style={{
               marginLeft: centerOffset,
               marginBottom: 30,
+              marginTop: 30,
               justifyContent: "center",
               alignItems: "center",
             }}

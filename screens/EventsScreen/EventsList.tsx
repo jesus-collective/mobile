@@ -63,7 +63,8 @@ export default function EventsList(props: Props) {
             EventList.FooterContainer,
             {
               marginLeft: centerOffset,
-              marginTop: 32,
+              marginBottom: 30,
+              marginTop: 30,
             },
           ]}
         >
