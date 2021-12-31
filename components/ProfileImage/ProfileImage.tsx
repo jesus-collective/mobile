@@ -23,6 +23,7 @@ interface Props {
     | "small5"
     | "small6"
     | "small7"
+    | "editorLarge"
     | "nav"
     | "miniNav"
     | "tiny"
@@ -160,6 +161,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginBottom: 0,
                 marginHorizontal: 10,
                 top: 0,
+              }
+            : this.props.size == "editorLarge"
+            ? {
+                width: "96px",
+                height: "120px",
+                borderRadius: 120,
               }
             : this.props.size === "nav"
             ? {
@@ -336,6 +343,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginBottom: 0,
                 marginLeft: 10,
                 top: 0,
+              }
+            : this.props.size == "editorLarge"
+            ? {
+                width: "96px",
+                height: "120px",
+                borderRadius: 120,
               }
             : this.props.size == "small6"
             ? {

@@ -181,7 +181,6 @@ export default function GroupScreen(props: Props) {
     }
     getGroup()
   }, [id])
-  console.log({ group })
   const modalItems: ModalMenuItem[] = [
     {
       title: "Edit",
@@ -203,20 +202,6 @@ export default function GroupScreen(props: Props) {
     },
   ]
   const centerOffset = isMobileOnly ? 0 : -32
-  // const handleAction = async (group) => {
-  //   // TODO: optimistically call updateJoined, undo if mutation fails
-  //   setIsLoading(true)
-  //   if (isAttending) {
-  //     const success = await leaveGroup(group, "group")
-  //     if (success) setAttendees((prev) => prev.filter((id) => id !== group.id))
-  //   } else {
-  //     const success = await joinGroup(item, "group")
-  //     if (success && item?.id) {
-  //       updateJoined([...joinedEvents, item.id])
-  //     }
-  //   }
-  //   setIsLoading(false)
-  // }
 
   return isLoading ? (
     <ActivityIndicator
@@ -250,33 +235,31 @@ export default function GroupScreen(props: Props) {
           <View style={style.MainContainer}>
             <View style={style.ContentContainer}>
               <View style={style.MainContent}>
-                {
-                  currentTab === GroupTabType.DISCUSSION ? (
-                    <MessageBoard replies style="regular" groupId={id}></MessageBoard>
-                  ) : currentTab === GroupTabType.MEMBERS ? (
-                    <View>
-                      <FlatList
-                        ListEmptyComponent={() =>
-                          !attendees?.length ? (
-                            <Text style={style.NoMembersText}>No members</Text>
-                          ) : null
-                        }
-                        columnWrapperStyle={{ gap: 32 } as any}
-                        numColumns={2}
-                        data={attendees}
-                        keyExtractor={({ item }) => item?.id}
-                        renderItem={({ item, index }) => {
-                          const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
-                          return (
-                            <LastListItem isLastAndOdd={isLastAndOdd}>
-                              <ProfileCard item={item} />
-                            </LastListItem>
-                          )
-                        }}
-                      />
-                    </View>
-                  ) : currentTab === GroupTabType.EVENTS ? null : null // </View> //   /> //     renderItem={({ item }) => <EventCard item={item} />} //     keyExtractor={({ item }) => item?.id} //     data={[]} //     numColumns={2} //     } //       ) : null //         <Text style={style.NoMembersText}>No events</Text> //       !attendees?.length ? ( //     ListEmptyComponent={() => //   <FlatList // <View>
-                }
+                {currentTab === GroupTabType.DISCUSSION ? (
+                  <MessageBoard replies style="regular" groupId={id}></MessageBoard>
+                ) : currentTab === GroupTabType.MEMBERS ? (
+                  <View>
+                    <FlatList
+                      ListEmptyComponent={() =>
+                        !attendees?.length ? (
+                          <Text style={style.NoMembersText}>No members</Text>
+                        ) : null
+                      }
+                      columnWrapperStyle={{ gap: 32 } as any}
+                      numColumns={2}
+                      data={attendees}
+                      keyExtractor={({ item }) => item?.id}
+                      renderItem={({ item, index }) => {
+                        const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
+                        return (
+                          <LastListItem isLastAndOdd={isLastAndOdd}>
+                            <ProfileCard item={item} />
+                          </LastListItem>
+                        )
+                      }}
+                    />
+                  </View>
+                ) : currentTab === GroupTabType.EVENTS ? null : null}
               </View>
               <View style={style.MinorContent}>
                 <View style={{ marginBottom: 32 }}>
