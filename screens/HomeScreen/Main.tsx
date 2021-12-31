@@ -30,7 +30,7 @@ const linking = {
             path: "",
             screens: {
               HomeScreen: "home",
-              GenericGroupScreen: "group/:groupType/:id/:create",
+              GenericGroupScreen: "genericgroup/:groupType/:create",
               GroupsScreen: "groups",
               GroupScreen: "groups/:id",
               EventsScreen: "events",
@@ -66,7 +66,7 @@ const linking = {
             path: "",
             screens: {
               HomeScreen: "home",
-              GenericGroupScreen: "group/:groupType/:id/:create",
+              GenericGroupScreen: "genericgroup/:groupType/:create",
               GroupsScreen: "groups",
               GroupScreen: "groups/:id",
               EventsScreen: "events",
