@@ -101,7 +101,6 @@ export const WidgetItem = ({
           </View>
         )
       case WidgetType.Group:
-        console.log("It's a group")
         return (
           <View
             style={{

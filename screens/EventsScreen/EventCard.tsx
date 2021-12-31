@@ -8,17 +8,15 @@ import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyl
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { JCEvent } from "./EventsList"
 import { joinGroup, leaveGroup } from "./GroupUtils"
-export default function EventCard({
-  joined,
-  isOwner,
-  updateEvents,
-  item,
-}: {
+
+type Props = {
   joined?: boolean
   isOwner?: boolean
   updateEvents: (action: any, id: string) => Promise<void>
   item: JCEvent
-}) {
+}
+export default function EventCard(props: Props) {
+  const { joined, isOwner, updateEvents, item } = props
   const [isLoading, setIsLoading] = useState(false)
   const { name, location, time } = item
   const members = item?.members?.items ?? []

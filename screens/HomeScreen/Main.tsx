@@ -160,7 +160,7 @@ export default function Main(props: Props): JSX.Element {
       linking={linking}
       theme={{
         ...DefaultTheme,
-        colors: { ...DefaultTheme.colors, background: "rgb(255, 255, 255)" },
+        colors: { ...DefaultTheme.colors, background: "#FFFDFC" },
       }}
       onStateChange={(state) => {
         console.log({ "Persistence State": state })

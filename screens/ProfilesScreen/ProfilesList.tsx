@@ -115,7 +115,7 @@ export default function ProfilesList(props: Props) {
           ? { display: "none" }
           : {}
       }
-      ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
+      ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 64 }}></View>)}
       columnWrapperStyle={isMobileOnly ? null : ({ gap: 32 } as any)}
       ListEmptyComponent={() =>
         !refreshing && !filteredData.length ? (
