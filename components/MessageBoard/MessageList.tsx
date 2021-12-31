@@ -278,6 +278,7 @@ export default function MessageList(props: Props): JSX.Element {
       next: (incoming) => {
         console.log({ incoming })
         if (incoming.value.data?.onCreateMessageByRoomId) {
+          // there is a bug here when no posts exist, appending one extra
           setState((prev) => ({
             ...prev,
             messages: [
