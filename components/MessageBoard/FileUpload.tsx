@@ -10,15 +10,16 @@ export default function FileUpload({ handleUploadCallback }: Props): JSX.Element
   return (
     <Button
       style={{
-        borderRadius: 4,
-        backgroundColor: "#c4c4c450",
+        borderRadius: 2,
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "#f1f1f1",
         width: 100,
         height: 32,
         display: "flex",
         justifyContent: "center",
         alignContent: "center",
         marginLeft: "auto",
-        marginRight: 40,
       }}
     >
       <Text
@@ -29,7 +30,7 @@ export default function FileUpload({ handleUploadCallback }: Props): JSX.Element
           color: "#333333",
         }}
       >
-        Upload File
+        Upload
       </Text>
       <input
         multiple={false}
