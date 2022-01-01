@@ -225,7 +225,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                     <Copyright />
                   </View>
                   {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
-                    <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
+                    <SignUpSidebar text={true} />
                   ) : null}
                 </View>
               ) : null}

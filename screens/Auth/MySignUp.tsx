@@ -454,7 +454,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                     ) : (
                       <View style={this.styles.style.authView3}>
                         <Text accessibilityRole="header" style={this.styles.style.mySignUpText}>
-                          Set up the account for the administrator of your organization first
+                          Create Your Account
                         </Text>
                         <View style={this.styles.style.mySignUpInputFieldscontainer}>
                           <Text
@@ -687,7 +687,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                           ? "Welcome to One Story"
                           : "Sign in to Jesus Collective"}
                       </Text>
-                      {this.state.brand == "oneStory" && (
+                      {/*this.state.brand == "oneStory" && (
                         <Text
                           style={{
                             width: "100%",
@@ -706,7 +706,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                           benefit of connecting with other One Story users to give feedback, share
                           ideas and ask questions.
                         </Text>
-                      )}
+                        )*/}
                       <Text accessibilityRole="header" style={this.styles.style.mySignUpText}>
                         What type of account would you like to create?
                       </Text>

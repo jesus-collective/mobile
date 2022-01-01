@@ -393,7 +393,7 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                     </View>
                   )}
                   {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
-                    <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
+                    <SignUpSidebar text={true} />
                   ) : null}
                 </View>
               ) : null}

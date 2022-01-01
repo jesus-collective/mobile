@@ -177,26 +177,7 @@ class MySignInImpl extends React.Component<Props, State> {
                         ? "Welcome to One Story"
                         : "Sign in to Jesus Collective"}
                     </Text>
-                    {this.state.brand == "oneStory" && (
-                      <Text
-                        style={{
-                          width: "100%",
-                          marginBottom: "5.5%",
-                          fontFamily: "Graphik-Regular-App",
 
-                          fontSize: 14,
-                          lineHeight: 20,
-                        }}
-                      >
-                        We are looking forward to partnering with you as you introduce kids and
-                        youth in your community to Jesus. To access our content you will need to
-                        create a Jesus Collective account. One Story’s partnership with Jesus
-                        Collective allows us to not only make all of our resources available online
-                        in a convenient easy to assess way, but also provides you the benefit of
-                        connecting with other One Story users to give feedback, share ideas and ask
-                        questions.
-                      </Text>
-                    )}
                     <TextInput
                       autoCompleteType="email"
                       textContentType="emailAddress"
@@ -299,7 +280,7 @@ class MySignInImpl extends React.Component<Props, State> {
                     <Copyright />
                   </View>
                   {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
-                    <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
+                    <SignUpSidebar text={true} />
                   ) : null}
                 </View>
               ) : null}

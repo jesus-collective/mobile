@@ -5,7 +5,7 @@ import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
   position?: string
-  text?: string
+  text?: boolean
 }
 export default class SignUpSidebar extends JCComponent<Props> {
   constructor(props: Props) {
@@ -20,8 +20,12 @@ export default class SignUpSidebar extends JCComponent<Props> {
       )?.brand ?? "jc"
     return (
       <View style={this.styles.style.signUpSidebarView}>
-        {this.props.text != null ? (
-          <Text style={this.styles.style.signUpSidebarText}>{this.props.text}</Text>
+        {this.props.text == true ? (
+          <Text style={this.styles.style.signUpSidebarText}>
+            {brand == "oneStory"
+              ? "Made by a church. Made for your church."
+              : "It’s time to unite, equip, and amplify a Jesus-centred movement."}
+          </Text>
         ) : (
           <View style={this.styles.style.signUpSidebarProgressTextView}>
             {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
@@ -77,23 +81,29 @@ export default class SignUpSidebar extends JCComponent<Props> {
             ) : null}
           </View>
         )}
-        <Image
-          source={require("../../assets/JC-Logo-RGB-KO2.png")}
-          style={this.styles.style.signUpSidebarLogo}
-        />
-        {brand == "oneStory" ? (
-          <>
-            <Text style={this.styles.style.signUpSidebarPlus}>+</Text>
-            <Image
-              source={require("../../assets/SignUp/logo-one-story.png")}
-              style={this.styles.style.signUpSidebarLogoOneStory}
-            />
-          </>
+        {brand != "oneStory" ? (
+          <Image
+            source={require("../../assets/JC-Logo-RGB-KO2.png")}
+            style={this.styles.style.signUpSidebarLogo}
+          />
         ) : null}
-        <Image
-          source={require("../../assets/leftPanel.png")}
-          style={this.styles.style.signUpSidebarPanel}
-        />
+        {brand == "oneStory" ? (
+          <Image
+            source={require("../../assets/SignUp/logo-one-story.png")}
+            style={this.styles.style.signUpSidebarLogo}
+          />
+        ) : null}
+        {brand == "oneStory" ? (
+          <Image
+            source={require("../../assets/leftPanel-oneStory.jpg")}
+            style={this.styles.style.signUpSidebarPanel}
+          />
+        ) : (
+          <Image
+            source={require("../../assets/leftPanel.png")}
+            style={this.styles.style.signUpSidebarPanel}
+          />
+        )}
       </View>
     )
   }

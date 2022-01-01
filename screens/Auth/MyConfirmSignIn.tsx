@@ -35,7 +35,7 @@ class MyConfirmSignIn extends ConfirmSignIn<EmptyProps> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.authView}>{super.render()}</View>
                   {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
-                    <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
+                    <SignUpSidebar text={true} />
                   ) : null}
                 </View>
               ) : null}
