@@ -385,7 +385,11 @@ class MySignUpImpl extends React.Component<Props, State> {
                           <View style={{ flex: 1 }}>
                             <JCButton
                               enabled={true}
-                              buttonType={ButtonTypes.SolidSignIn}
+                              buttonType={
+                                this.state.brand == "oneStory"
+                                  ? ButtonTypes.SolidSignInOneStory
+                                  : ButtonTypes.SolidSignIn
+                              }
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (
@@ -602,7 +606,11 @@ class MySignUpImpl extends React.Component<Props, State> {
                           <View style={{ flex: 1 }}>
                             <JCButton
                               enabled={true}
-                              buttonType={ButtonTypes.SolidSignIn}
+                              buttonType={
+                                this.state.brand == "oneStory"
+                                  ? ButtonTypes.SolidSignInOneStory
+                                  : ButtonTypes.SolidSignIn
+                              }
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (
@@ -713,7 +721,11 @@ class MySignUpImpl extends React.Component<Props, State> {
                       <View style={this.styles.style.mySignUpButton}>
                         <JCButton
                           accessibilityLabel="Register as an individual"
-                          buttonType={ButtonTypes.SolidSignIn2}
+                          buttonType={
+                            this.state.brand == "oneStory"
+                              ? ButtonTypes.SolidSignIn2OneStory
+                              : ButtonTypes.SolidSignIn2
+                          }
                           onPress={() => this.setState({ joinedAs: "individual" })}
                         >
                           Individual
@@ -721,7 +733,11 @@ class MySignUpImpl extends React.Component<Props, State> {
                         <Text style={this.styles.style.mySignUpOr}>{/* or */}</Text>
                         <JCButton
                           accessibilityLabel="Register as an organization"
-                          buttonType={ButtonTypes.SolidSignIn2}
+                          buttonType={
+                            this.state.brand == "oneStory"
+                              ? ButtonTypes.SolidSignIn2OneStory
+                              : ButtonTypes.SolidSignIn2
+                          }
                           onPress={() => this.setState({ joinedAs: "organization" })}
                         >
                           Organization

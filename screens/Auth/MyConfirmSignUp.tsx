@@ -27,6 +27,7 @@ interface Props {
 }
 
 interface State {
+  brand: "jc" | "oneStory" | null
   email: string
   code: string
   authError: string
@@ -37,6 +38,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
     super(props)
     console.log({ MYConfirmSignupImpl: props.route })
     this.state = {
+      brand: props.route?.params?.brand ?? "jc",
       email: props.route?.params.email ?? "",
       code: "",
       authError: "",
@@ -185,7 +187,11 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                       ></TextInput>
                       <JCButton
                         accessibilityLabel="Submit verification code"
-                        buttonType={ButtonTypes.SolidSignIn2}
+                        buttonType={
+                          this.state.brand == "oneStory"
+                            ? ButtonTypes.SolidSignIn2OneStory
+                            : ButtonTypes.SolidSignIn2
+                        }
                         onPress={() => this.handleConfirmSignUp(userActions)}
                       >
                         {this.state.sendingData ? (

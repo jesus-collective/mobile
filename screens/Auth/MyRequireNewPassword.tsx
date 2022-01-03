@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons"
+import { NavigationProp } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
 import { View } from "native-base"
@@ -22,9 +23,12 @@ import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/Us
 
 interface Props {
   username: any
+  navigation?: NavigationProp<any, any>
+  route?: any
 }
 
 interface State {
+  brand: "jc" | "oneStory" | null
   first: string
   last: string
   code: string
@@ -42,6 +46,7 @@ class MyForgotPassword extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
+      brand: props.route?.params?.brand ?? "jc",
       phone: "",
       code: "+1",
       first: "",
@@ -321,7 +326,11 @@ class MyForgotPassword extends React.Component<Props, State> {
                     </View>
                     <JCButton
                       accessibilityLabel="Submit changes"
-                      buttonType={ButtonTypes.SolidSignIn}
+                      buttonType={
+                        this.state.brand == "oneStory"
+                          ? ButtonTypes.SolidSignInOneStory
+                          : ButtonTypes.SolidSignIn
+                      }
                       onPress={() => {
                         this.save(userActions, userState)
                       }}

@@ -150,7 +150,11 @@ class MySignInImpl extends React.Component<Props, State> {
                     <JCButton
                       accessibilityLabel="Create account"
                       accessibilityHint="Navigate to account creation page"
-                      buttonType={ButtonTypes.SolidCreateAccount}
+                      buttonType={
+                        this.state.brand == "oneStory"
+                          ? ButtonTypes.SolidCreateAccountOneStory
+                          : ButtonTypes.SolidCreateAccount
+                      }
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signUp", null, {
                           joinedProduct: this.state.joinedProduct,
@@ -228,7 +232,11 @@ class MySignInImpl extends React.Component<Props, State> {
                     <JCButton
                       accessibilityLabel="Login"
                       accessibilityHint="Navigate to platform"
-                      buttonType={ButtonTypes.SolidSignIn}
+                      buttonType={
+                        this.state.brand == "oneStory"
+                          ? ButtonTypes.SolidSignInOneStory
+                          : ButtonTypes.SolidSignIn
+                      }
                       onPress={async () => {
                         await this.handleSignIn(userActions)
                       }}

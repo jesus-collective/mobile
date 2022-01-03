@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons"
+import { NavigationProp } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
 import { View } from "native-base"
 import React from "react"
@@ -12,7 +13,6 @@ import {
   TextInputKeyPressEventData,
   TouchableOpacity,
 } from "react-native"
-import { EmptyProps } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Sentry from "../../components/Sentry"
@@ -21,6 +21,7 @@ import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 
 interface State {
+  brand: "jc" | "oneStory" | null
   email: string
   authError: string
   codeSent: boolean
@@ -30,11 +31,15 @@ interface State {
   sendingCode: boolean
   resetting: boolean
 }
-
-class MyForgotPassword extends React.Component<EmptyProps, State> {
-  constructor(props: EmptyProps) {
+interface Props {
+  navigation?: NavigationProp<any, any>
+  route?: any
+}
+class MyForgotPassword extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
+      brand: props.route?.params?.brand ?? "jc",
       email: "",
       authError: "",
       codeSent: false,
@@ -196,7 +201,11 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                         }}
                       ></TextInput>
                       <JCButton
-                        buttonType={ButtonTypes.SolidSignIn}
+                        buttonType={
+                          this.state.brand == "oneStory"
+                            ? ButtonTypes.SolidSignInOneStory
+                            : ButtonTypes.SolidSignIn
+                        }
                         accessibilityLabel="Send security code"
                         onPress={() => this.sendCode()}
                       >
@@ -358,7 +367,11 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
                         ></TextInput>
                       </View>
                       <JCButton
-                        buttonType={ButtonTypes.SolidSignIn}
+                        buttonType={
+                          this.state.brand == "oneStory"
+                            ? ButtonTypes.SolidSignInOneStory
+                            : ButtonTypes.SolidSignIn
+                        }
                         onPress={() => this.resetPass(userActions)}
                       >
                         {this.state.resetting ? (
