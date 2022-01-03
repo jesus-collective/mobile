@@ -46,7 +46,6 @@ export default function GroupsList(props: Props) {
       const loadJoinedData = async () => {
         const user = await loadUser()
         data.forEach((item: any) => {
-          console.log("setting joined data")
           const groupMemberByUser = Data.groupMemberByUser(user, item.id)
           groupMemberByUser.then((json) => {
             if ((json.data?.groupMemberByUser?.items?.length ?? 0) > 0) {

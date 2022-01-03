@@ -324,8 +324,8 @@ export default function GroupScreen(props: Props) {
             <Text style={[style.DescriptionText, { marginBottom: 32 }]}>{group?.description}</Text>
             <View style={{ marginTop: -8 }}>
               <GenericButton
-                label={isAttending ? "Leave Group" : "Join Group"}
-                action={() => null}
+                label={isAttending ? "Leave group" : "Join group"}
+                action={handleAction}
                 style={{
                   ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                   LabelStyle: [GenericButtonStyles.QuarternaryLabelStyle, { fontSize: 16 }],
@@ -333,6 +333,7 @@ export default function GroupScreen(props: Props) {
                 }}
               />
             </View>
+            <MessageBoard replies style="regular" groupId={id}></MessageBoard>
           </View>
         ) : currentTab === GroupTabType.MEMBERS ? (
           <View>
