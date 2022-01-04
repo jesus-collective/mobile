@@ -2,8 +2,9 @@ import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { Auth, Storage } from "aws-amplify"
 import { convertToRaw, EditorState, getDefaultKeyBinding } from "draft-js"
 import React, { useEffect, useState } from "react"
+import { isMobileOnly } from "react-device-detect"
 import { Editor, SyntheticKeyboardEvent } from "react-draft-wysiwyg"
-import { Text, TouchableOpacity, View } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { CreateMessageInput, CreateReplyInput } from "src/API"
 import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
@@ -19,6 +20,25 @@ type Props = {
   groupId?: string
   replyMode?: boolean
 }
+const style = StyleSheet.create({
+  InputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    paddingBottom: isMobileOnly ? 12 : 32,
+    paddingTop: 16,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    marginLeft: isMobileOnly ? 12 : 64,
+  },
+  EditorContainer: {
+    backgroundColor: "#FAFAFA",
+    borderWidth: 1,
+    borderColor: "#E4E1E1",
+    flex: 1,
+    borderRadius: 8,
+    marginRight: 16,
+  },
+})
 const MessageInput = (props: Props) => {
   const { replyMode } = props
   const [state, setState] = useState({
@@ -267,29 +287,19 @@ const MessageInput = (props: Props) => {
       )} */}
       {state.attachment ? renderFileUploadBadge({ attachment: state.attachment }) : null}
       {replyMode ? (
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            paddingRight: 16,
-            paddingBottom: 32,
-            paddingTop: 32,
-            backgroundColor: "#fff",
-            borderRadius: 8,
-            marginLeft: 64,
-          }}
-        >
-          <ProfileImage linkToProfile size="small2" user={state.userId} />
+        <View style={style.InputContainer}>
           <View
-            style={{
-              backgroundColor: "#FAFAFA",
-              borderWidth: 1,
-              borderColor: "#E4E1E1",
-              flex: 1,
-              borderRadius: 8,
-              marginLeft: 16,
-            }}
+            style={
+              isMobileOnly ? { marginRight: 12, justifyContent: "center" } : { marginRight: 16 }
+            }
           >
+            <ProfileImage
+              linkToProfile
+              size={isMobileOnly ? "small6" : "small2"}
+              user={state.userId}
+            />
+          </View>
+          <View style={style.EditorContainer}>
             <Editor
               placeholder={"Add your comment..."}
               editorState={state.editorState}
@@ -335,12 +345,17 @@ const MessageInput = (props: Props) => {
             paddingBottom: 32,
             paddingLeft: 16,
             minHeight: 252,
+            marginTop: isMobileOnly ? 24 : 0,
             backgroundColor: "#fff",
-            marginBottom: 32,
+            marginBottom: isMobileOnly ? 24 : 32,
             borderRadius: 8,
           }}
         >
-          <ProfileImage linkToProfile size="editorLarge" user={state.userId} />
+          <ProfileImage
+            linkToProfile
+            size={isMobileOnly ? "small6" : "editorLarge"}
+            user={state.userId}
+          />
           <View
             style={{
               backgroundColor: "#FAFAFA",
@@ -381,10 +396,14 @@ const MessageInput = (props: Props) => {
                 backgroundColor: "#FAFAFA",
               }}
               toolbarCustomButtons={[
-                <FileUpload key="fileupload" handleUploadCallback={(e) => handleUpload(e)} />,
+                isMobileOnly ? (
+                  <View style={{ flex: 1 }} />
+                ) : (
+                  <FileUpload key="fileupload" handleUploadCallback={(e) => handleUpload(e)} />
+                ),
                 <View style={{ marginLeft: 8 }}>
                   <GenericButton
-                    label="Add Comment"
+                    label="Publish Post"
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                       LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,

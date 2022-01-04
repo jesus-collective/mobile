@@ -2,22 +2,69 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
-import moment from "moment"
+import moment, { Moment } from "moment"
 import React from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { isMobileOnly } from "react-device-detect"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { Message, Reply } from "./MessageList"
 import MessageUtils from "./MessageUtils"
 
-const MessageItem = ({
-  item,
-  index,
-  isReply,
-}: {
+type Props = {
   item: Message | Reply
   index: number
   isReply: boolean
-}) => {
+  now: Moment
+}
+
+const style = StyleSheet.create({
+  MessageContainer: {
+    paddingRight: isMobileOnly ? 12 : 16,
+    paddingLeft: isMobileOnly ? 12 : 16,
+    paddingBottom: isMobileOnly ? 12 : 0,
+    paddingTop: isMobileOnly ? 12 : 32,
+  },
+  ReplyContainer: {
+    paddingLeft: isMobileOnly ? 12 : 0,
+    paddingBottom: 0,
+    marginLeft: isMobileOnly ? 0 : 64,
+    borderBottomWidth: 0,
+  },
+  NameText: {
+    color: "#1A0706",
+    fontFamily: "Graphik-Semibold-App",
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  RoleText: {
+    color: "#483938",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  DateText: {
+    color: "#6A5E5D",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  CommentText: {
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 15,
+    lineHeight: 24,
+    marginLeft: isMobileOnly ? -60 : 0,
+    paddingTop: isMobileOnly ? 12 : 0,
+    color: "#1A0706",
+  },
+  ReplyText: {
+    marginLeft: isMobileOnly ? "unset" : 0,
+    paddingTop: 0,
+    fontSize: 14,
+    lineHeight: 21,
+  },
+})
+const MessageItem = (props: Props) => {
+  const { item, index, isReply, now } = props
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const convertCommentFromJSONToHTML = (text: string | null) => {
     const errorMarkdown = "<div>" + "Message" + " Can't Be Displayed</div>"
@@ -34,12 +81,17 @@ const MessageItem = ({
   const showProfile = (id: string | undefined) => {
     if (id) navigation?.push("ProfileScreen", { id: id, create: false })
   }
-  const now = moment()
+
+  const currentTime = now
   const datePosted = moment(parseInt(item?.when))
-  const daysSince = now.diff(datePosted.format("L"), "days")
+  const daysSince = currentTime.diff(datePosted, "days")
+  const hoursSince = currentTime.diff(datePosted, "hours")
+  const minutesSince = currentTime.diff(datePosted, "minutes")
   const dateString = `${
     daysSince === 0
-      ? "Today"
+      ? hoursSince > 0
+        ? hoursSince + " hours ago"
+        : minutesSince + " minutes ago"
       : daysSince === 1
       ? "Yesterday"
       : daysSince > 1
@@ -47,17 +99,7 @@ const MessageItem = ({
       : null
   }`
   return (
-    <View
-      key={index}
-      style={{
-        paddingHorizontal: 16,
-        paddingVertical: 32,
-        paddingBottom: !isReply ? 32 : 0,
-        marginLeft: isReply ? 64 : 0,
-        borderBottomWidth: !isReply ? 1 : 0,
-        borderBottomColor: "#E4E1E1",
-      }}
-    >
+    <View key={index} style={[style.MessageContainer, isReply ? style.ReplyContainer : {}]}>
       <View>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flexDirection: "column" }}>
@@ -68,13 +110,19 @@ const MessageItem = ({
               }}
             >
               {item && "owner" in item && (
-                <View style={{ marginRight: 16 }}>
-                  <ProfileImage size="editorLarge" user={item?.owner ?? null} />
+                <View style={isMobileOnly ? { marginRight: 12 } : { marginRight: 16 }}>
+                  <ProfileImage
+                    size={isMobileOnly ? "small7" : "editorLarge"}
+                    user={item?.owner ?? null}
+                  />
                 </View>
               )}
               {isReply && (
-                <View style={{ marginLeft: -16 }}>
-                  <ProfileImage size="small2" user={item?.author?.id ?? null} />
+                <View style={isMobileOnly ? { marginRight: 12 } : { marginRight: 16 }}>
+                  <ProfileImage
+                    size={isMobileOnly ? "small6" : "small2"}
+                    user={item?.author?.id ?? null}
+                  />
                 </View>
               )}
             </TouchableOpacity>
@@ -83,59 +131,59 @@ const MessageItem = ({
           <View style={{ flex: 1 }}>
             <View style={{ flexDirection: "row", flex: 1 }}>
               <View style={{ flexDirection: "column", flex: 1 }}>
-                <Text
-                  style={{
-                    color: "#1A0706",
-                    fontFamily: "Graphik-Semibold-App",
-                    fontSize: 16,
-                    lineHeight: 24,
-                  }}
-                >
+                <Text style={style.NameText}>
                   {item?.author?.given_name ?? ""} {item?.author?.family_name ?? ""}
                 </Text>
-                <Text
-                  style={{
-                    color: "#483938",
-                    fontFamily: "Graphik-Regular-App",
-                    fontSize: 16,
-                    lineHeight: 24,
-                  }}
-                >
-                  {item?.author?.currentRole ?? ""}
-                </Text>
+                <Text style={style.RoleText}>{item?.author?.currentRole ?? ""}</Text>
               </View>
-              {item?.when && (
-                <Text
-                  style={{
-                    color: "#6A5E5D",
-                    fontFamily: "Graphik-Regular-App",
-                    fontSize: 16,
-                    lineHeight: 24,
-                  }}
-                >
-                  {dateString}
-                </Text>
-              )}
+              {isMobileOnly || (!isReply && !isMobileOnly) ? (
+                <Text style={style.DateText}>{dateString}</Text>
+              ) : null}
             </View>
-
-            <div
-              style={{
-                fontFamily: "Graphik-Regular-App",
-                fontWeight: "normal",
-                fontSize: 15,
-                lineHeight: "24px",
-                color: "#1A0706",
-                marginBlockEnd: 0,
-              }}
-              dangerouslySetInnerHTML={{
-                __html: convertCommentFromJSONToHTML(item?.content ?? null),
-              }}
-            />
-
+            <Text style={[style.CommentText, isReply ? style.ReplyText : {}]}>
+              <div
+                style={{ marginBlockEnd: 0 }}
+                dangerouslySetInnerHTML={{
+                  __html: convertCommentFromJSONToHTML(item?.content ?? null),
+                  // need to filter empty elements here
+                }}
+              ></div>
+            </Text>
+            {!isMobileOnly && isReply ? (
+              <Text
+                style={{
+                  color: "#6A5E5D",
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 14,
+                  lineHeight: 24,
+                }}
+              >
+                {dateString}
+              </Text>
+            ) : null}
             {item?.attachment ? <View>{MessageUtils.renderFileDownloadBadge(item)}</View> : null}
           </View>
         </View>
       </View>
+      {!isReply ? (
+        <View
+          style={
+            isMobileOnly
+              ? {
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#E4E1E1",
+                  paddingTop: 9,
+                }
+              : {
+                  marginLeft: -16,
+                  marginRight: -32,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#E4E1E1",
+                  paddingTop: 17,
+                }
+          }
+        />
+      ) : null}
     </View>
   )
 }

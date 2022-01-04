@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, View } from "react-native"
 import Observable from "zen-observable-ts"
 import { JCState } from "../../components/JCComponent/JCComponent"
 import {
@@ -19,8 +19,7 @@ import {
   onCreateMessageByRoomId,
   onCreateReply,
 } from "../../src/graphql-custom/messages"
-import MessageInput from "./MessageInput"
-import MessageItem from "./MessageItem"
+import MessageThread from "./MessageThread"
 
 export type Messages = NonNullable<MessagesByRoomQuery["messagesByRoom"]>["items"]
 export type Message = NonNullable<Messages>[0]
@@ -82,60 +81,12 @@ export default function MessageList(props: Props): JSX.Element {
     }
     setState((prev) => ({ ...prev, fetchingData: false }))
   }
-  const RenderMessageWithReplies = ({ item, index }: { item: Message; index: number }) => {
-    const [showCount, setShowCount] = useState(2)
-    return (
-      <View
-        style={{
-          marginBottom: 32,
-          borderWidth: 1,
-          borderColor: "#E4E1E1",
-          borderRadius: 8,
-          backgroundColor: "#fff",
-        }}
-        key={index}
-      >
-        <MessageItem item={item} index={index} isReply={false} />
-        {item?.replies?.items.slice(0, showCount).map((reply, index) => {
-          return <MessageItem item={reply} index={index} isReply={true} />
-        })}
-        <TouchableOpacity
-          onPress={() => setShowCount((prev) => prev + 2)} // increase by 2, need to add state for num replies
-        >
-          {item?.replies?.items?.length && showCount < item?.replies?.items?.length ? (
-            <Text
-              style={{
-                marginLeft: 142,
-                color: "#6A5E5D",
-                fontFamily: "Graphik-Regular-App",
-                fontSize: 14,
-                lineHeight: 24,
-              }}
-            >
-              View {item.replies.items.length - showCount} more comments...
-            </Text>
-          ) : null}
-        </TouchableOpacity>
-        <MessageInput
-          replyMode={true}
-          replyState={{
-            replyToWho: [],
-            replyToId: item?.id,
-            replyToRoomId: props.groupId ?? "",
-          }}
-          clearReplyState={function (): void {
-            throw new Error("Function not implemented.")
-          }}
-          groupId={props.groupId}
-        />
-      </View>
-    )
-  }
 
   const messagesLoader = () => {
     if (state.nextToken) return <ActivityIndicator animating color="#F0493E" />
     return null
   }
+
   const flatListRef = React.createRef<FlatList<any>>()
   useEffect(() => {
     const messageSub = (
@@ -177,7 +128,7 @@ export default function MessageList(props: Props): JSX.Element {
           incoming.value?.data?.onCreateReply?.parentMessage &&
           incoming.value?.data.onCreateReply?.parentMessage?.roomId === props.groupId
         ) {
-          const tempMessages = state.messages
+          const tempMessages = [...state.messages]
           // find incoming reply's parent message in current state
           const index = tempMessages?.findIndex(
             (m) => m?.id === incoming.value?.data?.onCreateReply?.messageId
@@ -190,19 +141,18 @@ export default function MessageList(props: Props): JSX.Element {
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
             })) as GraphQLResult<GetMessageQuery>
-            console.log({ updatedMessage })
-            console.log({ tempMessages })
-
-            console.log("index is ", { index })
             if (
               updatedMessage.data?.getMessage &&
               index !== undefined &&
               tempMessages &&
               tempMessages[index]
             ) {
-              // replace old message/replies with incoming data
+              // prevent other threads from re-rendering
+              console.log("exists")
               tempMessages[index] = updatedMessage.data.getMessage
               setState((prev) => ({ ...prev, messages: tempMessages }))
+            } else {
+              console.error("Something went wrong")
             }
           } catch (e: any) {
             console.error(e)
@@ -261,7 +211,10 @@ export default function MessageList(props: Props): JSX.Element {
       <FlatList
         ref={flatListRef}
         scrollEnabled
-        renderItem={({ item, index }) => <RenderMessageWithReplies item={item} index={index} />}
+        renderItem={({ item, index }) => (
+          <MessageThread groupId={props.groupId ?? ""} item={item} index={index} />
+        )}
+        keyExtractor={(item) => item?.id}
         data={state.messages}
         refreshing={state.fetchingData}
         onEndReachedThreshold={0.1}
