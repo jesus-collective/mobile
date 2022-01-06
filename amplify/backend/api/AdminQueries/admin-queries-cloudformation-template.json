@@ -306,7 +306,7 @@
           "Value": "AdminQueries"
         },
         "ApiId": {
-          "Description": "API ID (prefix of API URL)",
+          "Description": "AdminQueries's API ID",
           "Value": {"Ref": "AdminQueries"}
         }
     }

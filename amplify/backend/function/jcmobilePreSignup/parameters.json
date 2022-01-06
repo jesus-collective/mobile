@@ -1,3 +1,4 @@
 {
-  "modules": "custom"
+  "modules": "custom",
+  "resourceName": "jcmobilePreSignup"
 }
