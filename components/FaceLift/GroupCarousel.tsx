@@ -18,12 +18,13 @@ const GroupCarousel = () => {
     loadGroups()
   }, [])
   const renderItem = (item: any, width: number) => {
-    console.log({ item })
-    return (
-      <View style={{ width: width }}>
-        <GroupCard item={item} />
-      </View>
-    )
+    if (width)
+      return (
+        <View style={{ width: width }}>
+          <GroupCard item={item} />
+        </View>
+      )
+    return <></>
   }
   return (
     <HomeCarousel
