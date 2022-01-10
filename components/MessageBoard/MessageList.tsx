@@ -4,9 +4,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, View } from "react-native"
+import { FlatList, View } from "react-native"
 import Observable from "zen-observable-ts"
-import { JCState } from "../../components/JCComponent/JCComponent"
 import {
   GetMessageQuery,
   MessagesByRoomQuery,
@@ -19,6 +18,7 @@ import {
   onCreateMessageByRoomId,
   onCreateReply,
 } from "../../src/graphql-custom/messages"
+import { JCState } from "../JCComponent/JCComponent"
 import MessageThread from "./MessageThread"
 
 export type Messages = NonNullable<MessagesByRoomQuery["messagesByRoom"]>["items"]
@@ -42,50 +42,12 @@ interface State extends JCState {
 }
 
 export default function MessageList(props: Props): JSX.Element {
+  console.log("MessageList", { props })
   const [state, setState] = useState<State>({
     messages: [],
     nextToken: null,
     fetchingData: false,
   })
-  const getMoreMessages = async () => {
-    setState((prev) => ({ ...prev, fetchingData: true }))
-    if (state.nextToken) {
-      try {
-        const messages = (await API.graphql({
-          query: messagesByRoom,
-          variables: {
-            roomId: props.groupId,
-            sortDirection: "DESC",
-            limit: 10,
-            nextToken: state.nextToken,
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<MessagesByRoomQuery>
-
-        if (messages.data?.messagesByRoom?.items) {
-          setState((prev) => ({
-            ...prev,
-            messages: [...(prev.messages ?? []), ...(messages?.data?.messagesByRoom?.items ?? [])],
-            nextToken: messages?.data?.messagesByRoom?.nextToken,
-          }))
-        }
-      } catch (e: any) {
-        if (e.data?.messagesByRoom) {
-          setState((prev) => ({
-            ...prev,
-            messages: [...(prev.messages ?? []), ...e.data.messagesByRoom.items],
-            nextToken: e.data.messagesByRoom.nextToken,
-          }))
-        }
-      }
-    }
-    setState((prev) => ({ ...prev, fetchingData: false }))
-  }
-
-  const messagesLoader = () => {
-    if (state.nextToken) return <ActivityIndicator animating color="#F0493E" />
-    return null
-  }
 
   const flatListRef = React.createRef<FlatList<any>>()
   useEffect(() => {
@@ -173,20 +135,20 @@ export default function MessageList(props: Props): JSX.Element {
           variables: {
             roomId: props.groupId,
             sortDirection: "DESC",
-            limit: 10,
+            limit: 20,
+            nextToken: null,
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as GraphQLResult<MessagesByRoomQuery>
 
         console.debug(messages)
 
-        if (messages.data?.messagesByRoom?.items) {
+        if (messages.data?.messagesByRoom?.items?.length) {
           setState((prev) => ({
             ...prev,
             messages: messages?.data?.messagesByRoom?.items ?? [],
             nextToken: messages?.data?.messagesByRoom?.nextToken,
           }))
-          props.onHandleCreated()
         }
       } catch (e: any) {
         console.debug(e)
@@ -196,11 +158,12 @@ export default function MessageList(props: Props): JSX.Element {
             messages: e.data.messagesByRoom.items,
             nextToken: e.data.messagesByRoom.nextToken,
           }))
-          props.onHandleCreated()
         }
       }
     }
-    if (!state.messages.length) loadMessages()
+    if (!state.messages.length) {
+      loadMessages()
+    }
     return () => {
       replySub.unsubscribe()
       messageSub.unsubscribe()
@@ -216,9 +179,47 @@ export default function MessageList(props: Props): JSX.Element {
         )}
         keyExtractor={(item) => item?.id}
         data={state.messages}
-        refreshing={state.fetchingData}
-        onEndReachedThreshold={0.1}
       />
     </View>
   )
 }
+
+// const getMoreMessages = async () => {
+//   setState((prev) => ({ ...prev, fetchingData: true }))
+//   if (state.nextToken) {
+//     try {
+//       const messages = (await API.graphql({
+//         query: messagesByRoom,
+//         variables: {
+//           roomId: props.groupId,
+//           sortDirection: "DESC",
+//           limit: 10,
+//           nextToken: state.nextToken,
+//         },
+//         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+//       })) as GraphQLResult<MessagesByRoomQuery>
+
+//       if (messages.data?.messagesByRoom?.items) {
+//         setState((prev) => ({
+//           ...prev,
+//           messages: [...(prev.messages ?? []), ...(messages?.data?.messagesByRoom?.items ?? [])],
+//           nextToken: messages?.data?.messagesByRoom?.nextToken,
+//         }))
+//       }
+//     } catch (e: any) {
+//       if (e.data?.messagesByRoom) {
+//         setState((prev) => ({
+//           ...prev,
+//           messages: [...(prev.messages ?? []), ...e.data.messagesByRoom.items],
+//           nextToken: e.data.messagesByRoom.nextToken,
+//         }))
+//       }
+//     }
+//   }
+//   setState((prev) => ({ ...prev, fetchingData: false }))
+// }
+
+// const messagesLoader = () => {
+//   if (state.nextToken) return <ActivityIndicator animating color="#F0493E" />
+//   return null
+// }
