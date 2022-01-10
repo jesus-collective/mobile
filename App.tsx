@@ -120,6 +120,10 @@ class AwesomeApp extends JCComponent<Props, State> {
     Asset.fromModule(require("./assets/SignUp/progress-2.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
     Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
     Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-1-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-2-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-3-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-4-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
   }
   renderFallback(): string {
     return ""

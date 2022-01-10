@@ -57,25 +57,41 @@ export default class SignUpSidebar extends JCComponent<Props> {
             )}
             {this.props.position == "1" ? (
               <Image
-                source={require("../../assets/SignUp/progress-1.png")}
+                source={
+                  brand == "oneStory"
+                    ? require("../../assets/SignUp/progress-1-oneStory.png")
+                    : require("../../assets/SignUp/progress-1.png")
+                }
                 style={this.styles.style.signUpSidebarProgress}
               />
             ) : null}
             {this.props.position == "2" ? (
               <Image
-                source={require("../../assets/SignUp/progress-2.png")}
+                source={
+                  brand == "oneStory"
+                    ? require("../../assets/SignUp/progress-2-oneStory.png")
+                    : require("../../assets/SignUp/progress-2.png")
+                }
                 style={this.styles.style.signUpSidebarProgress}
               />
             ) : null}
             {this.props.position == "3" ? (
               <Image
-                source={require("../../assets/SignUp/progress-3.png")}
+                source={
+                  brand == "oneStory"
+                    ? require("../../assets/SignUp/progress-3-oneStory.png")
+                    : require("../../assets/SignUp/progress-3.png")
+                }
                 style={this.styles.style.signUpSidebarProgress}
               />
             ) : null}
             {this.props.position == "4" ? (
               <Image
-                source={require("../../assets/SignUp/progress-4.png")}
+                source={
+                  brand == "oneStory"
+                    ? require("../../assets/SignUp/progress-4-oneStory.png")
+                    : require("../../assets/SignUp/progress-4.png")
+                }
                 style={this.styles.style.signUpSidebarProgress}
               />
             ) : null}
