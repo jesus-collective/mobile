@@ -680,17 +680,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                     )
                   ) : (
                     <View style={this.styles.style.authView3}>
-                      <Text
-                        accessibilityRole="header"
-                        style={{
-                          width: "100%",
-                          marginBottom: "5.5%",
-                          fontFamily: "Graphik-Regular-App",
-                          fontWeight: "bold",
-                          fontSize: 22,
-                          lineHeight: 30,
-                        }}
-                      >
+                      <Text accessibilityRole="header" style={this.styles.style.authView3Welcome}>
                         {this.state.brand == "oneStory"
                           ? "Welcome to One Story"
                           : "Sign in to Jesus Collective"}

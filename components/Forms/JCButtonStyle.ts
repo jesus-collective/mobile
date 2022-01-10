@@ -1206,6 +1206,12 @@ export default EStyleSheet.create({
 
   // Media Query Desktop Tablet
   "@media (min-width: 481) and (max-width: 768)": {
+    SolidCreateAccountButton: {
+      alignSelf: "flex-end",
+    },
+    SolidCreateAccountOneStoryButton: {
+      alignSelf: "flex-end",
+    },
     SolidRightMarginButton: {
       paddingLeft: 0,
       paddingRight: 0,
@@ -1284,6 +1290,16 @@ export default EStyleSheet.create({
       paddingRight: 60,
       marginLeft: 0,
       marginRight: 0,
+      alignSelf: "center",
+    },
+    SolidSignIn2OneStoryButton: {
+      paddingTop: 6,
+      paddingBottom: 6,
+      paddingLeft: 60,
+      paddingRight: 60,
+      marginLeft: 0,
+      marginRight: 0,
+      alignSelf: "center",
     },
   },
   // Media Query Mobile
@@ -1397,6 +1413,9 @@ export default EStyleSheet.create({
       marginBottom: 5,
     },
     SolidSignIn2Button: {
+      alignSelf: "center",
+    },
+    SolidSignIn2OneStoryButton: {
       alignSelf: "center",
     },
   },

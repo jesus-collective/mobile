@@ -34,6 +34,15 @@ export default class MainStyles {
         alignItems: "center",
         backgroundColor: mainColor,
       },
+      authView3Welcome: {
+        width: "100%",
+        marginTop: "2%",
+        marginBottom: "5.5%",
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "bold",
+        fontSize: 28,
+        lineHeight: 30,
+      },
       groupsJoinCourseModalContainer: {
         overflow: "none",
         height: "100vh",
@@ -1542,6 +1551,15 @@ export default class MainStyles {
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
+        authView3Welcome: {
+          width: "100%",
+          marginBottom: "5.5%",
+          fontFamily: "Graphik-Regular-App",
+          fontWeight: "bold",
+          fontSize: 28,
+          lineHeight: 30,
+          textAlign: "center",
+        },
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
         signUpBackButtonWrapper: { position: "absolute", top: "10%", left: "30%", zIndex: 9999 },
         authView2: { left: "37.5%", width: 300, top: "20%", height: "auto" },
@@ -2125,8 +2143,10 @@ export default class MainStyles {
           textAlign: "center",
         },
         authView3: {
-          marginLeft: 5,
-          marginRight: 5,
+          marginLeft: 0,
+          marginRight: 0,
+          paddingLeft: 5,
+          paddingRight: 5,
           left: "0%",
           width: "100%",
           top: "5%",
@@ -2164,7 +2184,7 @@ export default class MainStyles {
           marginLeft: 10,
         },
         mySignInForgotPassword: {
-          alignSelf: "flex-start",
+          alignSelf: "flex-end",
         },
         mySignUpPlaceholderText: {
           fontSize: 15,
@@ -2478,7 +2498,7 @@ export default class MainStyles {
       signUpSidebarView:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "fixed", width: "15%", height: "100%", left: "0%", top: "0%" }
-          : { position: "relative", width: "100%", height: "20%", left: "0%", top: 0 },
+          : { position: "relative", width: "100%", height: "unset", left: "0%", top: 0 },
 
       signUpSidebarText:
         Platform.OS === "web" && Dimensions.get("window").width > 720

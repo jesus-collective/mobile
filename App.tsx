@@ -175,10 +175,10 @@ class AwesomeApp extends JCComponent<Props, State> {
       } else {
         RootNavigation.navigate("auth", {
           screen: "Payment1",
-          params: {
-            joinedProduct: data?.joinedProduct,
-            brand: data?.brand,
-          },
+          // params: {
+          joinedProduct: data?.joinedProduct,
+          brand: data?.brand,
+          //},
         })
       }
     }
