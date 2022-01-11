@@ -453,6 +453,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }*/
   render(): React.ReactNode {
+    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
     return this.state.OrganizationDetails != null ? (
       <Content>
         <View style={this.styles.style.myProfileTopButtons}>
@@ -472,7 +473,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <JCButton
                     enabled={this.state.dirty}
                     testID="org-save"
-                    buttonType={ButtonTypes.SolidRightMargin}
+                    buttonType={
+                      brand == "oneStory"
+                        ? ButtonTypes.SolidRightMarginOneStory
+                        : ButtonTypes.SolidRightMargin
+                    }
                     onPress={async () => {
                       await this.finalizeProfile()
                     }}
@@ -482,7 +487,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 ) : null}
                 {this.props.loadId && this.state.showAccountSettings ? (
                   <JCButton
-                    buttonType={ButtonTypes.SolidProfileDelete}
+                    buttonType={
+                      brand == "oneStory"
+                        ? ButtonTypes.SolidProfileDeleteOneStory
+                        : ButtonTypes.SolidProfileDelete
+                    }
                     onPress={() => this.deleteOrg()}
                   >
                     Delete
@@ -515,7 +524,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
               {this.state.isEditable && this.state.editMode ? (
                 <View style={this.styles.style.fileInputWrapper}>
                   <JCButton
-                    buttonType={ButtonTypes.SolidProfile}
+                    buttonType={
+                      brand == "oneStory"
+                        ? ButtonTypes.SolidProfileOneStory
+                        : ButtonTypes.SolidProfile
+                    }
                     onPress={() => {
                       null
                     }}

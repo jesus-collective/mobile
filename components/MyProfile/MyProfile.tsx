@@ -624,6 +624,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
   renderTopBar(userActions: UserActions) {
+    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.myProfileTopButtons}>
@@ -643,7 +644,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   <JCButton
                     enabled={this.state.dirty}
                     testID="profile-save"
-                    buttonType={ButtonTypes.SolidRightMargin}
+                    buttonType={
+                      brand == "oneStory"
+                        ? ButtonTypes.SolidRightMarginOneStory
+                        : ButtonTypes.SolidRightMargin
+                    }
                     onPress={async () => {
                       await this.finalizeProfile()
                     }}
@@ -653,7 +658,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 ) : null}
                 <JCButton
                   testID={"logout"}
-                  buttonType={ButtonTypes.Solid}
+                  buttonType={brand == "oneStory" ? ButtonTypes.SolidOneStory : ButtonTypes.Solid}
                   onPress={() => this.logout(userActions)}
                 >
                   Logout
@@ -679,6 +684,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
     else return null
   }
   renderLeftBar(userActions: UserActions) {
+    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
+
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.profileScreenLeftCard}>
@@ -699,7 +706,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <TouchableOpacity
                   accessible={false}
                   style={{
-                    backgroundColor: "#F0493E",
+                    backgroundColor: brand == "oneStory" ? "rgb(255, 198, 41)" : "#F0493E",
                     padding: 12,
                     borderRadius: 4,
                   }}
@@ -708,7 +715,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     style={{
                       margin: "auto",
                       fontSize: 16,
-                      color: "white",
+                      color: brand == "oneStory" ? "black" : "white",
                       fontFamily: "Graphik-Regular-App",
                       fontWeight: "700",
                     }}
@@ -966,6 +973,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     else return null
   }
   renderProfile() {
+    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.profileScreenRightCard}>
@@ -1044,7 +1052,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         : `Add interest to list`
                     }`}
                     testID="profile-interest-button"
-                    buttonType={ButtonTypes.SolidAboutMe}
+                    buttonType={
+                      brand == "oneStory"
+                        ? ButtonTypes.SolidAboutMeOneStory
+                        : ButtonTypes.SolidAboutMe
+                    }
                     onPress={() => {
                       this.handleAddInterest()
                       console.log(this.state.interestsArray)

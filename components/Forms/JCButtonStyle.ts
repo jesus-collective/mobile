@@ -528,9 +528,9 @@ export default EStyleSheet.create({
     marginLeft: 0,
     marginRight: 0,
     //   color:"#F0493E",
-    backgroundColor: "rgb(255,179,42)",
+    backgroundColor: "rgb(255, 198, 41)",
     borderWidth: 1,
-    borderColor: "rgb(255,179,42)",
+    borderColor: "rgb(255, 198, 41)",
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
     borderRadius: 4,
@@ -541,7 +541,7 @@ export default EStyleSheet.create({
     borderColor: "#B5B5B5",
   },
   SolidOneStoryText: {
-    color: "#ffffff",
+    color: "#000000",
     fontFamily: "Graphik-Regular-App",
     fontSize: 16,
     padding: 10,
@@ -593,6 +593,29 @@ export default EStyleSheet.create({
     padding: 10,
     fontWeight: "600",
   },
+  SolidProfileDeleteOneStoryButton: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 29,
+    paddingRight: 29,
+    marginBottom: 20,
+    marginLeft: 30,
+    marginRight: 0,
+    //   color:"#F0493E",
+    backgroundColor: "rgb(255, 198, 41)",
+    borderWidth: 1,
+    borderColor: "rgb(255, 198, 41)",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+    borderRadius: 4,
+  },
+  SolidProfileDeleteOneStoryText: {
+    color: "#000000",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    padding: 10,
+    fontWeight: "600",
+  },
   SolidProfileButton: {
     paddingTop: 6,
     paddingBottom: 6,
@@ -612,6 +635,30 @@ export default EStyleSheet.create({
   },
   SolidProfileText: {
     color: "#ffffff",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    padding: 10,
+    fontWeight: "600",
+  },
+  SolidProfileOneStoryButton: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 29,
+    paddingRight: 29,
+    marginBottom: 20,
+    marginLeft: 0,
+    marginRight: 0,
+    //   color:"#F0493E",
+    backgroundColor: "rgb(255, 198, 41)",
+    borderWidth: 1,
+    borderColor: "rgb(255, 198, 41)",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+    borderRadius: 4,
+    justifyContent: "center",
+  },
+  SolidProfileOneStoryText: {
+    color: "#000000",
     fontFamily: "Graphik-Regular-App",
     fontSize: 16,
     padding: 10,
@@ -659,6 +706,29 @@ export default EStyleSheet.create({
   },
   SolidAboutMeText: {
     color: "#ffffff",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    padding: 10,
+    fontWeight: "600",
+  },
+  SolidAboutMeOneStoryButton: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 29,
+    paddingRight: 29,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 10,
+    //   color:"#F0493E",
+    backgroundColor: "rgb(255, 198, 41)",
+    borderWidth: 1,
+    borderColor: "rgb(255, 198, 41)",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+    borderRadius: 4,
+  },
+  SolidAboutMeOneStoryText: {
+    color: "#000000",
     fontFamily: "Graphik-Regular-App",
     fontSize: 16,
     padding: 10,
@@ -732,6 +802,33 @@ export default EStyleSheet.create({
   },
   SolidRightMarginText: {
     color: "#ffffff",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    padding: 10,
+    fontWeight: "600",
+  },
+  SolidRightMarginOneStoryButton: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 29,
+    paddingRight: 29,
+    marginBottom: 20,
+    marginLeft: 30,
+    marginRight: 30,
+    //   color:"#F0493E",
+    backgroundColor: "rgb(255, 198, 41)",
+    borderWidth: 1,
+    borderColor: "rgb(255, 198, 41)",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+    borderRadius: 4,
+  },
+  SolidRightMarginOneStoryButtonDisabled: {
+    backgroundColor: "#aaaaaa",
+    borderColor: "#aaaaaa",
+  },
+  SolidRightMarginOneStoryText: {
+    color: "#000000",
     fontFamily: "Graphik-Regular-App",
     fontSize: 16,
     padding: 10,
@@ -1246,6 +1343,12 @@ export default EStyleSheet.create({
       marginLeft: 0,
       marginRight: 25,
     },
+    SolidRightMarginOneStoryButton: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      marginLeft: 0,
+      marginRight: 25,
+    },
     SolidButton: {
       textAlign: "center",
       paddingLeft: 0,
@@ -1270,6 +1373,15 @@ export default EStyleSheet.create({
     SolidProfileText: {
       width: "100%",
     },
+    SolidProfileOneStoryButton: {
+      textAlign: "center",
+      paddingLeft: 0,
+      paddingRight: 0,
+      width: "100%",
+    },
+    SolidProfileOneStoryText: {
+      width: "100%",
+    },
     SolidProfileNameButton: {
       textAlign: "center",
       paddingLeft: 0,
@@ -1280,6 +1392,9 @@ export default EStyleSheet.create({
       width: "100%",
     },
     SolidAboutMeButton: {
+      width: 130,
+    },
+    SolidAboutMeOneStoryButton: {
       width: 130,
     },
     CourseSideBarFirstButton: {
@@ -1345,10 +1460,28 @@ export default EStyleSheet.create({
       marginRight: 0,
       textAlign: "center",
     },
+    SolidRightMarginOneStoryButton: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      textAlign: "center",
+    },
     SolidRightMarginText: {
       width: "100%",
     },
+    SolidRightMarginOneStoryText: {
+      width: "100%",
+    },
     SolidProfileDeleteButton: {
+      marginLeft: 0,
+      textAlign: "center",
+      width: "100%",
+      paddingLeft: 0,
+      paddingRight: 0,
+      justifyContent: "center",
+    },
+    SolidProfileDeleteOneStoryButton: {
       marginLeft: 0,
       textAlign: "center",
       width: "100%",
@@ -1377,6 +1510,12 @@ export default EStyleSheet.create({
       paddingRight: 0,
       width: "100%",
     },
+    SolidProfileOneStoryButton: {
+      textAlign: "center",
+      paddingLeft: 0,
+      paddingRight: 0,
+      width: "100%",
+    },
     SolidProfileNameButton: {
       textAlign: "center",
       paddingLeft: 0,
@@ -1384,6 +1523,9 @@ export default EStyleSheet.create({
       width: "100%",
     },
     SolidProfileText: {
+      width: "100%",
+    },
+    SolidProfileOneStoryText: {
       width: "100%",
     },
     TransparentBoldOrangeMapButton: {
@@ -1439,6 +1581,9 @@ export default EStyleSheet.create({
       justifyContent: "center",
     },
     SolidAboutMeButton: {
+      justifyContent: "center",
+    },
+    SolidAboutMeOneStoryButton: {
       justifyContent: "center",
     },
     CourseTransparentBoldOrangeButton: {
@@ -1504,7 +1649,25 @@ export default EStyleSheet.create({
       SolidRightMarginText: {
         width: "100%",
       },
+      SolidRightMarginOneStoryButton: {
+        paddingLeft: 0,
+        paddingRight: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        textAlign: "center",
+      },
+      SolidRightMarginOneStoryText: {
+        width: "100%",
+      },
       SolidProfileDeleteButton: {
+        marginLeft: 0,
+        textAlign: "center",
+        width: "100%",
+        paddingLeft: 0,
+        paddingRight: 0,
+        justifyContent: "center",
+      },
+      SolidProfileDeleteOneStoryButton: {
         marginLeft: 0,
         textAlign: "center",
         width: "100%",
@@ -1533,6 +1696,12 @@ export default EStyleSheet.create({
         paddingRight: 0,
         width: "100%",
       },
+      SolidProfileOneStoryButton: {
+        textAlign: "center",
+        paddingLeft: 0,
+        paddingRight: 0,
+        width: "100%",
+      },
       SolidProfileNameButton: {
         textAlign: "center",
         paddingLeft: 0,
@@ -1540,6 +1709,9 @@ export default EStyleSheet.create({
         width: "100%",
       },
       SolidProfileText: {
+        width: "100%",
+      },
+      SolidProfileOneStoryText: {
         width: "100%",
       },
       SolidRightJustifiedButton: {
@@ -1562,6 +1734,9 @@ export default EStyleSheet.create({
         width: "100%",
       },
       SolidAboutMeButton: {
+        justifyContent: "center",
+      },
+      SolidAboutMeOneStoryButton: {
         justifyContent: "center",
       },
       CourseTransparentBoldOrangeButton: {
