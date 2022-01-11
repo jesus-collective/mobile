@@ -24,6 +24,7 @@ export enum ButtonTypes {
   courseMktOutlineBoldNoMargin,
   CourseZoom,
   Solid,
+  SolidOneStory,
   SolidSignIn,
   SolidSignInOneStory,
   SolidSignIn2,

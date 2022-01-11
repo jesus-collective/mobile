@@ -663,7 +663,11 @@ class BillingImpl extends JCComponent<Props, State> {
                       onPress={() => {
                         this.completePaymentProcess(userActions, userState)
                       }}
-                      buttonType={ButtonTypes.Solid}
+                      buttonType={
+                        this.state.brand == "oneStory"
+                          ? ButtonTypes.SolidOneStory
+                          : ButtonTypes.Solid
+                      }
                       enabled={!this.state.validatingUser}
                     >
                       {this.state.validatingUser ? (

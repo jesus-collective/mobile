@@ -519,6 +519,34 @@ export default EStyleSheet.create({
     padding: 10,
     fontWeight: "600",
   },
+  SolidOneStoryButton: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 29,
+    paddingRight: 29,
+    marginBottom: 20,
+    marginLeft: 0,
+    marginRight: 0,
+    //   color:"#F0493E",
+    backgroundColor: "rgb(255,179,42)",
+    borderWidth: 1,
+    borderColor: "rgb(255,179,42)",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+    borderRadius: 4,
+  },
+  SolidOneStoryButtonDisabled: {
+    backgroundColor: "#B5B5B5",
+    borderWidth: 1,
+    borderColor: "#B5B5B5",
+  },
+  SolidOneStoryText: {
+    color: "#ffffff",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    padding: 10,
+    fontWeight: "600",
+  },
   courseCardSolidButton: {
     paddingTop: 6,
     paddingBottom: 6,
@@ -1224,6 +1252,12 @@ export default EStyleSheet.create({
       paddingRight: 0,
       width: 125,
     },
+    SolidOneStoryButton: {
+      textAlign: "center",
+      paddingLeft: 0,
+      paddingRight: 0,
+      width: 125,
+    },
     SolidText: {
       width: "100%",
     },
@@ -1323,6 +1357,12 @@ export default EStyleSheet.create({
       justifyContent: "center",
     },
     SolidButton: {
+      textAlign: "center",
+      paddingLeft: 0,
+      paddingRight: 0,
+      width: "100%",
+    },
+    SolidOneStoryButton: {
       textAlign: "center",
       paddingLeft: 0,
       paddingRight: 0,
@@ -1473,6 +1513,12 @@ export default EStyleSheet.create({
         justifyContent: "center",
       },
       SolidButton: {
+        textAlign: "center",
+        paddingLeft: 0,
+        paddingRight: 0,
+        width: "100%",
+      },
+      SolidOneStoryButton: {
         textAlign: "center",
         paddingLeft: 0,
         paddingRight: 0,
