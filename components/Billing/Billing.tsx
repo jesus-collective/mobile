@@ -1190,7 +1190,9 @@ class BillingImpl extends JCComponent<Props, State> {
                         <JCButton
                           accessibilityLabel="Process Payment"
                           testID={"billing-processPayment-button"}
-                          buttonType={ButtonTypes.Solid}
+                          buttonType={
+                            this.state.brand ? ButtonTypes.SolidOneStory : ButtonTypes.Solid
+                          }
                           onPress={() => {
                             this.setState({ errorMsg: "" })
                             this.makePayment(stripe, elements)
