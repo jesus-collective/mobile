@@ -14,21 +14,26 @@
     "categories": {
       "auth": {
         "jcmobile": {
-          "hostedUIProviderCreds": "[]",
           "facebookAppId": "373637213227697",
           "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
         },
-        "userPoolGroups": {}
+        "userPoolGroups": {},
+        "true": {
+          "facebookAppId": "373637213227697",
+          "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
+        }
       },
       "function": {
         "jcmobilePostConfirmation": {
-          "GROUP": "verifiedUsers"
+          "GROUP": "verifiedUsers",
+          "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
+          "s3Key": "amplify-builds/jcmobilePostConfirmation-31445435787339536e7a-build.zip"
         },
         "S3Trigger14f1cefa": {},
         "S3Trigger839efa13": {},
         "AdminQueries7403b6cf": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/AdminQueries7403b6cf-6a4d5574766351793064-build.zip"
+          "s3Key": "amplify-builds/AdminQueries7403b6cf-544c346a684e50343973-build.zip"
         },
         "jcmobilePreSignup": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
