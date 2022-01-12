@@ -21,11 +21,15 @@ export default class SignUpSidebar extends JCComponent<Props> {
     return (
       <View style={this.styles.style.signUpSidebarView}>
         {this.props.text == true ? (
-          <Text style={this.styles.style.signUpSidebarText}>
-            {brand == "oneStory"
-              ? "Made by a church. Made for your church."
-              : "It’s time to unite, equip, and amplify a Jesus-centred movement."}
-          </Text>
+          brand == "oneStory" ? (
+            <Text style={this.styles.style.signUpSidebarTextOneStory}>
+              Made by a church. Made for your church.
+            </Text>
+          ) : (
+            <Text style={this.styles.style.signUpSidebarText}>
+              It’s time to unite, equip, and amplify a Jesus-centred movement.{" "}
+            </Text>
+          )
         ) : (
           <View style={this.styles.style.signUpSidebarProgressTextView}>
             {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (

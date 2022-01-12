@@ -2527,6 +2527,33 @@ export default class MainStyles {
               lineHeight: 48,
               color: "#FFFFFF",
             },
+      signUpSidebarTextOneStory:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "80%",
+              height: "10%",
+              left: "10%",
+              top: "40%",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 20,
+              lineHeight: 30,
+              color: "#000000",
+            }
+          : {
+              display: "none",
+              zIndex: 3,
+              position: "absolute",
+              width: "80%",
+              height: "10%",
+              left: "10%",
+              top: "40%",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 24,
+              lineHeight: 48,
+              color: "#000000",
+            },
 
       signUpProfile:
         Platform.OS === "web" && Dimensions.get("window").width > 1024
