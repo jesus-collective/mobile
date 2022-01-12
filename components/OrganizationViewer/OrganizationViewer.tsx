@@ -533,7 +533,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       null
                     }}
                   >
-                    Set Profile Picture
+                    Set Logo
                   </JCButton>
                   <input
                     data-testId="org-image"

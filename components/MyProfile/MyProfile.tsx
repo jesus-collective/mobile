@@ -718,6 +718,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       color: brand == "oneStory" ? "black" : "white",
                       fontFamily: "Graphik-Regular-App",
                       fontWeight: "700",
+                      width: "100%",
+                      textAlign: "center",
                     }}
                   >
                     Set Profile Picture

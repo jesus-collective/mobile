@@ -1633,6 +1633,7 @@ export default class MainStyles {
           borderRadius: 120,
         },
         fileInputWrapper: {
+          position: "static",
           width: "100%",
           top: 265,
           left: 0,
@@ -1900,9 +1901,9 @@ export default class MainStyles {
         },
         myProfileTopButtonsInternalContainer: {
           flex: 0,
-          flexDirection: "column",
+          flexDirection: "row",
           alignSelf: "auto",
-          width: 200,
+          width: "100%",
         },
         profileFontTitle: {
           minWidth: 300,

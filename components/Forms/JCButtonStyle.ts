@@ -518,6 +518,8 @@ export default EStyleSheet.create({
     fontSize: 16,
     padding: 10,
     fontWeight: "600",
+    justifyContent: "center",
+    width: "100%",
   },
   SolidOneStoryButton: {
     paddingTop: 6,
@@ -546,6 +548,8 @@ export default EStyleSheet.create({
     fontSize: 16,
     padding: 10,
     fontWeight: "600",
+    justifyContent: "center",
+    width: "100%",
   },
   courseCardSolidButton: {
     paddingTop: 6,
@@ -585,8 +589,10 @@ export default EStyleSheet.create({
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
     borderRadius: 4,
+    justifyContent: "center",
   },
   SolidProfileDeleteText: {
+    textAlign: "center",
     color: "#ffffff",
     fontFamily: "Graphik-Regular-App",
     fontSize: 16,
@@ -608,8 +614,10 @@ export default EStyleSheet.create({
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
     borderRadius: 4,
+    justifyContent: "center",
   },
   SolidProfileDeleteOneStoryText: {
+    textAlign: "center",
     color: "#000000",
     fontFamily: "Graphik-Regular-App",
     fontSize: 16,
@@ -1365,6 +1373,7 @@ export default EStyleSheet.create({
       width: "100%",
     },
     SolidProfileButton: {
+      position: "static",
       textAlign: "center",
       paddingLeft: 0,
       paddingRight: 0,
@@ -1374,6 +1383,7 @@ export default EStyleSheet.create({
       width: "100%",
     },
     SolidProfileOneStoryButton: {
+      position: "static",
       textAlign: "center",
       paddingLeft: 0,
       paddingRight: 0,
@@ -1496,6 +1506,7 @@ export default EStyleSheet.create({
       width: "100%",
     },
     SolidOneStoryButton: {
+      position: "static",
       textAlign: "center",
       paddingLeft: 0,
       paddingRight: 0,
@@ -1511,6 +1522,7 @@ export default EStyleSheet.create({
       width: "100%",
     },
     SolidProfileOneStoryButton: {
+      position: "static",
       textAlign: "center",
       paddingLeft: 0,
       paddingRight: 0,
@@ -1682,6 +1694,7 @@ export default EStyleSheet.create({
         width: "100%",
       },
       SolidOneStoryButton: {
+        position: "static",
         textAlign: "center",
         paddingLeft: 0,
         paddingRight: 0,
@@ -1697,6 +1710,7 @@ export default EStyleSheet.create({
         width: "100%",
       },
       SolidProfileOneStoryButton: {
+        position: "static",
         textAlign: "center",
         paddingLeft: 0,
         paddingRight: 0,
