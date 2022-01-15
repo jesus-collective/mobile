@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { Group } from "src/API"
 import { Data } from "../../components/Data/Data"
-import { JCEvent } from "../../screens/EventsScreen/EventsList"
-import { useFetchEvents } from "../../screens/EventsScreen/useFetchEvents"
+import { JCEvent } from "../EventsScreen/EventsList"
+import { useFetchEvents } from "../EventsScreen/useFetchEvents"
 
 export const useEventsForProfile = (userId: string) => {
   const { events, isLoading, nextToken, updateEvents } = useFetchEvents({

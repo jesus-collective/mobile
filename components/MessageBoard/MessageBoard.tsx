@@ -4,6 +4,7 @@ import { View } from "react-native"
 import { MessagesByRoomQuery } from "../../src/API-messages"
 import MessageInput from "./MessageInput"
 import MessageList from "./MessageList"
+import MessageListDirect from "./MessageListDirect"
 type Messages = NonNullable<MessagesByRoomQuery["messagesByRoom"]>["items"]
 type Message = NonNullable<Messages>[0]
 type Reply = NonNullable<NonNullable<NonNullable<Message>["replies"]>["items"]>[0]
@@ -33,7 +34,6 @@ export default function MessageBoard(props: Props): JSX.Element {
     replyToRoomId: "",
   })
   const handlePressReply = (item: Message | Reply) => {
-    // this might not be necessary
     if (item) {
       const peopleInThread: string[] = []
 
@@ -61,7 +61,20 @@ export default function MessageBoard(props: Props): JSX.Element {
       }))
     }
   }
-  return (
+  return props.roomId ? (
+    <>
+      <MessageListDirect roomId={props.roomId} />
+      <MessageInput
+        recipients={props.recipients}
+        roomId={props.roomId}
+        clearReplyState={() =>
+          setState({ ...state, replyToRoomId: "", replyToId: "", replyToWho: [] })
+        }
+        directMessageInput={true}
+        replyState={state}
+      />
+    </>
+  ) : (
     <View>
       <MessageInput
         groupId={props.groupId}

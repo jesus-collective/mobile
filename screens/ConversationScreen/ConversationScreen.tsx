@@ -1,202 +1,118 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
-import { Container, Content } from "native-base"
-import React from "react"
-import { Text, TouchableOpacity, View } from "react-native"
-import { CreateDirectMessageUserMutation } from "src/API"
-import { GetDirectMessageUserQuery } from "src/API-customqueries"
+import { convertFromRaw } from "draft-js"
+import { stateToHTML } from "draft-js-export-html"
+import moment from "moment"
+import React, { useEffect, useState } from "react"
+import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import { JCCognitoUser } from "src/types"
-import { Data } from "../../components/Data/Data"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import GenericButton from "../../components/FaceLift/GenericButton"
+import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
-import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
-
-interface Props {
-  navigation?: StackNavigationProp<any, any>
-  route?: any
+import { useAndHandleDms } from "./useAndHandleDms"
+const style = StyleSheet.create({
+  container: {
+    marginTop: 60,
+    marginBottom: 60,
+    marginLeft: "9vw",
+    marginRight: "9vw",
+    display: "flex",
+    flexDirection: "row",
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#E4E1E1",
+    backgroundColor: "#fff",
+  },
+  columnOne: {
+    flex: 0.35,
+    flexDirection: "column",
+    borderRightWidth: 1,
+    borderRightColor: "#E4E1E1",
+  },
+  columnTwo: {
+    flexDirection: "column",
+    flex: 0.65,
+  },
+  ConversationItem: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E4E1E1",
+    padding: 16,
+    paddingRight: 14,
+    borderRightWidth: 2,
+    borderRightColor: "transparent",
+    flexDirection: "row",
+  },
+  ConversationTextContainer: {
+    flexDirection: "column",
+    flex: 1,
+    paddingLeft: 16,
+  },
+  Header: {
+    paddingVertical: 26,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E4E1E1",
+  },
+  HeaderText: {
+    fontFamily: "Graphik-Semibold-App",
+    color: "#1A0706",
+    lineHeight: 36,
+    fontSize: 24,
+  },
+  NameText: {
+    flex: 1,
+    fontFamily: "Graphik-Medium-App",
+    fontSize: 15,
+    lineHeight: 24,
+    color: "#1A0706",
+  },
+  DateText: {
+    justifyContent: "flex-end",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 15,
+    lineHeight: 24,
+    color: "#A39C9B",
+  },
+  MessageText: {
+    paddingTop: 2,
+    fontFamily: "Graphik-Regular-App",
+    color: "#483938",
+    fontSize: 15,
+    lineHeight: 24,
+  },
+})
+type ConversationState = {
+  currentRoom: string
+  currentUser: JCCognitoUser["username"]
 }
-interface State extends JCState {
-  newToList: any[]
-  showMap: boolean
-  data: NonNullable<GraphQLResult<GetDirectMessageUserQuery>["data"]>["getDirectMessageUser"][]
 
-  currentUser: string | null
-  currentRoomId: string | null
+type Props = {
+  a?: boolean
+  route: any
+  navigation: any
 }
-
-export default class ConversationScreen extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-
-      showMap: false,
-      data: [],
-      currentUser: null,
-      currentRoomId: null,
-      newToList: [],
-    }
-    // console.log(this.props.route.params.initialUser)
-
-    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
-      this.setState({ currentUser: user.username })
-    })
-
-    this.getInitialData(null)
+const ConversationScreen = (props: Props) => {
+  const [state, setState] = useState<ConversationState>({
+    currentRoom: "",
+    currentUser: "",
+  })
+  const setRoom = (roomId: string) => {
+    setState({ ...state, currentRoom: roomId })
   }
-  createRoom = (toUserID: string, toUserName: string): void => {
-    console.log("CreateRoom")
-    Auth.currentAuthenticatedUser()
-      .then((user: JCCognitoUser) => {
-        const createDirectMessageRoom = Data.createDirectMessageRoom({
-          name: "",
-          roomType: "directMessage",
-        })
-        createDirectMessageRoom
-          .then((json) => {
-            console.log({ createDirectMessageRoom: json })
-            console.log("createDMUser")
-            const addDM2 = (json2: GraphQLResult<CreateDirectMessageUserMutation>) => {
-              console.log({ Dm2: json2 })
-              const createDirectMessageUser2 = Data.createDirectMessageUser({
-                roomID: json.data?.createDirectMessageRoom?.id,
-                userID: toUserID,
-                userName: toUserName,
-              })
-              createDirectMessageUser2
-                .then(() => {
-                  console.log(json2)
-                  if (json2.data?.createDirectMessageUser)
-                    this.getNewUser(json2.data.createDirectMessageUser.id)
-                })
-                .catch(() => {
-                  console.log(json2)
-                  if (json2.data?.createDirectMessageUser)
-                    this.getNewUser(json2.data.createDirectMessageUser.id)
-                })
-            }
-            const myUserName = user.attributes?.given_name + " " + user.attributes?.family_name
-            const createDirectMessageUser1 = Data.createDirectMessageUser({
-              roomID: json.data?.createDirectMessageRoom?.id,
-              userID: user["username"],
-              userName: myUserName,
-            })
-            createDirectMessageUser1.then(addDM2).catch(addDM2)
-          })
-          .catch((e: any) => {
-            console.log(e)
-          })
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-  }
-  shouldCreateRoom = (): void => {
-    if (this.props.route?.params?.initialUserID)
-      if (
-        !this.state.data
-          .map((item) => {
-            if (item && item.room)
-              if (item.room.roomType == null || item.room.roomType == "directMessage")
-                if (
-                  item.room.messageUsers?.items?.length == 2 &&
-                  (item.room.messageUsers?.items![0]?.userID ==
-                    this.props.route.params.initialUserID ||
-                    item.room.messageUsers?.items![1]?.userID ==
-                      this.props.route.params.initialUserID)
-                ) {
-                  console.log("Found")
-                  this.setState({
-                    currentRoomId: item.roomID,
-                  })
-                  return true
-                }
-          })
-          .some((z) => {
-            return z
-          })
-      ) {
-        console.log("Creating Room")
-        if (
-          this.props.route.params.initialUserID != null &&
-          this.props.route.params.initialUserName != null &&
-          this.props.route.params.initialUserID != "null" &&
-          this.props.route.params.initialUserName != "null"
-        )
-          this.createRoom(
-            this.props.route.params.initialUserID,
-            this.props.route.params.initialUserName
-          )
-      }
-  }
+  const [dmUsers] = useAndHandleDms({
+    initialUserID: props?.route?.params?.initialUserID ?? null,
+    initialUserName: props?.route?.params?.initialUserName ?? null,
+    setRoom: setRoom,
+  })
 
-  async getNewUser(id: string): Promise<void> {
-    try {
-      const json = await Data.getDirectMessageUser(id)
-      if (json?.data?.getDirectMessageUser) {
-        console.log({ "Data.getDirectMessageUser": json.data.getDirectMessageUser })
-        this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
-          this.setState({
-            currentRoomId: json.data?.getDirectMessageUser?.roomID ?? null,
-          })
-        })
-      }
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  async getInitialData(next: string | null): Promise<void> {
-    try {
-      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      try {
-        const query = { limit: 200, filter: { userID: { eq: user["username"] } }, nextToken: next }
-        const json = await Data.listDirectMessageUsers(query)
-        if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
-          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
-          this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
-          this.getInitialData(json.data.listDirectMessageUsers.nextToken)
-        } else if (json?.data?.listDirectMessageUsers) {
-          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
-          this.setState(
-            { data: this.state.data.concat(json.data.listDirectMessageUsers.items) },
-            () => {
-              this.shouldCreateRoom()
-            }
-          )
-        }
-      } catch (json: any) {
-        if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
-          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
-          this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
-          this.getInitialData(json.data.listDirectMessageUsers.nextToken)
-        } else if (json?.data?.listDirectMessageUsers) {
-          console.log({ "Data.listDirectMessageUsers": json.data.listDirectMessageUsers })
-          this.setState(
-            { data: this.state.data.concat(json.data.listDirectMessageUsers.items) },
-            () => {
-              this.shouldCreateRoom()
-            }
-          )
-        }
-        console.error(json)
-      }
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap })
-  }
-
-  getOtherUsers(data: any): { ids: string[]; names: string[] } {
+  const getOtherUsers = (data: any): { ids: string[]; names: string[] } => {
     const ids: string[] = []
     const names: string[] = []
     data.room.messageUsers.items.forEach((user) => {
-      if (user.userID !== this.state.currentUser) {
+      if (user.userID !== state.currentUser) {
         ids.push(user.userID)
         names.push(user.userName)
       }
@@ -204,129 +120,147 @@ export default class ConversationScreen extends JCComponent<Props, State> {
 
     return { ids, names }
   }
+  const getText = (text: string | null | undefined) => {
+    const errorMarkdown = "<div>" + "</div>"
 
-  switchRoom(roomId: string): void {
-    this.setState({
-      currentRoomId: roomId,
-    })
+    if (!text) return errorMarkdown
+
+    try {
+      return stateToHTML(convertFromRaw(JSON.parse(text)))
+    } catch (e) {
+      console.error(e)
+      return errorMarkdown
+    }
   }
-  getCurrentRoomRecipients(): string[] {
+  const getCurrentRoomRecipients = (): string[] => {
     const ids: string[] = []
-    console.log(this.state.data.filter((x) => x?.roomID == this.state.currentRoomId)[0])
-    if (this.state.currentRoomId == null) return []
-    this.state.data
-      .filter((x) => x?.roomID == this.state.currentRoomId)[0]
-      .room?.messageUsers?.items?.forEach((user) => {
+    //console.log(dmUsers.filter((x) => x?.roomID == state.currentRoom)[0])
+    if (state.currentRoom == null) return []
+    dmUsers
+      ?.filter((x) => x?.roomID == state.currentRoom)?.[0]
+      ?.room?.messageUsers?.items?.forEach((user) => {
         if (user) ids.push(user.userID)
       })
     return ids
   }
-  render(): React.ReactNode {
-    console.log("ConversationScreen")
-    console.log({ StateData: this.state.data })
-    return (
-      <Container>
-        <Content>
-          <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
-          <Container style={this.styles.style.conversationScreenMainContainer}>
-            <Container style={this.styles.style.conversationScreenLeftCard}>
-              <Text style={[this.styles.style.eventNameInput, { fontSize: 20, paddingLeft: 30 }]}>
-                Direct Messages
-              </Text>
-
-              {/*false ? (
-                <div>
-                  <EditableUsers
-                    onChange={(value: any[]) => {
-                      this.setState({ newToList: value })
-                    }}
-                    multiline={false}
-                    testID="profile-currentRole"
-                    showProfileImages={true}
-                    textStyle={this.styles.style.fontFormSmallDarkGrey}
-                    inputStyle={this.styles.style.fontFormLargeInput}
-                    value={this.state.newToList}
-                    isEditable={true}
-                  ></EditableUsers>
-                </div>
-                  ) : null*/}
-
-              {this.state.data != null
-                ? this.state.data
-                    .filter(
-                      (item) =>
-                        item?.room?.roomType == "directMessage" || item?.room?.roomType == null
-                    )
-                    .map((item) => {
-                      if (item == null) return
-                      const otherUsers = this.getOtherUsers(item)
-                      let stringOfNames = ""
-                      otherUsers.names.forEach((name, index: number) => {
-                        if (otherUsers.names.length === index + 1) {
-                          stringOfNames += name
-                        } else {
-                          stringOfNames += name + ", "
-                        }
-                      })
-
-                      return (
-                        <TouchableOpacity
-                          style={{
-                            backgroundColor:
-                              this.state.currentRoomId == item.roomID ? "#eeeeee" : "unset",
-                            width: "100%",
-                          }}
-                          key={item.id}
-                          onPress={() => this.switchRoom(item.roomID)}
-                        >
-                          <View
-                            style={{
-                              alignSelf: "stretch",
-                              marginLeft: 30,
-                              marginRight: 60,
-                              paddingTop: 8,
-                              borderBottomWidth: 1,
-                              borderColor: "rgba(51, 51, 51, .1)",
-                              paddingBottom: 8,
-                            }}
-                          >
-                            <Text
-                              style={[
-                                this.state.currentRoomId == item.roomID
-                                  ? { fontWeight: "700" }
-                                  : {},
-                                {
-                                  fontSize: 20,
-                                  lineHeight: 25,
-                                  fontWeight: "normal",
-                                  fontFamily: "Graphik-Regular-App",
-                                  display: "flex",
-                                  alignItems: "center",
-                                },
-                              ]}
-                            >
-                              <ProfileImage
-                                user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
-                                size="small2"
-                              ></ProfileImage>
-                              {item?.room?.name ? item.room.name : stringOfNames}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      )
-                    })
-                : null}
-            </Container>
-            <Container style={this.styles.style.conversationsScreenRightCard}>
-              <MessageBoard
-                style="regular"
-                roomId={this.state.currentRoomId}
-                recipients={this.getCurrentRoomRecipients()}
-              ></MessageBoard>
-            </Container>
-          </Container>
-        </Content>
-      </Container>
-    )
+  useEffect(() => {
+    const loadUser = async () => {
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+      setState({ ...state, currentUser: user.username })
+    }
+    loadUser()
+  }, [])
+  const getCurrentRoomTitle = () => {
+    return getConversationTitle(dmUsers.find((a) => state.currentRoom === a?.roomID))
   }
+  const getConversationTitle = (item: any) => {
+    if (!item) return ""
+    const otherUsers = getOtherUsers(item)
+    let conversationTitle = ""
+    otherUsers.names.forEach((name, index: number) => {
+      if (otherUsers.names.length === index + 1) {
+        conversationTitle += name
+      } else {
+        conversationTitle += name + ", "
+      }
+    })
+    return conversationTitle
+  }
+  return (
+    <View style={style.container}>
+      <View style={style.columnOne}>
+        <View>
+          <View style={style.Header}>
+            <Text style={style.HeaderText}>Messages</Text>
+          </View>
+        </View>
+        <ScrollView>
+          {dmUsers.map((item) => {
+            const otherUsers = getOtherUsers(item)
+            const conversationTitle = getConversationTitle(item)
+            const messagesCount = item?.room?.directMessage?.items?.length ?? 1
+            const lastMessage = item?.room?.directMessage?.items?.[messagesCount - 1]
+            return (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  if (item?.room?.id !== state.currentRoom)
+                    setState({ ...state, currentRoom: item?.room?.id ?? "" })
+                }}
+                style={[
+                  style.ConversationItem,
+                  state.currentRoom === item?.room?.id
+                    ? {
+                        backgroundColor: "#F6F5F5",
+                        borderRightColor: "#FF4438",
+                      }
+                    : {},
+                ]}
+                key={item?.room?.id}
+              >
+                <ProfileImage
+                  user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
+                  linkToProfile
+                  size="small7"
+                />
+                <View style={style.ConversationTextContainer}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text numberOfLines={2} style={style.NameText}>
+                      {conversationTitle}
+                    </Text>
+                    <Text style={style.DateText}>
+                      {moment(lastMessage?.updatedAt).format("MMMM D")}
+                    </Text>
+                  </View>
+
+                  <Text style={style.MessageText} numberOfLines={2}>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: getText(lastMessage?.content)
+                          .replaceAll("<p>", "")
+                          .replaceAll("</p>", ""),
+                      }}
+                    />
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )
+          })}
+        </ScrollView>
+      </View>
+      <View style={style.columnTwo}>
+        {state.currentRoom ? (
+          <>
+            <View style={style.Header}>
+              <Text numberOfLines={1} style={style.HeaderText}>
+                {getCurrentRoomTitle()}
+              </Text>
+            </View>
+
+            <MessageBoard
+              recipients={getCurrentRoomRecipients()}
+              style="regular"
+              roomId={state.currentRoom}
+            />
+          </>
+        ) : (
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Text style={[style.HeaderText, { textAlign: "center", marginBottom: 32 }]}>
+              You don’t have a conversation selected.
+            </Text>
+            <Text style={{ marginBottom: 32 }}>Please select or begin a conversation.</Text>
+            <GenericButton
+              action={() => Promise.resolve()}
+              style={{
+                LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
+                ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
+              }}
+              label="START A CONVERSATION"
+            ></GenericButton>
+          </View>
+        )}
+      </View>
+    </View>
+  )
 }
+export default ConversationScreen

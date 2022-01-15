@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"
 import { isMobileOnly } from "react-device-detect"
 import { Editor, SyntheticKeyboardEvent } from "react-draft-wysiwyg"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { CreateMessageInput, CreateReplyInput } from "src/API"
+import { CreateDirectMessageInput, CreateMessageInput, CreateReplyInput } from "src/API"
 import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
@@ -17,7 +17,10 @@ import { ReplyState } from "./MessageBoard"
 type Props = {
   replyState: ReplyState
   clearReplyState: () => void
+  directMessageInput?: boolean
   groupId?: string
+  roomId?: string
+  recipients?: string[]
   replyMode?: boolean
 }
 const style = StyleSheet.create({
@@ -108,23 +111,59 @@ const MessageInput = (props: Props) => {
     }
 
     const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    try {
-      const user = await Auth.currentAuthenticatedUser()
-      const input: CreateMessageInput = {
+    const user = await Auth.currentAuthenticatedUser()
+    if (props.groupId) {
+      try {
+        const input: CreateMessageInput = {
+          id: uuidv4(),
+          content: message,
+          when: Date.now().toString(),
+          attachment: attachment,
+          attachmentName: attachmentName,
+          attachmentOwner: attachmentOwner,
+          roomId: props.groupId,
+          userId: user.username,
+          owner: user.username,
+          //authorOrgId: "0"
+        }
+        try {
+          const createMessage = await Data.createMessage(input)
+          console.log({ "Success Data.createMessage": createMessage })
+          setState({
+            ...state,
+            editorState: EditorState.createEmpty(),
+            attachmentName: "",
+            attachment: "",
+            attachmentOwner: "",
+          })
+        } catch (err: any) {
+          console.error({ "Error Data.createMessage": err })
+          setState({
+            ...state,
+            editorState: EditorState.createEmpty(),
+            attachmentName: "",
+            attachment: "",
+            attachmentOwner: "",
+          })
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    } else if (props.roomId) {
+      const input: CreateDirectMessageInput = {
         id: uuidv4(),
+        userId: user.username,
         content: message,
-        when: Date.now().toString(),
         attachment: attachment,
         attachmentName: attachmentName,
         attachmentOwner: attachmentOwner,
-        roomId: props.groupId,
-        userId: user.username,
-        owner: user.username,
-        //authorOrgId: "0"
+        when: Date.now().toString(),
+        messageRoomID: props.roomId,
+        recipients: props.recipients ?? [],
       }
       try {
-        const createMessage = await Data.createMessage(input)
-        console.log({ "Success Data.createMessage": createMessage })
+        const createDirectMessage = await Data.createDirectMessage(input)
+        console.log({ "Success Data.createDirectMessage ": createDirectMessage })
         setState({
           ...state,
           editorState: EditorState.createEmpty(),
@@ -133,17 +172,17 @@ const MessageInput = (props: Props) => {
           attachmentOwner: "",
         })
       } catch (err: any) {
-        console.error({ "Error Data.createMessage": err })
-        setState({
-          ...state,
-          editorState: EditorState.createEmpty(),
-          attachmentName: "",
-          attachment: "",
-          attachmentOwner: "",
-        })
+        console.error({ "Error Data.createDirectMessage ": err })
+        if (err.data.createDirectMessage) {
+          setState({
+            ...state,
+            editorState: EditorState.createEmpty(),
+            attachmentName: "",
+            attachment: "",
+            attachmentOwner: "",
+          })
+        }
       }
-    } catch (err) {
-      console.error(err)
     }
   }
   const { replyState, clearReplyState } = props
@@ -257,7 +296,7 @@ const MessageInput = (props: Props) => {
     if (!state.userId) loadUser()
   }, [state.userId])
   return (
-    <View style={{ flexDirection: "column", flex: 1 }}>
+    <View style={props.directMessageInput ? {} : { flexDirection: "column", flex: 1 }}>
       {/* {replyToText && (
         <View
           style={{
@@ -336,26 +375,29 @@ const MessageInput = (props: Props) => {
       ) : (
         <View
           style={{
-            flex: 1,
+            flex: props.directMessageInput ? "unset" : 1,
             borderWidth: 1,
-            borderColor: "#E4E1E1",
-            flexDirection: "row",
+            borderColor: props.directMessageInput ? "transparent" : "#E4E1E1",
+            flexDirection: props.directMessageInput ? "row-reverse" : "row",
             paddingRight: 16,
-            paddingTop: 32,
-            paddingBottom: 32,
-            paddingLeft: 16,
-            minHeight: 252,
+            paddingTop: props.directMessageInput ? 4 : 32,
+            paddingBottom: props.directMessageInput ? 0 : 32,
+            paddingLeft: props.directMessageInput ? 56 : 16,
+            height: props.directMessageInput ? 180 : "inital",
+            minHeight: props.directMessageInput ? "unset" : 252,
             marginTop: isMobileOnly ? 24 : 0,
             backgroundColor: "#fff",
-            marginBottom: isMobileOnly ? 24 : 32,
+            marginBottom: props.directMessageInput ? 16 : isMobileOnly ? 24 : 32,
             borderRadius: 8,
           }}
         >
-          <ProfileImage
-            linkToProfile
-            size={isMobileOnly ? "small6" : "editorLarge"}
-            user={state.userId}
-          />
+          <View style={props.directMessageInput ? { marginRight: -8, paddingLeft: 10 } : {}}>
+            <ProfileImage
+              linkToProfile
+              size={isMobileOnly ? "small6" : props.directMessageInput ? "small7" : "editorLarge"}
+              user={state.userId}
+            />
+          </View>
           <View
             style={{
               backgroundColor: "#FAFAFA",
@@ -367,7 +409,7 @@ const MessageInput = (props: Props) => {
             }}
           >
             <Editor
-              placeholder={"Add your post"}
+              placeholder={props.directMessageInput ? "Start a new message..." : "Add your post"}
               editorState={state.editorState}
               onEditorStateChange={updateEditorInput}
               wrapperStyle={{
@@ -403,7 +445,7 @@ const MessageInput = (props: Props) => {
                 ),
                 <View style={{ marginLeft: 8 }}>
                   <GenericButton
-                    label="Publish Post"
+                    label={props.directMessageInput ? "Add Comment" : "Publish Post"}
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                       LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,

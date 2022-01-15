@@ -25,7 +25,7 @@ import CameraRecorder from "./CameraRecorder"
 import FileUpload from "./FileUpload"
 //TODO FIGURE OUT WHY THIS DOESN'T WORK
 import "./MessageBoard.css"
-import MessageList from "./MessageList.old"
+import MessageList from "./MessageList"
 import MessageListDirect from "./MessageListDirect"
 import "./react-draft-wysiwyg.css"
 
@@ -673,6 +673,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
   }
   render() {
+    console.log(this.props.recipients, "recipients")
     const { groupId, roomId, style, inputAt } = this.props
 
     if (groupId && roomId) {
