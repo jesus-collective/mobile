@@ -81,11 +81,13 @@ export default function MainBottomTabsRouter() {
           component={MainAppRouter}
         />
       ) : null}
-      <Tab.Screen
-        options={{ title: "Jesus Collective", headerShown: true }}
-        name="profile"
-        component={MyProfile}
-      />
+      {constants.SETTING_ISVISIBLE_SETTINGS ? (
+        <Tab.Screen
+          options={{ title: "Jesus Collective", headerShown: true }}
+          name="profile"
+          component={MyProfile}
+        />
+      ) : null}
     </Tab.Navigator>
   )
 }

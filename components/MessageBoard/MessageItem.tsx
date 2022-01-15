@@ -116,8 +116,8 @@ const MessageItem = (props: Props) => {
           }
         >
           {!props.isMine ? (
-            <View>
-              <ProfileImage size={"small7"} user={item?.userId} />
+            <View style={isMobileOnly ? { marginRight: 8 } : {}}>
+              <ProfileImage size={isMobileOnly ? "small6" : "small7"} user={item?.userId} />
             </View>
           ) : null}
           <View

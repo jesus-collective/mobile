@@ -23,6 +23,7 @@ interface Props {
     | "small5"
     | "small6"
     | "small7"
+    | "small8"
     | "editorLarge"
     | "nav"
     | "miniNav"
@@ -233,6 +234,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 alignSelf: "flex-start",
                 top: 0,
               }
+            : this.props.size == "small8"
+            ? {
+                width: "64px",
+                height: "80px",
+                borderRadius: 120,
+              }
             : this.props.size == "roundEvent"
             ? {
                 width: "32px",
@@ -364,6 +371,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginBottom: 0,
                 marginHorizontal: 0,
                 top: 0,
+              }
+            : this.props.size == "small8"
+            ? {
+                width: "64px",
+                height: "80px",
+                borderRadius: 120,
               }
             : this.props.size === "mobileProfile"
             ? {

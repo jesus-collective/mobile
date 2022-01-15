@@ -376,19 +376,29 @@ const MessageInput = (props: Props) => {
         <View
           style={{
             flex: props.directMessageInput ? "unset" : 1,
-            borderWidth: 1,
-            borderColor: props.directMessageInput ? "transparent" : "#E4E1E1",
             flexDirection: props.directMessageInput ? "row-reverse" : "row",
+            borderWidth: isMobileOnly ? 0 : 1,
+            borderColor: props.directMessageInput ? "transparent" : "#E4E1E1",
+            borderRadius: 8,
+            backgroundColor: isMobileOnly ? "#fffdfc" : "#fff",
+
             paddingRight: 16,
             paddingTop: props.directMessageInput ? 4 : 32,
             paddingBottom: props.directMessageInput ? 0 : 32,
-            paddingLeft: props.directMessageInput ? 56 : 16,
-            height: props.directMessageInput ? 180 : "inital",
+            paddingLeft:
+              isMobileOnly && props.directMessageInput ? 0 : props.directMessageInput ? 56 : 16,
+
+            height:
+              props.directMessageInput && isMobileOnly
+                ? 252
+                : props.directMessageInput
+                ? 180
+                : "initial",
             minHeight: props.directMessageInput ? "unset" : 252,
+
+            marginLeft: props.directMessageInput && isMobileOnly ? -4 : 0,
             marginTop: isMobileOnly ? 24 : 0,
-            backgroundColor: "#fff",
             marginBottom: props.directMessageInput ? 16 : isMobileOnly ? 24 : 32,
-            borderRadius: 8,
           }}
         >
           <View style={props.directMessageInput ? { marginRight: -8, paddingLeft: 10 } : {}}>

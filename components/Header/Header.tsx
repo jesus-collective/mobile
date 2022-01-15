@@ -20,6 +20,7 @@ interface Props {
   navigation?: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
+  backAction?: () => void
   subnav?: any
   controls?: any
   drawerState?: boolean
@@ -67,7 +68,7 @@ export default function HeaderJCC(props: Props) {
     if (controlCount === 2) return 56
     if (controlCount === 3) return 88
     // We might want to cap control at 2 especially if page titles get long
-    return 0
+    return -24
   }
   const [state, setState] = useState<State>({
     resourcesDropdown: null,
@@ -391,7 +392,8 @@ export default function HeaderJCC(props: Props) {
             {props.title !== "Home" ? (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.goBack()
+                  if (props.backAction) props.backAction()
+                  else navigation.goBack()
                 }}
               >
                 <Image
