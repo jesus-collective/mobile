@@ -116,7 +116,7 @@ const style = StyleSheet.create({
 })
 
 export default function ProfileScreen(props: Props) {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { id } = props.route.params
   const [isOpen, setIsOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState<ProfileTabType>(ProfileTabType.ABOUT)
@@ -384,7 +384,7 @@ export default function ProfileScreen(props: Props) {
                   <View style={{ marginBottom: 32 }}>
                     <GenericButton
                       label={"Edit Profile"}
-                      action={() => null}
+                      action={() => navigation.navigate("EditProfileScreen", { id: userData?.id })}
                       icon={"Edit"}
                       style={{
                         ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
