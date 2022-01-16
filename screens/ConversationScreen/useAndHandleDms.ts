@@ -1,11 +1,9 @@
-import { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api/lib/types"
-import { API, Auth } from "aws-amplify"
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { Auth } from "aws-amplify"
 import { useEffect, useState } from "react"
-import { DeleteDirectMessageRoomMutation, DeleteDirectMessageUserMutation } from "src/API"
 import { GetDirectMessageUserQuery } from "src/API-customqueries"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
-import * as mutations from "../../src/graphql/mutations"
 type HandleDMSOptions = {
   initialUserID: string | null
   initialUserName: string | null
@@ -14,64 +12,35 @@ type HandleDMSOptions = {
 
 export const useAndHandleDms = (options: HandleDMSOptions) => {
   const { initialUserID, initialUserName, setRoom } = options
+  const [isLoading, setIsLoading] = useState(true)
   const [dmUsers, setDmUsers] = useState<
     NonNullable<GraphQLResult<GetDirectMessageUserQuery>["data"]>["getDirectMessageUser"][]
   >([])
-  const checkDirectMessageRooms = async () => {
-    const rooms = await Data.listDirectMessageRooms({})
-    console.log({ rooms })
-  }
-  const deleteStuff = async () => {
-    const directmessagerooms = ["2a7a1daf-3eb7-4c92-9f1c-d4ede6c4cab9"]
-    const directmessageusers = ["4a037e96-b486-41d2-b283-cfc009aa4cf7"]
-    for await (const id of directmessageusers) {
-      try {
-        const deleteStatus = (await API.graphql({
-          query: mutations.deleteDirectMessageUser,
-          variables: {
-            input: {
-              id: id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<DeleteDirectMessageUserMutation>>
-        console.log({ deleteStatus })
-      } catch (err) {
-        console.error({ err })
-      }
-    }
-    for await (const id of directmessagerooms) {
-      try {
-        const deleteStatus = (await API.graphql({
-          query: mutations.deleteDirectMessageRoom,
-          variables: {
-            input: {
-              id: id,
-            },
-          },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<DeleteDirectMessageRoomMutation>>
-        console.log({ deleteStatus })
-      } catch (err) {
-        console.error({ err })
-      }
-    }
-  }
 
   useEffect(() => {
     const loadAllDmUsers = async () => {
+      if (!isLoading) setIsLoading(true)
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       let tempData: any = []
       const loadNext = async (next: string | null = null) => {
-        const query = { limit: 200, filter: { userID: { eq: user["username"] } }, nextToken: next }
-        const json = await Data.listDirectMessageUsers(query)
-        console.log({ json })
-        if (json?.data?.listDirectMessageUsers?.nextToken) {
-          tempData = [...tempData, ...(json?.data?.listDirectMessageUsers?.items ?? [])]
-          loadNext(json?.data?.listDirectMessageUsers?.nextToken)
-        } else if (json?.data?.listDirectMessageUsers) {
-          tempData = [...tempData, ...(json?.data?.listDirectMessageUsers?.items ?? [])]
-          setDmUsers(tempData)
+        try {
+          const query = {
+            limit: 200,
+            filter: { userID: { eq: user["username"] } },
+            nextToken: next,
+          }
+          const json = await Data.listDirectMessageUsers(query)
+          console.log({ json })
+          if (json?.data?.listDirectMessageUsers?.nextToken) {
+            tempData = [...tempData, ...(json?.data?.listDirectMessageUsers?.items ?? [])]
+            loadNext(json?.data?.listDirectMessageUsers?.nextToken)
+          } else if (json?.data?.listDirectMessageUsers) {
+            tempData = [...tempData, ...(json?.data?.listDirectMessageUsers?.items ?? [])]
+            setDmUsers(tempData)
+            setIsLoading(false)
+          }
+        } catch (err) {
+          console.error({ err })
         }
       }
       loadNext()
@@ -151,5 +120,46 @@ export const useAndHandleDms = (options: HandleDMSOptions) => {
     //deleteStuff()
     //checkDirectMessageRooms()
   }, [])
-  return [dmUsers]
+  return { dmUsers, isLoading }
 }
+
+// const checkDirectMessageRooms = async () => {
+//   const rooms = await Data.listDirectMessageRooms({})
+//   console.log({ rooms })
+// }
+// const deleteStuff = async () => {
+//   const directmessagerooms = ["2a7a1daf-3eb7-4c92-9f1c-d4ede6c4cab9"]
+//   const directmessageusers = ["4a037e96-b486-41d2-b283-cfc009aa4cf7"]
+//   for await (const id of directmessageusers) {
+//     try {
+//       const deleteStatus = (await API.graphql({
+//         query: mutations.deleteDirectMessageUser,
+//         variables: {
+//           input: {
+//             id: id,
+//           },
+//         },
+//         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+//       })) as Promise<GraphQLResult<DeleteDirectMessageUserMutation>>
+//       console.log({ deleteStatus })
+//     } catch (err) {
+//       console.error({ err })
+//     }
+//   }
+//   for await (const id of directmessagerooms) {
+//     try {
+//       const deleteStatus = (await API.graphql({
+//         query: mutations.deleteDirectMessageRoom,
+//         variables: {
+//           input: {
+//             id: id,
+//           },
+//         },
+//         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+//       })) as Promise<GraphQLResult<DeleteDirectMessageRoomMutation>>
+//       console.log({ deleteStatus })
+//     } catch (err) {
+//       console.error({ err })
+//     }
+//   }
+// }

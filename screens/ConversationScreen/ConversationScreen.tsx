@@ -6,7 +6,7 @@ import { stateToHTML } from "draft-js-export-html"
 import moment from "moment"
 import React, { useEffect, useLayoutEffect, useState } from "react"
 import { isMobileOnly } from "react-device-detect"
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { JCCognitoUser } from "src/types"
 import GenericButton from "../../components/FaceLift/GenericButton"
@@ -68,7 +68,10 @@ const style = StyleSheet.create({
     paddingLeft: isMobileOnly ? 12 : 16,
   },
   Header: {
-    paddingVertical: 26,
+    flexDirection: isMobileOnly ? "row-reverse" : "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingVertical: 16,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#E4E1E1",
@@ -76,6 +79,7 @@ const style = StyleSheet.create({
   HeaderText: {
     fontFamily: "Graphik-Semibold-App",
     color: "#1A0706",
+    flex: isMobileOnly ? 1 : -1,
     lineHeight: 36,
     fontSize: 24,
   },
@@ -120,7 +124,7 @@ const ConversationScreen = (props: Props) => {
   const setRoom = (roomId: string) => {
     setState({ ...state, currentRoom: roomId })
   }
-  const [dmUsers] = useAndHandleDms({
+  const { dmUsers, isLoading } = useAndHandleDms({
     initialUserID: props?.route?.params?.initialUserID ?? null,
     initialUserName: props?.route?.params?.initialUserName ?? null,
     setRoom: setRoom,
@@ -150,6 +154,7 @@ const ConversationScreen = (props: Props) => {
       return errorMarkdown
     }
   }
+
   const getCurrentRoomRecipients = (): string[] => {
     const ids: string[] = []
     //console.log(dmUsers.filter((x) => x?.roomID == state.currentRoom)[0])
@@ -168,6 +173,16 @@ const ConversationScreen = (props: Props) => {
     }
     loadUser()
   }, [])
+
+  const getUserId = (id: string) => {
+    // conversation user id
+    const room = getCurrentRoomItem(id)
+    const otherUsers = getOtherUsers(room)
+    return otherUsers.ids.length === 1 ? otherUsers.ids[0] : null
+  }
+  const getCurrentRoomItem = (id: string) => {
+    return dmUsers.find((a) => a?.roomID === id)
+  }
   const getCurrentRoomTitle = () => {
     return getConversationTitle(dmUsers.find((a) => state.currentRoom === a?.roomID))
   }
@@ -184,12 +199,6 @@ const ConversationScreen = (props: Props) => {
     })
     return conversationTitle
   }
-  const controls = [
-    {
-      icon: "Plus",
-      action: () => null,
-    },
-  ]
   useLayoutEffect(() => {
     navigation.setOptions({
       header: (props) => {
@@ -214,62 +223,74 @@ const ConversationScreen = (props: Props) => {
           {!isMobileOnly ? (
             <View>
               <View style={style.Header}>
-                <Text style={style.HeaderText}>Messages</Text>
+                <Text style={style.HeaderText}>
+                  {isLoading ? "Loading Messages..." : "Messages"}
+                </Text>
               </View>
             </View>
           ) : null}
-          <ScrollView>
-            {dmUsers.map((item) => {
-              const otherUsers = getOtherUsers(item)
-              const conversationTitle = getConversationTitle(item)
-              const messagesCount = item?.room?.directMessage?.items?.length ?? 1
-              const lastMessage = item?.room?.directMessage?.items?.[messagesCount - 1]
-              return (
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    if (item?.room?.id !== state.currentRoom)
-                      setState({ ...state, currentRoom: item?.room?.id ?? "" })
-                  }}
-                  style={[
-                    style.ConversationItem,
-                    state.currentRoom === item?.room?.id
-                      ? {
-                          backgroundColor: "#F6F5F5",
-                          borderRightColor: "#FF4438",
-                        }
-                      : {},
-                  ]}
-                  key={item?.room?.id}
-                >
-                  <ProfileImage
-                    user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
-                    linkToProfile
-                    size="small8"
-                  />
-                  <View style={style.ConversationTextContainer}>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text numberOfLines={2} style={style.NameText}>
-                        {conversationTitle}
-                      </Text>
-                      <Text style={style.DateText}>
-                        {moment(lastMessage?.updatedAt).format("MMMM D")}
+          <ScrollView
+            contentContainerStyle={
+              isLoading ? { justifyContent: "center", alignItems: "center", flex: 1 } : {}
+            }
+          >
+            {isLoading ? (
+              <View style={{ marginTop: -69 }}>
+                <ActivityIndicator size="large" color="#FF4438" />
+              </View>
+            ) : (
+              dmUsers.map((item) => {
+                const otherUsers = getOtherUsers(item)
+                const conversationTitle = getConversationTitle(item)
+                const messagesCount = item?.room?.directMessage?.items?.length ?? 1
+                const lastMessage = item?.room?.directMessage?.items?.[messagesCount - 1]
+                return (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      if (item?.room?.id !== state.currentRoom)
+                        setState({ ...state, currentRoom: item?.room?.id ?? "" })
+                    }}
+                    style={[
+                      style.ConversationItem,
+                      state.currentRoom === item?.room?.id
+                        ? {
+                            backgroundColor: "#F6F5F5",
+                            borderRightColor: "#FF4438",
+                          }
+                        : {},
+                    ]}
+                    key={item?.room?.id}
+                  >
+                    <ProfileImage
+                      user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
+                      linkToProfile
+                      size="small8"
+                    />
+                    <View style={style.ConversationTextContainer}>
+                      <View style={{ flexDirection: "row" }}>
+                        <Text numberOfLines={2} style={style.NameText}>
+                          {conversationTitle}
+                        </Text>
+                        <Text style={style.DateText}>
+                          {moment(lastMessage?.updatedAt).format("MMMM D")}
+                        </Text>
+                      </View>
+
+                      <Text style={style.MessageText} numberOfLines={2}>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: getText(lastMessage?.content)
+                              .replaceAll("<p>", "")
+                              .replaceAll("</p>", ""),
+                          }}
+                        />
                       </Text>
                     </View>
-
-                    <Text style={style.MessageText} numberOfLines={2}>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: getText(lastMessage?.content)
-                            .replaceAll("<p>", "")
-                            .replaceAll("</p>", ""),
-                        }}
-                      />
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            })}
+                  </TouchableOpacity>
+                )
+              })
+            )}
           </ScrollView>
         </View>
       ) : null}
@@ -278,6 +299,7 @@ const ConversationScreen = (props: Props) => {
           {state.currentRoom ? (
             <>
               <View style={style.Header}>
+                <ProfileImage user={getUserId(state.currentRoom)} linkToProfile size="small7" />
                 <Text numberOfLines={1} style={style.HeaderText}>
                   {getCurrentRoomTitle()}
                 </Text>
@@ -291,18 +313,24 @@ const ConversationScreen = (props: Props) => {
             </>
           ) : (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-              <Text style={[style.HeaderText, { textAlign: "center", marginBottom: 32 }]}>
-                You don’t have a conversation selected.
-              </Text>
-              <Text style={{ marginBottom: 32 }}>Please select or begin a conversation.</Text>
-              <GenericButton
-                action={() => Promise.resolve()}
-                style={{
-                  LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
-                  ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
-                }}
-                label="START A CONVERSATION"
-              ></GenericButton>
+              {isLoading ? (
+                <ActivityIndicator size="large" color="#FF4438" />
+              ) : (
+                <>
+                  <Text style={[style.HeaderText, { textAlign: "center", marginBottom: 32 }]}>
+                    You don’t have a conversation selected.
+                  </Text>
+                  <Text style={{ marginBottom: 32 }}>Please select or begin a conversation.</Text>
+                  <GenericButton
+                    action={() => Promise.resolve()}
+                    style={{
+                      LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
+                      ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
+                    }}
+                    label="START A CONVERSATION"
+                  ></GenericButton>
+                </>
+              )}
             </View>
           )}
         </View>

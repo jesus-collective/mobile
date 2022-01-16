@@ -76,14 +76,15 @@ export default function MessageListDirect(props: Props) {
         if (directMessages.length && !isLoading) listRef.current?.scrollToEnd({ animated: false })
       }}
       ref={listRef}
-      style={{ flex: 1, padding: 16 }}
+      contentContainerStyle={{
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 16,
+        flex: 1,
+      }}
     >
       {isLoading ? (
-        <ActivityIndicator
-          style={{ justifyContent: "center", alignItems: "center" }}
-          size="large"
-          color="#FF4438"
-        />
+        <ActivityIndicator size="large" color="#FF4438" />
       ) : (
         <>
           {/* <TouchableOpacity onPress={loadMore} style={{ flex: 1 }}>
