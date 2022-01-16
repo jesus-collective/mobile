@@ -20,7 +20,6 @@ type Props = {
 }
 export default function MessageListDirect(props: Props) {
   const { directMessages, isLoading, loadMore, appendDM } = useDirectMessages(props.roomId)
-  console.log("a", { directMessages })
   const now = moment()
   const listRef = useRef<ScrollView | null>(null)
   const [userData, setUserData] = useState<JCCognitoUser["username"]>("")
@@ -76,12 +75,16 @@ export default function MessageListDirect(props: Props) {
         if (directMessages.length && !isLoading) listRef.current?.scrollToEnd({ animated: false })
       }}
       ref={listRef}
-      contentContainerStyle={{
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 16,
-        flex: 1,
-      }}
+      contentContainerStyle={
+        isLoading
+          ? {
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 16,
+              flex: 1,
+            }
+          : { flex: 1, padding: 16 }
+      }
     >
       {isLoading ? (
         <ActivityIndicator size="large" color="#FF4438" />
