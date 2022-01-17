@@ -1,7 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { useRoute } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import { GetDirectMessageUserQuery } from "../../src/API-customqueries"
@@ -14,6 +14,8 @@ type Options = {
 export const useShouldCreateRoom = (options: Options) => {
   const route = useRoute<any>()
   const { dmUsers, setRoom, setDmUsers } = options
+  const [roomSet, setRoomSet] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const getNewUser = async (id: string): Promise<void> => {
       try {
@@ -67,6 +69,7 @@ export const useShouldCreateRoom = (options: Options) => {
       }
     }
     const shouldCreateRoom = async () => {
+      if (!isLoading) setIsLoading(true)
       if (route?.params?.initialUserID) {
         if (
           !dmUsers
@@ -80,7 +83,8 @@ export const useShouldCreateRoom = (options: Options) => {
                   ) {
                     console.log("Room exists. Setting room")
                     setRoom(item.roomID)
-                    return true // not needed
+                    setRoomSet(true)
+                    return true
                   }
             })
             .some((z) => {
@@ -88,13 +92,24 @@ export const useShouldCreateRoom = (options: Options) => {
             })
         ) {
           if (route?.params?.initialUserID && route?.params?.initialUserName)
-            createRoom(route?.params?.initialUserID, route?.params?.initialUserName)
+            await createRoom(route?.params?.initialUserID, route?.params?.initialUserName)
+          setRoomSet(true)
         }
       }
     }
-    if (dmUsers.length && route?.params?.initialUserID && route?.params?.initialUserName)
-      shouldCreateRoom()
+    const load = async () => {
+      if (
+        dmUsers.length &&
+        !roomSet &&
+        route?.params?.initialUserID &&
+        route?.params?.initialUserName
+      )
+        await shouldCreateRoom()
+      setIsLoading(false)
+    }
+    load()
+    console.log("dmUsers changed", { dmUsers })
   }, [dmUsers])
 
-  return
+  return { isCreatingRoom: isLoading }
 }

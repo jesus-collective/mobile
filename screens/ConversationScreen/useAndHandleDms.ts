@@ -12,8 +12,7 @@ import { useShouldCreateRoom } from "./useShouldCreateRoom"
 
 export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
   const { dmUsers, isLoading, setDmUsers } = useDmUsers()
-  useShouldCreateRoom({ setRoom, dmUsers, setDmUsers })
-  console.log({ dmUsers })
+  const { isCreatingRoom } = useShouldCreateRoom({ setRoom, dmUsers, setDmUsers })
 
   useEffect(() => {
     const dmSub = (
@@ -61,7 +60,7 @@ export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
       dmSub.unsubscribe()
     }
   }, [dmUsers])
-  return { dmUsers, isLoading }
+  return { dmUsers, isLoading: isLoading || isCreatingRoom }
 }
 
 // useEffect(() => {
