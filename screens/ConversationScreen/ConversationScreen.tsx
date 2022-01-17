@@ -268,9 +268,7 @@ const ConversationScreen = () => {
                           {conversationTitle}
                         </Text>
                         <Text style={style.DateText}>
-                          {moment(lastMessage?.createdAt ?? item?.createdAt).format(
-                            "MMMM D hh:mm a"
-                          )}
+                          {moment(lastMessage?.createdAt ?? item?.createdAt).format("MMMM D")}
                         </Text>
                       </View>
 
