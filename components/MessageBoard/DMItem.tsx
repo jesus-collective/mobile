@@ -31,7 +31,7 @@ const DMItem = (props: Props) => {
               <ProfileImage size={isMobileOnly ? "small6" : "small7"} user={item?.userId} />
             </View>
           ) : (
-            <View style={{ width: 56 }} />
+            <View style={isMobileOnly ? { width: 40 } : { width: 56 }} />
           )}
         </View>
       ) : null}
@@ -41,7 +41,9 @@ const DMItem = (props: Props) => {
           isMine
             ? style.DMContentContainerIsMine
             : hideDate && !isPreviousSameUser
-            ? { marginLeft: 56 }
+            ? isMobileOnly
+              ? { marginLeft: 40 }
+              : { marginLeft: 56 }
             : {},
         ]}
       >
