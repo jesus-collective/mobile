@@ -119,7 +119,7 @@ const ConversationScreen = () => {
   const setRoom = (roomId: string) => {
     setState({ ...state, currentRoom: roomId })
   }
-
+  const hideButton = true
   useEffect(() => {
     const loadUser = async () => {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
@@ -316,14 +316,16 @@ const ConversationScreen = () => {
                     You don’t have a conversation selected.
                   </Text>
                   <Text style={{ marginBottom: 32 }}>Please select or begin a conversation.</Text>
-                  <GenericButton
-                    action={() => Promise.resolve()}
-                    style={{
-                      LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
-                      ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
-                    }}
-                    label="START A CONVERSATION"
-                  ></GenericButton>
+                  {!hideButton ? (
+                    <GenericButton
+                      action={() => Promise.resolve()}
+                      style={{
+                        LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
+                        ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
+                      }}
+                      label="START A CONVERSATION"
+                    ></GenericButton>
+                  ) : null}
                 </>
               )}
             </View>
