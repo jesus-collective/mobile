@@ -265,7 +265,7 @@ const ConversationScreen = () => {
                     <View style={style.ConversationTextContainer}>
                       <View style={{ flexDirection: "row" }}>
                         <Text numberOfLines={2} style={style.NameText}>
-                          {item?.roomID} {conversationTitle}
+                          {conversationTitle}
                         </Text>
                         <Text style={style.DateText}>
                           {moment(lastMessage?.createdAt ?? item?.createdAt).format(
