@@ -16,8 +16,6 @@ type Props = {
   index: number
   isReply: boolean
   now: Moment
-  isDM?: boolean
-  isMine?: boolean
 }
 
 const style = StyleSheet.create({
@@ -66,21 +64,23 @@ const style = StyleSheet.create({
     lineHeight: 21,
   },
 })
-const MessageItem = (props: Props) => {
-  const { item, index, isReply, now, isDM } = props
-  const navigation = useNavigation<StackNavigationProp<any, any>>()
-  const convertCommentFromJSONToHTML = (text: string | null) => {
-    const errorMarkdown = "<div>" + "Message" + " Can't Be Displayed</div>"
 
-    if (!text) return errorMarkdown
+export const convertCommentFromJSONToHTML = (text: string | null) => {
+  const errorMarkdown = "<div>" + "Message" + " Can't Be Displayed</div>"
 
-    try {
-      return stateToHTML(convertFromRaw(JSON.parse(text)))
-    } catch (e) {
-      console.error(e)
-      return errorMarkdown
-    }
+  if (!text) return errorMarkdown
+
+  try {
+    return stateToHTML(convertFromRaw(JSON.parse(text)))
+  } catch (e) {
+    console.error(e)
+    return errorMarkdown
   }
+}
+const MessageItem = (props: Props) => {
+  const { item, isReply, now } = props
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+
   const showProfile = (id: string | undefined) => {
     if (id) navigation?.push("ProfileScreen", { id: id, create: false })
   }
@@ -100,96 +100,6 @@ const MessageItem = (props: Props) => {
       ? daysSince + " days ago"
       : null
   }`
-  if (isDM) {
-    return (
-      <>
-        <View
-          style={
-            props.isMine
-              ? {
-                  flexDirection: "row-reverse",
-                  alignSelf: "flex-end",
-                  maxWidth: "65ch",
-                  marginBottom: 16,
-                }
-              : { flexDirection: "row", display: "flex", maxWidth: "65ch", marginBottom: 16 }
-          }
-        >
-          {!props.isMine ? (
-            <View style={isMobileOnly ? { marginRight: 8 } : {}}>
-              <ProfileImage size={isMobileOnly ? "small6" : "small7"} user={item?.userId} />
-            </View>
-          ) : null}
-          <View
-            style={
-              props.isMine
-                ? {
-                    flexDirection: "column",
-                    flex: 1,
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                  }
-                : {
-                    flexDirection: "column",
-                    flex: 1,
-                  }
-            }
-          >
-            <View
-              style={
-                props.isMine
-                  ? {
-                      backgroundColor: "#FFECEB",
-                      paddingVertical: 8,
-                      paddingHorizontal: 16,
-                      borderRadius: 8,
-                      alignSelf: "flex-end",
-                      flexShrink: 1,
-                    }
-                  : {
-                      backgroundColor: "#EDEBEB",
-                      paddingVertical: 8,
-                      paddingHorizontal: 16,
-                      borderRadius: 8,
-                      alignSelf: "flex-start",
-                      flexShrink: 1,
-                    }
-              }
-            >
-              <Text
-                style={{
-                  color: "#1A0706",
-                  fontFamily: "Graphik-Regular-App",
-                  fontSize: 15,
-                }}
-              >
-                <div
-                  style={{ marginBlockEnd: 0 }}
-                  dangerouslySetInnerHTML={{
-                    __html: convertCommentFromJSONToHTML(item?.content ?? null)
-                      ?.replaceAll("<p>", "")
-                      .replaceAll("</p>", ""),
-                    // need to filter empty elements here
-                  }}
-                ></div>
-              </Text>
-            </View>
-            <Text
-              style={{
-                fontFamily: "Graphik-Regular-App",
-                fontSize: 14,
-                lineHeight: 21,
-                color: "#6A5E5D",
-                marginTop: 16,
-              }}
-            >
-              {moment(parseInt(item?.when)).format("lll")}
-            </Text>
-          </View>
-        </View>
-      </>
-    )
-  }
   return (
     <View style={[style.MessageContainer, isReply ? style.ReplyContainer : {}]}>
       <View>
