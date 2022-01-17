@@ -21,6 +21,7 @@ type Props = {
   inputAt?: "top" | "bottom"
   toolbar?: boolean
   replies?: boolean
+  reloadDMS?: any
 }
 export type ReplyState = {
   replyToWho: string[]

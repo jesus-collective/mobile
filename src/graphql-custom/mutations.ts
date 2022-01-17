@@ -2,6 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createDirectMessageUser = /* GraphQL */ `
+  mutation CreateDirectMessageUser($input: CreateDirectMessageUserInput!) {
+    createDirectMessageUser(input: $input) {
+      id
+    }
+  }
+`
+
 export const updateDirectMessage = /* GraphQL */ `
   mutation UpdateDirectMessage($input: UpdateDirectMessageInput!) {
     updateDirectMessage(input: $input) {

@@ -110,12 +110,7 @@ type ConversationState = {
   currentUser: JCCognitoUser["username"]
 }
 
-type Props = {
-  a?: boolean
-  route: any
-  navigation: any
-}
-const ConversationScreen = (props: Props) => {
+const ConversationScreen = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [state, setState] = useState<ConversationState>({
     currentRoom: "",
@@ -124,19 +119,25 @@ const ConversationScreen = (props: Props) => {
   const setRoom = (roomId: string) => {
     setState({ ...state, currentRoom: roomId })
   }
-  const { dmUsers, isLoading } = useAndHandleDms({
-    initialUserID: props?.route?.params?.initialUserID ?? null,
-    initialUserName: props?.route?.params?.initialUserName ?? null,
-    setRoom: setRoom,
-  })
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+      setState({ ...state, currentUser: user.username })
+    }
+    loadUser()
+  }, [])
+  const { dmUsers, isLoading } = useAndHandleDms(setRoom)
 
   const getOtherUsers = (data: any): { ids: string[]; names: string[] } => {
     const ids: string[] = []
     const names: string[] = []
-    data.room.messageUsers.items.forEach((user) => {
+    data?.room?.messageUsers?.items?.forEach((user: any) => {
       if (user.userID !== state.currentUser) {
-        ids.push(user.userID)
-        names.push(user.userName)
+        if (user?.userID && user?.userName) {
+          ids.push(user?.userID)
+          names.push(user?.userName)
+        }
       }
     })
 
@@ -166,13 +167,6 @@ const ConversationScreen = (props: Props) => {
       })
     return ids
   }
-  useEffect(() => {
-    const loadUser = async () => {
-      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      setState({ ...state, currentUser: user.username })
-    }
-    loadUser()
-  }, [])
 
   const getUserId = (id: string) => {
     // conversation user id
@@ -222,7 +216,7 @@ const ConversationScreen = (props: Props) => {
         <View style={[style.columnOne, isMobileOnly ? { flex: 1 } : {}]}>
           {!isMobileOnly ? (
             <View>
-              <View style={style.Header}>
+              <View style={[style.Header, { paddingTop: 28, paddingBottom: 28 }]}>
                 <Text style={style.HeaderText}>
                   {isLoading ? "Loading Messages..." : "Messages"}
                 </Text>
@@ -242,8 +236,9 @@ const ConversationScreen = (props: Props) => {
               dmUsers.map((item) => {
                 const otherUsers = getOtherUsers(item)
                 const conversationTitle = getConversationTitle(item)
-                const messagesCount = item?.room?.directMessage?.items?.length ?? 1
-                const lastMessage = item?.room?.directMessage?.items?.[messagesCount - 1]
+                const lastMessage = item?.room?.directMessage?.items?.sort((a, b) =>
+                  b.createdAt.localeCompare(a.createdAt)
+                )?.[0]
                 return (
                   <TouchableOpacity
                     activeOpacity={0.8}
@@ -270,10 +265,12 @@ const ConversationScreen = (props: Props) => {
                     <View style={style.ConversationTextContainer}>
                       <View style={{ flexDirection: "row" }}>
                         <Text numberOfLines={2} style={style.NameText}>
-                          {conversationTitle}
+                          {item?.roomID} {conversationTitle}
                         </Text>
                         <Text style={style.DateText}>
-                          {moment(lastMessage?.updatedAt).format("MMMM D")}
+                          {moment(lastMessage?.createdAt ?? item?.createdAt).format(
+                            "MMMM D hh:mm a"
+                          )}
                         </Text>
                       </View>
 

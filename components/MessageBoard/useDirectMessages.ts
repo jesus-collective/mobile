@@ -3,9 +3,16 @@ import { API } from "aws-amplify"
 import { useEffect, useState } from "react"
 import { DirectMessagesByRoomQuery } from "../../src/API-messages"
 import { directMessagesByRoom } from "../../src/graphql-custom/messages"
+import { DM } from "./MessageListDirect"
+
+type DirectMessagesState = {
+  directMessages: DM[]
+  isLoading: boolean
+  nextToken: string | null | undefined
+}
 
 export const useDirectMessages = (roomId: string) => {
-  const [state, setState] = useState<any>({
+  const [state, setState] = useState<DirectMessagesState>({
     directMessages: [],
     isLoading: true,
     nextToken: null,
@@ -14,7 +21,7 @@ export const useDirectMessages = (roomId: string) => {
   const loadMore = async () => {
     //
   }
-  const appendDM = (msg) => {
+  const appendDM = (msg: DM) => {
     setState((prev) => ({
       ...prev,
       directMessages: [...prev.directMessages, msg],
@@ -29,16 +36,17 @@ export const useDirectMessages = (roomId: string) => {
           variables: {
             messageRoomID: roomId,
             sortDirection: "DESC",
-            limit: 20,
+            limit: 200,
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as GraphQLResult<DirectMessagesByRoomQuery>
-        setState({
+        setState((prev) => ({
+          ...prev,
           directMessages: [
             ...(directMessagesQuery?.data?.directMessagesByRoom?.items?.reverse() ?? []),
           ],
           isLoading: false,
-        })
+        }))
       } catch (e: any) {
         console.error({ e })
         setState((prev) => ({ ...prev, isLoading: false }))

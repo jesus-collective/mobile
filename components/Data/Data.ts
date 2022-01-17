@@ -550,6 +550,15 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<CreateGroupMemberMutation>>
   }
+  static createDirectMessageUserCustom(input: CreateDirectMessageUserInput) {
+    return API.graphql({
+      query: customMutations.createDirectMessageUser,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<CreateDirectMessageUserMutation>>
+  }
   static createDirectMessageUser(input: CreateDirectMessageUserInput) {
     return API.graphql({
       query: mutations.createDirectMessageUser,
@@ -680,6 +689,13 @@ export class Data {
   static listDirectMessageUsers(query: ListDirectMessageUsersQueryVariables) {
     return API.graphql({
       query: customQueries.listDirectMessageUsers,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListDirectMessageUsersQuery>>
+  }
+  static listDirectMessageUsersForDMs(query: ListDirectMessageUsersQueryVariables) {
+    return API.graphql({
+      query: customQueries.listDirectMessageUsersForDMS,
       variables: query,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListDirectMessageUsersQuery>>
