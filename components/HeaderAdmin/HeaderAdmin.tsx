@@ -58,6 +58,9 @@ export default class HeaderJC extends JCComponent<Props> {
   openEvents = (): void => {
     this.props.navigation.push("EventsScreen")
   }
+  openMenu = (): void => {
+    this.props.navigation.push("AdminMenuScreen")
+  }
   openResources = (): void => {
     this.props.navigation.push("ResourcesScreen")
   }
@@ -125,6 +128,14 @@ export default class HeaderJC extends JCComponent<Props> {
             style={this.headerStyles.style.centerMenuButtonsSubNav}
           >
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Config</Text>
+          </Button>
+          <Button
+            transparent
+            testID="header-events"
+            onPress={this.openMenu}
+            style={this.headerStyles.style.centerMenuButtonsSubNav}
+          >
+            <Text style={this.headerStyles.style.centerMenuButtonsText}>Menu</Text>
           </Button>
         </Body>
         {/* <Right>

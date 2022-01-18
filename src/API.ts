@@ -33,13 +33,13 @@ export type DirectMessageRoom = {
 
 export type ModelDirectMessageUserConnection = {
   __typename: "ModelDirectMessageUserConnection",
-  items?:  Array<DirectMessageUser | null > | null,
+  items?:  Array<DirectMessageUser >,
   nextToken?: string | null,
 };
 
 export type ModelDirectMessageConnection = {
   __typename: "ModelDirectMessageConnection",
-  items?:  Array<DirectMessage | null > | null,
+  items?:  Array<DirectMessage >,
   nextToken?: string | null,
 };
 
@@ -63,7 +63,7 @@ export type DirectMessage = {
 
 export type ModelDirectMessageReplyConnection = {
   __typename: "ModelDirectMessageReplyConnection",
-  items?:  Array<DirectMessageReply | null > | null,
+  items?:  Array<DirectMessageReply >,
   nextToken?: string | null,
 };
 
@@ -176,7 +176,7 @@ export type Image = {
 
 export type ModelOrganizationMemberConnection = {
   __typename: "ModelOrganizationMemberConnection",
-  items?:  Array<OrganizationMember | null > | null,
+  items?:  Array<OrganizationMember >,
   nextToken?: string | null,
 };
 
@@ -232,13 +232,13 @@ export type Organization = {
 
 export type ModelOrganizationConnection = {
   __typename: "ModelOrganizationConnection",
-  items?:  Array<Organization | null > | null,
+  items?:  Array<Organization >,
   nextToken?: string | null,
 };
 
 export type ModelGroupConnection = {
   __typename: "ModelGroupConnection",
-  items?:  Array<Group | null > | null,
+  items?:  Array<Group >,
   nextToken?: string | null,
 };
 
@@ -293,7 +293,7 @@ export enum UserGroupType {
 
 export type ModelGroupMemberConnection = {
   __typename: "ModelGroupMemberConnection",
-  items?:  Array<GroupMember | null > | null,
+  items?:  Array<GroupMember >,
   nextToken?: string | null,
 };
 
@@ -310,7 +310,7 @@ export type GroupMember = {
 
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection",
-  items?:  Array<Message | null > | null,
+  items?:  Array<Message >,
   nextToken?: string | null,
 };
 
@@ -335,7 +335,7 @@ export type Message = {
 
 export type ModelReplyConnection = {
   __typename: "ModelReplyConnection",
-  items?:  Array<Reply | null > | null,
+  items?:  Array<Reply >,
   nextToken?: string | null,
 };
 
@@ -361,7 +361,7 @@ export type Reply = {
 
 export type ModelResourceRootConnection = {
   __typename: "ModelResourceRootConnection",
-  items?:  Array<ResourceRoot | null > | null,
+  items?:  Array<ResourceRoot >,
   nextToken?: string | null,
 };
 
@@ -381,7 +381,7 @@ export type ResourceRoot = {
 
 export type ModelResourceConnection = {
   __typename: "ModelResourceConnection",
-  items?:  Array<Resource | null > | null,
+  items?:  Array<Resource >,
   nextToken?: string | null,
 };
 
@@ -425,7 +425,7 @@ export enum ResourceDetailType {
 
 export type ModelResourceSeriesConnection = {
   __typename: "ModelResourceSeriesConnection",
-  items?:  Array<ResourceSeries | null > | null,
+  items?:  Array<ResourceSeries >,
   nextToken?: string | null,
 };
 
@@ -451,7 +451,7 @@ export type ResourceSeries = {
 
 export type ModelResourceEpisodeConnection = {
   __typename: "ModelResourceEpisodeConnection",
-  items?:  Array<ResourceEpisode | null > | null,
+  items?:  Array<ResourceEpisode >,
   nextToken?: string | null,
 };
 
@@ -474,7 +474,7 @@ export type ResourceEpisode = {
 
 export type ModelResourceMenuItemConnection = {
   __typename: "ModelResourceMenuItemConnection",
-  items?:  Array<ResourceMenuItem | null > | null,
+  items?:  Array<ResourceMenuItem >,
   nextToken?: string | null,
 };
 
@@ -570,7 +570,7 @@ export enum ResourcePageItemStyle {
 
 export type ModelCourseTriadCoachesConnection = {
   __typename: "ModelCourseTriadCoachesConnection",
-  items?:  Array<CourseTriadCoaches | null > | null,
+  items?:  Array<CourseTriadCoaches >,
   nextToken?: string | null,
 };
 
@@ -616,7 +616,7 @@ export type CourseInfo = {
 
 export type ModelCourseWeekConnection = {
   __typename: "ModelCourseWeekConnection",
-  items?:  Array<CourseWeek | null > | null,
+  items?:  Array<CourseWeek >,
   nextToken?: string | null,
 };
 
@@ -638,7 +638,7 @@ export type CourseWeek = {
 
 export type ModelCourseLessonConnection = {
   __typename: "ModelCourseLessonConnection",
-  items?:  Array<CourseLesson | null > | null,
+  items?:  Array<CourseLesson >,
   nextToken?: string | null,
 };
 
@@ -664,7 +664,7 @@ export type CourseLesson = {
 
 export type ModelCourseInstructorsConnection = {
   __typename: "ModelCourseInstructorsConnection",
-  items?:  Array<CourseInstructors | null > | null,
+  items?:  Array<CourseInstructors >,
   nextToken?: string | null,
 };
 
@@ -681,7 +681,7 @@ export type CourseInstructors = {
 
 export type ModelCourseBackOfficeStaffConnection = {
   __typename: "ModelCourseBackOfficeStaffConnection",
-  items?:  Array<CourseBackOfficeStaff | null > | null,
+  items?:  Array<CourseBackOfficeStaff >,
   nextToken?: string | null,
 };
 
@@ -698,13 +698,13 @@ export type CourseBackOfficeStaff = {
 
 export type ModelCourseTriadsConnection = {
   __typename: "ModelCourseTriadsConnection",
-  items?:  Array<CourseTriads | null > | null,
+  items?:  Array<CourseTriads >,
   nextToken?: string | null,
 };
 
 export type ModelCourseTriadUsersConnection = {
   __typename: "ModelCourseTriadUsersConnection",
-  items?:  Array<CourseTriadUsers | null > | null,
+  items?:  Array<CourseTriadUsers >,
   nextToken?: string | null,
 };
 
@@ -721,7 +721,7 @@ export type CourseTriadUsers = {
 
 export type ModelPaymentConnection = {
   __typename: "ModelPaymentConnection",
-  items?:  Array<Payment | null > | null,
+  items?:  Array<Payment >,
   nextToken?: string | null,
 };
 
@@ -1709,7 +1709,7 @@ export type CRMRoot = {
 
 export type ModelCRMMessageConnection = {
   __typename: "ModelCRMMessageConnection",
-  items?:  Array<CRMMessage | null > | null,
+  items?:  Array<CRMMessage >,
   nextToken?: string | null,
 };
 
@@ -1731,7 +1731,7 @@ export type CRMMessage = {
 
 export type ModelCRMReplyConnection = {
   __typename: "ModelCRMReplyConnection",
-  items?:  Array<CRMReply | null > | null,
+  items?:  Array<CRMReply >,
   nextToken?: string | null,
 };
 
@@ -2142,6 +2142,79 @@ export type DeleteVideoObjectInput = {
   id: string,
 };
 
+export type CreateMenuInput = {
+  id?: string | null,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type Menu = {
+  __typename: "Menu",
+  id?: string,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+  subItems?: ModelSubMenuConnection,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type ModelSubMenuConnection = {
+  __typename: "ModelSubMenuConnection",
+  items?:  Array<SubMenu >,
+  nextToken?: string | null,
+};
+
+export type SubMenu = {
+  __typename: "SubMenu",
+  id?: string,
+  menuID?: string | null,
+  order?: number | null,
+  menu?: Menu,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type UpdateMenuInput = {
+  id: string,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type DeleteMenuInput = {
+  id: string,
+};
+
+export type CreateSubMenuInput = {
+  id?: string | null,
+  menuID?: string | null,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type UpdateSubMenuInput = {
+  id: string,
+  menuID?: string | null,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type DeleteSubMenuInput = {
+  id: string,
+};
+
 export type EventBriteEventList = {
   __typename: "EventBriteEventList",
   pagination?: EventBritePagination,
@@ -2291,7 +2364,7 @@ export type ModelIDFilterInput = {
 
 export type ModelApplicationProcessConnection = {
   __typename: "ModelApplicationProcessConnection",
-  items?:  Array<ApplicationProcess | null > | null,
+  items?:  Array<ApplicationProcess >,
   nextToken?: string | null,
 };
 
@@ -2409,7 +2482,7 @@ export type ModelActivityActionTypeFilterInput = {
 
 export type ModelActivityConnection = {
   __typename: "ModelActivityConnection",
-  items?:  Array<Activity | null > | null,
+  items?:  Array<Activity >,
   nextToken?: string | null,
 };
 
@@ -2447,7 +2520,7 @@ export type ModelCourseInfoFilterInput = {
 
 export type ModelCourseInfoConnection = {
   __typename: "ModelCourseInfoConnection",
-  items?:  Array<CourseInfo | null > | null,
+  items?:  Array<CourseInfo >,
   nextToken?: string | null,
 };
 
@@ -2549,7 +2622,7 @@ export type ModelDirectMessageRoomFilterInput = {
 
 export type ModelDirectMessageRoomConnection = {
   __typename: "ModelDirectMessageRoomConnection",
-  items?:  Array<DirectMessageRoom | null > | null,
+  items?:  Array<DirectMessageRoom >,
   nextToken?: string | null,
 };
 
@@ -2577,7 +2650,7 @@ export type ModelCRMRootFilterInput = {
 
 export type ModelCRMRootConnection = {
   __typename: "ModelCRMRootConnection",
-  items?:  Array<CRMRoot | null > | null,
+  items?:  Array<CRMRoot >,
   nextToken?: string | null,
 };
 
@@ -2735,7 +2808,7 @@ export type ModelFloatFilterInput = {
 
 export type ModelProductConnection = {
   __typename: "ModelProductConnection",
-  items?:  Array<Product | null > | null,
+  items?:  Array<Product >,
   nextToken?: string | null,
 };
 
@@ -2750,7 +2823,7 @@ export type ModelvodAssetFilterInput = {
 
 export type ModelvodAssetConnection = {
   __typename: "ModelvodAssetConnection",
-  items?:  Array<vodAsset | null > | null,
+  items?:  Array<vodAsset >,
   nextToken?: string | null,
 };
 
@@ -2763,8 +2836,37 @@ export type ModelvideoObjectFilterInput = {
 
 export type ModelvideoObjectConnection = {
   __typename: "ModelvideoObjectConnection",
-  items?:  Array<videoObject | null > | null,
+  items?:  Array<videoObject >,
   nextToken?: string | null,
+};
+
+export type ModelMenuFilterInput = {
+  id?: ModelIDFilterInput | null,
+  order?: ModelIntFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  action?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
+  and?: Array< ModelMenuFilterInput | null > | null,
+  or?: Array< ModelMenuFilterInput | null > | null,
+  not?: ModelMenuFilterInput | null,
+};
+
+export type ModelMenuConnection = {
+  __typename: "ModelMenuConnection",
+  items?:  Array<Menu >,
+  nextToken?: string | null,
+};
+
+export type ModelSubMenuFilterInput = {
+  id?: ModelIDFilterInput | null,
+  menuID?: ModelStringFilterInput | null,
+  order?: ModelIntFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  action?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
+  and?: Array< ModelSubMenuFilterInput | null > | null,
+  or?: Array< ModelSubMenuFilterInput | null > | null,
+  not?: ModelSubMenuFilterInput | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -2901,7 +3003,7 @@ export enum SearchableSortDirection {
 
 export type SearchableGroupConnection = {
   __typename: "SearchableGroupConnection",
-  items?:  Array<Group | null > | null,
+  items?:  Array<Group >,
   nextToken?: string | null,
   total?: number | null,
 };
@@ -2946,7 +3048,7 @@ export type ModelPaidStateFilterInput = {
 
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
-  items?:  Array<User | null > | null,
+  items?:  Array<User >,
   nextToken?: string | null,
 };
 
@@ -3019,7 +3121,7 @@ export enum SearchableUserSortableFields {
 
 export type SearchableUserConnection = {
   __typename: "SearchableUserConnection",
-  items?:  Array<User | null > | null,
+  items?:  Array<User >,
   nextToken?: string | null,
   total?: number | null,
 };
@@ -3809,7 +3911,7 @@ export type CreateUserMutation = {
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -3818,12 +3920,12 @@ export type CreateUserMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     owns?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -3847,24 +3949,24 @@ export type CreateUserMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     groups?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -3878,12 +3980,12 @@ export type CreateUserMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -3896,12 +3998,12 @@ export type CreateUserMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -3915,60 +4017,60 @@ export type CreateUserMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -3978,7 +4080,7 @@ export type CreateUserMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -4059,7 +4161,7 @@ export type UpdateUserMutation = {
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -4068,12 +4170,12 @@ export type UpdateUserMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     owns?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -4097,24 +4199,24 @@ export type UpdateUserMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     groups?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -4128,12 +4230,12 @@ export type UpdateUserMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -4146,12 +4248,12 @@ export type UpdateUserMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -4165,60 +4267,60 @@ export type UpdateUserMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -4228,7 +4330,7 @@ export type UpdateUserMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -4309,7 +4411,7 @@ export type DeleteUserMutation = {
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -4318,12 +4420,12 @@ export type DeleteUserMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     owns?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -4347,24 +4449,24 @@ export type DeleteUserMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     groups?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -4378,12 +4480,12 @@ export type DeleteUserMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -4396,12 +4498,12 @@ export type DeleteUserMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -4415,60 +4517,60 @@ export type DeleteUserMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -4478,7 +4580,7 @@ export type DeleteUserMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -5301,14 +5403,14 @@ export type CreateGroupMutation = {
     memberCount?: number | null,
     members?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -5331,7 +5433,7 @@ export type CreateGroupMutation = {
     promotionalText?: string | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -5345,7 +5447,7 @@ export type CreateGroupMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -5579,14 +5681,14 @@ export type UpdateGroupMutation = {
     memberCount?: number | null,
     members?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -5609,7 +5711,7 @@ export type UpdateGroupMutation = {
     promotionalText?: string | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -5623,7 +5725,7 @@ export type UpdateGroupMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -5857,14 +5959,14 @@ export type DeleteGroupMutation = {
     memberCount?: number | null,
     members?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -5887,7 +5989,7 @@ export type DeleteGroupMutation = {
     promotionalText?: string | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -5901,7 +6003,7 @@ export type DeleteGroupMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -6835,7 +6937,7 @@ export type CreateOrganizationMutation = {
     } | null,
     subOrganizations?:  {
       __typename: "ModelOrganizationConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Organization",
         id: string,
         orgName: string,
@@ -6863,12 +6965,12 @@ export type CreateOrganizationMutation = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     members?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -6877,12 +6979,12 @@ export type CreateOrganizationMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -6906,12 +7008,12 @@ export type CreateOrganizationMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resource?:  {
       __typename: "ModelResourceRootConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceRoot",
         id: string,
         type?: string | null,
@@ -6920,7 +7022,7 @@ export type CreateOrganizationMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -7071,7 +7173,7 @@ export type UpdateOrganizationMutation = {
     } | null,
     subOrganizations?:  {
       __typename: "ModelOrganizationConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Organization",
         id: string,
         orgName: string,
@@ -7099,12 +7201,12 @@ export type UpdateOrganizationMutation = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     members?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -7113,12 +7215,12 @@ export type UpdateOrganizationMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -7142,12 +7244,12 @@ export type UpdateOrganizationMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resource?:  {
       __typename: "ModelResourceRootConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceRoot",
         id: string,
         type?: string | null,
@@ -7156,7 +7258,7 @@ export type UpdateOrganizationMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -7307,7 +7409,7 @@ export type DeleteOrganizationMutation = {
     } | null,
     subOrganizations?:  {
       __typename: "ModelOrganizationConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Organization",
         id: string,
         orgName: string,
@@ -7335,12 +7437,12 @@ export type DeleteOrganizationMutation = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     members?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -7349,12 +7451,12 @@ export type DeleteOrganizationMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -7378,12 +7480,12 @@ export type DeleteOrganizationMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resource?:  {
       __typename: "ModelResourceRootConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceRoot",
         id: string,
         type?: string | null,
@@ -7392,7 +7494,7 @@ export type DeleteOrganizationMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -8297,7 +8399,7 @@ export type CreateCourseInfoMutation = {
     summary?: string | null,
     courseWeeks?:  {
       __typename: "ModelCourseWeekConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseWeek",
         id: string,
         week?: string | null,
@@ -8309,43 +8411,43 @@ export type CreateCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
     instructors?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     triads?:  {
       __typename: "ModelCourseTriadsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriads",
         id: string,
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -8369,7 +8471,7 @@ export type UpdateCourseInfoMutation = {
     summary?: string | null,
     courseWeeks?:  {
       __typename: "ModelCourseWeekConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseWeek",
         id: string,
         week?: string | null,
@@ -8381,43 +8483,43 @@ export type UpdateCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
     instructors?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     triads?:  {
       __typename: "ModelCourseTriadsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriads",
         id: string,
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -8441,7 +8543,7 @@ export type DeleteCourseInfoMutation = {
     summary?: string | null,
     courseWeeks?:  {
       __typename: "ModelCourseWeekConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseWeek",
         id: string,
         week?: string | null,
@@ -8453,43 +8555,43 @@ export type DeleteCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
     instructors?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     triads?:  {
       __typename: "ModelCourseTriadsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriads",
         id: string,
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -8541,26 +8643,26 @@ export type CreateCourseTriadsMutation = {
     } | null,
     coaches?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     users?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -8608,26 +8710,26 @@ export type UpdateCourseTriadsMutation = {
     } | null,
     coaches?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     users?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -8675,26 +8777,26 @@ export type DeleteCourseTriadsMutation = {
     } | null,
     coaches?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     users?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -10626,7 +10728,7 @@ export type CreateCourseWeekMutation = {
     } | null,
     lessons?:  {
       __typename: "ModelCourseLessonConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseLesson",
         id: string,
         lesson?: string | null,
@@ -10643,7 +10745,7 @@ export type CreateCourseWeekMutation = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -10697,7 +10799,7 @@ export type UpdateCourseWeekMutation = {
     } | null,
     lessons?:  {
       __typename: "ModelCourseLessonConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseLesson",
         id: string,
         lesson?: string | null,
@@ -10714,7 +10816,7 @@ export type UpdateCourseWeekMutation = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -10768,7 +10870,7 @@ export type DeleteCourseWeekMutation = {
     } | null,
     lessons?:  {
       __typename: "ModelCourseLessonConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseLesson",
         id: string,
         lesson?: string | null,
@@ -10785,7 +10887,7 @@ export type DeleteCourseWeekMutation = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -11404,7 +11506,7 @@ export type CreateDirectMessageRoomMutation = {
     name?: string | null,
     messageUsers?:  {
       __typename: "ModelDirectMessageUserConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
         userName?: string | null,
@@ -11412,12 +11514,12 @@ export type CreateDirectMessageRoomMutation = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -11430,7 +11532,7 @@ export type CreateDirectMessageRoomMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -11450,7 +11552,7 @@ export type UpdateDirectMessageRoomMutation = {
     name?: string | null,
     messageUsers?:  {
       __typename: "ModelDirectMessageUserConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
         userName?: string | null,
@@ -11458,12 +11560,12 @@ export type UpdateDirectMessageRoomMutation = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -11476,7 +11578,7 @@ export type UpdateDirectMessageRoomMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -11496,7 +11598,7 @@ export type DeleteDirectMessageRoomMutation = {
     name?: string | null,
     messageUsers?:  {
       __typename: "ModelDirectMessageUserConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
         userName?: string | null,
@@ -11504,12 +11606,12 @@ export type DeleteDirectMessageRoomMutation = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -11522,7 +11624,7 @@ export type DeleteDirectMessageRoomMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -11548,7 +11650,7 @@ export type CreateDirectMessageMutation = {
     userId: string,
     replies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -11563,7 +11665,7 @@ export type CreateDirectMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -11718,7 +11820,7 @@ export type UpdateDirectMessageMutation = {
     userId: string,
     replies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -11733,7 +11835,7 @@ export type UpdateDirectMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -11888,7 +11990,7 @@ export type DeleteDirectMessageMutation = {
     userId: string,
     replies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -11903,7 +12005,7 @@ export type DeleteDirectMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -12201,7 +12303,7 @@ export type CreateDirectMessageReplyMutation = {
     } | null,
     subReplies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -12216,7 +12318,7 @@ export type CreateDirectMessageReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -12497,7 +12599,7 @@ export type UpdateDirectMessageReplyMutation = {
     } | null,
     subReplies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -12512,7 +12614,7 @@ export type UpdateDirectMessageReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -12793,7 +12895,7 @@ export type DeleteDirectMessageReplyMutation = {
     } | null,
     subReplies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -12808,7 +12910,7 @@ export type DeleteDirectMessageReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -12939,7 +13041,7 @@ export type CreateCrmRootMutation = {
     id: string,
     messages?:  {
       __typename: "ModelCRMMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMMessage",
         id: string,
         rootId: string,
@@ -12951,7 +13053,7 @@ export type CreateCrmRootMutation = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -12969,7 +13071,7 @@ export type UpdateCrmRootMutation = {
     id: string,
     messages?:  {
       __typename: "ModelCRMMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMMessage",
         id: string,
         rootId: string,
@@ -12981,7 +13083,7 @@ export type UpdateCrmRootMutation = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -12999,7 +13101,7 @@ export type DeleteCrmRootMutation = {
     id: string,
     messages?:  {
       __typename: "ModelCRMMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMMessage",
         id: string,
         rootId: string,
@@ -13011,7 +13113,7 @@ export type DeleteCrmRootMutation = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13046,7 +13148,7 @@ export type CreateCrmMessageMutation = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -13059,7 +13161,7 @@ export type CreateCrmMessageMutation = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13094,7 +13196,7 @@ export type UpdateCrmMessageMutation = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -13107,7 +13209,7 @@ export type UpdateCrmMessageMutation = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13142,7 +13244,7 @@ export type DeleteCrmMessageMutation = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -13155,7 +13257,7 @@ export type DeleteCrmMessageMutation = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13418,7 +13520,7 @@ export type CreateMessageMutation = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -13432,7 +13534,7 @@ export type CreateMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13676,7 +13778,7 @@ export type UpdateMessageMutation = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -13690,7 +13792,7 @@ export type UpdateMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13934,7 +14036,7 @@ export type DeleteMessageMutation = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -13948,7 +14050,7 @@ export type DeleteMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -14245,7 +14347,7 @@ export type CreateReplyMutation = {
     } | null,
     subReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -14259,7 +14361,7 @@ export type CreateReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -14556,7 +14658,7 @@ export type UpdateReplyMutation = {
     } | null,
     subReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -14570,7 +14672,7 @@ export type UpdateReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -14867,7 +14969,7 @@ export type DeleteReplyMutation = {
     } | null,
     subReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -14881,7 +14983,7 @@ export type DeleteReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15016,7 +15118,7 @@ export type CreateResourceRootMutation = {
     owner?: string | null,
     resources?:  {
       __typename: "ModelResourceConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Resource",
         id: string,
         owner?: string | null,
@@ -15031,7 +15133,7 @@ export type CreateResourceRootMutation = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -15128,7 +15230,7 @@ export type CreateResourceRootMutation = {
     } | null,
     menuItems?:  {
       __typename: "ModelResourceMenuItemConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceMenuItem",
         id: string,
         owner?: string | null,
@@ -15140,7 +15242,7 @@ export type CreateResourceRootMutation = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15162,7 +15264,7 @@ export type UpdateResourceRootMutation = {
     owner?: string | null,
     resources?:  {
       __typename: "ModelResourceConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Resource",
         id: string,
         owner?: string | null,
@@ -15177,7 +15279,7 @@ export type UpdateResourceRootMutation = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -15274,7 +15376,7 @@ export type UpdateResourceRootMutation = {
     } | null,
     menuItems?:  {
       __typename: "ModelResourceMenuItemConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceMenuItem",
         id: string,
         owner?: string | null,
@@ -15286,7 +15388,7 @@ export type UpdateResourceRootMutation = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15308,7 +15410,7 @@ export type DeleteResourceRootMutation = {
     owner?: string | null,
     resources?:  {
       __typename: "ModelResourceConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Resource",
         id: string,
         owner?: string | null,
@@ -15323,7 +15425,7 @@ export type DeleteResourceRootMutation = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -15420,7 +15522,7 @@ export type DeleteResourceRootMutation = {
     } | null,
     menuItems?:  {
       __typename: "ModelResourceMenuItemConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceMenuItem",
         id: string,
         owner?: string | null,
@@ -15432,7 +15534,7 @@ export type DeleteResourceRootMutation = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15860,7 +15962,7 @@ export type CreateResourceMutation = {
     } | null > | null,
     series?:  {
       __typename: "ModelResourceSeriesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceSeries",
         id: string,
         owner?: string | null,
@@ -15874,7 +15976,7 @@ export type CreateResourceMutation = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -15972,7 +16074,7 @@ export type UpdateResourceMutation = {
     } | null > | null,
     series?:  {
       __typename: "ModelResourceSeriesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceSeries",
         id: string,
         owner?: string | null,
@@ -15986,7 +16088,7 @@ export type UpdateResourceMutation = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -16084,7 +16186,7 @@ export type DeleteResourceMutation = {
     } | null > | null,
     series?:  {
       __typename: "ModelResourceSeriesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceSeries",
         id: string,
         owner?: string | null,
@@ -16098,7 +16200,7 @@ export type DeleteResourceMutation = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -16195,7 +16297,7 @@ export type CreateResourceSeriesMutation = {
     } | null > | null,
     episodes?:  {
       __typename: "ModelResourceEpisodeConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
         owner?: string | null,
@@ -16207,7 +16309,7 @@ export type CreateResourceSeriesMutation = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -16302,7 +16404,7 @@ export type UpdateResourceSeriesMutation = {
     } | null > | null,
     episodes?:  {
       __typename: "ModelResourceEpisodeConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
         owner?: string | null,
@@ -16314,7 +16416,7 @@ export type UpdateResourceSeriesMutation = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -16409,7 +16511,7 @@ export type DeleteResourceSeriesMutation = {
     } | null > | null,
     episodes?:  {
       __typename: "ModelResourceEpisodeConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
         owner?: string | null,
@@ -16421,7 +16523,7 @@ export type DeleteResourceSeriesMutation = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -16769,7 +16871,7 @@ export type CreateProductMutation = {
     confirmationMsg?: string | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -16779,7 +16881,7 @@ export type CreateProductMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -16816,7 +16918,7 @@ export type UpdateProductMutation = {
     confirmationMsg?: string | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -16826,7 +16928,7 @@ export type UpdateProductMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -16863,7 +16965,7 @@ export type DeleteProductMutation = {
     confirmationMsg?: string | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -16873,7 +16975,7 @@ export type DeleteProductMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -16992,6 +17094,198 @@ export type DeleteVideoObjectMutation = {
   deleteVideoObject?:  {
     __typename: "videoObject",
     id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateMenuMutationVariables = {
+  input?: CreateMenuInput,
+};
+
+export type CreateMenuMutation = {
+  createMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateMenuMutationVariables = {
+  input?: UpdateMenuInput,
+};
+
+export type UpdateMenuMutation = {
+  updateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteMenuMutationVariables = {
+  input?: DeleteMenuInput,
+};
+
+export type DeleteMenuMutation = {
+  deleteMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateSubMenuMutationVariables = {
+  input?: CreateSubMenuInput,
+};
+
+export type CreateSubMenuMutation = {
+  createSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateSubMenuMutationVariables = {
+  input?: UpdateSubMenuInput,
+};
+
+export type UpdateSubMenuMutation = {
+  updateSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteSubMenuMutationVariables = {
+  input?: DeleteSubMenuInput,
+};
+
+export type DeleteSubMenuMutation = {
+  deleteSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -17163,12 +17457,12 @@ export type ListApplicationProcesssQueryVariables = {
 export type ListApplicationProcesssQuery = {
   listApplicationProcesss?:  {
     __typename: "ModelApplicationProcessConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "ApplicationProcess",
       id: string,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -17282,14 +17576,14 @@ export type GetGroupQuery = {
     memberCount?: number | null,
     members?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -17312,7 +17606,7 @@ export type GetGroupQuery = {
     promotionalText?: string | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -17326,7 +17620,7 @@ export type GetGroupQuery = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -17460,7 +17754,7 @@ export type ListGroupsQueryVariables = {
 export type ListGroupsQuery = {
   listGroups?:  {
     __typename: "ModelGroupConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Group",
       id: string,
       owner: string,
@@ -17563,7 +17857,7 @@ export type ListGroupsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -17711,7 +18005,7 @@ export type GetOrganizationQuery = {
     } | null,
     subOrganizations?:  {
       __typename: "ModelOrganizationConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Organization",
         id: string,
         orgName: string,
@@ -17739,12 +18033,12 @@ export type GetOrganizationQuery = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     members?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -17753,12 +18047,12 @@ export type GetOrganizationQuery = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -17782,12 +18076,12 @@ export type GetOrganizationQuery = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resource?:  {
       __typename: "ModelResourceRootConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceRoot",
         id: string,
         type?: string | null,
@@ -17796,7 +18090,7 @@ export type GetOrganizationQuery = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -17813,7 +18107,7 @@ export type ListOrganizationsQueryVariables = {
 export type ListOrganizationsQuery = {
   listOrganizations?:  {
     __typename: "ModelOrganizationConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Organization",
       id: string,
       orgName: string,
@@ -17904,7 +18198,7 @@ export type ListOrganizationsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -18053,7 +18347,7 @@ export type ListActivitysQueryVariables = {
 export type ListActivitysQuery = {
   listActivitys?:  {
     __typename: "ModelActivityConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Activity",
       id: string,
       readUser: string,
@@ -18099,7 +18393,7 @@ export type ListActivitysQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -18275,7 +18569,7 @@ export type ListPaymentsQueryVariables = {
 export type ListPaymentsQuery = {
   listPayments?:  {
     __typename: "ModelPaymentConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Payment",
       id: string,
       productID?: string | null,
@@ -18336,7 +18630,7 @@ export type ListPaymentsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -18353,7 +18647,7 @@ export type GetCourseInfoQuery = {
     summary?: string | null,
     courseWeeks?:  {
       __typename: "ModelCourseWeekConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseWeek",
         id: string,
         week?: string | null,
@@ -18365,43 +18659,43 @@ export type GetCourseInfoQuery = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
     instructors?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     triads?:  {
       __typename: "ModelCourseTriadsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriads",
         id: string,
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -18422,7 +18716,7 @@ export type ListCourseInfosQueryVariables = {
 export type ListCourseInfosQuery = {
   listCourseInfos?:  {
     __typename: "ModelCourseInfoConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseInfo",
       id: string,
       designedBy?: string | null,
@@ -18450,7 +18744,7 @@ export type ListCourseInfosQuery = {
       sylabusAttachmentOwner?: string | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -18495,26 +18789,26 @@ export type GetCourseTriadsQuery = {
     } | null,
     coaches?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     users?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -18531,7 +18825,7 @@ export type ListCourseTriadssQueryVariables = {
 export type ListCourseTriadssQuery = {
   listCourseTriadss?:  {
     __typename: "ModelCourseTriadsConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseTriads",
       id: string,
       courseInfoID?: string | null,
@@ -18558,7 +18852,7 @@ export type ListCourseTriadssQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -18729,7 +19023,7 @@ export type ListCourseBackOfficeStaffsQueryVariables = {
 export type ListCourseBackOfficeStaffsQuery = {
   listCourseBackOfficeStaffs?:  {
     __typename: "ModelCourseBackOfficeStaffConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseBackOfficeStaff",
       id: string,
       courseInfoID?: string | null,
@@ -18781,7 +19075,7 @@ export type ListCourseBackOfficeStaffsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -18952,7 +19246,7 @@ export type ListCourseInstructorssQueryVariables = {
 export type ListCourseInstructorssQuery = {
   listCourseInstructorss?:  {
     __typename: "ModelCourseInstructorsConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseInstructors",
       id: string,
       courseInfoID?: string | null,
@@ -19004,7 +19298,7 @@ export type ListCourseInstructorssQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -19174,7 +19468,7 @@ export type ListCourseTriadCoachessQueryVariables = {
 export type ListCourseTriadCoachessQuery = {
   listCourseTriadCoachess?:  {
     __typename: "ModelCourseTriadCoachesConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseTriadCoaches",
       id: string,
       triadID?: string | null,
@@ -19220,7 +19514,7 @@ export type ListCourseTriadCoachessQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -19392,7 +19686,7 @@ export type ListCourseTriadUserssQueryVariables = {
 export type ListCourseTriadUserssQuery = {
   listCourseTriadUserss?:  {
     __typename: "ModelCourseTriadUsersConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseTriadUsers",
       id: string,
       triadID?: string | null,
@@ -19438,7 +19732,7 @@ export type ListCourseTriadUserssQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -19489,7 +19783,7 @@ export type GetCourseWeekQuery = {
     } | null,
     lessons?:  {
       __typename: "ModelCourseLessonConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseLesson",
         id: string,
         lesson?: string | null,
@@ -19506,7 +19800,7 @@ export type GetCourseWeekQuery = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -19523,7 +19817,7 @@ export type ListCourseWeeksQueryVariables = {
 export type ListCourseWeeksQuery = {
   listCourseWeeks?:  {
     __typename: "ModelCourseWeekConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseWeek",
       id: string,
       week?: string | null,
@@ -19552,7 +19846,7 @@ export type ListCourseWeeksQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -19621,7 +19915,7 @@ export type ListCourseLessonsQueryVariables = {
 export type ListCourseLessonsQuery = {
   listCourseLessons?:  {
     __typename: "ModelCourseLessonConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseLesson",
       id: string,
       lesson?: string | null,
@@ -19651,7 +19945,7 @@ export type ListCourseLessonsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -19810,7 +20104,7 @@ export type ListDirectMessageUsersQueryVariables = {
 export type ListDirectMessageUsersQuery = {
   listDirectMessageUsers?:  {
     __typename: "ModelDirectMessageUserConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "DirectMessageUser",
       id: string,
       userName?: string | null,
@@ -19858,7 +20152,7 @@ export type ListDirectMessageUsersQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -19874,7 +20168,7 @@ export type GetDirectMessageRoomQuery = {
     name?: string | null,
     messageUsers?:  {
       __typename: "ModelDirectMessageUserConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
         userName?: string | null,
@@ -19882,12 +20176,12 @@ export type GetDirectMessageRoomQuery = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -19900,7 +20194,7 @@ export type GetDirectMessageRoomQuery = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -19918,7 +20212,7 @@ export type ListDirectMessageRoomsQueryVariables = {
 export type ListDirectMessageRoomsQuery = {
   listDirectMessageRooms?:  {
     __typename: "ModelDirectMessageRoomConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "DirectMessageRoom",
       id: string,
       name?: string | null,
@@ -19933,7 +20227,7 @@ export type ListDirectMessageRoomsQuery = {
       roomType?: string | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -19955,7 +20249,7 @@ export type GetDirectMessageQuery = {
     userId: string,
     replies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -19970,7 +20264,7 @@ export type GetDirectMessageQuery = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -20117,7 +20411,7 @@ export type ListDirectMessagesQueryVariables = {
 export type ListDirectMessagesQuery = {
   listDirectMessages?:  {
     __typename: "ModelDirectMessageConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "DirectMessage",
       id: string,
       content?: string | null,
@@ -20174,7 +20468,7 @@ export type ListDirectMessagesQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -20189,7 +20483,7 @@ export type GetCrmRootQuery = {
     id: string,
     messages?:  {
       __typename: "ModelCRMMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMMessage",
         id: string,
         rootId: string,
@@ -20201,7 +20495,7 @@ export type GetCrmRootQuery = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -20218,7 +20512,7 @@ export type ListCrmRootsQueryVariables = {
 export type ListCrmRootsQuery = {
   listCRMRoots?:  {
     __typename: "ModelCRMRootConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CRMRoot",
       id: string,
       messages?:  {
@@ -20227,7 +20521,7 @@ export type ListCrmRootsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -20259,7 +20553,7 @@ export type GetCrmMessageQuery = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -20272,7 +20566,7 @@ export type GetCrmMessageQuery = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -20289,7 +20583,7 @@ export type ListCrmMessagesQueryVariables = {
 export type ListCrmMessagesQuery = {
   listCRMMessages?:  {
     __typename: "ModelCRMMessageConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CRMMessage",
       id: string,
       rootId: string,
@@ -20311,7 +20605,7 @@ export type ListCrmMessagesQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -20369,7 +20663,7 @@ export type ListCrmReplysQueryVariables = {
 export type ListCrmReplysQuery = {
   listCRMReplys?:  {
     __typename: "ModelCRMReplyConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CRMReply",
       id: string,
       rootId: string,
@@ -20395,7 +20689,7 @@ export type ListCrmReplysQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -20523,7 +20817,7 @@ export type GetMessageQuery = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -20537,7 +20831,7 @@ export type GetMessageQuery = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -20667,7 +20961,7 @@ export type ListMessagesQueryVariables = {
 export type ListMessagesQuery = {
   listMessages?:  {
     __typename: "ModelMessageConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Message",
       id: string,
       content: string,
@@ -20742,7 +21036,7 @@ export type ListMessagesQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -20761,7 +21055,7 @@ export type GetResourceRootQuery = {
     owner?: string | null,
     resources?:  {
       __typename: "ModelResourceConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Resource",
         id: string,
         owner?: string | null,
@@ -20776,7 +21070,7 @@ export type GetResourceRootQuery = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -20873,7 +21167,7 @@ export type GetResourceRootQuery = {
     } | null,
     menuItems?:  {
       __typename: "ModelResourceMenuItemConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceMenuItem",
         id: string,
         owner?: string | null,
@@ -20885,7 +21179,7 @@ export type GetResourceRootQuery = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -20902,7 +21196,7 @@ export type ListResourceRootsQueryVariables = {
 export type ListResourceRootsQuery = {
   listResourceRoots?:  {
     __typename: "ModelResourceRootConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "ResourceRoot",
       id: string,
       type?: string | null,
@@ -20948,7 +21242,7 @@ export type ListResourceRootsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21088,7 +21382,7 @@ export type ListResourceMenuItemsQueryVariables = {
 export type ListResourceMenuItemsQuery = {
   listResourceMenuItems?:  {
     __typename: "ModelResourceMenuItemConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "ResourceMenuItem",
       id: string,
       owner?: string | null,
@@ -21127,7 +21421,7 @@ export type ListResourceMenuItemsQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21174,7 +21468,7 @@ export type GetResourceQuery = {
     } | null > | null,
     series?:  {
       __typename: "ModelResourceSeriesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceSeries",
         id: string,
         owner?: string | null,
@@ -21188,7 +21482,7 @@ export type GetResourceQuery = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -21253,7 +21547,7 @@ export type ListResourcesQueryVariables = {
 export type ListResourcesQuery = {
   listResources?:  {
     __typename: "ModelResourceConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Resource",
       id: string,
       owner?: string | null,
@@ -21297,7 +21591,7 @@ export type ListResourcesQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21343,7 +21637,7 @@ export type GetResourceSeriesQuery = {
     } | null > | null,
     episodes?:  {
       __typename: "ModelResourceEpisodeConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
         owner?: string | null,
@@ -21355,7 +21649,7 @@ export type GetResourceSeriesQuery = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -21418,7 +21712,7 @@ export type ListResourceSeriessQueryVariables = {
 export type ListResourceSeriessQuery = {
   listResourceSeriess?:  {
     __typename: "ModelResourceSeriesConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "ResourceSeries",
       id: string,
       owner?: string | null,
@@ -21467,7 +21761,7 @@ export type ListResourceSeriessQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21574,7 +21868,7 @@ export type ListResourceEpisodesQueryVariables = {
 export type ListResourceEpisodesQuery = {
   listResourceEpisodes?:  {
     __typename: "ModelResourceEpisodeConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "ResourceEpisode",
       id: string,
       owner?: string | null,
@@ -21616,7 +21910,7 @@ export type ListResourceEpisodesQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21636,7 +21930,7 @@ export type GetProductQuery = {
     confirmationMsg?: string | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -21646,7 +21940,7 @@ export type GetProductQuery = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -21677,7 +21971,7 @@ export type ListProductsQueryVariables = {
 export type ListProductsQuery = {
   listProducts?:  {
     __typename: "ModelProductConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Product",
       id: string,
       price?: number | null,
@@ -21705,7 +21999,7 @@ export type ListProductsQuery = {
       } | null > | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21740,7 +22034,7 @@ export type ListVodAssetsQueryVariables = {
 export type ListVodAssetsQuery = {
   listVodAssets?:  {
     __typename: "ModelvodAssetConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "vodAsset",
       id: string,
       title: string,
@@ -21753,7 +22047,7 @@ export type ListVodAssetsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21780,12 +22074,137 @@ export type ListVideoObjectsQueryVariables = {
 export type ListVideoObjectsQuery = {
   listVideoObjects?:  {
     __typename: "ModelvideoObjectConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "videoObject",
       id: string,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetMenuQueryVariables = {
+  id?: string,
+};
+
+export type GetMenuQuery = {
+  getMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListMenusQueryVariables = {
+  filter?: ModelMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMenusQuery = {
+  listMenus?:  {
+    __typename: "ModelMenuConnection",
+    items:  Array< {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetSubMenuQueryVariables = {
+  id?: string,
+};
+
+export type GetSubMenuQuery = {
+  getSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListSubMenusQueryVariables = {
+  filter?: ModelSubMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSubMenusQuery = {
+  listSubMenus?:  {
+    __typename: "ModelSubMenuConnection",
+    items:  Array< {
+      __typename: "SubMenu",
+      id: string,
+      menuID?: string | null,
+      order?: number | null,
+      menu?:  {
+        __typename: "Menu",
+        id: string,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      createdAt: string,
+      updatedAt: string,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21802,7 +22221,7 @@ export type GroupMemberByGroupQueryVariables = {
 export type GroupMemberByGroupQuery = {
   groupMemberByGroup?:  {
     __typename: "ModelGroupMemberConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "GroupMember",
       id: string,
       groupID?: string | null,
@@ -21866,7 +22285,7 @@ export type GroupMemberByGroupQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21883,7 +22302,7 @@ export type GroupMemberByUserQueryVariables = {
 export type GroupMemberByUserQuery = {
   groupMemberByUser?:  {
     __typename: "ModelGroupMemberConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "GroupMember",
       id: string,
       groupID?: string | null,
@@ -21947,7 +22366,7 @@ export type GroupMemberByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -21964,7 +22383,7 @@ export type GroupByTypeByTimeQueryVariables = {
 export type GroupByTypeByTimeQuery = {
   groupByTypeByTime?:  {
     __typename: "ModelGroupConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Group",
       id: string,
       owner: string,
@@ -22067,7 +22486,7 @@ export type GroupByTypeByTimeQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22084,7 +22503,7 @@ export type GroupByTypeQueryVariables = {
 export type GroupByTypeQuery = {
   groupByType?:  {
     __typename: "ModelGroupConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Group",
       id: string,
       owner: string,
@@ -22187,7 +22606,7 @@ export type GroupByTypeQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22204,7 +22623,7 @@ export type ActivityByGroupQueryVariables = {
 export type ActivityByGroupQuery = {
   activityByGroup?:  {
     __typename: "ModelActivityConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Activity",
       id: string,
       readUser: string,
@@ -22250,7 +22669,7 @@ export type ActivityByGroupQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22266,7 +22685,7 @@ export type PaymentByUserQueryVariables = {
 export type PaymentByUserQuery = {
   paymentByUser?:  {
     __typename: "ModelPaymentConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Payment",
       id: string,
       productID?: string | null,
@@ -22327,7 +22746,7 @@ export type PaymentByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22343,7 +22762,7 @@ export type CourseTriadUserByUserQueryVariables = {
 export type CourseTriadUserByUserQuery = {
   courseTriadUserByUser?:  {
     __typename: "ModelCourseTriadUsersConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "CourseTriadUsers",
       id: string,
       triadID?: string | null,
@@ -22389,7 +22808,7 @@ export type CourseTriadUserByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22406,7 +22825,7 @@ export type DmUsersByUserQueryVariables = {
 export type DmUsersByUserQuery = {
   dmUsersByUser?:  {
     __typename: "ModelDirectMessageUserConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "DirectMessageUser",
       id: string,
       userName?: string | null,
@@ -22454,7 +22873,7 @@ export type DmUsersByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22471,7 +22890,7 @@ export type DirectMessagesByRoomQueryVariables = {
 export type DirectMessagesByRoomQuery = {
   directMessagesByRoom?:  {
     __typename: "ModelDirectMessageConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "DirectMessage",
       id: string,
       content?: string | null,
@@ -22528,7 +22947,7 @@ export type DirectMessagesByRoomQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22545,7 +22964,7 @@ export type MessagesByRoomQueryVariables = {
 export type MessagesByRoomQuery = {
   messagesByRoom?:  {
     __typename: "ModelMessageConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Message",
       id: string,
       content: string,
@@ -22620,7 +23039,7 @@ export type MessagesByRoomQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -22636,7 +23055,7 @@ export type SearchGroupsQueryVariables = {
 export type SearchGroupsQuery = {
   searchGroups?:  {
     __typename: "SearchableGroupConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "Group",
       id: string,
       owner: string,
@@ -22739,7 +23158,7 @@ export type SearchGroupsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
     total?: number | null,
   } | null,
@@ -22808,7 +23227,7 @@ export type GetUserQuery = {
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -22817,12 +23236,12 @@ export type GetUserQuery = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     owns?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -22846,24 +23265,24 @@ export type GetUserQuery = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     groups?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -22877,12 +23296,12 @@ export type GetUserQuery = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -22895,12 +23314,12 @@ export type GetUserQuery = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -22914,60 +23333,60 @@ export type GetUserQuery = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -22977,7 +23396,7 @@ export type GetUserQuery = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -23004,7 +23423,7 @@ export type ListUsersQueryVariables = {
 export type ListUsersQuery = {
   listUsers?:  {
     __typename: "ModelUserConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -23116,7 +23535,7 @@ export type ListUsersQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
   } | null,
 };
@@ -23132,7 +23551,7 @@ export type SearchUsersQueryVariables = {
 export type SearchUsersQuery = {
   searchUsers?:  {
     __typename: "SearchableUserConnection",
-    items?:  Array< {
+    items:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -23244,7 +23663,7 @@ export type SearchUsersQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
+    } >,
     nextToken?: string | null,
     total?: number | null,
   } | null,
@@ -23373,7 +23792,7 @@ export type OnCreateMessageByRoomIdSubscription = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -23387,7 +23806,7 @@ export type OnCreateMessageByRoomIdSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -23535,7 +23954,7 @@ export type OnCreateCrmMessageByRootIdSubscription = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -23548,7 +23967,7 @@ export type OnCreateCrmMessageByRootIdSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -24421,14 +24840,14 @@ export type OnCreateGroupSubscription = {
     memberCount?: number | null,
     members?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -24451,7 +24870,7 @@ export type OnCreateGroupSubscription = {
     promotionalText?: string | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -24465,7 +24884,7 @@ export type OnCreateGroupSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -24700,14 +25119,14 @@ export type OnUpdateGroupSubscription = {
     memberCount?: number | null,
     members?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -24730,7 +25149,7 @@ export type OnUpdateGroupSubscription = {
     promotionalText?: string | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -24744,7 +25163,7 @@ export type OnUpdateGroupSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -24979,14 +25398,14 @@ export type OnDeleteGroupSubscription = {
     memberCount?: number | null,
     members?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -25009,7 +25428,7 @@ export type OnDeleteGroupSubscription = {
     promotionalText?: string | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -25023,7 +25442,7 @@ export type OnDeleteGroupSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -25941,7 +26360,7 @@ export type OnCreateOrganizationSubscription = {
     } | null,
     subOrganizations?:  {
       __typename: "ModelOrganizationConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Organization",
         id: string,
         orgName: string,
@@ -25969,12 +26388,12 @@ export type OnCreateOrganizationSubscription = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     members?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -25983,12 +26402,12 @@ export type OnCreateOrganizationSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -26012,12 +26431,12 @@ export type OnCreateOrganizationSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resource?:  {
       __typename: "ModelResourceRootConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceRoot",
         id: string,
         type?: string | null,
@@ -26026,7 +26445,7 @@ export type OnCreateOrganizationSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -26173,7 +26592,7 @@ export type OnUpdateOrganizationSubscription = {
     } | null,
     subOrganizations?:  {
       __typename: "ModelOrganizationConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Organization",
         id: string,
         orgName: string,
@@ -26201,12 +26620,12 @@ export type OnUpdateOrganizationSubscription = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     members?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -26215,12 +26634,12 @@ export type OnUpdateOrganizationSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -26244,12 +26663,12 @@ export type OnUpdateOrganizationSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resource?:  {
       __typename: "ModelResourceRootConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceRoot",
         id: string,
         type?: string | null,
@@ -26258,7 +26677,7 @@ export type OnUpdateOrganizationSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -26405,7 +26824,7 @@ export type OnDeleteOrganizationSubscription = {
     } | null,
     subOrganizations?:  {
       __typename: "ModelOrganizationConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Organization",
         id: string,
         orgName: string,
@@ -26433,12 +26852,12 @@ export type OnDeleteOrganizationSubscription = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     members?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -26447,12 +26866,12 @@ export type OnDeleteOrganizationSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -26476,12 +26895,12 @@ export type OnDeleteOrganizationSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resource?:  {
       __typename: "ModelResourceRootConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceRoot",
         id: string,
         type?: string | null,
@@ -26490,7 +26909,7 @@ export type OnDeleteOrganizationSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -27383,7 +27802,7 @@ export type OnCreateCourseInfoSubscription = {
     summary?: string | null,
     courseWeeks?:  {
       __typename: "ModelCourseWeekConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseWeek",
         id: string,
         week?: string | null,
@@ -27395,43 +27814,43 @@ export type OnCreateCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
     instructors?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     triads?:  {
       __typename: "ModelCourseTriadsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriads",
         id: string,
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -27455,7 +27874,7 @@ export type OnUpdateCourseInfoSubscription = {
     summary?: string | null,
     courseWeeks?:  {
       __typename: "ModelCourseWeekConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseWeek",
         id: string,
         week?: string | null,
@@ -27467,43 +27886,43 @@ export type OnUpdateCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
     instructors?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     triads?:  {
       __typename: "ModelCourseTriadsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriads",
         id: string,
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -27527,7 +27946,7 @@ export type OnDeleteCourseInfoSubscription = {
     summary?: string | null,
     courseWeeks?:  {
       __typename: "ModelCourseWeekConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseWeek",
         id: string,
         week?: string | null,
@@ -27539,43 +27958,43 @@ export type OnDeleteCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
     instructors?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     triads?:  {
       __typename: "ModelCourseTriadsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriads",
         id: string,
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -27623,26 +28042,26 @@ export type OnCreateCourseTriadsSubscription = {
     } | null,
     coaches?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     users?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -27686,26 +28105,26 @@ export type OnUpdateCourseTriadsSubscription = {
     } | null,
     coaches?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     users?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -27749,26 +28168,26 @@ export type OnDeleteCourseTriadsSubscription = {
     } | null,
     coaches?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     users?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -29652,7 +30071,7 @@ export type OnCreateCourseWeekSubscription = {
     } | null,
     lessons?:  {
       __typename: "ModelCourseLessonConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseLesson",
         id: string,
         lesson?: string | null,
@@ -29669,7 +30088,7 @@ export type OnCreateCourseWeekSubscription = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -29723,7 +30142,7 @@ export type OnUpdateCourseWeekSubscription = {
     } | null,
     lessons?:  {
       __typename: "ModelCourseLessonConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseLesson",
         id: string,
         lesson?: string | null,
@@ -29740,7 +30159,7 @@ export type OnUpdateCourseWeekSubscription = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -29794,7 +30213,7 @@ export type OnDeleteCourseWeekSubscription = {
     } | null,
     lessons?:  {
       __typename: "ModelCourseLessonConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseLesson",
         id: string,
         lesson?: string | null,
@@ -29811,7 +30230,7 @@ export type OnDeleteCourseWeekSubscription = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -30414,7 +30833,7 @@ export type OnCreateDirectMessageRoomSubscription = {
     name?: string | null,
     messageUsers?:  {
       __typename: "ModelDirectMessageUserConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
         userName?: string | null,
@@ -30422,12 +30841,12 @@ export type OnCreateDirectMessageRoomSubscription = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -30440,7 +30859,7 @@ export type OnCreateDirectMessageRoomSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -30456,7 +30875,7 @@ export type OnUpdateDirectMessageRoomSubscription = {
     name?: string | null,
     messageUsers?:  {
       __typename: "ModelDirectMessageUserConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
         userName?: string | null,
@@ -30464,12 +30883,12 @@ export type OnUpdateDirectMessageRoomSubscription = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -30482,7 +30901,7 @@ export type OnUpdateDirectMessageRoomSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -30498,7 +30917,7 @@ export type OnDeleteDirectMessageRoomSubscription = {
     name?: string | null,
     messageUsers?:  {
       __typename: "ModelDirectMessageUserConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
         userName?: string | null,
@@ -30506,12 +30925,12 @@ export type OnDeleteDirectMessageRoomSubscription = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -30524,7 +30943,7 @@ export type OnDeleteDirectMessageRoomSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -30546,7 +30965,7 @@ export type OnCreateDirectMessageSubscription = {
     userId: string,
     replies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -30561,7 +30980,7 @@ export type OnCreateDirectMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -30712,7 +31131,7 @@ export type OnUpdateDirectMessageSubscription = {
     userId: string,
     replies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -30727,7 +31146,7 @@ export type OnUpdateDirectMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -30878,7 +31297,7 @@ export type OnDeleteDirectMessageSubscription = {
     userId: string,
     replies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -30893,7 +31312,7 @@ export type OnDeleteDirectMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -31187,7 +31606,7 @@ export type OnCreateDirectMessageReplySubscription = {
     } | null,
     subReplies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -31202,7 +31621,7 @@ export type OnCreateDirectMessageReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -31479,7 +31898,7 @@ export type OnUpdateDirectMessageReplySubscription = {
     } | null,
     subReplies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -31494,7 +31913,7 @@ export type OnUpdateDirectMessageReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -31771,7 +32190,7 @@ export type OnDeleteDirectMessageReplySubscription = {
     } | null,
     subReplies?:  {
       __typename: "ModelDirectMessageReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessageReply",
         id: string,
         content?: string | null,
@@ -31786,7 +32205,7 @@ export type OnDeleteDirectMessageReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -31913,7 +32332,7 @@ export type OnCreateCrmRootSubscription = {
     id: string,
     messages?:  {
       __typename: "ModelCRMMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMMessage",
         id: string,
         rootId: string,
@@ -31925,7 +32344,7 @@ export type OnCreateCrmRootSubscription = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -31939,7 +32358,7 @@ export type OnUpdateCrmRootSubscription = {
     id: string,
     messages?:  {
       __typename: "ModelCRMMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMMessage",
         id: string,
         rootId: string,
@@ -31951,7 +32370,7 @@ export type OnUpdateCrmRootSubscription = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -31965,7 +32384,7 @@ export type OnDeleteCrmRootSubscription = {
     id: string,
     messages?:  {
       __typename: "ModelCRMMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMMessage",
         id: string,
         rootId: string,
@@ -31977,7 +32396,7 @@ export type OnDeleteCrmRootSubscription = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32008,7 +32427,7 @@ export type OnCreateCrmMessageSubscription = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -32021,7 +32440,7 @@ export type OnCreateCrmMessageSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32052,7 +32471,7 @@ export type OnUpdateCrmMessageSubscription = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -32065,7 +32484,7 @@ export type OnUpdateCrmMessageSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32096,7 +32515,7 @@ export type OnDeleteCrmMessageSubscription = {
     attachmentOwner?: string | null,
     thread?:  {
       __typename: "ModelCRMReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CRMReply",
         id: string,
         rootId: string,
@@ -32109,7 +32528,7 @@ export type OnDeleteCrmMessageSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32356,7 +32775,7 @@ export type OnCreateMessageSubscription = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -32370,7 +32789,7 @@ export type OnCreateMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32610,7 +33029,7 @@ export type OnUpdateMessageSubscription = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -32624,7 +33043,7 @@ export type OnUpdateMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32864,7 +33283,7 @@ export type OnDeleteMessageSubscription = {
     } | null,
     replies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -32878,7 +33297,7 @@ export type OnDeleteMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33171,7 +33590,7 @@ export type OnCreateReplySubscription = {
     } | null,
     subReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -33185,7 +33604,7 @@ export type OnCreateReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33478,7 +33897,7 @@ export type OnUpdateReplySubscription = {
     } | null,
     subReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -33492,7 +33911,7 @@ export type OnUpdateReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33785,7 +34204,7 @@ export type OnDeleteReplySubscription = {
     } | null,
     subReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -33799,7 +34218,7 @@ export type OnDeleteReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33930,7 +34349,7 @@ export type OnCreateResourceRootSubscription = {
     owner?: string | null,
     resources?:  {
       __typename: "ModelResourceConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Resource",
         id: string,
         owner?: string | null,
@@ -33945,7 +34364,7 @@ export type OnCreateResourceRootSubscription = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -34042,7 +34461,7 @@ export type OnCreateResourceRootSubscription = {
     } | null,
     menuItems?:  {
       __typename: "ModelResourceMenuItemConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceMenuItem",
         id: string,
         owner?: string | null,
@@ -34054,7 +34473,7 @@ export type OnCreateResourceRootSubscription = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -34072,7 +34491,7 @@ export type OnUpdateResourceRootSubscription = {
     owner?: string | null,
     resources?:  {
       __typename: "ModelResourceConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Resource",
         id: string,
         owner?: string | null,
@@ -34087,7 +34506,7 @@ export type OnUpdateResourceRootSubscription = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -34184,7 +34603,7 @@ export type OnUpdateResourceRootSubscription = {
     } | null,
     menuItems?:  {
       __typename: "ModelResourceMenuItemConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceMenuItem",
         id: string,
         owner?: string | null,
@@ -34196,7 +34615,7 @@ export type OnUpdateResourceRootSubscription = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -34214,7 +34633,7 @@ export type OnDeleteResourceRootSubscription = {
     owner?: string | null,
     resources?:  {
       __typename: "ModelResourceConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Resource",
         id: string,
         owner?: string | null,
@@ -34229,7 +34648,7 @@ export type OnDeleteResourceRootSubscription = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -34326,7 +34745,7 @@ export type OnDeleteResourceRootSubscription = {
     } | null,
     menuItems?:  {
       __typename: "ModelResourceMenuItemConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceMenuItem",
         id: string,
         owner?: string | null,
@@ -34338,7 +34757,7 @@ export type OnDeleteResourceRootSubscription = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -34766,7 +35185,7 @@ export type OnCreateResourceSubscription = {
     } | null > | null,
     series?:  {
       __typename: "ModelResourceSeriesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceSeries",
         id: string,
         owner?: string | null,
@@ -34780,7 +35199,7 @@ export type OnCreateResourceSubscription = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -34878,7 +35297,7 @@ export type OnUpdateResourceSubscription = {
     } | null > | null,
     series?:  {
       __typename: "ModelResourceSeriesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceSeries",
         id: string,
         owner?: string | null,
@@ -34892,7 +35311,7 @@ export type OnUpdateResourceSubscription = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -34990,7 +35409,7 @@ export type OnDeleteResourceSubscription = {
     } | null > | null,
     series?:  {
       __typename: "ModelResourceSeriesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceSeries",
         id: string,
         owner?: string | null,
@@ -35004,7 +35423,7 @@ export type OnDeleteResourceSubscription = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -35101,7 +35520,7 @@ export type OnCreateResourceSeriesSubscription = {
     } | null > | null,
     episodes?:  {
       __typename: "ModelResourceEpisodeConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
         owner?: string | null,
@@ -35113,7 +35532,7 @@ export type OnCreateResourceSeriesSubscription = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -35208,7 +35627,7 @@ export type OnUpdateResourceSeriesSubscription = {
     } | null > | null,
     episodes?:  {
       __typename: "ModelResourceEpisodeConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
         owner?: string | null,
@@ -35220,7 +35639,7 @@ export type OnUpdateResourceSeriesSubscription = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -35315,7 +35734,7 @@ export type OnDeleteResourceSeriesSubscription = {
     } | null > | null,
     episodes?:  {
       __typename: "ModelResourceEpisodeConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
         owner?: string | null,
@@ -35327,7 +35746,7 @@ export type OnDeleteResourceSeriesSubscription = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -35671,7 +36090,7 @@ export type OnCreateProductSubscription = {
     confirmationMsg?: string | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -35681,7 +36100,7 @@ export type OnCreateProductSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -35714,7 +36133,7 @@ export type OnUpdateProductSubscription = {
     confirmationMsg?: string | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -35724,7 +36143,7 @@ export type OnUpdateProductSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -35757,7 +36176,7 @@ export type OnDeleteProductSubscription = {
     confirmationMsg?: string | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -35767,7 +36186,7 @@ export type OnDeleteProductSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -35867,6 +36286,174 @@ export type OnDeleteVideoObjectSubscription = {
   } | null,
 };
 
+export type OnCreateMenuSubscription = {
+  onCreateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateMenuSubscription = {
+  onUpdateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteMenuSubscription = {
+  onDeleteMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateSubMenuSubscription = {
+  onCreateSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateSubMenuSubscription = {
+  onUpdateSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteSubMenuSubscription = {
+  onDeleteSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
@@ -35926,7 +36513,7 @@ export type OnCreateUserSubscription = {
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -35935,12 +36522,12 @@ export type OnCreateUserSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     owns?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -35964,24 +36551,24 @@ export type OnCreateUserSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     groups?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -35995,12 +36582,12 @@ export type OnCreateUserSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -36013,12 +36600,12 @@ export type OnCreateUserSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -36032,60 +36619,60 @@ export type OnCreateUserSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -36095,7 +36682,7 @@ export type OnCreateUserSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -36172,7 +36759,7 @@ export type OnUpdateUserSubscription = {
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -36181,12 +36768,12 @@ export type OnUpdateUserSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     owns?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -36210,24 +36797,24 @@ export type OnUpdateUserSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     groups?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -36241,12 +36828,12 @@ export type OnUpdateUserSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -36259,12 +36846,12 @@ export type OnUpdateUserSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -36278,60 +36865,60 @@ export type OnUpdateUserSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -36341,7 +36928,7 @@ export type OnUpdateUserSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -36418,7 +37005,7 @@ export type OnDeleteUserSubscription = {
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "OrganizationMember",
         id: string,
         userRole: string,
@@ -36427,12 +37014,12 @@ export type OnDeleteUserSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     owns?:  {
       __typename: "ModelGroupConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Group",
         id: string,
         owner: string,
@@ -36456,24 +37043,24 @@ export type OnDeleteUserSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     groups?:  {
       __typename: "ModelGroupMemberConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "GroupMember",
         id: string,
         groupID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messages?:  {
       __typename: "ModelMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Message",
         id: string,
         content: string,
@@ -36487,12 +37074,12 @@ export type OnDeleteUserSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
       __typename: "ModelDirectMessageConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "DirectMessage",
         id: string,
         content?: string | null,
@@ -36505,12 +37092,12 @@ export type OnDeleteUserSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
       __typename: "ModelReplyConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Reply",
         id: string,
         content: string,
@@ -36524,60 +37111,60 @@ export type OnDeleteUserSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
       __typename: "ModelCourseTriadCoachesConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadCoaches",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
       __typename: "ModelCourseTriadUsersConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseTriadUsers",
         id: string,
         triadID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
       __typename: "ModelCourseInstructorsConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseInstructors",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
       __typename: "ModelCourseBackOfficeStaffConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID?: string | null,
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     payments?:  {
       __typename: "ModelPaymentConnection",
-      items?:  Array< {
+      items:  Array< {
         __typename: "Payment",
         id: string,
         productID?: string | null,
@@ -36587,7 +37174,7 @@ export type OnDeleteUserSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
+      } >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {

@@ -11208,6 +11208,162 @@ export const onDeleteVideoObject = /* GraphQL */ `
     }
   }
 `
+export const onCreateMenu = /* GraphQL */ `
+  subscription OnCreateMenu {
+    onCreateMenu {
+      id
+      order
+      name
+      action
+      readGroups
+      subItems {
+        items {
+          id
+          menuID
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateMenu = /* GraphQL */ `
+  subscription OnUpdateMenu {
+    onUpdateMenu {
+      id
+      order
+      name
+      action
+      readGroups
+      subItems {
+        items {
+          id
+          menuID
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteMenu = /* GraphQL */ `
+  subscription OnDeleteMenu {
+    onDeleteMenu {
+      id
+      order
+      name
+      action
+      readGroups
+      subItems {
+        items {
+          id
+          menuID
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onCreateSubMenu = /* GraphQL */ `
+  subscription OnCreateSubMenu {
+    onCreateSubMenu {
+      id
+      menuID
+      order
+      menu {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      action
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateSubMenu = /* GraphQL */ `
+  subscription OnUpdateSubMenu {
+    onUpdateSubMenu {
+      id
+      menuID
+      order
+      menu {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      action
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteSubMenu = /* GraphQL */ `
+  subscription OnDeleteSubMenu {
+    onDeleteSubMenu {
+      id
+      menuID
+      order
+      menu {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      action
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {

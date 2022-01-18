@@ -163,7 +163,7 @@
         "S3Trigger839efa13": {},
         "AdminQueries7403b6cf": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/AdminQueries7403b6cf-534c37364331766e4f79-build.zip"
+          "s3Key": "amplify-builds/AdminQueries7403b6cf-544c346a684e50343973-build.zip"
         },
         "jcmobilePreSignup": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",

@@ -22,7 +22,7 @@ export type CourseInfo = {
 
 export type ModelCourseWeekConnection = {
   __typename: "ModelCourseWeekConnection"
-  items?: Array<CourseWeek | null> | null
+  items?: Array<CourseWeek>
   nextToken?: string | null
 }
 
@@ -44,7 +44,7 @@ export type CourseWeek = {
 
 export type ModelCourseLessonConnection = {
   __typename: "ModelCourseLessonConnection"
-  items?: Array<CourseLesson | null> | null
+  items?: Array<CourseLesson>
   nextToken?: string | null
 }
 
@@ -70,7 +70,7 @@ export type CourseLesson = {
 
 export type ModelCourseInstructorsConnection = {
   __typename: "ModelCourseInstructorsConnection"
-  items?: Array<CourseInstructors | null> | null
+  items?: Array<CourseInstructors>
   nextToken?: string | null
 }
 
@@ -172,7 +172,7 @@ export type Image = {
 
 export type ModelOrganizationMemberConnection = {
   __typename: "ModelOrganizationMemberConnection"
-  items?: Array<OrganizationMember | null> | null
+  items?: Array<OrganizationMember>
   nextToken?: string | null
 }
 
@@ -228,13 +228,13 @@ export type Organization = {
 
 export type ModelOrganizationConnection = {
   __typename: "ModelOrganizationConnection"
-  items?: Array<Organization | null> | null
+  items?: Array<Organization>
   nextToken?: string | null
 }
 
 export type ModelGroupConnection = {
   __typename: "ModelGroupConnection"
-  items?: Array<Group | null> | null
+  items?: Array<Group>
   nextToken?: string | null
 }
 
@@ -288,7 +288,7 @@ export enum UserGroupType {
 
 export type ModelGroupMemberConnection = {
   __typename: "ModelGroupMemberConnection"
-  items?: Array<GroupMember | null> | null
+  items?: Array<GroupMember>
   nextToken?: string | null
 }
 
@@ -305,7 +305,7 @@ export type GroupMember = {
 
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection"
-  items?: Array<Message | null> | null
+  items?: Array<Message>
   nextToken?: string | null
 }
 
@@ -330,7 +330,7 @@ export type Message = {
 
 export type ModelReplyConnection = {
   __typename: "ModelReplyConnection"
-  items?: Array<Reply | null> | null
+  items?: Array<Reply>
   nextToken?: string | null
 }
 
@@ -356,7 +356,7 @@ export type Reply = {
 
 export type ModelResourceRootConnection = {
   __typename: "ModelResourceRootConnection"
-  items?: Array<ResourceRoot | null> | null
+  items?: Array<ResourceRoot>
   nextToken?: string | null
 }
 
@@ -376,7 +376,7 @@ export type ResourceRoot = {
 
 export type ModelResourceConnection = {
   __typename: "ModelResourceConnection"
-  items?: Array<Resource | null> | null
+  items?: Array<Resource>
   nextToken?: string | null
 }
 
@@ -419,7 +419,7 @@ export enum ResourceDetailType {
 
 export type ModelResourceSeriesConnection = {
   __typename: "ModelResourceSeriesConnection"
-  items?: Array<ResourceSeries | null> | null
+  items?: Array<ResourceSeries>
   nextToken?: string | null
 }
 
@@ -445,7 +445,7 @@ export type ResourceSeries = {
 
 export type ModelResourceEpisodeConnection = {
   __typename: "ModelResourceEpisodeConnection"
-  items?: Array<ResourceEpisode | null> | null
+  items?: Array<ResourceEpisode>
   nextToken?: string | null
 }
 
@@ -468,7 +468,7 @@ export type ResourceEpisode = {
 
 export type ModelResourceMenuItemConnection = {
   __typename: "ModelResourceMenuItemConnection"
-  items?: Array<ResourceMenuItem | null> | null
+  items?: Array<ResourceMenuItem>
   nextToken?: string | null
 }
 
@@ -561,7 +561,7 @@ export enum ResourcePageItemStyle {
 
 export type ModelDirectMessageConnection = {
   __typename: "ModelDirectMessageConnection"
-  items?: Array<DirectMessage | null> | null
+  items?: Array<DirectMessage>
   nextToken?: string | null
 }
 
@@ -585,7 +585,7 @@ export type DirectMessage = {
 
 export type ModelDirectMessageReplyConnection = {
   __typename: "ModelDirectMessageReplyConnection"
-  items?: Array<DirectMessageReply | null> | null
+  items?: Array<DirectMessageReply>
   nextToken?: string | null
 }
 
@@ -623,7 +623,7 @@ export type DirectMessageRoom = {
 
 export type ModelDirectMessageUserConnection = {
   __typename: "ModelDirectMessageUserConnection"
-  items?: Array<DirectMessageUser | null> | null
+  items?: Array<DirectMessageUser>
   nextToken?: string | null
 }
 
@@ -641,7 +641,7 @@ export type DirectMessageUser = {
 
 export type ModelCourseTriadCoachesConnection = {
   __typename: "ModelCourseTriadCoachesConnection"
-  items?: Array<CourseTriadCoaches | null> | null
+  items?: Array<CourseTriadCoaches>
   nextToken?: string | null
 }
 
@@ -669,7 +669,7 @@ export type CourseTriads = {
 
 export type ModelCourseTriadUsersConnection = {
   __typename: "ModelCourseTriadUsersConnection"
-  items?: Array<CourseTriadUsers | null> | null
+  items?: Array<CourseTriadUsers>
   nextToken?: string | null
 }
 
@@ -686,7 +686,7 @@ export type CourseTriadUsers = {
 
 export type ModelCourseBackOfficeStaffConnection = {
   __typename: "ModelCourseBackOfficeStaffConnection"
-  items?: Array<CourseBackOfficeStaff | null> | null
+  items?: Array<CourseBackOfficeStaff>
   nextToken?: string | null
 }
 
@@ -703,7 +703,7 @@ export type CourseBackOfficeStaff = {
 
 export type ModelPaymentConnection = {
   __typename: "ModelPaymentConnection"
-  items?: Array<Payment | null> | null
+  items?: Array<Payment>
   nextToken?: string | null
 }
 
@@ -763,7 +763,7 @@ export type AlertConfig = {
 
 export type ModelCourseTriadsConnection = {
   __typename: "ModelCourseTriadsConnection"
-  items?: Array<CourseTriads | null> | null
+  items?: Array<CourseTriads>
   nextToken?: string | null
 }
 
@@ -782,7 +782,7 @@ export type GetCourseInfoQuery = {
     sylabusAttachment?: string | null
     backOfficeStaff?: {
       __typename: "ModelCourseBackOfficeStaffConnection"
-      items?: Array<{
+      items: Array<{
         __typename: "CourseBackOfficeStaff"
         id: string
         courseInfoID?: string | null
@@ -876,11 +876,11 @@ export type GetCourseInfoQuery = {
         } | null
         createdAt: string
         updatedAt: string
-      } | null> | null
+      }>
     } | null
     instructors?: {
       __typename: "ModelCourseInstructorsConnection"
-      items?: Array<{
+      items: Array<{
         __typename: "CourseInstructors"
         id: string
         courseInfoID?: string | null
@@ -974,11 +974,11 @@ export type GetCourseInfoQuery = {
         } | null
         createdAt: string
         updatedAt: string
-      } | null> | null
+      }>
     } | null
     courseWeeks?: {
       __typename: "ModelCourseWeekConnection"
-      items?: Array<{
+      items: Array<{
         __typename: "CourseWeek"
         id: string
         week?: string | null
@@ -989,7 +989,7 @@ export type GetCourseInfoQuery = {
         leader?: string | null
         lessons?: {
           __typename: "ModelCourseLessonConnection"
-          items?: Array<{
+          items: Array<{
             __typename: "CourseLesson"
             id: string
             lesson?: string | null
@@ -1005,25 +1005,25 @@ export type GetCourseInfoQuery = {
             description?: string | null
             createdAt: string
             updatedAt: string
-          } | null> | null
+          }>
           nextToken?: string | null
         } | null
         createdAt: string
         updatedAt: string
-      } | null> | null
+      }>
       nextToken?: string | null
     } | null
     subTitle?: string | null
     introduction?: string | null
     triads?: {
       __typename: "ModelCourseTriadsConnection"
-      items?: Array<{
+      items: Array<{
         __typename: "CourseTriads"
         id: string
         courseInfoID?: string | null
         coaches?: {
           __typename: "ModelCourseTriadCoachesConnection"
-          items?: Array<{
+          items: Array<{
             __typename: "CourseTriadCoaches"
             id: string
             triadID?: string | null
@@ -1047,12 +1047,12 @@ export type GetCourseInfoQuery = {
             } | null
             createdAt: string
             updatedAt: string
-          } | null> | null
+          }>
           nextToken?: string | null
         } | null
         users?: {
           __typename: "ModelCourseTriadUsersConnection"
-          items?: Array<{
+          items: Array<{
             __typename: "CourseTriadUsers"
             id: string
             triadID?: string | null
@@ -1076,12 +1076,12 @@ export type GetCourseInfoQuery = {
             } | null
             createdAt: string
             updatedAt: string
-          } | null> | null
+          }>
           nextToken?: string | null
         } | null
         createdAt: string
         updatedAt: string
-      } | null> | null
+      }>
       nextToken?: string | null
     } | null
     createdAt: string

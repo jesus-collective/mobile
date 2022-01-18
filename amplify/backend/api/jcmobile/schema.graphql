@@ -1362,3 +1362,39 @@ type videoObject @model
 {
   id:ID!
 }
+
+
+type Menu
+@model
+@auth(
+  rules: [
+    {allow: groups, groupsField: "readGroups", operations: [read] }
+    {allow: groups, groups:["admin"], operations: [create, update, delete, read]},
+  ]
+)
+{
+  id:ID!
+  order:Int
+  name:String
+  action:String
+  readGroups:[UserGroupType]
+  subItems: [SubMenu] @connection(name:"subMenuMenu",keyField: "menuID",sortField:"order")
+
+}
+type SubMenu
+@model
+@auth(
+  rules: [
+    {allow: groups, groupsField: "readGroups", operations: [read] }
+    {allow: groups, groups:["admin"], operations: [create, update, delete, read]},
+  ]
+)
+{
+  id:ID!
+  menuID:String
+  order:Int
+  menu:Menu @connection(name:"subMenuMenu",keyField:"menuID")
+  name:String
+  action:String
+  readGroups:[UserGroupType]
+}
