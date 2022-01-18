@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "jc_mobile44a13962_identitypool_44a13962",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "jcmobi44a13962",
     "userPoolName": "jc_mobile44a13962_userpool_44a13962",
     "autoVerifiedAttributes": [

@@ -144,7 +144,7 @@ class BillingImpl extends JCComponent<Props, State> {
               {
                 currentProduct: [listProducts.data.listProducts.items[0]],
                 quantities: [
-                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(1),
+                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(25),
                 ],
               },
               async () => {
@@ -663,7 +663,11 @@ class BillingImpl extends JCComponent<Props, State> {
                       onPress={() => {
                         this.completePaymentProcess(userActions, userState)
                       }}
-                      buttonType={ButtonTypes.Solid}
+                      buttonType={
+                        this.state.brand == "oneStory"
+                          ? ButtonTypes.SolidOneStory
+                          : ButtonTypes.Solid
+                      }
                       enabled={!this.state.validatingUser}
                     >
                       {this.state.validatingUser ? (
@@ -706,38 +710,6 @@ class BillingImpl extends JCComponent<Props, State> {
 
                   <Content style={{ display: this.state.processing == "entry" ? "flex" : "none" }}>
                     <View style={this.styles.style.signUpScreen1PaymentColumn1Form}>
-                      {this.state.brand == "oneStory" && (
-                        <Text>
-                          You are in the right place to sign up for One Story Curriculum! One Story
-                          is excited to partner with Jesus Collective in this tangible way and
-                          provide our curriculum through the Jesus Collective platform. Through this
-                          platform, you not only access these great discipleship resources for kids
-                          and youth in a super easy to use way, but you also get the benefit of
-                          having meaningful interaction and engagement with other One Story users to
-                          give feedback, share ideas and more.
-                          <br />
-                          <br />
-                          What is Jesus Collective, you ask? Jesus Collective is a relational
-                          Jesus-centred network that provides a place of belonging, learning and
-                          resourcing for like-minded churches and leaders, develops and supports
-                          future ready leaders, and equips churches to make more disciples in a
-                          post-Christian context. Jesus Collective wants to give greater voice and
-                          visibility to this Jesus-centred, third-way movement God is raising up
-                          around the world. Isn’t that exciting?
-                          <br />
-                          <br />
-                          Learn more here:{" "}
-                          <a href="https://jesuscollective.com">jesuscollective.com.</a>
-                          <br />
-                          <br />
-                          <a href="https://jesuscollective.com/get-involved">
-                            Apply for Partnerships
-                          </a>
-                          <br />
-                          <br />
-                          <br />
-                        </Text>
-                      )}
                       <Text
                         accessibilityRole="header"
                         style={{
@@ -1186,7 +1158,9 @@ class BillingImpl extends JCComponent<Props, State> {
                         <JCButton
                           accessibilityLabel="Process Payment"
                           testID={"billing-processPayment-button"}
-                          buttonType={ButtonTypes.Solid}
+                          buttonType={
+                            this.state.brand ? ButtonTypes.SolidOneStory : ButtonTypes.Solid
+                          }
                           onPress={() => {
                             this.setState({ errorMsg: "" })
                             this.makePayment(stripe, elements)

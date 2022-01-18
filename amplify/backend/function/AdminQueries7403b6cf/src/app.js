@@ -57,9 +57,8 @@ const checkGroup = function (req, res, next) {
 
   // Fail if group enforcement is being used
   if (req.apiGateway.event.requestContext.authorizer.claims["cognito:groups"]) {
-    const groups = req.apiGateway.event.requestContext.authorizer.claims["cognito:groups"].split(
-      ","
-    )
+    const groups =
+      req.apiGateway.event.requestContext.authorizer.claims["cognito:groups"].split(",")
     if (!(allowedGroup && groups.indexOf(allowedGroup) > -1)) {
       const err = new Error(`User does not have permissions to perform administrative tasks`)
       next(err)

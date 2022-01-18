@@ -41,6 +41,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
     actions.updateHasCompletedPersonalProfile()
   }
   render(): React.ReactNode {
+    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
     return (
       <SignUpScreen3Impl.UserConsumer>
         {({ userState, userActions }) => {
@@ -71,7 +72,8 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                             marginRight: 15,
                             paddingVertical: 5,
                             borderBottomWidth: this.state.selected === "profile" ? 7 : 0,
-                            borderBottomColor: "#F0493E",
+                            borderBottomColor:
+                              brand == "oneStory" ? "rgb(255, 198, 41)" : "#F0493E",
                           }}
                         >
                           <JCButton
@@ -89,7 +91,8 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                           style={{
                             paddingVertical: 5,
                             borderBottomWidth: this.state.selected === "organization" ? 7 : 0,
-                            borderBottomColor: "#F0493E",
+                            borderBottomColor:
+                              brand == "oneStory" ? "rgb(255, 198, 41)" : "#F0493E",
                           }}
                         >
                           <JCButton

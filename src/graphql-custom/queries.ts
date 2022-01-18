@@ -1,3 +1,32 @@
+export const listMenus = /* GraphQL */ `
+  query ListMenus($filter: ModelMenuFilterInput, $limit: Int, $nextToken: String) {
+    listMenus(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        action
+        order
+        readGroups
+        subItems {
+          items {
+            id
+            menuID
+            order
+            name
+            action
+            readGroups
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
 export const listDirectMessageRooms = /* GraphQL */ `
   query ListDirectMessageRooms(
     $filter: ModelDirectMessageRoomFilterInput

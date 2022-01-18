@@ -121,6 +121,10 @@ class AwesomeApp extends JCComponent<Props, State> {
     Asset.fromModule(require("./assets/SignUp/progress-2.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
     Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
     Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-1-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-2-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-3-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-4-oneStory.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
   }
   renderFallback(): string {
     return ""
@@ -137,18 +141,22 @@ class AwesomeApp extends JCComponent<Props, State> {
     else if (state == "signIn") {
       RootNavigation.navigate("auth", {
         screen: "signin",
-        params: {
-          brand: data?.brand,
-          email: data?.email,
-          fromVerified: data?.fromVerified,
-        },
+        brand: data?.brand,
+        email: data?.email,
+        fromVerified: data?.fromVerified,
       })
-    } else if (state == "forgotPassword") RootNavigation.navigate("forgotpassword", {})
-    else if (state == "requireNewPassword") RootNavigation.navigate("requirenewpassword", {})
-    else if (state == "verifyContact") RootNavigation.navigate("verifycontact", {})
-    else if (state == "confirmSignIn") RootNavigation.navigate("confirmsignin", {})
+    } else if (state == "forgotPassword")
+      RootNavigation.navigate("forgotpassword", {
+        brand: RootNavigation.getRoot()?.params?.brand,
+      })
+    else if (state == "requireNewPassword")
+      RootNavigation.navigate("requirenewpassword", { brand: data?.brand })
+    else if (state == "verifyContact")
+      RootNavigation.navigate("verifycontact", { brand: data?.brand })
+    else if (state == "confirmSignIn")
+      RootNavigation.navigate("confirmsignin", { brand: data?.brand })
     else if (state == "confirmSignUp")
-      RootNavigation.navigate("confirmsignup", { email: data?.email })
+      RootNavigation.navigate("confirmsignup", { email: data?.email, brand: data?.brand })
     else if (state == "signedIn") {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       if (
@@ -172,10 +180,10 @@ class AwesomeApp extends JCComponent<Props, State> {
       } else {
         RootNavigation.navigate("auth", {
           screen: "Payment1",
-          params: {
-            joinedProduct: data?.joinedProduct,
-            brand: data?.brand,
-          },
+          // params: {
+          joinedProduct: data?.joinedProduct,
+          brand: data?.brand,
+          //},
         })
       }
     }
@@ -205,7 +213,7 @@ class AwesomeApp extends JCComponent<Props, State> {
             this.state.authState != "loading" &&
             this.state.authState != "" ? (
               <Suspense fallback={this.renderFallback()}>
-                <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
+                <SignUpSidebar text={true} />
               </Suspense>
             ) : null
           ) : null}

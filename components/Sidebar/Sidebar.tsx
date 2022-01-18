@@ -15,6 +15,7 @@ const routes = [
     name: "Events",
     route: "EventsScreen",
   },
+
   {
     name: "Groups",
     route: "GroupsScreen",

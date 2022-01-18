@@ -2,13 +2,15 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type ModelDirectMessageRoomFilterInput = {
+export type ModelMenuFilterInput = {
   id?: ModelIDFilterInput | null
+  order?: ModelIntFilterInput | null
   name?: ModelStringFilterInput | null
-  roomType?: ModelStringFilterInput | null
-  and?: Array<ModelDirectMessageRoomFilterInput | null> | null
-  or?: Array<ModelDirectMessageRoomFilterInput | null> | null
-  not?: ModelDirectMessageRoomFilterInput | null
+  action?: ModelStringFilterInput | null
+  readGroups?: ModelUserGroupTypeListFilterInput | null
+  and?: Array<ModelMenuFilterInput | null> | null
+  or?: Array<ModelMenuFilterInput | null> | null
+  not?: ModelMenuFilterInput | null
 }
 
 export type ModelIDFilterInput = {
@@ -24,6 +26,16 @@ export type ModelIDFilterInput = {
   beginsWith?: string | null
 }
 
+export type ModelIntFilterInput = {
+  ne?: number | null
+  eq?: number | null
+  le?: number | null
+  lt?: number | null
+  ge?: number | null
+  gt?: number | null
+  between?: Array<number | null> | null
+}
+
 export type ModelStringFilterInput = {
   ne?: string | null
   eq?: string | null
@@ -35,6 +47,76 @@ export type ModelStringFilterInput = {
   notContains?: string | null
   between?: Array<string | null> | null
   beginsWith?: string | null
+}
+
+export type ModelUserGroupTypeListFilterInput = {
+  eq?: Array<UserGroupType | null> | null
+  ne?: Array<UserGroupType | null> | null
+  contains?: UserGroupType | null
+  notContains?: UserGroupType | null
+}
+
+export enum UserGroupType {
+  verifiedUsers = "verifiedUsers",
+  admin = "admin",
+  courseAdmin = "courseAdmin",
+  courseCoach = "courseCoach",
+  courseUser = "courseUser",
+  friends = "friends",
+  partners = "partners",
+  subscriptionPartners = "subscriptionPartners",
+  subscriptionkyearlyyears = "subscriptionkyearlyyears",
+  subscriptionkykids = "subscriptionkykids",
+  subscriptionkyyouth = "subscriptionkyyouth",
+  subscriptionValid = "subscriptionValid",
+  userpool = "userpool",
+  legacyUserGroup1 = "legacyUserGroup1",
+}
+
+export type ModelMenuConnection = {
+  __typename: "ModelMenuConnection"
+  items?: Array<Menu>
+  nextToken?: string | null
+}
+
+export type Menu = {
+  __typename: "Menu"
+  id?: string
+  order?: number | null
+  name?: string | null
+  action?: string | null
+  readGroups?: Array<UserGroupType | null> | null
+  subItems?: ModelSubMenuConnection
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type ModelSubMenuConnection = {
+  __typename: "ModelSubMenuConnection"
+  items?: Array<SubMenu>
+  nextToken?: string | null
+}
+
+export type SubMenu = {
+  __typename: "SubMenu"
+  id?: string
+  menuID?: string | null
+  order?: number | null
+  menu?: Menu
+  name?: string | null
+  action?: string | null
+  readGroups?: Array<UserGroupType | null> | null
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type ModelDirectMessageRoomFilterInput = {
+  id?: ModelIDFilterInput | null
+  name?: ModelStringFilterInput | null
+  roomType?: ModelStringFilterInput | null
+  and?: Array<ModelDirectMessageRoomFilterInput | null> | null
+  or?: Array<ModelDirectMessageRoomFilterInput | null> | null
+  not?: ModelDirectMessageRoomFilterInput | null
 }
 
 export type ModelDirectMessageRoomConnection = {
@@ -254,23 +336,6 @@ export type Group = {
   createdAt?: string
   updatedAt?: string
   ownerUser?: User
-}
-
-export enum UserGroupType {
-  verifiedUsers = "verifiedUsers",
-  admin = "admin",
-  courseAdmin = "courseAdmin",
-  courseCoach = "courseCoach",
-  courseUser = "courseUser",
-  friends = "friends",
-  partners = "partners",
-  subscriptionPartners = "subscriptionPartners",
-  subscriptionkyearlyyears = "subscriptionkyearlyyears",
-  subscriptionkykids = "subscriptionkykids",
-  subscriptionkyyouth = "subscriptionkyyouth",
-  subscriptionValid = "subscriptionValid",
-  userpool = "userpool",
-  legacyUserGroup1 = "legacyUserGroup1",
 }
 
 export type ModelGroupMemberConnection = {
@@ -863,16 +928,6 @@ export enum ActivityActionType {
   courses_youtube_create = "courses_youtube_create",
 }
 
-export type ModelIntFilterInput = {
-  ne?: number | null
-  eq?: number | null
-  le?: number | null
-  lt?: number | null
-  ge?: number | null
-  gt?: number | null
-  between?: Array<number | null> | null
-}
-
 export type ModelActivityConnection = {
   __typename: "ModelActivityConnection"
   items?: Array<Activity>
@@ -922,13 +977,6 @@ export type ModelGroupFilterInput = {
   not?: ModelGroupFilterInput | null
 }
 
-export type ModelUserGroupTypeListFilterInput = {
-  eq?: Array<UserGroupType | null> | null
-  ne?: Array<UserGroupType | null> | null
-  contains?: UserGroupType | null
-  notContains?: UserGroupType | null
-}
-
 export type ModelIDKeyConditionInput = {
   eq?: string | null
   le?: string | null
@@ -947,6 +995,44 @@ export type ModelDirectMessageUserFilterInput = {
   and?: Array<ModelDirectMessageUserFilterInput | null> | null
   or?: Array<ModelDirectMessageUserFilterInput | null> | null
   not?: ModelDirectMessageUserFilterInput | null
+}
+
+export type ListMenusQueryVariables = {
+  filter?: ModelMenuFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListMenusQuery = {
+  listMenus?: {
+    __typename: "ModelMenuConnection"
+    items: Array<{
+      __typename: "Menu"
+      id: string
+      name?: string | null
+      action?: string | null
+      order?: number | null
+      readGroups?: Array<UserGroupType | null> | null
+      subItems?: {
+        __typename: "ModelSubMenuConnection"
+        items: Array<{
+          __typename: "SubMenu"
+          id: string
+          menuID?: string | null
+          order?: number | null
+          name?: string | null
+          action?: string | null
+          readGroups?: Array<UserGroupType | null> | null
+          createdAt: string
+          updatedAt: string
+        }>
+        nextToken?: string | null
+      } | null
+      createdAt: string
+      updatedAt: string
+    }>
+    nextToken?: string | null
+  } | null
 }
 
 export type ListDirectMessageRoomsQueryVariables = {

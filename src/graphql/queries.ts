@@ -4144,6 +4144,103 @@ export const listVideoObjects = /* GraphQL */ `
     }
   }
 `
+export const getMenu = /* GraphQL */ `
+  query GetMenu($id: ID!) {
+    getMenu(id: $id) {
+      id
+      order
+      name
+      action
+      readGroups
+      subItems {
+        items {
+          id
+          menuID
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listMenus = /* GraphQL */ `
+  query ListMenus($filter: ModelMenuFilterInput, $limit: Int, $nextToken: String) {
+    listMenus(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
+export const getSubMenu = /* GraphQL */ `
+  query GetSubMenu($id: ID!) {
+    getSubMenu(id: $id) {
+      id
+      menuID
+      order
+      menu {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      action
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listSubMenus = /* GraphQL */ `
+  query ListSubMenus($filter: ModelSubMenuFilterInput, $limit: Int, $nextToken: String) {
+    listSubMenus(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        menuID
+        order
+        menu {
+          id
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        name
+        action
+        readGroups
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
 export const groupMemberByGroup = /* GraphQL */ `
   query GroupMemberByGroup(
     $groupID: ID

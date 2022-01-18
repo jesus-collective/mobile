@@ -34,6 +34,7 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
     await actions.recheckUserState()
   }
   render(): React.ReactNode {
+    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
     return (
       <SignUpScreen1Impl.UserConsumer>
         {({ userState, userActions }) => {
@@ -81,7 +82,9 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
                         onPress={() => {
                           this.completePaymentProcess(userActions, userState)
                         }}
-                        buttonType={ButtonTypes.Solid}
+                        buttonType={
+                          brand == "oneStory" ? ButtonTypes.SolidOneStory : ButtonTypes.Solid
+                        }
                       >
                         Continue to Your Profile
                       </JCButton>

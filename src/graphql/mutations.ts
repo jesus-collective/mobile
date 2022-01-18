@@ -12206,3 +12206,159 @@ export const deleteVideoObject = /* GraphQL */ `
     }
   }
 `
+export const createMenu = /* GraphQL */ `
+  mutation CreateMenu($input: CreateMenuInput!) {
+    createMenu(input: $input) {
+      id
+      order
+      name
+      action
+      readGroups
+      subItems {
+        items {
+          id
+          menuID
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateMenu = /* GraphQL */ `
+  mutation UpdateMenu($input: UpdateMenuInput!) {
+    updateMenu(input: $input) {
+      id
+      order
+      name
+      action
+      readGroups
+      subItems {
+        items {
+          id
+          menuID
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteMenu = /* GraphQL */ `
+  mutation DeleteMenu($input: DeleteMenuInput!) {
+    deleteMenu(input: $input) {
+      id
+      order
+      name
+      action
+      readGroups
+      subItems {
+        items {
+          id
+          menuID
+          order
+          name
+          action
+          readGroups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const createSubMenu = /* GraphQL */ `
+  mutation CreateSubMenu($input: CreateSubMenuInput!) {
+    createSubMenu(input: $input) {
+      id
+      menuID
+      order
+      menu {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      action
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateSubMenu = /* GraphQL */ `
+  mutation UpdateSubMenu($input: UpdateSubMenuInput!) {
+    updateSubMenu(input: $input) {
+      id
+      menuID
+      order
+      menu {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      action
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteSubMenu = /* GraphQL */ `
+  mutation DeleteSubMenu($input: DeleteSubMenuInput!) {
+    deleteSubMenu(input: $input) {
+      id
+      menuID
+      order
+      menu {
+        id
+        order
+        name
+        action
+        readGroups
+        subItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      action
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
