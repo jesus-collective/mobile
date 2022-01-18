@@ -10,13 +10,15 @@ import { Data } from "../../components/Data/Data"
 import BottomMenuModal, { ModalMenuItem } from "../../components/FaceLift/BottomMenuModal"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import LastListItem from "../../components/FaceLift/LastListItem"
 import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import { GetGroupQuery, GetUserQuery } from "../../src/API"
+import { GetUserQuery } from "../../src/API"
 import { GetUser2Query } from "../../src/API-customqueries"
+import { Group, joinGroup, leaveGroup } from "../EventsScreen/GroupUtils"
 import ProfileCard from "../ProfilesScreen/ProfileCard"
 type Props = {
   route: {
@@ -34,6 +36,7 @@ export enum GroupTabType {
 const style = StyleSheet.create({
   MainContainer: {
     flexDirection: "column",
+    paddingBottom: 120,
   },
   ContentContainer: {
     flexDirection: "row-reverse",
@@ -96,14 +99,13 @@ const style = StyleSheet.create({
     alignSelf: "center",
   },
 })
-
 export default function GroupScreen(props: Props) {
   const navigation = useNavigation()
   const { id } = props.route.params
   const [isOpen, setIsOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState<GroupTabType>(GroupTabType.DISCUSSION)
   const [isLoading, setIsLoading] = useState(true)
-  const [group, setGroup] = useState<GetGroupQuery["getGroup"]>(null)
+  const [group, setGroup] = useState<Group>()
   const [attendees, setAttendees] = useState<Array<GetUserQuery["getUser"]>>([])
   const [isAttending, setIsAttending] = useState(false)
   const navigateToMembersList = () => {
@@ -142,7 +144,7 @@ export default function GroupScreen(props: Props) {
           return (
             <Header
               subnav={subNavItems}
-              title={isLoading ? "Loading..." : group?.name ?? "Event"}
+              title={"Group"}
               controls={controls}
               navigation={props.navigation}
             />
@@ -179,7 +181,6 @@ export default function GroupScreen(props: Props) {
     }
     getGroup()
   }, [id])
-  console.log({ group })
   const modalItems: ModalMenuItem[] = [
     {
       title: "Edit",
@@ -201,21 +202,17 @@ export default function GroupScreen(props: Props) {
     },
   ]
   const centerOffset = isMobileOnly ? 0 : -32
-  // const handleAction = async (group) => {
-  //   // TODO: optimistically call updateJoined, undo if mutation fails
-  //   setIsLoading(true)
-  //   if (isAttending) {
-  //     const success = await leaveGroup(group, "group")
-  //     if (success) setAttendees((prev) => prev.filter((id) => id !== group.id))
-  //   } else {
-  //     const success = await joinGroup(item, "group")
-  //     if (success && item?.id) {
-  //       updateJoined([...joinedEvents, item.id])
-  //     }
-  //   }
-  //   setIsLoading(false)
-  // }
-
+  const handleAction = async () => {
+    if (group) {
+      if (isAttending) {
+        const success = await leaveGroup(group, "group")
+        if (success) setIsAttending(false)
+      } else {
+        const success = await joinGroup(group, "group")
+        if (success) setIsAttending(true)
+      }
+    }
+  }
   return isLoading ? (
     <ActivityIndicator
       style={[style.Spinner, { marginLeft: centerOffset }]}
@@ -248,32 +245,38 @@ export default function GroupScreen(props: Props) {
           <View style={style.MainContainer}>
             <View style={style.ContentContainer}>
               <View style={style.MainContent}>
-                {
-                  currentTab === GroupTabType.DISCUSSION ? (
-                    <MessageBoard replies style="regular" groupId={id}></MessageBoard>
-                  ) : currentTab === GroupTabType.MEMBERS ? (
-                    <View>
-                      <FlatList
-                        ListEmptyComponent={() =>
-                          !attendees?.length ? (
-                            <Text style={style.NoMembersText}>No members</Text>
-                          ) : null
-                        }
-                        numColumns={2}
-                        data={attendees}
-                        keyExtractor={({ item }) => item?.id}
-                        renderItem={({ item }) => <ProfileCard item={item} />}
-                      />
-                    </View>
-                  ) : currentTab === GroupTabType.EVENTS ? null : null // </View> //   /> //     renderItem={({ item }) => <EventCard item={item} />} //     keyExtractor={({ item }) => item?.id} //     data={[]} //     numColumns={2} //     } //       ) : null //         <Text style={style.NoMembersText}>No events</Text> //       !attendees?.length ? ( //     ListEmptyComponent={() => //   <FlatList // <View>
-                }
+                {currentTab === GroupTabType.DISCUSSION ? (
+                  <MessageBoard replies style="regular" groupId={id}></MessageBoard>
+                ) : currentTab === GroupTabType.MEMBERS ? (
+                  <View>
+                    <FlatList
+                      ListEmptyComponent={() =>
+                        !attendees?.length ? (
+                          <Text style={style.NoMembersText}>No members</Text>
+                        ) : null
+                      }
+                      columnWrapperStyle={{ gap: 32 } as any}
+                      numColumns={2}
+                      data={attendees}
+                      keyExtractor={({ item }) => item?.id}
+                      renderItem={({ item, index }) => {
+                        const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
+                        return (
+                          <LastListItem isLastAndOdd={isLastAndOdd}>
+                            <ProfileCard item={item} />
+                          </LastListItem>
+                        )
+                      }}
+                    />
+                  </View>
+                ) : currentTab === GroupTabType.EVENTS ? null : null}
               </View>
               <View style={style.MinorContent}>
                 <View style={{ marginBottom: 32 }}>
                   <GenericButton
                     label={isAttending ? "Leave group" : "Join group"}
-                    action={isAttending ? () => setIsAttending(false) : () => setIsAttending(true)}
-                    icon={isAttending ? null : "Plus"}
+                    action={handleAction}
+                    icon={isAttending ? "Minus" : "Plus"}
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                       LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
@@ -321,8 +324,8 @@ export default function GroupScreen(props: Props) {
             <Text style={[style.DescriptionText, { marginBottom: 32 }]}>{group?.description}</Text>
             <View style={{ marginTop: -8 }}>
               <GenericButton
-                label={isAttending ? "Leave Group" : "Join Group"}
-                action={() => null}
+                label={isAttending ? "Leave group" : "Join group"}
+                action={handleAction}
                 style={{
                   ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                   LabelStyle: [GenericButtonStyles.QuarternaryLabelStyle, { fontSize: 16 }],
@@ -330,6 +333,7 @@ export default function GroupScreen(props: Props) {
                 }}
               />
             </View>
+            <MessageBoard replies style="regular" groupId={id}></MessageBoard>
           </View>
         ) : currentTab === GroupTabType.MEMBERS ? (
           <View>

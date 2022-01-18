@@ -89,7 +89,7 @@ export default function GroupsScreen() {
         <GenericButton
           label="NEW GROUP"
           action={() =>
-            navigation.navigate("GenericGroupScreen", {
+            navigation.push("GenericGroupScreen", {
               groupType: "group",
               create: true,
             })

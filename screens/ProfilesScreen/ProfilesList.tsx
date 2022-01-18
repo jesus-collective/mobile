@@ -75,7 +75,7 @@ export default function ProfilesList(props: Props) {
     : data
   return (
     <FlatList
-      style={{ minHeight: 662, marginRight: isMobileOnly ? 0 : 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+      style={{ minHeight: 300, marginRight: isMobileOnly ? 0 : 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
       ListFooterComponent={() => (
         <View
           style={{
@@ -115,7 +115,7 @@ export default function ProfilesList(props: Props) {
           ? { display: "none" }
           : {}
       }
-      ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
+      ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 64 }}></View>)}
       columnWrapperStyle={isMobileOnly ? null : ({ gap: 32 } as any)}
       ListEmptyComponent={() =>
         !refreshing && !filteredData.length ? (
@@ -138,7 +138,9 @@ export default function ProfilesList(props: Props) {
       refreshing={refreshing}
       renderItem={({ item, index }) => {
         const isLastAndOdd = filteredData.length - 1 === index && index % 2 === 0
-        return (
+        return isMobileOnly ? (
+          <ProfileCard item={item} />
+        ) : (
           <LastListItem isLastAndOdd={isLastAndOdd}>
             <ProfileCard item={item} />
           </LastListItem>

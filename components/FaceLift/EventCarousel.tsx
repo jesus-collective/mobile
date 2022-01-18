@@ -12,16 +12,18 @@ const EventCarousel = () => {
   const { events, updateEvents, joinedGroups } = useFetchEvents({ reverse: false, loadAll: true })
   const { ownedGroups } = useMyGroups(events)
   const renderItem = (item: any, width: number) => {
-    return (
-      <View style={{ width: width }}>
-        <EventCard
-          item={item}
-          updateEvents={updateEvents}
-          isOwner={Boolean(ownedGroups?.find((a) => a === item?.id))}
-          joined={Boolean(joinedGroups?.find((a) => a === item?.id))}
-        />
-      </View>
-    )
+    if (width)
+      return (
+        <View style={{ width: width }}>
+          <EventCard
+            item={item}
+            updateEvents={updateEvents}
+            isOwner={Boolean(ownedGroups?.find((a) => a === item?.id))}
+            joined={Boolean(joinedGroups?.find((a) => a === item?.id))}
+          />
+        </View>
+      )
+    return <></>
   }
   return (
     <HomeCarousel

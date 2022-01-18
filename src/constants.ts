@@ -8,6 +8,7 @@ else env = "prod"
 export const constants: { [index: string]: boolean | string } = {
   SETTING_ISVISIBLE_course: true,
   SETTING_ISVISIBLE_organization: true,
+  SETTING_ISVISIBLE_SETTINGS: false,
   SETTING_ISVISIBLE_resource: true,
   SETTING_ISVISIBLE_group: true,
   SETTING_ISVISIBLE_event: true,

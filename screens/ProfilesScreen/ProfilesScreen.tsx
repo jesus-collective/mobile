@@ -23,15 +23,15 @@ export default function ProfilesScreen() {
                 title: "Everybody",
                 action: () => null,
               },
-              {
-                title: "In Your Org",
-                action: () => null,
-              },
+              // {
+              //   title: "In Your Org",
+              //   action: () => null,
+              // },
 
-              {
-                title: "In Your Groups",
-                action: () => null,
-              },
+              // {
+              //   title: "In Your Groups",
+              //   action: () => null,
+              // },
             ]}
             title={"People"}
             controls={[

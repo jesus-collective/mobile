@@ -705,6 +705,60 @@ export const getUserForProfile = /* GraphQL */ `
     }
   }
 `
+
+export const listDirectMessageUsersForDMS = /* GraphQL */ `
+  query ListDirectMessageUsers(
+    $filter: ModelDirectMessageUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectMessageUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        user {
+          id
+          given_name
+          family_name
+        }
+        roomID
+        room {
+          id
+          name
+          roomType
+          messageUsers {
+            items {
+              id
+              userName
+              userID
+              roomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          directMessage {
+            items {
+              id
+              content
+              when
+              messageRoomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
+
 export const listDirectMessageUsers = /* GraphQL */ `
   query ListDirectMessageUsers(
     $filter: ModelDirectMessageUserFilterInput

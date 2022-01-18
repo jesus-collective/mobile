@@ -20,6 +20,7 @@ interface Props {
   navigation?: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
+  backAction?: () => void
   subnav?: any
   controls?: any
   drawerState?: boolean
@@ -67,7 +68,7 @@ export default function HeaderJCC(props: Props) {
     if (controlCount === 2) return 56
     if (controlCount === 3) return 88
     // We might want to cap control at 2 especially if page titles get long
-    return 0
+    return -24
   }
   const [state, setState] = useState<State>({
     resourcesDropdown: null,
@@ -162,9 +163,20 @@ export default function HeaderJCC(props: Props) {
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity style={{ paddingTop: 6 }} onPress={openHome} testID="header-logo">
               <Image
-                style={headerStyles.style.logo}
+                style={
+                  width < 1300
+                    ? { marginRight: 16, width: 24.82, height: 30 }
+                    : {
+                        resizeMode: "stretch",
+                        width: 126,
+                        height: 33,
+                        marginRight: 48,
+                        marginTop: 5,
+                        marginBottom: 10,
+                      }
+                }
                 source={require(`../../assets/header/${
-                  Dimensions.get("window").width < 1300 ? "JCLogo.png" : "newicon.png"
+                  width < 1300 ? "JCLogo.png" : "newicon.png"
                 }`)}
               />
             </TouchableOpacity>
@@ -380,7 +392,8 @@ export default function HeaderJCC(props: Props) {
             {props.title !== "Home" ? (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.goBack()
+                  if (props.backAction) props.backAction()
+                  else navigation.goBack()
                 }}
               >
                 <Image

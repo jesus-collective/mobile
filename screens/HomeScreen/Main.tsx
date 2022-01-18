@@ -30,7 +30,7 @@ const linking = {
             path: "",
             screens: {
               HomeScreen: "home",
-              GenericGroupScreen: "group/:groupType/:id/:create",
+              GenericGroupScreen: "genericgroup/:groupType/:create",
               GroupsScreen: "groups",
               GroupScreen: "groups/:id",
               EventsScreen: "events",
@@ -66,7 +66,7 @@ const linking = {
             path: "",
             screens: {
               HomeScreen: "home",
-              GenericGroupScreen: "group/:groupType/:id/:create",
+              GenericGroupScreen: "genericgroup/:groupType/:create",
               GroupsScreen: "groups",
               GroupScreen: "groups/:id",
               EventsScreen: "events",
@@ -160,7 +160,7 @@ export default function Main(props: Props): JSX.Element {
       linking={linking}
       theme={{
         ...DefaultTheme,
-        colors: { ...DefaultTheme.colors, background: "rgb(255, 255, 255)" },
+        colors: { ...DefaultTheme.colors, background: "#FFFDFC" },
       }}
       onStateChange={(state) => {
         console.log({ "Persistence State": state })

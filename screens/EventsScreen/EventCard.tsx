@@ -8,17 +8,15 @@ import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyl
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { JCEvent } from "./EventsList"
 import { joinGroup, leaveGroup } from "./GroupUtils"
-export default function EventCard({
-  joined,
-  isOwner,
-  updateEvents,
-  item,
-}: {
+
+type Props = {
   joined?: boolean
   isOwner?: boolean
   updateEvents: (action: any, id: string) => Promise<void>
   item: JCEvent
-}) {
+}
+export default function EventCard(props: Props) {
+  const { joined, isOwner, updateEvents, item } = props
   const [isLoading, setIsLoading] = useState(false)
   const { name, location, time } = item
   const members = item?.members?.items ?? []
@@ -44,7 +42,7 @@ export default function EventCard({
   }
   return (
     <TouchableOpacity
-      delayPressIn={100}
+      delayPressIn={150}
       onPress={navigateToEventScreen}
       style={EventCardStyle.Container}
     >
@@ -133,7 +131,8 @@ const EventCardStyle = StyleSheet.create({
     fontSize: 15,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 8,
+    borderBottomRightRadius: 8,
+    borderTopLeftRadius: 8,
     marginTop: 32,
   },
   NameText: {

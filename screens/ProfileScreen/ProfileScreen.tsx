@@ -51,6 +51,7 @@ export enum ProfileTabType {
 const style = StyleSheet.create({
   MainContainer: {
     flexDirection: "column",
+    paddingBottom: 68, // 120px - 52px from twoitem carousel
   },
   ContentContainer: {
     flexDirection: "row-reverse",
@@ -115,7 +116,7 @@ const style = StyleSheet.create({
 })
 
 export default function ProfileScreen(props: Props) {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { id } = props.route.params
   const [isOpen, setIsOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState<ProfileTabType>(ProfileTabType.ABOUT)
@@ -314,7 +315,7 @@ export default function ProfileScreen(props: Props) {
                   <>
                     <TwoItemCarousel
                       data={groups}
-                      updateEvents={() => null}
+                      updateEvents={() => Promise.resolve()}
                       type={CarouselType.Group}
                       title="Group Memberships"
                       showMore={navigateToGroups}
@@ -383,7 +384,7 @@ export default function ProfileScreen(props: Props) {
                   <View style={{ marginBottom: 32 }}>
                     <GenericButton
                       label={"Edit Profile"}
-                      action={() => null}
+                      action={() => navigation.navigate("EditProfileScreen", { id: userData?.id })}
                       icon={"Edit"}
                       style={{
                         ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,

@@ -24,7 +24,7 @@ export default function JCWidget(props: Props) {
     <View key={title} style={UpcomingCardStyle.CardContainer}>
       <View style={UpcomingCardStyle.HeaderContainer}>
         <Text style={[UpcomingCardStyle.HeaderText, { flex: 1 }]}>{title}</Text>
-        <TouchableOpacity onPress={buttonAction ?? (() => null)}>
+        <TouchableOpacity delayPressIn={150} onPress={buttonAction ?? (() => null)}>
           <Text style={UpcomingCardStyle.HeaderText}>SEE ALL</Text>
         </TouchableOpacity>
       </View>

@@ -23,6 +23,8 @@ interface Props {
     | "small5"
     | "small6"
     | "small7"
+    | "small8"
+    | "editorLarge"
     | "nav"
     | "miniNav"
     | "tiny"
@@ -154,12 +156,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ? this.styles.style.small4ProfileImageConversations
             : this.props.size == "small2"
             ? {
-                width: "57.6px",
-                height: "72px",
+                width: "48px",
+                height: "60px",
                 borderRadius: 120,
                 marginBottom: 0,
-                marginHorizontal: 10,
                 top: 0,
+              }
+            : this.props.size == "editorLarge"
+            ? {
+                width: "96px",
+                height: "120px",
+                borderRadius: 120,
               }
             : this.props.size === "nav"
             ? {
@@ -226,6 +233,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginRight: 8,
                 alignSelf: "flex-start",
                 top: 0,
+              }
+            : this.props.size == "small8"
+            ? {
+                width: "64px",
+                height: "80px",
+                borderRadius: 120,
               }
             : this.props.size == "roundEvent"
             ? {
@@ -332,10 +345,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 width: "48px",
                 height: "60px",
                 borderRadius: 120,
-                marginRight: 10,
                 marginBottom: 0,
-                marginLeft: 10,
                 top: 0,
+              }
+            : this.props.size == "editorLarge"
+            ? {
+                width: "96px",
+                height: "120px",
+                borderRadius: 120,
               }
             : this.props.size == "small6"
             ? {
@@ -354,6 +371,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginBottom: 0,
                 marginHorizontal: 0,
                 top: 0,
+              }
+            : this.props.size == "small8"
+            ? {
+                width: "64px",
+                height: "80px",
+                borderRadius: 120,
               }
             : this.props.size === "mobileProfile"
             ? {

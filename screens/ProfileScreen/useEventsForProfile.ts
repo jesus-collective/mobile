@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { Group } from "src/API"
 import { Data } from "../../components/Data/Data"
-import { JCEvent } from "../../screens/EventsScreen/EventsList"
-import { useFetchEvents } from "../../screens/EventsScreen/useFetchEvents"
+import { JCEvent } from "../EventsScreen/EventsList"
+import { useFetchEvents } from "../EventsScreen/useFetchEvents"
 
 export const useEventsForProfile = (userId: string) => {
-  const { data, isLoading, nextToken, updateEvents } = useFetchEvents({ loadAll: true })
+  const { events, isLoading, nextToken, updateEvents } = useFetchEvents({
+    loadAll: true,
+  })
   const [profileUserEvents, setProfileUserEvents] = useState<JCEvent[]>([])
   useEffect(() => {
     const getGroup = async (id: Group["id"]) => {
@@ -18,15 +20,15 @@ export const useEventsForProfile = (userId: string) => {
     }
     const getUserGroups = async () => {
       const isJoined: Array<boolean> = []
-      for await (const event of data) {
+      for await (const event of events) {
         const groupData = await getGroup(event?.id)
         isJoined.push(groupData)
       }
-      const joinedGroups = data.filter((item, index) => isJoined[index])
+      const joinedGroups = events.filter((item, index) => isJoined[index])
       setProfileUserEvents(joinedGroups)
     }
-    if (data) getUserGroups()
-  }, [data])
+    if (events) getUserGroups()
+  }, [events])
 
   return { events: profileUserEvents, isLoading, nextToken, updateEvents }
 }

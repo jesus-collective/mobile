@@ -1,6 +1,8 @@
-﻿import React, { lazy } from "react"
-import { BrowserView, MobileOnlyView } from "react-device-detect"
-import { Dimensions, Text, View } from "react-native"
+﻿import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import React, { lazy, useLayoutEffect } from "react"
+import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
+import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import Cookies from "universal-cookie"
 import EventCarousel from "../../components/FaceLift/EventCarousel"
 import GroupCarousel from "../../components/FaceLift/GroupCarousel"
@@ -11,6 +13,37 @@ const MyMap = lazy(() => import("../../components/MyMap/MyMap"))
 
 export default function HomeScreen() {
   const { width } = Dimensions.get("window")
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  useLayoutEffect(() => {
+    if (isMobileOnly)
+      navigation.setOptions({
+        header: () => (
+          <View
+            style={{
+              backgroundColor: "#ffffff",
+              flexDirection: "row",
+              paddingVertical: 8,
+              borderBottomColor: "#E4E1E1",
+              borderBottomWidth: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")} style={{}}>
+              <Image
+                style={{
+                  resizeMode: "contain",
+                  width: 87,
+                  height: 52,
+                }}
+                source={require(`../../assets/header/newicon.png`)}
+              />
+            </TouchableOpacity>
+          </View>
+        ),
+      })
+  }, [])
   return (
     <>
       <BrowserView style={{ overflowX: "hidden", overflowY: "scroll" }}>

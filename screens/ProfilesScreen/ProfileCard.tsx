@@ -29,6 +29,7 @@ export default function ProfileCard(props: Props) {
   return !props.forceDesktop && isMobileOnly ? (
     <TouchableOpacity
       onPress={() => navigation.push("ProfileScreen", { id: item?.id })}
+      delayPressIn={150}
       style={{
         flexDirection: "row",
         flex: 1,
@@ -135,7 +136,12 @@ export default function ProfileCard(props: Props) {
               customLabel: { fontFamily: "Graphik-Medium-App" },
             }}
             label={"Message"}
-            action={() => null}
+            action={() => {
+              navigation.push("ConversationScreen", {
+                initialUserID: item?.id,
+                initialUserName: item?.given_name + " " + item?.family_name,
+              })
+            }}
             icon={"Airplane"}
           />
         </View>

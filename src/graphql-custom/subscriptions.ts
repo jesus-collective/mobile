@@ -16,6 +16,15 @@ export const onCreateDirectMessageReply = /* GraphQL */ `
   }
 `
 
+export const onCreateDirectMessageForDms = /* GraphQL */ `
+  subscription OnCreateDirectMessage {
+    onCreateDirectMessage {
+      recipients
+      messageRoomID
+    }
+  }
+`
+
 export const onCreateDirectMessage = /* GraphQL */ `
   subscription OnCreateDirectMessage {
     onCreateDirectMessage {

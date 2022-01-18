@@ -92,7 +92,7 @@ export default function EventsScreen() {
         <GenericButton
           label="NEW EVENT"
           action={() =>
-            navigation.navigate("GenericGroupScreen", {
+            navigation.push("GenericGroupScreen", {
               groupType: "event",
               create: true,
             })

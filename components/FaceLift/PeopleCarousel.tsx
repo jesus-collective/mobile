@@ -18,11 +18,13 @@ const PeopleCarousel = () => {
     loadGroups()
   }, [])
   const renderItem = (item: any, width: number) => {
-    return (
-      <View style={{ width: width }}>
-        <ProfileCard forceDesktop={true} item={item} />
-      </View>
-    )
+    if (width)
+      return (
+        <View style={{ width: width }}>
+          <ProfileCard forceDesktop={true} item={item} />
+        </View>
+      )
+    return <></>
   }
   return (
     <HomeCarousel

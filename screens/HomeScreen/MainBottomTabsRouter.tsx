@@ -3,8 +3,8 @@ import React from "react"
 import { Image } from "react-native"
 import Header from "../../components/Header/Header"
 import MyProfile from "../../components/ProfileImage/ProfileImage"
-import ConversationScreen from "../../screens/ConversationScreen/ConversationScreen"
 import { constants } from "../../src/constants"
+import ConversationScreen from "../ConversationScreen/ConversationScreen"
 import MainAppRouter from "./MainAppRouter"
 const Tab = createBottomTabNavigator()
 
@@ -81,11 +81,13 @@ export default function MainBottomTabsRouter() {
           component={MainAppRouter}
         />
       ) : null}
-      <Tab.Screen
-        options={{ title: "Jesus Collective", headerShown: true }}
-        name="profile"
-        component={MyProfile}
-      />
+      {constants.SETTING_ISVISIBLE_SETTINGS ? (
+        <Tab.Screen
+          options={{ title: "Jesus Collective", headerShown: true }}
+          name="profile"
+          component={MyProfile}
+        />
+      ) : null}
     </Tab.Navigator>
   )
 }

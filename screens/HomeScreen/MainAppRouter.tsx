@@ -22,6 +22,7 @@ const ResourceConfigureScreen = lazy(() => import("../ResourceScreen/ResourceCon
 const ResourceDisplayScreen = lazy(() => import("../ResourceScreen/ResourceDisplayScreen"))
 const ResourcesScreen = lazy(() => import("../ResourcesScreen/ResourcesScreen"))
 const ProfileScreen = lazy(() => import("../ProfileScreen/ProfileScreen"))
+const EditProfileScreen = lazy(() => import("../../components/MyProfile/MyProfile"))
 const ProfilesScreen = lazy(() => import("../ProfilesScreen/ProfilesScreen"))
 const SearchScreen = lazy(() => import("../SearchScreen/SearchScreen"))
 const AdminScreen = lazy(() => import("../AdminScreen/AdminScreen"))
@@ -79,6 +80,11 @@ export default class MainAppRouter extends JCComponent {
                     name="GenericGroupScreen"
                     component={GenericGroupScreen}
                     options={{ title: "Jesus Collective" }}
+                  />
+                  <Stack.Screen
+                    name="EditProfileScreen"
+                    component={EditProfileScreen}
+                    options={{ headerTitle: "Groups", title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="GroupsScreen"

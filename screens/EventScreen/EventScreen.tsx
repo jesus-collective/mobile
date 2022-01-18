@@ -13,6 +13,7 @@ import BottomMenuModal, { ModalMenuItem } from "../../components/FaceLift/Bottom
 import DetailsWidget from "../../components/FaceLift/DetailsWidget"
 import GenericButton from "../../components/FaceLift/GenericButton"
 import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import LastListItem from "../../components/FaceLift/LastListItem"
 import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
@@ -93,7 +94,7 @@ export default function EventScreen(props: Props) {
           return (
             <Header
               subnav={headerSubItems}
-              title={isLoading ? "Loading..." : event?.name ?? "Event"}
+              title={"Event"}
               controls={controls}
               navigation={props.navigation}
             />
@@ -211,10 +212,18 @@ export default function EventScreen(props: Props) {
                           <Text style={style.NoMembersText}>No attendees</Text>
                         ) : null
                       }
+                      columnWrapperStyle={{ gap: 32 } as any}
                       numColumns={2}
                       data={attendees}
                       keyExtractor={({ item }) => item?.id}
-                      renderItem={({ item }) => <ProfileCard item={item} />}
+                      renderItem={({ item, index }) => {
+                        const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
+                        return (
+                          <LastListItem isLastAndOdd={isLastAndOdd}>
+                            <ProfileCard item={item} />
+                          </LastListItem>
+                        )
+                      }}
                     />
                   </View>
                 ) : null}
@@ -320,6 +329,7 @@ export enum EventTabType {
 const style = StyleSheet.create({
   MainContainer: {
     flexDirection: "column",
+    paddingBottom: 120,
   },
   ContentContainer: {
     flexDirection: "row-reverse",

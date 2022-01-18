@@ -46,7 +46,6 @@ export default function GroupsList(props: Props) {
       const loadJoinedData = async () => {
         const user = await loadUser()
         data.forEach((item: any) => {
-          console.log("setting joined data")
           const groupMemberByUser = Data.groupMemberByUser(user, item.id)
           groupMemberByUser.then((json) => {
             if ((json.data?.groupMemberByUser?.items?.length ?? 0) > 0) {
@@ -74,7 +73,7 @@ export default function GroupsList(props: Props) {
   return (
     <>
       <FlatList
-        style={isMobileOnly ? { paddingBottom: 16 } : { minHeight: 662, marginRight: 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+        style={isMobileOnly ? { paddingBottom: 16 } : { minHeight: 300, marginRight: 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
         contentContainerStyle={isMobileOnly ? { paddingHorizontal: 12, paddingTop: 16 } : {}}
         ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
         columnWrapperStyle={isMobileOnly ? null : { gap: 32 }}
@@ -83,6 +82,7 @@ export default function GroupsList(props: Props) {
             style={{
               marginLeft: centerOffset,
               marginBottom: 30,
+              marginTop: 30,
               justifyContent: "center",
               alignItems: "center",
             }}
