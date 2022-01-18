@@ -2142,6 +2142,79 @@ export type DeleteVideoObjectInput = {
   id: string,
 };
 
+export type CreateMenuInput = {
+  id?: string | null,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type Menu = {
+  __typename: "Menu",
+  id?: string,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+  subItems?: ModelSubMenuConnection,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type ModelSubMenuConnection = {
+  __typename: "ModelSubMenuConnection",
+  items?:  Array<SubMenu >,
+  nextToken?: string | null,
+};
+
+export type SubMenu = {
+  __typename: "SubMenu",
+  id?: string,
+  menuID?: string | null,
+  order?: number | null,
+  menu?: Menu,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type UpdateMenuInput = {
+  id: string,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type DeleteMenuInput = {
+  id: string,
+};
+
+export type CreateSubMenuInput = {
+  id?: string | null,
+  menuID?: string | null,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type UpdateSubMenuInput = {
+  id: string,
+  menuID?: string | null,
+  order?: number | null,
+  name?: string | null,
+  action?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type DeleteSubMenuInput = {
+  id: string,
+};
+
 export type EventBriteEventList = {
   __typename: "EventBriteEventList",
   pagination?: EventBritePagination,
@@ -2765,6 +2838,35 @@ export type ModelvideoObjectConnection = {
   __typename: "ModelvideoObjectConnection",
   items?:  Array<videoObject >,
   nextToken?: string | null,
+};
+
+export type ModelMenuFilterInput = {
+  id?: ModelIDFilterInput | null,
+  order?: ModelIntFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  action?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
+  and?: Array< ModelMenuFilterInput | null > | null,
+  or?: Array< ModelMenuFilterInput | null > | null,
+  not?: ModelMenuFilterInput | null,
+};
+
+export type ModelMenuConnection = {
+  __typename: "ModelMenuConnection",
+  items?:  Array<Menu >,
+  nextToken?: string | null,
+};
+
+export type ModelSubMenuFilterInput = {
+  id?: ModelIDFilterInput | null,
+  menuID?: ModelStringFilterInput | null,
+  order?: ModelIntFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  action?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
+  and?: Array< ModelSubMenuFilterInput | null > | null,
+  or?: Array< ModelSubMenuFilterInput | null > | null,
+  not?: ModelSubMenuFilterInput | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -16997,6 +17099,198 @@ export type DeleteVideoObjectMutation = {
   } | null,
 };
 
+export type CreateMenuMutationVariables = {
+  input?: CreateMenuInput,
+};
+
+export type CreateMenuMutation = {
+  createMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateMenuMutationVariables = {
+  input?: UpdateMenuInput,
+};
+
+export type UpdateMenuMutation = {
+  updateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteMenuMutationVariables = {
+  input?: DeleteMenuInput,
+};
+
+export type DeleteMenuMutation = {
+  deleteMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateSubMenuMutationVariables = {
+  input?: CreateSubMenuInput,
+};
+
+export type CreateSubMenuMutation = {
+  createSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateSubMenuMutationVariables = {
+  input?: UpdateSubMenuInput,
+};
+
+export type UpdateSubMenuMutation = {
+  updateSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteSubMenuMutationVariables = {
+  input?: DeleteSubMenuInput,
+};
+
+export type DeleteSubMenuMutation = {
+  deleteSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type EventBriteListEventsQueryVariables = {
   page?: string | null,
 };
@@ -21783,6 +22077,131 @@ export type ListVideoObjectsQuery = {
     items:  Array< {
       __typename: "videoObject",
       id: string,
+      createdAt: string,
+      updatedAt: string,
+    } >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetMenuQueryVariables = {
+  id?: string,
+};
+
+export type GetMenuQuery = {
+  getMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListMenusQueryVariables = {
+  filter?: ModelMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMenusQuery = {
+  listMenus?:  {
+    __typename: "ModelMenuConnection",
+    items:  Array< {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetSubMenuQueryVariables = {
+  id?: string,
+};
+
+export type GetSubMenuQuery = {
+  getSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListSubMenusQueryVariables = {
+  filter?: ModelSubMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSubMenusQuery = {
+  listSubMenus?:  {
+    __typename: "ModelSubMenuConnection",
+    items:  Array< {
+      __typename: "SubMenu",
+      id: string,
+      menuID?: string | null,
+      order?: number | null,
+      menu?:  {
+        __typename: "Menu",
+        id: string,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
       createdAt: string,
       updatedAt: string,
     } >,
@@ -35862,6 +36281,174 @@ export type OnDeleteVideoObjectSubscription = {
   onDeleteVideoObject?:  {
     __typename: "videoObject",
     id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateMenuSubscription = {
+  onCreateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateMenuSubscription = {
+  onUpdateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteMenuSubscription = {
+  onDeleteMenu?:  {
+    __typename: "Menu",
+    id: string,
+    order?: number | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    subItems?:  {
+      __typename: "ModelSubMenuConnection",
+      items:  Array< {
+        __typename: "SubMenu",
+        id: string,
+        menuID?: string | null,
+        order?: number | null,
+        name?: string | null,
+        action?: string | null,
+        readGroups?: Array< UserGroupType | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateSubMenuSubscription = {
+  onCreateSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateSubMenuSubscription = {
+  onUpdateSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteSubMenuSubscription = {
+  onDeleteSubMenu?:  {
+    __typename: "SubMenu",
+    id: string,
+    menuID?: string | null,
+    order?: number | null,
+    menu?:  {
+      __typename: "Menu",
+      id: string,
+      order?: number | null,
+      name?: string | null,
+      action?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      subItems?:  {
+        __typename: "ModelSubMenuConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    name?: string | null,
+    action?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,

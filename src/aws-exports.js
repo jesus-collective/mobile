@@ -58,17 +58,17 @@ const awsmobile = {
             "region": "us-east-1",
             "maps": {
                 "items": {
-                    "jcMap-beta": {
+                    "jcMap-jcfacelift": {
                         "style": "VectorEsriLightGrayCanvas"
                     }
                 },
-                "default": "jcMap-beta"
+                "default": "jcMap-jcfacelift"
             },
             "search_indices": {
                 "items": [
-                    "jcPeople-beta"
+                    "jcPeople-jcfacelift"
                 ],
-                "default": "jcPeople-beta"
+                "default": "jcPeople-jcfacelift"
             }
         }
     },

@@ -432,7 +432,7 @@ export const getDirectMessageUser = /* GraphQL */ `
 `
 
 export const getGroupForProfile = /* GraphQL */ `
-  query GetGroup($id: ID!) {
+  query GetGroupForProfile($id: ID!) {
     getGroup(id: $id) {
       id
       owner
@@ -736,7 +736,7 @@ export const getUserForProfile = /* GraphQL */ `
 `
 
 export const listDirectMessageUsersForDMS = /* GraphQL */ `
-  query ListDirectMessageUsers(
+  query ListDirectMessageUsersForDMS(
     $filter: ModelDirectMessageUserFilterInput
     $limit: Int
     $nextToken: String

@@ -288,7 +288,7 @@
         },
         "AdminQueries7403b6cf": {
           "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
-          "s3Key": "amplify-builds/AdminQueries7403b6cf-6a4d5574766351793064-build.zip"
+          "s3Key": "amplify-builds/AdminQueries7403b6cf-544c346a684e50343973-build.zip"
         },
         "jcmobilePreSignup": {
           "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
@@ -321,7 +321,7 @@
         },
         "jcmobilePreTokenGeneration": {
           "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
-          "s3Key": "amplify-builds/jcmobilePreTokenGeneration-5749752f52386c337835-build.zip"
+          "s3Key": "amplify-builds/jcmobilePreTokenGeneration-64526669385064423473-build.zip"
         },
         "jcmobileStripWebhook": {
           "userPoolId": "us-east-1_yyA79SztQ",
@@ -395,7 +395,11 @@
           "facebookAppId": "abc",
           "googleClientId": "def"
         },
-        "userPoolGroups": {}
+        "userPoolGroups": {},
+        "true": {
+          "facebookAppId": "abc",
+          "googleClientId": "def"
+        }
       }
     }
   }

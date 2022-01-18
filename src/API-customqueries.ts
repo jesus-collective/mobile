@@ -987,6 +987,59 @@ export type ModelIDKeyConditionInput = {
   beginsWith?: string | null
 }
 
+export type ModelGroupMemberFilterInput = {
+  id?: ModelIDFilterInput | null
+  groupID?: ModelIDFilterInput | null
+  userID?: ModelIDFilterInput | null
+  and?: Array<ModelGroupMemberFilterInput | null> | null
+  or?: Array<ModelGroupMemberFilterInput | null> | null
+  not?: ModelGroupMemberFilterInput | null
+}
+
+export type ModelUserFilterInput = {
+  id?: ModelIDFilterInput | null
+  given_name?: ModelStringFilterInput | null
+  family_name?: ModelStringFilterInput | null
+  email?: ModelStringFilterInput | null
+  phone?: ModelStringFilterInput | null
+  owner?: ModelStringFilterInput | null
+  mainUserGroup?: ModelStringFilterInput | null
+  stripeCustomerID?: ModelStringFilterInput | null
+  stripeSubscriptionID?: ModelStringFilterInput | null
+  hasPaidState?: ModelPaidStateFilterInput | null
+  profileState?: ModelStringFilterInput | null
+  aboutMeShort?: ModelStringFilterInput | null
+  aboutMeLong?: ModelStringFilterInput | null
+  interests?: ModelStringFilterInput | null
+  currentRole?: ModelStringFilterInput | null
+  currentScope?: ModelStringFilterInput | null
+  personality?: ModelStringFilterInput | null
+  orgName?: ModelStringFilterInput | null
+  orgType?: ModelStringFilterInput | null
+  orgSize?: ModelStringFilterInput | null
+  denomination?: ModelStringFilterInput | null
+  pplServed?: ModelStringFilterInput | null
+  sundayAttendance?: ModelStringFilterInput | null
+  numberVolunteers?: ModelStringFilterInput | null
+  orgDescription?: ModelStringFilterInput | null
+  joined?: ModelStringFilterInput | null
+  primaryOrganization?: ModelStringFilterInput | null
+  and?: Array<ModelUserFilterInput | null> | null
+  or?: Array<ModelUserFilterInput | null> | null
+  not?: ModelUserFilterInput | null
+}
+
+export type ModelPaidStateFilterInput = {
+  eq?: PaidState | null
+  ne?: PaidState | null
+}
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection"
+  items?: Array<User>
+  nextToken?: string | null
+}
+
 export type ModelDirectMessageUserFilterInput = {
   id?: ModelIDFilterInput | null
   userName?: ModelStringFilterInput | null
@@ -1485,6 +1538,84 @@ export type GetDirectMessageUserQuery = {
   } | null
 }
 
+export type GetGroupForProfileQueryVariables = {
+  id?: string
+}
+
+export type GetGroupForProfileQuery = {
+  getGroup?: {
+    __typename: "Group"
+    id: string
+    owner: string
+    readGroups?: Array<UserGroupType | null> | null
+    type: string
+    name: string
+    description: string
+    ownerUser?: {
+      __typename: "User"
+      id: string
+      given_name: string
+      family_name: string
+    } | null
+    memberCount?: number | null
+    members?: {
+      __typename: "ModelGroupMemberConnection"
+      items: Array<{
+        __typename: "GroupMember"
+        id: string
+        groupID?: string | null
+        userID?: string | null
+        createdAt: string
+        updatedAt: string
+      }>
+      nextToken?: string | null
+    } | null
+    image: string
+    time?: string | null
+    lastUpdated?: string | null
+    location?: string | null
+    locationLatLong?: {
+      __typename: "LatLong"
+      latitude?: string | null
+      longitude?: string | null
+      geocodeFull?: string | null
+      geocodeCity?: string | null
+      geocodeRegion?: string | null
+      randomLatitude?: string | null
+      randomLongitude?: string | null
+    } | null
+    length?: string | null
+    effort?: string | null
+    cost?: string | null
+    promotionalText?: string | null
+    messages?: {
+      __typename: "ModelMessageConnection"
+      items: Array<{
+        __typename: "Message"
+        id: string
+        content: string
+        when: string
+        attachment?: string | null
+        attachmentName?: string | null
+        attachmentOwner?: string | null
+        roomId?: string | null
+        userId?: string | null
+        postingAs?: string | null
+        owner?: string | null
+        createdAt: string
+        updatedAt: string
+      }>
+      nextToken?: string | null
+    } | null
+    eventType?: string | null
+    eventUrl?: string | null
+    tz?: string | null
+    isSponsored?: string | null
+    createdAt: string
+    updatedAt: string
+  } | null
+}
+
 export type GetGroupQueryVariables = {
   id?: string
 }
@@ -1536,6 +1667,15 @@ export type GroupByTypeByTimeQuery = {
         geocodeCity?: string | null
         geocodeRegion?: string | null
       } | null
+      members?: {
+        __typename: "ModelGroupMemberConnection"
+        items: Array<{
+          __typename: "GroupMember"
+          id: string
+          userID?: string | null
+          createdAt: string
+        }>
+      } | null
       length?: string | null
       effort?: string | null
       cost?: string | null
@@ -1545,6 +1685,26 @@ export type GroupByTypeByTimeQuery = {
       isSponsored?: string | null
       createdAt: string
       updatedAt: string
+    }>
+    nextToken?: string | null
+  } | null
+}
+
+export type GroupMemberByUserQueryVariables = {
+  userID?: string | null
+  groupID?: ModelIDKeyConditionInput | null
+  sortDirection?: ModelSortDirection | null
+  filter?: ModelGroupMemberFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type GroupMemberByUserQuery = {
+  groupMemberByUser?: {
+    __typename: "ModelGroupMemberConnection"
+    items: Array<{
+      __typename: "GroupMember"
+      groupID?: string | null
     }>
     nextToken?: string | null
   } | null
@@ -1622,6 +1782,41 @@ export type getOrganizationQuery = {
   } | null
 }
 
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListUsersQuery = {
+  listUsers?: {
+    __typename: "ModelUserConnection"
+    items: Array<{
+      __typename: "User"
+      id: string
+      given_name: string
+      family_name: string
+      owner?: string | null
+      profileState?: string | null
+      location?: {
+        __typename: "LatLong"
+        latitude?: string | null
+        longitude?: string | null
+        geocodeFull?: string | null
+        geocodeCity?: string | null
+        geocodeRegion?: string | null
+        randomLatitude?: string | null
+        randomLongitude?: string | null
+      } | null
+      aboutMeShort?: string | null
+      aboutMeLong?: string | null
+      currentRole?: string | null
+      currentScope?: string | null
+    }>
+    nextToken?: string | null
+  } | null
+}
+
 export type GetUserQueryVariables = {
   id?: string
 }
@@ -1635,7 +1830,20 @@ export type GetUserQuery = {
     owner?: string | null
     mainUserGroup?: string | null
     hasPaidState?: PaidState | null
+    currentScope?: string | null
+    interests?: Array<string | null> | null
+    personality?: string | null
     profileState?: string | null
+    location?: {
+      __typename: "LatLong"
+      latitude?: string | null
+      longitude?: string | null
+      geocodeFull?: string | null
+      geocodeCity?: string | null
+      geocodeRegion?: string | null
+      randomLatitude?: string | null
+      randomLongitude?: string | null
+    } | null
     profileImage?: {
       __typename: "Image"
       userId?: string | null
@@ -1645,10 +1853,72 @@ export type GetUserQuery = {
       filenameUpload?: string | null
     } | null
     aboutMeShort?: string | null
+    aboutMeLong?: string | null
     currentRole?: string | null
     orgName?: string | null
     createdAt: string
     updatedAt: string
+  } | null
+}
+
+export type ListDirectMessageUsersForDMSQueryVariables = {
+  filter?: ModelDirectMessageUserFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListDirectMessageUsersForDMSQuery = {
+  listDirectMessageUsers?: {
+    __typename: "ModelDirectMessageUserConnection"
+    items: Array<{
+      __typename: "DirectMessageUser"
+      id: string
+      userID: string
+      user?: {
+        __typename: "User"
+        id: string
+        given_name: string
+        family_name: string
+      } | null
+      roomID: string
+      room?: {
+        __typename: "DirectMessageRoom"
+        id: string
+        name?: string | null
+        roomType?: string | null
+        messageUsers?: {
+          __typename: "ModelDirectMessageUserConnection"
+          items: Array<{
+            __typename: "DirectMessageUser"
+            id: string
+            userName?: string | null
+            userID: string
+            roomID: string
+            createdAt: string
+            updatedAt: string
+          }>
+          nextToken?: string | null
+        } | null
+        directMessage?: {
+          __typename: "ModelDirectMessageConnection"
+          items: Array<{
+            __typename: "DirectMessage"
+            id: string
+            content?: string | null
+            when: string
+            messageRoomID: string
+            createdAt: string
+            updatedAt: string
+          }>
+          nextToken?: string | null
+        } | null
+        createdAt: string
+        updatedAt: string
+      } | null
+      createdAt: string
+      updatedAt: string
+    }>
+    nextToken?: string | null
   } | null
 }
 
