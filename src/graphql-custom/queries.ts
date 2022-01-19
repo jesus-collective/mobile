@@ -1,3 +1,32 @@
+export const listMenus = /* GraphQL */ `
+  query ListMenus($filter: ModelMenuFilterInput, $limit: Int, $nextToken: String) {
+    listMenus(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        action
+        order
+        readGroups
+        subItems {
+          items {
+            id
+            menuID
+            order
+            name
+            action
+            readGroups
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
 export const listDirectMessageRooms = /* GraphQL */ `
   query ListDirectMessageRooms(
     $filter: ModelDirectMessageRoomFilterInput
@@ -223,7 +252,6 @@ export const getCourseInfoForOverview = /* GraphQL */ `
       sylabusAttachmentName
       sylabusAttachmentOwner
       sylabusAttachment
-
       courseWeeks {
         items {
           id
@@ -403,7 +431,7 @@ export const getDirectMessageUser = /* GraphQL */ `
 `
 
 export const getGroupForProfile = /* GraphQL */ `
-  query GetGroup($id: ID!) {
+  query GetGroupForProfile($id: ID!) {
     getGroup(id: $id) {
       id
       owner
@@ -705,25 +733,9 @@ export const getUserForProfile = /* GraphQL */ `
     }
   }
 `
-export const listDirectMessagesForDms = /* GraphQL */ `
-  query ListDirectMessages(
-    $filter: ModelDirectMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listDirectMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        content
-        createdAt
-      }
-      nextToken
-    }
-  }
-`
 
 export const listDirectMessageUsersForDMS = /* GraphQL */ `
-  query ListDirectMessageUsers(
+  query ListDirectMessageUsersForDMS(
     $filter: ModelDirectMessageUserFilterInput
     $limit: Int
     $nextToken: String
@@ -740,6 +752,8 @@ export const listDirectMessageUsersForDMS = /* GraphQL */ `
         roomID
         room {
           id
+          name
+          roomType
           messageUsers {
             items {
               id
@@ -762,7 +776,11 @@ export const listDirectMessageUsersForDMS = /* GraphQL */ `
             }
             nextToken
           }
+          createdAt
+          updatedAt
         }
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -1100,7 +1118,6 @@ export const getResourceRoot = /* GraphQL */ `
                     }
                   }
                   episodeID
-
                   createdAt
                   updatedAt
                 }
