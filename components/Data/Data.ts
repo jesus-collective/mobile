@@ -114,6 +114,8 @@ import {
   GroupByTypeByTimeQuery,
   GroupByTypeQuery,
   GroupMemberByUserQuery,
+  ListDirectMessagesQuery,
+  ListDirectMessagesQueryVariables,
   ListGroupsQuery,
   ListOrganizationsQuery,
   ListPaymentsQuery,
@@ -723,6 +725,13 @@ export class Data {
       variables: { id: id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<GetCourseInfoQuery>>
+  }
+  static listDirectMessages(query: ListDirectMessagesQueryVariables) {
+    return API.graphql({
+      query: customQueries.listDirectMessagesForDms,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListDirectMessagesQuery>>
   }
   static listDirectMessageUsers(query: ListDirectMessageUsersQueryVariables) {
     return API.graphql({

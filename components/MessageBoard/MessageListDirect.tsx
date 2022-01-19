@@ -1,7 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { ActivityIndicator, ScrollView } from "react-native"
 import { DirectMessagesByRoomQuery } from "src/API-messages"
 import { JCCognitoUser } from "src/types"
@@ -64,14 +64,11 @@ export default function MessageListDirect(props: Props) {
       dmSub.unsubscribe()
     }
   }, [props.roomId])
-  useEffect(() => {
-    if (listRef.current) listRef.current.scrollToEnd({ animated: true })
+  useLayoutEffect(() => {
+    if (listRef.current) listRef.current.scrollToEnd({ animated: false })
   }, [directMessages])
   return (
     <ScrollView
-      onLayout={() => {
-        if (directMessages.length && !isLoading) listRef.current?.scrollToEnd({ animated: false })
-      }}
       ref={listRef}
       contentContainerStyle={
         isLoading
