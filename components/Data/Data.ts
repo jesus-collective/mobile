@@ -9,8 +9,6 @@ import {
   ListDirectMessageRoomsQueryVariables,
   ListDirectMessageUsersQuery,
   ListDirectMessageUsersQueryVariables,
-  ListMenusQuery,
-  ModelGroupFilterInput,
 } from "src/API-customqueries"
 import { InviteType } from "src/types"
 import {
@@ -49,8 +47,6 @@ import {
   CreateGroupMemberInput,
   CreateGroupMemberMutation,
   CreateGroupMutation,
-  CreateMenuInput,
-  CreateMenuMutation,
   CreateMessageInput,
   CreateMessageMutation,
   CreateOrganizationInput,
@@ -76,8 +72,6 @@ import {
   CreateStripeCustomerAdminMutationVariables,
   CreateStripeCustomerMutation,
   CreateStripeCustomerMutationVariables,
-  CreateSubMenuInput,
-  CreateSubMenuMutation,
   CreateSubscriptionMutation,
   CreateSubscriptionMutationVariables,
   CreateUserInput,
@@ -114,7 +108,8 @@ import {
   GroupByTypeByTimeQuery,
   GroupByTypeQuery,
   GroupMemberByUserQuery,
-  ListGroupsQuery,
+  ListDirectMessagesQuery,
+  ListDirectMessagesQueryVariables,
   ListOrganizationsQuery,
   ListPaymentsQuery,
   ListProductsQuery,
@@ -123,7 +118,6 @@ import {
   ListUsersQueryVariables,
   MessagesByRoomQuery,
   MessagesByRoomQueryVariables,
-  ModelMenuFilterInput,
   ModelPaymentFilterInput,
   ModelProductFilterInput,
   ModelResourceRootFilterInput,
@@ -147,8 +141,6 @@ import {
   UpdateDirectMessageMutation,
   UpdateGroupInput,
   UpdateGroupMutation,
-  UpdateMenuInput,
-  UpdateMenuMutation,
   UpdateOrganizationInput,
   UpdateOrganizationMutation,
   UpdateProductInput,
@@ -161,8 +153,6 @@ import {
   UpdateResourceMutation,
   UpdateResourceSeriesInput,
   UpdateResourceSeriesMutation,
-  UpdateSubMenuInput,
-  UpdateSubMenuMutation,
   UpdateUserInput,
   UpdateUserMutation,
 } from "../../src/API"
@@ -278,20 +268,7 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<UpdateCourseWeekMutation>>
   }
-  static deleteMenu(id: string) {
-    return API.graphql({
-      query: mutations.deleteMenu,
-      variables: { input: { id: id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
-  }
-  static deleteSubMenu(id: string) {
-    return API.graphql({
-      query: mutations.deleteSubMenu,
-      variables: { input: { id: id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
-  }
+
   static deleteGroupMember(id: string) {
     return API.graphql({
       query: mutations.deleteGroupMember,
@@ -448,20 +425,7 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<DeleteCourseLessonMutation>>
   }
-  static createMenu(input: CreateMenuInput) {
-    return API.graphql({
-      query: mutations.createMenu,
-      variables: { input: input },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<CreateMenuMutation>>
-  }
-  static createSubMenu(input: CreateSubMenuInput) {
-    return API.graphql({
-      query: mutations.createSubMenu,
-      variables: { input: input },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<CreateSubMenuMutation>>
-  }
+
   static createCrmRoot(input: CreateCRMRootInput) {
     return API.graphql({
       query: mutations.createCrmRoot,
@@ -724,6 +688,13 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<GetCourseInfoQuery>>
   }
+  static listDirectMessages(query: ListDirectMessagesQueryVariables) {
+    return API.graphql({
+      query: customQueries.listDirectMessagesForDms,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListDirectMessagesQuery>>
+  }
   static listDirectMessageUsers(query: ListDirectMessageUsersQueryVariables) {
     return API.graphql({
       query: customQueries.listDirectMessageUsers,
@@ -823,17 +794,6 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListResourceRootsQuery>>
   }
-  static listMenu(filter: ModelMenuFilterInput | null) {
-    return API.graphql({
-      query: customQueries.listMenus,
-      variables: {
-        limit: 100,
-        filter: filter,
-        nextToken: null,
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<ListMenusQuery>>
-  }
   static getDirectMessageUser(id: string) {
     return API.graphql({
       query: customQueries.getDirectMessageUser,
@@ -903,24 +863,6 @@ export class Data {
     }) as Promise<GraphQLResult<GetGroupQuery>>
   }
 
-  static updateMenu(input: UpdateMenuInput) {
-    return API.graphql({
-      query: mutations.updateMenu,
-      variables: {
-        input: input,
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<UpdateMenuMutation>>
-  }
-  static updateSubMenu(input: UpdateSubMenuInput) {
-    return API.graphql({
-      query: mutations.updateSubMenu,
-      variables: {
-        input: input,
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<UpdateSubMenuMutation>>
-  }
   static getGroup(groupId: string) {
     return API.graphql({
       query: queries.getGroup,
@@ -934,20 +876,6 @@ export class Data {
       variables: { id: userId },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<GetUserQuery>>
-  }
-  static listEvents(nextToken: string | null | undefined) {
-    const z: ModelGroupFilterInput = {
-      type: { eq: "event" },
-    }
-    return API.graphql({
-      query: queries.listGroups,
-      variables: {
-        limit: 100,
-        filter: z,
-        nextToken: nextToken,
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<ListGroupsQuery>>
   }
   static listOrgs(nextToken: string | null | undefined) {
     return API.graphql({

@@ -29,7 +29,24 @@ export const sortMessageRooms = (rooms: DMUser[]) => {
   })
   return sortedRooms
 }
+export const loadDmsForRoom = async (roomId: string | undefined) => {
+  if (!roomId) return
+  const directMessages: any = []
+  const loadNext = async (next: string | null | undefined = null) => {
+    const dms = await Data.listDirectMessages({
+      limit: 200,
+      filter: { messageRoomID: { eq: roomId } },
+      nextToken: next,
+    })
+    if (dms?.data?.listDirectMessages?.items?.length)
+      directMessages.push(...dms.data.listDirectMessages.items)
+    if (dms?.data?.listDirectMessages?.nextToken)
+      await loadNext(dms?.data?.listDirectMessages?.nextToken)
+  }
 
+  await loadNext()
+  return directMessages
+}
 export const useDmUsers = () => {
   const [dmUsers, setDmUsers] = useState<DMUser[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -53,6 +70,11 @@ export const useDmUsers = () => {
             loadNext(json?.data?.listDirectMessageUsers?.nextToken)
           } else if (json?.data?.listDirectMessageUsers) {
             tempData = [...tempData, ...(json?.data?.listDirectMessageUsers?.items ?? [])]
+            // for rooms that have more than 100 dms
+            for await (const a of tempData) {
+              if (a?.room?.directMessage?.items && a?.room?.directMessage?.nextToken)
+                a.room.directMessage.items = await loadDmsForRoom(a?.roomID)
+            }
             setDmUsers(tempData)
             if (isLoading) setIsLoading(false)
           }

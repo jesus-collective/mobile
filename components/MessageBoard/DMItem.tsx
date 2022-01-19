@@ -1,7 +1,8 @@
 import moment from "moment"
-import React from "react"
+import React, { useEffect } from "react"
 import { isMobileOnly } from "react-device-detect"
 import { StyleSheet, Text, View } from "react-native"
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { convertCommentFromJSONToHTML } from "./MessageItem"
 import { DM } from "./MessageListDirect"
@@ -14,16 +15,38 @@ type Props = {
   nextMsg: DM | null
 }
 
+const SPRING_CONFIG = {
+  damping: 100,
+  overshootClamping: true,
+  restSpeedThreshold: 0.01,
+  stiffness: 1000,
+}
+
 const DMItem = (props: Props) => {
   const { item, isMine, previousMsg, nextMsg } = props
+
+  const marginValue = useSharedValue(-200)
+  const animStyle = useAnimatedStyle(() => {
+    if (isMine)
+      return {
+        marginRight: withSpring(marginValue.value, SPRING_CONFIG),
+      }
+    else
+      return {
+        marginLeft: withSpring(marginValue.value, SPRING_CONFIG),
+      }
+  })
   const isPreviousSameUser = previousMsg ? previousMsg.userId === item.userId : false
   const isNextSameUser = nextMsg ? nextMsg.userId === item.userId : false
   const sameNextTimeStamp = nextMsg
     ? moment(item.createdAt).diff(moment(nextMsg.createdAt), "minutes") === 0
     : false
   const hideDate = sameNextTimeStamp && isNextSameUser
+  useEffect(() => {
+    marginValue.value = 0
+  }, [])
   return (
-    <View style={[style.DMContainer, isMine ? style.DMMine : style.DMNotMine]}>
+    <Animated.View style={[style.DMContainer, isMine ? style.DMMine : style.DMNotMine, animStyle]}>
       {!isMine ? (
         <View style={isMobileOnly ? { marginRight: 8 } : {}}>
           {!isPreviousSameUser ? (
@@ -65,7 +88,7 @@ const DMItem = (props: Props) => {
           <Text style={style.DMDateText}>{moment(parseInt(item?.when)).format("lll")}</Text>
         )}
       </View>
-    </View>
+    </Animated.View>
   )
 }
 export default DMItem

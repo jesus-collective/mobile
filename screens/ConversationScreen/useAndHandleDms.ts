@@ -7,13 +7,11 @@ import Observable from "zen-observable-ts"
 import { Data } from "../../components/Data/Data"
 import { OnCreateDirectMessageSubscription } from "../../src/API-messages"
 import { onCreateDirectMessageForDms } from "../../src/graphql-custom/subscriptions"
-import { useDmUsers } from "./useDmUsers"
+import { loadDmsForRoom, useDmUsers } from "./useDmUsers"
 import { useShouldCreateRoom } from "./useShouldCreateRoom"
-
 export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
   const { dmUsers, isLoading, setDmUsers } = useDmUsers()
   const { isCreatingRoom } = useShouldCreateRoom({ setRoom, dmUsers, setDmUsers })
-
   useEffect(() => {
     const dmSub = (
       API.graphql({
@@ -40,11 +38,22 @@ export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
                 roomID: { eq: incoming.value?.data?.onCreateDirectMessage?.messageRoomID },
               },
             }
+            // should fetch individual DirectMessageUser here to update conversation pane preview
             const json = await Data.listDirectMessageUsersForDMs(query)
             const roomItem = json?.data?.listDirectMessageUsers?.items?.[0]
             if (roomItem) {
+              // for rooms that have more than 100 dms
+              if (
+                roomItem?.room?.directMessage?.items &&
+                roomItem?.room?.directMessage?.nextToken
+              ) {
+                const directMessages = await loadDmsForRoom(roomItem?.roomID)
+                roomItem.room.directMessage.items = directMessages
+              }
               const tempDmUsers = [...dmUsers]
-              const indexToUpdate = tempDmUsers.findIndex((dmUser) => dmUser?.id === roomItem?.id)
+              const indexToUpdate = tempDmUsers.findIndex(
+                (dmUser) => dmUser?.roomID === roomItem?.roomID
+              )
               if (indexToUpdate >= 0) {
                 tempDmUsers[indexToUpdate] = roomItem
                 setDmUsers(tempDmUsers)
@@ -62,30 +71,3 @@ export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
   }, [dmUsers])
   return { dmUsers, isLoading: isLoading || isCreatingRoom }
 }
-
-// useEffect(() => {
-//   const removeDMUser = async (id: string) => {
-//     try {
-//       const a = (await API.graphql({
-//         query: mutations.deleteDirectMessageUser,
-//         variables: { input: { id: id } },
-//         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-//       })) as Promise<GraphQLResult<DeleteDirectMessageUserMutation>>
-//       console.log({ a })
-//     } catch (err) {
-//       console.error({ err })
-//     }
-//   }
-//   const removeDMRoom = async (id: string) => {
-//     try {
-//       const a = (await API.graphql({
-//         query: mutations.deleteDirectMessageRoom,
-//         variables: { input: { id: id } },
-//         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-//       })) as Promise<GraphQLResult<DeleteDirectMessageUserMutation>>
-//       console.log({ a })
-//     } catch (err) {
-//       console.error({ err })
-//     }
-//   }
-// }, [])
