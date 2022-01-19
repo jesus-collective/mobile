@@ -733,6 +733,22 @@ export const getUserForProfile = /* GraphQL */ `
     }
   }
 `
+export const listDirectMessagesForDms = /* GraphQL */ `
+  query ListDirectMessages(
+    $filter: ModelDirectMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        content
+        createdAt
+      }
+      nextToken
+    }
+  }
+`
 
 export const listDirectMessageUsersForDMS = /* GraphQL */ `
   query ListDirectMessageUsersForDMS(
