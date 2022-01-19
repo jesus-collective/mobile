@@ -52,6 +52,7 @@ const linking = {
               ProfilesScreen: "profiles",
               AdminScreen: "admin",
               AdminCRMScreen: "admin-crm",
+              AdminMenuScreen: "admin-menu",
               AdminCreateProductScreen: "admin-products",
               CoursePaymentScreen: "coursepayment",
               PurchaseConfirmationScreen: "success",

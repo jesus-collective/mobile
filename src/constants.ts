@@ -23,7 +23,7 @@ export const constants: { [index: string]: boolean | string } = {
   SETTING_ISVISIBLE_orgs: false,
   SETTING_ISVISIBLE_people: true,
   SETTING_ISVISIBLE_BELL: false,
-  SETTING_MENU_custom: false,
+  SETTING_MENU_custom: true,
 
   SETTING_ISVISIBLE_SHOWRECOMMENDED: false,
   SETTING_ISVISIBLE_SHOWMY: false,

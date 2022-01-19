@@ -117,6 +117,9 @@ export default function HeaderJCC(props: Props) {
       create: false,
     })
   }
+  const openMenu = async (): Promise<void> => {
+    navigation?.push("AdminMenuScreen")
+  }
   const openScreen = (screen: string): void => {
     navigation?.push(screen)
   }
@@ -221,225 +224,216 @@ export default function HeaderJCC(props: Props) {
                 }`)}
               />
             </TouchableOpacity>
+
+            {constants["SETTING_MENU_custom"] ? (
+              <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+                {state.menus.map((mapItem) => {
+                  return (mapItem.subItems?.items?.length ?? 0) > 0 ? (
+                    <>
+                      <button
+                        data-testid="header-resources"
+                        onClick={(e) => {
+                          handleMenuDropdownClick(e, mapItem.id)
+                        }}
+                        onMouseEnter={() => {
+                          const z = state.menuStyle
+                          z[mapItem.id] = resourcesStyle2
+                          setState((prev) => ({
+                            ...prev,
+                            menuStyle: z,
+                          }))
+                        }}
+                        onMouseLeave={() => {
+                          const z = state.menuStyle
+                          z[mapItem.id] = resourcesStyle1
+                          setState((prev) => ({
+                            ...prev,
+                            menuStyle: z,
+                          }))
+                        }}
+                        style={state.menuStyle[mapItem.id] ?? resourcesStyle1}
+                      >
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                          <Text style={headerStyles.style.centerMenuButtonsTextResources}>
+                            {mapItem.name}
+                          </Text>
+                          <img
+                            src={require("../../assets/svg/dropdown.svg")}
+                            style={state.chevronStyle}
+                          ></img>
+                        </div>
+                      </button>
+                      <Menu
+                        keepMounted
+                        anchorEl={state.menuDropdown[mapItem.id]}
+                        open={Boolean(state.menuDropdown[mapItem.id])}
+                        onClose={() => {
+                          handleMenuDropdownClose(mapItem.id)
+                        }}
+                        style={{ marginTop: 40 }}
+                      >
+                        {mapItem.subItems?.items.map((subItem) => {
+                          return (
+                            <MenuItem
+                              onClick={() => {
+                                openScreen(subItem.action ?? "")
+                              }}
+                            >
+                              <Text
+                                testID="header-resources-all"
+                                style={headerStyles.style.dropdownText}
+                              >
+                                {subItem.name}
+                              </Text>
+                            </MenuItem>
+                          )
+                        })}
+                      </Menu>
+                    </>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        openScreen(mapItem.action ?? "")
+                      }}
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}> {mapItem.name}</Text>
+                    </TouchableOpacity>
+                  )
+                })}
+              </View>
+            ) : (
+              <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+                {constants["SETTING_ISVISIBLE_people"] ? (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("ProfilesScreen")}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
+                  </TouchableOpacity>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_orgs"] ? (
+                  <TouchableOpacity
+                    onPress={() => null}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
+                  </TouchableOpacity>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_event"] ? (
+                  <TouchableOpacity
+                    testID="header-events"
+                    onPress={openEvents}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
+                  </TouchableOpacity>
+                ) : null}
+
+                {constants["SETTING_ISVISIBLE_group"] ? (
+                  <TouchableOpacity
+                    testID="header-groups"
+                    onPress={openGroups}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Groups</Text>
+                  </TouchableOpacity>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_resource"] ? (
+                  <button
+                    data-testid="header-resources"
+                    onClick={handleResourcesDropdownClick}
+                    onMouseEnter={() => setState({ ...state, resourcesStyle: resourcesStyle2 })}
+                    onMouseLeave={() => setState({ ...state, resourcesStyle: resourcesStyle1 })}
+                    style={{ ...state.resourcesStyle, display: width > 750 ? "flex" : "none" }}
+                  >
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <Text style={headerStyles.style.centerMenuButtonsTextResources}>
+                        Resources
+                      </Text>
+                      <img
+                        src={require("../../assets/svg/dropdown.svg")}
+                        style={state.chevronStyle}
+                      ></img>
+                    </div>
+                  </button>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_resource"] ? (
+                  <Menu
+                    style={{ marginTop: 40, marginLeft: 6 }}
+                    keepMounted
+                    anchorEl={state.resourcesDropdown}
+                    open={Boolean(state.resourcesDropdown)}
+                    onClose={handleResourcesDropdownClose}
+                  >
+                    <MenuItem onClick={openResources}>
+                      <Text testID="header-resources-all" style={headerStyles.style.dropdownText}>
+                        All Resources
+                      </Text>
+                    </MenuItem>
+                    <Divider style={{ backgroundColor: "black" }} />
+                    <MenuItem onClick={openKids}>
+                      <Text style={headerStyles.style.dropdownText}>One Story Curriculum</Text>
+                    </MenuItem>
+                  </Menu>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_course"] &&
+                (userActions.isMemberOf("courseUser") ||
+                  userActions.isMemberOf("courseCoach") ||
+                  userActions.isMemberOf("courseAdmin")) ? (
+                  <TouchableOpacity
+                    testID="header-courses"
+                    onPress={openCourses}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
+                  </TouchableOpacity>
+                ) : null}
+                {props?.showAdmin ? (
+                  <>
+                    <TouchableOpacity
+                      testID="header-groups"
+                      onPress={() =>
+                        navigation.navigate("AdminScreen", {
+                          id: state.user?.username,
+                          create: false,
+                        })
+                      }
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}>Admin</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      testID="header-groups"
+                      onPress={() =>
+                        navigation.navigate("AdminCRMScreen", {
+                          id: state.user?.username,
+                          create: false,
+                        })
+                      }
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}>CRM</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      testID="header-groups"
+                      onPress={() =>
+                        navigation.navigate("AdminCreateProductScreen", {
+                          id: state.user?.username,
+                          create: false,
+                        })
+                      }
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}>Products</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : null}
+              </View>
+            )}
             <View
               style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
             >
-              {constants["SETTING_MENU_custom"] ? (
-                <>
-                  {state.menus.map((mapItem) => {
-                    return (mapItem.subItems?.items?.length ?? 0) > 0 ? (
-                      <>
-                        <button
-                          data-testid="header-resources"
-                          onClick={(e) => {
-                            handleMenuDropdownClick(e, mapItem.id)
-                          }}
-                          onMouseEnter={() => {
-                            const z = state.menuStyle
-                            z[mapItem.id] = resourcesStyle2
-                            setState((prev) => ({
-                              ...prev,
-                              menuStyle: z,
-                            }))
-                          }}
-                          onMouseLeave={() => {
-                            const z = state.menuStyle
-                            z[mapItem.id] = resourcesStyle1
-                            setState((prev) => ({
-                              ...prev,
-                              menuStyle: z,
-                            }))
-                          }}
-                          style={state.menuStyle[mapItem.id] ?? resourcesStyle1}
-                        >
-                          <div style={{ display: "flex", flexDirection: "row" }}>
-                            <Text style={headerStyles.style.centerMenuButtonsTextResources}>
-                              {mapItem.name}
-                            </Text>
-                            <img
-                              src={require("../../assets/svg/dropdown.svg")}
-                              style={state.chevronStyle}
-                            ></img>
-                          </div>
-                        </button>
-                        <Menu
-                          keepMounted
-                          anchorEl={state.menuDropdown[mapItem.id]}
-                          open={Boolean(state.menuDropdown[mapItem.id])}
-                          onClose={() => {
-                            handleMenuDropdownClose(mapItem.id)
-                          }}
-                          style={{ marginTop: 40 }}
-                        >
-                          {mapItem.subItems?.items.map((subItem) => {
-                            return (
-                              <MenuItem
-                                onClick={() => {
-                                  openScreen(subItem.action ?? "")
-                                }}
-                              >
-                                <Text
-                                  testID="header-resources-all"
-                                  style={headerStyles.style.dropdownText}
-                                >
-                                  {subItem.name}
-                                </Text>
-                              </MenuItem>
-                            )
-                          })}
-                        </Menu>
-                      </>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          openScreen(mapItem.action ?? "")
-                        }}
-                        style={headerStyles.style.centerMenuButtons}
-                      >
-                        <Text style={headerStyles.style.centerMenuButtonsText}>
-                          {" "}
-                          {mapItem.name}
-                        </Text>
-                      </TouchableOpacity>
-                    )
-                  })}
-                </>
-              ) : (
-                <>
-                  {constants["SETTING_ISVISIBLE_people"] ? (
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("ProfilesScreen")}
-                      style={headerStyles.style.centerMenuButtons}
-                    >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
-                    </TouchableOpacity>
-                  ) : null}
-                  {constants["SETTING_ISVISIBLE_orgs"] ? (
-                    <TouchableOpacity
-                      onPress={() => null}
-                      style={headerStyles.style.centerMenuButtons}
-                    >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
-                    </TouchableOpacity>
-                  ) : null}
-                  {constants["SETTING_ISVISIBLE_event"] ? (
-                    <TouchableOpacity
-                      testID="header-events"
-                      onPress={openEvents}
-                      style={headerStyles.style.centerMenuButtons}
-                    >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
-                    </TouchableOpacity>
-                  ) : null}
-
-                  {constants["SETTING_ISVISIBLE_group"] ? (
-                    <TouchableOpacity
-                      testID="header-groups"
-                      onPress={openGroups}
-                      style={headerStyles.style.centerMenuButtons}
-                    >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>Groups</Text>
-                    </TouchableOpacity>
-                  ) : null}
-                  {constants["SETTING_ISVISIBLE_resource"] ? (
-                    <button
-                      data-testid="header-resources"
-                      onClick={handleResourcesDropdownClick}
-                      onMouseEnter={() => setState({ ...state, resourcesStyle: resourcesStyle2 })}
-                      onMouseLeave={() => setState({ ...state, resourcesStyle: resourcesStyle1 })}
-                      style={{ ...state.resourcesStyle, display: width > 750 ? "flex" : "none" }}
-                    >
-                      <div style={{ display: "flex", flexDirection: "row" }}>
-                        <Text style={headerStyles.style.centerMenuButtonsTextResources}>
-                          Resources
-                        </Text>
-                        <img
-                          src={require("../../assets/svg/dropdown.svg")}
-                          style={state.chevronStyle}
-                        ></img>
-                      </div>
-                    </button>
-                  ) : null}
-                  {constants["SETTING_ISVISIBLE_resource"] ? (
-                    <Menu
-                      style={{ marginTop: 40, marginLeft: 6 }}
-                      keepMounted
-                      anchorEl={state.resourcesDropdown}
-                      open={Boolean(state.resourcesDropdown)}
-                      onClose={handleResourcesDropdownClose}
-                    >
-                      <MenuItem onClick={openResources}>
-                        <Text testID="header-resources-all" style={headerStyles.style.dropdownText}>
-                          All Resources
-                        </Text>
-                      </MenuItem>
-                      <Divider style={{ backgroundColor: "black" }} />
-                      <MenuItem onClick={openKids}>
-                        <Text style={headerStyles.style.dropdownText}>One Story Curriculum</Text>
-                      </MenuItem>
-                    </Menu>
-                  ) : null}
-                  {constants["SETTING_ISVISIBLE_course"] &&
-                  (userActions.isMemberOf("courseUser") ||
-                    userActions.isMemberOf("courseCoach") ||
-                    userActions.isMemberOf("courseAdmin")) ? (
-                    <TouchableOpacity
-                      testID="header-courses"
-                      onPress={openCourses}
-                      style={headerStyles.style.centerMenuButtons}
-                    >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
-                    </TouchableOpacity>
-                  ) : null}
-                  {props?.showAdmin ? (
-                    <>
-                      <TouchableOpacity
-                        testID="header-groups"
-                        onPress={() =>
-                          navigation.navigate("AdminScreen", {
-                            id: state.user?.username,
-                            create: false,
-                          })
-                        }
-                        style={headerStyles.style.centerMenuButtons}
-                      >
-                        <Text style={headerStyles.style.centerMenuButtonsText}>Admin</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        testID="header-groups"
-                        onPress={() =>
-                          navigation.navigate("AdminCRMScreen", {
-                            id: state.user?.username,
-                            create: false,
-                          })
-                        }
-                        style={headerStyles.style.centerMenuButtons}
-                      >
-                        <Text style={headerStyles.style.centerMenuButtonsText}>CRM</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        testID="header-groups"
-                        onPress={() =>
-                          navigation.navigate("AdminCreateProductScreen", {
-                            id: state.user?.username,
-                            create: false,
-                          })
-                        }
-                        style={headerStyles.style.centerMenuButtons}
-                      >
-                        <Text style={headerStyles.style.centerMenuButtonsText}>Products</Text>
-                      </TouchableOpacity>
-                    </>
-                  ) : null}
-                </>
-              )}
-              {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
-                <View style={{ marginHorizontal: 12 }}>
-                  <TouchableOpacity testID="header-map" onPress={openAdmin}>
-                    <Ionicons name="ios-rocket" style={headerStyles.style.icon} />
-                  </TouchableOpacity>
-                </View>
-              ) : null}
               {constants["SETTING_ISVISIBLE_SEARCH"] ? (
                 <View style={{ marginHorizontal: 12 }}>
                   <TouchableOpacity testID="header-search" onPress={openSearch}>
@@ -469,6 +463,7 @@ export default function HeaderJCC(props: Props) {
                 </View>
               ) : null}
             </View>
+
             <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
               <TouchableOpacity
                 testID="header-hamburger"
