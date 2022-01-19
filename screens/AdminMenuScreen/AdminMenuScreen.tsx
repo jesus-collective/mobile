@@ -7,8 +7,6 @@ import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
-import Header from "../../components/Header/Header"
-import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { UserGroupType } from "../../src/API"
@@ -321,9 +319,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
           console.log("AdminScreen")
           return (
             <Container testID="events">
-              <Header title="Jesus Collective" navigation={this.props.navigation} />
-
-              <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
               {userActions.isMemberOf("admin") ? (
                 <Content>
                   <Container style={this.styles.style.fontRegular}>
