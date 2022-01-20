@@ -7,6 +7,7 @@ export type ModelMenuFilterInput = {
   order?: ModelIntFilterInput | null
   name?: ModelStringFilterInput | null
   action?: ModelStringFilterInput | null
+  params?: ModelStringFilterInput | null
   readGroups?: ModelUserGroupTypeListFilterInput | null
   and?: Array<ModelMenuFilterInput | null> | null
   or?: Array<ModelMenuFilterInput | null> | null
@@ -85,6 +86,7 @@ export type Menu = {
   order?: number | null
   name?: string | null
   action?: string | null
+  params?: string | null
   readGroups?: Array<UserGroupType | null> | null
   subItems?: ModelSubMenuConnection
   createdAt?: string
@@ -105,6 +107,7 @@ export type SubMenu = {
   menu?: Menu
   name?: string | null
   action?: string | null
+  params?: string | null
   readGroups?: Array<UserGroupType | null> | null
   createdAt?: string
   updatedAt?: string
@@ -1040,6 +1043,21 @@ export type ModelUserConnection = {
   nextToken?: string | null
 }
 
+export type ModelDirectMessageFilterInput = {
+  id?: ModelIDFilterInput | null
+  content?: ModelStringFilterInput | null
+  attachment?: ModelStringFilterInput | null
+  attachmentName?: ModelStringFilterInput | null
+  attachmentOwner?: ModelStringFilterInput | null
+  when?: ModelStringFilterInput | null
+  recipients?: ModelStringFilterInput | null
+  userId?: ModelIDFilterInput | null
+  messageRoomID?: ModelIDFilterInput | null
+  and?: Array<ModelDirectMessageFilterInput | null> | null
+  or?: Array<ModelDirectMessageFilterInput | null> | null
+  not?: ModelDirectMessageFilterInput | null
+}
+
 export type ModelDirectMessageUserFilterInput = {
   id?: ModelIDFilterInput | null
   userName?: ModelStringFilterInput | null
@@ -1066,6 +1084,7 @@ export type ListMenusQuery = {
       action?: string | null
       order?: number | null
       readGroups?: Array<UserGroupType | null> | null
+      params?: string | null
       subItems?: {
         __typename: "ModelSubMenuConnection"
         items: Array<{
@@ -1073,6 +1092,7 @@ export type ListMenusQuery = {
           id: string
           menuID?: string | null
           order?: number | null
+          params?: string | null
           name?: string | null
           action?: string | null
           readGroups?: Array<UserGroupType | null> | null
@@ -1858,6 +1878,25 @@ export type GetUserQuery = {
     orgName?: string | null
     createdAt: string
     updatedAt: string
+  } | null
+}
+
+export type ListDirectMessagesQueryVariables = {
+  filter?: ModelDirectMessageFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListDirectMessagesQuery = {
+  listDirectMessages?: {
+    __typename: "ModelDirectMessageConnection"
+    items: Array<{
+      __typename: "DirectMessage"
+      id: string
+      content?: string | null
+      createdAt: string
+    }>
+    nextToken?: string | null
   } | null
 }
 

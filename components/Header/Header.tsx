@@ -110,18 +110,8 @@ export default function HeaderJCC(props: Props) {
     navigation?.dispatch(DrawerActions.toggleDrawer())
   }
 
-  const openAdmin = async (): Promise<void> => {
-    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    navigation?.push("AdminScreen", {
-      id: user["username"],
-      create: false,
-    })
-  }
-  const openMenu = async (): Promise<void> => {
-    navigation?.push("AdminMenuScreen")
-  }
-  const openScreen = (screen: string): void => {
-    navigation?.push(screen)
+  const openScreen = (screen: string, params: any): void => {
+    navigation?.push(screen, params == "" ? null : JSON.parse(params))
   }
 
   const openSearch = (): void => {
@@ -276,7 +266,7 @@ export default function HeaderJCC(props: Props) {
                           return (
                             <MenuItem
                               onClick={() => {
-                                openScreen(subItem.action ?? "")
+                                openScreen(subItem.action ?? "", subItem.params)
                               }}
                             >
                               <Text
@@ -293,7 +283,7 @@ export default function HeaderJCC(props: Props) {
                   ) : (
                     <TouchableOpacity
                       onPress={() => {
-                        openScreen(mapItem.action ?? "")
+                        openScreen(mapItem.action ?? "", mapItem.params)
                       }}
                       style={headerStyles.style.centerMenuButtons}
                     >
