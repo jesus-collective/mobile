@@ -116,7 +116,12 @@ export default function HomeCarousel(props: Props) {
             ItemSeparatorComponent={() => <View style={{ width: 32 }} />}
             showsHorizontalScrollIndicator={false}
             horizontal
-            onLayout={(e) => setCarouselScreenWidth(e.nativeEvent.layout.width - 65)}
+            onLayout={(e) => {
+              setCarouselScreenWidth(e.nativeEvent.layout.width - 65)
+              // carousel is scrolled on load, does not show first item at all times.
+              // \/ should not be needed. todo: WHY
+              if (listRef?.current) listRef.current.scrollToIndex({ animated: false, index: 0 })
+            }}
             style={{ flex: 1, margin: 16, minHeight: 308 }}
             contentContainerStyle={{ width: "84.444vw" }}
             renderItem={({ item }) => renderItem(item, cardWidth)}
