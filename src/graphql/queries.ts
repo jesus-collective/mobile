@@ -4151,6 +4151,7 @@ export const getMenu = /* GraphQL */ `
       order
       name
       action
+      params
       readGroups
       subItems {
         items {
@@ -4159,6 +4160,7 @@ export const getMenu = /* GraphQL */ `
           order
           name
           action
+          params
           readGroups
           createdAt
           updatedAt
@@ -4178,6 +4180,7 @@ export const listMenus = /* GraphQL */ `
         order
         name
         action
+        params
         readGroups
         subItems {
           nextToken
@@ -4200,6 +4203,7 @@ export const getSubMenu = /* GraphQL */ `
         order
         name
         action
+        params
         readGroups
         subItems {
           nextToken
@@ -4209,6 +4213,7 @@ export const getSubMenu = /* GraphQL */ `
       }
       name
       action
+      params
       readGroups
       createdAt
       updatedAt
@@ -4227,12 +4232,14 @@ export const listSubMenus = /* GraphQL */ `
           order
           name
           action
+          params
           readGroups
           createdAt
           updatedAt
         }
         name
         action
+        params
         readGroups
         createdAt
         updatedAt

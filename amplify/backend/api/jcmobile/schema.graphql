@@ -1377,6 +1377,7 @@ type Menu
   order:Int
   name:String
   action:String
+  params:String
   readGroups:[UserGroupType]
   subItems: [SubMenu] @connection(name:"subMenuMenu",keyField: "menuID",sortField:"order")
 
@@ -1396,5 +1397,6 @@ type SubMenu
   menu:Menu @connection(name:"subMenuMenu",keyField:"menuID")
   name:String
   action:String
+  params:String
   readGroups:[UserGroupType]
 }

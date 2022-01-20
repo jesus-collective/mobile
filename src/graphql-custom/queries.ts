@@ -7,11 +7,13 @@ export const listMenus = /* GraphQL */ `
         action
         order
         readGroups
+        params
         subItems {
           items {
             id
             menuID
             order
+            params
             name
             action
             readGroups

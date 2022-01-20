@@ -7,6 +7,7 @@ export type ModelMenuFilterInput = {
   order?: ModelIntFilterInput | null
   name?: ModelStringFilterInput | null
   action?: ModelStringFilterInput | null
+  params?: ModelStringFilterInput | null
   readGroups?: ModelUserGroupTypeListFilterInput | null
   and?: Array<ModelMenuFilterInput | null> | null
   or?: Array<ModelMenuFilterInput | null> | null
@@ -85,6 +86,7 @@ export type Menu = {
   order?: number | null
   name?: string | null
   action?: string | null
+  params?: string | null
   readGroups?: Array<UserGroupType | null> | null
   subItems?: ModelSubMenuConnection
   createdAt?: string
@@ -105,6 +107,7 @@ export type SubMenu = {
   menu?: Menu
   name?: string | null
   action?: string | null
+  params?: string | null
   readGroups?: Array<UserGroupType | null> | null
   createdAt?: string
   updatedAt?: string
@@ -1013,6 +1016,7 @@ export type ListMenusQuery = {
       action?: string | null
       order?: number | null
       readGroups?: Array<UserGroupType | null> | null
+      params?: string | null
       subItems?: {
         __typename: "ModelSubMenuConnection"
         items: Array<{
@@ -1020,6 +1024,7 @@ export type ListMenusQuery = {
           id: string
           menuID?: string | null
           order?: number | null
+          params?: string | null
           name?: string | null
           action?: string | null
           readGroups?: Array<UserGroupType | null> | null

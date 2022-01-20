@@ -11215,6 +11215,7 @@ export const onCreateMenu = /* GraphQL */ `
       order
       name
       action
+      params
       readGroups
       subItems {
         items {
@@ -11223,6 +11224,7 @@ export const onCreateMenu = /* GraphQL */ `
           order
           name
           action
+          params
           readGroups
           createdAt
           updatedAt
@@ -11241,6 +11243,7 @@ export const onUpdateMenu = /* GraphQL */ `
       order
       name
       action
+      params
       readGroups
       subItems {
         items {
@@ -11249,6 +11252,7 @@ export const onUpdateMenu = /* GraphQL */ `
           order
           name
           action
+          params
           readGroups
           createdAt
           updatedAt
@@ -11267,6 +11271,7 @@ export const onDeleteMenu = /* GraphQL */ `
       order
       name
       action
+      params
       readGroups
       subItems {
         items {
@@ -11275,6 +11280,7 @@ export const onDeleteMenu = /* GraphQL */ `
           order
           name
           action
+          params
           readGroups
           createdAt
           updatedAt
@@ -11297,6 +11303,7 @@ export const onCreateSubMenu = /* GraphQL */ `
         order
         name
         action
+        params
         readGroups
         subItems {
           nextToken
@@ -11306,6 +11313,7 @@ export const onCreateSubMenu = /* GraphQL */ `
       }
       name
       action
+      params
       readGroups
       createdAt
       updatedAt
@@ -11323,6 +11331,7 @@ export const onUpdateSubMenu = /* GraphQL */ `
         order
         name
         action
+        params
         readGroups
         subItems {
           nextToken
@@ -11332,6 +11341,7 @@ export const onUpdateSubMenu = /* GraphQL */ `
       }
       name
       action
+      params
       readGroups
       createdAt
       updatedAt
@@ -11349,6 +11359,7 @@ export const onDeleteSubMenu = /* GraphQL */ `
         order
         name
         action
+        params
         readGroups
         subItems {
           nextToken
@@ -11358,6 +11369,7 @@ export const onDeleteSubMenu = /* GraphQL */ `
       }
       name
       action
+      params
       readGroups
       createdAt
       updatedAt

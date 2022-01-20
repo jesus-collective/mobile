@@ -118,8 +118,8 @@ export default class HeaderJC extends JCComponent<Props, State> {
       create: false,
     })
   }
-  openScreen = (screen: string): void => {
-    this.props.navigation?.push(screen)
+  openScreen = (screen: string, params: any): void => {
+    this.props.navigation?.push(screen, params == "" ? null : JSON.parse(params))
   }
   openAdmin = async (): Promise<void> => {
     const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
@@ -251,7 +251,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                               return (
                                 <MenuItem
                                   onClick={() => {
-                                    this.openScreen(subItem.action ?? "")
+                                    this.openScreen(subItem.action ?? "", subItem.params)
                                   }}
                                 >
                                   <Text
@@ -270,7 +270,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                           transparent
                           testID="header-events"
                           onPress={() => {
-                            this.openScreen(mapItem.action ?? "")
+                            this.openScreen(mapItem.action ?? "", mapItem.params)
                           }}
                           style={this.headerStyles.style.centerMenuButtons}
                         >

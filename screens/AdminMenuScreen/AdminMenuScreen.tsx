@@ -8,7 +8,6 @@ import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
-import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { UserGroupType } from "../../src/API"
@@ -21,7 +20,10 @@ interface State extends JCState {
   menus: NonNullable<ListMenusQuery["listMenus"]>["items"]
   showAddMenuItem: boolean
   showAddSubMenuItem: string | null
+  showEditMenuItem: string | null
+  showEditSubMenuItem: string | null
   menuName: string
+  menuProps: string
   subMenuName: string
   groupData: UserGroupType[]
   groupList: string[]
@@ -29,15 +31,19 @@ interface State extends JCState {
   showGroupsId: string
   menuAction: string
   subMenuAction: string
+  subMenuProps: string
 }
 
 export default class AdminScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
+
     this.state = {
       ...super.getInitialState(),
       showAddMenuItem: false,
       showAddSubMenuItem: null,
+      showEditMenuItem: null,
+      showEditSubMenuItem: null,
       groupList: [],
       groupData: [],
       menus: [],
@@ -58,7 +64,31 @@ export default class AdminScreen extends JCComponent<Props, State> {
     }
   }
   static UserConsumer = UserContext.Consumer
-
+  async saveMenu(): Promise<void> {
+    try {
+      if (this.state.showEditMenuItem != null) {
+        const z = await Data.updateMenu({
+          id: this.state.showEditMenuItem,
+          name: this.state.menuName,
+          action: this.state.menuAction,
+          readGroups: this.state.groupData,
+          order: this.state.menus.length,
+          params: this.state.menuProps,
+        })
+        console.log(z)
+        this.setState({
+          menuName: "",
+          menuAction: "",
+          menuProps: "",
+          groupData: [],
+        })
+        await this.setInitialData()
+        this.closeAddMenuItem()
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
   async addMenu(): Promise<void> {
     try {
       const z = await Data.createMenu({
@@ -66,9 +96,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
         action: this.state.menuAction,
         readGroups: this.state.groupData,
         order: this.state.menus.length,
+        params: this.state.menuProps,
       })
       console.log(z)
-      this.setState({ menuName: "", menuAction: "", groupData: [] })
+      this.setState({ menuName: "", menuAction: "", menuProps: "", groupData: [] })
       await this.setInitialData()
       this.closeAddMenuItem()
     } catch (e) {
@@ -77,18 +108,38 @@ export default class AdminScreen extends JCComponent<Props, State> {
     //await this.addUserToGroup(user, group)
     //if (this.state.showGroupsId) this.showGroups(this.state.showGroupsId)
   }
+  async saveSubMenu(): Promise<void> {
+    try {
+      if (this.state.showEditSubMenuItem != null) {
+        const z = await Data.updateSubMenu({
+          id: this.state.showEditSubMenuItem,
+          name: this.state.subMenuName,
+          action: this.state.subMenuAction,
+          params: this.state.subMenuProps,
+          readGroups: this.state.groupData,
+        })
+        console.log(z)
+        this.setState({ subMenuName: "", subMenuAction: "", subMenuProps: "", groupData: [] })
+        await this.setInitialData()
+        this.closeAddSubMenuItem()
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
   async addSubMenu(): Promise<void> {
     try {
       const z = await Data.createSubMenu({
         name: this.state.subMenuName,
         action: this.state.subMenuAction,
+        params: this.state.subMenuProps,
         readGroups: this.state.groupData,
         menuID: this.state.showAddSubMenuItem,
         order: this.state.menus.filter((f) => f.id == this.state.showAddSubMenuItem)[0].subItems
           ?.items.length,
       })
       console.log(z)
-      this.setState({ subMenuName: "", subMenuAction: "", groupData: [] })
+      this.setState({ subMenuName: "", subMenuAction: "", subMenuProps: "", groupData: [] })
       await this.setInitialData()
       this.closeAddSubMenuItem()
     } catch (e) {
@@ -100,7 +151,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
   renderAddMenuModal(): React.ReactNode {
     return (
       <JCModal
-        visible={this.state.showAddMenuItem}
+        visible={this.state.showAddMenuItem || this.state.showEditMenuItem != null}
         title="Menu Item"
         onHide={() => {
           this.closeAddMenuItem()
@@ -116,13 +167,25 @@ export default class AdminScreen extends JCComponent<Props, State> {
             value={this.state.menuName}
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
+          <Picker
+            placeholder="Enter Action Value"
+            selectedValue={this.state.menuAction}
+            onValueChange={(e) => {
+              this.setState({ menuAction: e })
+            }}
+          >
+            {this.props.navigation.getState().routeNames.map((item) => {
+              return <Picker.Item label={item} value={item} />
+            })}
+          </Picker>
+
           <TextInput
             onChange={(val: any) => {
-              this.setState({ menuAction: val.target.value })
+              this.setState({ menuProps: val.target.value })
             }}
-            placeholder="Enter Action Name"
+            placeholder="Enter Props"
             multiline={false}
-            value={this.state.menuAction}
+            value={this.state.menuProps}
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
           <Text style={this.styles.style.adminCRMModal}>Visible to:</Text>
@@ -182,10 +245,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCButton
               buttonType={ButtonTypes.AdminAdd}
               onPress={() => {
-                this.addMenu()
+                this.state.showEditMenuItem != null ? this.saveMenu() : this.addMenu()
               }}
             >
-              Add Menu
+              {this.state.showEditMenuItem != null ? "Edit Menu" : "Add Menu"}
             </JCButton>
           </Container>
         </>
@@ -195,7 +258,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
   renderAddSubMenuModal(): React.ReactNode {
     return (
       <JCModal
-        visible={this.state.showAddSubMenuItem != null}
+        visible={this.state.showAddSubMenuItem != null || this.state.showEditSubMenuItem != null}
         title="Sub Menu Item"
         onHide={() => {
           this.closeAddSubMenuItem()
@@ -211,13 +274,25 @@ export default class AdminScreen extends JCComponent<Props, State> {
             value={this.state.subMenuName}
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
+          <Picker
+            placeholder="Enter Action Value"
+            selectedValue={this.state.subMenuAction}
+            onValueChange={(e) => {
+              this.setState({ subMenuAction: e })
+            }}
+          >
+            {this.props.navigation.getState().routeNames.map((item) => {
+              return <Picker.Item label={item} value={item} />
+            })}
+          </Picker>
+
           <TextInput
             onChange={(val: any) => {
-              this.setState({ subMenuAction: val.target.value })
+              this.setState({ subMenuProps: val.target.value })
             }}
-            placeholder="Enter Action Name"
+            placeholder="Enter Props"
             multiline={false}
-            value={this.state.subMenuAction}
+            value={this.state.subMenuProps}
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
           <Text style={this.styles.style.adminCRMModal}>Visible to:</Text>
@@ -277,10 +352,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCButton
               buttonType={ButtonTypes.AdminAdd}
               onPress={() => {
-                this.addSubMenu()
+                this.state.showEditSubMenuItem != null ? this.saveSubMenu() : this.addSubMenu()
               }}
             >
-              Add Sub Menu
+              {this.state.showEditSubMenuItem != null ? "Edit Sub Menu" : "Add Sub Menu"}
             </JCButton>
           </Container>
         </>
@@ -291,18 +366,47 @@ export default class AdminScreen extends JCComponent<Props, State> {
     this.setState({ showAddMenuItem: true })
   }
   closeAddMenuItem = () => {
-    this.setState({ showAddMenuItem: false })
+    this.setState({
+      showAddMenuItem: false,
+      showEditMenuItem: null,
+      menuName: "",
+      menuAction: "",
+      menuProps: "",
+      groupData: [],
+    })
   }
   addSubMenuItem = (id: string) => {
     this.setState({ showAddSubMenuItem: id })
   }
   closeAddSubMenuItem = () => {
-    this.setState({ showAddSubMenuItem: null })
+    this.setState({
+      showAddSubMenuItem: null,
+      showEditSubMenuItem: null,
+      subMenuName: "",
+      subMenuAction: "",
+      subMenuProps: "",
+      groupData: [],
+    })
   }
-  editMenuItem = (id: string) => {
+  editMenuItem = (item: any) => {
+    this.setState({
+      showEditMenuItem: item.id,
+      menuName: item.name,
+      menuAction: item.action,
+      menuProps: item.params,
+      groupData: item.readGroups,
+    })
+
     // await Data.updateMenu(id)
   }
-  editSubMenuItem = (id: string) => {
+  editSubMenuItem = (item: any) => {
+    this.setState({
+      showEditSubMenuItem: item.id,
+      subMenuName: item.name,
+      subMenuAction: item.action,
+      subMenuProps: item.params,
+      groupData: item.readGroups,
+    })
     //await Data.updateSubMenu(id)
   }
   deleteMenuItem = async (id: string) => {
@@ -323,7 +427,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <Container testID="events">
               <Header title="Jesus Collective" navigation={this.props.navigation} />
 
-              <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
               {userActions.isMemberOf("admin") ? (
                 <Content>
                   <Container style={this.styles.style.fontRegular}>
@@ -351,7 +454,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                               </JCButton>
                               <JCButton
                                 buttonType={ButtonTypes.AdminSmallOutline}
-                                onPress={() => this.editMenuItem(item.id)}
+                                onPress={() => this.editMenuItem(item)}
                               >
                                 ...
                               </JCButton>
@@ -394,7 +497,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                                     <Text>{item2.name}</Text>
                                     <JCButton
                                       buttonType={ButtonTypes.AdminSmallOutline}
-                                      onPress={() => this.editSubMenuItem(item2.id)}
+                                      onPress={() => this.editSubMenuItem(item2)}
                                     >
                                       ...
                                     </JCButton>

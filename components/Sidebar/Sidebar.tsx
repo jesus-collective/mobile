@@ -3,67 +3,44 @@ import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript
 import { Container, Content, Header, List, ListItem } from "native-base"
 import * as React from "react"
 import { Text } from "react-native"
-import { constants } from "../../src/constants"
+import { ListMenusQuery } from "src/API-customqueries"
+import { Data } from "../../components/Data/Data"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-const routes = [
-  {
-    name: "Home",
-    route: "HomeScreen",
-  },
-  {
-    name: "Events",
-    route: "EventsScreen",
-  },
-
-  {
-    name: "Groups",
-    route: "GroupsScreen",
-  },
-  {
-    name: "Resources",
-    route: "ResourcesScreen",
-  },
-
-  {
-    name: "Courses",
-    route: "CoursesScreen",
-  },
-]
-
-const resourceRoutes = [
-  {
-    name: "All Resources",
-    route: "ResourcesScreen",
-    props: {},
-  },
-  {
-    name: "Kids & Youth Curriculum",
-    route: "ResourceScreen",
-    props: { create: false, id: constants["SETTING_KY_GROUP_ID"] },
-  },
-]
 
 interface Props {
   route?: any
   navigation: DrawerNavigationHelpers
 }
 interface State extends JCState {
-  showResourcesSubMenu: boolean
+  showSubMenu: { [menuId: string]: boolean }
+  menus: NonNullable<ListMenusQuery["listMenus"]>["items"]
 }
 class SideBar extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
       ...super.getInitialState(),
-      showResourcesSubMenu: false,
+      showSubMenu: {},
+      menus: [],
     }
+    Data.listMenu(null)
+      .then((listMenus) => {
+        console.log({ listMenus: listMenus })
+        this.setState({
+          menus:
+            listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ?? [],
+        })
+      })
+      .catch((e) => {
+        this.setState({ menus: e.data?.listMenus?.items ?? [] })
+      })
   }
 
-  renderResourcesSubMenu(): React.ReactNode {
+  renderResourcesSubMenu(subMenus: any): React.ReactNode {
     return (
       <List
-        dataArray={resourceRoutes}
-        keyExtractor={(data) => data.name}
+        dataArray={subMenus}
+        keyExtractor={(data) => data.id}
         renderRow={(data) => {
           return (
             <ListItem
@@ -74,8 +51,13 @@ class SideBar extends JCComponent<Props, State> {
               }
               button
               onPress={() => {
-                this.props.navigation.navigate(data.route, data.props)
-                this.setState({ showResourcesSubMenu: false })
+                this.props.navigation.navigate(
+                  data.action,
+                  data.params == "" ? null : JSON.parse(data.params)
+                )
+                const z = this.state.showSubMenu
+                z[data.id] = false
+                this.setState({ showSubMenu: z })
               }}
             >
               <Text
@@ -102,17 +84,19 @@ class SideBar extends JCComponent<Props, State> {
         <Content>
           <Header style={{ backgroundColor: "#FFFFFF" }}></Header>
           <List
-            dataArray={routes}
-            keyExtractor={(data) => data.name}
+            dataArray={this.state.menus}
+            keyExtractor={(data) => data.id}
             renderRow={(data) => {
-              if (data.name === "Resources")
+              if ((data.subItems?.items?.length ?? 0) > 0)
                 return (
                   <Container>
                     <ListItem
                       style={{ marginRight: 20 }}
                       button
                       onPress={() => {
-                        this.setState({ showResourcesSubMenu: !this.state.showResourcesSubMenu })
+                        const z = this.state.showSubMenu
+                        z[data.id] = !z[data.id]
+                        this.setState({ showSubMenu: z })
                       }}
                     >
                       <Text
@@ -127,13 +111,15 @@ class SideBar extends JCComponent<Props, State> {
                         {data.name}
                       </Text>
                       <Entypo
-                        name={this.state.showResourcesSubMenu ? "chevron-up" : "chevron-down"}
+                        name={this.state.showSubMenu[data.id] ? "chevron-up" : "chevron-down"}
                         size={22}
                         color="#333333"
                         style={{ marginTop: 5 }}
                       />
                     </ListItem>
-                    {this.state.showResourcesSubMenu ? this.renderResourcesSubMenu() : null}
+                    {this.state.showSubMenu[data.id]
+                      ? this.renderResourcesSubMenu(data.subItems.items)
+                      : null}
                   </Container>
                 )
               return (
@@ -141,8 +127,12 @@ class SideBar extends JCComponent<Props, State> {
                   style={{ marginRight: 20 }}
                   button
                   onPress={() => {
-                    this.props.navigation.navigate(data.route)
-                    this.setState({ showResourcesSubMenu: false })
+                    this.props.navigation.navigate(
+                      data.action,
+                      data.params == "" ? null : JSON.parse(data.params)
+                    )
+                    const z = this.state.showSubMenu
+                    z[data.id] = false
                   }}
                 >
                   <Text
