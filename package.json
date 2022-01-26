@@ -60,6 +60,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "native-base": "^2.11.0",
+    "only-last-promise": "^1.0.0",
     "react": "16.13.1",
     "react-chips": "^0.8.0",
     "react-datepicker": "^3.6.0",

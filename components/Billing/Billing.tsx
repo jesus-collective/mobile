@@ -18,6 +18,7 @@ import {
 import { Mutex } from "async-mutex"
 import Amplify, { Auth } from "aws-amplify"
 import { Body, Card, CardItem, Content, Label } from "native-base"
+import onlyLastPromise, { DiscardSignal } from "only-last-promise"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
@@ -36,6 +37,18 @@ import awsConfig from "../../src/aws-exports"
 import "./CardSectionStyles.css"
 import EULA from "./eula.json"
 import HandleStripePayment from "./HandleStripePayment"
+
+const wrapper = onlyLastPromise()
+
+const wrappedPreviewInvoice = async (invoiceData: any) => {
+  try {
+    return await wrapper(Data.previewInvoice(invoiceData))
+  } catch (error) {
+    if (!(error instanceof DiscardSignal)) {
+      throw error
+    }
+  }
+}
 
 Amplify.configure(awsConfig)
 const handleInputMutex = new Mutex()
@@ -219,7 +232,7 @@ class BillingImpl extends JCComponent<Props, State> {
         {
           invoiceQueue: [
             ...this.state.invoiceQueue,
-            Data.previewInvoice({
+            wrappedPreviewInvoice({
               idempotency: this.state.idempotency,
               priceInfo: {
                 coupon: this.state.coupon,
@@ -231,7 +244,9 @@ class BillingImpl extends JCComponent<Props, State> {
         async () => {
           console.log({ invoiceQueue: this.state.invoiceQueue })
           try {
-            const invoice = await this.state.invoiceQueue[this.state.invoiceQueue.length - 1]
+            const invoice = (await Promise.all(this.state.invoiceQueue))[
+              this.state.invoiceQueue.length - 1
+            ]
             console.log({ invoice1: invoice })
             console.log({ invoice: invoice.data.previewInvoice?.invoice })
             this.setState({ invoice: invoice.data.previewInvoice?.invoice })
