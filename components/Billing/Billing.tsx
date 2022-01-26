@@ -215,27 +215,31 @@ class BillingImpl extends JCComponent<Props, State> {
     const priceItems = this.getPriceItems()
 
     try {
-      const newInvoice = Data.previewInvoice({
-        idempotency: this.state.idempotency,
-        priceInfo: {
-          coupon: this.state.coupon,
-          prices: priceItems,
+      this.setState(
+        {
+          invoiceQueue: [
+            ...this.state.invoiceQueue,
+            Data.previewInvoice({
+              idempotency: this.state.idempotency,
+              priceInfo: {
+                coupon: this.state.coupon,
+                prices: priceItems,
+              },
+            }),
+          ],
         },
-      })
-      console.log({ newInvoice: newInvoice })
-      this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
-        const currentIndex = this.state.invoiceQueue.length - 1
-        try {
-          const invoice = await this.state.invoiceQueue[currentIndex]
-          console.log({ invoice1: invoice })
-          if (currentIndex === this.state.invoiceQueue.length - 1) {
+        async () => {
+          console.log({ invoiceQueue: this.state.invoiceQueue })
+          try {
+            const invoice = await this.state.invoiceQueue[this.state.invoiceQueue.length - 1]
+            console.log({ invoice1: invoice })
             console.log({ invoice: invoice.data.previewInvoice?.invoice })
             this.setState({ invoice: invoice.data.previewInvoice?.invoice })
+          } catch (e: any) {
+            console.log({ ERROR: e })
           }
-        } catch (e: any) {
-          console.log({ ERROR: e })
         }
-      })
+      )
     } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log({ error: e })
@@ -540,7 +544,7 @@ class BillingImpl extends JCComponent<Props, State> {
         console.log("Subscription is not yet active")
       }
       await userActions.recheckUserState()
-    }, [2000])
+    }, 2000)
     setTimeout(() => {
       clearInterval(a)
       this.setState({
@@ -578,7 +582,7 @@ class BillingImpl extends JCComponent<Props, State> {
               temp.billingAddress[field] = value
 
             const user = await Data.updateUser({
-              id: this.state.userData?.id,
+              id: this.state.userData?.id ?? "",
               billingAddress: temp?.billingAddress,
             })
 
@@ -590,7 +594,7 @@ class BillingImpl extends JCComponent<Props, State> {
         if (temp?.billingAddress) temp.billingAddress[field] = value
 
         const user = await Data.updateUser({
-          id: this.state.userData?.id,
+          id: this.state.userData?.id ?? "",
           billingAddress: temp?.billingAddress,
         })
 

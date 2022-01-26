@@ -123,6 +123,7 @@ exports.handler = async (event) => {
       if (promotionCode != "") sub["promotion_code"] = promotionCode
       try {
         invoice = await stripe.invoices.retrieveUpcoming(sub)
+        console.log({ invoice: invoice })
       } catch (error) {
         return { statusCode: "402", error: { message: error.message } }
       }
