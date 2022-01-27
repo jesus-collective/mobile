@@ -1120,7 +1120,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             paddingBottom: 10,
                           }}
                         >
-                          {this.state.invoice ? "Total:" : "Calculating Total..."}
+                          {this.state.invoice ? "Total:" : <>Calculating Total...</>}
                         </Text>
                         <Text
                           style={{
@@ -1164,7 +1164,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           lineHeight: 15,
                         }}
                         onChange={async (value) => {
-                          this.setState({ coupon: value }, async () => {
+                          this.setState({ invoice: null, coupon: value }, async () => {
                             await this.createInvoice()
                           })
                         }}
