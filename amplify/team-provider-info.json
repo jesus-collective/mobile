@@ -44,7 +44,7 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-6c32466851797a515744-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-2b376d386c71337a5663-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_fe30GuOOt",
@@ -174,7 +174,7 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-6d6d35594c4378442f77-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-2b376d386c71337a5663-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
