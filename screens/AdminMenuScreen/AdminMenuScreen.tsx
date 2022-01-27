@@ -422,11 +422,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
     if (item2) {
       await Data.updateSubMenu({ id: item1.id, order: item2.order })
       await Data.updateSubMenu({ id: item2.id, order: item1.order })
+      await this.setInitialData()
     }
   }
   reOrderMenuItem = async (item1: MenuItem, item2: MenuItem) => {
     await Data.updateMenu({ id: item1.id, order: item2.order })
     await Data.updateMenu({ id: item2.id, order: item1.order })
+    await this.setInitialData()
   }
   render(): React.ReactNode {
     return (
