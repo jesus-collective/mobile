@@ -10,12 +10,13 @@ import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
-import { UserGroupType } from "../../src/API"
+import { ListSubMenusQuery, UserGroupType } from "../../src/API"
 interface Props {
   navigation: StackNavigationProp<any, any>
   route: any
 }
-
+type MenuItem = NonNullable<NonNullable<ListMenusQuery["listMenus"]>["items"]>[0]
+type SubMenuItem = NonNullable<NonNullable<ListSubMenusQuery["listSubMenus"]>["items"]>[0]
 interface State extends JCState {
   menus: NonNullable<ListMenusQuery["listMenus"]>["items"]
   showAddMenuItem: boolean
@@ -417,6 +418,16 @@ export default class AdminScreen extends JCComponent<Props, State> {
     await Data.deleteSubMenu(id)
     await this.setInitialData()
   }
+  reOrderSubMenuItem = async (item1: SubMenuItem, item2: SubMenuItem | undefined) => {
+    if (item2) {
+      await Data.updateSubMenu({ id: item1.id, order: item2.order })
+      await Data.updateSubMenu({ id: item2.id, order: item1.order })
+    }
+  }
+  reOrderMenuItem = async (item1: MenuItem, item2: MenuItem) => {
+    await Data.updateMenu({ id: item1.id, order: item2.order })
+    await Data.updateMenu({ id: item2.id, order: item1.order })
+  }
   render(): React.ReactNode {
     return (
       <AdminScreen.UserConsumer>
@@ -441,7 +452,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         justifyContent: "flex-start",
                       }}
                     >
-                      {this.state.menus?.map((item) => {
+                      {this.state.menus?.map((item, index: number) => {
                         return (
                           <>
                             <div style={{ display: "flex", flexDirection: "row" }}>
@@ -461,7 +472,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
                               {(item.order ?? 0) > 0 ? (
                                 <JCButton
                                   buttonType={ButtonTypes.AdminSmallOutline}
-                                  onPress={() => this.editMenuItem(item.id)}
+                                  onPress={() =>
+                                    this.reOrderMenuItem(item, this.state.menus[index - 1])
+                                  }
                                 >
                                   <Ionicons
                                     name="arrow-up-outline"
@@ -472,7 +485,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
                               {(item.order ?? 0) < this.state.menus.length - 1 ? (
                                 <JCButton
                                   buttonType={ButtonTypes.AdminSmallOutline}
-                                  onPress={() => this.editMenuItem(item.id)}
+                                  onPress={() =>
+                                    this.reOrderMenuItem(item, this.state.menus[index + 1])
+                                  }
                                 >
                                   <Ionicons
                                     name="arrow-down-outline"
@@ -490,7 +505,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                               <Text>{item.readGroups?.toString()}</Text>
                             </div>
                             <div>
-                              {item.subItems?.items.map((item2) => {
+                              {item.subItems?.items.map((item2, index2: number) => {
                                 return (
                                   <div style={{ display: "flex", flexDirection: "row" }}>
                                     <Text>&nbsp;&nbsp;&nbsp;</Text>
@@ -504,7 +519,12 @@ export default class AdminScreen extends JCComponent<Props, State> {
                                     {(item2.order ?? 0) > 0 ? (
                                       <JCButton
                                         buttonType={ButtonTypes.AdminSmallOutline}
-                                        onPress={() => this.editMenuItem(item.id)}
+                                        onPress={() =>
+                                          this.reOrderSubMenuItem(
+                                            item2,
+                                            item.subItems?.items[index2 - 1]
+                                          )
+                                        }
                                       >
                                         <Ionicons
                                           name="arrow-up-outline"
@@ -516,7 +536,12 @@ export default class AdminScreen extends JCComponent<Props, State> {
                                     (item.subItems?.items?.length ?? 0) - 1 ? (
                                       <JCButton
                                         buttonType={ButtonTypes.AdminSmallOutline}
-                                        onPress={() => this.editMenuItem(item.id)}
+                                        onPress={() =>
+                                          this.reOrderSubMenuItem(
+                                            item2,
+                                            item.subItems?.items[index2 + 1]
+                                          )
+                                        }
                                       >
                                         <Ionicons
                                           name="arrow-down-outline"
