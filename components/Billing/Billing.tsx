@@ -247,6 +247,7 @@ class BillingImpl extends JCComponent<Props, State> {
             const invoice = (await Promise.all(this.state.invoiceQueue))[
               this.state.invoiceQueue.length - 1
             ]
+            console.log({ invoiceQueue2: this.state.invoiceQueue })
             console.log({ invoice1: invoice })
             console.log({ invoice: invoice.data.previewInvoice?.invoice })
             this.setState({ invoice: invoice.data.previewInvoice?.invoice })

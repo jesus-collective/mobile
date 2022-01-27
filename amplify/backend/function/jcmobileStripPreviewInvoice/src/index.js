@@ -113,18 +113,20 @@ exports.handler = async (event) => {
         promotionCodes.data &&
         promotionCodes.data.length > 0
       )
-        var promotionCode = promotionCodes.data[0].id
+        var promotionCode = promotionCodes.data[0].coupon
       console.log({ promotionCode: promotionCode })
+
       const sub = {
         customer: stripeCustomerID,
         subscription_items: prices,
         expand: ["lines"],
       }
-      if (promotionCode != "") sub["promotion_code"] = promotionCode
+      if (code != "") sub["coupon"] = promotionCode.id
       try {
         invoice = await stripe.invoices.retrieveUpcoming(sub)
         console.log({ invoice: invoice })
       } catch (error) {
+        console.log({ error: error })
         return { statusCode: "402", error: { message: error.message } }
       }
     } else {
