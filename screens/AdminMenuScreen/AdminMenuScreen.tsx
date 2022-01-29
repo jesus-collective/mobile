@@ -19,6 +19,7 @@ type MenuItem = NonNullable<NonNullable<ListMenusQuery["listMenus"]>["items"]>[0
 type SubMenuItem = NonNullable<NonNullable<ListSubMenusQuery["listSubMenus"]>["items"]>[0]
 interface State extends JCState {
   menus: NonNullable<ListMenusQuery["listMenus"]>["items"]
+  previewMenus: NonNullable<ListMenusQuery["listMenus"]>["items"]
   showAddMenuItem: boolean
   showAddSubMenuItem: string | null
   showEditMenuItem: string | null
@@ -27,6 +28,7 @@ interface State extends JCState {
   menuProps: string
   subMenuName: string
   groupData: UserGroupType[]
+  previewGroupData: UserGroupType[]
   groupList: string[]
   groupToAdd: string
   showGroupsId: string
@@ -47,7 +49,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
       showEditSubMenuItem: null,
       groupList: [],
       groupData: [],
+      previewGroupData: [],
       menus: [],
+      previewMenus: [],
     }
     this.setInitialData()
   }
@@ -430,6 +434,89 @@ export default class AdminScreen extends JCComponent<Props, State> {
     await Data.updateMenu({ id: item2.id, order: item1.order })
     await this.setInitialData()
   }
+  getPreviewMenu() {
+    const pgd = this.state.previewGroupData
+    const preview = JSON.parse(JSON.stringify(this.state.menus))
+    if (preview) {
+      const preview2 = preview.filter(
+        (x: any) =>
+          (x.readGroups?.filter((z: any) => pgd.includes(z ?? UserGroupType.verifiedUsers))
+            .length ?? 0) >= 1
+      )
+      const previewPt2 = preview2.map((y: any) => {
+        if (y.subItems && y.subItems.items) {
+          y.subItems.items = y.subItems.items.filter(
+            (x: any) =>
+              (x.readGroups?.filter((z: any) => pgd.includes(z ?? UserGroupType.verifiedUsers))
+                .length ?? 0) >= 1
+          )
+        }
+        return y
+      })
+      return previewPt2
+    }
+    return null
+  }
+  renderPreview(): React.ReactNode {
+    return (
+      <View>
+        <Text>Menu Preview:</Text>
+        <Header
+          title="Jesus Collective"
+          overrideMenu={this.getPreviewMenu()}
+          navigation={this.props.navigation}
+        />
+        <Picker
+          style={{
+            height: 45,
+            paddingLeft: 10,
+            paddingRight: 10,
+            marginTop: 10,
+          }}
+          selectedValue={this.state.groupToAdd}
+          onValueChange={(val) => {
+            this.setState({
+              previewGroupData: this.state.previewGroupData.concat([val]),
+            })
+          }}
+        >
+          {Object.keys(UserGroupType).map((org) => {
+            return <Picker.Item key={org} label={org} value={org} />
+          })}
+        </Picker>
+        {this.state.previewGroupData
+          ? this.state.previewGroupData.map((item: any, index: number) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                  key={index}
+                >
+                  <Text style={this.styles.style.adminCRMModal} key={index}>
+                    {item}
+                  </Text>
+                  <JCButton
+                    buttonType={ButtonTypes.AdminModalOrange}
+                    onPress={() => {
+                      if (window.confirm("Are you sure you wish to delete this group?"))
+                        this.setState({
+                          previewGroupData: this.state.previewGroupData.filter((x) => x != item),
+                        })
+                    }}
+                  >
+                    X
+                  </JCButton>
+                </View>
+              )
+            })
+          : null}
+      </View>
+    )
+  }
   render(): React.ReactNode {
     return (
       <AdminScreen.UserConsumer>
@@ -442,6 +529,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
 
               {userActions.isMemberOf("admin") ? (
                 <Content>
+                  {this.renderPreview()}
+
                   <Container style={this.styles.style.fontRegular}>
                     <JCButton buttonType={ButtonTypes.AdminAdd} onPress={this.addMenuItem}>
                       Add Root Menu

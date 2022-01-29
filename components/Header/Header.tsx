@@ -20,6 +20,7 @@ interface Props {
   navigation?: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
+  overrideMenu?: NonNullable<ListMenusQuery["listMenus"]>["items"]
 }
 
 interface State extends JCState {
@@ -68,19 +69,25 @@ export default class HeaderJC extends JCComponent<Props, State> {
       resourcesStyle: resourcesStyle1,
       chevronStyle: Dimensions.get("window").width > 720 ? chevronStyle1 : chevronStyle2,
     }
-    Data.listMenu(null)
-      .then((listMenus) => {
-        console.log({ listMenus: listMenus })
-        this.setState({
-          menus:
-            listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ?? [],
+    if (this.props.overrideMenu != null) this.setState({ menus: this.props.overrideMenu })
+    else
+      Data.listMenu(null)
+        .then((listMenus) => {
+          console.log({ listMenus: listMenus })
+          this.setState({
+            menus:
+              listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ??
+              [],
+          })
         })
-      })
-      .catch((e) => {
-        this.setState({ menus: e.data?.listMenus?.items ?? [] })
-      })
+        .catch((e) => {
+          this.setState({ menus: e.data?.listMenus?.items ?? [] })
+        })
   }
-
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.overrideMenu != this.props.overrideMenu)
+      if (this.props.overrideMenu != null) this.setState({ menus: this.props.overrideMenu })
+  }
   updateStyles = (): void => {
     this.headerStyles.update()
     this.updateResourceStyles()
