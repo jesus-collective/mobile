@@ -42,11 +42,11 @@ const style = StyleSheet.create({
     flexDirection: "row-reverse",
   },
   MinorContent: {
-    flex: 0.3,
+    flex: 0.32,
   },
   MainContent: {
     marginLeft: 64,
-    flex: 0.7,
+    flex: 0.68,
   },
   TitleText: {
     fontFamily: "Graphik-Semibold-App",
@@ -260,9 +260,8 @@ export default function GroupScreen(props: Props) {
                       data={attendees}
                       keyExtractor={({ item }) => item?.id}
                       renderItem={({ item, index }) => {
-                        const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
                         return (
-                          <LastListItem isLastAndOdd={isLastAndOdd}>
+                          <LastListItem listLength={attendees.length} index={index}>
                             <ProfileCard item={item} />
                           </LastListItem>
                         )

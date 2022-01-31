@@ -12,7 +12,7 @@ interface Props {
   MainContent: (filter: any, reverse: boolean) => JSX.Element
   reverseContent?: boolean
   oneColumn?: boolean
-  Widgets: () => JSX.Element
+  Widgets?: () => JSX.Element
 }
 
 export default function GenericDirectoryScreen(props: Props) {
@@ -53,14 +53,12 @@ export default function GenericDirectoryScreen(props: Props) {
                 reverseContent ? { flexDirection: "row-reverse" } : {},
               ]}
             >
-              <View style={[style.MainContent, oneColumn ? { flex: 1 } : {}]}>
+              <View style={[style.MainContent, !Widgets ? { flex: 1 } : {}]}>
                 <MainContent />
               </View>
 
-              {!oneColumn ? (
-                <Animated.View
-                  style={[animatedStyle, style.MinorContent, oneColumn ? { flexShrink: 1 } : {}]}
-                >
+              {Widgets ? (
+                <Animated.View style={[animatedStyle, style.MinorContent]}>
                   <Widgets />
                 </Animated.View>
               ) : null}

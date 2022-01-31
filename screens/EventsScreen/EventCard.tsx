@@ -47,7 +47,7 @@ export default function EventCard(props: Props) {
       style={EventCardStyle.Container}
     >
       <Text style={{ paddingTop: 8 }}>
-        <Text style={EventCardStyle.DateText}>{moment(time).format("MMMM DD, YYYY")}</Text>
+        <Text style={EventCardStyle.DateText}>{moment(time).format("MMMM D, YYYY")}</Text>
       </Text>
       <View style={EventCardStyle.ContentContainer}>
         <Text numberOfLines={3} style={EventCardStyle.NameText}>

@@ -6,7 +6,9 @@ import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import Cookies from "universal-cookie"
 import EventCarousel from "../../components/FaceLift/EventCarousel"
 import GroupCarousel from "../../components/FaceLift/GroupCarousel"
+import OrgCarousel from "../../components/FaceLift/OrgCarousel"
 import PeopleCarousel from "../../components/FaceLift/PeopleCarousel"
+import ResourceCarousel from "../../components/FaceLift/ResourceCarousel"
 
 const cookies = new Cookies()
 const MyMap = lazy(() => import("../../components/MyMap/MyMap"))
@@ -49,8 +51,10 @@ export default function HomeScreen() {
       <BrowserView style={{ overflowX: "hidden", overflowY: "scroll" }}>
         <View style={{ marginHorizontal: "7.778vw" }}>
           <EventCarousel />
-          <PeopleCarousel />
           <GroupCarousel />
+          <ResourceCarousel />
+          <PeopleCarousel />
+          <OrgCarousel />
 
           <View style={{ marginBottom: 80 }}>
             <Text
@@ -88,9 +92,10 @@ export default function HomeScreen() {
         }} // fix margins
       >
         <EventCarousel />
-
-        <PeopleCarousel />
         <GroupCarousel />
+        <ResourceCarousel />
+        <PeopleCarousel />
+        <OrgCarousel />
 
         <View style={{ marginBottom: 60, marginTop: 48 }}>
           <Text

@@ -304,7 +304,7 @@ export default function HeaderJCC(props: Props) {
                 ) : null}
                 {constants["SETTING_ISVISIBLE_orgs"] ? (
                   <TouchableOpacity
-                    onPress={() => null}
+                    onPress={() => navigation.navigate("OrganizationsScreen")}
                     style={headerStyles.style.centerMenuButtons}
                   >
                     <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>

@@ -217,9 +217,8 @@ export default function EventScreen(props: Props) {
                       data={attendees}
                       keyExtractor={({ item }) => item?.id}
                       renderItem={({ item, index }) => {
-                        const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
                         return (
-                          <LastListItem isLastAndOdd={isLastAndOdd}>
+                          <LastListItem listLength={attendees.length} index={index}>
                             <ProfileCard item={item} />
                           </LastListItem>
                         )

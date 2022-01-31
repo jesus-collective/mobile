@@ -2,7 +2,6 @@
 import Amplify from "aws-amplify"
 import { Container } from "native-base"
 import React from "react"
-import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import OrganizationViewer from "../../components/OrganizationViewer/OrganizationViewer"
 import awsConfig from "../../src/aws-exports"
@@ -30,7 +29,6 @@ export default class OrganizationScreen extends JCComponent<Props, State> {
   render(): React.ReactNode {
     return (
       <Container testID="organization">
-        <Header title="Jesus Collective" navigation={this.props.navigation} />
         <OrganizationViewer
           loadId={this.state.loadId}
           create={this.state.createNew}

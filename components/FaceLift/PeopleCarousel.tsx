@@ -12,7 +12,7 @@ const PeopleCarousel = () => {
   const [people, setPeople] = useState<NonNullable<ListUsersQuery["listUsers"]>["items"]>([])
   const loadGroups = async () => {
     const listUsers = await Data.listUsersForProfile(UserGroupType.All, null)
-    setPeople(listUsers?.data?.listUsers?.items)
+    setPeople(listUsers?.data?.listUsers?.items ?? [])
   }
   useEffect(() => {
     loadGroups()

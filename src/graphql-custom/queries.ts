@@ -29,6 +29,35 @@ export const listMenus = /* GraphQL */ `
     }
   }
 `
+
+export const listOrganizations = /* GraphQL */ `
+  query ListOrganizations($filter: ModelOrganizationFilterInput, $limit: Int, $nextToken: String) {
+    listOrganizations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        orgName
+        location {
+          geocodeFull
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgDescription
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
+
 export const listDirectMessageRooms = /* GraphQL */ `
   query ListDirectMessageRooms(
     $filter: ModelDirectMessageRoomFilterInput
@@ -598,6 +627,46 @@ export const groupsJoinedByUser = /* GraphQL */ `
   }
 `
 
+export const resourcesForDirectory = /* GraphQL */ `
+  query GroupByType(
+    $type: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupByType(
+      type: $type
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        ownerUser {
+          id
+          given_name
+          family_name
+        }
+        ownerOrg {
+          id
+          orgName
+        }
+        name
+        readGroups
+        description
+        image
+        isSponsored
+      }
+      nextToken
+    }
+  }
+`
+
 export const groupByTypeForMyGroups = /* GraphQL */ `
   query GroupByType(
     $type: String
@@ -622,6 +691,10 @@ export const groupByTypeForMyGroups = /* GraphQL */ `
           id
           given_name
           family_name
+        }
+        ownerOrg {
+          id
+          orgName
         }
         type
         name
@@ -650,6 +723,98 @@ export const groupByTypeForMyGroups = /* GraphQL */ `
         updatedAt
       }
       nextToken
+    }
+  }
+`
+
+export const getOrganization = /* GraphQL */ `
+  query GetOrganization($id: ID!) {
+    getOrganization(id: $id) {
+      id
+      orgName
+      admins
+      superAdmin
+      profileState
+      country
+      location {
+        latitude
+        longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
+        randomLatitude
+        randomLongitude
+      }
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
+      aboutMeShort
+      aboutMeLong
+      orgType
+      orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
+      orgDescription
+      joined
+      members {
+        items {
+          id
+          userRole
+          userId
+          organizationId
+          organizationName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      ownsGroups {
+        items {
+          id
+          owner
+          readGroups
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          promotionalText
+          eventType
+          eventUrl
+          tz
+          isSponsored
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      resource {
+        items {
+          id
+          type
+          groupId
+          organizationId
+          owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
     }
   }
 `

@@ -75,11 +75,10 @@ export default function TwoItemCarousel(props: Props) {
         numColumns={2}
         keyExtractor={({ item }) => item?.id}
         renderItem={({ item, index }) => {
-          const isLastAndOdd = data.length - 1 === index && index % 2 === 0
           switch (type) {
             case CarouselType.Event:
               return (
-                <LastListItem isLastAndOdd={isLastAndOdd}>
+                <LastListItem listLength={data.length} index={index}>
                   <EventCard
                     item={item}
                     updateEvents={updateEvents}
@@ -90,7 +89,7 @@ export default function TwoItemCarousel(props: Props) {
               )
             case CarouselType.Group:
               return (
-                <LastListItem isLastAndOdd={isLastAndOdd}>
+                <LastListItem listLength={data.length} index={index}>
                   <GroupCard item={item} />
                 </LastListItem>
               )

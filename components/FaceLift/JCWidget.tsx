@@ -17,6 +17,7 @@ export enum WidgetType {
   Group = "group",
   Resource = "resouce",
   People = "people",
+  Org = "org",
 }
 
 type Props = {
@@ -45,7 +46,9 @@ export const WidgetItem = ({
       case WidgetType.Group:
         return item.name
       case WidgetType.Resource:
-        return item.description
+        return item.name
+      case WidgetType.Org:
+        return item.orgName
     }
   }, [])
 
@@ -57,8 +60,25 @@ export const WidgetItem = ({
         return item.description
       case WidgetType.Resource:
         return item.description
+      case WidgetType.Org:
+        return item.aboutMeLong ?? item.aboutMeShort
     }
   }, [])
+  const handleAction = () => {
+    switch (widgetType) {
+      case WidgetType.Event:
+        navigation.navigate("EventScreen", { id: item.id })
+        break
+      case WidgetType.Org:
+        navigation.push("OrganizationScreen", { id: item.id })
+        break
+      case WidgetType.Resource:
+        navigation.push("ResourceScreen", { id: item.id })
+        break
+      default:
+      //do nothing
+    }
+  }
   const WidgetIcon = useCallback((entry) => {
     const { item } = entry
     switch (widgetType) {
@@ -139,6 +159,32 @@ export const WidgetItem = ({
         )
       case WidgetType.People:
         return <></>
+      case WidgetType.Org:
+        return (
+          <View
+            style={{
+              width: 60,
+              height: 60,
+              borderWidth: 1,
+              borderColor: "#E4E1E1",
+              borderRadius: 120,
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Image
+              style={{
+                width: 60,
+                height: 60,
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                borderRadius: 120,
+              }}
+              source={require("../../assets/Facelift/JC-Logo.png")}
+            ></Image>
+          </View>
+        )
       default:
         return <></>
     }
@@ -162,10 +208,9 @@ export const WidgetItem = ({
           delayPressIn={150}
           style={{
             flexDirection: "row",
+            paddingTop: index === 0 ? 4 : 0,
           }}
-          onPress={() =>
-            WidgetType.Event ? navigation.navigate("EventScreen", { id: item.id }) : null
-          }
+          onPress={handleAction}
         >
           <WidgetIcon item={item}></WidgetIcon>
           <View style={{ marginLeft: 16, flex: 1, flexWrap: "wrap" }}>

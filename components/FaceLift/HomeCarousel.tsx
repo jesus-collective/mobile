@@ -70,38 +70,39 @@ export default function HomeCarousel(props: Props) {
         >
           {title}
         </Text>
-        {seeAllButton && data?.length ? (
-          <TouchableOpacity style={{ justifyContent: "center" }} onPress={seeAllButton}>
-            <Text
-              style={{
-                fontFamily: "Graphik-Medium-App",
-                color: "#6A5E5D",
-                fontSize: 12,
-                lineHeight: 16,
-                letterSpacing: 1,
-                textTransform: "uppercase",
-              }}
-            >
-              SEE ALL
-            </Text>
-          </TouchableOpacity>
-        ) : null}
+
+        <TouchableOpacity style={{ justifyContent: "center" }} onPress={seeAllButton}>
+          <Text
+            style={{
+              fontFamily: "Graphik-Medium-App",
+              color: "#6A5E5D",
+              fontSize: 12,
+              lineHeight: 16,
+              letterSpacing: 1,
+              textTransform: "uppercase",
+            }}
+          >
+            SEE ALL
+          </Text>
+        </TouchableOpacity>
       </View>
       {data?.length ? (
         <View
           style={{
             flexDirection: "row",
-            marginHorizontal: -32,
+            marginHorizontal: !isMobileOnly ? -32 : 0,
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <TouchableOpacity onPress={() => scrollBackward(page)}>
-            <Image
-              style={{ width: 16, height: 14 }}
-              source={require("../../assets/Facelift/Arrow-Left.png")}
-            ></Image>
-          </TouchableOpacity>
+          {!isMobileOnly ? (
+            <TouchableOpacity onPress={() => scrollBackward(page)}>
+              <Image
+                style={{ width: 16, height: 14 }}
+                source={require("../../assets/Facelift/Arrow-Left.png")}
+              ></Image>
+            </TouchableOpacity>
+          ) : null}
           <FlatList<JSX.Element>
             ref={listRef}
             data={data}
@@ -122,16 +123,20 @@ export default function HomeCarousel(props: Props) {
               // \/ should not be needed. todo: WHY
               if (listRef?.current) listRef.current.scrollToIndex({ animated: false, index: 0 })
             }}
-            style={{ flex: 1, margin: 16, minHeight: 308 }}
-            contentContainerStyle={{ width: "84.444vw" }}
+            style={
+              isMobileOnly ? { flex: 1, marginBottom: 64, marginTop: 16 } : { flex: 1, margin: 16 }
+            }
+            contentContainerStyle={isMobileOnly ? {} : { width: "84.444vw" }}
             renderItem={({ item }) => renderItem(item, cardWidth)}
           />
-          <TouchableOpacity onPress={() => scrollForward(page)}>
-            <Image
-              style={{ width: 16, height: 14 }}
-              source={require("../../assets/Facelift/Arrow-Right.png")}
-            ></Image>
-          </TouchableOpacity>
+          {!isMobileOnly ? (
+            <TouchableOpacity onPress={() => scrollForward(page)}>
+              <Image
+                style={{ width: 16, height: 14 }}
+                source={require("../../assets/Facelift/Arrow-Right.png")}
+              ></Image>
+            </TouchableOpacity>
+          ) : null}
         </View>
       ) : (
         <View style={{ height: 60 }}>

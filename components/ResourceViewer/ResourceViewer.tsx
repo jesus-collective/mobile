@@ -177,10 +177,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     } else {
       const getGroup = Data.getGroup(props.route.params.id)
       const processResults = (json: GetGroupQueryResult) => {
-        const isEditable =
-          (json.data?.getGroup?.owner == this.state.currentUser ||
-            this.props.userAction?.isMemberOf("admin")) ??
-          false
+        const isEditable = false
 
         this.setState(
           {

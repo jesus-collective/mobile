@@ -14,7 +14,8 @@ const Stack = createStackNavigator()
 const HomeScreen = lazy(() => import("./HomeScreen"))
 const ConversationScreen = lazy(() => import("../ConversationScreen/ConversationScreen"))
 const OrganizationsScreen = lazy(() => import("../OrganizationsScreen/OrganizationsScreen"))
-const OrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationScreen"))
+const OrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationProfile"))
+const OldOrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationScreen.old"))
 const GenericGroupScreen = lazy(() => import("../GenericGroupScreen/GenericGroupScreen"))
 const CoursesScreen = lazy(() => import("../CoursesScreen/CoursesScreen"))
 const CourseOverviewScreen = lazy(() => import("../CourseOverviewScreen/CourseOverviewScreen"))
@@ -223,6 +224,11 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="OrganizationScreen"
                       component={OrganizationScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="EditOrganizationScreen"
+                      component={OldOrganizationScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen

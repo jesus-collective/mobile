@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { GetGroupQuery } from "../../src/API"
 
-export default function JCWidget(props: Props) {
+export default function PeopleListWidget(props: Props) {
   const { title, emptyMessage, loadData, userData, buttonAction } = props
   const [data, setData] = useState<
     Array<any> | NonNullable<NonNullable<GetGroupQuery["getGroup"]>["members"]>["items"]
@@ -24,9 +24,11 @@ export default function JCWidget(props: Props) {
     <View key={title} style={UpcomingCardStyle.CardContainer}>
       <View style={UpcomingCardStyle.HeaderContainer}>
         <Text style={[UpcomingCardStyle.HeaderText, { flex: 1 }]}>{title}</Text>
-        <TouchableOpacity delayPressIn={150} onPress={buttonAction ?? (() => null)}>
-          <Text style={UpcomingCardStyle.HeaderText}>SEE ALL</Text>
-        </TouchableOpacity>
+        {buttonAction ? (
+          <TouchableOpacity delayPressIn={150} onPress={buttonAction ?? (() => null)}>
+            <Text style={UpcomingCardStyle.HeaderText}>SEE ALL</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
       <View style={UpcomingCardStyle.MembersContainer}>
         {data?.length ? (
@@ -35,7 +37,7 @@ export default function JCWidget(props: Props) {
               <View key={item?.id} style={UpcomingCardStyle.MemberItemContainer}>
                 <ProfileImage
                   linkToProfile
-                  size={userData ? "small6" : "small5"}
+                  size={userData ? "small5" : "small6"}
                   user={userData ? item?.userID : item.id}
                 />
               </View>

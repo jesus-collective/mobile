@@ -341,9 +341,8 @@ export default function ProfileScreen(props: Props) {
                     data={groups}
                     style={{ marginBottom: 32 }}
                     renderItem={({ item, index }) => {
-                      const isLastAndOdd = groups?.length - 1 === index && index % 2 === 0
                       return (
-                        <LastListItem isLastAndOdd={isLastAndOdd}>
+                        <LastListItem listLength={groups.length} index={index}>
                           <GroupCard item={item} />
                         </LastListItem>
                       )
@@ -360,9 +359,8 @@ export default function ProfileScreen(props: Props) {
                     data={events}
                     style={{ marginBottom: 32 }}
                     renderItem={({ item, index }) => {
-                      const isLastAndOdd = events?.length - 1 === index && index % 2 === 0
                       return (
-                        <LastListItem isLastAndOdd={isLastAndOdd}>
+                        <LastListItem listLength={events.length} index={index}>
                           <EventCard
                             item={item}
                             updateEvents={updateEvents}

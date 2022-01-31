@@ -78,7 +78,7 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
     )
   }
   renderLeftMenu(): React.ReactNode {
-    return this.renderItems()
+    return <View style={{ marginLeft: "7.78vw" }}>{this.renderItems()}</View>
   }
   parentIsSelected(resourceState: ResourceState, index: number): boolean {
     console.log({ index: index })
@@ -131,7 +131,14 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           return (
-            <View style={{ zIndex: 5000 + this.props.pageItemIndex.length }}>
+            <View
+              style={{
+                zIndex: 5000 + this.props.pageItemIndex.length,
+                borderRadius: 8,
+                backgroundColor: "#F6F5F5",
+                marginRight: 60,
+              }}
+            >
               <PageItemSettings
                 resourceActions={this.props.resourceActions}
                 resourceState={this.props.resourceState}
@@ -145,7 +152,9 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                 if (item != null)
                   return item.type == ResourceMenuItemType.break ? (
                     <View key={index} style={{ flexDirection: "row" }}>
-                      <View style={this.styles.style.resourceMenuLineBreak}></View>
+                      <View
+                        style={[this.styles.style.resourceMenuLineBreak, { marginLeft: 0 }]}
+                      ></View>
                       {resourceState.isEditable && (
                         <Button
                           transparent
@@ -158,7 +167,16 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                       )}
                     </View>
                   ) : this.isMenuItemExpanded(resourceState, index) ? (
-                    <View key={index} style={{ flexDirection: "row" }}>
+                    <View
+                      key={index}
+                      style={{
+                        flexDirection: "row",
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
+                        justifyContent: "flex-start",
+                        alignItems: "flex-start",
+                      }}
+                    >
                       {item.depth == "2" && <View style={{ width: 10 }} />}
                       <EditableButton
                         onDelete={() => resourceActions.deleteMenuItem(index)}
@@ -173,6 +191,7 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                         textStyle={[
                           this.headerStyles.style.resourcesMenuButtonsText,
                           resourceState.currentMenuItem == index && { fontWeight: "bold" },
+                          { marginLeft: 0 },
                         ]}
                         value={item.menuTitle ?? ""}
                       ></EditableButton>

@@ -2,7 +2,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Container, StyleProvider } from "native-base"
 import React from "react"
-import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyMap from "../../components/MyMap/MyMap"
 import ResourceViewer from "../../components/ResourceViewer/ResourceViewer"
@@ -27,11 +26,10 @@ class ResourceScreenImpl extends JCComponent<Props, State> {
   }
   render(): React.ReactNode {
     //console.log(this.state)
-    console.log("ResourceScreen")
+    console.log(`ResourceScreen ${this.props.route.params.id}`)
     return (
       <StyleProvider style={getTheme(material)}>
         <Container>
-          <Header title="Jesus Collective" navigation={this.props.navigation} />
           <MyMap type={"no-filters"} mapData={[]} visible={this.state.showMap}></MyMap>
           <ResourceViewer
             navigation={this.props.navigation}

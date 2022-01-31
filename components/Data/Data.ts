@@ -783,6 +783,11 @@ export class Data {
       GraphQLResult<GetOrganizationQuery>
     >
   }
+  static getOrganizationCustom(id: string) {
+    return API.graphql({ query: customQueries.getOrganization, variables: { id: id } }) as Promise<
+      GraphQLResult<GetOrganizationQuery>
+    >
+  }
   static messagesByRoom(variables: MessagesByRoomQueryVariables) {
     return API.graphql({
       query: queries.messagesByRoom,
@@ -960,7 +965,7 @@ export class Data {
   }
   static listOrgs(nextToken: string | null | undefined) {
     return API.graphql({
-      query: queries.listOrganizations,
+      query: customQueries.listOrganizations,
       variables: {
         limit: 20,
         filter: { profileState: { eq: "Complete" } },
@@ -1010,6 +1015,17 @@ export class Data {
       variables: {
         limit: 20,
         type: type,
+        nextToken: nextToken,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<GroupByTypeQuery>>
+  }
+  static loadResources(nextToken: string | null | undefined) {
+    return API.graphql({
+      query: customQueries.resourcesForDirectory,
+      variables: {
+        limit: 10,
+        type: "resource",
         nextToken: nextToken,
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,

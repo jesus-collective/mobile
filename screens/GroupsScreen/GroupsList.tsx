@@ -134,11 +134,17 @@ export default function GroupsList(props: Props) {
         numColumns={isMobile ? 1 : 2}
         refreshing={refreshing}
         renderItem={({ item, index }) => {
-          const isLastAndOdd = data.length - 1 === index && index % 2 === 0
           return isMobileOnly ? (
             <GroupCard item={item} />
           ) : (
-            <LastListItem isLastAndOdd={isLastAndOdd}>
+            <LastListItem
+              listLength={
+                filter
+                  ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)).length
+                  : data.length
+              }
+              index={index}
+            >
               <GroupCard item={item} />
             </LastListItem>
           )

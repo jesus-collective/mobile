@@ -234,7 +234,6 @@ export const messagesByRoom = /* GraphQL */ `
           currentRole
           currentScope
           denomination
-          email
           family_name
           given_name
           hasPaidState
@@ -248,13 +247,10 @@ export const messagesByRoom = /* GraphQL */ `
           orgSize
           orgType
           owner
-          phone
           personality
           pplServed
           primaryOrganization
           profileState
-          stripeCustomerID
-          stripeSubscriptionID
           sundayAttendance
           updatedAt
         }
@@ -279,7 +275,6 @@ export const messagesByRoom = /* GraphQL */ `
               currentRole
               currentScope
               denomination
-              email
               family_name
               given_name
               hasPaidState
@@ -294,13 +289,10 @@ export const messagesByRoom = /* GraphQL */ `
               orgType
               owner
               personality
-              phone
               pplServed
               primaryOrganization
               updatedAt
               sundayAttendance
-              stripeCustomerID
-              stripeSubscriptionID
               profileState
             }
             content

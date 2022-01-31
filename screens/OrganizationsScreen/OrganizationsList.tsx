@@ -6,9 +6,8 @@ import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyl
 import { WidgetItem, WidgetType } from "../../components/FaceLift/JCWidget"
 import LastListItem from "../../components/FaceLift/LastListItem"
 import { Group } from "../../src/API"
-import EventCard from "./EventCard"
-import { useFetchEvents } from "./useFetchEvents"
-import { useMyGroups } from "./useMyGroups"
+import OrganizationCard from "./OrganizationCard"
+import { useOrgs } from "./useOrgs"
 
 type Props = {
   filter: string
@@ -16,10 +15,9 @@ type Props = {
 }
 export type JCEvent = Group
 
-const EventList = StyleSheet.create({
+const OrgList = StyleSheet.create({
   Container: {
     minHeight: 300,
-    marginRight: isMobileOnly ? 0 : 32,
   },
   FooterContainer: {
     marginBottom: 30,
@@ -40,29 +38,21 @@ const EventList = StyleSheet.create({
   },
 })
 
-export default function EventsList(props: Props) {
+export default function OrganizationsList(props: Props) {
   const { reverse, filter } = props
-  const { events, isLoading, nextToken, loadMore, currentUser, updateEvents, joinedGroups } =
-    useFetchEvents({
-      reverse: reverse ?? false,
-    })
-  const { ownedGroups } = useMyGroups(events)
-  const centerOffset = isMobileOnly ? 0 : -32
-  const filteredData = filter
-    ? events.filter((a) => a?.id === ownedGroups.find((b) => b === a?.id))
-    : events
+  const { orgs, isLoading, loadMore, nextToken } = useOrgs()
   return (
     <FlatList
       ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
       columnWrapperStyle={isMobileOnly ? null : ({ gap: 32 } as any)}
-      style={EventList.Container}
+      style={OrgList.Container}
       ListFooterComponentStyle={nextToken && !isLoading ? {} : { display: "none" }}
       ListFooterComponent={() => (
         <View
           style={[
-            EventList.FooterContainer,
+            OrgList.FooterContainer,
             {
-              marginLeft: centerOffset,
+              marginLeft: isMobileOnly ? 0 : -32,
               marginBottom: 30,
               marginTop: 30,
             },
@@ -83,32 +73,25 @@ export default function EventsList(props: Props) {
           <ActivityIndicator
             style={{
               marginTop: isMobileOnly ? 32 : 0,
-              marginLeft: centerOffset,
+              marginLeft: isMobileOnly ? 0 : -32,
             }}
             size="large"
             color="#FF4438"
           />
         ) : null
       }
-      contentContainerStyle={isMobileOnly ? { marginTop: 16 } : {}}
       ListEmptyComponent={() =>
-        !isLoading && !filteredData.length ? (
-          <Text style={EventList.EmptyText}>No upcoming events</Text>
+        !isLoading && !orgs.length ? (
+          <Text style={OrgList.EmptyText}>No organizations found</Text>
         ) : null
       }
-      data={filteredData}
-      numColumns={isMobileOnly ? 1 : 2}
+      data={orgs}
+      numColumns={isMobileOnly ? 1 : 3}
       refreshing={isLoading}
       renderItem={({ item, index }) => {
         return !isMobileOnly ? (
-          <LastListItem listLength={filteredData.length} index={index}>
-            <EventCard
-              key={item.id}
-              item={item}
-              updateEvents={updateEvents}
-              isOwner={Boolean(ownedGroups.find((a) => a === item?.id))}
-              joined={Boolean(joinedGroups.find((a) => a === item?.id))}
-            />
+          <LastListItem listLength={orgs.length} index={index} isThreeColumn={true}>
+            <OrganizationCard item={item} />
           </LastListItem>
         ) : (
           <View
@@ -120,10 +103,10 @@ export default function EventsList(props: Props) {
           >
             <View style={{ borderBottomColor: "#E4E1E1", borderBottomWidth: 1, paddingBottom: 12 }}>
               <WidgetItem
-                len={filteredData.length - 1}
+                len={orgs.length - 1}
                 item={item}
                 index={index}
-                widgetType={WidgetType.Event}
+                widgetType={WidgetType.Org}
               />
             </View>
           </View>
