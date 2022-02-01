@@ -55,7 +55,7 @@ export default function GenericButton(props: Props) {
     >
       {icon ? (
         <Image
-          style={{ width: 24, height: 24, marginRight: 8 }}
+          style={{ width: 24, height: 24, marginRight: 10 }}
           source={require(`../../assets/Facelift/svg/${icon}.svg`)}
         />
       ) : null}
