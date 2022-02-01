@@ -8,6 +8,12 @@ export const GenericButtonStyles = StyleSheet.create({
     backgroundColor: "#FF4438",
     borderRadius: 50,
   },
+  DisabledButtonStyle: {
+    backgroundColor: "#E4E1E1",
+  },
+  DisabledLabelStyle: {
+    color: "#6A5E5D",
+  },
   PrimaryLabelStyle: {
     color: "#FFFFFF",
     fontFamily: "Graphik-Regular-App",

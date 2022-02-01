@@ -602,13 +602,12 @@ const resourceStyles = EStyleSheet.create({
           top: "24vw",
           width: "75%",
           overflow: "none",
+          borderWidth: 1,
+          borderColor: "#E4E1E1",
           position: "absolute",
           backgroundColor: "#ffffff",
           height: 195,
           borderRadius: 8,
-          shadowOffset: { width: 0, height: 0 },
-          shadowColor: "rgba(0, 0, 0, 0.19)",
-          shadowRadius: 30,
           justifyContent: "center",
         }
       : {
@@ -916,7 +915,7 @@ const resourceStyles = EStyleSheet.create({
           marginBottom: 36,
         },
   resourceGridContainer: {
-    overflow: "scroll",
+    overflow: "none",
   },
   resourcesRichTextContainer: {
     width: "80%",

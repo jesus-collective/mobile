@@ -296,6 +296,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 backgroundColor: "#fff",
                 borderWidth: 1,
                 borderColor: "#E4E1E1",
+                width: 352.4,
                 borderRadius: 8,
                 marginBottom: 30,
               },
@@ -545,10 +546,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         this.styles.style.resourceSeries,
                         { zIndex: 6000 + this.props.pageItemIndex.length },
                         {
-                          borderWidth: 1,
-                          borderColor: "#E4E1E1",
-                          borderRadius: 8,
-                          marginBottom: 30,
+                          marginVertical: 90,
                         },
                       ]}
                     >
@@ -572,7 +570,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                                 textAlign: "left",
                                 color: "#AAAAAA",
                                 alignSelf: "flex-start",
-                                marginRight: 15,
+                                marginRight: 32,
                               }}
                               inputStyle={{
                                 fontFamily: "Graphik-Bold-App",
@@ -594,7 +592,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                                 className="LiveVideoPlayerIframe"
                                 allowFullScreen
                                 style={{
-                                  width: isBrowser ? 638 : isTablet ? 375 : 320,
+                                  width: isBrowser ? 606 : isTablet ? 375 : 320,
                                   height: isBrowser ? 382 : isTablet ? 210 : 179,
                                   marginLeft: isMobile ? 120 : "null",
                                 }}
@@ -633,12 +631,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       <CardItem
                         style={{
                           zIndex: 6000 + this.props.pageItemIndex.length,
-                          marginLeft: isMobile ? 10 : "4rem",
-                          justifyContent: "space-between",
+                          marginLeft: isMobile ? 10 : 82,
+                          paddingRight: isMobile ? 0 : 54,
                           width: 670,
                         }}
                       >
-                        <View style={{ width: 320 }}>
+                        <View style={{ flex: 1 }}>
                           <EditableText
                             multiline={true}
                             textStyle={{

@@ -125,6 +125,34 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
   ScheduleIcon1 = (): JSX.Element => (
     <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
   )
+  FindParentIndex = (itemIndex: number, currentActiveIndex: number, items: any): number => {
+    for (let i = currentActiveIndex - 1; i > 1; i--) {
+      if (!items[i]?.depth || items[i]?.depth === "1") {
+        return i
+      }
+    }
+    return itemIndex
+  }
+  DetermineActiveMenuItem = (
+    itemIndex: number,
+    currentActiveIndex: number,
+    items: any
+  ): boolean => {
+    console.log("active index is ", currentActiveIndex)
+    const activeIndexItem = items[currentActiveIndex]
+    if (itemIndex === currentActiveIndex) {
+      return true
+    } else {
+      if (activeIndexItem?.depth !== null) {
+        if (currentActiveIndex < itemIndex) return false
+        const activeUntilThisIndex = this.FindParentIndex(itemIndex, currentActiveIndex, items)
+        if (activeUntilThisIndex >= itemIndex && itemIndex > 0) {
+          return true
+        }
+      }
+    }
+    return false
+  }
   renderItems(): React.ReactNode {
     return (
       <ResourceMenu.Consumer>
@@ -149,6 +177,7 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                 hideEditButton={this.props.hideEditButton}
               ></PageItemSettings>
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
+                console.log({ item })
                 if (item != null)
                   return item.type == ResourceMenuItemType.break ? (
                     <View key={index} style={{ flexDirection: "row" }}>
@@ -169,15 +198,24 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                   ) : this.isMenuItemExpanded(resourceState, index) ? (
                     <View
                       key={index}
-                      style={{
-                        flexDirection: "row",
-                        paddingHorizontal: 16,
-                        paddingVertical: 4,
-                        justifyContent: "flex-start",
-                        alignItems: "flex-start",
-                      }}
+                      style={[
+                        {
+                          flexDirection: "row",
+                          paddingHorizontal: 16,
+                          paddingVertical: 4,
+                          justifyContent: "flex-start",
+                          alignItems: "flex-start",
+                        },
+                        this.DetermineActiveMenuItem(
+                          index,
+                          resourceState.currentMenuItem,
+                          resourceState.resourceData?.menuItems?.items
+                        ) && {
+                          backgroundColor: "#E4E1E1",
+                        },
+                      ]}
                     >
-                      {item.depth == "2" && <View style={{ width: 10 }} />}
+                      {item.depth == "2" && <View style={{ width: 16 }} />}
                       <EditableButton
                         onDelete={() => resourceActions.deleteMenuItem(index)}
                         onChange={(value) =>
@@ -190,7 +228,9 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                         inputStyle={this.headerStyles.style.resourcesMenuButtonsText}
                         textStyle={[
                           this.headerStyles.style.resourcesMenuButtonsText,
-                          resourceState.currentMenuItem == index && { fontWeight: "bold" },
+                          resourceState.currentMenuItem == index && {
+                            fontWeight: "bold",
+                          },
                           { marginLeft: 0 },
                         ]}
                         value={item.menuTitle ?? ""}
