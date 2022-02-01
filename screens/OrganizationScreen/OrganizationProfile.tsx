@@ -350,7 +350,7 @@ export default function OrganizationProfile(props: Props) {
                       action={() =>
                         navigation.navigate("EditOrganizationScreen", { id: orgData?.id })
                       }
-                      icon={"Edit"}
+                      icon={"Edit-White"}
                       style={{
                         ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                         LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
@@ -414,7 +414,7 @@ export default function OrganizationProfile(props: Props) {
             <GenericButton
               label={"Edit Org Profile"}
               action={() => navigation.navigate("EditOrganizationScreen", { id: orgData?.id })}
-              icon={"Edit"}
+              icon={"Edit-White"}
               style={{
                 ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                 LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,

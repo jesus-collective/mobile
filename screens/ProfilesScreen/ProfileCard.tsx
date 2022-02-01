@@ -95,7 +95,7 @@ export default function ProfileCard(props: Props) {
         >
           <Image
             style={{ width: 24, height: 24 }}
-            source={require("../../assets/Facelift/svg/Airplane-Active.svg")}
+            source={require("../../assets/Facelift/svg/Airplane.svg")}
           />
         </TouchableOpacity>
       </View>
