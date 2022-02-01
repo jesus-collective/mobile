@@ -1,8 +1,8 @@
 import React from "react"
 import { Linking, Platform, Text, View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
 import JCModal from "../../components/Forms/JCModal"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import GenericButton from "../GenericButton/GenericButton"
 
 interface ModalProps {
   onHide(): void

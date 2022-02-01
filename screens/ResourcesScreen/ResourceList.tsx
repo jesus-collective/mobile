@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { isMobile, isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
 import { Data } from "../../components/Data/Data"
-import LastListItem from "../../components/FaceLift/LastListItem"
+import LastListItem from "../../components/LastListItem/LastListItem"
 import ResourceCard from "./ResourceCard"
 
 type Props = {

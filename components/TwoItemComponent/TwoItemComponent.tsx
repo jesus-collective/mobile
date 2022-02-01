@@ -4,7 +4,7 @@ import { FlatList } from "react-native-gesture-handler"
 import { Group } from "src/API"
 import EventCard from "../../screens/EventsScreen/EventCard"
 import GroupCard from "../../screens/GroupsScreen/GroupCard"
-import LastListItem from "./LastListItem"
+import LastListItem from "../LastListItem/LastListItem"
 
 export enum CarouselType {
   Event = "event",
@@ -44,7 +44,7 @@ const style = StyleSheet.create({
     color: "#6A5E5D",
   },
 })
-export default function TwoItemCarousel(props: Props) {
+export default function TwoItemComponent(props: Props) {
   const { title, showMore, data, type, updateEvents, joinedGroups, ownedGroups } = props
   return (
     <View style={style.Container}>

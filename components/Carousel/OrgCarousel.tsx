@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import OrganizationCard from "../../screens/OrganizationsScreen/OrganizationCard"
 import { Org } from "../../screens/OrganizationsScreen/OrganizationsList"
+import HomeCarousel from "../Carousel/HomeCarousel"
 import { Data } from "../Data/Data"
-import HomeCarousel from "./HomeCarousel"
 
 const OrgCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()

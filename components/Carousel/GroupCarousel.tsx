@@ -5,7 +5,7 @@ import { View } from "react-native"
 import { Group } from "src/API"
 import { Data } from "../../components/Data/Data"
 import GroupCard from "../../screens/GroupsScreen/GroupCard"
-import HomeCarousel from "./HomeCarousel"
+import HomeCarousel from "../Carousel/HomeCarousel"
 
 const GroupCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()

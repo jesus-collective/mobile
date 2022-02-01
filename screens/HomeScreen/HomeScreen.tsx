@@ -4,11 +4,11 @@ import React, { lazy, useLayoutEffect } from "react"
 import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import Cookies from "universal-cookie"
-import EventCarousel from "../../components/FaceLift/EventCarousel"
-import GroupCarousel from "../../components/FaceLift/GroupCarousel"
-import OrgCarousel from "../../components/FaceLift/OrgCarousel"
-import PeopleCarousel from "../../components/FaceLift/PeopleCarousel"
-import ResourceCarousel from "../../components/FaceLift/ResourceCarousel"
+import EventCarousel from "../../components/Carousel/EventCarousel"
+import GroupCarousel from "../../components/Carousel/GroupCarousel"
+import OrgCarousel from "../../components/Carousel/OrgCarousel"
+import PeopleCarousel from "../../components/Carousel/PeopleCarousel"
+import ResourceCarousel from "../../components/Carousel/ResourceCarousel"
 
 const cookies = new Cookies()
 const MyMap = lazy(() => import("../../components/MyMap/MyMap"))

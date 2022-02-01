@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import ResourceCard from "../../screens/ResourcesScreen/ResourceCard"
-import HomeCarousel from "./HomeCarousel"
+import HomeCarousel from "../Carousel/HomeCarousel"
 
 const ResourceCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()

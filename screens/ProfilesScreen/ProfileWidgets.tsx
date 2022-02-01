@@ -1,5 +1,5 @@
 import React from "react"
-import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
+import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
 
 export default function ProfileWidgets() {
   return (

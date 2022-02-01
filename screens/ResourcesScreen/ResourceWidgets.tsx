@@ -1,6 +1,6 @@
 import React from "react"
 import { Data } from "../../components/Data/Data"
-import JCWidget, { WidgetType } from "../../components/FaceLift/JCWidget"
+import JCWidget, { WidgetType } from "../../components/Widgets/JCWidget"
 
 export default function GroupWidgets() {
   const loadUpcoming = async () => {

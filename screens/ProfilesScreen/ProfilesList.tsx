@@ -4,9 +4,9 @@ import { isMobile, isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data, UserGroupType } from "../../components/Data/Data"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import LastListItem from "../../components/FaceLift/LastListItem"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import LastListItem from "../../components/LastListItem/LastListItem"
 import ProfileCard from "./ProfileCard"
 
 type Props = {

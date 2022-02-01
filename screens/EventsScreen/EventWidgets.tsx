@@ -2,7 +2,7 @@ import Auth from "@aws-amplify/auth"
 import moment from "moment"
 import React from "react"
 import { Data } from "../../components/Data/Data"
-import JCWidget, { WidgetType } from "../../components/FaceLift/JCWidget"
+import JCWidget, { WidgetType } from "../../components/Widgets/JCWidget"
 import { GroupByTypeByTimeQueryVariables, ModelSortDirection } from "../../src/API"
 import { JCCognitoUser } from "../../src/types"
 

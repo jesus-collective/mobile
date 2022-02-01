@@ -4,8 +4,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
 import { isMobileOnly } from "react-device-detect"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
 const ProfileCardStyle = StyleSheet.create({

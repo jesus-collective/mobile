@@ -5,7 +5,7 @@ import { View } from "react-native"
 import { Data, UserGroupType } from "../../components/Data/Data"
 import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
 import { ListUsersQuery } from "../../src/API"
-import HomeCarousel from "./HomeCarousel"
+import HomeCarousel from "../Carousel/HomeCarousel"
 
 const PeopleCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
