@@ -275,7 +275,7 @@ export default function GroupScreen(props: Props) {
                   <GenericButton
                     label={isAttending ? "Leave group" : "Join group"}
                     action={handleAction}
-                    icon={isAttending ? "Minus" : "Plus"}
+                    icon={isAttending ? "Minus-White" : "Plus-White"}
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                       LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,

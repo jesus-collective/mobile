@@ -15,7 +15,7 @@ export default function OrgDetailsWidget(props: Props) {
         <View style={DetailsCard.Item}>
           <Image
             style={DetailsCard.ItemIcon}
-            source={require("../../assets/Facelift/Location.png")}
+            source={require("../../assets/Facelift/svg/Location.svg")}
           />
           <View style={{ flex: 1 }}>
             <Text style={DetailsCard.ItemText}>{data?.address}</Text>

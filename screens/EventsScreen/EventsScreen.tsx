@@ -68,7 +68,7 @@ export default function EventsScreen() {
               marginRight: 32,
             },
           }}
-          icon="Sort"
+          icon="Sort-Red"
         ></GenericButton>
         <GenericButton
           label={`FILTER${filter ? ": My Events" : ""}`}
@@ -87,7 +87,7 @@ export default function EventsScreen() {
               marginRight: 32,
             },
           }}
-          icon={filter ? "X" : "Filter"}
+          icon={filter ? "X-White" : "Filter-Red"}
         ></GenericButton>
         <GenericButton
           label="NEW EVENT"
@@ -101,7 +101,7 @@ export default function EventsScreen() {
             ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
             LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
           }}
-          icon="Plus"
+          icon="Plus-White"
         ></GenericButton>
       </View>
     )

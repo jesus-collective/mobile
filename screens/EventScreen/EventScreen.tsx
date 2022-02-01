@@ -161,21 +161,21 @@ export default function EventScreen(props: Props) {
               <View style={style.InfoItemContainer}>
                 <Image
                   style={style.InfoItemIcon}
-                  source={require("../../assets/Facelift/Calendar.png")}
+                  source={require("../../assets/Facelift/svg/Calendar.svg")}
                 />
                 <Text style={style.InfoItemText}>{moment(event?.time).format("MMMM D, YYYY")}</Text>
               </View>
               <View style={style.InfoItemContainer}>
                 <Image
                   style={style.InfoItemIcon}
-                  source={require("../../assets/Facelift/Clock.png")}
+                  source={require("../../assets/Facelift/svg/Clock.svg")}
                 />
                 <Text style={style.InfoItemText}>{moment(event?.time).format("LT")}</Text>
               </View>
               <View style={style.InfoItemContainer}>
                 <Image
                   style={style.InfoItemIcon}
-                  source={require("../../assets/Facelift/Eye.png")}
+                  source={require("../../assets/Facelift/svg/Eye.svg")}
                 />
                 <Text style={style.InfoItemText}>Public</Text>
               </View>
@@ -232,7 +232,7 @@ export default function EventScreen(props: Props) {
                   <GenericButton
                     label={isAttending ? "Don't Attend" : "Attend"}
                     action={() => null}
-                    icon={isAttending ? "Minus" : "Plus"}
+                    icon={isAttending ? "Minus-White" : "Plus-White"}
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                       LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,

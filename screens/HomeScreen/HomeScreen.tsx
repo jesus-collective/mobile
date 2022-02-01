@@ -39,7 +39,7 @@ export default function HomeScreen() {
                   width: 87,
                   height: 52,
                 }}
-                source={require(`../../assets/header/newicon.png`)}
+                source={require(`../../assets/Facelift/svg/JC-Logo.svg`)}
               />
             </TouchableOpacity>
           </View>

@@ -82,7 +82,7 @@ export default function ResourcesScreen() {
               marginRight: 32,
             },
           }}
-          icon="Sort"
+          icon="Sort-Red"
         ></GenericButton>
         <GenericButton
           label={`FILTER${filter ? ": My Orgs" : ""}`}
@@ -101,7 +101,7 @@ export default function ResourcesScreen() {
               marginRight: 32,
             },
           }}
-          icon={filter ? "X" : "Filter"}
+          icon={filter ? "X-White" : "Filter-Red"}
         ></GenericButton>
         {showCreate ? (
           <GenericButton
@@ -115,7 +115,7 @@ export default function ResourcesScreen() {
               ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
               LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
             }}
-            icon="Plus"
+            icon="Plus-White"
           ></GenericButton>
         ) : null}
       </View>

@@ -95,7 +95,7 @@ export default function ProfileCard(props: Props) {
         >
           <Image
             style={{ width: 24, height: 24 }}
-            source={require("../../assets/Facelift/Airplane-dark.png")}
+            source={require("../../assets/Facelift/svg/Airplane-Active.svg")}
           />
         </TouchableOpacity>
       </View>
@@ -161,7 +161,7 @@ export default function ProfileCard(props: Props) {
                   initialUserName: item?.given_name + " " + item?.family_name,
                 })
             }}
-            icon={"Airplane"}
+            icon={"Airplane-White"}
           />
         </View>
       </View>

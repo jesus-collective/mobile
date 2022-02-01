@@ -99,7 +99,7 @@ export default function HomeCarousel(props: Props) {
             <TouchableOpacity onPress={() => scrollBackward(page)}>
               <Image
                 style={{ width: 16, height: 14 }}
-                source={require("../../assets/Facelift/Arrow-Left.png")}
+                source={require("../../assets/Facelift/svg/Left-Arrow.svg")}
               ></Image>
             </TouchableOpacity>
           ) : null}
@@ -133,7 +133,7 @@ export default function HomeCarousel(props: Props) {
             <TouchableOpacity onPress={() => scrollForward(page)}>
               <Image
                 style={{ width: 16, height: 14 }}
-                source={require("../../assets/Facelift/Arrow-Right.png")}
+                source={require("../../assets/Facelift/svg/Right-Arrow.svg")}
               ></Image>
             </TouchableOpacity>
           ) : null}

@@ -135,7 +135,7 @@ export const WidgetItem = ({
           >
             <Image
               style={{ width: 48, height: 48 }}
-              source={require("../../assets/Facelift/People.png")}
+              source={require("../../assets/Facelift/svg/People-White.svg")}
             ></Image>
           </View>
         )
@@ -153,7 +153,7 @@ export const WidgetItem = ({
           >
             <Image
               style={{ width: 64, height: 64 }}
-              source={require("../../assets/Facelift/JC-Logo.png")}
+              source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
             ></Image>
           </View>
         )
@@ -181,7 +181,7 @@ export const WidgetItem = ({
                 borderColor: "#E4E1E1",
                 borderRadius: 120,
               }}
-              source={require("../../assets/Facelift/JC-Logo.png")}
+              source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
             ></Image>
           </View>
         )

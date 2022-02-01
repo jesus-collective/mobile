@@ -16,19 +16,22 @@ export default function DetailsWidget(props: Props) {
         <View style={DetailsCard.Item}>
           <Image
             style={DetailsCard.ItemIcon}
-            source={require("../../assets/Facelift/Location.png")}
+            source={require("../../assets/Facelift/svg/Location.svg")}
           />
           <Text style={DetailsCard.ItemText}>{data?.location}</Text>
         </View>
         <View style={DetailsCard.Item}>
           <Image
             style={DetailsCard.ItemIcon}
-            source={require("../../assets/Facelift/Calendar.png")}
+            source={require("../../assets/Facelift/svg/Calendar.svg")}
           />
           <Text style={DetailsCard.ItemText}>{moment(data?.time).format("MMMM D, YYYY")}</Text>
         </View>
         <View style={[DetailsCard.Item, { marginBottom: 0 }]}>
-          <Image style={DetailsCard.ItemIcon} source={require("../../assets/Facelift/Clock.png")} />
+          <Image
+            style={DetailsCard.ItemIcon}
+            source={require("../../assets/Facelift/svg/Clock.svg")}
+          />
           <Text style={DetailsCard.ItemText}>{moment(data?.time).format("LT")}</Text>
         </View>
       </View>

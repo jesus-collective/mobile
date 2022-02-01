@@ -65,7 +65,7 @@ export default function GroupsScreen() {
               marginRight: 32,
             },
           }}
-          icon="Sort"
+          icon="Sort-Red"
         ></GenericButton>
         <GenericButton
           label={`FILTER${filter ? ": My Groups" : ""}`}
@@ -84,7 +84,7 @@ export default function GroupsScreen() {
               marginRight: 32,
             },
           }}
-          icon={filter ? "X" : "Filter"}
+          icon={filter ? "X-White" : "Filter-Red"}
         ></GenericButton>
         <GenericButton
           label="NEW GROUP"
@@ -98,7 +98,7 @@ export default function GroupsScreen() {
             ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
             LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
           }}
-          icon="Plus"
+          icon="Plus-White"
         ></GenericButton>
       </View>
     )

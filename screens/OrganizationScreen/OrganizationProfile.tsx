@@ -453,7 +453,7 @@ export default function OrganizationProfile(props: Props) {
           >
             <Image
               style={{ height: 24, width: 24, marginRight: 18 }}
-              source={require("../../assets/Facelift/Location.png")}
+              source={require("../../assets/Facelift/svg/Location.svg")}
             />
             <View style={{ flex: 1 }}>
               <Text
