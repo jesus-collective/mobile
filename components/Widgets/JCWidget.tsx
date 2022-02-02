@@ -66,6 +66,9 @@ export const WidgetItem = ({
   }, [])
   const handleAction = () => {
     switch (widgetType) {
+      case WidgetType.Group:
+        navigation.navigate("GroupScreen", { id: item.id })
+        break
       case WidgetType.Event:
         navigation.navigate("EventScreen", { id: item.id })
         break
