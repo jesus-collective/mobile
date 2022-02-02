@@ -382,7 +382,7 @@ export default function ProfileScreen(props: Props) {
                   <View style={{ marginBottom: 32 }}>
                     <GenericButton
                       label={"Edit Profile"}
-                      action={() => navigation.navigate("EditProfileScreen", { id: userData?.id })}
+                      action={() => navigation.push("EditProfileScreen", { id: userData?.id })}
                       icon={"Edit-White"}
                       style={{
                         ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,

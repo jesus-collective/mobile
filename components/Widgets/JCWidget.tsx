@@ -67,10 +67,10 @@ export const WidgetItem = ({
   const handleAction = () => {
     switch (widgetType) {
       case WidgetType.Group:
-        navigation.navigate("GroupScreen", { id: item.id })
+        navigation.push("GroupScreen", { id: item.id })
         break
       case WidgetType.Event:
-        navigation.navigate("EventScreen", { id: item.id })
+        navigation.push("EventScreen", { id: item.id })
         break
       case WidgetType.Org:
         navigation.push("OrganizationScreen", { id: item.id })

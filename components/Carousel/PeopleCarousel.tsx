@@ -28,7 +28,7 @@ const PeopleCarousel = () => {
   }
   return (
     <HomeCarousel
-      seeAllButton={() => navigation.navigate("ProfilesScreen")}
+      seeAllButton={() => navigation.push("ProfilesScreen")}
       renderItem={renderItem}
       title={"People"}
       data={people?.slice(0, 10)}

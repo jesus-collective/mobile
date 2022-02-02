@@ -19,6 +19,7 @@ import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import DetailsWidget from "../../components/Widgets/DetailsWidget"
 import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
+import { joinGroup, leaveGroup } from "../../screens/EventsScreen/GroupUtils"
 import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
 import { GetGroupQuery, GetUserQuery } from "../../src/API"
 
@@ -103,42 +104,53 @@ export default function EventScreen(props: Props) {
         },
       })
   })
-
-  useEffect(() => {
-    setIsLoading(true)
-    const getAttendees = async (attendeeIds: Array<string>) => {
-      try {
-        const user = await Auth.currentAuthenticatedUser()
-        setIsAttending(Boolean(attendeeIds.find((a) => a === user.username)))
-        setCurrentUser(user.username)
-        const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
-        for (const attendeeId of attendeeIds) {
-          const attendeeData = Data.getUserForProfile(attendeeId)
-          getAllAttendees.push(attendeeData as GraphQLResult<GetUser2Query>)
-        }
-        const d = await Promise.all(getAllAttendees)
-        const userData = d?.map((item) => item?.data?.getUser)
-        setAttendees(userData)
-      } catch (err) {
-        console.log({ "something went wrong": err })
+  const getAttendees = async (attendeeIds: Array<string>) => {
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      setIsAttending(Boolean(attendeeIds.find((a) => a === user.username)))
+      setCurrentUser(user.username)
+      const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
+      for (const attendeeId of attendeeIds) {
+        const attendeeData = Data.getUserForProfile(attendeeId)
+        getAllAttendees.push(attendeeData as GraphQLResult<GetUser2Query>)
       }
+      const d = await Promise.all(getAllAttendees)
+      const userData = d?.map((item) => item?.data?.getUser)
+      setAttendees(userData)
+    } catch (err) {
+      console.log({ "something went wrong": err })
     }
-    const getOwner = async (ownerId: string) => {
-      const owner = await Data.getUserForProfile(ownerId)
-      setOwner(owner.data?.getUser)
-    }
-    const getEvent = async () => {
-      const currentEvent = await Data.getGroupForItemPage(id)
-      if (currentEvent?.data?.getGroup?.owner) getOwner(currentEvent?.data?.getGroup?.owner)
-      getAttendees(
-        currentEvent?.data?.getGroup?.members?.items?.map((att) => att?.userID ?? "") ?? []
-      )
-      setEvent(currentEvent.data?.getGroup)
-      setIsLoading(false)
-    }
+  }
+  const getOwner = async (ownerId: string) => {
+    const owner = await Data.getUserForProfile(ownerId)
+    setOwner(owner.data?.getUser)
+  }
+  const getEvent = async (showSpinner = true) => {
+    if (showSpinner) setIsLoading(true)
+    const currentEvent = await Data.getGroupForItemPage(id)
+    if (currentEvent?.data?.getGroup?.owner) getOwner(currentEvent?.data?.getGroup?.owner)
+    getAttendees(
+      currentEvent?.data?.getGroup?.members?.items?.map((att) => att?.userID ?? "") ?? []
+    )
+    setEvent(currentEvent.data?.getGroup)
+    if (showSpinner) setIsLoading(false)
+  }
+  useEffect(() => {
     getEvent()
   }, [id])
-  console.log({ owner })
+  const handleAction = async () => {
+    if (isAttending) {
+      const success = await leaveGroup(event, "event")
+      if (success) {
+        getEvent(false)
+      }
+    } else {
+      const success = await joinGroup(event, "event")
+      if (success) {
+        getEvent(false)
+      }
+    }
+  }
   const centerOffset = isMobileOnly ? 0 : -32
   return isLoading ? (
     <ActivityIndicator
@@ -233,7 +245,7 @@ export default function EventScreen(props: Props) {
                 <View style={{ marginBottom: 32 }}>
                   <GenericButton
                     label={isAttending ? "Don't Attend" : "Attend"}
-                    action={() => null}
+                    action={handleAction}
                     icon={isAttending ? "Minus-White" : "Plus-White"}
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
@@ -255,7 +267,7 @@ export default function EventScreen(props: Props) {
                       style={{
                         ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                         LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
-                        custom: undefined,
+                        custom: { marginTop: 4 },
                       }}
                     />
                   ) : null}
@@ -316,7 +328,7 @@ export default function EventScreen(props: Props) {
             <View style={{ marginTop: -8 }}>
               <GenericButton
                 label={isAttending ? "Don't Attend" : "Attend"}
-                action={() => null}
+                action={handleAction}
                 style={{
                   ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                   LabelStyle: [GenericButtonStyles.QuarternaryLabelStyle, { fontSize: 16 }],

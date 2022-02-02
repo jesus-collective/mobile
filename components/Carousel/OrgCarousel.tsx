@@ -32,7 +32,7 @@ const OrgCarousel = () => {
   }
   return (
     <HomeCarousel
-      seeAllButton={() => navigation.navigate("OrganizationsScreen")}
+      seeAllButton={() => navigation.push("OrganizationsScreen")}
       renderItem={renderItem}
       title={"Orgs"}
       data={orgs?.slice(0, 10)}

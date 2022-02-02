@@ -11,7 +11,7 @@ export default function GroupCard({ item }: { item: Group }) {
   const profileImageSize = useMemo(() => (isMobileOnly ? "small6" : "small7"), [isMobileOnly])
   const { name, owner, description, ownerUser } = item
   const navigateToGroupScreen = () => {
-    navigation.navigate("GroupScreen", { id: item.id })
+    navigation.push("GroupScreen", { id: item.id })
   }
   return (
     <TouchableOpacity delayPressIn={150} onPress={navigateToGroupScreen} style={Card.Container}>

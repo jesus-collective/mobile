@@ -11,7 +11,6 @@ export default function GroupCard({ item }: { item: Group }) {
   const { name, description, ownerOrg, ownerOrgID } = item
   const resourceType = "Curriculum"
   const navigateToResourceScreen = () => {
-    console.log("navigating to resource ", item.id)
     navigation.push("ResourceScreen", { id: item.id })
   }
   const [cardWidth, setCardWidth] = useState(200)

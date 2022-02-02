@@ -22,7 +22,7 @@ export default function EventCard(props: Props) {
   const members = item?.members?.items ?? []
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const navigateToEventScreen = () => {
-    navigation.navigate("EventScreen", { id: item.id })
+    navigation.push("EventScreen", { id: item.id })
   }
   const handleAction = async () => {
     // TODO: optimistically call updateJoined, undo if mutation fails

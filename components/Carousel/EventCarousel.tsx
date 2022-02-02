@@ -27,7 +27,7 @@ const EventCarousel = () => {
   }
   return (
     <HomeCarousel
-      seeAllButton={() => navigation.navigate("EventsScreen")}
+      seeAllButton={() => navigation.push("EventsScreen")}
       title={"Events"}
       renderItem={renderItem}
       data={events.slice(0, 10)}

@@ -20,6 +20,9 @@ export default function PeopleListWidget(props: Props) {
     }
     load()
   }, [])
+  useEffect(() => {
+    if (!loadData && userData) setData(userData)
+  }, [userData])
   return (
     <View key={title} style={UpcomingCardStyle.CardContainer}>
       <View style={UpcomingCardStyle.HeaderContainer}>
@@ -32,7 +35,7 @@ export default function PeopleListWidget(props: Props) {
       </View>
       <View style={UpcomingCardStyle.MembersContainer}>
         {data?.length ? (
-          data?.map((item) => {
+          data?.map((item: any) => {
             return (
               <View key={item?.id} style={UpcomingCardStyle.MemberItemContainer}>
                 <ProfileImage

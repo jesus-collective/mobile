@@ -35,7 +35,7 @@ const ResourceCarousel = () => {
   }
   return (
     <HomeCarousel
-      seeAllButton={() => navigation.navigate("ResourcesScreen")}
+      seeAllButton={() => navigation.push("ResourcesScreen")}
       renderItem={renderItem}
       title={"Resources"}
       data={resources?.slice(0, 10)}

@@ -347,9 +347,7 @@ export default function OrganizationProfile(props: Props) {
                   orgData?.admins.includes(currentUser) ? (
                     <GenericButton
                       label={"Edit Org Profile"}
-                      action={() =>
-                        navigation.navigate("EditOrganizationScreen", { id: orgData?.id })
-                      }
+                      action={() => navigation.push("EditOrganizationScreen", { id: orgData?.id })}
                       icon={"Edit-White"}
                       style={{
                         ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
