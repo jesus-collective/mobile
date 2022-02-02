@@ -24,12 +24,13 @@ import { GetGroupQuery, GetUserQuery } from "../../src/API"
 
 export default function EventScreen(props: Props) {
   const [isOpen, setIsOpen] = useState(false)
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { id } = props.route.params
   const [currentTab, setCurrentTab] = useState<EventTabType>(
     isMobileOnly ? EventTabType.ABOUT : EventTabType.DISCUSSION
   )
   const [isLoading, setIsLoading] = useState(true)
+  const [currentUser, setCurrentUser] = useState("")
   const [event, setEvent] = useState<GetGroupQuery["getGroup"]>(null)
   const [attendees, setAttendees] = useState<Array<GetUserQuery["getUser"]>>([])
   const [owner, setOwner] = useState<GetUserQuery["getUser"]>(null)
@@ -107,8 +108,9 @@ export default function EventScreen(props: Props) {
     setIsLoading(true)
     const getAttendees = async (attendeeIds: Array<string>) => {
       try {
-        const currentUser = await Auth.currentAuthenticatedUser()
-        setIsAttending(Boolean(attendeeIds.find((a) => a === currentUser.username)))
+        const user = await Auth.currentAuthenticatedUser()
+        setIsAttending(Boolean(attendeeIds.find((a) => a === user.username)))
+        setCurrentUser(user.username)
         const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
         for (const attendeeId of attendeeIds) {
           const attendeeData = Data.getUserForProfile(attendeeId)
@@ -239,6 +241,24 @@ export default function EventScreen(props: Props) {
                       custom: undefined,
                     }}
                   />
+                  {event?.owner === currentUser ? (
+                    <GenericButton
+                      label={"Edit Event"}
+                      action={() =>
+                        navigation.push("GenericGroupScreen", {
+                          groupType: "event",
+                          id: event?.id,
+                          create: false,
+                        })
+                      }
+                      icon={"Edit-White"}
+                      style={{
+                        ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
+                        LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
+                        custom: undefined,
+                      }}
+                    />
+                  ) : null}
                 </View>
                 <DetailsWidget title="Event Details" data={event} />
                 {event?.members?.items?.length ? (

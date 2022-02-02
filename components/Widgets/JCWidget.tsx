@@ -141,21 +141,15 @@ export const WidgetItem = ({
         )
       case WidgetType.Resource:
         return (
-          <View
+          <Image
             style={{
-              width: 64,
+              width: 53,
               height: 64,
-              borderRadius: 64,
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
+              borderRadius: 100,
+              backgroundColor: "white",
             }}
-          >
-            <Image
-              style={{ width: 64, height: 64 }}
-              source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
-            ></Image>
-          </View>
+            source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
+          ></Image>
         )
       case WidgetType.People:
         return <></>

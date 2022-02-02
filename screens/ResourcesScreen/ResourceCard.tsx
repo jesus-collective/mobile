@@ -49,20 +49,31 @@ export default function GroupCard({ item }: { item: Group }) {
           <View style={ResourceCard.OrganizerContainer}>
             <View style={ResourceCard.OrganizerSubContainer}>
               <View style={ResourceCard.ProfileImageContainer}>
-                <ProfileImage
-                  isOrg={Boolean(ownerOrg?.orgName)}
-                  style={ownerOrg?.orgName ? "org" : undefined}
-                  size={ownerOrg?.orgName ? undefined : "small2"}
-                  user={ownerOrg?.orgName ? ownerOrgID : item?.owner}
-                />
+                {ownerOrg?.orgName ? (
+                  <ProfileImage
+                    isOrg={Boolean(ownerOrg?.orgName)}
+                    style={"org"}
+                    user={ownerOrgID}
+                  />
+                ) : (
+                  <Image
+                    style={{
+                      width: 53,
+                      height: 64,
+                      borderRadius: 100,
+                      backgroundColor: "white",
+                      marginRight: 8,
+                    }}
+                    source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
+                  ></Image>
+                )}
               </View>
               <View style={ResourceCard.OrganizerTextColumn}>
                 <Text numberOfLines={1} style={ResourceCard.OrganizerText}>
-                  Provided by
+                  Curated by
                 </Text>
                 <Text numberOfLines={1} style={ResourceCard.OrganizerNameText}>
-                  {ownerOrg?.orgName ??
-                    item?.ownerUser?.given_name + " " + item?.ownerUser?.family_name}
+                  {ownerOrg?.orgName ?? "Jesus Collective"}
                 </Text>
               </View>
             </View>

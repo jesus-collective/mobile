@@ -286,7 +286,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             : this.props.size == "roundEvent"
             ? {
-                width: "32px",
+                width: "26px",
                 height: "32px",
                 borderRadius: 120,
                 marginBottom: 0,
@@ -460,7 +460,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             : this.props.size == "roundEvent"
             ? {
-                width: "32px",
+                width: "26px",
                 height: "32px",
                 borderRadius: 120,
                 marginBottom: 0,

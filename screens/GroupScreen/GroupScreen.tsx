@@ -100,13 +100,14 @@ const style = StyleSheet.create({
   },
 })
 export default function GroupScreen(props: Props) {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { id } = props.route.params
   const [isOpen, setIsOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState<GroupTabType>(GroupTabType.DISCUSSION)
   const [isLoading, setIsLoading] = useState(true)
   const [group, setGroup] = useState<Group>()
   const [attendees, setAttendees] = useState<Array<GetUserQuery["getUser"]>>([])
+  const [currentUser, setCurrentUser] = useState("")
   const [isAttending, setIsAttending] = useState(false)
   const navigateToMembersList = () => {
     setCurrentTab(GroupTabType.MEMBERS)
@@ -157,8 +158,9 @@ export default function GroupScreen(props: Props) {
     setIsLoading(true)
     const getAttendees = async (attendeeIds: Array<string>) => {
       try {
-        const currentUser = await Auth.currentAuthenticatedUser()
-        setIsAttending(Boolean(attendeeIds.find((a) => a === currentUser.username)))
+        const user = await Auth.currentAuthenticatedUser()
+        setCurrentUser(user.username)
+        setIsAttending(Boolean(attendeeIds.find((a) => a === user.username)))
         const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
         for (const attendeeId of attendeeIds) {
           const attendeeData = Data.getUserForProfile(attendeeId)
@@ -282,6 +284,24 @@ export default function GroupScreen(props: Props) {
                       custom: undefined,
                     }}
                   />
+                  {group?.owner === currentUser ? (
+                    <GenericButton
+                      label={"Edit Group"}
+                      action={() =>
+                        navigation.push("GenericGroupScreen", {
+                          groupType: "group",
+                          id: group?.id,
+                          create: false,
+                        })
+                      }
+                      icon={"Edit-White"}
+                      style={{
+                        ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
+                        LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
+                        custom: undefined,
+                      }}
+                    />
+                  ) : null}
                 </View>
 
                 <PeopleListWidget

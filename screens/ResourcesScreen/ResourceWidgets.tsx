@@ -2,22 +2,22 @@ import React from "react"
 import { Data } from "../../components/Data/Data"
 import JCWidget, { WidgetType } from "../../components/Widgets/JCWidget"
 
-export default function GroupWidgets() {
+export default function ResourceWidgets() {
   const loadUpcoming = async () => {
     const listGroup = await Data.groupByTypeForMyGroups("resource", null)
     return listGroup.data?.groupByType?.items ?? []
   }
   const loadSponsored = async () => {
     const resources = await loadUpcoming()
-    return Promise.resolve(resources.filter((a) => a?.isSponsored === "true"))
+    return Promise.resolve(resources.filter((a) => a?.name === "One Story Curriculum"))
   }
   return (
     <>
       <JCWidget
         widgetType={WidgetType.Resource}
-        emptyMessage="No recommended resources at the moment"
+        emptyMessage="No featured resource found"
         loadData={loadSponsored}
-        title="Recommended by Jesus Collective"
+        title="Featured resource"
       />
     </>
   )
