@@ -31,6 +31,7 @@ const EventList = StyleSheet.create({
     alignSelf: "center",
   },
   EmptyText: {
+    paddingLeft: 12,
     fontSize: 15,
     fontFamily: "Graphik-Regular-App",
     fontWeight: "400",

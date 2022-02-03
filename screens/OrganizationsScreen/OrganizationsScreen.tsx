@@ -11,7 +11,7 @@ import GenericDirectoryScreen from "../../components/GenericDirectoryScreen/Gene
 import Header from "../../components/Header/Header"
 import OrganizationsList from "./OrganizationsList"
 
-export default function ResourcesScreen() {
+export default function OrganizationsScreen() {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const route = useRoute()
   const [reverse, setReverse] = useState(false)
@@ -29,13 +29,6 @@ export default function ResourcesScreen() {
                       setFilter("")
                     },
                   },
-                  {
-                    title: "Your Orgs",
-                    action: () => {
-                      if (filter) setFilter("")
-                      else setFilter(": Your Resources")
-                    },
-                  },
                 ]}
                 title={"Organizations"}
                 controls={[
@@ -45,10 +38,6 @@ export default function ResourcesScreen() {
                       setReverse((prev) => !prev)
                     },
                   },
-                  {
-                    icon: "Plus",
-                    action: () => null,
-                  },
                 ]}
                 navigation={props.navigation}
               />
@@ -57,7 +46,7 @@ export default function ResourcesScreen() {
         })
       : null
   }, [])
-  const GroupsControlButtons = () => {
+  const OrgControlButtons = () => {
     const [showCreate, setShowCreate] = useState<boolean>(false)
     useEffect(() => {
       const load = async () => {
@@ -73,7 +62,7 @@ export default function ResourcesScreen() {
     return (
       <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
         <GenericButton
-          label="SORT"
+          label={reverse ? "SORT: Z - A" : "SORT: A - Z"}
           action={() => setReverse((prev) => !prev)}
           style={{
             ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
@@ -84,7 +73,7 @@ export default function ResourcesScreen() {
           }}
           icon="Sort-Red"
         ></GenericButton>
-        <GenericButton
+        {/* <GenericButton
           label={`FILTER${filter ? ": My Orgs" : ""}`}
           action={() => {
             if (filter) setFilter("")
@@ -102,7 +91,7 @@ export default function ResourcesScreen() {
             },
           }}
           icon={filter ? "X-White" : "Filter-Red"}
-        ></GenericButton>
+        ></GenericButton> */}
         {showCreate ? (
           <GenericButton
             label="New Org"
@@ -124,7 +113,7 @@ export default function ResourcesScreen() {
   return (
     <GenericDirectoryScreen
       navigation={navigation}
-      ControlButtons={GroupsControlButtons}
+      ControlButtons={OrgControlButtons}
       MainContent={() => <OrganizationsList filter={filter} reverse={reverse} />}
       route={route}
       pageTitle="Organizations"

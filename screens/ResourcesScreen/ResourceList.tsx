@@ -1,6 +1,8 @@
+import { Auth } from "aws-amplify"
 import React, { useEffect, useState } from "react"
 import { isMobile, isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
+import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import LastListItem from "../../components/LastListItem/LastListItem"
 import ResourceCard from "./ResourceCard"
@@ -12,9 +14,24 @@ type Props = {
 export default function GroupsList(props: Props) {
   const { reverse, filter } = props
   const [data, setData] = useState<Array<any>>([])
+  const [currentUser, setCurrentUser] = useState("")
   const [isLoading, setIsLoading] = useState(true)
-
+  const filterResources = (d: any[]) => {
+    if (filter === ": Your Resources") {
+      return d.filter((a) => a?.owner === currentUser)
+    }
+    return d
+  }
   useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const jcUser: JCCognitoUser = await Auth.currentAuthenticatedUser()
+        setCurrentUser(jcUser.username)
+      } catch (err) {
+        console.error({ err })
+      }
+    }
+    loadUser()
     const loadResources = async () => {
       console.log("loading")
       let tempArr: any = []
@@ -67,7 +84,13 @@ export default function GroupsList(props: Props) {
         }
         ListFooterComponentStyle={{ display: "none" }}
         ListEmptyComponent={() =>
-          !isLoading && !data.length ? (
+          (!isLoading && !data.length) ||
+          (filter &&
+            !filterResources(
+              data.sort((a, b) =>
+                reverse ? b?.name?.localeCompare(a?.name) : a?.name.localeCompare(b?.name)
+              )
+            ).length) ? (
             <Text
               style={{
                 fontSize: 15,
@@ -82,8 +105,10 @@ export default function GroupsList(props: Props) {
             </Text>
           ) : null
         }
-        data={data.sort((a, b) =>
-          reverse ? b?.name?.localeCompare(a?.name) : a?.name.localeCompare(b?.name)
+        data={filterResources(
+          data.sort((a, b) =>
+            reverse ? b?.name?.localeCompare(a?.name) : a?.name.localeCompare(b?.name)
+          )
         )}
         numColumns={isMobile ? 1 : 2}
         keyExtractor={(item) => item?.id}

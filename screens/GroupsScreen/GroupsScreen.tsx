@@ -41,10 +41,6 @@ export default function GroupsScreen() {
                   setReverse((prev) => !prev)
                 },
               },
-              {
-                icon: "Plus",
-                action: () => null,
-              },
             ]}
             navigation={props.navigation}
           />
@@ -56,7 +52,7 @@ export default function GroupsScreen() {
     return (
       <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
         <GenericButton
-          label="SORT"
+          label={reverse ? "SORT: Z - A" : "SORT: A - Z"}
           action={() => setReverse((prev) => !prev)}
           style={{
             ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,

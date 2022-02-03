@@ -15,28 +15,34 @@ type Props = {
 }
 export default function GroupsList(props: Props) {
   const { reverse, filter } = props
-  const [data, setData] = useState<Array<any>>([])
+  const [data, setData] = useState<any[]>([])
   const [refreshing, setRefreshing] = useState(true)
   const [nextToken, setNextToken] = useState<string | null>(null)
   const [joinedGroups, setJoinedGroups] = useState<Array<any>>([])
   const [isOwnerGroups, setIsOwnerGroups] = useState<Array<any>>([])
   const loadGroups = async () => {
     const listGroup = await Data.groupByTypeForMyGroups("group", null)
+
     setData(
-      listGroup?.data?.groupByType?.items?.sort((groupA, groupB) => {
-        if (reverse && groupA?.name && groupB?.name)
-          return groupA?.name?.toLowerCase()?.localeCompare(groupB?.name?.toLowerCase())
-        return 1
-      }) ?? []
+      listGroup?.data?.groupByType?.items?.sort((groupA, groupB) =>
+        groupA?.name?.toLowerCase()?.localeCompare(groupB?.name?.toLowerCase())
+      ) ?? []
     )
     setNextToken(listGroup.data?.groupByType?.nextToken ?? "")
     setRefreshing(false)
   }
   useEffect(() => {
-    setData([])
-    setNextToken(null)
     loadGroups()
-  }, [reverse])
+  }, [])
+  const sortByName = (d: any[]) => {
+    if (reverse)
+      return d.sort((groupA, groupB) =>
+        groupB?.name?.toLowerCase()?.localeCompare(groupA?.name?.toLowerCase())
+      )
+    return d.sort((groupA, groupB) =>
+      groupA?.name?.toLowerCase()?.localeCompare(groupB.name?.toLowerCase())
+    )
+  }
   useEffect(() => {
     const loadUser = async () => {
       const jcUser: JCCognitoUser = await Auth.currentAuthenticatedUser()
@@ -130,7 +136,11 @@ export default function GroupsList(props: Props) {
             </Text>
           ) : null
         }
-        data={filter ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)) : data}
+        data={
+          filter
+            ? sortByName(data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)))
+            : sortByName(data)
+        }
         numColumns={isMobile ? 1 : 2}
         refreshing={refreshing}
         renderItem={({ item, index }) => {

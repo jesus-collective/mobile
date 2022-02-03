@@ -7,7 +7,6 @@ import { GenericButtonStyles } from "../../components/GenericButton/GenericButto
 import GenericDirectoryScreen from "../../components/GenericDirectoryScreen/GenericDirectoryScreen"
 import Header from "../../components/Header/Header"
 import ProfilesList from "./ProfilesList"
-import ProfileWidgets from "./ProfileWidgets"
 export default function ProfilesScreen() {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const route = useRoute()
@@ -23,15 +22,6 @@ export default function ProfilesScreen() {
                 title: "Everybody",
                 action: () => null,
               },
-              // {
-              //   title: "In Your Org",
-              //   action: () => null,
-              // },
-
-              // {
-              //   title: "In Your Groups",
-              //   action: () => null,
-              // },
             ]}
             title={"People"}
             controls={[
@@ -47,12 +37,12 @@ export default function ProfilesScreen() {
         )
       },
     })
-  }, [])
+  }, [filter])
   const PeopleControlButtons = () => {
     return (
       <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
         <GenericButton
-          label="SORT"
+          label={reverse ? "SORT: Z - A" : "SORT: A - Z"}
           action={() => setReverse((prev) => !prev)}
           style={{
             ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
@@ -64,10 +54,10 @@ export default function ProfilesScreen() {
           icon="Sort-Red"
         ></GenericButton>
         <GenericButton
-          label={`FILTER${filter ? ": My People" : ""}`}
+          label={`FILTER${filter ? ": Friends" : ""}`}
           action={() => {
             if (filter) setFilter("")
-            else setFilter(": My People")
+            else setFilter(": Friends")
           }}
           style={{
             ButtonStyle: filter
@@ -90,7 +80,6 @@ export default function ProfilesScreen() {
       navigation={navigation}
       ControlButtons={PeopleControlButtons}
       MainContent={() => <ProfilesList filter={filter} reverse={reverse} />}
-      Widgets={ProfileWidgets}
       route={route}
       pageTitle="People"
     />

@@ -1,8 +1,6 @@
-import { Auth } from "aws-amplify"
 import React, { useEffect, useState } from "react"
 import { isMobile, isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
-import { JCCognitoUser } from "src/types"
 import { Data, UserGroupType } from "../../components/Data/Data"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
@@ -16,66 +14,26 @@ type Props = {
 export default function ProfilesList(props: Props) {
   const { reverse, filter } = props
   const [data, setData] = useState<Array<any>>([])
-  const [refreshing, setRefreshing] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const [nextToken, setNextToken] = useState<string | null>(null)
-  const [joinedGroups, setJoinedGroups] = useState<Array<any>>([])
-  const [isOwnerGroups, setIsOwnerGroups] = useState<Array<any>>([])
-  const loadProfiles = async () => {
-    const listUsers = await Data.listUsersForProfile(UserGroupType.All, null)
-    setData(
-      listUsers?.data?.listUsers?.items?.sort((userA, userB) => {
-        if (reverse && userA?.family_name && userB?.family_name)
-          return userA?.family_name?.toLowerCase()?.localeCompare(userB?.family_name?.toLowerCase())
-        return 1
-      }) ?? []
+  const loadProfiles = async (next: string | undefined | null = null) => {
+    const userGroup = filter ? UserGroupType.Friends : UserGroupType.All
+    const listUsers = await Data.listUsersForProfile(userGroup, next)
+    setData((prev) =>
+      [...prev, ...(listUsers?.data?.listUsers?.items ?? [])].sort((userA, userB) =>
+        userA?.family_name?.toLowerCase()?.localeCompare(userB?.family_name?.toLowerCase())
+      )
     )
     setNextToken(listUsers.data?.listUsers?.nextToken ?? "")
-    setRefreshing(false)
+    setIsLoading(false)
   }
   useEffect(() => {
-    setData([])
-    setNextToken(null)
     loadProfiles()
-  }, [reverse])
-  useEffect(() => {
-    const loadUser = async () => {
-      const jcUser: JCCognitoUser = await Auth.currentAuthenticatedUser()
-      return jcUser.username
-    }
-    if (data.length) {
-      const loadJoinedData = async () => {
-        const user = await loadUser()
-        data.forEach((item: any) => {
-          const groupMemberByUser = Data.groupMemberByUser(user, item.id)
-          groupMemberByUser.then((json) => {
-            if ((json.data?.groupMemberByUser?.items?.length ?? 0) > 0) {
-              setJoinedGroups((prev) => [...prev, item.id])
-            }
-          })
-        })
-      }
-      const loadOwnerData = async () => {
-        const user = await loadUser()
-        data.forEach((item: any) => {
-          const getGroup = Data.getGroupForOwner(item.id)
-          getGroup.then((json) => {
-            if (json.data?.getGroup?.owner === user) {
-              setIsOwnerGroups((prev) => [...prev, item.id])
-            }
-          })
-        })
-      }
-      loadOwnerData()
-      loadJoinedData()
-    }
-  }, [data])
+  }, [])
   const centerOffset = isMobile ? 0 : -32
-  const filteredData = filter
-    ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id))
-    : data
   return (
     <FlatList
-      style={{ minHeight: 300, marginRight: isMobileOnly ? 0 : 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
+      style={{ minHeight: 300, marginRight: 0 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
       ListFooterComponent={() => (
         <View
           style={{
@@ -92,12 +50,12 @@ export default function ProfilesList(props: Props) {
               LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
             }}
             label="Load More"
-            action={() => loadProfiles()}
+            action={() => loadProfiles(nextToken)}
           />
         </View>
       )}
       ListHeaderComponent={() =>
-        refreshing ? (
+        isLoading ? (
           <ActivityIndicator
             style={{
               marginTop: isMobile ? 32 : 0,
@@ -110,15 +68,11 @@ export default function ProfilesList(props: Props) {
           />
         ) : null
       }
-      ListFooterComponentStyle={
-        !nextToken || (filteredData?.length % 4 !== 0 && !nextToken) || !filteredData.length
-          ? { display: "none" }
-          : {}
-      }
+      ListFooterComponentStyle={!nextToken || isLoading ? { display: "none" } : {}}
       ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 64 }}></View>)}
       columnWrapperStyle={isMobileOnly ? null : ({ gap: 32 } as any)}
       ListEmptyComponent={() =>
-        !refreshing && !filteredData.length ? (
+        !isLoading && !data.length ? (
           <Text
             style={{
               fontSize: 15,
@@ -133,14 +87,14 @@ export default function ProfilesList(props: Props) {
           </Text>
         ) : null
       }
-      data={filteredData}
-      numColumns={isMobile ? 1 : 2}
-      refreshing={refreshing}
+      data={reverse ? data.reverse() : data}
+      numColumns={isMobile ? 1 : 3}
+      refreshing={isLoading}
       renderItem={({ item, index }) => {
         return isMobileOnly ? (
           <ProfileCard item={item} />
         ) : (
-          <LastListItem listLength={filteredData.length} index={index}>
+          <LastListItem listLength={data.length} index={index} isThreeColumn={true}>
             <ProfileCard item={item} />
           </LastListItem>
         )

@@ -36,10 +36,6 @@ export default function EventsScreen() {
         setReverse((prev) => !prev)
       },
     },
-    {
-      icon: "Plus",
-      action: () => null,
-    },
   ]
   useLayoutEffect(() => {
     navigation.setOptions({

@@ -30,6 +30,7 @@ const OrgList = StyleSheet.create({
   },
   EmptyText: {
     fontSize: 15,
+    paddingLeft: 12,
     fontFamily: "Graphik-Regular-App",
     fontWeight: "400",
     lineHeight: 24,
@@ -39,8 +40,8 @@ const OrgList = StyleSheet.create({
 })
 
 export default function OrganizationsList(props: Props) {
-  const { reverse, filter } = props
   const { orgs, isLoading, loadMore, nextToken } = useOrgs()
+  const { reverse, filter } = props
   return (
     <FlatList
       ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
@@ -85,7 +86,13 @@ export default function OrganizationsList(props: Props) {
           <Text style={OrgList.EmptyText}>No organizations found</Text>
         ) : null
       }
-      data={orgs}
+      data={
+        reverse
+          ? orgs.sort((orgA, orgB) =>
+              orgB?.orgName?.toLowerCase()?.localeCompare(orgA?.orgName?.toLowerCase())
+            )
+          : orgs
+      }
       numColumns={isMobileOnly ? 1 : 3}
       refreshing={isLoading}
       renderItem={({ item, index }) => {

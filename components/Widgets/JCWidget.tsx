@@ -158,29 +158,15 @@ export const WidgetItem = ({
         return <></>
       case WidgetType.Org:
         return (
-          <View
+          <Image
             style={{
-              width: 60,
-              height: 60,
-              borderWidth: 1,
-              borderColor: "#E4E1E1",
-              borderRadius: 120,
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
+              width: 53,
+              height: 64,
+              borderRadius: 100,
+              backgroundColor: "white",
             }}
-          >
-            <Image
-              style={{
-                width: 60,
-                height: 60,
-                borderWidth: 1,
-                borderColor: "#E4E1E1",
-                borderRadius: 120,
-              }}
-              source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
-            ></Image>
-          </View>
+            source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
+          ></Image>
         )
       default:
         return <></>

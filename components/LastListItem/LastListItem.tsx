@@ -17,9 +17,9 @@ const LastListItem = (props: Props) => {
     <View
       style={[
         isThreeColumn
-          ? { flex: 0.333333 }
+          ? { width: "calc(33% - 20px)" }
           : isLastAndOdd
-          ? { flex: 0.5, marginRight: 32 }
+          ? { width: "calc(50% - 16px)" }
           : { flex: 1 },
       ]}
     >

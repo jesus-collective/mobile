@@ -46,10 +46,6 @@ export default function ResourcesScreen() {
                       setReverse((prev) => !prev)
                     },
                   },
-                  {
-                    icon: "Plus",
-                    action: () => null,
-                  },
                 ]}
                 navigation={props.navigation}
               />
