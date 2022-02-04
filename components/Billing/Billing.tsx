@@ -675,7 +675,7 @@ class BillingImpl extends JCComponent<Props, State> {
                   />
 
                   <Text accessibilityRole="header" style={this.styles.style.SignUpScreenSetupText}>
-                    We&apos;ve received your payment.
+                    Thank you. Your subscription is now active.
                     <br />
                     <JCButton
                       accessibilityLabel="Navigate to profile"
