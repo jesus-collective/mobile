@@ -293,7 +293,7 @@
         },
         "jcmobilePreSignup": {
           "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
-          "s3Key": "amplify-builds/jcmobilePreSignup-534e754f4d666e412b6a-build.zip"
+          "s3Key": "amplify-builds/jcmobilePreSignup-434534496c672b494b66-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_yyA79SztQ",

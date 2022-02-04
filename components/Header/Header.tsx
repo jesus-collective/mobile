@@ -84,7 +84,6 @@ export default function HeaderJCC(props: Props) {
     chevronStyle: Dimensions.get("window").width > 720 ? chevronStyle1 : chevronStyle2,
     user: null,
   })
-  if (props.overrideMenu != null) setState({ ...state, menus: props.overrideMenu })
 
   const headerStyles = HeaderStyles.getInstance()
   const navigation = useNavigation<any>()
@@ -152,18 +151,21 @@ export default function HeaderJCC(props: Props) {
     setState({ ...state, resourcesDropdown: null })
   }
   useEffect(() => {
-    Data.listMenu(null)
-      .then((listMenus) => {
-        console.log({ listMenus: listMenus })
-        setState((prev) => ({
-          ...prev,
-          menus:
-            listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ?? [],
-        }))
-      })
-      .catch((e) => {
-        setState((prev) => ({ ...prev, menus: e.data?.listMenus?.items ?? [] }))
-      })
+    if (props.overrideMenu != null) setState({ ...state, menus: props.overrideMenu })
+    else
+      Data.listMenu(null)
+        .then((listMenus) => {
+          console.log({ listMenus: listMenus })
+          setState((prev) => ({
+            ...prev,
+            menus:
+              listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ??
+              [],
+          }))
+        })
+        .catch((e) => {
+          setState((prev) => ({ ...prev, menus: e.data?.listMenus?.items ?? [] }))
+        })
 
     const loadUser = async () => {
       const userData = await Auth.currentAuthenticatedUser()
@@ -175,6 +177,9 @@ export default function HeaderJCC(props: Props) {
       //Dimensions.removeEventListener("change", updateStyles)
     }
   }, [])
+  useEffect(() => {
+    if (props.overrideMenu != null) setState({ ...state, menus: props.overrideMenu })
+  }, [props.overrideMenu])
   const handleMenuDropdownClick = (event: React.MouseEvent<HTMLElement>, id: string): void => {
     const z = state.menuDropdown
     z[id] = event.currentTarget
