@@ -8,28 +8,30 @@ import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { GetUser2Query } from "src/API-customqueries"
+import BottomMenuModal, { ModalMenuItem } from "../../components/ActionsModal/ActionsModal"
 import { Data } from "../../components/Data/Data"
-import BottomMenuModal, { ModalMenuItem } from "../../components/FaceLift/BottomMenuModal"
-import DetailsWidget from "../../components/FaceLift/DetailsWidget"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import LastListItem from "../../components/FaceLift/LastListItem"
-import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
+import LastListItem from "../../components/LastListItem/LastListItem"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import DetailsWidget from "../../components/Widgets/DetailsWidget"
+import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
+import { joinGroup, leaveGroup } from "../../screens/EventsScreen/GroupUtils"
 import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
 import { GetGroupQuery, GetUserQuery } from "../../src/API"
 
 export default function EventScreen(props: Props) {
   const [isOpen, setIsOpen] = useState(false)
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { id } = props.route.params
   const [currentTab, setCurrentTab] = useState<EventTabType>(
     isMobileOnly ? EventTabType.ABOUT : EventTabType.DISCUSSION
   )
   const [isLoading, setIsLoading] = useState(true)
+  const [currentUser, setCurrentUser] = useState("")
   const [event, setEvent] = useState<GetGroupQuery["getGroup"]>(null)
   const [attendees, setAttendees] = useState<Array<GetUserQuery["getUser"]>>([])
   const [owner, setOwner] = useState<GetUserQuery["getUser"]>(null)
@@ -102,41 +104,53 @@ export default function EventScreen(props: Props) {
         },
       })
   })
-
-  useEffect(() => {
-    setIsLoading(true)
-    const getAttendees = async (attendeeIds: Array<string>) => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser()
-        setIsAttending(Boolean(attendeeIds.find((a) => a === currentUser.username)))
-        const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
-        for (const attendeeId of attendeeIds) {
-          const attendeeData = Data.getUserForProfile(attendeeId)
-          getAllAttendees.push(attendeeData as GraphQLResult<GetUser2Query>)
-        }
-        const d = await Promise.all(getAllAttendees)
-        const userData = d?.map((item) => item?.data?.getUser)
-        setAttendees(userData)
-      } catch (err) {
-        console.log({ "something went wrong": err })
+  const getAttendees = async (attendeeIds: Array<string>) => {
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      setIsAttending(Boolean(attendeeIds.find((a) => a === user.username)))
+      setCurrentUser(user.username)
+      const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
+      for (const attendeeId of attendeeIds) {
+        const attendeeData = Data.getUserForProfile(attendeeId)
+        getAllAttendees.push(attendeeData as GraphQLResult<GetUser2Query>)
       }
+      const d = await Promise.all(getAllAttendees)
+      const userData = d?.map((item) => item?.data?.getUser)
+      setAttendees(userData)
+    } catch (err) {
+      console.log({ "something went wrong": err })
     }
-    const getOwner = async (ownerId: string) => {
-      const owner = await Data.getUserForProfile(ownerId)
-      setOwner(owner.data?.getUser)
-    }
-    const getEvent = async () => {
-      const currentEvent = await Data.getGroupForItemPage(id)
-      if (currentEvent?.data?.getGroup?.owner) getOwner(currentEvent?.data?.getGroup?.owner)
-      getAttendees(
-        currentEvent?.data?.getGroup?.members?.items?.map((att) => att?.userID ?? "") ?? []
-      )
-      setEvent(currentEvent.data?.getGroup)
-      setIsLoading(false)
-    }
+  }
+  const getOwner = async (ownerId: string) => {
+    const owner = await Data.getUserForProfile(ownerId)
+    setOwner(owner.data?.getUser)
+  }
+  const getEvent = async (showSpinner = true) => {
+    if (showSpinner) setIsLoading(true)
+    const currentEvent = await Data.getGroupForItemPage(id)
+    if (currentEvent?.data?.getGroup?.owner) getOwner(currentEvent?.data?.getGroup?.owner)
+    getAttendees(
+      currentEvent?.data?.getGroup?.members?.items?.map((att) => att?.userID ?? "") ?? []
+    )
+    setEvent(currentEvent.data?.getGroup)
+    if (showSpinner) setIsLoading(false)
+  }
+  useEffect(() => {
     getEvent()
   }, [id])
-  console.log({ owner })
+  const handleAction = async () => {
+    if (isAttending) {
+      const success = await leaveGroup(event, "event")
+      if (success) {
+        getEvent(false)
+      }
+    } else {
+      const success = await joinGroup(event, "event")
+      if (success) {
+        getEvent(false)
+      }
+    }
+  }
   const centerOffset = isMobileOnly ? 0 : -32
   return isLoading ? (
     <ActivityIndicator
@@ -161,21 +175,21 @@ export default function EventScreen(props: Props) {
               <View style={style.InfoItemContainer}>
                 <Image
                   style={style.InfoItemIcon}
-                  source={require("../../assets/Facelift/Calendar.png")}
+                  source={require("../../assets/Facelift/svg/Calendar.svg")}
                 />
                 <Text style={style.InfoItemText}>{moment(event?.time).format("MMMM D, YYYY")}</Text>
               </View>
               <View style={style.InfoItemContainer}>
                 <Image
                   style={style.InfoItemIcon}
-                  source={require("../../assets/Facelift/Clock.png")}
+                  source={require("../../assets/Facelift/svg/Clock.svg")}
                 />
                 <Text style={style.InfoItemText}>{moment(event?.time).format("LT")}</Text>
               </View>
               <View style={style.InfoItemContainer}>
                 <Image
                   style={style.InfoItemIcon}
-                  source={require("../../assets/Facelift/Eye.png")}
+                  source={require("../../assets/Facelift/svg/Eye.svg")}
                 />
                 <Text style={style.InfoItemText}>Public</Text>
               </View>
@@ -217,9 +231,8 @@ export default function EventScreen(props: Props) {
                       data={attendees}
                       keyExtractor={({ item }) => item?.id}
                       renderItem={({ item, index }) => {
-                        const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
                         return (
-                          <LastListItem isLastAndOdd={isLastAndOdd}>
+                          <LastListItem listLength={attendees.length} index={index}>
                             <ProfileCard item={item} />
                           </LastListItem>
                         )
@@ -232,14 +245,32 @@ export default function EventScreen(props: Props) {
                 <View style={{ marginBottom: 32 }}>
                   <GenericButton
                     label={isAttending ? "Don't Attend" : "Attend"}
-                    action={() => null}
-                    icon={isAttending ? "Minus" : "Plus"}
+                    action={handleAction}
+                    icon={isAttending ? "Minus-White" : "Plus-White"}
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                       LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
                       custom: undefined,
                     }}
                   />
+                  {event?.owner === currentUser ? (
+                    <GenericButton
+                      label={"Edit Event"}
+                      action={() =>
+                        navigation.push("GenericGroupScreen", {
+                          groupType: "event",
+                          id: event?.id,
+                          create: false,
+                        })
+                      }
+                      icon={"Edit-White"}
+                      style={{
+                        ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
+                        LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
+                        custom: { marginTop: 4 },
+                      }}
+                    />
+                  ) : null}
                 </View>
                 <DetailsWidget title="Event Details" data={event} />
                 {event?.members?.items?.length ? (
@@ -297,7 +328,7 @@ export default function EventScreen(props: Props) {
             <View style={{ marginTop: -8 }}>
               <GenericButton
                 label={isAttending ? "Don't Attend" : "Attend"}
-                action={() => null}
+                action={handleAction}
                 style={{
                   ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                   LabelStyle: [GenericButtonStyles.QuarternaryLabelStyle, { fontSize: 16 }],

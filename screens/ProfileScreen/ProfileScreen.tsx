@@ -4,18 +4,18 @@ import { Auth } from "aws-amplify"
 import React, { useEffect, useLayoutEffect, useState } from "react"
 import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native"
+import BottomMenuModal, { ModalMenuItem } from "../../components/ActionsModal/ActionsModal"
 import { Data } from "../../components/Data/Data"
-import BottomMenuModal, { ModalMenuItem } from "../../components/FaceLift/BottomMenuModal"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import { WidgetItem, WidgetType } from "../../components/FaceLift/JCWidget"
-import LastListItem from "../../components/FaceLift/LastListItem"
-import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
-import ProfileDetailsWidget from "../../components/FaceLift/ProfileDetailsWidget"
-import TwoItemCarousel, { CarouselType } from "../../components/FaceLift/TwoItemCarousel"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
+import LastListItem from "../../components/LastListItem/LastListItem"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import TwoItemComponent, { CarouselType } from "../../components/TwoItemComponent/TwoItemComponent"
+import { WidgetItem, WidgetType } from "../../components/Widgets/JCWidget"
+import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
+import ProfileDetailsWidget from "../../components/Widgets/ProfileDetailsWidget"
 import EventCard from "../../screens/EventsScreen/EventCard"
 import { useOwnedGroups } from "../../screens/EventsScreen/useOwnedGroups"
 import GroupCard from "../../screens/GroupsScreen/GroupCard"
@@ -313,14 +313,14 @@ export default function ProfileScreen(props: Props) {
               <View style={style.MainContent}>
                 {currentTab === ProfileTabType.ABOUT ? (
                   <>
-                    <TwoItemCarousel
+                    <TwoItemComponent
                       data={groups}
                       updateEvents={() => Promise.resolve()}
                       type={CarouselType.Group}
                       title="Group Memberships"
                       showMore={navigateToGroups}
                     />
-                    <TwoItemCarousel
+                    <TwoItemComponent
                       data={events}
                       type={CarouselType.Event}
                       updateEvents={updateEvents}
@@ -341,9 +341,8 @@ export default function ProfileScreen(props: Props) {
                     data={groups}
                     style={{ marginBottom: 32 }}
                     renderItem={({ item, index }) => {
-                      const isLastAndOdd = groups?.length - 1 === index && index % 2 === 0
                       return (
-                        <LastListItem isLastAndOdd={isLastAndOdd}>
+                        <LastListItem listLength={groups.length} index={index}>
                           <GroupCard item={item} />
                         </LastListItem>
                       )
@@ -360,9 +359,8 @@ export default function ProfileScreen(props: Props) {
                     data={events}
                     style={{ marginBottom: 32 }}
                     renderItem={({ item, index }) => {
-                      const isLastAndOdd = events?.length - 1 === index && index % 2 === 0
                       return (
-                        <LastListItem isLastAndOdd={isLastAndOdd}>
+                        <LastListItem listLength={events.length} index={index}>
                           <EventCard
                             item={item}
                             updateEvents={updateEvents}
@@ -384,8 +382,8 @@ export default function ProfileScreen(props: Props) {
                   <View style={{ marginBottom: 32 }}>
                     <GenericButton
                       label={"Edit Profile"}
-                      action={() => navigation.navigate("EditProfileScreen", { id: userData?.id })}
-                      icon={"Edit"}
+                      action={() => navigation.push("EditProfileScreen", { id: userData?.id })}
+                      icon={"Edit-White"}
                       style={{
                         ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                         LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,

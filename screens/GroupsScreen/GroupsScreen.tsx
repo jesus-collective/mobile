@@ -2,9 +2,9 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useLayoutEffect, useState } from "react"
 import { View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import GenericDirectoryScreen from "../../components/GenericDirectoryScreen/GenericDirectoryScreen"
 import Header from "../../components/Header/Header"
 import GroupsList from "./GroupsList"
 import GroupWidgets from "./GroupWidgets"
@@ -41,10 +41,6 @@ export default function GroupsScreen() {
                   setReverse((prev) => !prev)
                 },
               },
-              {
-                icon: "Plus",
-                action: () => null,
-              },
             ]}
             navigation={props.navigation}
           />
@@ -56,7 +52,7 @@ export default function GroupsScreen() {
     return (
       <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
         <GenericButton
-          label="SORT"
+          label={reverse ? "SORT: Z - A" : "SORT: A - Z"}
           action={() => setReverse((prev) => !prev)}
           style={{
             ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
@@ -65,7 +61,7 @@ export default function GroupsScreen() {
               marginRight: 32,
             },
           }}
-          icon="Sort"
+          icon="Sort-Red"
         ></GenericButton>
         <GenericButton
           label={`FILTER${filter ? ": My Groups" : ""}`}
@@ -84,7 +80,7 @@ export default function GroupsScreen() {
               marginRight: 32,
             },
           }}
-          icon={filter ? "X" : "Filter"}
+          icon={filter ? "X-White" : "Filter-Red"}
         ></GenericButton>
         <GenericButton
           label="NEW GROUP"
@@ -98,7 +94,7 @@ export default function GroupsScreen() {
             ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
             LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
           }}
-          icon="Plus"
+          icon="Plus-White"
         ></GenericButton>
       </View>
     )

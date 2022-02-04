@@ -24,6 +24,7 @@ interface Props {
     | "small6"
     | "small7"
     | "small8"
+    | "small9"
     | "editorLarge"
     | "nav"
     | "miniNav"
@@ -31,7 +32,14 @@ interface Props {
     | "profile"
     | "mobileProfile"
     | "roundEvent"
-  style?: "map" | "my-people" | "courseProfile" | "personCard"
+  style?:
+    | "map"
+    | "my-people"
+    | "courseProfile"
+    | "personCard"
+    | "org"
+    | "orgProfile"
+    | "orgProfileMobile"
   inlineStyle?: ImageStyle
   isOrg?: boolean
   linkToProfile?: boolean
@@ -234,15 +242,51 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 alignSelf: "flex-start",
                 top: 0,
               }
+            : this.props.style === "org"
+            ? {
+                width: "60px",
+                height: "60px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                borderRadius: 120,
+                marginBottom: 0,
+                top: -32,
+              }
+            : this.props.style === "orgProfileMobile"
+            ? {
+                width: "96px",
+                height: "96px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                borderRadius: 120,
+                marginBottom: 0,
+              }
+            : this.props.style === "orgProfile"
+            ? {
+                width: "176px",
+                height: "176px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                borderRadius: 120,
+                marginBottom: 0,
+              }
             : this.props.size == "small8"
             ? {
                 width: "64px",
                 height: "80px",
                 borderRadius: 120,
               }
+            : this.props.size == "small9"
+            ? {
+                width: "60px",
+                height: "60px",
+                borderRadius: 120,
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+              }
             : this.props.size == "roundEvent"
             ? {
-                width: "32px",
+                width: "26px",
                 height: "32px",
                 borderRadius: 120,
                 marginBottom: 0,
@@ -253,6 +297,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
             : this.props.style === "personCard"
             ? {
                 width: "64px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
                 height: "80px",
                 borderRadius: 120,
                 marginRight: 10,
@@ -303,7 +349,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginBottom: 15,
               })
         }
-        resizeMode={this.props.size == "xsmall" ? "contain" : "cover"}
+        resizeMode={this.props.size == "xsmall" || this.props.style === "org" ? "contain" : "cover"}
         source={this.state.profileImage}
       />
     ) : this.state.showEmpty || !this.state.profileImage ? (
@@ -378,6 +424,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 height: "80px",
                 borderRadius: 120,
               }
+            : this.props.size == "small9"
+            ? {
+                width: "60px",
+                height: "60px",
+                borderRadius: 120,
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+              }
             : this.props.size === "mobileProfile"
             ? {
                 width: "77px",
@@ -406,7 +460,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             : this.props.size == "roundEvent"
             ? {
-                width: "32px",
+                width: "26px",
                 height: "32px",
                 borderRadius: 120,
                 marginBottom: 0,
@@ -425,9 +479,39 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 alignSelf: "flex-start",
                 top: 0,
               }
+            : this.props.style === "orgProfileMobile"
+            ? {
+                width: "96px",
+                height: "96px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                borderRadius: 120,
+                marginBottom: 0,
+              }
+            : this.props.style === "org"
+            ? {
+                width: "60px",
+                height: "60px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                borderRadius: 120,
+                marginBottom: 0,
+                top: -32,
+              }
+            : this.props.style === "orgProfile"
+            ? {
+                width: "176px",
+                height: "176px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                borderRadius: 120,
+                marginBottom: 0,
+              }
             : this.props.style === "personCard"
             ? {
                 width: "64px",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
                 height: "80px",
                 borderRadius: 120,
                 marginRight: 10,

@@ -35,20 +35,20 @@ export default function MainBottomTabsRouter() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
           if (route.name === "mainDrawer") {
-            iconName = focused ? "Home-active" : "Home"
+            iconName = focused ? "Home-Active" : "Home"
           } else if (route.name === "search") {
-            iconName = focused ? "Search-active" : "Search"
+            iconName = focused ? "Search-Active" : "Search"
           } else if (route.name === "dms") {
-            iconName = focused ? "Airplane-active" : "Airplane"
+            iconName = focused ? "Airplane-Active" : "Airplane"
           } else if (route.name === "notifs") {
-            iconName = focused ? "Bell" : "Bell"
+            iconName = focused ? "Bell-Active" : "Bell"
           } else if (route.name === "profile") {
-            iconName = focused ? "Person-active" : "Person"
+            iconName = focused ? "Person-Active" : "Person"
           }
           return (
             <Image
               style={{ width: 24, height: 24 }}
-              source={require(`../../assets/Facelift/tabsicons/${iconName}.png`)}
+              source={require(`../../assets/Facelift/svg/${iconName}.svg`)}
             />
           )
         },

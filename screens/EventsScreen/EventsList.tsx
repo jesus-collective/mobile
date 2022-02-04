@@ -1,10 +1,10 @@
 import React from "react"
 import { isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import { WidgetItem, WidgetType } from "../../components/FaceLift/JCWidget"
-import LastListItem from "../../components/FaceLift/LastListItem"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import LastListItem from "../../components/LastListItem/LastListItem"
+import { WidgetItem, WidgetType } from "../../components/Widgets/JCWidget"
 import { Group } from "../../src/API"
 import EventCard from "./EventCard"
 import { useFetchEvents } from "./useFetchEvents"
@@ -31,6 +31,7 @@ const EventList = StyleSheet.create({
     alignSelf: "center",
   },
   EmptyText: {
+    paddingLeft: 12,
     fontSize: 15,
     fontFamily: "Graphik-Regular-App",
     fontWeight: "400",
@@ -100,9 +101,8 @@ export default function EventsList(props: Props) {
       numColumns={isMobileOnly ? 1 : 2}
       refreshing={isLoading}
       renderItem={({ item, index }) => {
-        const isLastAndOdd = filteredData.length - 1 === index && index % 2 === 0
         return !isMobileOnly ? (
-          <LastListItem isLastAndOdd={isLastAndOdd}>
+          <LastListItem listLength={filteredData.length} index={index}>
             <EventCard
               key={item.id}
               item={item}

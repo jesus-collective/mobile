@@ -2,12 +2,11 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useLayoutEffect, useState } from "react"
 import { View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import GenericDirectoryScreen from "../../components/GenericDirectoryScreen/GenericDirectoryScreen"
 import Header from "../../components/Header/Header"
 import ProfilesList from "./ProfilesList"
-import ProfileWidgets from "./ProfileWidgets"
 export default function ProfilesScreen() {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const route = useRoute()
@@ -23,15 +22,6 @@ export default function ProfilesScreen() {
                 title: "Everybody",
                 action: () => null,
               },
-              // {
-              //   title: "In Your Org",
-              //   action: () => null,
-              // },
-
-              // {
-              //   title: "In Your Groups",
-              //   action: () => null,
-              // },
             ]}
             title={"People"}
             controls={[
@@ -47,12 +37,12 @@ export default function ProfilesScreen() {
         )
       },
     })
-  }, [])
+  }, [filter])
   const PeopleControlButtons = () => {
     return (
       <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
         <GenericButton
-          label="SORT"
+          label={reverse ? "SORT: Z - A" : "SORT: A - Z"}
           action={() => setReverse((prev) => !prev)}
           style={{
             ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
@@ -61,13 +51,13 @@ export default function ProfilesScreen() {
               marginRight: 32,
             },
           }}
-          icon="Sort"
+          icon="Sort-Red"
         ></GenericButton>
         <GenericButton
-          label={`FILTER${filter ? ": My People" : ""}`}
+          label={`FILTER${filter ? ": Friends" : ""}`}
           action={() => {
             if (filter) setFilter("")
-            else setFilter(": My People")
+            else setFilter(": Friends")
           }}
           style={{
             ButtonStyle: filter
@@ -80,7 +70,7 @@ export default function ProfilesScreen() {
               marginRight: 32,
             },
           }}
-          icon={filter ? "X" : "Filter"}
+          icon={filter ? "X-White" : "Filter-Red"}
         ></GenericButton>
       </View>
     )
@@ -90,7 +80,6 @@ export default function ProfilesScreen() {
       navigation={navigation}
       ControlButtons={PeopleControlButtons}
       MainContent={() => <ProfilesList filter={filter} reverse={reverse} />}
-      Widgets={ProfileWidgets}
       route={route}
       pageTitle="People"
     />

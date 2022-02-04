@@ -4,9 +4,9 @@ import { isMobile, isMobileOnly } from "react-device-detect"
 import { ActivityIndicator, FlatList, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import LastListItem from "../../components/FaceLift/LastListItem"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import LastListItem from "../../components/LastListItem/LastListItem"
 import GroupCard from "./GroupCard"
 
 type Props = {
@@ -15,28 +15,34 @@ type Props = {
 }
 export default function GroupsList(props: Props) {
   const { reverse, filter } = props
-  const [data, setData] = useState<Array<any>>([])
+  const [data, setData] = useState<any[]>([])
   const [refreshing, setRefreshing] = useState(true)
   const [nextToken, setNextToken] = useState<string | null>(null)
   const [joinedGroups, setJoinedGroups] = useState<Array<any>>([])
   const [isOwnerGroups, setIsOwnerGroups] = useState<Array<any>>([])
   const loadGroups = async () => {
     const listGroup = await Data.groupByTypeForMyGroups("group", null)
+
     setData(
-      listGroup?.data?.groupByType?.items?.sort((groupA, groupB) => {
-        if (reverse && groupA?.name && groupB?.name)
-          return groupA?.name?.toLowerCase()?.localeCompare(groupB?.name?.toLowerCase())
-        return 1
-      }) ?? []
+      listGroup?.data?.groupByType?.items?.sort((groupA, groupB) =>
+        groupA?.name?.toLowerCase()?.localeCompare(groupB?.name?.toLowerCase())
+      ) ?? []
     )
     setNextToken(listGroup.data?.groupByType?.nextToken ?? "")
     setRefreshing(false)
   }
   useEffect(() => {
-    setData([])
-    setNextToken(null)
     loadGroups()
-  }, [reverse])
+  }, [])
+  const sortByName = (d: any[]) => {
+    if (reverse)
+      return d.sort((groupA, groupB) =>
+        groupB?.name?.toLowerCase()?.localeCompare(groupA?.name?.toLowerCase())
+      )
+    return d.sort((groupA, groupB) =>
+      groupA?.name?.toLowerCase()?.localeCompare(groupB.name?.toLowerCase())
+    )
+  }
   useEffect(() => {
     const loadUser = async () => {
       const jcUser: JCCognitoUser = await Auth.currentAuthenticatedUser()
@@ -130,15 +136,25 @@ export default function GroupsList(props: Props) {
             </Text>
           ) : null
         }
-        data={filter ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)) : data}
+        data={
+          filter
+            ? sortByName(data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)))
+            : sortByName(data)
+        }
         numColumns={isMobile ? 1 : 2}
         refreshing={refreshing}
         renderItem={({ item, index }) => {
-          const isLastAndOdd = data.length - 1 === index && index % 2 === 0
           return isMobileOnly ? (
             <GroupCard item={item} />
           ) : (
-            <LastListItem isLastAndOdd={isLastAndOdd}>
+            <LastListItem
+              listLength={
+                filter
+                  ? data.filter((a) => a.id === joinedGroups.find((b) => b === a.id)).length
+                  : data.length
+              }
+              index={index}
+            >
               <GroupCard item={item} />
             </LastListItem>
           )

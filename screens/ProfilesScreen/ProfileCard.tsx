@@ -1,10 +1,11 @@
+import Auth from "@aws-amplify/auth"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { isMobileOnly } from "react-device-detect"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
 const ProfileCardStyle = StyleSheet.create({
@@ -21,11 +22,19 @@ const ProfileCardStyle = StyleSheet.create({
 type Props = {
   item: any
   forceDesktop?: boolean
+  hideBottomBorder?: boolean
 }
 export default function ProfileCard(props: Props) {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
-  console.log(props.item)
+  const [currentUser, setCurrentUser] = useState()
   const { item } = props
+  useEffect(() => {
+    const loadUser = async () => {
+      const user = await Auth.currentAuthenticatedUser()
+      setCurrentUser(user.username)
+    }
+    loadUser()
+  }, [])
   return !props.forceDesktop && isMobileOnly ? (
     <TouchableOpacity
       onPress={() => navigation.push("ProfileScreen", { id: item?.id })}
@@ -33,9 +42,9 @@ export default function ProfileCard(props: Props) {
       style={{
         flexDirection: "row",
         flex: 1,
-        paddingLeft: 12,
+        paddingLeft: props.hideBottomBorder ? 0 : 12,
         paddingTop: 16,
-        paddingRight: 24,
+        paddingRight: props.hideBottomBorder ? 12 : 24,
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -45,7 +54,7 @@ export default function ProfileCard(props: Props) {
           flex: 1,
           paddingBottom: 12,
           flexDirection: "row",
-          borderBottomWidth: 1,
+          borderBottomWidth: props.hideBottomBorder ? 0 : 1,
           borderBottomColor: "#E4E1E1",
         }}
       >
@@ -74,10 +83,19 @@ export default function ProfileCard(props: Props) {
             {item?.currentRole}
           </Text>
         </View>
-        <TouchableOpacity style={{ alignSelf: "center" }}>
+        <TouchableOpacity
+          onPress={() => {
+            if (item?.id !== currentUser)
+              navigation.push("ConversationScreen", {
+                initialUserID: item?.id,
+                initialUserName: item?.given_name + " " + item?.family_name,
+              })
+          }}
+          style={{ alignSelf: "center" }}
+        >
           <Image
             style={{ width: 24, height: 24 }}
-            source={require("../../assets/Facelift/Airplane-dark.png")}
+            source={require("../../assets/Facelift/svg/Airplane.svg")}
           />
         </TouchableOpacity>
       </View>
@@ -137,12 +155,13 @@ export default function ProfileCard(props: Props) {
             }}
             label={"Message"}
             action={() => {
-              navigation.push("ConversationScreen", {
-                initialUserID: item?.id,
-                initialUserName: item?.given_name + " " + item?.family_name,
-              })
+              if (item?.id !== currentUser)
+                navigation.push("ConversationScreen", {
+                  initialUserID: item?.id,
+                  initialUserName: item?.given_name + " " + item?.family_name,
+                })
             }}
-            icon={"Airplane"}
+            icon={"Airplane-White"}
           />
         </View>
       </View>

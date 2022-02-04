@@ -209,8 +209,8 @@ export default function HeaderJCC(props: Props) {
                         marginBottom: 10,
                       }
                 }
-                source={require(`../../assets/header/${
-                  width < 1300 ? "JCLogo.png" : "newicon.png"
+                source={require(`../../assets/Facelift/svg/${
+                  width < 1300 ? "JC-Logo-No-Text.svg" : "JC-Logo.svg"
                 }`)}
               />
             </TouchableOpacity>
@@ -304,7 +304,7 @@ export default function HeaderJCC(props: Props) {
                 ) : null}
                 {constants["SETTING_ISVISIBLE_orgs"] ? (
                   <TouchableOpacity
-                    onPress={() => null}
+                    onPress={() => navigation.navigate("OrganizationsScreen")}
                     style={headerStyles.style.centerMenuButtons}
                   >
                     <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
@@ -437,7 +437,7 @@ export default function HeaderJCC(props: Props) {
                   <TouchableOpacity testID="header-messages" onPress={openMessages}>
                     <Image
                       style={headerStyles.style.icon}
-                      source={require("../../assets/header/Airplane.png")}
+                      source={require("../../assets/Facelift/svg/Airplane-LightGrey.svg")}
                     />
                   </TouchableOpacity>
                 </View>
@@ -447,7 +447,7 @@ export default function HeaderJCC(props: Props) {
                   <TouchableOpacity onPress={openMessages}>
                     <Image
                       style={headerStyles.style.icon}
-                      source={require("../../assets/header/Bell.png")}
+                      source={require("../../assets/Facelift/svg/Bell-LightGrey.svg")}
                     />
                   </TouchableOpacity>
                 </View>

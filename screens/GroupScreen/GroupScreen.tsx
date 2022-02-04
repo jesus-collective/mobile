@@ -6,16 +6,16 @@ import React, { useEffect, useLayoutEffect, useState } from "react"
 import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
+import BottomMenuModal, { ModalMenuItem } from "../../components/ActionsModal/ActionsModal"
 import { Data } from "../../components/Data/Data"
-import BottomMenuModal, { ModalMenuItem } from "../../components/FaceLift/BottomMenuModal"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import LastListItem from "../../components/FaceLift/LastListItem"
-import PeopleListWidget from "../../components/FaceLift/PeopleListWidget"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
+import LastListItem from "../../components/LastListItem/LastListItem"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
 import { GetUserQuery } from "../../src/API"
 import { GetUser2Query } from "../../src/API-customqueries"
 import { Group, joinGroup, leaveGroup } from "../EventsScreen/GroupUtils"
@@ -42,11 +42,11 @@ const style = StyleSheet.create({
     flexDirection: "row-reverse",
   },
   MinorContent: {
-    flex: 0.3,
+    flex: 0.32,
   },
   MainContent: {
     marginLeft: 64,
-    flex: 0.7,
+    flex: 0.68,
   },
   TitleText: {
     fontFamily: "Graphik-Semibold-App",
@@ -100,13 +100,14 @@ const style = StyleSheet.create({
   },
 })
 export default function GroupScreen(props: Props) {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { id } = props.route.params
   const [isOpen, setIsOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState<GroupTabType>(GroupTabType.DISCUSSION)
   const [isLoading, setIsLoading] = useState(true)
   const [group, setGroup] = useState<Group>()
   const [attendees, setAttendees] = useState<Array<GetUserQuery["getUser"]>>([])
+  const [currentUser, setCurrentUser] = useState("")
   const [isAttending, setIsAttending] = useState(false)
   const navigateToMembersList = () => {
     setCurrentTab(GroupTabType.MEMBERS)
@@ -114,9 +115,6 @@ export default function GroupScreen(props: Props) {
   const navigateToDiscussions = () => {
     setCurrentTab(GroupTabType.DISCUSSION)
   }
-  // const navigateToEvents = () => {
-  //   setCurrentTab(GroupTabType.EVENTS)
-  // }
   const controls = [
     {
       icon: "Dots",
@@ -152,33 +150,33 @@ export default function GroupScreen(props: Props) {
         },
       })
   })
-
-  useEffect(() => {
-    setIsLoading(true)
-    const getAttendees = async (attendeeIds: Array<string>) => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser()
-        setIsAttending(Boolean(attendeeIds.find((a) => a === currentUser.username)))
-        const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
-        for (const attendeeId of attendeeIds) {
-          const attendeeData = Data.getUserForProfile(attendeeId)
-          getAllAttendees.push(attendeeData as GraphQLResult<GetUser2Query>)
-        }
-        const d = await Promise.all(getAllAttendees)
-        const userData = d?.map((item) => item?.data?.getUser)
-        setAttendees(userData)
-      } catch (err) {
-        console.log({ "something went wrong": err })
+  const getAttendees = async (attendeeIds: Array<string>) => {
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      setCurrentUser(user.username)
+      setIsAttending(Boolean(attendeeIds.find((a) => a === user.username)))
+      const getAllAttendees: Array<GraphQLResult<GetUser2Query>> = []
+      for (const attendeeId of attendeeIds) {
+        const attendeeData = Data.getUserForProfile(attendeeId)
+        getAllAttendees.push(attendeeData as GraphQLResult<GetUser2Query>)
       }
+      const d = await Promise.all(getAllAttendees)
+      const userData = d?.map((item) => item?.data?.getUser)
+      setAttendees(userData)
+    } catch (err) {
+      console.log({ "something went wrong": err })
     }
-    const getGroup = async () => {
-      const currentEvent = await Data.getGroupForItemPage(id)
-      const membersToGetDataFor =
-        currentEvent?.data?.getGroup?.members?.items?.map((att) => att?.userID ?? "") ?? []
-      getAttendees(membersToGetDataFor)
-      setGroup(currentEvent.data?.getGroup)
-      setIsLoading(false)
-    }
+  }
+  const getGroup = async (showSpinner = true) => {
+    if (showSpinner) setIsLoading(true)
+    const currentEvent = await Data.getGroupForItemPage(id)
+    const membersToGetDataFor =
+      currentEvent?.data?.getGroup?.members?.items?.map((att) => att?.userID ?? "") ?? []
+    getAttendees(membersToGetDataFor)
+    setGroup(currentEvent.data?.getGroup)
+    if (showSpinner) setIsLoading(false)
+  }
+  useEffect(() => {
     getGroup()
   }, [id])
   const modalItems: ModalMenuItem[] = [
@@ -205,11 +203,19 @@ export default function GroupScreen(props: Props) {
   const handleAction = async () => {
     if (group) {
       if (isAttending) {
+        console.log("leaving")
         const success = await leaveGroup(group, "group")
-        if (success) setIsAttending(false)
+        console.log({ success })
+        if (success) {
+          getGroup(false)
+        }
       } else {
+        console.log("joining")
         const success = await joinGroup(group, "group")
-        if (success) setIsAttending(true)
+        console.log({ success })
+        if (success) {
+          getGroup(false)
+        }
       }
     }
   }
@@ -260,9 +266,8 @@ export default function GroupScreen(props: Props) {
                       data={attendees}
                       keyExtractor={({ item }) => item?.id}
                       renderItem={({ item, index }) => {
-                        const isLastAndOdd = attendees.length - 1 === index && index % 2 === 0
                         return (
-                          <LastListItem isLastAndOdd={isLastAndOdd}>
+                          <LastListItem listLength={attendees.length} index={index}>
                             <ProfileCard item={item} />
                           </LastListItem>
                         )
@@ -274,15 +279,33 @@ export default function GroupScreen(props: Props) {
               <View style={style.MinorContent}>
                 <View style={{ marginBottom: 32 }}>
                   <GenericButton
-                    label={isAttending ? "Leave group" : "Join group"}
+                    label={isAttending ? "Leave Group" : "Join Group"}
                     action={handleAction}
-                    icon={isAttending ? "Minus" : "Plus"}
+                    icon={isAttending ? "Minus-White" : "Plus-White"}
                     style={{
                       ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
                       LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
                       custom: undefined,
                     }}
                   />
+                  {group?.owner === currentUser ? (
+                    <GenericButton
+                      label={"Edit Group"}
+                      action={() =>
+                        navigation.push("GenericGroupScreen", {
+                          groupType: "group",
+                          id: group?.id,
+                          create: false,
+                        })
+                      }
+                      icon={"Edit-White"}
+                      style={{
+                        ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,
+                        LabelStyle: GenericButtonStyles.QuarternaryLabelStyle,
+                        custom: { marginTop: 4 },
+                      }}
+                    />
+                  ) : null}
                 </View>
 
                 <PeopleListWidget
@@ -324,7 +347,7 @@ export default function GroupScreen(props: Props) {
             <Text style={[style.DescriptionText, { marginBottom: 32 }]}>{group?.description}</Text>
             <View style={{ marginTop: -8 }}>
               <GenericButton
-                label={isAttending ? "Leave group" : "Join group"}
+                label={isAttending ? "Leave Group" : "Join Group"}
                 action={handleAction}
                 style={{
                   ButtonStyle: GenericButtonStyles.QuarternaryButtonStyle,

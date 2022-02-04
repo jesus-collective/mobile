@@ -1,7 +1,7 @@
 import Auth from "@aws-amplify/auth"
 import React from "react"
 import { Data } from "../../components/Data/Data"
-import JCWidget, { WidgetType } from "../../components/FaceLift/JCWidget"
+import JCWidget, { WidgetType } from "../../components/Widgets/JCWidget"
 import { JCCognitoUser } from "../../src/types"
 
 export default function GroupWidgets() {

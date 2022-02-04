@@ -2,9 +2,9 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useLayoutEffect, useState } from "react"
 import { View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
-import GenericDirectoryScreen from "../../components/FaceLift/GenericDirectoryScreen"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import GenericDirectoryScreen from "../../components/GenericDirectoryScreen/GenericDirectoryScreen"
 import Header from "../../components/Header/Header"
 import EventsList from "./EventsList"
 import EventWidgets from "./EventWidgets"
@@ -36,10 +36,6 @@ export default function EventsScreen() {
         setReverse((prev) => !prev)
       },
     },
-    {
-      icon: "Plus",
-      action: () => null,
-    },
   ]
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -68,7 +64,7 @@ export default function EventsScreen() {
               marginRight: 32,
             },
           }}
-          icon="Sort"
+          icon="Sort-Red"
         ></GenericButton>
         <GenericButton
           label={`FILTER${filter ? ": My Events" : ""}`}
@@ -87,7 +83,7 @@ export default function EventsScreen() {
               marginRight: 32,
             },
           }}
-          icon={filter ? "X" : "Filter"}
+          icon={filter ? "X-White" : "Filter-Red"}
         ></GenericButton>
         <GenericButton
           label="NEW EVENT"
@@ -101,7 +97,7 @@ export default function EventsScreen() {
             ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
             LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
           }}
-          icon="Plus"
+          icon="Plus-White"
         ></GenericButton>
       </View>
     )

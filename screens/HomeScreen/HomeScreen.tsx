@@ -4,9 +4,11 @@ import React, { lazy, useLayoutEffect } from "react"
 import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import Cookies from "universal-cookie"
-import EventCarousel from "../../components/FaceLift/EventCarousel"
-import GroupCarousel from "../../components/FaceLift/GroupCarousel"
-import PeopleCarousel from "../../components/FaceLift/PeopleCarousel"
+import EventCarousel from "../../components/Carousel/EventCarousel"
+import GroupCarousel from "../../components/Carousel/GroupCarousel"
+import OrgCarousel from "../../components/Carousel/OrgCarousel"
+import PeopleCarousel from "../../components/Carousel/PeopleCarousel"
+import ResourceCarousel from "../../components/Carousel/ResourceCarousel"
 
 const cookies = new Cookies()
 const MyMap = lazy(() => import("../../components/MyMap/MyMap"))
@@ -37,7 +39,7 @@ export default function HomeScreen() {
                   width: 87,
                   height: 52,
                 }}
-                source={require(`../../assets/header/newicon.png`)}
+                source={require(`../../assets/Facelift/svg/JC-Logo.svg`)}
               />
             </TouchableOpacity>
           </View>
@@ -49,8 +51,10 @@ export default function HomeScreen() {
       <BrowserView style={{ overflowX: "hidden", overflowY: "scroll" }}>
         <View style={{ marginHorizontal: "7.778vw" }}>
           <EventCarousel />
-          <PeopleCarousel />
           <GroupCarousel />
+          <ResourceCarousel />
+          <PeopleCarousel />
+          <OrgCarousel />
 
           <View style={{ marginBottom: 80 }}>
             <Text
@@ -88,9 +92,10 @@ export default function HomeScreen() {
         }} // fix margins
       >
         <EventCarousel />
-
-        <PeopleCarousel />
         <GroupCarousel />
+        <ResourceCarousel />
+        <PeopleCarousel />
+        <OrgCarousel />
 
         <View style={{ marginBottom: 60, marginTop: 48 }}>
           <Text

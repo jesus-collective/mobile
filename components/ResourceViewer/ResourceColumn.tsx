@@ -63,7 +63,7 @@ class ResourceColumn extends JCComponent<Props, State> {
       case ResourcePageItemStyle.Column7030:
         return "67%"
       default:
-        return "50%"
+        return "calc(40% + 36px)"
     }
   }
   getRightColumnSize(): string {
@@ -71,11 +71,11 @@ class ResourceColumn extends JCComponent<Props, State> {
       case ResourcePageItemStyle.Column3070:
         return "67%"
       case ResourcePageItemStyle.Column5050:
-        return "50%"
+        return "40%"
       case ResourcePageItemStyle.Column7030:
         return "33%"
       default:
-        return "50%"
+        return "calc(40% + 36px)"
     }
   }
   render(): React.ReactNode {
@@ -117,6 +117,7 @@ class ResourceColumn extends JCComponent<Props, State> {
             pageItem={this.props.pageItem}
           ></PageItemSettings>
         </View>
+
         <View
           style={[
             {

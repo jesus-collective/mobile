@@ -141,7 +141,7 @@ export default function MessageList(props: Props): JSX.Element {
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as GraphQLResult<MessagesByRoomQuery>
 
-        console.debug(messages)
+        console.log(messages)
 
         if (messages.data?.messagesByRoom?.items?.length) {
           setState((prev) => ({
@@ -151,7 +151,7 @@ export default function MessageList(props: Props): JSX.Element {
           }))
         }
       } catch (e: any) {
-        console.debug(e)
+        console.error({ e })
         if (e.data?.messagesByRoom) {
           setState((prev) => ({
             ...prev,

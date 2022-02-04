@@ -3,8 +3,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
 import React, { useState } from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import GenericButton from "../../components/FaceLift/GenericButton"
-import { GenericButtonStyles } from "../../components/FaceLift/GenericButtonStyles"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { JCEvent } from "./EventsList"
 import { joinGroup, leaveGroup } from "./GroupUtils"
@@ -22,7 +22,7 @@ export default function EventCard(props: Props) {
   const members = item?.members?.items ?? []
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const navigateToEventScreen = () => {
-    navigation.navigate("EventScreen", { id: item.id })
+    navigation.push("EventScreen", { id: item.id })
   }
   const handleAction = async () => {
     // TODO: optimistically call updateJoined, undo if mutation fails
@@ -47,7 +47,7 @@ export default function EventCard(props: Props) {
       style={EventCardStyle.Container}
     >
       <Text style={{ paddingTop: 8 }}>
-        <Text style={EventCardStyle.DateText}>{moment(time).format("MMMM DD, YYYY")}</Text>
+        <Text style={EventCardStyle.DateText}>{moment(time).format("MMMM D, YYYY")}</Text>
       </Text>
       <View style={EventCardStyle.ContentContainer}>
         <Text numberOfLines={3} style={EventCardStyle.NameText}>
