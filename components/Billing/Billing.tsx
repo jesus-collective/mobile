@@ -18,6 +18,7 @@ import {
 import { Mutex } from "async-mutex"
 import Amplify, { Auth } from "aws-amplify"
 import { Body, Card, CardItem, Content, Label } from "native-base"
+import onlyLastPromise, { DiscardSignal } from "only-last-promise"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
@@ -36,6 +37,18 @@ import awsConfig from "../../src/aws-exports"
 import "./CardSectionStyles.css"
 import EULA from "./eula.json"
 import HandleStripePayment from "./HandleStripePayment"
+
+const wrapper = onlyLastPromise()
+
+const wrappedPreviewInvoice = async (invoiceData: any) => {
+  try {
+    return await wrapper(Data.previewInvoice(invoiceData))
+  } catch (error) {
+    if (!(error instanceof DiscardSignal)) {
+      throw error
+    }
+  }
+}
 
 Amplify.configure(awsConfig)
 const handleInputMutex = new Mutex()
@@ -215,27 +228,34 @@ class BillingImpl extends JCComponent<Props, State> {
     const priceItems = this.getPriceItems()
 
     try {
-      const newInvoice = Data.previewInvoice({
-        idempotency: this.state.idempotency,
-        priceInfo: {
-          coupon: this.state.coupon,
-          prices: priceItems,
+      this.setState(
+        {
+          invoiceQueue: [
+            ...this.state.invoiceQueue,
+            wrappedPreviewInvoice({
+              idempotency: this.state.idempotency,
+              priceInfo: {
+                coupon: this.state.coupon,
+                prices: priceItems,
+              },
+            }),
+          ],
         },
-      })
-      console.log({ newInvoice: newInvoice })
-      this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
-        const currentIndex = this.state.invoiceQueue.length - 1
-        try {
-          const invoice = await this.state.invoiceQueue[currentIndex]
-          console.log({ invoice1: invoice })
-          if (currentIndex === this.state.invoiceQueue.length - 1) {
+        async () => {
+          console.log({ invoiceQueue: this.state.invoiceQueue })
+          try {
+            const invoice = (await Promise.all(this.state.invoiceQueue))[
+              this.state.invoiceQueue.length - 1
+            ]
+            console.log({ invoiceQueue2: this.state.invoiceQueue })
+            console.log({ invoice1: invoice })
             console.log({ invoice: invoice.data.previewInvoice?.invoice })
             this.setState({ invoice: invoice.data.previewInvoice?.invoice })
+          } catch (e: any) {
+            console.log({ ERROR: e })
           }
-        } catch (e: any) {
-          console.log({ ERROR: e })
         }
-      })
+      )
     } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log({ error: e })
@@ -540,7 +560,7 @@ class BillingImpl extends JCComponent<Props, State> {
         console.log("Subscription is not yet active")
       }
       await userActions.recheckUserState()
-    }, [2000])
+    }, 2000)
     setTimeout(() => {
       clearInterval(a)
       this.setState({
@@ -578,7 +598,7 @@ class BillingImpl extends JCComponent<Props, State> {
               temp.billingAddress[field] = value
 
             const user = await Data.updateUser({
-              id: this.state.userData?.id,
+              id: this.state.userData?.id ?? "",
               billingAddress: temp?.billingAddress,
             })
 
@@ -590,7 +610,7 @@ class BillingImpl extends JCComponent<Props, State> {
         if (temp?.billingAddress) temp.billingAddress[field] = value
 
         const user = await Data.updateUser({
-          id: this.state.userData?.id,
+          id: this.state.userData?.id ?? "",
           billingAddress: temp?.billingAddress,
         })
 
@@ -655,7 +675,7 @@ class BillingImpl extends JCComponent<Props, State> {
                   />
 
                   <Text accessibilityRole="header" style={this.styles.style.SignUpScreenSetupText}>
-                    We&apos;ve received your payment.
+                    Thank you. Your subscription is now active.
                     <br />
                     <JCButton
                       accessibilityLabel="Navigate to profile"
@@ -1100,7 +1120,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             paddingBottom: 10,
                           }}
                         >
-                          {this.state.invoice ? "Total:" : "Calculating Total..."}
+                          {this.state.invoice ? "Total:" : <>Calculating Total...</>}
                         </Text>
                         <Text
                           style={{
@@ -1144,7 +1164,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           lineHeight: 15,
                         }}
                         onChange={async (value) => {
-                          this.setState({ coupon: value }, async () => {
+                          this.setState({ invoice: null, coupon: value }, async () => {
                             await this.createInvoice()
                           })
                         }}

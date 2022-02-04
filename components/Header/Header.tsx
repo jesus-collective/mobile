@@ -26,6 +26,7 @@ interface Props {
   controls?: any
   drawerState?: boolean
   showAdmin?: boolean
+  overrideMenu?: NonNullable<ListMenusQuery["listMenus"]>["items"]
 }
 
 interface State extends JCState {
@@ -83,6 +84,7 @@ export default function HeaderJCC(props: Props) {
     chevronStyle: Dimensions.get("window").width > 720 ? chevronStyle1 : chevronStyle2,
     user: null,
   })
+  if (props.overrideMenu != null) setState({ ...state, menus: props.overrideMenu })
 
   const headerStyles = HeaderStyles.getInstance()
   const navigation = useNavigation<any>()

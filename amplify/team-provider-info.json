@@ -14,6 +14,7 @@
     "categories": {
       "auth": {
         "jcmobile": {
+          "hostedUIProviderCreds": "[]",
           "facebookAppId": "373637213227697",
           "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
         },
@@ -44,7 +45,7 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-6c32466851797a515744-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-2b376d386c71337a5663-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_fe30GuOOt",
@@ -167,14 +168,14 @@
         },
         "jcmobilePreSignup": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobilePreSignup-662b4d4b782f64594272-build.zip"
+          "s3Key": "amplify-builds/jcmobilePreSignup-56354b5049726f417843-build.zip"
         },
         "jcmobileStripPreviewInvoice": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-6c32466851797a515744-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-2b376d386c71337a5663-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_Bq1YZMmzA",

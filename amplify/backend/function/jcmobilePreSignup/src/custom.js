@@ -72,7 +72,26 @@ exports.handler = (event, context, callback) => {
     "lucas.test.57@jesuscollective.com",
     "lucas.test.58@jesuscollective.com",
     "lucas.test.59@jesuscollective.com",
-
+    "lucas.test.60@jesuscollective.com",
+    "lucas.test.61@jesuscollective.com",
+    "lucas.test.62@jesuscollective.com",
+    "lucas.test.63@jesuscollective.com",
+    "lucas.test.64@jesuscollective.com",
+    "lucas.test.65@jesuscollective.com",
+    "lucas.test.66@jesuscollective.com",
+    "lucas.test.67@jesuscollective.com",
+    "lucas.test.68@jesuscollective.com",
+    "lucas.test.69@jesuscollective.com",
+    "lucas.test.70@jesuscollective.com",
+    "lucas.test.71@jesuscollective.com",
+    "lucas.test.72@jesuscollective.com",
+    "lucas.test.73@jesuscollective.com",
+    "lucas.test.74@jesuscollective.com",
+    "lucas.test.75@jesuscollective.com",
+    "lucas.test.76@jesuscollective.com",
+    "lucas.test.77@jesuscollective.com",
+    "lucas.test.78@jesuscollective.com",
+    "lucas.test.79@jesuscollective.com",
     "test1@jesuscollective.com",
     "test2@jesuscollective.com",
     "test3@jesuscollective.com",
@@ -95,7 +114,10 @@ exports.handler = (event, context, callback) => {
     "coursecoach4@jesuscollective.com",
     "legacyusergroup1@jesuscollective.com",
   ]
-  if (process.env.ENV == "beta" && emailList.includes(event.request.userAttributes.email)) {
+  if (
+    (process.env.ENV == "beta" || process.env.ENV == "jcfacelift") &&
+    emailList.includes(event.request.userAttributes.email)
+  ) {
     event.response.autoConfirmUser = "true"
     event.response.autoVerifyPhone = "true"
     event.response.autoVerifyEmail = "true"
