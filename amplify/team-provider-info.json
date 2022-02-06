@@ -350,7 +350,7 @@
           "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
           "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
           "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
-          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-6c32466851797a515744-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-2b376d386c71337a5663-build.zip"
         },
         "jcmobileGetOrgStripeSubs": {
           "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
