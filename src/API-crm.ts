@@ -12,7 +12,7 @@ export type CRMRoot = {
 
 export type ModelCRMMessageConnection = {
   __typename: "ModelCRMMessageConnection"
-  items?: Array<CRMMessage>
+  items?: Array<CRMMessage | null>
   nextToken?: string | null
 }
 
@@ -34,7 +34,7 @@ export type CRMMessage = {
 
 export type ModelCRMReplyConnection = {
   __typename: "ModelCRMReplyConnection"
-  items?: Array<CRMReply>
+  items?: Array<CRMReply | null>
   nextToken?: string | null
 }
 
@@ -89,12 +89,12 @@ export type GetCrmRootQuery = {
             parentId: string
             createdAt: string
             updatedAt: string
-          }>
+          } | null>
           nextToken?: string | null
         } | null
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     createdAt: string

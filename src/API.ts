@@ -33,13 +33,13 @@ export type DirectMessageRoom = {
 
 export type ModelDirectMessageUserConnection = {
   __typename: "ModelDirectMessageUserConnection",
-  items?:  Array<DirectMessageUser >,
+  items?:  Array<DirectMessageUser | null >,
   nextToken?: string | null,
 };
 
 export type ModelDirectMessageConnection = {
   __typename: "ModelDirectMessageConnection",
-  items?:  Array<DirectMessage >,
+  items?:  Array<DirectMessage | null >,
   nextToken?: string | null,
 };
 
@@ -63,7 +63,7 @@ export type DirectMessage = {
 
 export type ModelDirectMessageReplyConnection = {
   __typename: "ModelDirectMessageReplyConnection",
-  items?:  Array<DirectMessageReply >,
+  items?:  Array<DirectMessageReply | null >,
   nextToken?: string | null,
 };
 
@@ -176,7 +176,7 @@ export type Image = {
 
 export type ModelOrganizationMemberConnection = {
   __typename: "ModelOrganizationMemberConnection",
-  items?:  Array<OrganizationMember >,
+  items?:  Array<OrganizationMember | null >,
   nextToken?: string | null,
 };
 
@@ -232,13 +232,13 @@ export type Organization = {
 
 export type ModelOrganizationConnection = {
   __typename: "ModelOrganizationConnection",
-  items?:  Array<Organization >,
+  items?:  Array<Organization | null >,
   nextToken?: string | null,
 };
 
 export type ModelGroupConnection = {
   __typename: "ModelGroupConnection",
-  items?:  Array<Group >,
+  items?:  Array<Group | null >,
   nextToken?: string | null,
 };
 
@@ -293,7 +293,7 @@ export enum UserGroupType {
 
 export type ModelGroupMemberConnection = {
   __typename: "ModelGroupMemberConnection",
-  items?:  Array<GroupMember >,
+  items?:  Array<GroupMember | null >,
   nextToken?: string | null,
 };
 
@@ -310,7 +310,7 @@ export type GroupMember = {
 
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection",
-  items?:  Array<Message >,
+  items?:  Array<Message | null >,
   nextToken?: string | null,
 };
 
@@ -335,7 +335,7 @@ export type Message = {
 
 export type ModelReplyConnection = {
   __typename: "ModelReplyConnection",
-  items?:  Array<Reply >,
+  items?:  Array<Reply | null >,
   nextToken?: string | null,
 };
 
@@ -361,7 +361,7 @@ export type Reply = {
 
 export type ModelResourceRootConnection = {
   __typename: "ModelResourceRootConnection",
-  items?:  Array<ResourceRoot >,
+  items?:  Array<ResourceRoot | null >,
   nextToken?: string | null,
 };
 
@@ -381,7 +381,7 @@ export type ResourceRoot = {
 
 export type ModelResourceConnection = {
   __typename: "ModelResourceConnection",
-  items?:  Array<Resource >,
+  items?:  Array<Resource | null >,
   nextToken?: string | null,
 };
 
@@ -425,7 +425,7 @@ export enum ResourceDetailType {
 
 export type ModelResourceSeriesConnection = {
   __typename: "ModelResourceSeriesConnection",
-  items?:  Array<ResourceSeries >,
+  items?:  Array<ResourceSeries | null >,
   nextToken?: string | null,
 };
 
@@ -451,7 +451,7 @@ export type ResourceSeries = {
 
 export type ModelResourceEpisodeConnection = {
   __typename: "ModelResourceEpisodeConnection",
-  items?:  Array<ResourceEpisode >,
+  items?:  Array<ResourceEpisode | null >,
   nextToken?: string | null,
 };
 
@@ -474,7 +474,7 @@ export type ResourceEpisode = {
 
 export type ModelResourceMenuItemConnection = {
   __typename: "ModelResourceMenuItemConnection",
-  items?:  Array<ResourceMenuItem >,
+  items?:  Array<ResourceMenuItem | null >,
   nextToken?: string | null,
 };
 
@@ -570,7 +570,7 @@ export enum ResourcePageItemStyle {
 
 export type ModelCourseTriadCoachesConnection = {
   __typename: "ModelCourseTriadCoachesConnection",
-  items?:  Array<CourseTriadCoaches >,
+  items?:  Array<CourseTriadCoaches | null >,
   nextToken?: string | null,
 };
 
@@ -616,7 +616,7 @@ export type CourseInfo = {
 
 export type ModelCourseWeekConnection = {
   __typename: "ModelCourseWeekConnection",
-  items?:  Array<CourseWeek >,
+  items?:  Array<CourseWeek | null >,
   nextToken?: string | null,
 };
 
@@ -638,7 +638,7 @@ export type CourseWeek = {
 
 export type ModelCourseLessonConnection = {
   __typename: "ModelCourseLessonConnection",
-  items?:  Array<CourseLesson >,
+  items?:  Array<CourseLesson | null >,
   nextToken?: string | null,
 };
 
@@ -664,7 +664,7 @@ export type CourseLesson = {
 
 export type ModelCourseInstructorsConnection = {
   __typename: "ModelCourseInstructorsConnection",
-  items?:  Array<CourseInstructors >,
+  items?:  Array<CourseInstructors | null >,
   nextToken?: string | null,
 };
 
@@ -681,7 +681,7 @@ export type CourseInstructors = {
 
 export type ModelCourseBackOfficeStaffConnection = {
   __typename: "ModelCourseBackOfficeStaffConnection",
-  items?:  Array<CourseBackOfficeStaff >,
+  items?:  Array<CourseBackOfficeStaff | null >,
   nextToken?: string | null,
 };
 
@@ -698,13 +698,13 @@ export type CourseBackOfficeStaff = {
 
 export type ModelCourseTriadsConnection = {
   __typename: "ModelCourseTriadsConnection",
-  items?:  Array<CourseTriads >,
+  items?:  Array<CourseTriads | null >,
   nextToken?: string | null,
 };
 
 export type ModelCourseTriadUsersConnection = {
   __typename: "ModelCourseTriadUsersConnection",
-  items?:  Array<CourseTriadUsers >,
+  items?:  Array<CourseTriadUsers | null >,
   nextToken?: string | null,
 };
 
@@ -721,7 +721,7 @@ export type CourseTriadUsers = {
 
 export type ModelPaymentConnection = {
   __typename: "ModelPaymentConnection",
-  items?:  Array<Payment >,
+  items?:  Array<Payment | null >,
   nextToken?: string | null,
 };
 
@@ -1709,7 +1709,7 @@ export type CRMRoot = {
 
 export type ModelCRMMessageConnection = {
   __typename: "ModelCRMMessageConnection",
-  items?:  Array<CRMMessage >,
+  items?:  Array<CRMMessage | null >,
   nextToken?: string | null,
 };
 
@@ -1731,7 +1731,7 @@ export type CRMMessage = {
 
 export type ModelCRMReplyConnection = {
   __typename: "ModelCRMReplyConnection",
-  items?:  Array<CRMReply >,
+  items?:  Array<CRMReply | null >,
   nextToken?: string | null,
 };
 
@@ -2142,6 +2142,37 @@ export type DeleteVideoObjectInput = {
   id: string,
 };
 
+export type CreateStartupInput = {
+  id?: string | null,
+  order?: number | null,
+  action?: string | null,
+  params?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type Startup = {
+  __typename: "Startup",
+  id?: string,
+  order?: number | null,
+  action?: string | null,
+  params?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type UpdateStartupInput = {
+  id: string,
+  order?: number | null,
+  action?: string | null,
+  params?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type DeleteStartupInput = {
+  id: string,
+};
+
 export type CreateMenuInput = {
   id?: string | null,
   order?: number | null,
@@ -2166,7 +2197,7 @@ export type Menu = {
 
 export type ModelSubMenuConnection = {
   __typename: "ModelSubMenuConnection",
-  items?:  Array<SubMenu >,
+  items?:  Array<SubMenu | null >,
   nextToken?: string | null,
 };
 
@@ -2370,7 +2401,7 @@ export type ModelIDFilterInput = {
 
 export type ModelApplicationProcessConnection = {
   __typename: "ModelApplicationProcessConnection",
-  items?:  Array<ApplicationProcess >,
+  items?:  Array<ApplicationProcess | null >,
   nextToken?: string | null,
 };
 
@@ -2488,7 +2519,7 @@ export type ModelActivityActionTypeFilterInput = {
 
 export type ModelActivityConnection = {
   __typename: "ModelActivityConnection",
-  items?:  Array<Activity >,
+  items?:  Array<Activity | null >,
   nextToken?: string | null,
 };
 
@@ -2526,7 +2557,7 @@ export type ModelCourseInfoFilterInput = {
 
 export type ModelCourseInfoConnection = {
   __typename: "ModelCourseInfoConnection",
-  items?:  Array<CourseInfo >,
+  items?:  Array<CourseInfo | null >,
   nextToken?: string | null,
 };
 
@@ -2628,7 +2659,7 @@ export type ModelDirectMessageRoomFilterInput = {
 
 export type ModelDirectMessageRoomConnection = {
   __typename: "ModelDirectMessageRoomConnection",
-  items?:  Array<DirectMessageRoom >,
+  items?:  Array<DirectMessageRoom | null >,
   nextToken?: string | null,
 };
 
@@ -2656,7 +2687,7 @@ export type ModelCRMRootFilterInput = {
 
 export type ModelCRMRootConnection = {
   __typename: "ModelCRMRootConnection",
-  items?:  Array<CRMRoot >,
+  items?:  Array<CRMRoot | null >,
   nextToken?: string | null,
 };
 
@@ -2814,7 +2845,7 @@ export type ModelFloatFilterInput = {
 
 export type ModelProductConnection = {
   __typename: "ModelProductConnection",
-  items?:  Array<Product >,
+  items?:  Array<Product | null >,
   nextToken?: string | null,
 };
 
@@ -2829,7 +2860,7 @@ export type ModelvodAssetFilterInput = {
 
 export type ModelvodAssetConnection = {
   __typename: "ModelvodAssetConnection",
-  items?:  Array<vodAsset >,
+  items?:  Array<vodAsset | null >,
   nextToken?: string | null,
 };
 
@@ -2842,7 +2873,24 @@ export type ModelvideoObjectFilterInput = {
 
 export type ModelvideoObjectConnection = {
   __typename: "ModelvideoObjectConnection",
-  items?:  Array<videoObject >,
+  items?:  Array<videoObject | null >,
+  nextToken?: string | null,
+};
+
+export type ModelStartupFilterInput = {
+  id?: ModelIDFilterInput | null,
+  order?: ModelIntFilterInput | null,
+  action?: ModelStringFilterInput | null,
+  params?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
+  and?: Array< ModelStartupFilterInput | null > | null,
+  or?: Array< ModelStartupFilterInput | null > | null,
+  not?: ModelStartupFilterInput | null,
+};
+
+export type ModelStartupConnection = {
+  __typename: "ModelStartupConnection",
+  items?:  Array<Startup | null >,
   nextToken?: string | null,
 };
 
@@ -2860,7 +2908,7 @@ export type ModelMenuFilterInput = {
 
 export type ModelMenuConnection = {
   __typename: "ModelMenuConnection",
-  items?:  Array<Menu >,
+  items?:  Array<Menu | null >,
   nextToken?: string | null,
 };
 
@@ -3011,7 +3059,7 @@ export enum SearchableSortDirection {
 
 export type SearchableGroupConnection = {
   __typename: "SearchableGroupConnection",
-  items?:  Array<Group >,
+  items?:  Array<Group | null >,
   nextToken?: string | null,
   total?: number | null,
 };
@@ -3056,7 +3104,7 @@ export type ModelPaidStateFilterInput = {
 
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
-  items?:  Array<User >,
+  items?:  Array<User | null >,
   nextToken?: string | null,
 };
 
@@ -3129,7 +3177,7 @@ export enum SearchableUserSortableFields {
 
 export type SearchableUserConnection = {
   __typename: "SearchableUserConnection",
-  items?:  Array<User >,
+  items?:  Array<User | null >,
   nextToken?: string | null,
   total?: number | null,
 };
@@ -3928,7 +3976,7 @@ export type CreateUserMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     owns?:  {
@@ -3957,7 +4005,7 @@ export type CreateUserMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     groups?:  {
@@ -3969,7 +4017,7 @@ export type CreateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messages?:  {
@@ -3988,7 +4036,7 @@ export type CreateUserMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
@@ -4006,7 +4054,7 @@ export type CreateUserMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
@@ -4025,7 +4073,7 @@ export type CreateUserMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
@@ -4037,7 +4085,7 @@ export type CreateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
@@ -4049,7 +4097,7 @@ export type CreateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
@@ -4061,7 +4109,7 @@ export type CreateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
@@ -4073,7 +4121,7 @@ export type CreateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     payments?:  {
@@ -4088,7 +4136,7 @@ export type CreateUserMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -4178,7 +4226,7 @@ export type UpdateUserMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     owns?:  {
@@ -4207,7 +4255,7 @@ export type UpdateUserMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     groups?:  {
@@ -4219,7 +4267,7 @@ export type UpdateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messages?:  {
@@ -4238,7 +4286,7 @@ export type UpdateUserMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
@@ -4256,7 +4304,7 @@ export type UpdateUserMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
@@ -4275,7 +4323,7 @@ export type UpdateUserMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
@@ -4287,7 +4335,7 @@ export type UpdateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
@@ -4299,7 +4347,7 @@ export type UpdateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
@@ -4311,7 +4359,7 @@ export type UpdateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
@@ -4323,7 +4371,7 @@ export type UpdateUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     payments?:  {
@@ -4338,7 +4386,7 @@ export type UpdateUserMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -4428,7 +4476,7 @@ export type DeleteUserMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     owns?:  {
@@ -4457,7 +4505,7 @@ export type DeleteUserMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     groups?:  {
@@ -4469,7 +4517,7 @@ export type DeleteUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messages?:  {
@@ -4488,7 +4536,7 @@ export type DeleteUserMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
@@ -4506,7 +4554,7 @@ export type DeleteUserMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
@@ -4525,7 +4573,7 @@ export type DeleteUserMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
@@ -4537,7 +4585,7 @@ export type DeleteUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
@@ -4549,7 +4597,7 @@ export type DeleteUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
@@ -4561,7 +4609,7 @@ export type DeleteUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
@@ -4573,7 +4621,7 @@ export type DeleteUserMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     payments?:  {
@@ -4588,7 +4636,7 @@ export type DeleteUserMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -5418,7 +5466,7 @@ export type CreateGroupMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -5455,7 +5503,7 @@ export type CreateGroupMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -5696,7 +5744,7 @@ export type UpdateGroupMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -5733,7 +5781,7 @@ export type UpdateGroupMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -5974,7 +6022,7 @@ export type DeleteGroupMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -6011,7 +6059,7 @@ export type DeleteGroupMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -6973,7 +7021,7 @@ export type CreateOrganizationMutation = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     members?:  {
@@ -6987,7 +7035,7 @@ export type CreateOrganizationMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
@@ -7016,7 +7064,7 @@ export type CreateOrganizationMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resource?:  {
@@ -7030,7 +7078,7 @@ export type CreateOrganizationMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -7209,7 +7257,7 @@ export type UpdateOrganizationMutation = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     members?:  {
@@ -7223,7 +7271,7 @@ export type UpdateOrganizationMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
@@ -7252,7 +7300,7 @@ export type UpdateOrganizationMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resource?:  {
@@ -7266,7 +7314,7 @@ export type UpdateOrganizationMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -7445,7 +7493,7 @@ export type DeleteOrganizationMutation = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     members?:  {
@@ -7459,7 +7507,7 @@ export type DeleteOrganizationMutation = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
@@ -7488,7 +7536,7 @@ export type DeleteOrganizationMutation = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resource?:  {
@@ -7502,7 +7550,7 @@ export type DeleteOrganizationMutation = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -8419,7 +8467,7 @@ export type CreateCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
@@ -8432,7 +8480,7 @@ export type CreateCourseInfoMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
@@ -8444,7 +8492,7 @@ export type CreateCourseInfoMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     triads?:  {
@@ -8455,7 +8503,7 @@ export type CreateCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -8491,7 +8539,7 @@ export type UpdateCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
@@ -8504,7 +8552,7 @@ export type UpdateCourseInfoMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
@@ -8516,7 +8564,7 @@ export type UpdateCourseInfoMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     triads?:  {
@@ -8527,7 +8575,7 @@ export type UpdateCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -8563,7 +8611,7 @@ export type DeleteCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
@@ -8576,7 +8624,7 @@ export type DeleteCourseInfoMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
@@ -8588,7 +8636,7 @@ export type DeleteCourseInfoMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     triads?:  {
@@ -8599,7 +8647,7 @@ export type DeleteCourseInfoMutation = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -8658,7 +8706,7 @@ export type CreateCourseTriadsMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     users?:  {
@@ -8670,7 +8718,7 @@ export type CreateCourseTriadsMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -8725,7 +8773,7 @@ export type UpdateCourseTriadsMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     users?:  {
@@ -8737,7 +8785,7 @@ export type UpdateCourseTriadsMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -8792,7 +8840,7 @@ export type DeleteCourseTriadsMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     users?:  {
@@ -8804,7 +8852,7 @@ export type DeleteCourseTriadsMutation = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -10753,7 +10801,7 @@ export type CreateCourseWeekMutation = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -10824,7 +10872,7 @@ export type UpdateCourseWeekMutation = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -10895,7 +10943,7 @@ export type DeleteCourseWeekMutation = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -11522,7 +11570,7 @@ export type CreateDirectMessageRoomMutation = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
@@ -11540,7 +11588,7 @@ export type CreateDirectMessageRoomMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -11568,7 +11616,7 @@ export type UpdateDirectMessageRoomMutation = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
@@ -11586,7 +11634,7 @@ export type UpdateDirectMessageRoomMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -11614,7 +11662,7 @@ export type DeleteDirectMessageRoomMutation = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
@@ -11632,7 +11680,7 @@ export type DeleteDirectMessageRoomMutation = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -11673,7 +11721,7 @@ export type CreateDirectMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -11843,7 +11891,7 @@ export type UpdateDirectMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -12013,7 +12061,7 @@ export type DeleteDirectMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -12326,7 +12374,7 @@ export type CreateDirectMessageReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -12622,7 +12670,7 @@ export type UpdateDirectMessageReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -12918,7 +12966,7 @@ export type DeleteDirectMessageReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13061,7 +13109,7 @@ export type CreateCrmRootMutation = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13091,7 +13139,7 @@ export type UpdateCrmRootMutation = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13121,7 +13169,7 @@ export type DeleteCrmRootMutation = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13169,7 +13217,7 @@ export type CreateCrmMessageMutation = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13217,7 +13265,7 @@ export type UpdateCrmMessageMutation = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13265,7 +13313,7 @@ export type DeleteCrmMessageMutation = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13542,7 +13590,7 @@ export type CreateMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -13800,7 +13848,7 @@ export type UpdateMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -14058,7 +14106,7 @@ export type DeleteMessageMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -14369,7 +14417,7 @@ export type CreateReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -14680,7 +14728,7 @@ export type UpdateReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -14991,7 +15039,7 @@ export type DeleteReplyMutation = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15141,7 +15189,7 @@ export type CreateResourceRootMutation = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -15250,7 +15298,7 @@ export type CreateResourceRootMutation = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15287,7 +15335,7 @@ export type UpdateResourceRootMutation = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -15396,7 +15444,7 @@ export type UpdateResourceRootMutation = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15433,7 +15481,7 @@ export type DeleteResourceRootMutation = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -15542,7 +15590,7 @@ export type DeleteResourceRootMutation = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -15984,7 +16032,7 @@ export type CreateResourceMutation = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -16096,7 +16144,7 @@ export type UpdateResourceMutation = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -16208,7 +16256,7 @@ export type DeleteResourceMutation = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -16317,7 +16365,7 @@ export type CreateResourceSeriesMutation = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -16424,7 +16472,7 @@ export type UpdateResourceSeriesMutation = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -16531,7 +16579,7 @@ export type DeleteResourceSeriesMutation = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -16889,7 +16937,7 @@ export type CreateProductMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -16936,7 +16984,7 @@ export type UpdateProductMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -16983,7 +17031,7 @@ export type DeleteProductMutation = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -17107,6 +17155,57 @@ export type DeleteVideoObjectMutation = {
   } | null,
 };
 
+export type CreateStartupMutationVariables = {
+  input?: CreateStartupInput,
+};
+
+export type CreateStartupMutation = {
+  createStartup?:  {
+    __typename: "Startup",
+    id: string,
+    order?: number | null,
+    action?: string | null,
+    params?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateStartupMutationVariables = {
+  input?: UpdateStartupInput,
+};
+
+export type UpdateStartupMutation = {
+  updateStartup?:  {
+    __typename: "Startup",
+    id: string,
+    order?: number | null,
+    action?: string | null,
+    params?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteStartupMutationVariables = {
+  input?: DeleteStartupInput,
+};
+
+export type DeleteStartupMutation = {
+  deleteStartup?:  {
+    __typename: "Startup",
+    id: string,
+    order?: number | null,
+    action?: string | null,
+    params?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateMenuMutationVariables = {
   input?: CreateMenuInput,
 };
@@ -17133,7 +17232,7 @@ export type CreateMenuMutation = {
         readGroups?: Array< UserGroupType | null > | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -17167,7 +17266,7 @@ export type UpdateMenuMutation = {
         readGroups?: Array< UserGroupType | null > | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -17201,7 +17300,7 @@ export type DeleteMenuMutation = {
         readGroups?: Array< UserGroupType | null > | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -17482,7 +17581,7 @@ export type ListApplicationProcesssQuery = {
       id: string,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -17603,7 +17702,7 @@ export type GetGroupQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -17640,7 +17739,7 @@ export type GetGroupQuery = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -17877,7 +17976,7 @@ export type ListGroupsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -18053,7 +18152,7 @@ export type GetOrganizationQuery = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     members?:  {
@@ -18067,7 +18166,7 @@ export type GetOrganizationQuery = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
@@ -18096,7 +18195,7 @@ export type GetOrganizationQuery = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resource?:  {
@@ -18110,7 +18209,7 @@ export type GetOrganizationQuery = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -18218,7 +18317,7 @@ export type ListOrganizationsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -18413,7 +18512,7 @@ export type ListActivitysQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -18650,7 +18749,7 @@ export type ListPaymentsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -18679,7 +18778,7 @@ export type GetCourseInfoQuery = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
@@ -18692,7 +18791,7 @@ export type GetCourseInfoQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
@@ -18704,7 +18803,7 @@ export type GetCourseInfoQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     triads?:  {
@@ -18715,7 +18814,7 @@ export type GetCourseInfoQuery = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -18764,7 +18863,7 @@ export type ListCourseInfosQuery = {
       sylabusAttachmentOwner?: string | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -18816,7 +18915,7 @@ export type GetCourseTriadsQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     users?:  {
@@ -18828,7 +18927,7 @@ export type GetCourseTriadsQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -18872,7 +18971,7 @@ export type ListCourseTriadssQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -19095,7 +19194,7 @@ export type ListCourseBackOfficeStaffsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -19318,7 +19417,7 @@ export type ListCourseInstructorssQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -19534,7 +19633,7 @@ export type ListCourseTriadCoachessQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -19752,7 +19851,7 @@ export type ListCourseTriadUserssQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -19820,7 +19919,7 @@ export type GetCourseWeekQuery = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -19866,7 +19965,7 @@ export type ListCourseWeeksQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -19965,7 +20064,7 @@ export type ListCourseLessonsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -20172,7 +20271,7 @@ export type ListDirectMessageUsersQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -20196,7 +20295,7 @@ export type GetDirectMessageRoomQuery = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
@@ -20214,7 +20313,7 @@ export type GetDirectMessageRoomQuery = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -20247,7 +20346,7 @@ export type ListDirectMessageRoomsQuery = {
       roomType?: string | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -20284,7 +20383,7 @@ export type GetDirectMessageQuery = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -20488,7 +20587,7 @@ export type ListDirectMessagesQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -20515,7 +20614,7 @@ export type GetCrmRootQuery = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -20541,7 +20640,7 @@ export type ListCrmRootsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -20586,7 +20685,7 @@ export type GetCrmMessageQuery = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -20625,7 +20724,7 @@ export type ListCrmMessagesQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -20709,7 +20808,7 @@ export type ListCrmReplysQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -20851,7 +20950,7 @@ export type GetMessageQuery = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -21056,7 +21155,7 @@ export type ListMessagesQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -21090,7 +21189,7 @@ export type GetResourceRootQuery = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -21199,7 +21298,7 @@ export type GetResourceRootQuery = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -21262,7 +21361,7 @@ export type ListResourceRootsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -21441,7 +21540,7 @@ export type ListResourceMenuItemsQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -21502,7 +21601,7 @@ export type GetResourceQuery = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -21611,7 +21710,7 @@ export type ListResourcesQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -21669,7 +21768,7 @@ export type GetResourceSeriesQuery = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -21781,7 +21880,7 @@ export type ListResourceSeriessQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -21930,7 +22029,7 @@ export type ListResourceEpisodesQuery = {
       },
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -21960,7 +22059,7 @@ export type GetProductQuery = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -22019,7 +22118,7 @@ export type ListProductsQuery = {
       } | null > | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22067,7 +22166,7 @@ export type ListVodAssetsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22099,7 +22198,47 @@ export type ListVideoObjectsQuery = {
       id: string,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetStartupQueryVariables = {
+  id?: string,
+};
+
+export type GetStartupQuery = {
+  getStartup?:  {
+    __typename: "Startup",
+    id: string,
+    order?: number | null,
+    action?: string | null,
+    params?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListStartupsQueryVariables = {
+  filter?: ModelStartupFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListStartupsQuery = {
+  listStartups?:  {
+    __typename: "ModelStartupConnection",
+    items:  Array< {
+      __typename: "Startup",
+      id: string,
+      order?: number | null,
+      action?: string | null,
+      params?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22130,7 +22269,7 @@ export type GetMenuQuery = {
         readGroups?: Array< UserGroupType | null > | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -22161,7 +22300,7 @@ export type ListMenusQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22231,7 +22370,7 @@ export type ListSubMenusQuery = {
       readGroups?: Array< UserGroupType | null > | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22312,7 +22451,7 @@ export type GroupMemberByGroupQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22393,7 +22532,7 @@ export type GroupMemberByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22513,7 +22652,7 @@ export type GroupByTypeByTimeQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22633,7 +22772,7 @@ export type GroupByTypeQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22696,7 +22835,7 @@ export type ActivityByGroupQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22773,7 +22912,7 @@ export type PaymentByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22835,7 +22974,7 @@ export type CourseTriadUserByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22900,7 +23039,7 @@ export type DmUsersByUserQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -22974,7 +23113,7 @@ export type DirectMessagesByRoomQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -23066,7 +23205,7 @@ export type MessagesByRoomQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -23185,7 +23324,7 @@ export type SearchGroupsQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-    } >,
+    } | null >,
     nextToken?: string | null,
     total?: number | null,
   } | null,
@@ -23263,7 +23402,7 @@ export type GetUserQuery = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     owns?:  {
@@ -23292,7 +23431,7 @@ export type GetUserQuery = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     groups?:  {
@@ -23304,7 +23443,7 @@ export type GetUserQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messages?:  {
@@ -23323,7 +23462,7 @@ export type GetUserQuery = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
@@ -23341,7 +23480,7 @@ export type GetUserQuery = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
@@ -23360,7 +23499,7 @@ export type GetUserQuery = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
@@ -23372,7 +23511,7 @@ export type GetUserQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
@@ -23384,7 +23523,7 @@ export type GetUserQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
@@ -23396,7 +23535,7 @@ export type GetUserQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
@@ -23408,7 +23547,7 @@ export type GetUserQuery = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     payments?:  {
@@ -23423,7 +23562,7 @@ export type GetUserQuery = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -23562,7 +23701,7 @@ export type ListUsersQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
   } | null,
 };
@@ -23690,7 +23829,7 @@ export type SearchUsersQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } >,
+    } | null >,
     nextToken?: string | null,
     total?: number | null,
   } | null,
@@ -23833,7 +23972,7 @@ export type OnCreateMessageByRoomIdSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -23994,7 +24133,7 @@ export type OnCreateCrmMessageByRootIdSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -24874,7 +25013,7 @@ export type OnCreateGroupSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -24911,7 +25050,7 @@ export type OnCreateGroupSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -25153,7 +25292,7 @@ export type OnUpdateGroupSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -25190,7 +25329,7 @@ export type OnUpdateGroupSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -25432,7 +25571,7 @@ export type OnDeleteGroupSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     image: string,
@@ -25469,7 +25608,7 @@ export type OnDeleteGroupSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     eventType?: string | null,
@@ -26415,7 +26554,7 @@ export type OnCreateOrganizationSubscription = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     members?:  {
@@ -26429,7 +26568,7 @@ export type OnCreateOrganizationSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
@@ -26458,7 +26597,7 @@ export type OnCreateOrganizationSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resource?:  {
@@ -26472,7 +26611,7 @@ export type OnCreateOrganizationSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -26647,7 +26786,7 @@ export type OnUpdateOrganizationSubscription = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     members?:  {
@@ -26661,7 +26800,7 @@ export type OnUpdateOrganizationSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
@@ -26690,7 +26829,7 @@ export type OnUpdateOrganizationSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resource?:  {
@@ -26704,7 +26843,7 @@ export type OnUpdateOrganizationSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -26879,7 +27018,7 @@ export type OnDeleteOrganizationSubscription = {
         parentOrganizationId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     members?:  {
@@ -26893,7 +27032,7 @@ export type OnDeleteOrganizationSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     ownsGroups?:  {
@@ -26922,7 +27061,7 @@ export type OnDeleteOrganizationSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resource?:  {
@@ -26936,7 +27075,7 @@ export type OnDeleteOrganizationSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -27841,7 +27980,7 @@ export type OnCreateCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
@@ -27854,7 +27993,7 @@ export type OnCreateCourseInfoSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
@@ -27866,7 +28005,7 @@ export type OnCreateCourseInfoSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     triads?:  {
@@ -27877,7 +28016,7 @@ export type OnCreateCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -27913,7 +28052,7 @@ export type OnUpdateCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
@@ -27926,7 +28065,7 @@ export type OnUpdateCourseInfoSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
@@ -27938,7 +28077,7 @@ export type OnUpdateCourseInfoSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     triads?:  {
@@ -27949,7 +28088,7 @@ export type OnUpdateCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -27985,7 +28124,7 @@ export type OnDeleteCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     subTitle?: string | null,
@@ -27998,7 +28137,7 @@ export type OnDeleteCourseInfoSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     backOfficeStaff?:  {
@@ -28010,7 +28149,7 @@ export type OnDeleteCourseInfoSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     triads?:  {
@@ -28021,7 +28160,7 @@ export type OnDeleteCourseInfoSubscription = {
         courseInfoID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     introduction?: string | null,
@@ -28076,7 +28215,7 @@ export type OnCreateCourseTriadsSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     users?:  {
@@ -28088,7 +28227,7 @@ export type OnCreateCourseTriadsSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -28139,7 +28278,7 @@ export type OnUpdateCourseTriadsSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     users?:  {
@@ -28151,7 +28290,7 @@ export type OnUpdateCourseTriadsSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -28202,7 +28341,7 @@ export type OnDeleteCourseTriadsSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     users?:  {
@@ -28214,7 +28353,7 @@ export type OnDeleteCourseTriadsSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -30115,7 +30254,7 @@ export type OnCreateCourseWeekSubscription = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -30186,7 +30325,7 @@ export type OnUpdateCourseWeekSubscription = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -30257,7 +30396,7 @@ export type OnDeleteCourseWeekSubscription = {
         courseWeekID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -30868,7 +31007,7 @@ export type OnCreateDirectMessageRoomSubscription = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
@@ -30886,7 +31025,7 @@ export type OnCreateDirectMessageRoomSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -30910,7 +31049,7 @@ export type OnUpdateDirectMessageRoomSubscription = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
@@ -30928,7 +31067,7 @@ export type OnUpdateDirectMessageRoomSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -30952,7 +31091,7 @@ export type OnDeleteDirectMessageRoomSubscription = {
         roomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessage?:  {
@@ -30970,7 +31109,7 @@ export type OnDeleteDirectMessageRoomSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     roomType?: string | null,
@@ -31007,7 +31146,7 @@ export type OnCreateDirectMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -31173,7 +31312,7 @@ export type OnUpdateDirectMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -31339,7 +31478,7 @@ export type OnDeleteDirectMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageRoomID: string,
@@ -31648,7 +31787,7 @@ export type OnCreateDirectMessageReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -31940,7 +32079,7 @@ export type OnUpdateDirectMessageReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32232,7 +32371,7 @@ export type OnDeleteDirectMessageReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32371,7 +32510,7 @@ export type OnCreateCrmRootSubscription = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32397,7 +32536,7 @@ export type OnUpdateCrmRootSubscription = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32423,7 +32562,7 @@ export type OnDeleteCrmRootSubscription = {
         attachmentOwner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32467,7 +32606,7 @@ export type OnCreateCrmMessageSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32511,7 +32650,7 @@ export type OnUpdateCrmMessageSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32555,7 +32694,7 @@ export type OnDeleteCrmMessageSubscription = {
         parentId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -32816,7 +32955,7 @@ export type OnCreateMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33070,7 +33209,7 @@ export type OnUpdateMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33324,7 +33463,7 @@ export type OnDeleteMessageSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33631,7 +33770,7 @@ export type OnCreateReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -33938,7 +34077,7 @@ export type OnUpdateReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -34245,7 +34384,7 @@ export type OnDeleteReplySubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -34391,7 +34530,7 @@ export type OnCreateResourceRootSubscription = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -34500,7 +34639,7 @@ export type OnCreateResourceRootSubscription = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -34533,7 +34672,7 @@ export type OnUpdateResourceRootSubscription = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -34642,7 +34781,7 @@ export type OnUpdateResourceRootSubscription = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -34675,7 +34814,7 @@ export type OnDeleteResourceRootSubscription = {
         resourceID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     organization?:  {
@@ -34784,7 +34923,7 @@ export type OnDeleteResourceRootSubscription = {
         resourceRootID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -35226,7 +35365,7 @@ export type OnCreateResourceSubscription = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -35338,7 +35477,7 @@ export type OnUpdateResourceSubscription = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -35450,7 +35589,7 @@ export type OnDeleteResourceSubscription = {
         seriesID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     resourceID: string,
@@ -35559,7 +35698,7 @@ export type OnCreateResourceSeriesSubscription = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -35666,7 +35805,7 @@ export type OnUpdateResourceSeriesSubscription = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -35773,7 +35912,7 @@ export type OnDeleteResourceSeriesSubscription = {
         episodeID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     seriesID: string,
@@ -36127,7 +36266,7 @@ export type OnCreateProductSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -36170,7 +36309,7 @@ export type OnUpdateProductSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -36213,7 +36352,7 @@ export type OnDeleteProductSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     isOrgTier?: string | null,
@@ -36313,6 +36452,45 @@ export type OnDeleteVideoObjectSubscription = {
   } | null,
 };
 
+export type OnCreateStartupSubscription = {
+  onCreateStartup?:  {
+    __typename: "Startup",
+    id: string,
+    order?: number | null,
+    action?: string | null,
+    params?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateStartupSubscription = {
+  onUpdateStartup?:  {
+    __typename: "Startup",
+    id: string,
+    order?: number | null,
+    action?: string | null,
+    params?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteStartupSubscription = {
+  onDeleteStartup?:  {
+    __typename: "Startup",
+    id: string,
+    order?: number | null,
+    action?: string | null,
+    params?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateMenuSubscription = {
   onCreateMenu?:  {
     __typename: "Menu",
@@ -36335,7 +36513,7 @@ export type OnCreateMenuSubscription = {
         readGroups?: Array< UserGroupType | null > | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -36365,7 +36543,7 @@ export type OnUpdateMenuSubscription = {
         readGroups?: Array< UserGroupType | null > | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -36395,7 +36573,7 @@ export type OnDeleteMenuSubscription = {
         readGroups?: Array< UserGroupType | null > | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -36561,7 +36739,7 @@ export type OnCreateUserSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     owns?:  {
@@ -36590,7 +36768,7 @@ export type OnCreateUserSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     groups?:  {
@@ -36602,7 +36780,7 @@ export type OnCreateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messages?:  {
@@ -36621,7 +36799,7 @@ export type OnCreateUserSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
@@ -36639,7 +36817,7 @@ export type OnCreateUserSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
@@ -36658,7 +36836,7 @@ export type OnCreateUserSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
@@ -36670,7 +36848,7 @@ export type OnCreateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
@@ -36682,7 +36860,7 @@ export type OnCreateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
@@ -36694,7 +36872,7 @@ export type OnCreateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
@@ -36706,7 +36884,7 @@ export type OnCreateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     payments?:  {
@@ -36721,7 +36899,7 @@ export type OnCreateUserSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -36807,7 +36985,7 @@ export type OnUpdateUserSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     owns?:  {
@@ -36836,7 +37014,7 @@ export type OnUpdateUserSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     groups?:  {
@@ -36848,7 +37026,7 @@ export type OnUpdateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messages?:  {
@@ -36867,7 +37045,7 @@ export type OnUpdateUserSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
@@ -36885,7 +37063,7 @@ export type OnUpdateUserSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
@@ -36904,7 +37082,7 @@ export type OnUpdateUserSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
@@ -36916,7 +37094,7 @@ export type OnUpdateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
@@ -36928,7 +37106,7 @@ export type OnUpdateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
@@ -36940,7 +37118,7 @@ export type OnUpdateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
@@ -36952,7 +37130,7 @@ export type OnUpdateUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     payments?:  {
@@ -36967,7 +37145,7 @@ export type OnUpdateUserSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {
@@ -37053,7 +37231,7 @@ export type OnDeleteUserSubscription = {
         organizationName?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     owns?:  {
@@ -37082,7 +37260,7 @@ export type OnDeleteUserSubscription = {
         isSponsored?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     groups?:  {
@@ -37094,7 +37272,7 @@ export type OnDeleteUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messages?:  {
@@ -37113,7 +37291,7 @@ export type OnDeleteUserSubscription = {
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     directMessages?:  {
@@ -37131,7 +37309,7 @@ export type OnDeleteUserSubscription = {
         messageRoomID: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     messageReplies?:  {
@@ -37150,7 +37328,7 @@ export type OnDeleteUserSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     coachingTriad?:  {
@@ -37162,7 +37340,7 @@ export type OnDeleteUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     userTriad?:  {
@@ -37174,7 +37352,7 @@ export type OnDeleteUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseInstructing?:  {
@@ -37186,7 +37364,7 @@ export type OnDeleteUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     courseBackOfficeStaff?:  {
@@ -37198,7 +37376,7 @@ export type OnDeleteUserSubscription = {
         userID?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     payments?:  {
@@ -37213,7 +37391,7 @@ export type OnDeleteUserSubscription = {
         paymentInfo?: string | null,
         createdAt: string,
         updatedAt: string,
-      } >,
+      } | null >,
       nextToken?: string | null,
     } | null,
     alertConfig?:  {

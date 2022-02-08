@@ -11208,6 +11208,45 @@ export const onDeleteVideoObject = /* GraphQL */ `
     }
   }
 `
+export const onCreateStartup = /* GraphQL */ `
+  subscription OnCreateStartup {
+    onCreateStartup {
+      id
+      order
+      action
+      params
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateStartup = /* GraphQL */ `
+  subscription OnUpdateStartup {
+    onUpdateStartup {
+      id
+      order
+      action
+      params
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteStartup = /* GraphQL */ `
+  subscription OnDeleteStartup {
+    onDeleteStartup {
+      id
+      order
+      action
+      params
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const onCreateMenu = /* GraphQL */ `
   subscription OnCreateMenu {
     onCreateMenu {

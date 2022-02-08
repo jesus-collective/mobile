@@ -1363,7 +1363,22 @@ type videoObject @model
   id:ID!
 }
 
+type Startup
+@model
+@auth(
+  rules: [
+    {allow: groups, groupsField: "readGroups", operations: [read] }
+    {allow: groups, groups:["admin"], operations: [create, update, delete, read]},
+  ]
+)
+{
+  id:ID!
+  order:Int
+  action:String
+  params:String
+  readGroups:[UserGroupType]
 
+}
 type Menu
 @model
 @auth(

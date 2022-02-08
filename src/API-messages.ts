@@ -128,13 +128,13 @@ export type Image = {
 
 export type ModelOrganizationConnection = {
   __typename: "ModelOrganizationConnection"
-  items?: Array<Organization>
+  items?: Array<Organization | null>
   nextToken?: string | null
 }
 
 export type ModelOrganizationMemberConnection = {
   __typename: "ModelOrganizationMemberConnection"
-  items?: Array<OrganizationMember>
+  items?: Array<OrganizationMember | null>
   nextToken?: string | null
 }
 
@@ -218,13 +218,13 @@ export type Address = {
 
 export type ModelGroupConnection = {
   __typename: "ModelGroupConnection"
-  items?: Array<Group>
+  items?: Array<Group | null>
   nextToken?: string | null
 }
 
 export type ModelGroupMemberConnection = {
   __typename: "ModelGroupMemberConnection"
-  items?: Array<GroupMember>
+  items?: Array<GroupMember | null>
   nextToken?: string | null
 }
 
@@ -241,13 +241,13 @@ export type GroupMember = {
 
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection"
-  items?: Array<Message>
+  items?: Array<Message | null>
   nextToken?: string | null
 }
 
 export type ModelDirectMessageConnection = {
   __typename: "ModelDirectMessageConnection"
-  items?: Array<DirectMessage>
+  items?: Array<DirectMessage | null>
   nextToken?: string | null
 }
 
@@ -271,7 +271,7 @@ export type DirectMessage = {
 
 export type ModelDirectMessageReplyConnection = {
   __typename: "ModelDirectMessageReplyConnection"
-  items?: Array<DirectMessageReply>
+  items?: Array<DirectMessageReply | null>
   nextToken?: string | null
 }
 
@@ -309,7 +309,7 @@ export type DirectMessageRoom = {
 
 export type ModelDirectMessageUserConnection = {
   __typename: "ModelDirectMessageUserConnection"
-  items?: Array<DirectMessageUser>
+  items?: Array<DirectMessageUser | null>
   nextToken?: string | null
 }
 
@@ -327,7 +327,7 @@ export type DirectMessageUser = {
 
 export type ModelReplyConnection = {
   __typename: "ModelReplyConnection"
-  items?: Array<Reply>
+  items?: Array<Reply | null>
   nextToken?: string | null
 }
 
@@ -353,7 +353,7 @@ export type Reply = {
 
 export type ModelCourseTriadCoachesConnection = {
   __typename: "ModelCourseTriadCoachesConnection"
-  items?: Array<CourseTriadCoaches>
+  items?: Array<CourseTriadCoaches | null>
   nextToken?: string | null
 }
 
@@ -399,7 +399,7 @@ export type CourseInfo = {
 
 export type ModelCourseWeekConnection = {
   __typename: "ModelCourseWeekConnection"
-  items?: Array<CourseWeek>
+  items?: Array<CourseWeek | null>
   nextToken?: string | null
 }
 
@@ -421,7 +421,7 @@ export type CourseWeek = {
 
 export type ModelCourseLessonConnection = {
   __typename: "ModelCourseLessonConnection"
-  items?: Array<CourseLesson>
+  items?: Array<CourseLesson | null>
   nextToken?: string | null
 }
 
@@ -447,7 +447,7 @@ export type CourseLesson = {
 
 export type ModelCourseInstructorsConnection = {
   __typename: "ModelCourseInstructorsConnection"
-  items?: Array<CourseInstructors>
+  items?: Array<CourseInstructors | null>
   nextToken?: string | null
 }
 
@@ -464,7 +464,7 @@ export type CourseInstructors = {
 
 export type ModelCourseBackOfficeStaffConnection = {
   __typename: "ModelCourseBackOfficeStaffConnection"
-  items?: Array<CourseBackOfficeStaff>
+  items?: Array<CourseBackOfficeStaff | null>
   nextToken?: string | null
 }
 
@@ -481,13 +481,13 @@ export type CourseBackOfficeStaff = {
 
 export type ModelCourseTriadsConnection = {
   __typename: "ModelCourseTriadsConnection"
-  items?: Array<CourseTriads>
+  items?: Array<CourseTriads | null>
   nextToken?: string | null
 }
 
 export type ModelCourseTriadUsersConnection = {
   __typename: "ModelCourseTriadUsersConnection"
-  items?: Array<CourseTriadUsers>
+  items?: Array<CourseTriadUsers | null>
   nextToken?: string | null
 }
 
@@ -504,7 +504,7 @@ export type CourseTriadUsers = {
 
 export type ModelPaymentConnection = {
   __typename: "ModelPaymentConnection"
-  items?: Array<Payment>
+  items?: Array<Payment | null>
   nextToken?: string | null
 }
 
@@ -564,7 +564,7 @@ export type AlertConfig = {
 
 export type ModelResourceRootConnection = {
   __typename: "ModelResourceRootConnection"
-  items?: Array<ResourceRoot>
+  items?: Array<ResourceRoot | null>
   nextToken?: string | null
 }
 
@@ -584,7 +584,7 @@ export type ResourceRoot = {
 
 export type ModelResourceConnection = {
   __typename: "ModelResourceConnection"
-  items?: Array<Resource>
+  items?: Array<Resource | null>
   nextToken?: string | null
 }
 
@@ -627,7 +627,7 @@ export enum ResourceDetailType {
 
 export type ModelResourceSeriesConnection = {
   __typename: "ModelResourceSeriesConnection"
-  items?: Array<ResourceSeries>
+  items?: Array<ResourceSeries | null>
   nextToken?: string | null
 }
 
@@ -653,7 +653,7 @@ export type ResourceSeries = {
 
 export type ModelResourceEpisodeConnection = {
   __typename: "ModelResourceEpisodeConnection"
-  items?: Array<ResourceEpisode>
+  items?: Array<ResourceEpisode | null>
   nextToken?: string | null
 }
 
@@ -676,7 +676,7 @@ export type ResourceEpisode = {
 
 export type ModelResourceMenuItemConnection = {
   __typename: "ModelResourceMenuItemConnection"
-  items?: Array<ResourceMenuItem>
+  items?: Array<ResourceMenuItem | null>
   nextToken?: string | null
 }
 
@@ -938,7 +938,7 @@ export type GetMessageQuery = {
         userId: string
         when: string
         roomId?: string | null
-      }>
+      } | null>
     } | null
   } | null
 }
@@ -1009,7 +1009,7 @@ export type DirectMessagesByRoomQuery = {
           userId: string
           when: string
           messageRoomID?: string | null
-        }>
+        } | null>
       } | null
       messageRoomID: string
       messageRoom?: {
@@ -1050,7 +1050,7 @@ export type DirectMessagesByRoomQuery = {
         createdAt: string
         updatedAt: string
       } | null
-    }>
+    } | null>
     nextToken?: string | null
   } | null
 }
@@ -1081,7 +1081,6 @@ export type MessagesByRoomQuery = {
         currentRole?: string | null
         currentScope?: string | null
         denomination?: string | null
-        email?: string | null
         family_name: string
         given_name: string
         hasPaidState?: PaidState | null
@@ -1095,13 +1094,10 @@ export type MessagesByRoomQuery = {
         orgSize?: string | null
         orgType?: string | null
         owner?: string | null
-        phone?: string | null
         personality?: string | null
         pplServed?: string | null
         primaryOrganization?: string | null
         profileState?: string | null
-        stripeCustomerID?: string | null
-        stripeSubscriptionID?: string | null
         sundayAttendance?: string | null
         updatedAt: string
       } | null
@@ -1129,7 +1125,6 @@ export type MessagesByRoomQuery = {
             currentRole?: string | null
             currentScope?: string | null
             denomination?: string | null
-            email?: string | null
             family_name: string
             given_name: string
             hasPaidState?: PaidState | null
@@ -1144,13 +1139,10 @@ export type MessagesByRoomQuery = {
             orgType?: string | null
             owner?: string | null
             personality?: string | null
-            phone?: string | null
             pplServed?: string | null
             primaryOrganization?: string | null
             updatedAt: string
             sundayAttendance?: string | null
-            stripeCustomerID?: string | null
-            stripeSubscriptionID?: string | null
             profileState?: string | null
           } | null
           content: string
@@ -1162,9 +1154,9 @@ export type MessagesByRoomQuery = {
           userId: string
           when: string
           roomId?: string | null
-        }>
+        } | null>
       } | null
-    }>
+    } | null>
   } | null
 }
 
@@ -1336,7 +1328,7 @@ export type OnCreateMessageByRoomIdSubscription = {
           createdAt: string
           updatedAt: string
         } | null
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     createdAt: string
@@ -1424,7 +1416,7 @@ export type OnCreateDirectMessageSubscription = {
         parentReplyId: string
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     messageRoomID: string
@@ -1647,7 +1639,7 @@ export type GetDirectMessageQuery = {
         userId: string
         when: string
         messageRoomID?: string | null
-      }>
+      } | null>
     } | null
     messageRoomID: string
     messageRoom?: {

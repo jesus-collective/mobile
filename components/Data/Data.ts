@@ -72,6 +72,8 @@ import {
   CreateResourceRootMutation,
   CreateResourceSeriesInput,
   CreateResourceSeriesMutation,
+  CreateStartupInput,
+  CreateStartupMutation,
   CreateStripeCustomerAdminMutation,
   CreateStripeCustomerAdminMutationVariables,
   CreateStripeCustomerMutation,
@@ -91,6 +93,7 @@ import {
   DeleteCourseWeekMutation,
   DeleteGroupMemberMutation,
   DeleteGroupMutation,
+  DeleteMenuMutation,
   DeleteOrganizationMutation,
   DeletePaymentMutation,
   DeleteProductMutation,
@@ -98,6 +101,7 @@ import {
   DeleteResourceMenuItemMutation,
   DeleteResourceMutation,
   DeleteResourceSeriesMutation,
+  DeleteStartupMutation,
   DeleteUserMutation,
   EventBriteListEventsQuery,
   EventBriteListTicketClassesQuery,
@@ -121,6 +125,7 @@ import {
   ListPaymentsQuery,
   ListProductsQuery,
   ListResourceRootsQuery,
+  ListStartupsQuery,
   ListUsersQuery,
   ListUsersQueryVariables,
   MessagesByRoomQuery,
@@ -129,6 +134,7 @@ import {
   ModelPaymentFilterInput,
   ModelProductFilterInput,
   ModelResourceRootFilterInput,
+  ModelStartupFilterInput,
   ModelStringFilterInput,
   PaymentByUserQuery,
   PreviewInvoiceMutation,
@@ -163,6 +169,8 @@ import {
   UpdateResourceMutation,
   UpdateResourceSeriesInput,
   UpdateResourceSeriesMutation,
+  UpdateStartupInput,
+  UpdateStartupMutation,
   UpdateSubMenuInput,
   UpdateSubMenuMutation,
   UpdateUserInput,
@@ -285,7 +293,14 @@ export class Data {
       query: mutations.deleteMenu,
       variables: { input: { id: id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
+    }) as Promise<GraphQLResult<DeleteMenuMutation>>
+  }
+  static deleteStartup(id: string) {
+    return API.graphql({
+      query: mutations.deleteStartup,
+      variables: { input: { id: id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DeleteStartupMutation>>
   }
   static deleteSubMenu(id: string) {
     return API.graphql({
@@ -456,6 +471,13 @@ export class Data {
       variables: { input: input },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<CreateMenuMutation>>
+  }
+  static createStartup(input: CreateStartupInput) {
+    return API.graphql({
+      query: mutations.createStartup,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<CreateStartupMutation>>
   }
   static createSubMenu(input: CreateSubMenuInput) {
     return API.graphql({
@@ -848,6 +870,17 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListMenusQuery>>
   }
+  static listStartup(filter: ModelStartupFilterInput | null) {
+    return API.graphql({
+      query: queries.listStartups,
+      variables: {
+        limit: 100,
+        filter: filter,
+        nextToken: null,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListStartupsQuery>>
+  }
   static getDirectMessageUser(id: string) {
     return API.graphql({
       query: customQueries.getDirectMessageUser,
@@ -925,6 +958,15 @@ export class Data {
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<UpdateMenuMutation>>
+  }
+  static updateStartup(input: UpdateStartupInput) {
+    return API.graphql({
+      query: mutations.updateStartup,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateStartupMutation>>
   }
   static updateSubMenu(input: UpdateSubMenuInput) {
     return API.graphql({
