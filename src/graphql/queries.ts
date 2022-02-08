@@ -4144,6 +4144,35 @@ export const listVideoObjects = /* GraphQL */ `
     }
   }
 `
+export const getStartup = /* GraphQL */ `
+  query GetStartup($id: ID!) {
+    getStartup(id: $id) {
+      id
+      order
+      action
+      params
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listStartups = /* GraphQL */ `
+  query ListStartups($filter: ModelStartupFilterInput, $limit: Int, $nextToken: String) {
+    listStartups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        order
+        action
+        params
+        readGroups
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
 export const getMenu = /* GraphQL */ `
   query GetMenu($id: ID!) {
     getMenu(id: $id) {

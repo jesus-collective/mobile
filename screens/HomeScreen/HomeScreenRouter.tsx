@@ -15,9 +15,9 @@ import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
   CreateUserInput,
+  UserGroupType,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
-import { constants } from "../../src/constants"
 import MainAuthRouter from "./MainAuthRouter"
 import MainDrawerRouter from "./MainDrawerRouter"
 import { PaidStatus, ProfileStatus, UserContext, UserState } from "./UserContext"
@@ -322,6 +322,24 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       )
     })
   }
+  async getStartup(): Promise<{ action: string; props: Record<string, unknown> | null }> {
+    let result = { action: "HomeScreen", props: null }
+    const listStartup = await Data.listStartup(null)
+    const startup =
+      listStartup.data?.listStartups?.items.sort((x, y) => (x?.order ?? 0) - (y?.order ?? 0)) ?? []
+    const pgd = this.state.groups
+    const preview = JSON.parse(JSON.stringify(startup))
+    if (preview) {
+      const preview2 = preview.filter(
+        (x: any) =>
+          (x.readGroups?.filter((z: any) => pgd.includes(z ?? UserGroupType.verifiedUsers))
+            .length ?? 0) >= 1
+      )
+      if (preview.length < 0) result = { action: "HomeScreen", props: null }
+      else result = { action: preview2[0]?.action, props: preview2[0]?.params }
+    }
+    return result
+  }
   async performNavigation(): Promise<void> {
     console.log("NAVIGATING")
     switch (this.state.hasPaidState) {
@@ -329,9 +347,18 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         switch (this.state.hasCompletedPersonalProfile) {
           case ProfileStatus.Completed: {
             const initialUrl = await Linking.getInitialURL()
+
             console.log(initialUrl)
             if (Platform.OS == "web" && initialUrl?.includes("auth/payment3")) {
-              if (
+              const startup = await this.getStartup()
+              RootNavigation.navigate(isMobile ? "mainApp" : "mainApp2", {
+                screen: "mainDrawer",
+                params: {
+                  screen: startup.action,
+                  params: startup.props,
+                },
+              })
+              /* if (
                 this.isMemberOf("friends") ||
                 this.isMemberOf("partners") ||
                 this.isMemberOf("admin") ||
@@ -357,7 +384,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
                   },
                 })
                 break
-              }
+              }*/
             }
             RootNavigation.navigate("mainApp", {})
 

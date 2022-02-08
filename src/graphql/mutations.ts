@@ -12206,6 +12206,45 @@ export const deleteVideoObject = /* GraphQL */ `
     }
   }
 `
+export const createStartup = /* GraphQL */ `
+  mutation CreateStartup($input: CreateStartupInput!) {
+    createStartup(input: $input) {
+      id
+      order
+      action
+      params
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateStartup = /* GraphQL */ `
+  mutation UpdateStartup($input: UpdateStartupInput!) {
+    updateStartup(input: $input) {
+      id
+      order
+      action
+      params
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteStartup = /* GraphQL */ `
+  mutation DeleteStartup($input: DeleteStartupInput!) {
+    deleteStartup(input: $input) {
+      id
+      order
+      action
+      params
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const createMenu = /* GraphQL */ `
   mutation CreateMenu($input: CreateMenuInput!) {
     createMenu(input: $input) {

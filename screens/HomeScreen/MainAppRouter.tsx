@@ -37,6 +37,7 @@ const AdminCreateProductScreen = lazy(
   () => import("../AdminCreateProductScreen/AdminCreateProductScreen")
 )
 const AdminMenuScreen = lazy(() => import("../AdminMenuScreen/AdminMenuScreen"))
+const AdminStartupScreen = lazy(() => import("../AdminStartupScreen/AdminStartupScreen"))
 
 class Nothing extends Component {
   render() {
@@ -266,6 +267,11 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       component={AdminMenuScreen}
                       options={{ title: "Jesus Collective" }}
                     />
+                    <Stack.Screen
+                      name="AdminStartupScreen"
+                      component={AdminStartupScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
                   </>
                 ) : (
                   <>
@@ -388,6 +394,11 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="AdminMenuScreen"
                       component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminStartupScreen"
+                      component={AdminStartupScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                   </>

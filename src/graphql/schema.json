@@ -1836,6 +1836,68 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "getStartup",
+          "description" : null,
+          "args" : [ {
+            "name" : "id",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "SCALAR",
+                "name" : "ID",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Startup",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "listStartups",
+          "description" : null,
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelStartupFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "limit",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "nextToken",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ModelStartupConnection",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "getMenu",
           "description" : null,
           "args" : [ {
@@ -4021,13 +4083,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "ApplicationProcess",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "ApplicationProcess",
+                "ofType" : null
               }
             }
           },
@@ -5455,13 +5513,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Organization",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Organization",
+                "ofType" : null
               }
             }
           },
@@ -5956,13 +6010,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "OrganizationMember",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "OrganizationMember",
+                "ofType" : null
               }
             }
           },
@@ -7263,13 +7313,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Group",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Group",
+                "ofType" : null
               }
             }
           },
@@ -7659,13 +7705,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "GroupMember",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "GroupMember",
+                "ofType" : null
               }
             }
           },
@@ -7871,13 +7913,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Message",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Message",
+                "ofType" : null
               }
             }
           },
@@ -8153,13 +8191,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Reply",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Reply",
+                "ofType" : null
               }
             }
           },
@@ -8802,13 +8836,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "DirectMessage",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "DirectMessage",
+                "ofType" : null
               }
             }
           },
@@ -9085,13 +9115,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "DirectMessageReply",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "DirectMessageReply",
+                "ofType" : null
               }
             }
           },
@@ -9736,13 +9762,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "DirectMessageUser",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "DirectMessageUser",
+                "ofType" : null
               }
             }
           },
@@ -10101,13 +10123,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseTriadCoaches",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseTriadCoaches",
+                "ofType" : null
               }
             }
           },
@@ -10731,13 +10749,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseWeek",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseWeek",
+                "ofType" : null
               }
             }
           },
@@ -10963,13 +10977,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseLesson",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseLesson",
+                "ofType" : null
               }
             }
           },
@@ -11480,13 +11490,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseInstructors",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseInstructors",
+                "ofType" : null
               }
             }
           },
@@ -11692,13 +11698,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseBackOfficeStaff",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseBackOfficeStaff",
+                "ofType" : null
               }
             }
           },
@@ -11904,13 +11906,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseTriads",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseTriads",
+                "ofType" : null
               }
             }
           },
@@ -12080,13 +12078,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseTriadUsers",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseTriadUsers",
+                "ofType" : null
               }
             }
           },
@@ -12292,13 +12286,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Payment",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Payment",
+                "ofType" : null
               }
             }
           },
@@ -12964,13 +12954,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "ResourceRoot",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "ResourceRoot",
+                "ofType" : null
               }
             }
           },
@@ -13214,13 +13200,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Resource",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Resource",
+                "ofType" : null
               }
             }
           },
@@ -13610,13 +13592,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "ResourceSeries",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "ResourceSeries",
+                "ofType" : null
               }
             }
           },
@@ -13902,13 +13880,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "ResourceEpisode",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "ResourceEpisode",
+                "ofType" : null
               }
             }
           },
@@ -14514,13 +14488,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "ResourceMenuItem",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "ResourceMenuItem",
+                "ofType" : null
               }
             }
           },
@@ -15661,13 +15631,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Activity",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Activity",
+                "ofType" : null
               }
             }
           },
@@ -15892,13 +15858,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CourseInfo",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CourseInfo",
+                "ofType" : null
               }
             }
           },
@@ -16051,13 +16013,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "DirectMessageRoom",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "DirectMessageRoom",
+                "ofType" : null
               }
             }
           },
@@ -16275,13 +16233,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CRMMessage",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CRMMessage",
+                "ofType" : null
               }
             }
           },
@@ -16536,13 +16490,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CRMReply",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CRMReply",
+                "ofType" : null
               }
             }
           },
@@ -16997,13 +16947,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "CRMRoot",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "CRMRoot",
+                "ofType" : null
               }
             }
           },
@@ -17093,13 +17039,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Product",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Product",
+                "ofType" : null
               }
             }
           },
@@ -17531,13 +17473,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "vodAsset",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "vodAsset",
+                "ofType" : null
               }
             }
           },
@@ -17645,13 +17583,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "videoObject",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "videoObject",
+                "ofType" : null
               }
             }
           },
@@ -17719,6 +17653,236 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelvideoObjectFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "Startup",
+        "description" : null,
+        "fields" : [ {
+          "name" : "id",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "order",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "action",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "params",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "readGroups",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "ENUM",
+              "name" : "UserGroupType",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "createdAt",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSDateTime",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "updatedAt",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSDateTime",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "ModelStartupConnection",
+        "description" : null,
+        "fields" : [ {
+          "name" : "items",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "OBJECT",
+                "name" : "Startup",
+                "ofType" : null
+              }
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "nextToken",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelStartupFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "order",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "action",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "params",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "readGroups",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelUserGroupTypeListFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "and",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelStartupFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "or",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelStartupFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "not",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStartupFilterInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -17901,13 +18065,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "SubMenu",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "SubMenu",
+                "ofType" : null
               }
             }
           },
@@ -18186,13 +18346,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Menu",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Menu",
+                "ofType" : null
               }
             }
           },
@@ -18327,13 +18483,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "Group",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "Group",
+                "ofType" : null
               }
             }
           },
@@ -19100,13 +19252,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "User",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "User",
+                "ofType" : null
               }
             }
           },
@@ -19457,13 +19605,9 @@
               "kind" : "LIST",
               "name" : null,
               "ofType" : {
-                "kind" : "NON_NULL",
-                "name" : null,
-                "ofType" : {
-                  "kind" : "OBJECT",
-                  "name" : "User",
-                  "ofType" : null
-                }
+                "kind" : "OBJECT",
+                "name" : "User",
+                "ofType" : null
               }
             }
           },
@@ -22693,6 +22837,78 @@
           "type" : {
             "kind" : "OBJECT",
             "name" : "videoObject",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "createStartup",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "CreateStartupInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Startup",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "updateStartup",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "UpdateStartupInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Startup",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "deleteStartup",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "DeleteStartupInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Startup",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -32791,6 +33007,148 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
+        "name" : "CreateStartupInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "order",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "action",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "params",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "readGroups",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "ENUM",
+              "name" : "UserGroupType",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "UpdateStartupInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "order",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "action",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "params",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "readGroups",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "ENUM",
+              "name" : "UserGroupType",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "DeleteStartupInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
         "name" : "CreateMenuInput",
         "description" : null,
         "fields" : null,
@@ -34530,6 +34888,39 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "onCreateStartup",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Startup",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onUpdateStartup",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Startup",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onDeleteStartup",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Startup",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "onCreateMenu",
           "description" : null,
           "args" : [ ],
@@ -34634,30 +35025,23 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "ModelBooleanFilterInput",
+        "kind" : "OBJECT",
+        "name" : "StripePaymentOptions",
         "description" : null,
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "ne",
+        "fields" : [ {
+          "name" : "card",
           "description" : null,
+          "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Boolean",
+            "kind" : "OBJECT",
+            "name" : "StripeCard",
             "ofType" : null
           },
-          "defaultValue" : null
-        }, {
-          "name" : "eq",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Boolean",
-            "ofType" : null
-          },
-          "defaultValue" : null
+          "isDeprecated" : false,
+          "deprecationReason" : null
         } ],
-        "interfaces" : null,
+        "inputFields" : null,
+        "interfaces" : [ ],
         "enumValues" : null,
         "possibleTypes" : null
       }, {
@@ -34685,6 +35069,7 @@
           "defaultValue" : null
         } ],
         "interfaces" : null,
+
         "enumValues" : null,
         "possibleTypes" : null
       }, {
@@ -34757,6 +35142,33 @@
               "name" : "Float",
               "ofType" : null
             }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelBooleanFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+            "ofType" : null
           },
           "defaultValue" : null
         } ],
@@ -34891,6 +35303,33 @@
         } ],
         "inputFields" : null,
         "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "SearchableBooleanFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
         "enumValues" : null,
         "possibleTypes" : null
       }, {
@@ -35677,31 +36116,26 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "aws_oidc",
-        "description" : "Tells the service this field/object has access authorized by an OIDC token.",
+        "name" : "aws_lambda",
+        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_publish",
-        "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
-        "locations" : [ "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "subscriptions",
-          "description" : "List of subscriptions which will be published to when this mutation is called.",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
+        "name" : "aws_iam",
+        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_oidc",
+        "description" : "Tells the service this field/object has access authorized by an OIDC token.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
@@ -35727,26 +36161,44 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_lambda",
-        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
+        "name" : "aws_auth",
+        "description" : "Directs the schema to enforce authorization on a field",
+        "locations" : [ "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "cognito_groups",
+          "description" : "List of cognito user pool groups which have access on this field",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_api_key",
-        "description" : "Tells the service this field/object has access authorized by an API key.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_iam",
-        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
+        "name" : "aws_publish",
+        "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
+        "locations" : [ "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "subscriptions",
+          "description" : "List of subscriptions which will be published to when this mutation is called.",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
@@ -35805,6 +36257,7 @@
             }
           },
           "defaultValue" : null
+
         } ],
         "onOperation" : false,
         "onFragment" : false,
