@@ -86,7 +86,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     })
   }
   static Provider = CourseContext.Provider
-
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      headerShown: false,
+    })
+  }
   setInitialData(props: Props, groups: string[]): void {
     const getGroup = Data.getGroup(props.route.params.id)
     const getCourse = Data.getCourseInfo(props.route.params.id)
