@@ -111,6 +111,7 @@ export default class HeaderStyles {
       },
 
       headerRightContainer: {
+        flexGrow: 1,
         marginRight: 12,
       },
 

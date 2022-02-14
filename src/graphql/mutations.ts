@@ -12413,3 +12413,54 @@ export const deleteSubMenu = /* GraphQL */ `
     }
   }
 `
+export const createCustomPricing = /* GraphQL */ `
+  mutation CreateCustomPricing($input: CreateCustomPricingInput!) {
+    createCustomPricing(input: $input) {
+      id
+      emailAddress
+      type
+      lineItems {
+        itemId
+        count
+        amount
+        description
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateCustomPricing = /* GraphQL */ `
+  mutation UpdateCustomPricing($input: UpdateCustomPricingInput!) {
+    updateCustomPricing(input: $input) {
+      id
+      emailAddress
+      type
+      lineItems {
+        itemId
+        count
+        amount
+        description
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteCustomPricing = /* GraphQL */ `
+  mutation DeleteCustomPricing($input: DeleteCustomPricingInput!) {
+    deleteCustomPricing(input: $input) {
+      id
+      emailAddress
+      type
+      lineItems {
+        itemId
+        count
+        amount
+        description
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`

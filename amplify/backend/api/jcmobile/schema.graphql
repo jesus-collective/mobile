@@ -1415,3 +1415,30 @@ type SubMenu
   params:String
   readGroups:[UserGroupType]
 }
+enum CustomPricingType{
+  monthly
+  weekly
+  yearly
+  oneTime
+}
+type CustomPricing
+@model
+@auth(
+  rules: [
+      { allow: private, provider:iam, operations:[read]}
+      { allow: private, provider:userPools, operations:[read]}
+      { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+    {allow: groups, groups:["admin"], operations: [create, update, delete, read]},
+  ]
+){
+  id:ID!
+  emailAddress:String
+  type:CustomPricingType
+  lineItems:[LineItem]
+}
+type LineItem{
+  itemId:String
+  count:String
+  amount:String
+  description:String
+}

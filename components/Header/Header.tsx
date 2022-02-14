@@ -289,7 +289,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                     })}
                   </>
                 ) : (
-                  <>
+                  <div>
                     {constants["SETTING_ISVISIBLE_event"] ? (
                       <Button
                         transparent
@@ -366,7 +366,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                         <Text style={this.headerStyles.style.centerMenuButtonsText}>Courses</Text>
                       </Button>
                     ) : null}
-                  </>
+                  </div>
                 )}
               </Body>
               <Right style={this.headerStyles.style.headerRightContainer}>

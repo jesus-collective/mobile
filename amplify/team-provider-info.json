@@ -251,6 +251,14 @@
         "jcmobilePinpointCleanEndpoints": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
           "s3Key": "amplify-builds/jcmobilePinpointCleanEndpoints-552f434b7942464f4a75-build.zip"
+        },
+        "jcmobileStripListProducts": {
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/jcmobileStripListProducts-73692b61454b72394638-build.zip"
+        },
+        "jcmobileShared": {
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion2ffb38ed-build.zip"
         }
       },
       "video": {

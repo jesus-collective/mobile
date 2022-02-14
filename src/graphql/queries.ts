@@ -5670,3 +5670,44 @@ export const searchUsers = /* GraphQL */ `
     }
   }
 `
+export const getCustomPricing = /* GraphQL */ `
+  query GetCustomPricing($id: ID!) {
+    getCustomPricing(id: $id) {
+      id
+      emailAddress
+      type
+      lineItems {
+        itemId
+        count
+        amount
+        description
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listCustomPricings = /* GraphQL */ `
+  query ListCustomPricings(
+    $filter: ModelCustomPricingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCustomPricings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        emailAddress
+        type
+        lineItems {
+          itemId
+          count
+          amount
+          description
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`

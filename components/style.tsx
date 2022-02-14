@@ -1316,6 +1316,7 @@ export default class MainStyles {
       },
       headerMiddleBody: {
         flex: 1,
+        flexGrow: 2,
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "flex-start",

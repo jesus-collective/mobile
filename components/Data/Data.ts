@@ -37,6 +37,8 @@ import {
   CreateCrmReplyMutation,
   CreateCRMRootInput,
   CreateCrmRootMutation,
+  CreateCustomPricingInput,
+  CreateCustomPricingMutation,
   CreateDirectMessageInput,
   CreateDirectMessageMutation,
   CreateDirectMessageReplyInput,
@@ -58,6 +60,7 @@ import {
   CreateOrganizationMemberMutation,
   CreateOrganizationMutation,
   CreatePaymentInput,
+  CreatePaymentMutation,
   CreateProductInput,
   CreateProductMutation,
   CreateReplyInput,
@@ -91,6 +94,7 @@ import {
   DeleteCourseTriadsMutation,
   DeleteCourseTriadUsersMutation,
   DeleteCourseWeekMutation,
+  DeleteCustomPricingMutation,
   DeleteGroupMemberMutation,
   DeleteGroupMutation,
   DeleteMenuMutation,
@@ -117,6 +121,7 @@ import {
   GroupByTypeByTimeQuery,
   GroupByTypeQuery,
   GroupMemberByUserQuery,
+  ListCustomPricingsQuery,
   ListGroupsQuery,
   ListOrganizationsQuery,
   ListPaymentsQuery,
@@ -127,6 +132,7 @@ import {
   ListUsersQueryVariables,
   MessagesByRoomQuery,
   MessagesByRoomQueryVariables,
+  ModelCustomPricingFilterInput,
   ModelMenuFilterInput,
   ModelPaymentFilterInput,
   ModelProductFilterInput,
@@ -148,6 +154,8 @@ import {
   UpdateCourseTriadsMutation,
   UpdateCourseWeekInput,
   UpdateCourseWeekMutation,
+  UpdateCustomPricingInput,
+  UpdateCustomPricingMutation,
   UpdateDirectMessageInput,
   UpdateDirectMessageMutation,
   UpdateGroupInput,
@@ -291,6 +299,13 @@ export class Data {
       variables: { input: { id: id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<DeleteMenuMutation>>
+  }
+  static deleteCustomPricing(id: string) {
+    return API.graphql({
+      query: mutations.deleteCustomPricing,
+      variables: { input: { id: id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DeleteCustomPricingMutation>>
   }
   static deleteStartup(id: string) {
     return API.graphql({
@@ -468,6 +483,13 @@ export class Data {
       variables: { input: input },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<CreateMenuMutation>>
+  }
+  static createCustomPricing(input: CreateCustomPricingInput) {
+    return API.graphql({
+      query: mutations.createCustomPricing,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<CreateCustomPricingMutation>>
   }
   static createStartup(input: CreateStartupInput) {
     return API.graphql({
@@ -655,7 +677,7 @@ export class Data {
         input: input,
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<ListPaymentsQuery>>
+    }) as Promise<GraphQLResult<CreatePaymentMutation>>
   }
   static createSubscription(variables: CreateSubscriptionMutationVariables) {
     return API.graphql({
@@ -742,6 +764,18 @@ export class Data {
       variables: query,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListDirectMessageUsersQuery>>
+  }
+
+  static listCustomPricings(filter: ModelCustomPricingFilterInput | null) {
+    return API.graphql({
+      query: queries.listCustomPricings,
+      variables: {
+        limit: 100,
+        filter: filter,
+        nextToken: null,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListCustomPricingsQuery>>
   }
   static paymentByUser(id: string) {
     return API.graphql({
@@ -909,6 +943,15 @@ export class Data {
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<UpdateUserMutation>>
+  }
+  static updateCustomPricing(input: UpdateCustomPricingInput) {
+    return API.graphql({
+      query: mutations.updateCustomPricing,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateCustomPricingMutation>>
   }
   static updateMenu(input: UpdateMenuInput) {
     return API.graphql({
