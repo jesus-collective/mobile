@@ -134,6 +134,15 @@ export type AmplifyDependentResourcesAttributes = {
       LambdaExecutionRole: "string"
       CloudWatchEventRule: "string"
     }
+    jcmobileStripListProducts: {
+      Name: "string"
+      Arn: "string"
+      Region: "string"
+      LambdaExecutionRole: "string"
+    }
+    jcmobileShared: {
+      Arn: "string"
+    }
   }
   auth: {
     jcmobile: {

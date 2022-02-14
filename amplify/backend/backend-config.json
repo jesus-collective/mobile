@@ -344,6 +344,13 @@
       "service": "Lambda",
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
           "category": "auth",
           "resourceName": "jcmobile",
           "attributes": [

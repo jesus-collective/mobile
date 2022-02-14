@@ -19,6 +19,7 @@
     "amplify:S3Trigger14f1cefa": "cd amplify/backend/function/S3Trigger14f1cefa/src && rm -rf node_modules/sharp && SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux sharp",
     "amplify:jcmobilePinpointCleanEndpoints": "cd amplify/backend/function/jcmobilePinpointCleanEndpoints/src && tsc && cd -",
     "amplify:jcmobileShared": "cd amplify/backend/function/jcmobileShared/lib/nodejs && tsc && cd -",
+    "amplify:jcmobileStripListProducts": "cd amplify/backend/function/jcmobileStripListProducts/src && tsc && cd -",
     "test": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start:web http://localhost:19006 cy:open",
     "backup": "export z=$(date +%Y%m%d%H%M%S); mkdir backup/$z; cd backup/$z; dynamodump export-all-data --region=us-east-1 --profile=amplify"
   },

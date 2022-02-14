@@ -254,11 +254,11 @@
         },
         "jcmobileStripListProducts": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileStripListProducts-73692b61454b72394638-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripListProducts-6c684e4445772f553845-build.zip"
         },
         "jcmobileShared": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion2ffb38ed-build.zip"
+          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion6abf0e8a-build.zip"
         }
       },
       "video": {
