@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Header } from "native-base"
 import React from "react"
 import { isDesktop } from "react-device-detect"
-import { Dimensions, ScrollView, Text, View } from "react-native"
+import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { constants } from "../../src/constants"
 import EditableButton from "../Forms/EditableButton"
 import HeaderStyles from "../Header/style"
@@ -143,9 +143,14 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                   </Button>
                 ) : null}
                 {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
-                  <Button transparent testID="header-messages" onPress={this.openMessages}>
-                    <Ionicons name="mail-outline" style={this.headerStyles.style.icon} />
-                  </Button>
+                  <View style={{ marginHorizontal: 12 }}>
+                    <TouchableOpacity testID="header-messages" onPress={this.openMessages}>
+                      <Image
+                        style={{ width: 24, height: 24 }}
+                        source={require("../../assets/Facelift/svg/Airplane-LightGrey.svg")}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 ) : null}
               </View>
             </Header>
