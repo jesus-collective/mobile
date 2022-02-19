@@ -164,7 +164,10 @@
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
           "s3Key": "amplify-builds/S3Trigger14f1cefa-654b2b63632b426c4833-build.zip"
         },
-        "S3Trigger839efa13": {},
+        "S3Trigger839efa13": {
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/S3Trigger839efa13-58354f542f46714e764c-build.zip"
+        },
         "AdminQueries7403b6cf": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
           "s3Key": "amplify-builds/AdminQueries7403b6cf-544c346a684e50343973-build.zip"

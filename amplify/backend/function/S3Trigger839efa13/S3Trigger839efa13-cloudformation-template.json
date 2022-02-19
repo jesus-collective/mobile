@@ -4,6 +4,12 @@
   "Parameters": {
     "env": {
       "Type": "String"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -59,8 +65,12 @@
         "Runtime": "nodejs14.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/S3Trigger839efa13-7661536e43677479584a-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },
