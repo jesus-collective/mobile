@@ -168,7 +168,7 @@
         },
         "jcmobilePreSignup": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobilePreSignup-56354b5049726f417843-build.zip"
+          "s3Key": "amplify-builds/jcmobilePreSignup-434534496c672b494b66-build.zip"
         },
         "jcmobileStripPreviewInvoice": {
           "userPoolId": "us-east-1_Bq1YZMmzA",

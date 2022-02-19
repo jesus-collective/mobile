@@ -201,6 +201,13 @@ export type AmplifyDependentResourcesAttributes = {
       Region: "string"
     }
   }
+  video: {
+    jesuscollectiveCourses: {
+      oVODInputS3: "string"
+      oVODOutputS3: "string"
+      oVodOutputUrl: "string"
+    }
+  }
   geo: {
     jcMap: {
       Name: "string"
