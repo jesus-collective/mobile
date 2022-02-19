@@ -436,11 +436,6 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       component={Nothing}
                       options={{ title: "Jesus Collective" }}
                     />
-                    <Stack.Screen
-                      name="AdminStartupScreen"
-                      component={AdminStartupScreen}
-                      options={{ title: "Jesus Collective" }}
-                    />
                   </>
                 )}
               </Stack.Navigator>
