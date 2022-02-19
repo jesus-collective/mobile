@@ -7,7 +7,6 @@ import { Data } from "../../components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
-import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
@@ -445,7 +444,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
           if (!userState) return null
           return (
             <Container>
-              <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
               {userActions.isMemberOf("admin") ? (
                 <Content>
                   <JCButton
