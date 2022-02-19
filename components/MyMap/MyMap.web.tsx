@@ -192,7 +192,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       const getUser = await Data.getUserForProfile(user)
 
       return await this.getProfileImage(getUser.data?.getUser?.profileImage)
-    } catch (e) {
+    } catch (e: any) {
       return await this.getProfileImage(e.data?.getUser?.profileImage)
     }
   }
@@ -201,7 +201,7 @@ class MyMapImpl extends JCComponent<Props, State> {
     try {
       const getUser = await Data.getOrgForImage(user)
       return await this.getProfileImage(getUser.data?.getOrganization?.profileImage)
-    } catch (e) {
+    } catch (e: any) {
       return await this.getProfileImage(e.data?.getOrganization?.profileImage)
     }
   }
@@ -724,7 +724,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       this.map.on("load", this.addMapDetails)
     }
   }
-  renderMap(mapState: MapState) {
+  renderMap() {
     if (this.props.type === "filters") {
       return (
         <View
@@ -1033,7 +1033,7 @@ class MyMapImpl extends JCComponent<Props, State> {
         <MyMapImpl.MapConsumer>
           {({ mapState }) => {
             if (mapState == undefined) return null
-            return this.renderMap(mapState)
+            return this.renderMap()
           }}
         </MyMapImpl.MapConsumer>
       </ErrorBoundary>

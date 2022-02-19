@@ -62,7 +62,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       console.log({ listMenus: listMenus })
       this.setState({
         menus:
-          listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ?? [],
+          listMenus.data?.listMenus?.items.sort((x, y) => (x?.order ?? 0) - (y?.order ?? 0)) ?? [],
       })
     } catch (e) {
       console.log(e)
@@ -423,16 +423,18 @@ export default class AdminScreen extends JCComponent<Props, State> {
     await this.setInitialData()
   }
   reOrderSubMenuItem = async (item1: SubMenuItem, item2: SubMenuItem | undefined) => {
-    if (item2) {
+    if (item1 && item2) {
       await Data.updateSubMenu({ id: item1.id, order: item2.order })
       await Data.updateSubMenu({ id: item2.id, order: item1.order })
       await this.setInitialData()
     }
   }
   reOrderMenuItem = async (item1: MenuItem, item2: MenuItem) => {
-    await Data.updateMenu({ id: item1.id, order: item2.order })
-    await Data.updateMenu({ id: item2.id, order: item1.order })
-    await this.setInitialData()
+    if (item1 && item2) {
+      await Data.updateMenu({ id: item1.id, order: item2.order })
+      await Data.updateMenu({ id: item2.id, order: item1.order })
+      await this.setInitialData()
+    }
   }
   getPreviewMenu() {
     const pgd = this.state.previewGroupData
@@ -542,6 +544,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       }}
                     >
                       {this.state.menus?.map((item, index: number) => {
+                        if (item == null) return null
                         return (
                           <>
                             <div style={{ display: "flex", flexDirection: "row" }}>
@@ -595,6 +598,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                             </div>
                             <div>
                               {item.subItems?.items.map((item2, index2: number) => {
+                                if (item2 == null) return null
                                 return (
                                   <div style={{ display: "flex", flexDirection: "row" }}>
                                     <Text>&nbsp;&nbsp;&nbsp;</Text>

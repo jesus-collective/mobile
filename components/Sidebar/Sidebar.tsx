@@ -32,7 +32,8 @@ export default function SideBar(props: Props) {
         setState((prev) => ({
           ...prev,
           menus:
-            listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ?? [],
+            listMenus.data?.listMenus?.items.sort((x, y) => (x?.order ?? 0) - (y?.order ?? 0)) ??
+            [],
         }))
       })
       .catch((e) => {
@@ -94,6 +95,7 @@ export default function SideBar(props: Props) {
         data={state.menus}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
+          if (item == null) return null
           if ((item.subItems?.items?.length ?? 0) > 0)
             return (
               <View>

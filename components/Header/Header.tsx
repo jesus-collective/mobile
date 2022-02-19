@@ -1,16 +1,14 @@
 import { Ionicons } from "@expo/vector-icons"
-import Divider from "@material-ui/core/Divider"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import { DrawerActions, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
-import React, { HTMLAttributes, useContext, useEffect, useState } from "react"
+import React, { HTMLAttributes, useEffect, useState } from "react"
 import { BrowserView, MobileOnlyView } from "react-device-detect"
 import { Dimensions, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
-import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
@@ -63,7 +61,7 @@ export default function HeaderJCC(props: Props) {
   const { width } = useWindowDimensions()
   const isOpen = props?.drawerState // useDrawerStatus() is needed when in a drawer navigator to determine hamburger icon state
   /* 
-      TODOS:
+      Todo:
         - Refactor styles, remove media queries (?)
   */
   const determineTitleMarginLeft = (controlCount = 0) => {
@@ -87,8 +85,8 @@ export default function HeaderJCC(props: Props) {
 
   const headerStyles = HeaderStyles.getInstance()
   const navigation = useNavigation<any>()
-  const { userActions } = useContext(UserContext)
-  const updateResourceStyles = (): void => {
+
+  /* const updateResourceStyles = (): void => {
     const bigScreen = Dimensions.get("window").width > 720
     if (bigScreen)
       setState({
@@ -102,11 +100,11 @@ export default function HeaderJCC(props: Props) {
         resourcesStyle: { ...state.resourcesStyle, display: "none" },
         chevronStyle: chevronStyle2,
       })
-  }
-  const updateStyles = (): void => {
+  }*/
+  /* const updateStyles = (): void => {
     headerStyles.update()
     updateResourceStyles()
-  }
+  }*/
   const openDrawer = (): void => {
     navigation?.dispatch(DrawerActions.toggleDrawer())
   }
@@ -118,38 +116,15 @@ export default function HeaderJCC(props: Props) {
   const openSearch = (): void => {
     navigation?.push("SearchScreen")
   }
-  const openEvents = (): void => {
-    navigation?.push("EventsScreen")
-  }
-  const openResources = (): void => {
-    handleResourcesDropdownClose()
-    navigation?.push("ResourcesScreen")
-  }
+
   const openMessages = (): void => {
     navigation?.push("ConversationScreen")
   }
-  const openKids = (): void => {
-    handleResourcesDropdownClose()
-    navigation?.push("ResourceScreen", {
-      create: false,
-      id: constants["SETTING_KY_GROUP_ID"],
-    })
-  }
-  const openGroups = (): void => {
-    navigation?.push("GroupsScreen")
-  }
+
   const openHome = (): void => {
     navigation?.push("HomeScreen")
   }
-  const openCourses = (): void => {
-    navigation?.push("CoursesScreen")
-  }
-  const handleResourcesDropdownClick = (event: React.MouseEvent<HTMLElement>): void => {
-    setState({ ...state, resourcesDropdown: event.currentTarget })
-  }
-  const handleResourcesDropdownClose = (): void => {
-    setState({ ...state, resourcesDropdown: null })
-  }
+
   useEffect(() => {
     if (props.overrideMenu != null) setState({ ...state, menus: props.overrideMenu })
     else
@@ -159,7 +134,7 @@ export default function HeaderJCC(props: Props) {
           setState((prev) => ({
             ...prev,
             menus:
-              listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ??
+              listMenus.data?.listMenus?.items.sort((x, y) => (x?.order ?? 0) - (y?.order ?? 0)) ??
               [],
           }))
         })
@@ -221,215 +196,85 @@ export default function HeaderJCC(props: Props) {
                 }`)}
               />
             </TouchableOpacity>
-
-            {constants["SETTING_MENU_custom"] ? (
-              <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-                {state.menus.map((mapItem) => {
-                  return (mapItem.subItems?.items?.length ?? 0) > 0 ? (
-                    <>
-
-                      <button
-                        data-testid="header-resources"
-                        onClick={(e) => {
-                          handleMenuDropdownClick(e, mapItem.id)
-                        }}
-                        onMouseEnter={() => {
-                          const z = state.menuStyle
-                          z[mapItem.id] = resourcesStyle2
-                          setState((prev) => ({
-                            ...prev,
-                            menuStyle: z,
-                          }))
-                        }}
-                        onMouseLeave={() => {
-                          const z = state.menuStyle
-                          z[mapItem.id] = resourcesStyle1
-                          setState((prev) => ({
-                            ...prev,
-                            menuStyle: z,
-                          }))
-                        }}
-                        style={state.menuStyle[mapItem.id] ?? resourcesStyle1}
-                      >
-                        <div style={{ display: "flex", flexDirection: "row" }}>
-                          <Text style={headerStyles.style.centerMenuButtonsTextResources}>
-                            {mapItem.name}
-                          </Text>
-                          <img
-                            src={require("../../assets/svg/dropdown.svg")}
-                            style={state.chevronStyle}
-                          ></img>
-                        </div>
-                      </button>
-                      <Menu
-                        keepMounted
-                        anchorEl={state.menuDropdown[mapItem.id]}
-                        open={Boolean(state.menuDropdown[mapItem.id])}
-                        onClose={() => {
-                          handleMenuDropdownClose(mapItem.id)
-                        }}
-                        style={{ marginTop: 40 }}
-                      >
-                        {mapItem.subItems?.items.map((subItem) => {
-                          return (
-                            <MenuItem
-                              onClick={() => {
-                                openScreen(subItem.action ?? "", subItem.params)
-                              }}
-                            >
-                              <Text
-                                testID="header-resources-all"
-                                style={headerStyles.style.dropdownText}
-                              >
-                                {subItem.name}
-                              </Text>
-                            </MenuItem>
-                          )
-                        })}
-                      </Menu>
-                    </>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => {
-                        openScreen(mapItem.action ?? "", mapItem.params)
-                      }}
-                      style={headerStyles.style.centerMenuButtons}
-                    >
-                      <Text style={headerStyles.style.centerMenuButtonsText}> {mapItem.name}</Text>
-                    </TouchableOpacity>
-                  )
-                })}
-              </View>
-            ) : (
-              <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-                {constants["SETTING_ISVISIBLE_people"] ? (
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("ProfilesScreen")}
-                    style={headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
-                  </TouchableOpacity>
-
-                ) : null}
-                {constants["SETTING_ISVISIBLE_orgs"] ? (
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("OrganizationsScreen")}
-                    style={headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
-                  </TouchableOpacity>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_event"] ? (
-                  <TouchableOpacity
-                    testID="header-events"
-                    onPress={openEvents}
-                    style={headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
-                  </TouchableOpacity>
-                ) : null}
-
-                {constants["SETTING_ISVISIBLE_group"] ? (
-                  <TouchableOpacity
-                    testID="header-groups"
-                    onPress={openGroups}
-                    style={headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={headerStyles.style.centerMenuButtonsText}>Groups</Text>
-                  </TouchableOpacity>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_resource"] ? (
-                  <button
-                    data-testid="header-resources"
-                    onClick={handleResourcesDropdownClick}
-                    onMouseEnter={() => setState({ ...state, resourcesStyle: resourcesStyle2 })}
-                    onMouseLeave={() => setState({ ...state, resourcesStyle: resourcesStyle1 })}
-                    style={{ ...state.resourcesStyle, display: width > 750 ? "flex" : "none" }}
-                  >
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                      <Text style={headerStyles.style.centerMenuButtonsTextResources}>
-                        Resources
-                      </Text>
-                      <img
-                        src={require("../../assets/svg/dropdown.svg")}
-                        style={state.chevronStyle}
-                      ></img>
-                    </div>
-                  </button>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_resource"] ? (
-                  <Menu
-                    style={{ marginTop: 40, marginLeft: 6 }}
-                    keepMounted
-                    anchorEl={state.resourcesDropdown}
-                    open={Boolean(state.resourcesDropdown)}
-                    onClose={handleResourcesDropdownClose}
-                  >
-                    <MenuItem onClick={openResources}>
-                      <Text testID="header-resources-all" style={headerStyles.style.dropdownText}>
-                        All Resources
-                      </Text>
-                    </MenuItem>
-                    <Divider style={{ backgroundColor: "black" }} />
-                    <MenuItem onClick={openKids}>
-                      <Text style={headerStyles.style.dropdownText}>One Story Curriculum</Text>
-                    </MenuItem>
-                  </Menu>
-                ) : null}
-                {constants["SETTING_ISVISIBLE_course"] &&
-                (userActions.isMemberOf("courseUser") ||
-                  userActions.isMemberOf("courseCoach") ||
-                  userActions.isMemberOf("courseAdmin")) ? (
-                  <TouchableOpacity
-                    testID="header-courses"
-                    onPress={openCourses}
-                    style={headerStyles.style.centerMenuButtons}
-                  >
-                    <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
-                  </TouchableOpacity>
-                ) : null}
-                {props?.showAdmin ? (
+            <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+              {state.menus.map((mapItem) => {
+                if (mapItem == null) return null
+                return (mapItem?.subItems?.items?.length ?? 0) > 0 ? (
                   <>
-                    <TouchableOpacity
-                      testID="header-groups"
-                      onPress={() =>
-                        navigation.navigate("AdminScreen", {
-                          id: state.user?.username,
-                          create: false,
-                        })
-                      }
-                      style={headerStyles.style.centerMenuButtons}
+                    <button
+                      data-testid="header-resources"
+                      onClick={(e) => {
+                        handleMenuDropdownClick(e, mapItem.id)
+                      }}
+                      onMouseEnter={() => {
+                        const z = state.menuStyle
+                        z[mapItem.id] = resourcesStyle2
+                        setState((prev) => ({
+                          ...prev,
+                          menuStyle: z,
+                        }))
+                      }}
+                      onMouseLeave={() => {
+                        const z = state.menuStyle
+                        z[mapItem.id] = resourcesStyle1
+                        setState((prev) => ({
+                          ...prev,
+                          menuStyle: z,
+                        }))
+                      }}
+                      style={state.menuStyle[mapItem.id] ?? resourcesStyle1}
                     >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>Admin</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      testID="header-groups"
-                      onPress={() =>
-                        navigation.navigate("AdminCRMScreen", {
-                          id: state.user?.username,
-                          create: false,
-                        })
-                      }
-                      style={headerStyles.style.centerMenuButtons}
+                      <div style={{ display: "flex", flexDirection: "row" }}>
+                        <Text style={headerStyles.style.centerMenuButtonsTextResources}>
+                          {mapItem.name}
+                        </Text>
+                        <img
+                          src={require("../../assets/svg/dropdown.svg")}
+                          style={state.chevronStyle}
+                        ></img>
+                      </div>
+                    </button>
+                    <Menu
+                      keepMounted
+                      anchorEl={state.menuDropdown[mapItem.id]}
+                      open={Boolean(state.menuDropdown[mapItem.id])}
+                      onClose={() => {
+                        handleMenuDropdownClose(mapItem.id)
+                      }}
+                      style={{ marginTop: 40 }}
                     >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>CRM</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      testID="header-groups"
-                      onPress={() =>
-                        navigation.navigate("AdminCreateProductScreen", {
-                          id: state.user?.username,
-                          create: false,
-                        })
-                      }
-                      style={headerStyles.style.centerMenuButtons}
-                    >
-                      <Text style={headerStyles.style.centerMenuButtonsText}>Products</Text>
-                    </TouchableOpacity>
+                      {mapItem.subItems?.items.map((subItem) => {
+                        if (subItem == null) return null
+                        return (
+                          <MenuItem
+                            onClick={() => {
+                              openScreen(subItem.action ?? "", subItem.params)
+                            }}
+                          >
+                            <Text
+                              testID="header-resources-all"
+                              style={headerStyles.style.dropdownText}
+                            >
+                              {subItem.name}
+                            </Text>
+                          </MenuItem>
+                        )
+                      })}
+                    </Menu>
                   </>
-                ) : null}
-              </View>
-            )}
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      openScreen(mapItem.action ?? "", mapItem.params)
+                    }}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}> {mapItem.name}</Text>
+                  </TouchableOpacity>
+                )
+              })}
+            </View>
+            )
             <View
               style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
             >
@@ -462,7 +307,6 @@ export default function HeaderJCC(props: Props) {
                 </View>
               ) : null}
             </View>
-
             <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
               <TouchableOpacity
                 testID="header-hamburger"

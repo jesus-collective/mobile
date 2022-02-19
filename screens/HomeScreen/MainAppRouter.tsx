@@ -145,7 +145,7 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
             return (
               <Stack.Navigator
                 initialRouteName="HomeScreen"
-                screenOptions={({ route, navigation }) => ({
+                screenOptions={({ navigation }) => ({
                   animationEnabled: false,
                   gestureEnabled: false,
                   cardOverlayEnabled: false,
