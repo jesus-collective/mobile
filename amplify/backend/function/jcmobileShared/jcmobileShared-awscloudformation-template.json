@@ -20,7 +20,7 @@
     }
   },
   "Resources": {
-    "LambdaLayerVersion077907c2": {
+    "LambdaLayerVersion9d7ef217": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": {
@@ -51,13 +51,50 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPrivate077907c2": {
+    "LambdaLayerPermissionPrivate9d7ef217": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
         "LayerVersionArn": {
-          "Ref": "LambdaLayerVersion077907c2"
+          "Ref": "LambdaLayerVersion9d7ef217"
         },
+        "Principal": {
+          "Ref": "AWS::AccountId"
+        }
+      }
+    },
+    "LambdaLayerVersion077907c2": {
+      "Type": "AWS::Lambda::LayerVersion",
+      "Properties": {
+        "CompatibleRuntimes": [
+          "nodejs14.x"
+        ],
+        "Content": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion077907c2-build.zip"
+        },
+        "Description": "Updated layer version 2022-02-19T09:24:45.469Z",
+        "LayerName": {
+          "Fn::Sub": [
+            "jcmobileShared-${env}",
+            {
+              "env": {
+                "Ref": "env"
+              }
+            }
+          ]
+        }
+      },
+      "DeletionPolicy": "Delete",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "LambdaLayerPermissionPrivate077907c2": {
+      "Type": "AWS::Lambda::LayerVersionPermission",
+      "Properties": {
+        "Action": "lambda:GetLayerVersion",
+        "LayerVersionArn": "arn:aws:lambda:us-east-1:119330689042:layer:jcmobileShared-beta:14",
         "Principal": {
           "Ref": "AWS::AccountId"
         }
@@ -252,7 +289,7 @@
   "Outputs": {
     "Arn": {
       "Value": {
-        "Ref": "LambdaLayerVersion077907c2"
+        "Ref": "LambdaLayerVersion9d7ef217"
       }
     }
   }

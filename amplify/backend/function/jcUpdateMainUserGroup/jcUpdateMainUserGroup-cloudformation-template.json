@@ -126,7 +126,7 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": "360",
         "Code": {
           "S3Bucket": {
