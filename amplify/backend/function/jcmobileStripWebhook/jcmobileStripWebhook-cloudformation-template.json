@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.3.3\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
   "Parameters": {
     "userPoolId": {
       "Type": "String",
@@ -37,12 +37,6 @@
     "apiAdminQueriesApiId": {
       "Type": "String",
       "Default": "apiAdminQueriesApiId"
-    },
-    "deploymentBucketName": {
-      "Type": "String"
-    },
-    "s3Key": {
-      "Type": "String"
     }
   },
   "Conditions": {
@@ -123,12 +117,8 @@
         "Layers": [],
         "Timeout": "65",
         "Code": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": {
-            "Ref": "s3Key"
-          }
+          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
+          "S3Key": "amplify-builds/jcmobileStripWebhook-6e364f3045374e304f57-build.zip"
         }
       }
     },

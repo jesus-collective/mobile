@@ -85,13 +85,13 @@ export type AmplifyDependentResourcesAttributes = {
       Region: "string"
       LambdaExecutionRole: "string"
     }
-    jcmobileGetOrgStripeSubs: {
+    jcmobileCreateCognitoOrgUser: {
       Name: "string"
       Arn: "string"
       Region: "string"
       LambdaExecutionRole: "string"
     }
-    jcmobileCreateCognitoOrgUser: {
+    jcmobileGetOrgStripeSubs: {
       Name: "string"
       Arn: "string"
       Region: "string"

@@ -501,6 +501,13 @@
       ]
     }
   },
+  "video": {
+    "jesuscollectiveCourses": {
+      "service": "video",
+      "serviceType": "video-on-demand",
+      "providerPlugin": "awscloudformation"
+    }
+  },
   "geo": {
     "jcMap": {
       "isDefault": true,

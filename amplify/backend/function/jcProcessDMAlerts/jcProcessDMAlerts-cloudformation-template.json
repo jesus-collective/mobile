@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.3.3\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -269,7 +269,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "v2a5imsuknftvco6zfue5hf4km:GetAtt:DirectMessageTable:StreamArn"
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
                 }
               }
             }
@@ -290,7 +290,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "v2a5imsuknftvco6zfue5hf4km:GetAtt:DirectMessageTable:StreamArn"
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
           }
         },
         "FunctionName": {
@@ -328,7 +328,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "v2a5imsuknftvco6zfue5hf4km:GetAtt:DirectMessageReplyTable:StreamArn"
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageReplyTable:StreamArn"
                 }
               }
             }
@@ -349,7 +349,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "v2a5imsuknftvco6zfue5hf4km:GetAtt:DirectMessageReplyTable:StreamArn"
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageReplyTable:StreamArn"
           }
         },
         "FunctionName": {
