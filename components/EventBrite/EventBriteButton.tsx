@@ -1,8 +1,18 @@
 import PropTypes from "prop-types"
-import React from "react"
+import React, { Component } from "react"
 import { v4 as uuid } from "uuid"
-
-export default class EventbritePopupCheckout extends React.Component {
+interface Props {
+  onClick: any
+  isModal: boolean
+  ebEventId: string
+  promoCode: string
+  className: string
+  component: Component
+  componentProps: any
+  ebScriptPath: string
+  onOrderComplete: any
+}
+export default class EventbritePopupCheckout extends React.Component<Props> {
   state = { isEventbriteLoaded: false }
 
   /** @type {string} */

@@ -351,7 +351,7 @@ const MessageInput = (props: Props) => {
               keyBindingFn={(e: SyntheticKeyboardEvent): string | null => {
                 if (e.key === "Enter") {
                   const confirmation = confirm("Are you sure you want to submit?")
-                  if (confirmation) replyState.replyToId ? sendReply() : saveMessage() // should open collpased comments
+                  if (confirmation) replyState.replyToId ? sendReply() : saveMessage() // should open collapsed comments
                   return null
                 }
                 return getDefaultKeyBinding(e)

@@ -229,21 +229,22 @@ class MyProfileImpl extends JCComponent<Props, State> {
       } else {
         try {
           const getUser = await Data.getUser(user["username"])
-          this.setState(
-            {
-              UserDetails: getUser.data.getUser,
-              isEditable: true,
-              editMode: true,
-              interestsArray: getUser.data.getUser.interests,
-              firstName: getUser.data.getUser.given_name,
-              lastName: getUser.data.getUser.family_name,
-            },
-            () => {
-              this.getProfileImage()
-              this.convertProfileToMapData()
-            }
-          )
-
+          if (getUser) {
+            this.setState(
+              {
+                UserDetails: getUser.data?.getUser,
+                isEditable: true,
+                editMode: true,
+                interestsArray: getUser.data?.getUser?.interests,
+                firstName: getUser.data?.getUser?.given_name,
+                lastName: getUser.data?.getUser?.family_name,
+              },
+              () => {
+                this.getProfileImage()
+                this.convertProfileToMapData()
+              }
+            )
+          }
           console.log(this.state.UserDetails)
         } catch (e) {
           console.log(e)
