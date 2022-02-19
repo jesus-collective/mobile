@@ -138,10 +138,6 @@ export default class HeaderJC extends JCComponent<Props> {
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Menu</Text>
           </Button>
         </Body>
-        {/* <Right>
-
-
-        </Right> */}
       </Header>
     )
   }

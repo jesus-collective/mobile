@@ -288,22 +288,44 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
             }
           }}
         >
-          <Card style={this.styles.style.resourceGroupCard}>
-            <CardItem style={{ paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 27 }}>
+          <Card
+            noShadow
+            style={[
+              this.styles.style.resourceGroupCard,
+              {
+                backgroundColor: "#fff",
+                borderWidth: 1,
+                borderColor: "#E4E1E1",
+                width: 352.4,
+                borderRadius: 8,
+                marginBottom: 30,
+              },
+            ]}
+          >
+            <CardItem
+              style={{
+                paddingLeft: 0,
+                paddingTop: 0,
+                paddingRight: 0,
+                paddingBottom: 27,
+                borderRadius: 8,
+              }}
+            >
               {this.state.imageUrl ? (
                 <Animated.View
                   onLayout={this.fadeAnimation}
                   style={[
                     this.styles.style.resourceHeaderImgView,
-                    { opacity: this.state.fadeValue },
+                    { opacity: this.state.fadeValue, borderRadius: 8 },
                   ]}
                 >
                   <Image
                     style={{
-                      width: 425,
+                      flex: 1,
                       height: 211,
                       borderTopLeftRadius: 8,
                       borderTopRightRadius: 8,
+                      borderColor: "#E4E1E1",
                     }}
                     source={this.state.imageUrl}
                     onError={() => {
@@ -314,72 +336,73 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
               ) : null}
             </CardItem>
 
-            <CardItem
-              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 3 }}
-            >
+            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
               <EditableText
                 multiline={false}
                 textStyle={{
                   margin: 0,
-                  fontFamily: "Graphik-Bold-App",
+                  fontFamily: "Graphik-Semibold-App",
                   fontSize: 12,
-                  fontStyle: "bold",
-                  fontWeight: 800,
+                  fontWeight: 600,
                   lineHeight: 18,
                   letterSpacing: 0.5,
                   textAlign: "left",
-                  color: "#F0493E",
+                  color: "#FF4438",
                   textTransform: "uppercase",
                 }}
                 inputStyle={{
                   margin: 0,
-                  fontFamily: "Graphik-Bold-App",
+                  fontFamily: "Graphik-Semibold-App",
                   fontSize: 12,
-                  fontStyle: "bold",
-                  fontWeight: 800,
+                  fontWeight: 600,
                   lineHeight: 18,
                   letterSpacing: 0.5,
                   textAlign: "left",
-                  color: "#F0493E",
+                  color: "#FF4438",
                   textTransform: "uppercase",
                 }}
                 value={this.props.pageItem.title1 ?? ""}
                 isEditable={false}
               ></EditableText>
             </CardItem>
-            <CardItem
-              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 10 }}
-            >
+            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
               <EditableText
                 multiline={false}
                 textStyle={{
                   margin: 0,
-                  fontFamily: "Graphik-Bold-App",
+                  fontFamily: "Graphik-Semibold-App",
                   fontSize: 24,
                   fontStyle: "normal",
-                  fontWeight: 800,
+                  fontWeight: 600,
                   lineHeight: 36,
-                  letterSpacing: 0.5,
                   textAlign: "left",
-                  color: "#404040",
+                  color: "#483938",
                 }}
                 inputStyle={{
                   margin: 0,
-                  fontFamily: "Graphik-Bold-App",
+                  fontFamily: "Graphik-Semibold-App",
                   fontSize: 24,
                   fontStyle: "normal",
-                  fontWeight: 800,
+                  fontWeight: 600,
                   lineHeight: 36,
-                  letterSpacing: 0.5,
                   textAlign: "left",
-                  color: "#404040",
+                  color: "#483938",
                 }}
                 value={this.props.pageItem.title2 ?? ""}
                 isEditable={false}
               ></EditableText>
             </CardItem>
             <CardItem
-              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 30 }}
+              style={{
+                paddingTop: 0,
+                paddingLeft: 27,
+                paddingBottom: 30,
+                paddingRight: 27,
+                backgroundColor: "transparent",
+                flex: 1,
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+              }}
             >
               <EditableText
                 multiline={false}
@@ -390,9 +413,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: 24,
-                  letterSpacing: 0.5,
                   textAlign: "left",
-                  color: "#333333",
+                  color: "#6A5E5D",
                 }}
                 inputStyle={{
                   margin: 0,
@@ -401,13 +423,13 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: 24,
-                  letterSpacing: 0.5,
+
                   textAlign: "left",
-                  color: "#333333",
+                  color: "#6A5E5D",
                 }}
                 value={this.props.pageItem.description1 ?? ""}
                 isEditable={false}
-                numberOfLines={6}
+                numberOfLines={5}
                 ellipsizeMode="tail"
               ></EditableText>
             </CardItem>
@@ -519,9 +541,13 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     }}
                   >
                     <Card
+                      noShadow
                       style={[
                         this.styles.style.resourceSeries,
                         { zIndex: 6000 + this.props.pageItemIndex.length },
+                        {
+                          marginVertical: 90,
+                        },
                       ]}
                     >
                       <CardItem
@@ -544,7 +570,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                                 textAlign: "left",
                                 color: "#AAAAAA",
                                 alignSelf: "flex-start",
-                                marginRight: 15,
+                                marginRight: 32,
                               }}
                               inputStyle={{
                                 fontFamily: "Graphik-Bold-App",
@@ -566,7 +592,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                                 className="LiveVideoPlayerIframe"
                                 allowFullScreen
                                 style={{
-                                  width: isBrowser ? 638 : isTablet ? 375 : 320,
+                                  width: isBrowser ? 606 : isTablet ? 375 : 320,
                                   height: isBrowser ? 382 : isTablet ? 210 : 179,
                                   marginLeft: isMobile ? 120 : "null",
                                 }}
@@ -605,12 +631,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       <CardItem
                         style={{
                           zIndex: 6000 + this.props.pageItemIndex.length,
-                          marginLeft: isMobile ? 10 : "4rem",
-                          justifyContent: "space-between",
+                          marginLeft: isMobile ? 10 : 82,
+                          paddingRight: isMobile ? 0 : 54,
                           width: 670,
                         }}
                       >
-                        <View style={{ width: 320 }}>
+                        <View style={{ flex: 1 }}>
                           <EditableText
                             multiline={true}
                             textStyle={{
@@ -804,7 +830,18 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   }
                 }}
               >
-                <Card style={this.styles.style.resourceGroupCard}>
+                <Card
+                  noShadow
+                  style={[
+                    this.styles.style.resourceGroupCard,
+                    {
+                      borderWidth: 1,
+                      borderColor: "#E4E1E1",
+                      borderRadius: 8,
+                      marginBottom: 30,
+                    },
+                  ]}
+                >
                   <CardItem>
                     {youtubeID && (
                       <div>
@@ -833,7 +870,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       >
                         <Image
                           style={{
-                            width: 425,
+                            width: 424,
                             height: 211,
                             borderTopLeftRadius: 8,
                             borderTopRightRadius: 8,
@@ -850,9 +887,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       </Animated.View>
                     ) : null}
                   </CardItem>
-                  <CardItem
-                    style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 3 }}
-                  >
+                  <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
                     <EditableText
                       multiline={false}
                       textStyle={{
@@ -883,9 +918,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       isEditable={false}
                     ></EditableText>
                   </CardItem>
-                  <CardItem
-                    style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 10 }}
-                  >
+                  <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
                     <EditableText
                       multiline={false}
                       textStyle={{
@@ -914,9 +947,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       isEditable={false}
                     ></EditableText>
                   </CardItem>
-                  <CardItem
-                    style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 30 }}
-                  >
+                  <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
                     <EditableText
                       multiline={false}
                       textStyle={{

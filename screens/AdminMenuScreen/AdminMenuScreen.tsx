@@ -525,8 +525,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
           console.log("AdminScreen")
           return (
             <Container testID="events">
-              <Header title="Jesus Collective" navigation={this.props.navigation} />
-
               {userActions.isMemberOf("admin") ? (
                 <Content>
                   {this.renderPreview()}

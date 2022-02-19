@@ -1081,7 +1081,6 @@ export type MessagesByRoomQuery = {
         currentRole?: string | null
         currentScope?: string | null
         denomination?: string | null
-        email?: string | null
         family_name: string
         given_name: string
         hasPaidState?: PaidState | null
@@ -1095,13 +1094,10 @@ export type MessagesByRoomQuery = {
         orgSize?: string | null
         orgType?: string | null
         owner?: string | null
-        phone?: string | null
         personality?: string | null
         pplServed?: string | null
         primaryOrganization?: string | null
         profileState?: string | null
-        stripeCustomerID?: string | null
-        stripeSubscriptionID?: string | null
         sundayAttendance?: string | null
         updatedAt: string
       } | null
@@ -1129,7 +1125,6 @@ export type MessagesByRoomQuery = {
             currentRole?: string | null
             currentScope?: string | null
             denomination?: string | null
-            email?: string | null
             family_name: string
             given_name: string
             hasPaidState?: PaidState | null
@@ -1144,13 +1139,10 @@ export type MessagesByRoomQuery = {
             orgType?: string | null
             owner?: string | null
             personality?: string | null
-            phone?: string | null
             pplServed?: string | null
             primaryOrganization?: string | null
             updatedAt: string
             sundayAttendance?: string | null
-            stripeCustomerID?: string | null
-            stripeSubscriptionID?: string | null
             profileState?: string | null
           } | null
           content: string

@@ -41,9 +41,8 @@ class MainAuthRouterImpl extends JCComponent<MARProp, MARState> {
           if (!userState) return null
           return (
             <AuthStack.Navigator
-              headerMode="none"
-              mode="card"
               screenOptions={{
+                headerShown: false,
                 animationEnabled: false,
                 gestureEnabled: false,
                 cardOverlayEnabled: false,

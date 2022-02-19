@@ -1207,6 +1207,7 @@ if (window.location === undefined) env = "mobile"
 else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"
 else if (window.location.hostname.includes("dev")) env = "dev"
+else if (window.location.hostname.includes("d13j9gfr4f50wr")) env = "jcfacelift"
 else env = "prod"
 
 export default function Billing(props: Props): JSX.Element {

@@ -1,64 +1,87 @@
-﻿import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content } from "native-base"
-import React from "react"
+﻿import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import React, { useLayoutEffect, useState } from "react"
+import { View } from "react-native"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import GenericDirectoryScreen from "../../components/GenericDirectoryScreen/GenericDirectoryScreen"
 import Header from "../../components/Header/Header"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
-import MyMap from "../../components/MyMap/MyMap"
-interface Props {
-  navigation: StackNavigationProp<any, any>
-}
-interface State extends JCState {
-  showMap: boolean
-  mapData: MapData[]
-}
-
-export default class HomeScreen extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      mapData: [],
-      showMap: false,
-    }
-  }
-  mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap })
-  }
-
-  render(): React.ReactNode {
-    console.log("Profiles")
+import ProfilesList from "./ProfilesList"
+export default function ProfilesScreen() {
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  const route = useRoute()
+  const [reverse, setReverse] = useState(false)
+  const [filter, setFilter] = useState("")
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        return (
+          <Header
+            subnav={[
+              {
+                title: "Everybody",
+                action: () => null,
+              },
+            ]}
+            title={"People"}
+            controls={[
+              {
+                icon: "Sort",
+                action: () => {
+                  setReverse((prev) => !prev)
+                },
+              },
+            ]}
+            navigation={props.navigation}
+          />
+        )
+      },
+    })
+  }, [filter])
+  const PeopleControlButtons = () => {
     return (
-      <Container testID="profiles">
-        <Header
-          title="Jesus Collective"
-          navigation={this.props.navigation}
-          onMapChange={this.mapChanged}
-        />
-        <Content>
-          <MyMap
-            type={"no-filters"}
-            mapData={this.state.mapData}
-            visible={this.state.showMap}
-          ></MyMap>
-          <Container style={this.styles.style.profilesScreenMainContainer}>
-            <Container style={this.styles.style.profilesScreenLeftContainer}>
-              <MyGroups
-                showMore={true}
-                type="profile"
-                wrap={true}
-                navigation={this.props.navigation}
-              ></MyGroups>
-            </Container>
-            {/*
-            <Container style={this.styles.style.profilesScreensRightContainer}>
-              <MyConversations navigation={this.props.navigation}> </MyConversations>
-              <Container ></Container>
-            </Container>
-            */}
-          </Container>
-        </Content>
-      </Container>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
+        <GenericButton
+          label={reverse ? "SORT: Z - A" : "SORT: A - Z"}
+          action={() => setReverse((prev) => !prev)}
+          style={{
+            ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
+            LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
+            custom: {
+              marginRight: 32,
+            },
+          }}
+          icon="Sort-Red"
+        ></GenericButton>
+        <GenericButton
+          label={`FILTER${filter ? ": Friends" : ""}`}
+          action={() => {
+            if (filter) setFilter("")
+            else setFilter(": Friends")
+          }}
+          style={{
+            ButtonStyle: filter
+              ? GenericButtonStyles.PrimaryButtonStyle
+              : GenericButtonStyles.SecondaryButtonStyle,
+            LabelStyle: filter
+              ? GenericButtonStyles.PrimaryLabelStyle
+              : GenericButtonStyles.SecondaryLabelStyle,
+            custom: {
+              marginRight: 32,
+            },
+          }}
+          icon={filter ? "X-White" : "Filter-Red"}
+        ></GenericButton>
+      </View>
     )
   }
+  return (
+    <GenericDirectoryScreen
+      navigation={navigation}
+      ControlButtons={PeopleControlButtons}
+      MainContent={() => <ProfilesList filter={filter} reverse={reverse} />}
+      route={route}
+      pageTitle="People"
+    />
+  )
 }

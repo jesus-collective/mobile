@@ -16,7 +16,6 @@ import EditableDollar from "../../components/Forms/EditableDollar"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import MyMap from "../../components/MyMap/MyMap"
@@ -661,11 +660,6 @@ export default class CourseScreen extends JCComponent<Props, State> {
           return this.state.data ? (
             <StyleProvider style={getTheme()}>
               <Container>
-                <Header
-                  title="Jesus Collective"
-                  navigation={this.props.navigation}
-                  onMapChange={this.state.createNew ? undefined : this.mapChanged}
-                />
                 <Content>
                   <MyMap
                     type={"no-filters"}

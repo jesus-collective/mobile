@@ -2,24 +2,30 @@ import { Ionicons } from "@expo/vector-icons"
 import Divider from "@material-ui/core/Divider"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
-import { DrawerActions } from "@react-navigation/native"
+import { DrawerActions, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-//import styles from '../Header/style'
 import { Auth } from "aws-amplify"
-import { Body, Button, Header, Left, Right } from "native-base"
-import React, { HTMLAttributes } from "react"
-import { Dimensions, Image, Text } from "react-native"
+import React, { HTMLAttributes, useContext, useEffect, useState } from "react"
+import { BrowserView, MobileOnlyView } from "react-device-detect"
+import { Dimensions, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { JCState } from "../JCComponent/JCComponent"
+import { HeaderControls } from "./HeaderControls"
+import { SubHeader } from "./SubHeader"
 interface Props {
   navigation?: StackNavigationProp<any, any>
   title: string
   onMapChange?(): any
+  backAction?: () => void
+  subnav?: any
+  controls?: any
+  drawerState?: boolean
+  showAdmin?: boolean
   overrideMenu?: NonNullable<ListMenusQuery["listMenus"]>["items"]
 }
 
@@ -28,6 +34,7 @@ interface State extends JCState {
   resourcesDropdown: HTMLElement | null
   resourcesStyle: HTMLAttributes<HTMLButtonElement>["style"]
   chevronStyle: HTMLAttributes<HTMLImageElement>["style"]
+  user: JCCognitoUser | null
   menus: NonNullable<ListMenusQuery["listMenus"]>["items"]
   menuStyle: { [menuId: string]: any }
 }
@@ -39,368 +46,495 @@ const chevronStyle2 = { paddingLeft: 8, paddingTop: 2, display: "none" }
 const resourcesStyle1 = {
   backgroundColor: "transparent",
   borderWidth: 0,
-  height: 45,
-  paddingBottom: 12,
-  paddingTop: 6,
+  display: "flex",
   marginRight: 30,
 }
 
 const resourcesStyle2 = {
   backgroundColor: "transparent",
   borderWidth: 0,
-  height: 45,
-  paddingBottom: 12,
-  paddingTop: 6,
+  display: "flex",
+
   marginRight: 30,
   cursor: "pointer",
 }
 
-export default class HeaderJC extends JCComponent<Props, State> {
-  headerStyles: HeaderStyles = HeaderStyles.getInstance()
+export default function HeaderJCC(props: Props) {
+  const { width } = useWindowDimensions()
+  const isOpen = props?.drawerState // useDrawerStatus() is needed when in a drawer navigator to determine hamburger icon state
+  /* 
+      TODOS:
+        - Refactor styles, remove media queries (?)
+  */
+  const determineTitleMarginLeft = (controlCount = 0) => {
+    // this is based on current header button sizes
+    // if sizes change this will also need to be changed in order for the header title to be centered
+    if (controlCount === 1) return 8
+    if (controlCount === 2) return 56
+    if (controlCount === 3) return 88
+    // We might want to cap control at 2 especially if page titles get long
+    return -24
+  }
+  const [state, setState] = useState<State>({
+    menus: [],
+    menuStyle: {},
+    menuDropdown: {},
+    resourcesDropdown: null,
+    resourcesStyle: resourcesStyle1,
+    chevronStyle: Dimensions.get("window").width > 720 ? chevronStyle1 : chevronStyle2,
+    user: null,
+  })
 
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      menus: [],
-      menuStyle: {},
-      menuDropdown: {},
-      resourcesDropdown: null,
-      resourcesStyle: resourcesStyle1,
-      chevronStyle: Dimensions.get("window").width > 720 ? chevronStyle1 : chevronStyle2,
-    }
-    if (this.props.overrideMenu != null) this.setState({ menus: this.props.overrideMenu })
-    else
-      Data.listMenu(null)
-        .then((listMenus) => {
-          console.log({ listMenus: listMenus })
-          this.setState({
-            menus:
-              listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ??
-              [],
-          })
-        })
-        .catch((e) => {
-          this.setState({ menus: e.data?.listMenus?.items ?? [] })
-        })
-  }
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.overrideMenu != this.props.overrideMenu)
-      if (this.props.overrideMenu != null) this.setState({ menus: this.props.overrideMenu })
-  }
-  updateStyles = (): void => {
-    this.headerStyles.update()
-    this.updateResourceStyles()
-    this.forceUpdate()
-  }
-  componentDidMount(): void {
-    Dimensions.addEventListener("change", this.updateStyles)
-  }
-  componentWillUnmount(): void {
-    // Important to stop updating state after unmount
-    Dimensions.removeEventListener("change", this.updateStyles)
-  }
-
-  updateResourceStyles = (): void => {
+  const headerStyles = HeaderStyles.getInstance()
+  const navigation = useNavigation<any>()
+  const { userActions } = useContext(UserContext)
+  const updateResourceStyles = (): void => {
     const bigScreen = Dimensions.get("window").width > 720
     if (bigScreen)
-      this.setState({
+      setState({
+        ...state,
         resourcesStyle: resourcesStyle1,
         chevronStyle: chevronStyle1,
       })
     else
-      this.setState({
-        resourcesStyle: { display: "none" },
+      setState({
+        ...state,
+        resourcesStyle: { ...state.resourcesStyle, display: "none" },
         chevronStyle: chevronStyle2,
       })
   }
+  const updateStyles = (): void => {
+    headerStyles.update()
+    updateResourceStyles()
+  }
+  const openDrawer = (): void => {
+    navigation?.dispatch(DrawerActions.toggleDrawer())
+  }
 
-  openDrawer = (): void => {
-    this.props.navigation?.dispatch(DrawerActions.openDrawer())
+  const openScreen = (screen: string, params: any): void => {
+    navigation?.push(screen, params == "" ? null : JSON.parse(params))
   }
-  openProfile = async (): Promise<void> => {
-    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    this.props.navigation?.push("ProfileScreen", {
-      id: user["username"],
-      create: false,
-    })
+
+  const openSearch = (): void => {
+    navigation?.push("SearchScreen")
   }
-  openScreen = (screen: string, params: any): void => {
-    this.props.navigation?.push(screen, params == "" ? null : JSON.parse(params))
+  const openEvents = (): void => {
+    navigation?.push("EventsScreen")
   }
-  openAdmin = async (): Promise<void> => {
-    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    this.props.navigation?.push("AdminScreen", {
-      id: user["username"],
-      create: false,
-    })
+  const openResources = (): void => {
+    handleResourcesDropdownClose()
+    navigation?.push("ResourcesScreen")
   }
-  openSearch = (): void => {
-    this.props.navigation?.push("SearchScreen")
+  const openMessages = (): void => {
+    navigation?.push("ConversationScreen")
   }
-  openEvents = (): void => {
-    this.props.navigation?.push("EventsScreen")
-  }
-  openResources = (): void => {
-    this.handleResourcesDropdownClose()
-    this.props.navigation?.push("ResourcesScreen")
-  }
-  openMessages = (): void => {
-    this.props.navigation?.push("ConversationScreen")
-  }
-  openKids = (): void => {
-    this.handleResourcesDropdownClose()
-    this.props.navigation?.push("ResourceScreen", {
+  const openKids = (): void => {
+    handleResourcesDropdownClose()
+    navigation?.push("ResourceScreen", {
       create: false,
       id: constants["SETTING_KY_GROUP_ID"],
     })
   }
-  openGroups = (): void => {
-    this.props.navigation?.push("GroupsScreen")
+  const openGroups = (): void => {
+    navigation?.push("GroupsScreen")
   }
-  openHome = (): void => {
-    this.props.navigation?.push("HomeScreen")
+  const openHome = (): void => {
+    navigation?.push("HomeScreen")
   }
-  openCourses = (): void => {
-    this.props.navigation?.push("CoursesScreen")
+  const openCourses = (): void => {
+    navigation?.push("CoursesScreen")
   }
-  showMap = (): void => {
-    if (this.props.onMapChange != null) this.props.onMapChange()
+  const handleResourcesDropdownClick = (event: React.MouseEvent<HTMLElement>): void => {
+    setState({ ...state, resourcesDropdown: event.currentTarget })
   }
-  handleResourcesDropdownClick = (event: React.MouseEvent<HTMLElement>): void => {
-    this.setState({ resourcesDropdown: event.currentTarget })
+  const handleResourcesDropdownClose = (): void => {
+    setState({ ...state, resourcesDropdown: null })
   }
-  handleResourcesDropdownClose = (): void => {
-    this.setState({ resourcesDropdown: null })
-  }
-  handleMenuDropdownClick = (event: React.MouseEvent<HTMLElement>, id: string): void => {
-    const z = this.state.menuDropdown
-    z[id] = event.currentTarget
-    this.setState({ menuDropdown: z })
-  }
-  handleMenuDropdownClose = (id: string): void => {
-    const z = this.state.menuDropdown
-    z[id] = null
-    this.setState({ menuDropdown: z })
-  }
-  static UserConsumer = UserContext.Consumer
+  useEffect(() => {
+    if (props.overrideMenu != null) setState({ ...state, menus: props.overrideMenu })
+    else
+      Data.listMenu(null)
+        .then((listMenus) => {
+          console.log({ listMenus: listMenus })
+          setState((prev) => ({
+            ...prev,
+            menus:
+              listMenus.data?.listMenus?.items.sort((x, y) => (x.order ?? 0) - (y.order ?? 0)) ??
+              [],
+          }))
+        })
+        .catch((e) => {
+          setState((prev) => ({ ...prev, menus: e.data?.listMenus?.items ?? [] }))
+        })
 
-  render(): React.ReactNode {
-    return (
-      <HeaderJC.UserConsumer>
-        {({ userState, userActions }) => {
-          if (!userState) return null
-          return (
-            <Header style={this.headerStyles.style.container}>
-              <Left style={this.styles.style.headerLeft}>
-                <Button
-                  testID="header-hamburger"
-                  style={this.headerStyles.style.leftButtons}
-                  transparent
-                  onPress={this.openDrawer}
-                >
-                  <Ionicons name="md-menu" style={this.headerStyles.style.icon} />
-                </Button>
-              </Left>
-              <Body style={this.styles.style.headerMiddleBody}>
-                <Button transparent onPress={this.openHome} testID="header-logo">
-                  <Image
-                    style={this.headerStyles.style.logo}
-                    source={require("../../assets/header/icon.png")}
-                  />
-                </Button>
-                {constants["SETTING_MENU_custom"] ? (
-                  <>
-                    {this.state.menus.map((mapItem) => {
-                      return (mapItem.subItems?.items?.length ?? 0) > 0 ? (
-                        <>
-                          <button
-                            data-testid="header-resources"
-                            onClick={(e) => {
-                              this.handleMenuDropdownClick(e, mapItem.id)
-                            }}
-                            onMouseEnter={() => {
-                              const z = this.state.menuStyle
-                              z[mapItem.id] = resourcesStyle2
-                              this.setState({
-                                menuStyle: z,
-                              })
-                            }}
-                            onMouseLeave={() => {
-                              const z = this.state.menuStyle
-                              z[mapItem.id] = resourcesStyle1
-                              this.setState({
-                                menuStyle: z,
-                              })
-                            }}
-                            style={this.state.menuStyle[mapItem.id] ?? resourcesStyle1}
-                          >
-                            <div style={{ display: "flex", flexDirection: "row" }}>
-                              <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>
-                                {mapItem.name}
-                              </Text>
-                              <img
-                                src={require("../../assets/svg/dropdown.svg")}
-                                style={this.state.chevronStyle}
-                              ></img>
-                            </div>
-                          </button>
-                          <Menu
-                            keepMounted
-                            anchorEl={this.state.menuDropdown[mapItem.id]}
-                            open={Boolean(this.state.menuDropdown[mapItem.id])}
-                            onClose={() => {
-                              this.handleMenuDropdownClose(mapItem.id)
-                            }}
-                            style={{ marginTop: 40 }}
-                          >
-                            {mapItem.subItems?.items.map((subItem) => {
-                              return (
-                                <MenuItem
-                                  onClick={() => {
-                                    this.openScreen(subItem.action ?? "", subItem.params)
-                                  }}
-                                >
-                                  <Text
-                                    testID="header-resources-all"
-                                    style={this.headerStyles.style.dropdownText}
-                                  >
-                                    {subItem.name}
-                                  </Text>
-                                </MenuItem>
-                              )
-                            })}
-                          </Menu>
-                        </>
-                      ) : (
-                        <Button
-                          transparent
-                          testID="header-events"
-                          onPress={() => {
-                            this.openScreen(mapItem.action ?? "", mapItem.params)
-                          }}
-                          style={this.headerStyles.style.centerMenuButtons}
-                        >
-                          <Text style={this.headerStyles.style.centerMenuButtonsText}>
-                            {mapItem.name}
-                          </Text>
-                        </Button>
-                      )
-                    })}
-                  </>
-                ) : (
-                  <div>
-                    {constants["SETTING_ISVISIBLE_event"] ? (
-                      <Button
-                        transparent
-                        testID="header-events"
-                        onPress={this.openEvents}
-                        style={this.headerStyles.style.centerMenuButtons}
-                      >
-                        <Text style={this.headerStyles.style.centerMenuButtonsText}>Events</Text>
-                      </Button>
-                    ) : null}
-                    {constants["SETTING_ISVISIBLE_group"] ? (
-                      <Button
-                        transparent
-                        testID="header-groups"
-                        onPress={this.openGroups}
-                        style={this.headerStyles.style.centerMenuButtons}
-                      >
-                        <Text style={this.headerStyles.style.centerMenuButtonsText}>Groups</Text>
-                      </Button>
-                    ) : null}
-                    {constants["SETTING_ISVISIBLE_resource"] ? (
+    const loadUser = async () => {
+      const userData = await Auth.currentAuthenticatedUser()
+      setState((prev) => ({ ...prev, user: userData }))
+    }
+    loadUser()
+    //Dimensions.addEventListener("change", updateStyles)
+    return () => {
+      //Dimensions.removeEventListener("change", updateStyles)
+    }
+  }, [])
+  useEffect(() => {
+    if (props.overrideMenu != null) setState({ ...state, menus: props.overrideMenu })
+  }, [props.overrideMenu])
+  const handleMenuDropdownClick = (event: React.MouseEvent<HTMLElement>, id: string): void => {
+    const z = state.menuDropdown
+    z[id] = event.currentTarget
+    setState((prev) => ({
+      ...prev,
+      menuDropdown: z,
+    }))
+  }
+  const handleMenuDropdownClose = (id: string): void => {
+    const z = state.menuDropdown
+    z[id] = null
+    setState((prev) => ({
+      ...prev,
+      menuDropdown: z,
+    }))
+  }
+
+  return (
+    <>
+      <BrowserView>
+        <View style={headerStyles.style.container}>
+          <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity style={{ paddingTop: 6 }} onPress={openHome} testID="header-logo">
+              <Image
+                style={
+                  width < 1300
+                    ? { marginRight: 16, width: 24.82, height: 30 }
+                    : {
+                        resizeMode: "stretch",
+                        width: 126,
+                        height: 33,
+                        marginRight: 48,
+                        marginTop: 5,
+                        marginBottom: 10,
+                      }
+                }
+                source={require(`../../assets/Facelift/svg/${
+                  width < 1300 ? "JC-Logo-No-Text.svg" : "JC-Logo.svg"
+                }`)}
+              />
+            </TouchableOpacity>
+
+            {constants["SETTING_MENU_custom"] ? (
+              <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+                {state.menus.map((mapItem) => {
+                  return (mapItem.subItems?.items?.length ?? 0) > 0 ? (
+                    <>
+
                       <button
                         data-testid="header-resources"
-                        onClick={this.handleResourcesDropdownClick}
-                        onMouseEnter={() => this.setState({ resourcesStyle: resourcesStyle2 })}
-                        onMouseLeave={() => this.setState({ resourcesStyle: resourcesStyle1 })}
-                        style={this.state.resourcesStyle}
+                        onClick={(e) => {
+                          handleMenuDropdownClick(e, mapItem.id)
+                        }}
+                        onMouseEnter={() => {
+                          const z = state.menuStyle
+                          z[mapItem.id] = resourcesStyle2
+                          setState((prev) => ({
+                            ...prev,
+                            menuStyle: z,
+                          }))
+                        }}
+                        onMouseLeave={() => {
+                          const z = state.menuStyle
+                          z[mapItem.id] = resourcesStyle1
+                          setState((prev) => ({
+                            ...prev,
+                            menuStyle: z,
+                          }))
+                        }}
+                        style={state.menuStyle[mapItem.id] ?? resourcesStyle1}
                       >
                         <div style={{ display: "flex", flexDirection: "row" }}>
-                          <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>
-                            Resources
+                          <Text style={headerStyles.style.centerMenuButtonsTextResources}>
+                            {mapItem.name}
                           </Text>
                           <img
                             src={require("../../assets/svg/dropdown.svg")}
-                            style={this.state.chevronStyle}
+                            style={state.chevronStyle}
                           ></img>
                         </div>
                       </button>
-                    ) : null}
-                    {constants["SETTING_ISVISIBLE_resource"] ? (
                       <Menu
                         keepMounted
-                        anchorEl={this.state.resourcesDropdown}
-                        open={Boolean(this.state.resourcesDropdown)}
-                        onClose={this.handleResourcesDropdownClose}
+                        anchorEl={state.menuDropdown[mapItem.id]}
+                        open={Boolean(state.menuDropdown[mapItem.id])}
+                        onClose={() => {
+                          handleMenuDropdownClose(mapItem.id)
+                        }}
                         style={{ marginTop: 40 }}
                       >
-                        <MenuItem onClick={this.openResources}>
-                          <Text
-                            testID="header-resources-all"
-                            style={this.headerStyles.style.dropdownText}
-                          >
-                            All Resources
-                          </Text>
-                        </MenuItem>
-                        <Divider style={{ backgroundColor: "black" }} />
-                        <MenuItem onClick={this.openKids}>
-                          <Text style={this.headerStyles.style.dropdownText}>
-                            One Story Curriculum
-                          </Text>
-                        </MenuItem>
+                        {mapItem.subItems?.items.map((subItem) => {
+                          return (
+                            <MenuItem
+                              onClick={() => {
+                                openScreen(subItem.action ?? "", subItem.params)
+                              }}
+                            >
+                              <Text
+                                testID="header-resources-all"
+                                style={headerStyles.style.dropdownText}
+                              >
+                                {subItem.name}
+                              </Text>
+                            </MenuItem>
+                          )
+                        })}
                       </Menu>
-                    ) : null}
-                    {constants["SETTING_ISVISIBLE_course"] &&
-                    (userActions.isMemberOf("courseUser") ||
-                      userActions.isMemberOf("courseCoach") ||
-                      userActions.isMemberOf("courseAdmin")) ? (
-                      <Button
-                        transparent
-                        testID="header-courses"
-                        onPress={this.openCourses}
-                        style={this.headerStyles.style.centerMenuButtons}
-                      >
-                        <Text style={this.headerStyles.style.centerMenuButtonsText}>Courses</Text>
-                      </Button>
-                    ) : null}
-                  </div>
-                )}
-              </Body>
-              <Right style={this.headerStyles.style.headerRightContainer}>
-                {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
-                  <Button transparent testID="header-map" onPress={this.openAdmin}>
-                    <Ionicons name="ios-rocket" style={this.headerStyles.style.icon} />
-                  </Button>
+                    </>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        openScreen(mapItem.action ?? "", mapItem.params)
+                      }}
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}> {mapItem.name}</Text>
+                    </TouchableOpacity>
+                  )
+                })}
+              </View>
+            ) : (
+              <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+                {constants["SETTING_ISVISIBLE_people"] ? (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("ProfilesScreen")}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
+                  </TouchableOpacity>
+
                 ) : null}
-                {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
-                  <Button transparent testID="header-messages" onPress={this.openMessages}>
-                    <Ionicons name="mail-outline" style={this.headerStyles.style.icon} />
-                  </Button>
+                {constants["SETTING_ISVISIBLE_orgs"] ? (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("OrganizationsScreen")}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Orgs</Text>
+                  </TouchableOpacity>
                 ) : null}
-                {constants["SETTING_ISVISIBLE_MAP"] ? (
-                  this.props.onMapChange != null ? (
-                    <Button transparent testID="header-map" onPress={this.showMap}>
-                      <Ionicons name="md-map" style={this.headerStyles.style.icon} />
-                    </Button>
-                  ) : null
-                ) : null}
-                {constants["SETTING_ISVISIBLE_SEARCH"] ? (
-                  <Button transparent testID="header-search" onPress={this.openSearch}>
-                    <Ionicons name="md-search" style={this.headerStyles.style.icon} />
-                  </Button>
+                {constants["SETTING_ISVISIBLE_event"] ? (
+                  <TouchableOpacity
+                    testID="header-events"
+                    onPress={openEvents}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Events</Text>
+                  </TouchableOpacity>
                 ) : null}
 
-                <Button transparent testID="header-profile" onPress={this.openProfile}>
-                  <Ionicons name="md-person" style={this.headerStyles.style.icon} />
-                </Button>
-              </Right>
-            </Header>
-          )
-        }}
-      </HeaderJC.UserConsumer>
-    )
-  }
+                {constants["SETTING_ISVISIBLE_group"] ? (
+                  <TouchableOpacity
+                    testID="header-groups"
+                    onPress={openGroups}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Groups</Text>
+                  </TouchableOpacity>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_resource"] ? (
+                  <button
+                    data-testid="header-resources"
+                    onClick={handleResourcesDropdownClick}
+                    onMouseEnter={() => setState({ ...state, resourcesStyle: resourcesStyle2 })}
+                    onMouseLeave={() => setState({ ...state, resourcesStyle: resourcesStyle1 })}
+                    style={{ ...state.resourcesStyle, display: width > 750 ? "flex" : "none" }}
+                  >
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <Text style={headerStyles.style.centerMenuButtonsTextResources}>
+                        Resources
+                      </Text>
+                      <img
+                        src={require("../../assets/svg/dropdown.svg")}
+                        style={state.chevronStyle}
+                      ></img>
+                    </div>
+                  </button>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_resource"] ? (
+                  <Menu
+                    style={{ marginTop: 40, marginLeft: 6 }}
+                    keepMounted
+                    anchorEl={state.resourcesDropdown}
+                    open={Boolean(state.resourcesDropdown)}
+                    onClose={handleResourcesDropdownClose}
+                  >
+                    <MenuItem onClick={openResources}>
+                      <Text testID="header-resources-all" style={headerStyles.style.dropdownText}>
+                        All Resources
+                      </Text>
+                    </MenuItem>
+                    <Divider style={{ backgroundColor: "black" }} />
+                    <MenuItem onClick={openKids}>
+                      <Text style={headerStyles.style.dropdownText}>One Story Curriculum</Text>
+                    </MenuItem>
+                  </Menu>
+                ) : null}
+                {constants["SETTING_ISVISIBLE_course"] &&
+                (userActions.isMemberOf("courseUser") ||
+                  userActions.isMemberOf("courseCoach") ||
+                  userActions.isMemberOf("courseAdmin")) ? (
+                  <TouchableOpacity
+                    testID="header-courses"
+                    onPress={openCourses}
+                    style={headerStyles.style.centerMenuButtons}
+                  >
+                    <Text style={headerStyles.style.centerMenuButtonsText}>Courses</Text>
+                  </TouchableOpacity>
+                ) : null}
+                {props?.showAdmin ? (
+                  <>
+                    <TouchableOpacity
+                      testID="header-groups"
+                      onPress={() =>
+                        navigation.navigate("AdminScreen", {
+                          id: state.user?.username,
+                          create: false,
+                        })
+                      }
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}>Admin</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      testID="header-groups"
+                      onPress={() =>
+                        navigation.navigate("AdminCRMScreen", {
+                          id: state.user?.username,
+                          create: false,
+                        })
+                      }
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}>CRM</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      testID="header-groups"
+                      onPress={() =>
+                        navigation.navigate("AdminCreateProductScreen", {
+                          id: state.user?.username,
+                          create: false,
+                        })
+                      }
+                      style={headerStyles.style.centerMenuButtons}
+                    >
+                      <Text style={headerStyles.style.centerMenuButtonsText}>Products</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : null}
+              </View>
+            )}
+            <View
+              style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
+            >
+              {constants["SETTING_ISVISIBLE_SEARCH"] ? (
+                <View style={{ marginHorizontal: 12 }}>
+                  <TouchableOpacity testID="header-search" onPress={openSearch}>
+                    <Ionicons name="md-search" style={headerStyles.style.icon} />
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+
+              {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
+                <View style={{ marginHorizontal: 12 }}>
+                  <TouchableOpacity testID="header-messages" onPress={openMessages}>
+                    <Image
+                      style={headerStyles.style.icon}
+                      source={require("../../assets/Facelift/svg/Airplane-LightGrey.svg")}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+              {constants["SETTING_ISVISIBLE_BELL"] ? (
+                <View style={{ marginHorizontal: 12 }}>
+                  <TouchableOpacity onPress={openMessages}>
+                    <Image
+                      style={headerStyles.style.icon}
+                      source={require("../../assets/Facelift/svg/Bell-LightGrey.svg")}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
+
+            <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
+              <TouchableOpacity
+                testID="header-hamburger"
+                style={headerStyles.style.leftButtons}
+                onPress={openDrawer}
+              >
+                {isOpen ? (
+                  <Image
+                    style={headerStyles.style.icon}
+                    source={require("../../assets/header/X.png")}
+                  />
+                ) : (
+                  <Image
+                    style={headerStyles.style.icon}
+                    source={require("../../assets/header/Boxes.png")}
+                  />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </BrowserView>
+      <MobileOnlyView>
+        <View
+          style={{
+            flexDirection: "column",
+            flex: 1,
+            borderBottomWidth: 1,
+            borderBottomColor: "#E4E1E1",
+            paddingTop: 16,
+            paddingHorizontal: 16,
+            backgroundColor: "#fff",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              paddingBottom: 12,
+            }}
+          >
+            {props.title !== "Home" ? (
+              <TouchableOpacity
+                onPress={() => {
+                  if (props.backAction) props.backAction()
+                  else navigation.goBack()
+                }}
+              >
+                <Image
+                  source={require("../../assets/header/Left-Arrow.png")}
+                  style={{ width: 24, height: 24 }}
+                />
+              </TouchableOpacity>
+            ) : null}
+            <Text
+              numberOfLines={1}
+              style={{
+                marginLeft: determineTitleMarginLeft(props?.controls?.length),
+                fontFamily: "Graphik-Semibold-App",
+                fontSize: 15,
+                lineHeight: 24,
+                color: "#1A0706",
+                textAlign: "center",
+                flex: 1,
+              }}
+            >
+              {props.title}
+            </Text>
+            {props.controls ? <HeaderControls controls={props.controls} /> : null}
+          </View>
+          {props.subnav ? <SubHeader navItems={props.subnav} /> : null}
+        </View>
+      </MobileOnlyView>
+    </>
+  )
 }

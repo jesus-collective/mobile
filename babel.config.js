@@ -1,12 +1,12 @@
 module.exports = function (api) {
-  api.cache(true);
+  api.cache(true)
   return {
-    presets: ['babel-preset-expo'],
+    presets: ["babel-preset-expo"],
     plugins: [
       "babel-plugin-dynamic-import-node",
       "transform-class-properties",
-      "istanbul"
-
-    ]
-  };
-};
+      "istanbul",
+      "react-native-reanimated/plugin",
+    ],
+  }
+}

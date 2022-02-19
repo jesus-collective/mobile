@@ -267,5 +267,149 @@
         }
       }
     }
+  },
+  "jcfacelift": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-jc-mobile-jcfacelift-14730-authRole",
+      "UnauthRoleArn": "arn:aws:iam::536749583917:role/amplify-jc-mobile-jcfacelift-14730-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::536749583917:role/amplify-jc-mobile-jcfacelift-14730-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+      "UnauthRoleName": "amplify-jc-mobile-jcfacelift-14730-unauthRole",
+      "StackName": "amplify-jc-mobile-jcfacelift-14730",
+      "StackId": "arn:aws:cloudformation:us-east-1:536749583917:stack/amplify-jc-mobile-jcfacelift-14730/39394540-5597-11ec-beec-128d51ee02b5",
+      "AmplifyAppId": "do6mkavcy6lrc"
+    },
+    "categories": {
+      "function": {
+        "jcmobilePostConfirmation": {
+          "GROUP": "verifiedUsers",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobilePostConfirmation-31445435787339536e7a-build.zip"
+        },
+        "S3Trigger14f1cefa": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/S3Trigger14f1cefa-46635956635a47386a34-build.zip"
+        },
+        "S3Trigger839efa13": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/S3Trigger839efa13-30442f382f4776525456-build.zip"
+        },
+        "AdminQueries7403b6cf": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/AdminQueries7403b6cf-544c346a684e50343973-build.zip"
+        },
+        "jcmobilePreSignup": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobilePreSignup-434534496c672b494b66-build.zip"
+        },
+        "jcUpdateMainUserGroup": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcUpdateMainUserGroup-363248633235546e4971-build.zip"
+        },
+        "jcProcessDMAlerts": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcProcessDMAlerts-32736c2b4c3872313632-build.zip"
+        },
+        "jcProcessMessageAlerts": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcProcessMessageAlerts-7161796f773742767351-build.zip"
+        },
+        "jcmobileStripeCreatePaymentIntent": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileStripeCreatePaymentIntent-396e62757562437a4d51-build.zip"
+        },
+        "jcmobilePreTokenGeneration": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobilePreTokenGeneration-64526669385064423473-build.zip"
+        },
+        "jcmobileStripWebhook": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileStripWebhook-6e364f3045374e304f57-build.zip"
+        },
+        "jcmobileStripCreateCustomer": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileStripCreateCustomer-4a6f635073497a4c596a-build.zip"
+        },
+        "jcmobileStripCreateSubscription": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-552f3737632b51676d46-build.zip"
+        },
+        "jcmobileStripPreviewInvoice": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-2b376d386c71337a5663-build.zip"
+        },
+        "jcmobileGetOrgStripeSubs": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileGetOrgStripeSubs-396d6e78583637352b47-build.zip"
+        },
+        "jcmobileCreateCognitoOrgUser": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileCreateCognitoOrgUser-476e324e4f4e3257786c-build.zip"
+        },
+        "jcmobileSendInviteToOrgUser": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileSendInviteToOrgUser-68336d344679666f712b-build.zip"
+        },
+        "jcmobileStripListInvoices": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileStripListInvoices-50526b66595943707863-build.zip"
+        },
+        "jcmobileStripCancelSubscription": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileStripCancelSubscription-706a4c586e66314e746a-build.zip"
+        },
+        "jcmobileSendHelpRequest": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobileSendHelpRequest-48622f753751562b4775-build.zip"
+        },
+        "jcHandleActivity": {
+          "userPoolId": "us-east-1_yyA79SztQ",
+          "userPoolWebClientId": "3foidb1pli6fc6l52geqvf7ovm",
+          "identityPoolId": "us-east-1:5cc0d77d-41ea-46e9-959b-447174139b1e",
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcHandleActivity-486d71615965666d4876-build.zip"
+        },
+        "jcmobilePinpointCleanEndpoints": {
+          "deploymentBucketName": "amplify-jc-mobile-jcfacelift-14730-deployment",
+          "s3Key": "amplify-builds/jcmobilePinpointCleanEndpoints-552f434b7942464f4a75-build.zip"
+        }
+      },
+      "auth": {
+        "jcmobile": {
+          "facebookAppId": "abc",
+          "googleClientId": "def"
+        },
+        "userPoolGroups": {},
+        "true": {
+          "facebookAppId": "abc",
+          "googleClientId": "def"
+        }
+      }
+    }
   }
 }

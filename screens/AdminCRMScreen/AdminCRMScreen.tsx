@@ -2,7 +2,6 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
-import { MapData } from "components/MyGroups/MyGroups"
 import moment from "moment"
 import { Button, Container, Content, Text } from "native-base"
 import React from "react"
@@ -14,9 +13,9 @@ import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
-import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import { MapData } from "../../components/MyGroups/MyGroups"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateOrganizationInput,
@@ -1019,7 +1018,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
     )
   }
   static UserConsumer = UserContext.Consumer
-
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      header: (props: { navigation: StackNavigationProp<any, any> | undefined }) => {
+        return <Header showAdmin={true} navigation={props.navigation} title={"Admin Page"} />
+      },
+    })
+  }
   render(): React.ReactNode {
     return (
       <AdminScreen.UserConsumer>
@@ -1028,9 +1033,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
           console.log("AdminScreen")
           return (
             <Container testID="events">
-              <Header title="Jesus Collective" navigation={this.props.navigation} />
-
-              <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
               {userActions.isMemberOf("admin") ? (
                 <Content>
                   <Container style={this.styles.style.fontRegular}>

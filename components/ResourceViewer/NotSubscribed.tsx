@@ -1,7 +1,8 @@
 import React from "react"
 import { Linking, Platform, Text, View } from "react-native"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import GenericButton from "../GenericButton/GenericButton"
 
 interface ModalProps {
   onHide(): void
@@ -56,8 +57,17 @@ interface ButtonProps {
 
 export function NotSubscribedButton({ onPress }: ButtonProps): JSX.Element {
   return (
-    <JCButton onPress={onPress} buttonType={ButtonTypes.UpgradeToDownload}>
-      Upgrade to download
-    </JCButton>
+    <GenericButton
+      label="Upgrade to download"
+      action={onPress}
+      style={{
+        ButtonStyle: [
+          GenericButtonStyles.PrimaryButtonStyle,
+          GenericButtonStyles.DisabledButtonStyle,
+        ],
+        LabelStyle: [GenericButtonStyles.PrimaryLabelStyle, GenericButtonStyles.DisabledLabelStyle],
+        custom: { width: 262 },
+      }}
+    />
   )
 }

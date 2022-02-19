@@ -87,7 +87,7 @@
       "email"
     ],
     "adminQueries": true,
-    "adminQueryGroup": "admin",
+    "adminQueryGroup": "userpool",
     "hostedUI": false,
     "thirdPartyAuth": true,
     "authProviders": [
@@ -158,6 +158,8 @@
     ],
     "parentStack": {
       "Ref": "AWS::StackId"
-    }
+    },
+    "facebookAppId": "abc",
+    "googleClientId": "def"
   }
 }

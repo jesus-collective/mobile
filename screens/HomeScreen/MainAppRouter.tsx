@@ -4,6 +4,7 @@ import React, { Component, lazy } from "react"
 import { ListGroupsQuery, ListOrganizationsQuery, ListUsersQuery } from "src/API"
 import { EmptyProps } from "src/types"
 import { Data, UserGroupType } from "../../components/Data/Data"
+import Header from "../../components/Header/Header"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import { MapContext, MapState } from "./MapContext"
 import { MapConverter } from "./MapConverter"
@@ -13,23 +14,28 @@ const Stack = createStackNavigator()
 const HomeScreen = lazy(() => import("./HomeScreen"))
 const ConversationScreen = lazy(() => import("../ConversationScreen/ConversationScreen"))
 const OrganizationsScreen = lazy(() => import("../OrganizationsScreen/OrganizationsScreen"))
-const OrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationScreen"))
+const OrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationProfile"))
+const OldOrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationScreen.old"))
 const GenericGroupScreen = lazy(() => import("../GenericGroupScreen/GenericGroupScreen"))
 const CoursesScreen = lazy(() => import("../CoursesScreen/CoursesScreen"))
 const CourseOverviewScreen = lazy(() => import("../CourseOverviewScreen/CourseOverviewScreen"))
 const CourseHomeScreen = lazy(() => import("../CourseHomeScreen/CourseHomeScreen"))
 const GroupsScreen = lazy(() => import("../GroupsScreen/GroupsScreen"))
 const EventsScreen = lazy(() => import("../EventsScreen/EventsScreen"))
+const EventScreen = lazy(() => import("../EventScreen/EventScreen"))
+const GroupScreen = lazy(() => import("../GroupScreen/GroupScreen"))
 const ResourceScreen = lazy(() => import("../ResourceScreen/ResourceScreen"))
 const ResourceConfigureScreen = lazy(() => import("../ResourceScreen/ResourceConfigureScreen"))
 const ResourceDisplayScreen = lazy(() => import("../ResourceScreen/ResourceDisplayScreen"))
 const ResourcesScreen = lazy(() => import("../ResourcesScreen/ResourcesScreen"))
 const ProfileScreen = lazy(() => import("../ProfileScreen/ProfileScreen"))
+const EditProfileScreen = lazy(() => import("../../components/MyProfile/MyProfile"))
 const ProfilesScreen = lazy(() => import("../ProfilesScreen/ProfilesScreen"))
 const SearchScreen = lazy(() => import("../SearchScreen/SearchScreen"))
 const AdminScreen = lazy(() => import("../AdminScreen/AdminScreen"))
 const AdminCRMScreen = lazy(() => import("../AdminCRMScreen/AdminCRMScreen"))
 const CoursePaymentScreen = lazy(() => import("../CoursePaymentScreen/CoursePaymentScreen"))
+
 const PurchaseConfirmationScreen = lazy(
   () => import("../PurchaseConfirmationScreen/PurchaseConfirmationScreen")
 )
@@ -139,12 +145,22 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
             return (
               <Stack.Navigator
                 initialRouteName="HomeScreen"
-                screenOptions={{
-                  headerMode: "none",
+                screenOptions={({ route, navigation }) => ({
                   animationEnabled: false,
                   gestureEnabled: false,
                   cardOverlayEnabled: false,
-                }}
+                  headerMode: "screen",
+                  cardStyle: { flex: 1, backgroundColor: "#fffdfc" },
+                  presentation: "card",
+                  header: (props) => {
+                    return (
+                      <Header
+                        title={(props.options.headerTitle as string) ?? "" ?? props.route.name}
+                        navigation={navigation}
+                      />
+                    )
+                  },
+                })}
               >
                 {userState.hasPaidState == PaidStatus.Success &&
                 userState.hasCompletedPersonalProfile == ProfileStatus.Completed ? (
@@ -152,7 +168,7 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="HomeScreen"
                       component={HomeScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Home", title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="GenericGroupScreen"
@@ -160,19 +176,34 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
+                      name="EditProfileScreen"
+                      component={EditProfileScreen}
+                      options={{ headerTitle: "Groups", title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
                       name="GroupsScreen"
                       component={GroupsScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Groups", title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="GroupScreen"
+                      component={GroupScreen}
+                      options={{ headerTitle: "Group", title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="EventsScreen"
                       component={EventsScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Events", title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="EventScreen"
+                      component={EventScreen}
+                      options={{ headerTitle: "Event", title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="ResourcesScreen"
                       component={ResourcesScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Resources", title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="ResourceScreen"
@@ -192,11 +223,16 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="OrganizationsScreen"
                       component={OrganizationsScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Organizations", title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="OrganizationScreen"
                       component={OrganizationScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="EditOrganizationScreen"
+                      component={OldOrganizationScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
@@ -207,7 +243,7 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="CoursesScreen"
                       component={CoursesScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Courses", title: "Jesus Collective" }}
                     />
 
                     <Stack.Screen
@@ -219,13 +255,13 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="ConversationScreen"
                       component={ConversationScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Messages", title: "Jesus Collective" }}
                     />
 
                     <Stack.Screen
                       name="SearchScreen"
                       component={SearchScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "Search", title: "Jesus Collective" }}
                     />
 
                     <Stack.Screen
@@ -237,7 +273,7 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="ProfilesScreen"
                       component={ProfilesScreen}
-                      options={{ title: "Jesus Collective" }}
+                      options={{ headerTitle: "People", title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="AdminScreen"
@@ -299,7 +335,17 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
+                      name="GroupScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
                       name="EventsScreen"
+                      component={Nothing}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="EventScreen"
                       component={Nothing}
                       options={{ title: "Jesus Collective" }}
                     />
@@ -343,66 +389,46 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       component={Nothing}
                       options={{ title: "Jesus Collective" }}
                     />
-
-                    <Stack.Screen
-                      name="CourseHomeScreen"
-                      component={Nothing}
-                      options={{ title: "Jesus Collective" }}
-                    />
-
-                    <Stack.Screen
-                      name="ConversationScreen"
-                      component={Nothing}
-                      options={{ title: "Jesus Collective" }}
-                    />
-
-                    <Stack.Screen
-                      name="SearchScreen"
-                      component={Nothing}
-                      options={{ title: "Jesus Collective" }}
-                    />
-
-                    <Stack.Screen
-                      name="ProfileScreen"
-                      component={Nothing}
-                      options={{ title: "Jesus Collective" }}
-                    />
-
                     <Stack.Screen
                       name="ProfilesScreen"
-                      component={Nothing}
+                      component={ProfilesScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="AdminScreen"
-                      component={Nothing}
+                      component={AdminScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="AdminCRMScreen"
-                      component={Nothing}
+                      component={AdminCRMScreen}
                       options={{ title: "Jesus Collective" }}
                     />
 
                     <Stack.Screen
                       name="CoursePaymentScreen"
-                      component={Nothing}
+                      component={CoursePaymentScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="PurchaseConfirmationScreen"
-                      component={Nothing}
+                      component={PurchaseConfirmationScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="AdminCreateProductScreen"
-                      component={Nothing}
+                      component={AdminCreateProductScreen}
                       options={{ title: "Jesus Collective" }}
                     />
 
                     <Stack.Screen
                       name="AdminMenuScreen"
-                      component={Nothing}
+                      component={AdminMenuScreen}
+                      options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="AdminStartupScreen"
+                      component={AdminStartupScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen

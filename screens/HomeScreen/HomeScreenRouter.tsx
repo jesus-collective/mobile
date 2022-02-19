@@ -20,6 +20,7 @@ import {
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import MainAuthRouter from "./MainAuthRouter"
+import MainBottomTabsRouter from "./MainBottomTabsRouter"
 import MainDrawerRouter from "./MainDrawerRouter"
 import { PaidStatus, ProfileStatus, UserContext, UserState } from "./UserContext"
 
@@ -369,7 +370,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
                 this.isMemberOf("courseUser") ||
                 this.isMemberOf("courseCoach")
               ) {
-                RootNavigation.navigate("mainApp", {})
+                RootNavigation.navigate(isMobile ? "mainApp" : "mainApp2", {})
                 break
               } else if (
                 !this.state.initialUrl.includes("app/resource") &&
@@ -377,7 +378,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
                   this.isMemberOf("subscriptionkykids") ||
                   this.isMemberOf("subscriptionkyyouth"))
               ) {
-                RootNavigation.navigate("mainApp", {
+                RootNavigation.navigate("mainApp2", {
                   screen: "mainDrawer",
                   params: {
                     screen: "ResourceScreen",
@@ -387,7 +388,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
                 break
               }*/
             }
-            RootNavigation.navigate("mainApp", {})
+            RootNavigation.navigate(isMobile ? "mainApp" : "mainApp2", {})
 
             break
           }
@@ -504,9 +505,9 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         >
           <MainStack.Navigator
             initialRouteName="auth"
-            headerMode="none"
-            mode="card"
             screenOptions={{
+              headerShown: false,
+              presentation: "card",
               animationEnabled: false,
               gestureEnabled: false,
               cardOverlayEnabled: false,
@@ -521,15 +522,29 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
               }}
               options={{ title: "Jesus Collective" }}
             />
-            <MainStack.Screen
-              name="mainApp"
-              component={MainDrawerRouter}
-              initialParams={{
-                screen: this.state.initialAuthType,
-                params: this.state.initialParams,
-              }}
-              options={{ title: "Jesus Collective" }}
-            />
+            {isMobile ? (
+              <MainStack.Screen
+                name="mainApp"
+                component={MainBottomTabsRouter}
+                options={{
+                  title: "Jesus Collective",
+                }}
+                initialParams={{
+                  screen: this.state.initialAuthType,
+                  params: this.state.initialParams,
+                }}
+              />
+            ) : (
+              <MainStack.Screen
+                name="mainApp2"
+                component={MainDrawerRouter}
+                initialParams={{
+                  screen: this.state.initialAuthType,
+                  params: this.state.initialParams,
+                }}
+                options={{ title: "Jesus Collective" }}
+              />
+            )}
           </MainStack.Navigator>
         </HomeScreenRouter.UserProvider>
       )

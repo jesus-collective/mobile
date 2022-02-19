@@ -602,13 +602,12 @@ const resourceStyles = EStyleSheet.create({
           top: "24vw",
           width: "75%",
           overflow: "none",
+          borderWidth: 1,
+          borderColor: "#E4E1E1",
           position: "absolute",
           backgroundColor: "#ffffff",
           height: 195,
           borderRadius: 8,
-          shadowOffset: { width: 0, height: 0 },
-          shadowColor: "rgba(0, 0, 0, 0.19)",
-          shadowRadius: 30,
           justifyContent: "center",
         }
       : {
@@ -665,11 +664,10 @@ const resourceStyles = EStyleSheet.create({
           height: "100%",
         },
   resourceHeaderImgView: {
-    backgroundColor: "#000000",
     position: "relative",
     width: "100%",
     height: "100%",
-    borderRadius: 0,
+    borderRadius: 8,
   },
   resourcesSubMenu: {
     flex: 1,
@@ -850,7 +848,7 @@ const resourceStyles = EStyleSheet.create({
     Platform.OS === "web"
       ? {
           height: 463,
-          width: 425,
+
           alignSelf: "flex-start",
           padding: "0%",
           // paddingLeft: "0.25rem",
@@ -868,7 +866,6 @@ const resourceStyles = EStyleSheet.create({
         }
       : {
           height: 463,
-          width: 425,
           alignSelf: "flex-start",
           padding: "0%",
           // paddingLeft: "0.25rem",
@@ -918,7 +915,7 @@ const resourceStyles = EStyleSheet.create({
           marginBottom: 36,
         },
   resourceGridContainer: {
-    overflow: "scroll",
+    overflow: "none",
   },
   resourcesRichTextContainer: {
     width: "80%",
@@ -948,12 +945,10 @@ const resourceStyles = EStyleSheet.create({
   resourceMenuLineBreak: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    width: 189,
-    marginLeft: 175,
-    borderBottomColor: "#CCCCCC",
+    borderBottomColor: "#E4E1E1",
     marginTop: 0,
     marginBottom: 0,
-    marginRight: 15,
+    flex: 1,
     alignSelf: "center",
   },
 
@@ -1104,10 +1099,6 @@ const resourceStyles = EStyleSheet.create({
     resourcesRichTextContainer: {
       width: "90%",
     },
-    resourceMenuLineBreak: {
-      marginLeft: 40,
-      width: 135,
-    },
   },
   "@media (min-width: 769) and (max-width: 1024)": {
     resourcefileFieldWrapper: {
@@ -1126,10 +1117,6 @@ const resourceStyles = EStyleSheet.create({
     },
     resourcesRichTextContainer: {
       width: "90%",
-    },
-    resourceMenuLineBreak: {
-      marginLeft: 130,
-      width: 150,
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {

@@ -12,6 +12,16 @@ exports.handler = (event, context, callback) => {
     "login.test.7@jesuscollective.com",
     "login.test.8@jesuscollective.com",
     "login.test.9@jesuscollective.com",
+    "lucas.test.0@jesuscollective.com",
+    "lucas.test.1@jesuscollective.com",
+    "lucas.test.2@jesuscollective.com",
+    "lucas.test.3@jesuscollective.com",
+    "lucas.test.4@jesuscollective.com",
+    "lucas.test.5@jesuscollective.com",
+    "lucas.test.6@jesuscollective.com",
+    "lucas.test.7@jesuscollective.com",
+    "lucas.test.8@jesuscollective.com",
+    "lucas.test.9@jesuscollective.com",
     "lucas.test.10@jesuscollective.com",
     "lucas.test.11@jesuscollective.com",
     "lucas.test.12@jesuscollective.com",
@@ -104,7 +114,10 @@ exports.handler = (event, context, callback) => {
     "coursecoach4@jesuscollective.com",
     "legacyusergroup1@jesuscollective.com",
   ]
-  if (process.env.ENV == "beta" && emailList.includes(event.request.userAttributes.email)) {
+  if (
+    (process.env.ENV == "beta" || process.env.ENV == "jcfacelift") &&
+    emailList.includes(event.request.userAttributes.email)
+  ) {
     event.response.autoConfirmUser = "true"
     event.response.autoVerifyPhone = "true"
     event.response.autoVerifyEmail = "true"

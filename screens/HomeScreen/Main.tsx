@@ -22,20 +22,62 @@ const linking = {
   config: {
     screens: {
       mainApp: {
+        // points to mobile
         path: "app",
+        screens: {
+          //missing tab navigator screen configs (?)
+          mainDrawer: {
+            path: "",
+            screens: {
+              HomeScreen: "home",
+              GenericGroupScreen: "genericgroup/:groupType/:create",
+              GroupsScreen: "groups",
+              GroupScreen: "groups/:id",
+              EventsScreen: "events",
+              EventScreen: "events/:id",
+              ResourceScreen: "resource",
+              ResourceConfigureScreen: "resourceconfig/:id",
+              ResourceDisplayScreen: "resourcedisplay/:id",
+              ResourcesScreen: "resources",
+              OrganizationScreen: "organizations/:id",
+              OrganizationsScreen: "organizations",
+              CourseOverviewScreen: "courseoverview",
+              CoursesScreen: "courses",
+              CourseHomeScreen: "course",
+              CourseDetailScreen: "coursedetail",
+              CourseCoachingScreen: "coursecoaching",
+              ConversationScreen: "conversation",
+              SearchScreen: "search",
+              ProfileScreen: "profile",
+              ProfilesScreen: "profiles",
+              AdminScreen: "admin",
+              AdminCRMScreen: "admin-crm",
+              AdminMenuScreen: "admin-menu",
+              AdminStartupScreen: "admin-startup",
+              AdminCreateProductScreen: "admin-products",
+              CoursePaymentScreen: "coursepayment",
+              PurchaseConfirmationScreen: "success",
+            },
+          },
+        },
+      },
+      mainApp2: {
+        path: "web",
         screens: {
           mainDrawer: {
             path: "",
             screens: {
               HomeScreen: "home",
-              GenericGroupScreen: "group/:groupType/:id/:create",
+              GenericGroupScreen: "genericgroup/:groupType/:create",
               GroupsScreen: "groups",
+              GroupScreen: "groups/:id",
               EventsScreen: "events",
+              EventScreen: "events/:id",
               ResourceScreen: "resource",
               ResourceConfigureScreen: "resourceconfig/:id",
               ResourceDisplayScreen: "resourcedisplay/:id",
               ResourcesScreen: "resources",
-              OrganizationScreen: "organization",
+              OrganizationScreen: "organization/:id",
               OrganizationsScreen: "organizations",
               CourseOverviewScreen: "courseoverview",
               CoursesScreen: "courses",
@@ -123,7 +165,7 @@ export default function Main(props: Props): JSX.Element {
       linking={linking}
       theme={{
         ...DefaultTheme,
-        colors: { ...DefaultTheme.colors, background: "rgb(255, 255, 255)" },
+        colors: { ...DefaultTheme.colors, background: "#FFFDFC" },
       }}
       onStateChange={(state) => {
         console.log({ "Persistence State": state })
