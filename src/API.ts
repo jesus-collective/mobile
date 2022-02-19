@@ -2252,6 +2252,57 @@ export type DeleteSubMenuInput = {
   id: string,
 };
 
+export type CreateCustomPricingInput = {
+  id?: string | null,
+  emailAddress?: string | null,
+  type?: CustomPricingType | null,
+  lineItems?: Array< LineItemInput | null > | null,
+};
+
+export enum CustomPricingType {
+  monthly = "monthly",
+  weekly = "weekly",
+  yearly = "yearly",
+  oneTime = "oneTime",
+}
+
+
+export type LineItemInput = {
+  itemId?: string | null,
+  count?: string | null,
+  amount?: string | null,
+  description?: string | null,
+};
+
+export type CustomPricing = {
+  __typename: "CustomPricing",
+  id?: string,
+  emailAddress?: string | null,
+  type?: CustomPricingType | null,
+  lineItems?:  Array<LineItem | null > | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type LineItem = {
+  __typename: "LineItem",
+  itemId?: string | null,
+  count?: string | null,
+  amount?: string | null,
+  description?: string | null,
+};
+
+export type UpdateCustomPricingInput = {
+  id: string,
+  emailAddress?: string | null,
+  type?: CustomPricingType | null,
+  lineItems?: Array< LineItemInput | null > | null,
+};
+
+export type DeleteCustomPricingInput = {
+  id: string,
+};
+
 export type EventBriteEventList = {
   __typename: "EventBriteEventList",
   pagination?: EventBritePagination,
@@ -3180,6 +3231,26 @@ export type SearchableUserConnection = {
   items?:  Array<User | null >,
   nextToken?: string | null,
   total?: number | null,
+};
+
+export type ModelCustomPricingFilterInput = {
+  id?: ModelIDFilterInput | null,
+  emailAddress?: ModelStringFilterInput | null,
+  type?: ModelCustomPricingTypeFilterInput | null,
+  and?: Array< ModelCustomPricingFilterInput | null > | null,
+  or?: Array< ModelCustomPricingFilterInput | null > | null,
+  not?: ModelCustomPricingFilterInput | null,
+};
+
+export type ModelCustomPricingTypeFilterInput = {
+  eq?: CustomPricingType | null,
+  ne?: CustomPricingType | null,
+};
+
+export type ModelCustomPricingConnection = {
+  __typename: "ModelCustomPricingConnection",
+  items?:  Array<CustomPricing | null >,
+  nextToken?: string | null,
 };
 
 export type BatchCreateDirectMessageUsersMutationVariables = {
@@ -17410,6 +17481,72 @@ export type DeleteSubMenuMutation = {
   } | null,
 };
 
+export type CreateCustomPricingMutationVariables = {
+  input?: CreateCustomPricingInput,
+};
+
+export type CreateCustomPricingMutation = {
+  createCustomPricing?:  {
+    __typename: "CustomPricing",
+    id: string,
+    emailAddress?: string | null,
+    type?: CustomPricingType | null,
+    lineItems?:  Array< {
+      __typename: "LineItem",
+      itemId?: string | null,
+      count?: string | null,
+      amount?: string | null,
+      description?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCustomPricingMutationVariables = {
+  input?: UpdateCustomPricingInput,
+};
+
+export type UpdateCustomPricingMutation = {
+  updateCustomPricing?:  {
+    __typename: "CustomPricing",
+    id: string,
+    emailAddress?: string | null,
+    type?: CustomPricingType | null,
+    lineItems?:  Array< {
+      __typename: "LineItem",
+      itemId?: string | null,
+      count?: string | null,
+      amount?: string | null,
+      description?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCustomPricingMutationVariables = {
+  input?: DeleteCustomPricingInput,
+};
+
+export type DeleteCustomPricingMutation = {
+  deleteCustomPricing?:  {
+    __typename: "CustomPricing",
+    id: string,
+    emailAddress?: string | null,
+    type?: CustomPricingType | null,
+    lineItems?:  Array< {
+      __typename: "LineItem",
+      itemId?: string | null,
+      count?: string | null,
+      amount?: string | null,
+      description?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type EventBriteListEventsQueryVariables = {
   page?: string | null,
 };
@@ -23832,6 +23969,56 @@ export type SearchUsersQuery = {
     } | null >,
     nextToken?: string | null,
     total?: number | null,
+  } | null,
+};
+
+export type GetCustomPricingQueryVariables = {
+  id?: string,
+};
+
+export type GetCustomPricingQuery = {
+  getCustomPricing?:  {
+    __typename: "CustomPricing",
+    id: string,
+    emailAddress?: string | null,
+    type?: CustomPricingType | null,
+    lineItems?:  Array< {
+      __typename: "LineItem",
+      itemId?: string | null,
+      count?: string | null,
+      amount?: string | null,
+      description?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCustomPricingsQueryVariables = {
+  filter?: ModelCustomPricingFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCustomPricingsQuery = {
+  listCustomPricings?:  {
+    __typename: "ModelCustomPricingConnection",
+    items:  Array< {
+      __typename: "CustomPricing",
+      id: string,
+      emailAddress?: string | null,
+      type?: CustomPricingType | null,
+      lineItems?:  Array< {
+        __typename: "LineItem",
+        itemId?: string | null,
+        count?: string | null,
+        amount?: string | null,
+        description?: string | null,
+      } | null > | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -37404,6 +37591,60 @@ export type OnDeleteUserSubscription = {
       emailCourseMessage?: string | null,
       emailPromotions?: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCustomPricingSubscription = {
+  onCreateCustomPricing?:  {
+    __typename: "CustomPricing",
+    id: string,
+    emailAddress?: string | null,
+    type?: CustomPricingType | null,
+    lineItems?:  Array< {
+      __typename: "LineItem",
+      itemId?: string | null,
+      count?: string | null,
+      amount?: string | null,
+      description?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCustomPricingSubscription = {
+  onUpdateCustomPricing?:  {
+    __typename: "CustomPricing",
+    id: string,
+    emailAddress?: string | null,
+    type?: CustomPricingType | null,
+    lineItems?:  Array< {
+      __typename: "LineItem",
+      itemId?: string | null,
+      count?: string | null,
+      amount?: string | null,
+      description?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCustomPricingSubscription = {
+  onDeleteCustomPricing?:  {
+    __typename: "CustomPricing",
+    id: string,
+    emailAddress?: string | null,
+    type?: CustomPricingType | null,
+    lineItems?:  Array< {
+      __typename: "LineItem",
+      itemId?: string | null,
+      count?: string | null,
+      amount?: string | null,
+      description?: string | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,

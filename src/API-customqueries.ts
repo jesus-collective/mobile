@@ -76,7 +76,7 @@ export enum UserGroupType {
 
 export type ModelMenuConnection = {
   __typename: "ModelMenuConnection"
-  items?: Array<Menu>
+  items?: Array<Menu | null>
   nextToken?: string | null
 }
 
@@ -95,7 +95,7 @@ export type Menu = {
 
 export type ModelSubMenuConnection = {
   __typename: "ModelSubMenuConnection"
-  items?: Array<SubMenu>
+  items?: Array<SubMenu | null>
   nextToken?: string | null
 }
 
@@ -124,7 +124,7 @@ export type ModelDirectMessageRoomFilterInput = {
 
 export type ModelDirectMessageRoomConnection = {
   __typename: "ModelDirectMessageRoomConnection"
-  items?: Array<DirectMessageRoom>
+  items?: Array<DirectMessageRoom | null>
   nextToken?: string | null
 }
 
@@ -141,7 +141,7 @@ export type DirectMessageRoom = {
 
 export type ModelDirectMessageUserConnection = {
   __typename: "ModelDirectMessageUserConnection"
-  items?: Array<DirectMessageUser>
+  items?: Array<DirectMessageUser | null>
   nextToken?: string | null
 }
 
@@ -244,7 +244,7 @@ export type Image = {
 
 export type ModelOrganizationMemberConnection = {
   __typename: "ModelOrganizationMemberConnection"
-  items?: Array<OrganizationMember>
+  items?: Array<OrganizationMember | null>
   nextToken?: string | null
 }
 
@@ -300,13 +300,13 @@ export type Organization = {
 
 export type ModelOrganizationConnection = {
   __typename: "ModelOrganizationConnection"
-  items?: Array<Organization>
+  items?: Array<Organization | null>
   nextToken?: string | null
 }
 
 export type ModelGroupConnection = {
   __typename: "ModelGroupConnection"
-  items?: Array<Group>
+  items?: Array<Group | null>
   nextToken?: string | null
 }
 
@@ -343,7 +343,7 @@ export type Group = {
 
 export type ModelGroupMemberConnection = {
   __typename: "ModelGroupMemberConnection"
-  items?: Array<GroupMember>
+  items?: Array<GroupMember | null>
   nextToken?: string | null
 }
 
@@ -360,7 +360,7 @@ export type GroupMember = {
 
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection"
-  items?: Array<Message>
+  items?: Array<Message | null>
   nextToken?: string | null
 }
 
@@ -385,7 +385,7 @@ export type Message = {
 
 export type ModelReplyConnection = {
   __typename: "ModelReplyConnection"
-  items?: Array<Reply>
+  items?: Array<Reply | null>
   nextToken?: string | null
 }
 
@@ -411,7 +411,7 @@ export type Reply = {
 
 export type ModelResourceRootConnection = {
   __typename: "ModelResourceRootConnection"
-  items?: Array<ResourceRoot>
+  items?: Array<ResourceRoot | null>
   nextToken?: string | null
 }
 
@@ -431,7 +431,7 @@ export type ResourceRoot = {
 
 export type ModelResourceConnection = {
   __typename: "ModelResourceConnection"
-  items?: Array<Resource>
+  items?: Array<Resource | null>
   nextToken?: string | null
 }
 
@@ -474,7 +474,7 @@ export enum ResourceDetailType {
 
 export type ModelResourceSeriesConnection = {
   __typename: "ModelResourceSeriesConnection"
-  items?: Array<ResourceSeries>
+  items?: Array<ResourceSeries | null>
   nextToken?: string | null
 }
 
@@ -500,7 +500,7 @@ export type ResourceSeries = {
 
 export type ModelResourceEpisodeConnection = {
   __typename: "ModelResourceEpisodeConnection"
-  items?: Array<ResourceEpisode>
+  items?: Array<ResourceEpisode | null>
   nextToken?: string | null
 }
 
@@ -523,7 +523,7 @@ export type ResourceEpisode = {
 
 export type ModelResourceMenuItemConnection = {
   __typename: "ModelResourceMenuItemConnection"
-  items?: Array<ResourceMenuItem>
+  items?: Array<ResourceMenuItem | null>
   nextToken?: string | null
 }
 
@@ -616,7 +616,7 @@ export enum ResourcePageItemStyle {
 
 export type ModelDirectMessageConnection = {
   __typename: "ModelDirectMessageConnection"
-  items?: Array<DirectMessage>
+  items?: Array<DirectMessage | null>
   nextToken?: string | null
 }
 
@@ -640,7 +640,7 @@ export type DirectMessage = {
 
 export type ModelDirectMessageReplyConnection = {
   __typename: "ModelDirectMessageReplyConnection"
-  items?: Array<DirectMessageReply>
+  items?: Array<DirectMessageReply | null>
   nextToken?: string | null
 }
 
@@ -667,7 +667,7 @@ export type DirectMessageReply = {
 
 export type ModelCourseTriadCoachesConnection = {
   __typename: "ModelCourseTriadCoachesConnection"
-  items?: Array<CourseTriadCoaches>
+  items?: Array<CourseTriadCoaches | null>
   nextToken?: string | null
 }
 
@@ -713,7 +713,7 @@ export type CourseInfo = {
 
 export type ModelCourseWeekConnection = {
   __typename: "ModelCourseWeekConnection"
-  items?: Array<CourseWeek>
+  items?: Array<CourseWeek | null>
   nextToken?: string | null
 }
 
@@ -735,7 +735,7 @@ export type CourseWeek = {
 
 export type ModelCourseLessonConnection = {
   __typename: "ModelCourseLessonConnection"
-  items?: Array<CourseLesson>
+  items?: Array<CourseLesson | null>
   nextToken?: string | null
 }
 
@@ -761,7 +761,7 @@ export type CourseLesson = {
 
 export type ModelCourseInstructorsConnection = {
   __typename: "ModelCourseInstructorsConnection"
-  items?: Array<CourseInstructors>
+  items?: Array<CourseInstructors | null>
   nextToken?: string | null
 }
 
@@ -778,7 +778,7 @@ export type CourseInstructors = {
 
 export type ModelCourseBackOfficeStaffConnection = {
   __typename: "ModelCourseBackOfficeStaffConnection"
-  items?: Array<CourseBackOfficeStaff>
+  items?: Array<CourseBackOfficeStaff | null>
   nextToken?: string | null
 }
 
@@ -795,13 +795,13 @@ export type CourseBackOfficeStaff = {
 
 export type ModelCourseTriadsConnection = {
   __typename: "ModelCourseTriadsConnection"
-  items?: Array<CourseTriads>
+  items?: Array<CourseTriads | null>
   nextToken?: string | null
 }
 
 export type ModelCourseTriadUsersConnection = {
   __typename: "ModelCourseTriadUsersConnection"
-  items?: Array<CourseTriadUsers>
+  items?: Array<CourseTriadUsers | null>
   nextToken?: string | null
 }
 
@@ -818,7 +818,7 @@ export type CourseTriadUsers = {
 
 export type ModelPaymentConnection = {
   __typename: "ModelPaymentConnection"
-  items?: Array<Payment>
+  items?: Array<Payment | null>
   nextToken?: string | null
 }
 
@@ -933,7 +933,7 @@ export enum ActivityActionType {
 
 export type ModelActivityConnection = {
   __typename: "ModelActivityConnection"
-  items?: Array<Activity>
+  items?: Array<Activity | null>
   nextToken?: string | null
 }
 
@@ -1098,12 +1098,12 @@ export type ListMenusQuery = {
           readGroups?: Array<UserGroupType | null> | null
           createdAt: string
           updatedAt: string
-        }>
+        } | null>
         nextToken?: string | null
       } | null
       createdAt: string
       updatedAt: string
-    }>
+    } | null>
     nextToken?: string | null
   } | null
 }
@@ -1132,7 +1132,7 @@ export type ListDirectMessageRoomsQuery = {
           roomID: string
           createdAt: string
           updatedAt: string
-        }>
+        } | null>
         nextToken?: string | null
       } | null
       directMessage?: {
@@ -1166,7 +1166,7 @@ export type ListDirectMessageRoomsQuery = {
               content?: string | null
               createdAt: string
               updatedAt: string
-            }>
+            } | null>
           } | null
           when: string
           recipients: Array<string | null>
@@ -1174,12 +1174,12 @@ export type ListDirectMessageRoomsQuery = {
           messageRoomID: string
           createdAt: string
           updatedAt: string
-        }>
+        } | null>
         nextToken?: string | null
       } | null
       createdAt: string
       updatedAt: string
-    }>
+    } | null>
     nextToken?: string | null
   } | null
 }
@@ -1210,7 +1210,7 @@ export type ActivityByGroupQuery = {
       expirationDate: number
       createdAt: string
       updatedAt: string
-    }>
+    } | null>
   } | null
 }
 
@@ -1284,7 +1284,7 @@ export type GetUser2Query = {
         organizationName?: string | null
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     owns?: {
@@ -1312,7 +1312,7 @@ export type GetUser2Query = {
         isSponsored?: string | null
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     groups?: {
@@ -1324,7 +1324,7 @@ export type GetUser2Query = {
         userID?: string | null
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     alertConfig?: {
@@ -1379,12 +1379,12 @@ export type GetCourseInfoQuery = {
             duration?: string | null
             createdAt: string
             updatedAt: string
-          }>
+          } | null>
           nextToken?: string | null
         } | null
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     subTitle?: string | null
@@ -1426,7 +1426,7 @@ export type GetDirectMessageQuery = {
         parentReplyId: string
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     messageRoomID: string
@@ -1534,7 +1534,7 @@ export type GetDirectMessageUserQuery = {
           roomID: string
           createdAt: string
           updatedAt: string
-        }>
+        } | null>
         nextToken?: string | null
       } | null
       directMessage?: {
@@ -1547,7 +1547,7 @@ export type GetDirectMessageUserQuery = {
           messageRoomID: string
           createdAt: string
           updatedAt: string
-        }>
+        } | null>
         nextToken?: string | null
       } | null
       createdAt: string
@@ -1705,7 +1705,7 @@ export type GroupByTypeByTimeQuery = {
       isSponsored?: string | null
       createdAt: string
       updatedAt: string
-    }>
+    } | null>
     nextToken?: string | null
   } | null
 }
@@ -1778,7 +1778,7 @@ export type GroupByTypeQuery = {
       isSponsored?: string | null
       createdAt: string
       updatedAt: string
-    }>
+    } | null>
     nextToken?: string | null
   } | null
 }
@@ -2023,7 +2023,7 @@ export type ListDirectMessageUsersQuery = {
             roomID: string
             createdAt: string
             updatedAt: string
-          }>
+          } | null>
           nextToken?: string | null
         } | null
         directMessage?: {
@@ -2036,7 +2036,7 @@ export type ListDirectMessageUsersQuery = {
             messageRoomID: string
             createdAt: string
             updatedAt: string
-          }>
+          } | null>
           nextToken?: string | null
         } | null
         createdAt: string
@@ -2044,7 +2044,7 @@ export type ListDirectMessageUsersQuery = {
       } | null
       createdAt: string
       updatedAt: string
-    }>
+    } | null>
     nextToken?: string | null
   } | null
 }
@@ -2241,7 +2241,7 @@ export type GetResourceRootQuery = {
         } | null> | null
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
     } | null
     resources?: {
       __typename: "ModelResourceConnection"
@@ -2337,19 +2337,19 @@ export type GetResourceRootQuery = {
                 episodeID: string
                 createdAt: string
                 updatedAt: string
-              }>
+              } | null>
               nextToken?: string | null
             } | null
             seriesID: string
             createdAt: string
             updatedAt: string
-          }>
+          } | null>
           nextToken?: string | null
         } | null
         resourceID: string
         createdAt: string
         updatedAt: string
-      }>
+      } | null>
       nextToken?: string | null
     } | null
     createdAt: string

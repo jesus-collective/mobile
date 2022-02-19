@@ -12075,3 +12075,54 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `
+export const onCreateCustomPricing = /* GraphQL */ `
+  subscription OnCreateCustomPricing {
+    onCreateCustomPricing {
+      id
+      emailAddress
+      type
+      lineItems {
+        itemId
+        count
+        amount
+        description
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateCustomPricing = /* GraphQL */ `
+  subscription OnUpdateCustomPricing {
+    onUpdateCustomPricing {
+      id
+      emailAddress
+      type
+      lineItems {
+        itemId
+        count
+        amount
+        description
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteCustomPricing = /* GraphQL */ `
+  subscription OnDeleteCustomPricing {
+    onDeleteCustomPricing {
+      id
+      emailAddress
+      type
+      lineItems {
+        itemId
+        count
+        amount
+        description
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`

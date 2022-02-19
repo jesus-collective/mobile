@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "auth": {
+      "jcmobile": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "jcmobileShared",
+      "env": "beta",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ]
+}

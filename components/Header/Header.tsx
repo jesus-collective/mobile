@@ -227,6 +227,7 @@ export default function HeaderJCC(props: Props) {
                 {state.menus.map((mapItem) => {
                   return (mapItem.subItems?.items?.length ?? 0) > 0 ? (
                     <>
+
                       <button
                         data-testid="header-resources"
                         onClick={(e) => {
@@ -308,6 +309,7 @@ export default function HeaderJCC(props: Props) {
                   >
                     <Text style={headerStyles.style.centerMenuButtonsText}>People</Text>
                   </TouchableOpacity>
+
                 ) : null}
                 {constants["SETTING_ISVISIBLE_orgs"] ? (
                   <TouchableOpacity
