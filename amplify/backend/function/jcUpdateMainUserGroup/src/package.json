@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "aws-amplify": "3.3.10-unstable.3",
-    "aws-sdk": "^2.831.0",
+    "aws-sdk": "^2.1077.0",
     "axios": "^0.24.0",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
