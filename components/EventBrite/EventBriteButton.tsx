@@ -33,7 +33,7 @@ export default class EventbritePopupCheckout extends React.Component {
       script.addEventListener("load", () => resolve(window.EBWidgets))
 
       /** @param {Error} e */
-      const handleErr = (e) => {
+      const handleErr = (e: any) => {
         console.error(`Failed to load Eventbrite script from ${ebScriptPath}`)
         reject(e)
       }
@@ -43,7 +43,7 @@ export default class EventbritePopupCheckout extends React.Component {
       document.head.appendChild(script)
     })
 
-  handleClick = (e) => {
+  handleClick = (e: any) => {
     if (this.props.onClick) {
       this.props.onClick(e)
     }

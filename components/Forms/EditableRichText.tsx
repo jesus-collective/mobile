@@ -149,7 +149,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                   options: ["unordered", "ordered"],
                 },
                 image: {
-                  uploadCallback: async (z1) => {
+                  uploadCallback: async (z1: any) => {
                     const id = uuidv1()
 
                     const download = await Storage.get("messages/" + id + ".png", {
