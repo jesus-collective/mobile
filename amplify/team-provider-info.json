@@ -160,7 +160,10 @@
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
           "s3Key": "amplify-builds/jcmobilePostConfirmation-31445435787339536e7a-build.zip"
         },
-        "S3Trigger14f1cefa": {},
+        "S3Trigger14f1cefa": {
+          "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+          "s3Key": "amplify-builds/S3Trigger14f1cefa-654b2b63632b426c4833-build.zip"
+        },
         "S3Trigger839efa13": {},
         "AdminQueries7403b6cf": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
@@ -266,7 +269,7 @@
         },
         "jcmobileShared": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion6959ac9b-build.zip"
+          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion077907c2-build.zip"
         }
       },
       "video": {
