@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "aws-amplify": "^3.3.3",
-    "aws-sdk": "^2.734.0",
+    "aws-sdk": "^2.814.0",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "graphql-tag": "^2.11.0",
