@@ -1,10 +1,10 @@
 import { Ionicons } from "@expo/vector-icons"
-import { Text } from "native-base"
 import React from "react"
 import ReactDOM from "react-dom"
-import { Modal, View } from "react-native"
+import { Modal, Text, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
+
 interface Props {
   visible: boolean
   onHide(): void
