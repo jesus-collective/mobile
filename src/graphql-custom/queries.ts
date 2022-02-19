@@ -668,7 +668,7 @@ export const resourcesForDirectory = /* GraphQL */ `
 `
 
 export const groupByTypeForMyGroups = /* GraphQL */ `
-  query GroupByType(
+  query GroupByType2(
     $type: String
     $id: ModelIDKeyConditionInput
     $sortDirection: ModelSortDirection
