@@ -35,7 +35,7 @@ app.post("/webhook", bodyParser.raw({ type: "application/json" }), async (reques
 
   try {
     event = request.body
-  } catch (err) {
+  } catch (err: any) {
     response.status(400).send(`Webhook Error: ${err.message}`)
   }
   console.log(event)
@@ -72,4 +72,4 @@ app.listen(3000, function () {
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app
+export default app

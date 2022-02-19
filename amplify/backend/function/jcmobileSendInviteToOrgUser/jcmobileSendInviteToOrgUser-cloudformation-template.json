@@ -33,6 +33,16 @@
     "apijcmobileGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apijcmobileGraphQLAPIEndpointOutput"
+    },
+    "functionjcmobileSharedArn": {
+      "Type": "String",
+      "Default": "functionjcmobileSharedArn"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -107,11 +117,19 @@
           ]
         },
         "Runtime": "nodejs12.x",
-        "Layers": [],
+        "Layers": [
+          {
+            "Ref": "functionjcmobileSharedArn"
+          }
+        ],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcmobileSendInviteToOrgUser-55636d41755032484f69-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },

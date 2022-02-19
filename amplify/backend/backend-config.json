@@ -109,7 +109,15 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "dependsOn": []
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
     },
     "jcmobilePreTokenGeneration": {
       "build": true,
@@ -122,6 +130,13 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
         {
           "category": "api",
           "resourceName": "jcmobile",
@@ -146,6 +161,13 @@
       "service": "Lambda",
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
           "category": "api",
           "resourceName": "jcmobile",
           "attributes": [
@@ -161,6 +183,13 @@
       "service": "Lambda",
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
           "category": "api",
           "resourceName": "jcmobile",
           "attributes": [
@@ -175,6 +204,13 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
         {
           "category": "api",
           "resourceName": "jcmobile",
@@ -244,6 +280,13 @@
       "dependsOn": [
         {
           "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
           "resourceName": "jcmobileCreateCognitoOrgUser",
           "attributes": [
             "Name"
@@ -272,6 +315,13 @@
       "service": "Lambda",
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
           "category": "api",
           "resourceName": "jcmobile",
           "attributes": [
@@ -286,6 +336,13 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileShared",
+          "attributes": [
+            "Arn"
+          ]
+        },
         {
           "category": "api",
           "resourceName": "jcmobile",

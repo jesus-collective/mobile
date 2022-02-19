@@ -1,7 +1,7 @@
 //const amplifyPassword = ""
 //const stripeSecret =
 //  ""
-exports.handler = async (event) => {
+export const handler = async (event) => {
   // TODO implement
   /*const stripe = require("stripe")(stripeSecret)
 

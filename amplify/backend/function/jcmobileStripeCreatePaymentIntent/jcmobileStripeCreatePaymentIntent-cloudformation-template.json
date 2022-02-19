@@ -29,6 +29,16 @@
     "apijcmobileGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apijcmobileGraphQLAPIEndpointOutput"
+    },
+    "functionjcmobileSharedArn": {
+      "Type": "String",
+      "Default": "functionjcmobileSharedArn"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -49,7 +59,7 @@
         "aws:asset:property": "Code"
       },
       "Properties": {
-        "Handler": "index.handler",
+        "Handler": "build/jcmobileStripCreatePaymentIntent/src/index.handler",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
@@ -99,12 +109,20 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs12.x",
-        "Layers": [],
+        "Runtime": "nodejs14.x",
+        "Layers": [
+          {
+            "Ref": "functionjcmobileSharedArn"
+          }
+        ],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcmobileStripeCreatePaymentIntent-45507632704433714848-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },

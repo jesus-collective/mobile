@@ -23,6 +23,10 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "functionjcmobileSharedArn": {
+      "Type": "String",
+      "Default": "functionjcmobileSharedArn"
     }
   },
   "Conditions": {
@@ -43,7 +47,7 @@
         "aws:asset:property": "Code"
       },
       "Properties": {
-        "Handler": "index.handler",
+        "Handler": "build/jcmobileStripCancelSubscription/src/index.handler",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
@@ -84,8 +88,12 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs12.x",
-        "Layers": [],
+        "Runtime": "nodejs14.x",
+        "Layers": [
+          {
+            "Ref": "functionjcmobileSharedArn"
+          }
+        ],
         "Timeout": "25",
         "Code": {
           "S3Bucket": {

@@ -121,6 +121,34 @@ export default class JCStripe {
     })
     return subscriptionResult
   }
+  static async retrieveCustomer(
+    customerId: string
+  ): Promise<Stripe.Response<Stripe.Customer | Stripe.DeletedCustomer>> {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    return await stripe.customers.retrieve(customerId, {
+      expand: ["subscriptions"],
+    })
+  }
+  static async retrieveUpcomingInvoices(
+    sub: Stripe.InvoiceRetrieveUpcomingParams
+  ): Promise<Stripe.Response<Stripe.Invoice>> {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    const retrieveUpcoming = await stripe.invoices.retrieveUpcoming(sub)
+    return retrieveUpcoming
+  }
+  static async listInvoices(stripeCustomerID: string) {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    const listInvoices = await stripe.invoices.list({
+      customer: stripeCustomerID,
+    })
+    return listInvoices
+  }
   static async createInvoice(
     payment: Stripe.InvoiceCreateParams,
     idempotency: string
@@ -177,6 +205,38 @@ export default class JCStripe {
       idempotencyKey: idempotency + "CC",
     })
     return subscriptionResult
+  }
+  static async promotionCodesList(
+    options: Stripe.PromotionCodeListParams
+  ): Promise<Stripe.ApiListPromise<Stripe.PromotionCode>> {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    const promotionCodes = await stripe.promotionCodes.list(options)
+    return promotionCodes
+  }
+  static async updateSubscription(
+    stripeSubscriptionID: string,
+    sub: Stripe.SubscriptionUpdateParams,
+    idempotency: string
+  ) {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    const subscriptionResult = await stripe.subscriptions.update(stripeSubscriptionID, sub, {
+      idempotencyKey: idempotency,
+    })
+    return subscriptionResult
+  }
+  static async paymentMethodsAttach(
+    paymentMethodId: string,
+    options: Stripe.PaymentMethodAttachParams
+  ): Promise<Stripe.Response<Stripe.PaymentMethod>> {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    const paymentMethodsResult = await stripe.paymentMethods.attach(paymentMethodId, options)
+    return paymentMethodsResult
   }
   static async listSubscription(
     subscription: Stripe.SubscriptionListParams,
