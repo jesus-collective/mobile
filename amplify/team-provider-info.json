@@ -158,7 +158,7 @@
         "jcmobilePostConfirmation": {
           "GROUP": "verifiedUsers",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobilePostConfirmation-695a4169776f68425865-build.zip"
+          "s3Key": "amplify-builds/jcmobilePostConfirmation-37626c4f444f69544f4f-build.zip"
         },
         "S3Trigger14f1cefa": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
@@ -188,7 +188,7 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcUpdateMainUserGroup-48313168426f76664152-build.zip"
+          "s3Key": "amplify-builds/jcUpdateMainUserGroup-535a6c507263795a6876-build.zip"
         },
         "jcmobileStripCreateSubscription": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
