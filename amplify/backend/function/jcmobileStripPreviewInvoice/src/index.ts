@@ -3,7 +3,6 @@ import JCStripe from "../../jcmobileShared/lib/nodejs/JCStripe"
 
 export const handler = async (event) => {
   console.log(event)
-
   try {
     var stripeCustomerID = event.arguments.stripeCustomerID
     const idempotency = event.arguments.idempotency

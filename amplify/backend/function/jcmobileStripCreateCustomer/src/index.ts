@@ -3,7 +3,6 @@ import JCStripe from "../../jcmobileShared/lib/nodejs/JCStripe"
 
 export const handler = async (event) => {
   console.log(event)
-
   try {
     const idempotency = event.arguments.idempotency
     let userID
@@ -19,6 +18,7 @@ export const handler = async (event) => {
     const userInfo = await JCDB.getUser(userID)
 
     var customer
+
     if (userInfo.stripeCustomerID == null) {
       var concatName
       concatName = firstName + " " + lastName
@@ -54,7 +54,6 @@ export const handler = async (event) => {
       )
     }
     // TODO update stripeCustomerID
-
     const response = {
       statusCode: 200,
       //  Uncomment below to enable CORS requests

@@ -12,19 +12,18 @@ Licensed under the Apache License, Version 2.0 (the "License"). You may not use 
 or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
-
-var express = require("express")
-var bodyParser = require("body-parser")
-var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware")
-var handlePaymentIntentSucceeded = require("./handlePaymentIntentSucceeded")
-var handleSubscriptionCreated = require("./handleSubscriptionCreated")
+import awsServerlessExpressMiddleware from "aws-serverless-express/middleware"
+import bodyParser from "body-parser"
+import express from "express"
+import handlePaymentIntentSucceeded from "./handlePaymentIntentSucceeded"
+import handleSubscriptionCreated from "./handleSubscriptionCreated"
 // declare a new express app
-var app = express()
+const app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
 
 // Enable CORS for all methods
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
@@ -38,16 +37,16 @@ app.post("/webhook", bodyParser.raw({ type: "application/json" }), async (reques
   } catch (err: any) {
     response.status(400).send(`Webhook Error: ${err.message}`)
   }
-  console.log(event)
+  console.log({ eventBody: event })
   // Handle the event
   switch (event.type) {
     case "customer.subscription.created":
       const subscriptionCreated = event.data.object
-      await handleSubscriptionCreated.runIt(subscriptionCreated)
+      await handleSubscriptionCreated(subscriptionCreated)
       break
     case "payment_intent.succeeded":
       const paymentIntent = event.data.object
-      await handlePaymentIntentSucceeded.runIt(paymentIntent)
+      await handlePaymentIntentSucceeded(paymentIntent)
       // Then define and call a method to handle the successful payment intent.
       // handlePaymentIntentSucceeded(paymentIntent);
       break
@@ -65,7 +64,7 @@ app.post("/webhook", bodyParser.raw({ type: "application/json" }), async (reques
   response.json({ received: true })
 })
 
-app.listen(3000, function () {
+app.listen(3000, () => {
   console.log("App started")
 })
 

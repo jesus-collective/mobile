@@ -3,7 +3,6 @@ import JCStripe from "../../jcmobileShared/lib/nodejs/JCStripe"
 
 export const handler = async (event) => {
   console.log(event)
-
   try {
     const userID = event.identity.username
     const priceInfo = event.arguments.priceInfo.prices

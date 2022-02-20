@@ -11,7 +11,6 @@ export const handler = async (event) => {
     const userInfo = await JCDB.getUser(userID)
     console.log(userInfo.stripeCustomerID)
     const stripeCustomerID = userInfo.stripeCustomerID
-
     // TODO determine if we have a user created in table (User/stripeCustomerID)
     var invoice
     if (stripeCustomerID != null) {

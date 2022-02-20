@@ -7,7 +7,7 @@ async function asyncForEach(array, callback) {
     await callback(array[index], index, array)
   }
 }
-const runIt = async (paymentIntent) => {
+const handlePaymentIntentSucceeded = async (paymentIntent) => {
   console.log(paymentIntent)
 
   try {
@@ -38,4 +38,4 @@ const runIt = async (paymentIntent) => {
     console.log({ "Login Error": e })
   }
 }
-export default runIt
+export default handlePaymentIntentSucceeded

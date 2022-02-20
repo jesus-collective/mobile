@@ -54,10 +54,13 @@ async function deleteEndpoint(endpointId) {
   return endpoint
 }
 export const handler = async (event) => {
+  console.log({ ANALYTICS_JCMOBILE_ID: process.env.ANALYTICS_JCMOBILE_ID })
+
   try {
     const allUsers = await getAllUsers()
     const map = allUsers.map(async (user) => {
       try {
+        console.log({ user: user.Attributes.filter((e) => e.Name == "sub")[0].Value })
         const inactiveEndpoints = await getInactiveEndpoints(user)
         const map2 = inactiveEndpoints.map(async (endpoint) => {
           console.log({ deleting: endpoint.Id })
@@ -65,7 +68,7 @@ export const handler = async (event) => {
         })
         await Promise.all(map2)
       } catch (e) {
-        console.log(e)
+        console.log({ error: e })
       }
       console.log("Done2")
     })

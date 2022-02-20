@@ -7,7 +7,7 @@ async function asyncForEach(array, callback) {
     await callback(array[index], index, array)
   }
 }
-const runIt = async (paymentIntent) => {
+const handleSubscriptionCreated = async (paymentIntent) => {
   console.log(paymentIntent)
 
   try {
@@ -39,4 +39,4 @@ const runIt = async (paymentIntent) => {
   }
 }
 
-export default runIt
+export default handleSubscriptionCreated

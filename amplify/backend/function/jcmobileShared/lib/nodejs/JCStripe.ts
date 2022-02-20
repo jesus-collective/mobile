@@ -4,7 +4,7 @@ export default class JCStripe {
     try {
       var AWS = require("aws-sdk"),
         region = "us-east-1",
-        secretName = "jcmobile/" + process.env.ENV + "/secrets",
+        secretName = "jcmobile/" + process.env.ENV + "/lamdaSecrets",
         secret,
         decodedBinarySecret
 
@@ -14,14 +14,8 @@ export default class JCStripe {
       })
       const data = await client.getSecretValue({ SecretId: secretName }).promise()
 
-      if ("SecretString" in data) {
-        secret = JSON.parse(data.SecretString)
-      } else {
-        let buff = new Buffer(data.SecretBinary, "base64")
-        decodedBinarySecret = buff.toString("ascii")
-      }
+      secret = JSON.parse(data.SecretString)
       console.log("Loading Secret Done")
-
       return secret[name]
     } catch (e) {
       console.log({ error: e })
