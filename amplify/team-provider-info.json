@@ -202,7 +202,7 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileStripWebhook-2b65616e314576712b58-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripWebhook-6d70644335787a484839-build.zip"
         },
         "jcmobileStripCreateCustomer": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
@@ -278,7 +278,7 @@
         },
         "jcmobileShared": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion58fd6f49-build.zip"
+          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion254512a0-build.zip"
         }
       },
       "video": {
