@@ -108,13 +108,11 @@ export const useDmUsers = () => {
               if (a?.room?.directMessage?.items && a?.room?.directMessage?.nextToken)
                 a.room.directMessage.items = await loadDmsForRoom(a?.roomID)
             }
-            //removeDirectMessages(tempData)
             setDmUsers(tempData)
             if (isLoading) setIsLoading(false)
           }
         } catch (err: any) {
           const tempData = err?.data?.listDirectMessageUsers?.items ?? []
-          //removeDirectMessages(tempData)
           setDmUsers(tempData)
           if (isLoading) setIsLoading(false)
           console.error({ err })
