@@ -95,6 +95,7 @@ import {
   DeleteCourseTriadUsersMutation,
   DeleteCourseWeekMutation,
   DeleteCustomPricingMutation,
+  DeleteDirectMessageRoomMutation,
   DeleteGroupMemberMutation,
   DeleteGroupMutation,
   DeleteMenuMutation,
@@ -122,9 +123,9 @@ import {
   GroupByTypeByTimeQuery,
   GroupByTypeQuery,
   GroupMemberByUserQuery,
+  ListCustomPricingsQuery,
   ListDirectMessagesQuery,
   ListDirectMessagesQueryVariables,
-  ListCustomPricingsQuery,
   ListGroupsQuery,
   ListOrganizationsQuery,
   ListPaymentsQuery,
@@ -296,6 +297,21 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<UpdateCourseWeekMutation>>
   }
+  static deleteDirectMessageRoom(id: string) {
+    return API.graphql({
+      query: mutations.deleteDirectMessageRoom,
+      variables: { input: { id: id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DeleteDirectMessageRoomMutation>>
+  }
+  static deleteDirectMessageUser(id: string) {
+    return API.graphql({
+      query: mutations.deleteDirectMessageUser,
+      variables: { input: { id: id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DeleteDirectMessageRoomMutation>>
+  }
+
   static deleteMenu(id: string) {
     return API.graphql({
       query: mutations.deleteMenu,
