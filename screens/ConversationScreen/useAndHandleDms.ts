@@ -49,7 +49,6 @@ export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
                 }
                 // should fetch individual DirectMessageUser here to update conversation pane preview
                 const json = await Data.listDirectMessageUsersForDMs(query)
-                console.log({ newMessage: json })
                 if (json?.data?.listDirectMessageUsers?.items?.length)
                   item = json?.data?.listDirectMessageUsers?.items?.[0]
                 if (json.data?.listDirectMessageUsers?.nextToken && !item)
