@@ -69,6 +69,7 @@ const CARD_ELEMENT_OPTIONS = {
     },
   },
 }
+
 //type KeysOfType<T, U> = { [k in keyof T]: T[k] extends U ? k : never }[keyof T]
 type Products = NonNullable<ListProductsQuery["listProducts"]>["items"]
 type Product = NonNullable<Products>[0]
@@ -167,6 +168,25 @@ class BillingImpl extends JCComponent<Props, State> {
             console.log({ item0: listProducts.data.listProducts.items[0] })
           }
         } else {
+          if (listProducts.data?.listProducts?.items) {
+            const productIds = listProducts.data.listProducts.items
+              .map((x) => x?.id ?? "")
+              .filter((x) => this.state.joinedProduct.includes(x))
+            const products = listProducts.data.listProducts.items.filter((x) =>
+              productIds.includes(x?.id ?? "")
+            )
+            this.setState(
+              {
+                currentProduct: products,
+                quantities: [
+                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(1),
+                ],
+              },
+              async () => {
+                await this.createInvoice()
+              }
+            )
+          }
           console.log("Bad")
           /* const products = listProducts.data?.listProducts?.items?.filter(
             (item) => this.state.joinedProduct?.includes(item?.stripePaymentID)
