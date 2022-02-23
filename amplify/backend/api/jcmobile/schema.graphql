@@ -1130,7 +1130,7 @@ enum UserGroupType{
   subscriptionValid	
   userpool
   legacyUserGroup1
-  product_MarkBaker
+  productMarkBaker
 }
 type ResourceMenuItem
 @model 

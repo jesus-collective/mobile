@@ -10,7 +10,8 @@
       "skipoverridemutationinputtypes": false,
       "transformerversion": 1,
       "suppressschemamigrationprompt": true,
-      "showfieldauthnotification": false
+      "showfieldauthnotification": false,
+      "securityEnhancementNotification": false
     },
     "frontend-ios": {
       "enablexcodeintegration": false

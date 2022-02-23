@@ -288,6 +288,7 @@ export enum UserGroupType {
   subscriptionValid = "subscriptionValid",
   userpool = "userpool",
   legacyUserGroup1 = "legacyUserGroup1",
+  productMarkBaker = "productMarkBaker",
 }
 
 

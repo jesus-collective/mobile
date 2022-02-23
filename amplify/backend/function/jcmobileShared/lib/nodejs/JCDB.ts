@@ -150,7 +150,6 @@ export default class JCDB {
   }
   static async updateUser(id: string, field: string, value: string) {
     console.log(id)
-    console.log(process.env)
     try {
       const login = await JCDB.ensureLogin()
       if (login != null) return login

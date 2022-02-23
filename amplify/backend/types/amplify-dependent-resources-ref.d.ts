@@ -159,18 +159,19 @@ export type AmplifyDependentResourcesAttributes = {
     }
     userPoolGroups: {
       userpoolGroupRole: "string"
+      verifiedUsersGroupRole: "string"
       adminGroupRole: "string"
       courseAdminGroupRole: "string"
       courseCoachGroupRole: "string"
       courseUserGroupRole: "string"
       friendsGroupRole: "string"
-      legacyUserGroup1GroupRole: "string"
       partnersGroupRole: "string"
-      subscriptionValidGroupRole: "string"
+      subscriptionPartnersGroupRole: "string"
       subscriptionkyearlyyearsGroupRole: "string"
       subscriptionkykidsGroupRole: "string"
       subscriptionkyyouthGroupRole: "string"
-      verifiedUsersGroupRole: "string"
+      subscriptionValidGroupRole: "string"
+      legacyUserGroup1GroupRole: "string"
       productMarkBakerGroupRole: "string"
     }
   }

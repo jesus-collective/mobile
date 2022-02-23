@@ -2,5 +2,61 @@
   {
     "groupName": "userpool",
     "precedence": 1
+  },
+  {
+    "groupName": "verifiedUsers",
+    "precedence": 2
+  },
+  {
+    "groupName": "admin",
+    "precedence": 3
+  },
+  {
+    "groupName": "courseAdmin",
+    "precedence": 4
+  },
+  {
+    "groupName": "courseCoach",
+    "precedence": 5
+  },
+  {
+    "groupName": "courseUser",
+    "precedence": 6
+  },
+  {
+    "groupName": "friends",
+    "precedence": 7
+  },
+  {
+    "groupName": "partners",
+    "precedence": 8
+  },
+  {
+    "groupName": "subscriptionPartners",
+    "precedence": 9
+  },
+  {
+    "groupName": "subscriptionkyearlyyears",
+    "precedence": 10
+  },
+  {
+    "groupName": "subscriptionkykids",
+    "precedence": 11
+  },
+  {
+    "groupName": "subscriptionkyyouth",
+    "precedence": 12
+  },
+  {
+    "groupName": "subscriptionValid",
+    "precedence": 13
+  },
+  {
+    "groupName": "legacyUserGroup1",
+    "precedence": 14
+  },
+  {
+    "groupName": "productMarkBaker",
+    "precedence": 15
   }
 ]

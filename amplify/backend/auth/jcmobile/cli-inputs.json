@@ -46,9 +46,7 @@
       "email",
       "family_name",
       "given_name",
-      "phone_number",
-      "custom:orgName",
-      "custom:isOrg"
+      "phone_number"
     ],
     "userpoolClientReadAttributes": [
       "address",
@@ -69,9 +67,8 @@
       "website",
       "zoneinfo",
       "email_verified",
-      "phone_number_verified",
-      "custom:orgName",
-      "custom:isOrg"
+      "phone_number_verified"
+     
     ],
     "userpoolClientLambdaRole": "jcmobi44a13962_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
@@ -80,7 +77,21 @@
     "serviceName": "Cognito",
     "useDefault": "manual",
     "userPoolGroupList": [
-      "userpool"
+      "userpool",
+      "verifiedUsers",
+      "admin",
+      "courseAdmin",	
+      "courseCoach",
+      "courseUser",
+      "friends",
+      "partners",
+      "subscriptionPartners",
+      "subscriptionkyearlyyears",	
+      "subscriptionkykids",
+      "subscriptionkyyouth",	
+      "subscriptionValid",
+      "legacyUserGroup1",
+      "productMarkBaker"
     ],
     "userPoolGroups": true,
     "usernameAttributes": [
@@ -149,7 +160,7 @@
       }
     ],
     "permissions": [
-      "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}"
+      "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
     ],
     "authTriggerConnections": [
       "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"jcmobilePostConfirmation\"}",
@@ -158,6 +169,8 @@
     ],
     "parentStack": {
       "Ref": "AWS::StackId"
-    }
+    },
+    "facebookAppId": "373637213227697",
+    "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
   }
 }
