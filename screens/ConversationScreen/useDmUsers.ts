@@ -47,10 +47,43 @@ export const loadDmsForRoom = async (roomId: string | undefined) => {
   await loadNext()
   return directMessages
 }
+
+export const removeDirectMessages = async (dmUsers: DMUser[]) => {
+  // Takes an Array<DirectMessageUser> and removes each item, and room associated with it
+  const roomIds = dmUsers.map((a) => a?.roomID)
+  const messageUserIds = dmUsers.map((a) => a?.id)
+  const removeRoom = async (id: string) => {
+    return Data.deleteDirectMessageRoom(id)
+  }
+  const removeMessageUser = async (id: string) => {
+    return Data.deleteDirectMessageUser(id)
+  }
+  console.log("========= Removing Stuff ===========")
+  try {
+    for await (const id of roomIds) {
+      if (id) {
+        const roomRemoved = await removeRoom(id)
+        console.log({ roomRemoved })
+      }
+    }
+  } catch (err: any) {
+    console.error({ roomsRemoved: err })
+  }
+  try {
+    for await (const id of messageUserIds) {
+      if (id) {
+        const messageUsersRemoved = await removeMessageUser(id)
+        console.log({ messageUsersRemoved })
+      }
+    }
+  } catch (err: any) {
+    console.error({ messageUsersRemoved: err })
+  }
+  console.log("========= Finished Removing Stuff ===========")
+}
 export const useDmUsers = () => {
   const [dmUsers, setDmUsers] = useState<DMUser[]>([])
   const [isLoading, setIsLoading] = useState(true)
-
   useEffect(() => {
     const loadAllDmUsers = async () => {
       if (!isLoading) setIsLoading(true)
@@ -60,7 +93,7 @@ export const useDmUsers = () => {
         try {
           const query = {
             limit: 200,
-            filter: { userID: { eq: user["username"] } },
+            filter: { userID: { eq: user["username"] }, roomID: { notContains: "course" } },
             nextToken: next,
           }
           const json = await Data.listDirectMessageUsersForDMs(query)

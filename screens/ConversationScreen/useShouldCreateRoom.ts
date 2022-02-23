@@ -10,6 +10,7 @@ type Options = {
   dmUsers: DMUser[]
   setRoom: any
   setDmUsers: any
+  loadingFinished: boolean
 }
 export const useShouldCreateRoom = (options: Options) => {
   const route = useRoute<any>()
@@ -69,8 +70,9 @@ export const useShouldCreateRoom = (options: Options) => {
       }
     }
     const shouldCreateRoom = async () => {
+      // I think this is missing some checks?
       if (!isLoading) setIsLoading(true)
-      if (route?.params?.initialUserID) {
+      if (route?.params?.initialUserID && route?.params?.initialUserName) {
         if (
           !dmUsers
             .map((item) => {
@@ -91,15 +93,14 @@ export const useShouldCreateRoom = (options: Options) => {
               return z
             })
         ) {
-          if (route?.params?.initialUserID && route?.params?.initialUserName)
-            await createRoom(route?.params?.initialUserID, route?.params?.initialUserName)
+          await createRoom(route?.params?.initialUserID, route?.params?.initialUserName)
           setRoomSet(true)
         }
       }
     }
     const load = async () => {
       if (
-        dmUsers.length &&
+        options.loadingFinished &&
         !roomSet &&
         route?.params?.initialUserID &&
         route?.params?.initialUserName
@@ -109,7 +110,7 @@ export const useShouldCreateRoom = (options: Options) => {
     }
     load()
     console.log("dmUsers changed", { dmUsers })
-  }, [dmUsers])
+  }, [dmUsers, options.loadingFinished])
 
   return { isCreatingRoom: isLoading }
 }

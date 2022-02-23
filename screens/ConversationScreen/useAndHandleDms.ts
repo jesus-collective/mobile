@@ -11,7 +11,12 @@ import { loadDmsForRoom, useDmUsers } from "./useDmUsers"
 import { useShouldCreateRoom } from "./useShouldCreateRoom"
 export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
   const { dmUsers, isLoading, setDmUsers } = useDmUsers()
-  const { isCreatingRoom } = useShouldCreateRoom({ setRoom, dmUsers, setDmUsers })
+  const { isCreatingRoom } = useShouldCreateRoom({
+    loadingFinished: isLoading === false,
+    setRoom,
+    dmUsers,
+    setDmUsers,
+  })
   useEffect(() => {
     const dmSub = (
       API.graphql({
@@ -31,16 +36,29 @@ export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
           incoming.value?.data?.onCreateDirectMessage?.recipients?.includes(currentUser.username)
         ) {
           try {
-            const query = {
-              limit: 200,
-              filter: {
-                userID: { eq: currentUser["username"] },
-                roomID: { eq: incoming.value?.data?.onCreateDirectMessage?.messageRoomID },
-              },
+            const loadDm = async () => {
+              let item: any
+              const loadNext = async (next: string | null | undefined = null) => {
+                const query = {
+                  limit: 200,
+                  filter: {
+                    userID: { eq: currentUser["username"] },
+                    roomID: { eq: incoming.value?.data?.onCreateDirectMessage?.messageRoomID },
+                  },
+                  nextToken: next,
+                }
+                // should fetch individual DirectMessageUser here to update conversation pane preview
+                const json = await Data.listDirectMessageUsersForDMs(query)
+                if (json?.data?.listDirectMessageUsers?.items?.length)
+                  item = json?.data?.listDirectMessageUsers?.items?.[0]
+                if (json.data?.listDirectMessageUsers?.nextToken && !item)
+                  await loadNext(json.data?.listDirectMessageUsers?.nextToken)
+              }
+              await loadNext(null)
+              return item
             }
-            // should fetch individual DirectMessageUser here to update conversation pane preview
-            const json = await Data.listDirectMessageUsersForDMs(query)
-            const roomItem = json?.data?.listDirectMessageUsers?.items?.[0]
+            const item = await loadDm()
+            const roomItem = item
             if (roomItem) {
               // for rooms that have more than 100 dms
               if (
@@ -57,8 +75,10 @@ export const useAndHandleDms = (setRoom: SetStateAction<any>) => {
               if (indexToUpdate >= 0) {
                 tempDmUsers[indexToUpdate] = roomItem
                 setDmUsers(tempDmUsers)
+              } else {
+                console.log("Index not found")
               }
-            }
+            } else console.log("Room not found")
           } catch (error: any) {
             console.error({ error })
           }

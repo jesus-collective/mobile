@@ -274,7 +274,7 @@ export default function HeaderJCC(props: Props) {
                 )
               })}
             </View>
-            )
+
             <View
               style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
             >

@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { Org } from "screens/OrganizationsScreen/useOrgs"
+import { ListOrganizationsQuery } from "src/API"
 import OrganizationCard from "../../screens/OrganizationsScreen/OrganizationCard"
 import HomeCarousel from "../Carousel/HomeCarousel"
 import { Data } from "../Data/Data"
@@ -11,12 +12,25 @@ const OrgCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [orgs, setOrgs] = useState<Org[]>([])
   const loadOrgs = async () => {
-    try {
-      const orgs = await Data.listOrgs(null)
-      setOrgs(orgs?.data?.listOrganizations?.items ?? [])
-    } catch (err) {
-      console.error({ err })
+    let tempOrgs: NonNullable<ListOrganizationsQuery["listOrganizations"]>["items"] = []
+    const loadNext = async (next: null | undefined | string = null) => {
+      try {
+        const orgs = await Data.listOrgs(next)
+        if (orgs.data?.listOrganizations?.items?.length)
+          tempOrgs = [...tempOrgs, ...(orgs?.data?.listOrganizations?.items ?? [])]
+        if (orgs?.data?.listOrganizations?.nextToken && tempOrgs.length < 10)
+          await loadNext(orgs?.data?.listOrganizations?.nextToken)
+      } catch (err: any) {
+        if (err?.data?.listOrganizations?.items?.length)
+          tempOrgs = [...tempOrgs, ...(err?.data?.listOrganizations?.items ?? [])]
+        if (err?.data?.listOrganizations?.nextToken && tempOrgs.length < 10)
+          await loadNext(err?.data?.listOrganizations?.nextToken)
+        console.log({ err })
+      }
     }
+
+    await loadNext()
+    setOrgs(tempOrgs)
   }
   useEffect(() => {
     loadOrgs()
@@ -35,7 +49,7 @@ const OrgCarousel = () => {
       seeAllButton={() => navigation.push("OrganizationsScreen")}
       renderItem={renderItem}
       title={"Orgs"}
-      data={orgs?.slice(0, 10)}
+      data={orgs?.slice(0, 9)}
     />
   )
 }
