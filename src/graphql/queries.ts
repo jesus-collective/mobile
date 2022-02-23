@@ -994,14 +994,15 @@ export const getPayment = /* GraphQL */ `
         isIndividualTier
         isLogin
         marketingDescription
-        groupsIncluded
+        eula
         enabled
         isStripe
         isPaypal
         tiered {
           name
           stripePaymentID
-          stripeIsTiered
+          defaultAmount
+          amountIsEditable
         }
         createdAt
         updatedAt
@@ -1141,7 +1142,7 @@ export const listPayments = /* GraphQL */ `
           isIndividualTier
           isLogin
           marketingDescription
-          groupsIncluded
+          eula
           enabled
           isStripe
           isPaypal
@@ -4041,14 +4042,15 @@ export const getProduct = /* GraphQL */ `
       isIndividualTier
       isLogin
       marketingDescription
-      groupsIncluded
+      eula
       enabled
       isStripe
       isPaypal
       tiered {
         name
         stripePaymentID
-        stripeIsTiered
+        defaultAmount
+        amountIsEditable
       }
       createdAt
       updatedAt
@@ -4072,14 +4074,15 @@ export const listProducts = /* GraphQL */ `
         isIndividualTier
         isLogin
         marketingDescription
-        groupsIncluded
+        eula
         enabled
         isStripe
         isPaypal
         tiered {
           name
           stripePaymentID
-          stripeIsTiered
+          defaultAmount
+          amountIsEditable
         }
         createdAt
         updatedAt
@@ -4776,7 +4779,7 @@ export const paymentByUser = /* GraphQL */ `
           isIndividualTier
           isLogin
           marketingDescription
-          groupsIncluded
+          eula
           enabled
           isStripe
           isPaypal

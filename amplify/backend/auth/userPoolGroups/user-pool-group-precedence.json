@@ -58,5 +58,41 @@
   {
     "groupName": "productMarkBaker",
     "precedence": 15
+  },
+  {
+    "groupName": "courseGroup1",
+    "precedence": 16
+  },
+  {
+    "groupName": "courseGroup2",
+    "precedence": 17
+  },
+  {
+    "groupName": "courseGroup3",
+    "precedence": 18
+  },
+  {
+    "groupName": "courseGroup4",
+    "precedence": 19
+  },
+  {
+    "groupName": "courseGroup5",
+    "precedence": 20
+  },
+  {
+    "groupName": "courseGroup6",
+    "precedence": 21
+  },
+  {
+    "groupName": "courseGroup7",
+    "precedence": 22
+  },
+  {
+    "groupName": "courseGroup8",
+    "precedence": 23
+  },
+  {
+    "groupName": "courseGroup9",
+    "precedence": 24
   }
 ]

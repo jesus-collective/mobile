@@ -4275,14 +4275,15 @@ export const createPayment = /* GraphQL */ `
         isIndividualTier
         isLogin
         marketingDescription
-        groupsIncluded
+        eula
         enabled
         isStripe
         isPaypal
         tiered {
           name
           stripePaymentID
-          stripeIsTiered
+          defaultAmount
+          amountIsEditable
         }
         createdAt
         updatedAt
@@ -4412,14 +4413,15 @@ export const updatePayment = /* GraphQL */ `
         isIndividualTier
         isLogin
         marketingDescription
-        groupsIncluded
+        eula
         enabled
         isStripe
         isPaypal
         tiered {
           name
           stripePaymentID
-          stripeIsTiered
+          defaultAmount
+          amountIsEditable
         }
         createdAt
         updatedAt
@@ -4549,14 +4551,15 @@ export const deletePayment = /* GraphQL */ `
         isIndividualTier
         isLogin
         marketingDescription
-        groupsIncluded
+        eula
         enabled
         isStripe
         isPaypal
         tiered {
           name
           stripePaymentID
-          stripeIsTiered
+          defaultAmount
+          amountIsEditable
         }
         createdAt
         updatedAt
@@ -12037,14 +12040,15 @@ export const createProduct = /* GraphQL */ `
       isIndividualTier
       isLogin
       marketingDescription
-      groupsIncluded
+      eula
       enabled
       isStripe
       isPaypal
       tiered {
         name
         stripePaymentID
-        stripeIsTiered
+        defaultAmount
+        amountIsEditable
       }
       createdAt
       updatedAt
@@ -12077,14 +12081,15 @@ export const updateProduct = /* GraphQL */ `
       isIndividualTier
       isLogin
       marketingDescription
-      groupsIncluded
+      eula
       enabled
       isStripe
       isPaypal
       tiered {
         name
         stripePaymentID
-        stripeIsTiered
+        defaultAmount
+        amountIsEditable
       }
       createdAt
       updatedAt
@@ -12117,14 +12122,15 @@ export const deleteProduct = /* GraphQL */ `
       isIndividualTier
       isLogin
       marketingDescription
-      groupsIncluded
+      eula
       enabled
       isStripe
       isPaypal
       tiered {
         name
         stripePaymentID
-        stripeIsTiered
+        defaultAmount
+        amountIsEditable
       }
       createdAt
       updatedAt

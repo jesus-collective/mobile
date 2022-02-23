@@ -285,6 +285,15 @@ export enum UserGroupType {
   userpool = "userpool",
   legacyUserGroup1 = "legacyUserGroup1",
   productMarkBaker = "productMarkBaker",
+  courseGroup1 = "courseGroup1",
+  courseGroup2 = "courseGroup2",
+  courseGroup3 = "courseGroup3",
+  courseGroup4 = "courseGroup4",
+  courseGroup5 = "courseGroup5",
+  courseGroup6 = "courseGroup6",
+  courseGroup7 = "courseGroup7",
+  courseGroup8 = "courseGroup8",
+  courseGroup9 = "courseGroup9",
 }
 
 export type ModelGroupMemberConnection = {
@@ -735,7 +744,7 @@ export type Product = {
   isIndividualTier?: string | null
   isLogin?: string | null
   marketingDescription?: string | null
-  groupsIncluded?: Array<string | null> | null
+  eula?: string | null
   enabled?: string | null
   isStripe?: string | null
   isPaypal?: string | null
@@ -748,7 +757,8 @@ export type TieredProduct = {
   __typename: "TieredProduct"
   name?: string | null
   stripePaymentID?: string | null
-  stripeIsTiered?: string | null
+  defaultAmount?: number | null
+  amountIsEditable?: string | null
 }
 
 export type AlertConfig = {

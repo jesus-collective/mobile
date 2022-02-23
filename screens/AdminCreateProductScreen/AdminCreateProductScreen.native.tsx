@@ -7,6 +7,7 @@ import { Data } from "../../components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
+import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
@@ -17,7 +18,6 @@ import {
   UpdateProductInput,
   UserGroupType,
 } from "../../src/API"
-
 interface Props {
   navigation: StackNavigationProp<any, any>
   route: any
@@ -26,6 +26,7 @@ interface State extends JCState {
   products: NonNullable<NonNullable<ListProductsQuery>["listProducts"]>["items"]
   name: string
   description: string
+  eula: string
   productId: string
   confirmationMsg: string
   price: string
@@ -36,7 +37,6 @@ interface State extends JCState {
   isOrgTier: string
   isIndividualTier: string
   marketingDescription: string
-  groupsIncluded: string[]
   enabled: string
   isStripe: string
   isPaypal: string
@@ -73,8 +73,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       //  marketingDescription: JSON.stringify(
       //    convertToRaw(EditorState.createEmpty().getCurrentContent())
       //  ),
-      tiered: [{ name: "", stripePaymentID: "", stripeIsTiered: "false" }],
-      groupsIncluded: [],
+      tiered: [{ name: "", stripePaymentID: "", defaultAmount: 1, amountIsEditable: "false" }],
       enabled: "true",
       isStripe: "true",
       isPaypal: "false",
@@ -99,6 +98,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       name: product.name,
       productId: product.id,
       description: product.description,
+      eula: product.eula,
       confirmationMsg: product.confirmationMsg,
       price: product.price.toFixed(2),
       pricePer: product.pricePer,
@@ -107,7 +107,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
       isOrgTier: product.isOrgTier,
       isIndividualTier: product.isIndividualTier,
       marketingDescription: product.marketingDescription,
-      groupsIncluded: product.groupsIncluded,
       enabled: product.enabled,
       isStripe: product.isStripe,
       isPaypal: product.isPaypal,
@@ -134,19 +133,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
     if (isNaN(parseInt(this.state.price))) return
     try {
       switch (this.state.mode) {
-        case "save":
+        case "save": {
           const newProduct: CreateProductInput = {
             id: this.state.productId,
             price: parseFloat(this.state.price),
             pricePer: this.state.pricePer,
             description: this.state.description,
+            eula: this.state.eula,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
             isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
             marketingDescription: this.state.marketingDescription,
-            groupsIncluded: this.state.groupsIncluded,
             enabled: this.state.enabled,
             isStripe: this.state.isStripe,
             isPaypal: this.state.isPaypal,
@@ -168,27 +167,29 @@ export default class AdminScreen extends JCComponent<Props, State> {
             //  marketingDescription: JSON.stringify(
             //    convertToRaw(EditorState.createEmpty().getCurrentContent())
             // ),
-            groupsIncluded: [],
             enabled: "true",
             isStripe: "true",
             isPaypal: "false",
-            tiered: [{ name: "", stripePaymentID: "", stripeIsTiered: "false" }],
+            tiered: [
+              { name: "", stripePaymentID: "", defaultAmount: 1, amountIsEditable: "false" },
+            ],
             showAddProductModal: false,
           })
           break
-        case "edit":
+        }
+        case "edit": {
           const editProduct: UpdateProductInput = {
             id: this.state.productId,
             price: parseFloat(this.state.price),
             pricePer: this.state.pricePer,
             description: this.state.description,
+            eula: this.state.eula,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
             isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
             marketingDescription: this.state.marketingDescription,
-            groupsIncluded: this.state.groupsIncluded,
             enabled: this.state.enabled,
             isStripe: this.state.isStripe,
             tiered: this.state.tiered,
@@ -212,29 +213,25 @@ export default class AdminScreen extends JCComponent<Props, State> {
             //   marketingDescription: JSON.stringify(
             //     convertToRaw(EditorState.createEmpty().getCurrentContent())
             //   ),
-            groupsIncluded: [],
             enabled: "true",
             isStripe: "true",
             isPaypal: "false",
-            tiered: [{ name: "", stripePaymentID: "", stripeIsTiered: "false" }],
+            tiered: [
+              { name: "", stripePaymentID: "", defaultAmount: 1, amountIsEditable: "false" },
+            ],
             showAddProductModal: false,
           })
           break
+        }
       }
     } catch (err) {
       console.error(err)
     }
   }
-  updateTierList(val: any): void {
-    const tmp = this.state.groupsIncluded
-    const index = tmp.indexOf(val)
-    if (index !== -1) tmp.splice(index, 1)
-    else tmp.push(val)
-    this.setState({ groupsIncluded: tmp })
-  }
+
   addTier(): void {
     const temp = this.state.tiered ? this.state.tiered : []
-    temp.push({ name: "", stripeIsTiered: "false", stripePaymentID: "" })
+    temp.push({ name: "", defaultAmount: 1, stripePaymentID: "", amountIsEditable: "false" })
     this.setState({ tiered: temp })
   }
   deleteTier(index: number): void {
@@ -258,33 +255,39 @@ export default class AdminScreen extends JCComponent<Props, State> {
       >
         <>
           <View>
-            <Text>Id: </Text>
-            <TextInput
-              onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                this.setState({ productId: val.nativeEvent.text })
-              }}
-              placeholder="productId"
-              multiline={false}
-              value={this.state.productId}
-            ></TextInput>
-            <Text>Product name: </Text>
-            <TextInput
-              onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                this.setState({ name: val.nativeEvent.text })
-              }}
-              placeholder="Name"
-              multiline={false}
-              value={this.state.name}
-            ></TextInput>
-            <Text>Price: </Text>
-            <TextInput
-              onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                this.setState({ price: val.nativeEvent.text })
-              }}
-              placeholder="Price in CAD"
-              multiline={false}
-              value={this.state.price}
-            ></TextInput>
+            <div style={{ flexDirection: "row" }}>
+              <Text>Id: </Text>
+              <TextInput
+                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                  this.setState({ productId: val.nativeEvent.text })
+                }}
+                placeholder="productId"
+                multiline={false}
+                value={this.state.productId}
+              ></TextInput>
+            </div>
+            <div style={{ flexDirection: "row" }}>
+              <Text>Product name: </Text>
+              <TextInput
+                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                  this.setState({ name: val.nativeEvent.text })
+                }}
+                placeholder="Name"
+                multiline={false}
+                value={this.state.name}
+              ></TextInput>
+            </div>
+            <div style={{ flexDirection: "row" }}>
+              <Text>Price: </Text>
+              <TextInput
+                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                  this.setState({ price: val.nativeEvent.text })
+                }}
+                placeholder="Price in CAD"
+                multiline={false}
+                value={this.state.price}
+              ></TextInput>
+            </div>
             <Picker
               onStartShouldSetResponder={() => true}
               onMoveShouldSetResponderCapture={() => true}
@@ -311,60 +314,62 @@ export default class AdminScreen extends JCComponent<Props, State> {
               <Picker.Item label="Monthly" value="Monthly" />
               <Picker.Item label="Yearly" value="Yearly" />
             </Picker>
-            <Text>Purchase confirmation message</Text>
-            <TextInput
-              onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                this.setState({ confirmationMsg: val.nativeEvent.text })
-              }}
-              placeholder="optional: 1-2 sentences"
-              multiline={false}
-              value={this.state.confirmationMsg}
-            ></TextInput>
+            <div style={{ flexDirection: "row" }}>
+              <Text>Purchase confirmation message: </Text>
+              <TextInput
+                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                  this.setState({ confirmationMsg: val.nativeEvent.text })
+                }}
+                placeholder="optional: 1-2 sentences"
+                multiline={false}
+                value={this.state.confirmationMsg}
+              ></TextInput>
+            </div>
             <JCSwitch
               switchLabel="Show on Login Page"
               initState={this.state.isLogin == "true"}
               onPress={(val) => {
-                this.setState({ isLogin: val })
+                this.setState({ isLogin: val.toString() })
               }}
             ></JCSwitch>
             <JCSwitch
               switchLabel="Is Org Tier"
               initState={this.state.isOrgTier == "true"}
               onPress={(val) => {
-                this.setState({ isOrgTier: val })
+                this.setState({ isOrgTier: val.toString() })
               }}
             ></JCSwitch>
             <JCSwitch
               switchLabel="Is Individual Tier"
               initState={this.state.isIndividualTier == "true"}
               onPress={(val) => {
-                this.setState({ isIndividualTier: val })
+                this.setState({ isIndividualTier: val.toString() })
               }}
             ></JCSwitch>
             <JCSwitch
               switchLabel="Enabled"
               initState={this.state.enabled == "true"}
               onPress={(val) => {
-                this.setState({ enabled: val })
+                this.setState({ enabled: val.toString() })
               }}
             ></JCSwitch>
             <JCSwitch
               switchLabel="Is Paypal"
               initState={this.state.isPaypal == "true"}
               onPress={(val) => {
-                this.setState({ isPaypal: val })
+                this.setState({ isPaypal: val.toString() })
               }}
             ></JCSwitch>
             <JCSwitch
               switchLabel="Is Stripe"
               initState={this.state.isStripe == "true"}
               onPress={(val) => {
-                this.setState({ isStripe: val })
+                this.setState({ isStripe: val.toString() })
               }}
             ></JCSwitch>
             {this.state.tiered?.map((item, index) => {
               return (
-                <React.Fragment key={index}>
+                <div style={{ flexDirection: "row", borderStyle: "solid", borderWidth: 1 }}>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       this.updateTier(index, "name", val.nativeEvent.text)
@@ -381,11 +386,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     multiline={false}
                     value={item.stripePaymentID ?? ""}
                   ></TextInput>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      this.updateTier(index, "defaultAmount", val.nativeEvent.text)
+                    }}
+                    placeholder="Default Amount"
+                    multiline={false}
+                    value={item.defaultAmount ?? "1"}
+                  ></TextInput>
                   <JCSwitch
-                    switchLabel="Is Tier"
-                    initState={item.stripeIsTiered == "true"}
+                    switchLabel="Is Editable"
+                    initState={item.amountIsEditable == "true"}
                     onPress={(val) => {
-                      this.updateTier(index, "stripeIsTiered", val)
+                      this.updateTier(index, "amountIsEditable", val.toString())
                     }}
                   ></JCSwitch>
                   <AntDesign
@@ -394,39 +407,41 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     color="black"
                     onPress={() => this.deleteTier(index)}
                   />
-                </React.Fragment>
+                </div>
               )
             })}
             <AntDesign name="plus" size={20} color="black" onPress={() => this.addTier()} />
-            <EditableRichText
-              onChange={(val: any) => {
-                this.setState({ marketingDescription: val })
-              }}
-              value={this.state.marketingDescription}
-              isEditable={true}
-            ></EditableRichText>
-            <Text>Groups: </Text>
-            {this.state.groupList.map((item, index) => {
-              return (
-                <JCSwitch
-                  key={index}
-                  switchLabel={item}
-                  initState={this.state.groupsIncluded?.includes(item)}
-                  onPress={() => {
-                    this.updateTierList(item)
-                  }}
-                ></JCSwitch>
-              )
-            })}
-          </View>
-          <Text>Description</Text>
+            <div style={{ flexDirection: "row" }}>
+              <Text>Marketing Description: </Text>
+              <EditableRichText
+                onChange={(val: any) => {
+                  this.setState({ marketingDescription: val })
+                }}
+                value={this.state.marketingDescription}
+                isEditable={true}
+              ></EditableRichText>
+            </div>
+            <div style={{ flexDirection: "row" }}>
+              <Text>Description: </Text>
 
-          <EditableRichText
-            toolBar={toolBar}
-            onChange={(description: any) => this.setState({ description })}
-            value={this.state.description}
-            isEditable={true}
-          />
+              <EditableRichText
+                toolBar={toolBar}
+                onChange={(description: any) => this.setState({ description })}
+                value={this.state.description}
+                isEditable={true}
+              />
+            </div>
+            <div style={{ flexDirection: "row" }}>
+              <Text>EULA: </Text>
+
+              <EditableRichText
+                toolBar={toolBar}
+                onChange={(eula: any) => this.setState({ eula })}
+                value={this.state.eula}
+                isEditable={true}
+              />
+            </div>
+          </View>
 
           <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.saveProduct()}>
             save product
@@ -436,7 +451,22 @@ export default class AdminScreen extends JCComponent<Props, State> {
     )
   }
   static UserConsumer = UserContext.Consumer
-
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      header: (props: { navigation: StackNavigationProp<any, any> | undefined }) => {
+        return <Header showAdmin={true} navigation={props.navigation} title={"Admin Page"} />
+      },
+    })
+  }
+  copyToClipboard = (text: string) => {
+    console.log("text", text)
+    const textField = document.createElement("textarea")
+    textField.innerText = text
+    document.body.appendChild(textField)
+    textField.select()
+    document.execCommand("copy")
+    textField.remove()
+  }
   render(): React.ReactNode {
     return (
       <AdminScreen.UserConsumer>
@@ -558,6 +588,18 @@ export default class AdminScreen extends JCComponent<Props, State> {
                             size={20}
                             color="black"
                             onPress={() => this.handlePress(product)}
+                          />
+
+                          <AntDesign
+                            name="link"
+                            size={20}
+                            color="black"
+                            onPress={() => {
+                              this.copyToClipboard(
+                                "http://app.jesuscollective.com/auth/signup?brand=jc&joinedAs=" +
+                                  product.id
+                              )
+                            }}
                           />
                         </View>
                       )

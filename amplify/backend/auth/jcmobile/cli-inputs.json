@@ -91,7 +91,16 @@
       "subscriptionkyyouth",	
       "subscriptionValid",
       "legacyUserGroup1",
-      "productMarkBaker"
+      "productMarkBaker",
+      "courseGroup1",
+      "courseGroup2",
+      "courseGroup3",
+      "courseGroup4",
+      "courseGroup5",
+      "courseGroup6",
+      "courseGroup7",
+      "courseGroup8",
+      "courseGroup9"
     ],
     "userPoolGroups": true,
     "usernameAttributes": [

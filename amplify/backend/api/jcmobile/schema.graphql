@@ -1131,6 +1131,17 @@ enum UserGroupType{
   userpool
   legacyUserGroup1
   productMarkBaker
+  courseGroup1
+  courseGroup2
+  courseGroup3
+  courseGroup4
+  courseGroup5
+  courseGroup6
+  courseGroup7
+  courseGroup8
+  courseGroup9
+
+
 }
 type ResourceMenuItem
 @model 
@@ -1317,7 +1328,7 @@ type Product
     isIndividualTier:String
     isLogin:String
     marketingDescription:String
-    groupsIncluded:[String]
+    eula:String
     enabled:String
     isStripe:String
     isPaypal:String
@@ -1328,7 +1339,8 @@ type Product
 type TieredProduct{
   name:String
   stripePaymentID:String
-  stripeIsTiered:String
+  defaultAmount:Int
+  amountIsEditable:String
 }
 
 
