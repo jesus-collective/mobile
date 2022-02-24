@@ -4,6 +4,8 @@ import React, { useMemo } from "react"
 import { isMobileOnly } from "react-device-detect"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Group } from "src/API"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
 export default function GroupCard({ item }: { item: Group }) {
@@ -42,6 +44,16 @@ export default function GroupCard({ item }: { item: Group }) {
                 {ownerUser?.given_name + " " + ownerUser?.family_name}
               </Text>
             </View>
+            <GenericButton
+              style={{
+                ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
+                LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
+                custom: { height: 32, width: 96 },
+                customLabel: { fontFamily: "Graphik-Medium-App" },
+              }}
+              label="View"
+              action={() => navigation.push("GroupScreen", { id: item.id })}
+            />
           </View>
         </View>
       </View>
