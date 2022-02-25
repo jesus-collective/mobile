@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Group } from "src/API"
+import { Group } from "screens/GroupsScreen/useGroups"
 import { Data } from "../../components/Data/Data"
 import { loadUser } from "./GroupUtils"
 
