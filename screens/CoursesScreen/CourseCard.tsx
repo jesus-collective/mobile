@@ -6,19 +6,20 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Group } from "src/API"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
-export default function ResourceCard({ item }: { item: Group }) {
+export default function CourseCard({ item }: { item: Group }) {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { name, description, ownerOrg, ownerOrgID } = item
-  const resourceType = "Curriculum"
-  const navigateToResourceScreen = () => {
-    navigation.push("ResourceScreen", { id: item.id })
+  const resourceType = "Course"
+  const navigateToCourseScreen = () => {
+    navigation.push("CourseHomeScreen", { id: item.id })
   }
   const [cardWidth, setCardWidth] = useState(200)
+  console.log({ item })
   return (
     <TouchableOpacity
       delayPressIn={150}
-      onPress={navigateToResourceScreen}
-      style={ResourceCardStyle.Container}
+      onPress={navigateToCourseScreen}
+      style={CourseCardStyle.Container}
     >
       <Image
         style={{
@@ -31,30 +32,31 @@ export default function ResourceCard({ item }: { item: Group }) {
       ></Image>
       <View
         onLayout={(e) => setCardWidth(e.nativeEvent.layout.width)}
-        style={ResourceCardStyle.ContentContainer}
+        style={CourseCardStyle.ContentContainer}
       >
-        <Text numberOfLines={1} style={ResourceCardStyle.ResourceType}>
+        <Text numberOfLines={1} style={CourseCardStyle.ResourceType}>
           {resourceType}
         </Text>
-        <Text numberOfLines={2} style={ResourceCardStyle.NameText}>
+        <Text numberOfLines={2} style={CourseCardStyle.NameText}>
           {name}
         </Text>
-        <Text numberOfLines={isMobileOnly ? 5 : 4} style={ResourceCardStyle.DescriptionText}>
+        <Text numberOfLines={isMobileOnly ? 5 : 4} style={CourseCardStyle.DescriptionText}>
           {description && description?.length >= 240
             ? `${description?.substring(0, 240)}...`
             : description}
         </Text>
-        {ownerOrg?.orgName || item.ownerUser ? (
-          <View style={ResourceCardStyle.OrganizerContainer}>
-            <View style={ResourceCardStyle.OrganizerSubContainer}>
-              <View style={ResourceCardStyle.ProfileImageContainer}>
+
+        {ownerOrg?.orgName || item.ownerUser || item?.isSponsored === "true" ? (
+          <View style={CourseCardStyle.OrganizerContainer}>
+            <View style={CourseCardStyle.OrganizerSubContainer}>
+              <View style={CourseCardStyle.ProfileImageContainer}>
                 {ownerOrg?.orgName ? (
                   <ProfileImage
                     isOrg={Boolean(ownerOrg?.orgName)}
                     style={"org"}
                     user={ownerOrgID}
                   />
-                ) : (
+                ) : item?.isSponsored === "true" ? (
                   <Image
                     style={{
                       width: 53,
@@ -65,16 +67,18 @@ export default function ResourceCard({ item }: { item: Group }) {
                     }}
                     source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
                   ></Image>
-                )}
+                ) : null}
               </View>
-              <View style={ResourceCardStyle.OrganizerTextColumn}>
-                <Text numberOfLines={1} style={ResourceCardStyle.OrganizerText}>
-                  Curated by
-                </Text>
-                <Text numberOfLines={1} style={ResourceCardStyle.OrganizerNameText}>
-                  {ownerOrg?.orgName ?? "Jesus Collective"}
-                </Text>
-              </View>
+              {item?.isSponsored === "true" ? (
+                <View style={CourseCardStyle.OrganizerTextColumn}>
+                  <Text numberOfLines={1} style={CourseCardStyle.OrganizerText}>
+                    Curated by
+                  </Text>
+                  <Text numberOfLines={1} style={CourseCardStyle.OrganizerNameText}>
+                    {ownerOrg?.orgName ?? "Jesus Collective"}
+                  </Text>
+                </View>
+              ) : null}
             </View>
           </View>
         ) : null}
@@ -83,7 +87,7 @@ export default function ResourceCard({ item }: { item: Group }) {
   )
 }
 
-const ResourceCardStyle = StyleSheet.create({
+const CourseCardStyle = StyleSheet.create({
   Container: {
     border: "1px solid #E4E1E1",
     backgroundColor: "#fff",
