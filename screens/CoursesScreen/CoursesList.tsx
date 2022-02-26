@@ -39,7 +39,7 @@ const CourseList = StyleSheet.create({
 })
 
 export default function CoursesList(props: Props) {
-  const { courses, isLoading, loadMore, nextToken = null } = useCourses()
+  const { currentUser, courses, isLoading, loadMore, nextToken = null } = useCourses()
   const { reverse, filter } = props
   return (
     <FlatList
@@ -88,9 +88,11 @@ export default function CoursesList(props: Props) {
       }
       data={
         reverse
-          ? courses.sort((courseA, courseB) =>
-              courseB?.name?.toLowerCase()?.localeCompare(courseA?.name?.toLowerCase())
-            )
+          ? courses.sort((courseA, courseB) => {
+              if (courseB?.name && courseA?.name)
+                return courseB.name.toLowerCase().localeCompare(courseA.name.toLowerCase())
+              return 0
+            })
           : courses
       }
       numColumns={isMobileOnly ? 1 : 3}
@@ -98,10 +100,10 @@ export default function CoursesList(props: Props) {
       renderItem={({ item, index }) => {
         return !isMobileOnly ? (
           <LastListItem listLength={courses.length} index={index} isThreeColumn={true}>
-            <CourseCard item={item} />
+            <CourseCard user={currentUser} item={item} />
           </LastListItem>
         ) : (
-          <CourseCard item={item} />
+          <CourseCard user={currentUser} item={item} />
         )
       }}
     />

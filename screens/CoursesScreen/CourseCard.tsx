@@ -4,14 +4,44 @@ import React, { useState } from "react"
 import { isMobileOnly } from "react-device-detect"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Group } from "src/API"
+import { JCCognitoUser } from "src/types"
+import { Data } from "../../components/Data/Data"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 
-export default function CourseCard({ item }: { item: Group }) {
+export default function CourseCard({
+  item,
+  user,
+}: {
+  item: Group
+  user: JCCognitoUser["username"]
+}) {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const { name, description, ownerOrg, ownerOrgID } = item
   const resourceType = "Course"
+  const setIsPaid = async (): Promise<boolean> => {
+    const getPayment = Data.getPayment(item.id + "-" + user)
+    return getPayment
+      .then((json) => {
+        //console.log(json)
+        if (json?.data?.getPayment != null) return true
+        else return false
+      })
+      .catch((err) => {
+        console.log({ "Error query.getPayment": err })
+        return false
+      })
+  }
   const navigateToCourseScreen = () => {
-    navigation.push("CourseHomeScreen", { id: item.id })
+    setIsPaid().then((isPaid) => {
+      if (isPaid) navigation.push("CourseHomeScreen", { id: item.id })
+      else {
+        navigation.push("CourseOverviewScreen", {
+          groupType: "course",
+          id: item?.id,
+          create: false,
+        })
+      }
+    })
   }
   const [cardWidth, setCardWidth] = useState(200)
   console.log({ item })

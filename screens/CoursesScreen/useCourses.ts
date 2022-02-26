@@ -1,10 +1,13 @@
+import { Auth } from "aws-amplify"
 import { useCallback, useEffect, useState } from "react"
 import { Group } from "src/API"
+import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 
 export const useCourses = () => {
   const [nextToken, setNextToken] = useState<string | undefined | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [currentUser, setCurrentUser] = useState<JCCognitoUser["username"]>("")
   const [courses, setCourses] = useState<Group[]>([])
   const loadCourses = useCallback(async () => {
     setIsLoading(true)
@@ -22,9 +25,11 @@ export const useCourses = () => {
         } else {
           setNextToken(token)
           setCourses((prev) =>
-            [...prev, ...tempArr].sort((courseA, courseB) =>
-              courseA?.name?.toLowerCase()?.localeCompare(courseB?.name?.toLowerCase())
-            )
+            [...prev, ...tempArr].sort((courseA, courseB) => {
+              if (courseA?.name && courseB?.name)
+                return courseA.name.toLowerCase()?.localeCompare(courseB.name.toLowerCase())
+              return 0
+            })
           )
         }
       } catch (err: any) {
@@ -39,9 +44,11 @@ export const useCourses = () => {
         } else {
           setNextToken(token)
           setCourses((prev) =>
-            [...prev, ...tempArr].sort((courseA, courseB) =>
-              courseA?.name?.toLowerCase()?.localeCompare(courseB?.name?.toLowerCase())
-            )
+            [...prev, ...tempArr].sort((courseA, courseB) => {
+              if (courseA?.name && courseB?.name)
+                return courseA.name.toLowerCase().localeCompare(courseB.name.toLowerCase())
+              return 0
+            })
           )
         }
       } finally {
@@ -51,7 +58,12 @@ export const useCourses = () => {
     await loadNext()
   }, [nextToken])
   useEffect(() => {
+    const loadUser = async () => {
+      const user: JCCognitoUser = await Auth.currentAuthenticatedUser()
+      setCurrentUser(user.username)
+    }
+    loadUser()
     if (!courses.length) loadCourses()
   }, [])
-  return { courses, isLoading, loadMore: loadCourses, nextToken }
+  return { currentUser, courses, isLoading, loadMore: loadCourses, nextToken }
 }
