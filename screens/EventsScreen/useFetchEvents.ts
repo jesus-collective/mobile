@@ -14,7 +14,7 @@ export const fetchUpcomingEvents = async (
   let events: JCEvent[] = []
   let counter = 0
   let cacheNextToken: string | null | undefined = null
-  const paginateCount = loadAll ? 100 : 10
+  const paginateCount = loadAll ? 200 : 200
   const constructQueryVariables = (
     nextToken: GroupByTypeByTimeQueryVariables["nextToken"],
     limit: number,
