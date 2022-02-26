@@ -141,6 +141,7 @@ import {
   ModelPaymentFilterInput,
   ModelProductFilterInput,
   ModelResourceRootFilterInput,
+  ModelSortDirection,
   ModelStartupFilterInput,
   ModelStringFilterInput,
   PaymentByUserQuery,
@@ -1108,12 +1109,14 @@ export class Data {
   }
   static groupByTypeForMyGroups(
     type: string | InviteType | undefined,
+    order: ModelSortDirection,
     nextToken: string | null | undefined
   ) {
     return API.graphql({
       query: customQueries.groupByTypeForMyGroups,
       variables: {
         limit: 20,
+        sortDirection: order,
         type: type,
         nextToken: nextToken,
       },

@@ -1,11 +1,13 @@
-import Constants from "expo-constants"
+//import Constants from "expo-constants"
 import { Dimensions, Platform } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import adminStyles from "./adminStyles"
 import courseStyles from "./courseStyles"
 import resourceStyles from "./resourceStyles"
 const mainColor = "#ffffff"
-
+const Constants = {
+  statusBarHeight: 0,
+}
 export default class MainStyles {
   constructor() {
     this.update()

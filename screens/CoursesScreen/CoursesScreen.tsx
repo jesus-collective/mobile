@@ -1,61 +1,103 @@
-﻿import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content } from "native-base"
-import React from "react"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
-import MyMap from "../../components/MyMap/MyMap"
+﻿import { useNavigation, useRoute } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Auth } from "aws-amplify"
+import React, { useEffect, useLayoutEffect, useState } from "react"
+import { isMobileOnly } from "react-device-detect"
+import { View } from "react-native"
+import { JCCognitoUser } from "src/types"
+import GenericButton from "../../components/GenericButton/GenericButton"
+import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
+import GenericDirectoryScreen from "../../components/GenericDirectoryScreen/GenericDirectoryScreen"
+import Header from "../../components/Header/Header"
+import CoursesList from "./CoursesList"
 
-interface Props {
-  navigation: StackNavigationProp<any, any>
-}
-interface State extends JCState {
-  showMap: boolean
-  mapData: MapData[]
-}
-
-export default class HomeScreen extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      mapData: [],
-      showMap: false,
-    }
-  }
-  mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap })
-  }
-
-  render(): React.ReactNode {
-    console.log("CoursesScreen")
+export default function CoursesScreen() {
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  const route = useRoute()
+  const [reverse, setReverse] = useState(false)
+  const [filter, setFilter] = useState("")
+  useLayoutEffect(() => {
+    isMobileOnly
+      ? navigation.setOptions({
+          header: (props) => {
+            return (
+              <Header
+                subnav={[
+                  {
+                    title: "All Courses",
+                    action: () => {
+                      setFilter("")
+                    },
+                  },
+                ]}
+                title={"Courses"}
+                controls={[
+                  {
+                    icon: "Sort",
+                    action: () => {
+                      setReverse((prev) => !prev)
+                    },
+                  },
+                ]}
+                navigation={props.navigation}
+              />
+            )
+          },
+        })
+      : null
+  }, [])
+  const CoursesControlButtons = () => {
+    const [showCreate, setShowCreate] = useState<boolean>(false)
+    useEffect(() => {
+      const load = async () => {
+        const user: JCCognitoUser = await Auth.currentAuthenticatedUser()
+        const groupList: string[] = user.getSignInUserSession()?.getAccessToken().payload[
+          "cognito:groups"
+        ]
+        if (groupList?.includes("admin") || groupList?.includes("verifiedUsers"))
+          setShowCreate(true)
+      }
+      load()
+    }, [])
     return (
-      <Container>
-        <Content>
-          <MyMap
-            type={"no-filters"}
-            size={"50%"}
-            mapData={this.state.mapData}
-            visible={this.state.showMap}
-          ></MyMap>
-          <Container
-            style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}
-          >
-            <Container style={{ flex: 70, flexDirection: "column", justifyContent: "flex-start" }}>
-              <MyGroups
-                showMore={true}
-                type="course"
-                wrap={true}
-                navigation={this.props.navigation}
-              ></MyGroups>
-            </Container>
-            {/* <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-              <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyPeople>
-              <MyConversations navigation={this.props.navigation}> </MyConversations>
-              <Container ></Container>
-            </Container> */}
-          </Container>
-        </Content>
-      </Container>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 112 }}>
+        <GenericButton
+          label={reverse ? "SORT: Z - A" : "SORT: A - Z"}
+          action={() => setReverse((prev) => !prev)}
+          style={{
+            ButtonStyle: GenericButtonStyles.SecondaryButtonStyle,
+            LabelStyle: GenericButtonStyles.SecondaryLabelStyle,
+            custom: {
+              marginRight: 32,
+            },
+          }}
+          icon="Sort-Red"
+        ></GenericButton>
+        {showCreate ? (
+          <GenericButton
+            label="New Course"
+            action={() =>
+              navigation.push("CourseOverviewScreen", {
+                create: true,
+              })
+            }
+            style={{
+              ButtonStyle: GenericButtonStyles.PrimaryButtonStyle,
+              LabelStyle: GenericButtonStyles.PrimaryLabelStyle,
+            }}
+            icon="Plus-White"
+          ></GenericButton>
+        ) : null}
+      </View>
     )
   }
+  return (
+    <GenericDirectoryScreen
+      navigation={navigation}
+      ControlButtons={CoursesControlButtons}
+      MainContent={() => <CoursesList filter={filter} reverse={reverse} />}
+      route={route}
+      pageTitle="Courses"
+    />
+  )
 }

@@ -23,7 +23,8 @@ export enum WidgetType {
 type Props = {
   title: string
   emptyMessage: string
-  loadData: () => Promise<Array<any>>
+  loadData?: () => Promise<Array<any>>
+  data?: any[]
   widgetType: WidgetType
 }
 
@@ -248,14 +249,20 @@ export default function JCWidget(props: Props) {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const load = async () => {
-      loadData().then((data) => {
-        setData(data)
-        setIsLoading(false)
-      })
+      if (loadData)
+        loadData().then((data) => {
+          setData(data)
+          setIsLoading(false)
+        })
     }
-    load()
+    if (!props.data) load()
   }, [])
-
+  useEffect(() => {
+    if (props.data) {
+      setData(props.data)
+      setIsLoading(false)
+    }
+  }, [props.data])
   return (
     <View key={title} style={UpcomingCardStyle.CardContainer}>
       <Text
