@@ -53,7 +53,7 @@ export default function ProfilesScreen() {
           }}
           icon="Sort-Red"
         ></GenericButton>
-        <GenericButton
+        {/* <GenericButton
           label={`FILTER${filter ? ": Friends" : ""}`}
           action={() => {
             if (filter) setFilter("")
@@ -71,7 +71,7 @@ export default function ProfilesScreen() {
             },
           }}
           icon={filter ? "X-White" : "Filter-Red"}
-        ></GenericButton>
+        ></GenericButton> */}
       </View>
     )
   }
