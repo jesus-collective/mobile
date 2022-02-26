@@ -35,7 +35,6 @@ import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/Us
 import { GetUserQuery, ListProductsQuery, StripeInvoice, StripePriceDetail } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
 import "./CardSectionStyles.css"
-import EULA from "./eula.json"
 import HandleStripePayment from "./HandleStripePayment"
 
 const wrapper = onlyLastPromise()
@@ -90,6 +89,7 @@ interface State extends JCState {
   showEULA: boolean
   errorMsg: string | undefined
   quantities: number[][]
+  isEditable: string[][]
   invoice: StripeInvoice | null
   processing: "entry" | "processing" | "complete"
   stripeValidation: any
@@ -158,7 +158,14 @@ class BillingImpl extends JCComponent<Props, State> {
               {
                 currentProduct: [listProducts.data.listProducts.items[0]],
                 quantities: [
-                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(25),
+                  listProducts.data.listProducts.items[0]?.tiered?.map(
+                    (e) => e?.defaultAmount ?? 1
+                  ) ?? [],
+                ],
+                isEditable: [
+                  listProducts.data.listProducts.items[0]?.tiered?.map(
+                    (e) => e?.amountIsEditable ?? "false"
+                  ) ?? [],
                 ],
               },
               async () => {
@@ -178,28 +185,14 @@ class BillingImpl extends JCComponent<Props, State> {
             this.setState(
               {
                 currentProduct: products,
-                quantities: [
-                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(1),
-                ],
+                quantities: [products[0]?.tiered?.map((e) => e?.defaultAmount ?? 1) ?? []],
+                isEditable: [products[0]?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? []],
               },
               async () => {
                 await this.createInvoice()
               }
             )
           }
-          console.log("Bad")
-          /* const products = listProducts.data?.listProducts?.items?.filter(
-            (item) => this.state.joinedProduct?.includes(item?.stripePaymentID)
-          );
-          this.setState(
-            {
-              currentProduct: products,
-              quantities: Array(products?.length).fill(1),
-            },
-            () => {
-              this.createInvoice();
-            }
-          );*/
         }
     } catch (err) {
       Sentry.captureException(err)
@@ -287,7 +280,12 @@ class BillingImpl extends JCComponent<Props, State> {
         {
           showSubscriptionSelector: false,
           currentProduct: this.state.currentProduct.concat(product),
-          quantities: [Array(product?.tiered?.length).fill(1)],
+          quantities: [
+            product?.tiered?.map((e) => {
+              return e?.defaultAmount ?? 1
+            }) ?? [],
+          ],
+          isEditable: [product?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? []],
           invoice: null,
         },
         async () => {
@@ -415,7 +413,7 @@ class BillingImpl extends JCComponent<Props, State> {
       }
     )
   }
-  renderEULA() {
+  renderEULA(eula: string | null | undefined) {
     return (
       <JCModal
         visible={this.state.showEULA}
@@ -426,9 +424,7 @@ class BillingImpl extends JCComponent<Props, State> {
       >
         <Content>
           <View accessible>
-            {EULA.map((item, index) => {
-              return <Text key={index}>{item}</Text>
-            })}
+            <EditableRichText value={eula ?? ""} isEditable={false}></EditableRichText>
           </View>
         </Content>
       </JCModal>
@@ -498,32 +494,36 @@ class BillingImpl extends JCComponent<Props, State> {
               >
                 {item2?.name ?? ""}
               </Text>
-              <EditableText
-                accessibilityLabel={item2?.name ?? ""}
-                placeholder="Quantity"
-                multiline={false}
-                testID="course-weekTitle"
-                textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-                inputStyle={{
-                  borderWidth: 1,
-                  borderColor: "#dddddd",
-                  marginTop: 5,
-                  marginBottom: 5,
-                  width: "20%",
-                  paddingTop: 5,
-                  paddingRight: 5,
-                  paddingBottom: 5,
-                  paddingLeft: 5,
-                  fontFamily: "Graphik-Regular-App",
-                  fontSize: 10,
-                  lineHeight: 15,
-                }}
-                onChange={(value) => {
-                  this.updateQuantity(index, index2, parseInt(value))
-                }}
-                value={this.state.quantities[index][index2].toString()}
-                isEditable={true}
-              ></EditableText>
+              {this.state.isEditable[index][index2] == "true" ? (
+                <EditableText
+                  accessibilityLabel={item2?.name ?? ""}
+                  placeholder="Quantity"
+                  multiline={false}
+                  testID="course-weekTitle"
+                  textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
+                  inputStyle={{
+                    borderWidth: 1,
+                    borderColor: "#dddddd",
+                    marginTop: 5,
+                    marginBottom: 5,
+                    width: "20%",
+                    paddingTop: 5,
+                    paddingRight: 5,
+                    paddingBottom: 5,
+                    paddingLeft: 5,
+                    fontFamily: "Graphik-Regular-App",
+                    fontSize: 10,
+                    lineHeight: 15,
+                  }}
+                  onChange={(value) => {
+                    this.updateQuantity(index, index2, parseInt(value))
+                  }}
+                  value={this.state.quantities[index][index2].toString()}
+                  isEditable={true}
+                ></EditableText>
+              ) : (
+                <Text>{this.state.quantities[index][index2].toString()}</Text>
+              )}
             </View>
           )
         })}
@@ -558,7 +558,7 @@ class BillingImpl extends JCComponent<Props, State> {
           Read the End User Licensing Agreement
         </JCButton>
 
-        {this.renderEULA()}
+        {this.renderEULA(item?.eula)}
       </View>
     )
   }

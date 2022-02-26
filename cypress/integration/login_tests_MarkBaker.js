@@ -27,7 +27,7 @@ const submitNewUserOrgScreen = () => {
   cy.contains("Continue").click({ force: true })
 }
 const completeBillingScreen = (coupon) => {
-  cy.contains("One Story Curriculum", { timeout: 30000 })
+  cy.contains("Mark Baker Resource", { timeout: 30000 })
   cy.contains("Total:", { timeout: 30000 })
   cy.get('input[data-testId="billing-coupon"]').clear()
   if (coupon != "") cy.get('input[data-testId="billing-coupon"]').type(coupon)
