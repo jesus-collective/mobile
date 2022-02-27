@@ -9,7 +9,7 @@ import HomeCarousel from "../Carousel/HomeCarousel"
 const ResourceCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [resources, setResources] = useState<any[]>([])
-
+  const [isLoading, setIsLoading] = useState(true)
   const loadResources = async () => {
     try {
       const resources = await Data.loadResources(null)
@@ -18,6 +18,8 @@ const ResourceCarousel = () => {
     } catch (err: any) {
       setResources(err?.data?.groupByType?.items ?? [])
       console.error({ err })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -35,6 +37,7 @@ const ResourceCarousel = () => {
   }
   return (
     <HomeCarousel
+      isLoading={isLoading}
       seeAllButton={() => navigation.push("ResourcesScreen")}
       renderItem={renderItem}
       title={"Resources"}

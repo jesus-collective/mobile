@@ -115,13 +115,16 @@ export const useFetchEvents = ({ reverse, loadAll }: { reverse?: boolean; loadAl
 
     [data, currentUser]
   )
-
+  const ownedGroups: (string | undefined)[] = useMemo(() => {
+    return data.filter((eventItem) => eventItem?.owner === currentUser).map((a) => a?.id)
+  }, [currentUser, data])
   useEffect(() => {
     loadEvents()
   }, [reverse])
   return {
     events: data,
     joinedGroups,
+    ownedGroups,
     isLoading,
     error,
     nextToken,
