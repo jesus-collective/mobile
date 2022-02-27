@@ -7,7 +7,7 @@ import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { JCEvent } from "./EventsList"
-import { joinGroup, leaveGroup } from "./GroupUtils"
+import { joinGroup } from "./GroupUtils"
 
 type Props = {
   joined?: boolean
@@ -28,10 +28,11 @@ export default function EventCard(props: Props) {
     // TODO: optimistically call updateJoined, undo if mutation fails
     setIsLoading(true)
     if (joined) {
-      const success = await leaveGroup(item, "event")
-      if (success) {
-        if (item?.id) updateEvents("leave", item?.id)
-      }
+      navigateToEventScreen()
+      // const success = await leaveGroup(item, "event")
+      // if (success) {
+      //   if (item?.id) updateEvents("leave", item?.id)
+      // }
     } else {
       const success = await joinGroup(item, "event")
       if (success && item?.id) {
@@ -100,7 +101,7 @@ export default function EventCard(props: Props) {
               custom: EventCardStyle.ButtonCustom,
             }}
             disabled={isOwner}
-            label={isOwner ? "Owner" : joined ? "Leave" : "Sign up"}
+            label={isOwner ? "Owner" : joined ? "View" : "Sign up"}
             spinner={isLoading}
             action={handleAction}
           />
