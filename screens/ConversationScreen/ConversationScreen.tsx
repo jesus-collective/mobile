@@ -315,7 +315,7 @@ const ConversationScreen = () => {
                   <Text style={[style.HeaderText, { textAlign: "center", marginBottom: 32 }]}>
                     You don’t have a conversation selected.
                   </Text>
-                  <Text style={{ marginBottom: 32 }}>Please select or begin a conversation.</Text>
+                  <Text style={{ marginBottom: 32 }}>Please select a conversation.</Text>
                   {!hideButton ? (
                     <GenericButton
                       action={() => Promise.resolve()}
