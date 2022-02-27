@@ -10,6 +10,7 @@ import HomeCarousel from "../Carousel/HomeCarousel"
 const PeopleCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [people, setPeople] = useState<NonNullable<ListUsersQuery["listUsers"]>["items"]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const loadGroups = async () => {
     const listUsers = await Data.listUsersForProfile(UserGroupType.All, null)
     setPeople(listUsers?.data?.listUsers?.items ?? [])
@@ -28,6 +29,7 @@ const PeopleCarousel = () => {
   }
   return (
     <HomeCarousel
+      isLoading={isLoading}
       seeAllButton={() => navigation.push("ProfilesScreen")}
       renderItem={renderItem}
       title={"People"}
