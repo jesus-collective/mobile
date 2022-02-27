@@ -698,7 +698,6 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         pageItemIndex.slice(2)
       )
       console.log({ pageItemIndexB: pageItemIndex })
-      console.log({ z: z })
       rootPageItems2[pageItemIndex[0]][pageItemIndex[1]] = z
       console.log({ rootPageItems2222: rootPageItems2 })
       return rootPageItems2
@@ -725,7 +724,6 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         pageItemIndex.slice(2)
       )
       console.log({ pageItemIndexB: pageItemIndex })
-      console.log({ z: z })
       rootPageItems2[pageItemIndex[0]][pageItemIndex[1]] = z
       console.log({ rootPageItems2222: rootPageItems2 })
       return rootPageItems2

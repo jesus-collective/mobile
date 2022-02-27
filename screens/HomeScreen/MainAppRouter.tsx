@@ -63,7 +63,7 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
   }
   async loadAllEvents(nextToken: string | null) {
     const process = async (z: GraphQLResult<ListGroupsQuery>) => {
-      console.log({ z: z })
+      console.log({ loadAllEvents: z })
       this.setState(
         {
           MapItems: [
@@ -81,7 +81,7 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
   }
   async loadAllOrgs(nextToken: string | null) {
     const process = async (z: GraphQLResult<ListOrganizationsQuery>) => {
-      console.log({ z: z })
+      console.log({ loadAllOrgs: z })
       this.setState(
         {
           MapItems: [
@@ -99,7 +99,7 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
   }
   async loadAllUsers(nextToken: string | null) {
     const process = async (z: GraphQLResult<ListUsersQuery>) => {
-      console.log({ z: z })
+      console.log({ loadAllUsers: z })
       this.setState(
         {
           MapItems: [

@@ -334,7 +334,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     if (preview) {
       const preview2 = preview.filter(
         (x: any) =>
-          (x.readGroups?.filter((z: any) => pgd.includes(z ?? UserGroupType.verifiedUsers))
+          (x.readGroups?.filter((z: any) => pgd?.includes(z ?? UserGroupType.verifiedUsers))
             .length ?? 0) >= 1
       )
       if (preview.length < 0) result = { action: "HomeScreen", props: null }

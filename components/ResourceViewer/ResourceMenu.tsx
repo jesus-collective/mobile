@@ -83,7 +83,6 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
   parentIsSelected(resourceState: ResourceState, index: number): boolean {
     console.log({ index: index })
     for (let z: number = index; z--; z >= resourceState.currentMenuItem) {
-      console.log({ z: z })
       const menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
       console.log({ depth: menuItem.depth })
       if ((menuItem?.depth ?? "1") == "1") return z == resourceState.currentMenuItem
