@@ -2,17 +2,19 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
-import { Group } from "src/API"
 import { Data } from "../../components/Data/Data"
 import GroupCard from "../../screens/GroupsScreen/GroupCard"
+import { Group, ModelSortDirection } from "../../src/API"
 import HomeCarousel from "../Carousel/HomeCarousel"
 
 const GroupCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [groups, setGroups] = useState<Group[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const loadGroups = async () => {
-    const listGroup = await Data.groupByTypeForMyGroups("group", null)
+    const listGroup = await Data.groupByTypeForMyGroups("group", ModelSortDirection.DESC, null)
     setGroups(listGroup?.data?.groupByType?.items as Group[])
+    setIsLoading(false)
   }
   useEffect(() => {
     loadGroups()
@@ -28,6 +30,7 @@ const GroupCarousel = () => {
   }
   return (
     <HomeCarousel
+      isLoading={isLoading}
       seeAllButton={() => navigation.navigate("GroupsScreen")}
       renderItem={renderItem}
       title={"Groups"}

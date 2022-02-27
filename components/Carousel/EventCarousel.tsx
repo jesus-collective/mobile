@@ -4,13 +4,14 @@ import React from "react"
 import { View } from "react-native"
 import EventCard from "../../screens/EventsScreen/EventCard"
 import { useFetchEvents } from "../../screens/EventsScreen/useFetchEvents"
-import { useMyGroups } from "../../screens/EventsScreen/useMyGroups"
 import HomeCarousel from "./HomeCarousel"
 
 const EventCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
-  const { events, updateEvents, joinedGroups } = useFetchEvents({ reverse: false, loadAll: true })
-  const { ownedGroups } = useMyGroups(events)
+  const { events, updateEvents, joinedGroups, isLoading, ownedGroups } = useFetchEvents({
+    reverse: false,
+    loadAll: true,
+  })
   const renderItem = (item: any, width: number) => {
     if (width)
       return (
@@ -27,6 +28,7 @@ const EventCarousel = () => {
   }
   return (
     <HomeCarousel
+      isLoading={isLoading}
       seeAllButton={() => navigation.push("EventsScreen")}
       title={"Events"}
       renderItem={renderItem}

@@ -1,10 +1,19 @@
 import React, { createRef, useEffect, useState } from "react"
 import { isMobileOnly } from "react-device-detect"
-import { FlatList, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native"
 
 type Props = {
   data: any
   title: string
+  isLoading: boolean
   renderItem: (item: any, width: number) => JSX.Element
   seeAllButton?: () => void
 }
@@ -35,7 +44,6 @@ export default function HomeCarousel(props: Props) {
     : width < 875
     ? carouselScreenWidth / 2
     : carouselScreenWidth / 3
-
   return (
     <>
       <View
@@ -86,7 +94,7 @@ export default function HomeCarousel(props: Props) {
           </Text>
         </TouchableOpacity>
       </View>
-      {data?.length ? (
+      {data?.length || props.isLoading ? (
         <View
           style={{
             flexDirection: "row",
@@ -95,7 +103,7 @@ export default function HomeCarousel(props: Props) {
             alignItems: "center",
           }}
         >
-          {!isMobileOnly ? (
+          {!isMobileOnly && !props.isLoading ? (
             <TouchableOpacity onPress={() => scrollBackward(page)}>
               <Image
                 style={{ width: 16, height: 14 }}
@@ -103,33 +111,49 @@ export default function HomeCarousel(props: Props) {
               ></Image>
             </TouchableOpacity>
           ) : null}
-          <FlatList<JSX.Element>
-            ref={listRef}
-            data={data}
-            pagingEnabled
-            getItemLayout={(data, index) => {
-              return {
-                length: carouselScreenWidth / 3,
-                offset: (carouselScreenWidth / 3 - 32) * index,
-                index,
-              }
-            }}
-            ItemSeparatorComponent={() => <View style={{ width: 32 }} />}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            onLayout={(e) => {
-              setCarouselScreenWidth(e.nativeEvent.layout.width - 65)
-              // carousel is scrolled on load, does not show first item at all times.
-              // \/ should not be needed. todo: WHY
-              if (listRef?.current) listRef.current.scrollToIndex({ animated: false, index: 0 })
-            }}
-            style={
-              isMobileOnly ? { flex: 1, marginBottom: 64, marginTop: 16 } : { flex: 1, margin: 16 }
-            }
-            contentContainerStyle={isMobileOnly ? {} : { width: "84.444vw" }}
-            renderItem={({ item }) => renderItem(item, cardWidth)}
-          />
-          {!isMobileOnly ? (
+          {props.isLoading ? (
+            <>
+              <View style={{ marginTop: 80, marginBottom: 80, flex: 1 }}>
+                <ActivityIndicator size="large" color="#FF4438" />
+              </View>
+              <View style={{ marginTop: 80, marginBottom: 80, flex: 1 }}>
+                <ActivityIndicator size="large" color="#FF4438" />
+              </View>
+              <View style={{ marginTop: 80, marginBottom: 80, flex: 1 }}>
+                <ActivityIndicator size="large" color="#FF4438" />
+              </View>
+            </>
+          ) : (
+            <FlatList<JSX.Element>
+              ref={listRef}
+              data={data}
+              pagingEnabled
+              getItemLayout={(data, index) => {
+                return {
+                  length: carouselScreenWidth / 3,
+                  offset: (carouselScreenWidth / 3 - 32) * index,
+                  index,
+                }
+              }}
+              ItemSeparatorComponent={() => <View style={{ width: 32 }} />}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              onLayout={(e) => {
+                setCarouselScreenWidth(e.nativeEvent.layout.width - 65)
+                // carousel is scrolled on load, does not show first item at all times.
+                // \/ should not be needed. todo: WHY
+                if (listRef?.current) listRef.current.scrollToIndex({ animated: false, index: 0 })
+              }}
+              style={[
+                isMobileOnly
+                  ? { flex: 1, marginBottom: 64, marginTop: 16 }
+                  : { flex: 1, margin: 16 },
+              ]}
+              contentContainerStyle={isMobileOnly ? {} : { width: "84.444vw" }}
+              renderItem={({ item }) => renderItem(item, cardWidth)}
+            />
+          )}
+          {!isMobileOnly && !props.isLoading ? (
             <TouchableOpacity onPress={() => scrollForward(page)}>
               <Image
                 style={{ width: 16, height: 14 }}

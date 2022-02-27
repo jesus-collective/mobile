@@ -11,6 +11,7 @@ import { Data } from "../Data/Data"
 const OrgCarousel = () => {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [orgs, setOrgs] = useState<Org[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const loadOrgs = async () => {
     let tempOrgs: NonNullable<ListOrganizationsQuery["listOrganizations"]>["items"] = []
     const loadNext = async (next: null | undefined | string = null) => {
@@ -30,6 +31,7 @@ const OrgCarousel = () => {
     }
 
     await loadNext()
+    setIsLoading(false)
     setOrgs(tempOrgs)
   }
   useEffect(() => {
@@ -46,6 +48,7 @@ const OrgCarousel = () => {
   }
   return (
     <HomeCarousel
+      isLoading={isLoading}
       seeAllButton={() => navigation.push("OrganizationsScreen")}
       renderItem={renderItem}
       title={"Orgs"}
