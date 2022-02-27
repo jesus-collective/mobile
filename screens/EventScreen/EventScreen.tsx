@@ -288,7 +288,9 @@ export default function EventScreen(props: Props) {
       </BrowserView>
       <MobileOnlyView style={{ overflow: "scroll" }}>
         {currentTab === EventTabType.DISCUSSION ? (
-          <Text>Discussion</Text>
+          <View style={{ padding: 12 }}>
+            <MessageBoard replies style="regular" groupId={id}></MessageBoard>
+          </View>
         ) : currentTab === EventTabType.ATTENDEES ? (
           <View>
             <FlatList
