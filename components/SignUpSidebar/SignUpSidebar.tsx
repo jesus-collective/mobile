@@ -12,7 +12,7 @@ export default class SignUpSidebar extends JCComponent<Props> {
     super(props)
   }
   render(): React.ReactNode {
-    const brand = Brand
+    const brand = Brand()
     return (
       <View style={this.styles.style.signUpSidebarView}>
         {this.props.text == true ? (

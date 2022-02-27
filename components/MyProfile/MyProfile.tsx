@@ -625,7 +625,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
   renderTopBar(userActions: UserActions) {
-    const brand = Brand
+    const brand = Brand()
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.myProfileTopButtons}>
@@ -685,7 +685,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     else return null
   }
   renderLeftBar(userActions: UserActions) {
-    const brand = Brand
+    const brand = Brand()
 
     if (this.state.UserDetails)
       return (
@@ -976,7 +976,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     else return null
   }
   renderProfile() {
-    const brand = Brand
+    const brand = Brand()
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.profileScreenRightCard}>

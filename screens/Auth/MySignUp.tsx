@@ -67,7 +67,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       authError: "",
       joinedAs: props.route?.params.joinedAs,
       joinedProduct: props.route?.params.joinedProduct,
-      brand: Brand,
+      brand: Brand(),
       sendingData: false,
     }
     console.log({ PARAMS: props.route })

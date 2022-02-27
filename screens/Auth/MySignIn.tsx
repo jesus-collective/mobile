@@ -44,7 +44,7 @@ class MySignInImpl extends React.Component<Props, State> {
       user: props.route?.params?.email ?? "",
       authError: "",
       fromVerified: props.route?.params?.fromVerified ?? false,
-      brand: Brand,
+      brand: Brand(),
       joinedProduct: props.route?.params.joinedProduct,
     }
   }

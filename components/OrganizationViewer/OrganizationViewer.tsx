@@ -453,7 +453,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }*/
   render(): React.ReactNode {
-    const brand = Brand
+    const brand = Brand()
     return this.state.OrganizationDetails != null ? (
       <Content>
         <View style={this.styles.style.myProfileTopButtons}>

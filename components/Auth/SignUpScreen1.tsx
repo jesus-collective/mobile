@@ -35,7 +35,7 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
     await actions.recheckUserState()
   }
   render(): React.ReactNode {
-    const brand = Brand
+    const brand = Brand()
     return (
       <SignUpScreen1Impl.UserConsumer>
         {({ userState, userActions }) => {

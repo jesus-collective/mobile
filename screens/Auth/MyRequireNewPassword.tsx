@@ -47,7 +47,7 @@ class MyForgotPassword extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      brand: Brand,
+      brand: Brand(),
       phone: "",
       code: "+1",
       first: "",

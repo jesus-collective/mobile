@@ -42,7 +42,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
     actions.updateHasCompletedPersonalProfile()
   }
   render(): React.ReactNode {
-    const brand = Brand
+    const brand = Brand()
     return (
       <SignUpScreen3Impl.UserConsumer>
         {({ userState, userActions }) => {

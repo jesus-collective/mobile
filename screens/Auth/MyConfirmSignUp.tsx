@@ -39,7 +39,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
     super(props)
     console.log({ MYConfirmSignupImpl: props.route })
     this.state = {
-      brand: Brand,
+      brand: Brand(),
       email: props.route?.params.email ?? "",
       code: "",
       authError: "",

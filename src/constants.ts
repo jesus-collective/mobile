@@ -6,14 +6,6 @@ else if (window.location.hostname.includes("dev")) env = "dev"
 else if (window.location.hostname.includes("d13j9gfr4f50wr")) env = "jcfacelift"
 else env = "prod"
 
-const params = new URLSearchParams(window.location.search)
-const brandParam = params.get("brand")
-if (window.location.hostname.includes("onestorycurriculum")) brand = "oneStory"
-else if (window.location.hostname.includes("jesuscollective")) brand = "jc"
-else if (brandParam == "jc") brand = "jc"
-else if (brandParam == "oneStory") brand = "oneStory"
-else brand = "jc"
-
 export const constants: { [index: string]: boolean | string } = {
   SETTING_ISVISIBLE_course: true,
   SETTING_ISVISIBLE_organization: true,
@@ -55,4 +47,15 @@ export const constants: { [index: string]: boolean | string } = {
   SETTING_KY_GROUP_ID: env == "beta" ? "resource-1611326161952" : "resource-1608148143731",
 }
 
-export const Brand: "oneStory" | "jc" | null = brand as "oneStory" | "jc" | null
+export const Brand = (): "oneStory" | "jc" | null => {
+  const params = new URLSearchParams(window.location.search)
+  const brandParam = params.get("brand")
+  console.log({ hostname: window.location.hostname })
+  if (window.location.hostname.includes("onestorycurriculum")) brand = "oneStory"
+  else if (window.location.hostname.includes("jesuscollective")) brand = "jc"
+  else if (brandParam === "jc") brand = "jc"
+  else if (brandParam === "oneStory") brand = "oneStory"
+  else brand = "jc"
+  console.log(brand)
+  return brand as "oneStory" | "jc" | null
+}

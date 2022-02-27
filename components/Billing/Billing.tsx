@@ -121,7 +121,7 @@ class BillingImpl extends JCComponent<Props, State> {
       validatingUser: false,
       freeDays: 30,
       eula: false,
-      brand: Brand,
+      brand: Brand(),
       joinedProduct: props.route?.params?.joinedProduct
         ? props.route?.params?.joinedProduct == "null"
           ? []
