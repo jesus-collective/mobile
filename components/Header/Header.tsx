@@ -9,6 +9,7 @@ import { BrowserView, MobileOnlyView } from "react-device-detect"
 import { Dimensions, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import HeaderStyles from "../Header/style"
@@ -278,6 +279,11 @@ export default function HeaderJCC(props: Props) {
             <View
               style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
             >
+              <ProfileImage
+                linkToProfile
+                user={state?.user?.username}
+                size={width < 1300 ? "miniNav" : "small7"}
+              ></ProfileImage>
               {constants["SETTING_ISVISIBLE_SEARCH"] ? (
                 <View style={{ marginHorizontal: 12 }}>
                   <TouchableOpacity testID="header-search" onPress={openSearch}>
