@@ -72,17 +72,17 @@ const DetailsCard = StyleSheet.create({
     fontFamily: "Graphik-Medium-App",
   },
   ContentContainer: {
+    flex: 1,
     padding: 16,
     flexDirection: "column",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
   },
   Item: {
-    flex: 1,
     flexDirection: "row",
     marginBottom: 4,
   },
   ItemText: {
+    flex: 1,
     color: "#483938",
     fontSize: 15,
     fontFamily: "Graphik-Regular-App",
