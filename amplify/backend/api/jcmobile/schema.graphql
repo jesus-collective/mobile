@@ -141,7 +141,8 @@ input StripeAddressInput
     state:String
   }
 input StripePriceInput{
-  prices:[StripePriceDetail]
+  subscriptionPrices:[StripePriceDetail]
+  oneoffPrices:[StripePriceDetail]
   coupon:String
 }
 input StripePriceDetail{

@@ -6,8 +6,10 @@ export const handler = async (event) => {
   try {
     var stripeCustomerID = event.arguments.stripeCustomerID
     const idempotency = event.arguments.idempotency
-    const prices = event.arguments.priceInfo.prices
-    console.log({ prices: prices })
+    const subscriptionPrices = event.arguments.priceInfo.subscriptionPrices
+    const oneOffPrices = event.arguments.priceInfo.oneOffPrices
+    console.log({ prsubscriptionPricesices: subscriptionPrices })
+    console.log({ oneOffPrices: oneOffPrices })
     const code = event.arguments.priceInfo.coupon
     const userID = event.identity.username
     if (stripeCustomerID == null) {
@@ -41,7 +43,8 @@ export const handler = async (event) => {
 
       const sub = {
         customer: stripeCustomerID,
-        subscription_items: prices,
+        subscription_items: subscriptionPrices,
+        invoice_items: oneOffPrices,
         expand: ["lines"],
       }
       if (code != "") sub["coupon"] = promotionCode.id
