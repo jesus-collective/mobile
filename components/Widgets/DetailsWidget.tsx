@@ -1,10 +1,15 @@
 import moment from "moment"
 import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, Linking, StyleSheet, Text, View } from "react-native"
 import { GetGroupQuery } from "src/API"
 
 export default function DetailsWidget(props: Props) {
   const { title, data, hideHeading } = props
+  console.log({ data })
+  const locationString = () => {
+    if (data?.location) return data?.location
+    return "Online"
+  }
   return (
     <View key={title} style={[DetailsCard.Container, hideHeading ? DetailsCard.HiddenHeading : {}]}>
       {!hideHeading ? (
@@ -18,8 +23,22 @@ export default function DetailsWidget(props: Props) {
             style={DetailsCard.ItemIcon}
             source={require("../../assets/Facelift/svg/Location.svg")}
           />
-          <Text style={DetailsCard.ItemText}>{data?.location}</Text>
+          <Text style={DetailsCard.ItemText}>{locationString()}</Text>
         </View>
+        {locationString() === "Online" ? (
+          <View style={DetailsCard.Item}>
+            <Image
+              style={DetailsCard.ItemIcon}
+              source={require("../../assets/Facelift/svg/Link.svg")}
+            />
+            <Text
+              onPress={() => (data?.eventUrl ? Linking.openURL(data?.eventUrl) : null)}
+              style={[DetailsCard.ItemText, { textDecorationLine: "underline" }]}
+            >
+              {data?.eventUrl}
+            </Text>
+          </View>
+        ) : null}
         <View style={DetailsCard.Item}>
           <Image
             style={DetailsCard.ItemIcon}
@@ -72,17 +91,17 @@ const DetailsCard = StyleSheet.create({
     fontFamily: "Graphik-Medium-App",
   },
   ContentContainer: {
-    flex: 1,
     padding: 16,
     flexDirection: "column",
     flexWrap: "wrap",
+    justifyContent: "flex-start",
   },
   Item: {
+    flex: 1,
     flexDirection: "row",
     marginBottom: 4,
   },
   ItemText: {
-    flex: 1,
     color: "#483938",
     fontSize: 15,
     fontFamily: "Graphik-Regular-App",
