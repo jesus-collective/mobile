@@ -67,7 +67,7 @@ export default function PeopleListWidgetWithInfo(props: Props) {
               >
                 <ProfileImage
                   size={isMobileOnly ? "small6" : "small5"}
-                  user={item.userID ?? item?.id}
+                  user={item?.userID ?? item?.id}
                 />
 
                 <View
