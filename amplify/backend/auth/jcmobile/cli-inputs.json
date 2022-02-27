@@ -68,7 +68,6 @@
       "zoneinfo",
       "email_verified",
       "phone_number_verified"
-     
     ],
     "userpoolClientLambdaRole": "jcmobi44a13962_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
@@ -80,15 +79,15 @@
       "userpool",
       "verifiedUsers",
       "admin",
-      "courseAdmin",	
+      "courseAdmin",
       "courseCoach",
       "courseUser",
       "friends",
       "partners",
       "subscriptionPartners",
-      "subscriptionkyearlyyears",	
+      "subscriptionkyearlyyears",
       "subscriptionkykids",
-      "subscriptionkyyouth",	
+      "subscriptionkyyouth",
       "subscriptionValid",
       "legacyUserGroup1",
       "productMarkBaker",
@@ -181,5 +180,6 @@
     },
     "facebookAppId": "373637213227697",
     "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
+  
   }
 }
