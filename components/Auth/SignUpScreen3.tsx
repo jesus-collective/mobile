@@ -9,6 +9,7 @@ import OrganizationViewer from "../../components/OrganizationViewer/Organization
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import { PaidStatus, ProfileStatus, UserContext } from "../../screens/HomeScreen/UserContext"
 import awsConfig from "../../src/aws-exports"
+import { Brand } from "../../src/constants"
 Amplify.configure(awsConfig)
 
 interface Props {
@@ -41,7 +42,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
     actions.updateHasCompletedPersonalProfile()
   }
   render(): React.ReactNode {
-    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
+    const brand = Brand
     return (
       <SignUpScreen3Impl.UserConsumer>
         {({ userState, userActions }) => {

@@ -20,6 +20,7 @@ import Sentry from "../../components/Sentry"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { Brand } from "../../src/constants"
 
 interface Props {
   navigation?: NavigationProp<any, any>
@@ -38,7 +39,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
     super(props)
     console.log({ MYConfirmSignupImpl: props.route })
     this.state = {
-      brand: props.route?.params?.brand ?? "jc",
+      brand: Brand,
       email: props.route?.params.email ?? "",
       code: "",
       authError: "",

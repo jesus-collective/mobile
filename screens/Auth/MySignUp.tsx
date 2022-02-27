@@ -24,6 +24,7 @@ import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { Brand } from "../../src/constants"
 
 interface Props {
   navigation?: NavigationProp<any, any>
@@ -66,7 +67,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       authError: "",
       joinedAs: props.route?.params.joinedAs,
       joinedProduct: props.route?.params.joinedProduct,
-      brand: props.route?.params.brand ?? "jc",
+      brand: Brand,
       sendingData: false,
     }
     console.log({ PARAMS: props.route })

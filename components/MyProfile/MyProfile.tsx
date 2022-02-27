@@ -20,7 +20,7 @@ import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { GetUserQuery, ListInvoicesMutation } from "../../src/API"
 import { GetCrmRootQuery } from "../../src/API-crm"
 import awsconfig from "../../src/aws-exports"
-import { constants } from "../../src/constants"
+import { Brand, constants } from "../../src/constants"
 import { getCrmRoot } from "../../src/graphql-custom/crm"
 import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
@@ -625,7 +625,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
   renderTopBar(userActions: UserActions) {
-    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
+    const brand = Brand
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.myProfileTopButtons}>
@@ -685,7 +685,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     else return null
   }
   renderLeftBar(userActions: UserActions) {
-    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
+    const brand = Brand
 
     if (this.state.UserDetails)
       return (
@@ -976,7 +976,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     else return null
   }
   renderProfile() {
-    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
+    const brand = Brand
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.profileScreenRightCard}>

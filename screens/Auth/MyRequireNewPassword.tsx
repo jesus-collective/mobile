@@ -20,6 +20,7 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
+import { Brand } from "../../src/constants"
 
 interface Props {
   username: any
@@ -46,7 +47,7 @@ class MyForgotPassword extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      brand: props.route?.params?.brand ?? "jc",
+      brand: Brand,
       phone: "",
       code: "+1",
       first: "",

@@ -13,7 +13,7 @@ import {
   GetOrganizationQuery,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
-import { constants } from "../../src/constants"
+import { Brand, constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import EditableLocation from "../Forms/EditableLocation"
 import EditableText from "../Forms/EditableText"
@@ -453,7 +453,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }*/
   render(): React.ReactNode {
-    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
+    const brand = Brand
     return this.state.OrganizationDetails != null ? (
       <Content>
         <View style={this.styles.style.myProfileTopButtons}>

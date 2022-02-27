@@ -19,6 +19,7 @@ import Sentry from "../../components/Sentry"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { Brand } from "../../src/constants"
 
 interface State {
   brand: "jc" | "oneStory" | null
@@ -39,7 +40,7 @@ class MyForgotPassword extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      brand: props.route?.params?.brand ?? "jc",
+      brand: Brand,
       email: "",
       authError: "",
       codeSent: false,

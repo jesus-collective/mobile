@@ -14,6 +14,7 @@ import {
   UserState,
 } from "../../screens/HomeScreen/UserContext"
 import awsConfig from "../../src/aws-exports"
+import { Brand } from "../../src/constants"
 Amplify.configure(awsConfig)
 
 interface Props {
@@ -34,7 +35,7 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
     await actions.recheckUserState()
   }
   render(): React.ReactNode {
-    const brand: "jc" | "oneStory" | null = this.props.route?.params?.brand
+    const brand = Brand
     return (
       <SignUpScreen1Impl.UserConsumer>
         {({ userState, userActions }) => {

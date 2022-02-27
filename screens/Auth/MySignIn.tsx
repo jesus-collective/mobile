@@ -19,6 +19,7 @@ import Sentry from "../../components/Sentry"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { Brand } from "../../src/constants"
 
 interface Props {
   navigation?: NavigationProp<any, any>
@@ -43,7 +44,7 @@ class MySignInImpl extends React.Component<Props, State> {
       user: props.route?.params?.email ?? "",
       authError: "",
       fromVerified: props.route?.params?.fromVerified ?? false,
-      brand: props.route?.params?.brand ?? "jc",
+      brand: Brand,
       joinedProduct: props.route?.params.joinedProduct,
     }
   }

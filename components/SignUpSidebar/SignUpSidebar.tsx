@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Dimensions, Image, Platform, Text, View } from "react-native"
-import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
+import { Brand } from "../../src/constants"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
@@ -12,12 +12,7 @@ export default class SignUpSidebar extends JCComponent<Props> {
     super(props)
   }
   render(): React.ReactNode {
-    const brand =
-      (
-        RootNavigation.getRoot()?.params as {
-          brand: "jc" | "oneStory" | null
-        }
-      )?.brand ?? "jc"
+    const brand = Brand
     return (
       <View style={this.styles.style.signUpSidebarView}>
         {this.props.text == true ? (

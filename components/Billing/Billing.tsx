@@ -34,6 +34,7 @@ import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import { GetUserQuery, ListProductsQuery, StripeInvoice, StripePriceDetail } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
+import { Brand } from "../../src/constants"
 import "./CardSectionStyles.css"
 import HandleStripePayment from "./HandleStripePayment"
 
@@ -120,14 +121,14 @@ class BillingImpl extends JCComponent<Props, State> {
       validatingUser: false,
       freeDays: 30,
       eula: false,
-      brand: props.route?.params?.brand,
+      brand: Brand,
       joinedProduct: props.route?.params?.joinedProduct
         ? props.route?.params?.joinedProduct == "null"
           ? []
           : props.route?.params?.joinedProduct.split(",")
         : [],
     }
-    console.log({ brand: props.route?.params?.brand })
+    console.log({ brand: Brand })
     console.log({ joinedProduct: this.state.joinedProduct })
     this.setInitialData()
   }

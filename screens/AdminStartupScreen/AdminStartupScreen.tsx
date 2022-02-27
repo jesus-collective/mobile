@@ -20,6 +20,7 @@ interface State extends JCState {
   showAddStartupItem: boolean
   showEditStartupItem: string | null
   startupProps: string
+  startupOrder: number
   groupData: UserGroupType[]
   previewGroupData: UserGroupType[]
   groupList: string[]
@@ -66,13 +67,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
           id: this.state.showEditStartupItem,
           action: this.state.startupAction,
           readGroups: this.state.groupData,
-          order: this.state.startup.length,
+          order: this.state.startupOrder,
           params: this.state.startupProps,
         })
         console.log(z)
         this.setState({
           startupAction: "",
           startupProps: "",
+          startupOrder: -1,
           groupData: [],
         })
         await this.setInitialData()
@@ -217,6 +219,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       showEditStartupItem: item.id,
       startupAction: item.action,
       startupProps: item.params,
+      startupOrder: item.order,
       groupData: item.readGroups,
     })
 
