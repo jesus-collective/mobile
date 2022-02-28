@@ -577,7 +577,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
                             color="black"
                             onPress={() => {
                               this.copyToClipboard(
-                                "http://app.jesuscollective.com/auth/signup?joinedAs=" + product.id
+                                "https://" +
+                                  window.location.hostname +
+                                  "/auth/signup?joinedProduct=" +
+                                  product.id
                               )
                             }}
                           />
