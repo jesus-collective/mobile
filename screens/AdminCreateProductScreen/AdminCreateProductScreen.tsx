@@ -26,7 +26,6 @@ interface Props {
 interface State extends JCState {
   products: NonNullable<NonNullable<ListProductsQuery>["listProducts"]>["items"]
   name: string
-  description: string
   eula: string
   productId: string
   confirmationMsg: string
@@ -37,9 +36,9 @@ interface State extends JCState {
   isLogin: string
   isOrgTier: string
   isIndividualTier: string
-  marketingDescription: string
   enabled: string
   isStripe: string
+  isDefault: boolean
   isPaypal: string
   groupList: string[]
   showAddProductModal: boolean
@@ -62,7 +61,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
       ...super.getInitialState(),
       products: [],
       name: "",
-      description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
       eula: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
       productId: `JC-${Date.now()}`,
       confirmationMsg: "",
@@ -72,12 +70,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
       isLogin: "false",
       isOrgTier: "false",
       isIndividualTier: "false",
-      marketingDescription: JSON.stringify(
-        convertToRaw(EditorState.createEmpty().getCurrentContent())
-      ),
       tiered: [{ name: "", stripePaymentID: "", defaultAmount: 1, amountIsEditable: "false" }],
       enabled: "true",
       isStripe: "true",
+      isDefault: false,
       isPaypal: "false",
       groupList: Object.keys(UserGroupType).map((org: string) => {
         return org
@@ -99,7 +95,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
     this.setState({
       name: product.name,
       productId: product.id,
-      description: product.description,
       eula: product.eula,
       confirmationMsg: product.confirmationMsg,
       price: product.price.toFixed(2),
@@ -108,9 +103,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
       isLogin: product.isLogin,
       isOrgTier: product.isOrgTier,
       isIndividualTier: product.isIndividualTier,
-      marketingDescription: product.marketingDescription,
       enabled: product.enabled,
       isStripe: product.isStripe,
+      isDefault: product.isDefault,
       isPaypal: product.isPaypal,
       tiered: product.tiered,
       showAddProductModal: true,
@@ -140,16 +135,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
             id: this.state.productId,
             price: parseFloat(this.state.price),
             pricePer: this.state.pricePer,
-            description: this.state.description,
             eula: this.state.eula,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
             isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
-            marketingDescription: this.state.marketingDescription,
             enabled: this.state.enabled,
             isStripe: this.state.isStripe,
+            isDefault: this.state.isDefault,
             isPaypal: this.state.isPaypal,
             tiered: this.state.tiered,
           }
@@ -158,9 +152,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
           this.setInitialData()
           this.setState({
             name: "",
-            description: JSON.stringify(
-              convertToRaw(EditorState.createEmpty().getCurrentContent())
-            ),
             eula: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
             productId: `JC-${Date.now()}`,
             confirmationMsg: "",
@@ -169,11 +160,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
             isLogin: "false",
             isOrgTier: "false",
             isIndividualTier: "false",
-            marketingDescription: JSON.stringify(
-              convertToRaw(EditorState.createEmpty().getCurrentContent())
-            ),
             enabled: "true",
             isStripe: "true",
+            isDefault: false,
             isPaypal: "false",
             tiered: [
               { name: "", stripePaymentID: "", defaultAmount: 1, amountIsEditable: "false" },
@@ -187,16 +176,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
             id: this.state.productId,
             price: parseFloat(this.state.price),
             pricePer: this.state.pricePer,
-            description: this.state.description,
             eula: this.state.eula,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
             isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
-            marketingDescription: this.state.marketingDescription,
             enabled: this.state.enabled,
             isStripe: this.state.isStripe,
+            isDefault: this.state.isDefault,
             tiered: this.state.tiered,
             isPaypal: this.state.isPaypal,
           }
@@ -205,9 +193,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
           this.setInitialData()
           this.setState({
             name: "",
-            description: JSON.stringify(
-              convertToRaw(EditorState.createEmpty().getCurrentContent())
-            ),
             eula: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
             productId: `JC-${Date.now()}`,
             confirmationMsg: "",
@@ -216,11 +201,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
             isLogin: "false",
             isOrgTier: "false",
             isIndividualTier: "false",
-            marketingDescription: JSON.stringify(
-              convertToRaw(EditorState.createEmpty().getCurrentContent())
-            ),
             enabled: "true",
             isStripe: "true",
+            isDefault: false,
             isPaypal: "false",
             tiered: [
               { name: "", stripePaymentID: "", defaultAmount: 1, amountIsEditable: "false" },
@@ -373,6 +356,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 this.setState({ isStripe: val.toString() })
               }}
             ></JCSwitch>
+            <JCSwitch
+              switchLabel="Is Default"
+              initState={this.state.isDefault == true}
+              onPress={(val) => {
+                this.setState({ isDefault: val })
+              }}
+            ></JCSwitch>
             {this.state.tiered?.map((item, index) => {
               return (
                 <div style={{ flexDirection: "row", borderStyle: "solid", borderWidth: 1 }}>
@@ -408,6 +398,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       this.updateTier(index, "amountIsEditable", val.toString())
                     }}
                   ></JCSwitch>
+                  <JCSwitch
+                    switchLabel="Is Subscription"
+                    initState={item.isSubscription ?? false}
+                    onPress={(val) => {
+                      this.updateTier(index, "isSubscription", val.toString())
+                    }}
+                  ></JCSwitch>
                   <AntDesign
                     name="delete"
                     size={20}
@@ -418,26 +415,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               )
             })}
             <AntDesign name="plus" size={20} color="black" onPress={() => this.addTier()} />
-            <div style={{ flexDirection: "row" }}>
-              <Text>Marketing Description: </Text>
-              <EditableRichText
-                onChange={(val: any) => {
-                  this.setState({ marketingDescription: val })
-                }}
-                value={this.state.marketingDescription}
-                isEditable={true}
-              ></EditableRichText>
-            </div>
-            <div style={{ flexDirection: "row" }}>
-              <Text>Description: </Text>
 
-              <EditableRichText
-                toolBar={toolBar}
-                onChange={(description: any) => this.setState({ description })}
-                value={this.state.description}
-                isEditable={true}
-              />
-            </div>
             <div style={{ flexDirection: "row" }}>
               <Text>EULA: </Text>
 

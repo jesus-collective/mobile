@@ -17,7 +17,7 @@ import {
 } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import Amplify, { Auth } from "aws-amplify"
-import { Body, Card, CardItem, Content, Label } from "native-base"
+import { Content, Label } from "native-base"
 import onlyLastPromise, { DiscardSignal } from "only-last-promise"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
@@ -41,6 +41,7 @@ import HandleStripePayment from "./HandleStripePayment"
 const wrapper = onlyLastPromise()
 
 const wrappedPreviewInvoice = async (invoiceData: any) => {
+  console.log({ invoiceData: invoiceData })
   try {
     return await wrapper(Data.previewInvoice(invoiceData))
   } catch (error) {
@@ -155,18 +156,27 @@ class BillingImpl extends JCComponent<Props, State> {
       if (this.state.currentProduct?.length == 0)
         if (this.state.joinedProduct.length == 0) {
           if (listProducts.data?.listProducts?.items) {
+            console.log({ items: listProducts.data?.listProducts?.items })
             this.setState(
               {
-                currentProduct: [listProducts.data.listProducts.items[0]],
+                currentProduct: [
+                  listProducts.data.listProducts.items.filter((e) => {
+                    return e?.isDefault == true
+                  })[0],
+                ],
                 quantities: [
-                  listProducts.data.listProducts.items[0]?.tiered?.map(
-                    (e) => e?.defaultAmount ?? 1
-                  ) ?? [],
+                  listProducts.data.listProducts.items
+                    .filter((e) => {
+                      return e?.isDefault == true
+                    })[0]
+                    ?.tiered?.map((e) => e?.defaultAmount ?? 1) ?? [],
                 ],
                 isEditable: [
-                  listProducts.data.listProducts.items[0]?.tiered?.map(
-                    (e) => e?.amountIsEditable ?? "false"
-                  ) ?? [],
+                  listProducts.data.listProducts.items
+                    .filter((e) => {
+                      return e?.isDefault == true
+                    })[0]
+                    ?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? [],
                 ],
               },
               async () => {
@@ -220,10 +230,30 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log(e)
     }
   }
-  getPriceItems(): StripePriceDetail[] {
+  getOneOffPriceItems(): StripePriceDetail[] {
     const priceItems = this.state.currentProduct
       ?.map((item, index: number) => {
         const priceItems2 = item?.tiered?.map((item2, index2: number) => {
+          if (item2?.isSubscription) return undefined
+          return {
+            price: item2?.stripePaymentID,
+            quantity: this.state.quantities[index][index2],
+          } as StripePriceDetail
+        })
+        return priceItems2
+      })
+      .flat()
+    console.log({ priceItems: priceItems })
+    if (priceItems == undefined) return []
+    return priceItems
+      .filter((x) => x != undefined && (x.quantity ?? 0) > 0)
+      .filter((e) => e) as StripePriceDetail[]
+  }
+  getSubscriptionPriceItems(): StripePriceDetail[] {
+    const priceItems = this.state.currentProduct
+      ?.map((item, index: number) => {
+        const priceItems2 = item?.tiered?.map((item2, index2: number) => {
+          if (!item2?.isSubscription) return undefined
           return {
             price: item2?.stripePaymentID,
             quantity: this.state.quantities[index][index2],
@@ -239,7 +269,8 @@ class BillingImpl extends JCComponent<Props, State> {
       .filter((e) => e) as StripePriceDetail[]
   }
   async createInvoice() {
-    const priceItems = this.getPriceItems()
+    const subscriptionPriceItems = this.getSubscriptionPriceItems()
+    const oneOffPriceItems = this.getOneOffPriceItems()
 
     try {
       this.setState(
@@ -250,7 +281,8 @@ class BillingImpl extends JCComponent<Props, State> {
               idempotency: this.state.idempotency,
               priceInfo: {
                 coupon: this.state.coupon,
-                prices: priceItems,
+                subscriptionPrices: subscriptionPriceItems,
+                oneOffPrices: oneOffPriceItems,
               },
             }),
           ],
@@ -296,68 +328,13 @@ class BillingImpl extends JCComponent<Props, State> {
   }
 
   static UserConsumer = UserContext.Consumer
-  renderAddProductModal(userState: UserState): React.ReactNode {
-    return (
-      <JCModal
-        visible={this.state.showSubscriptionSelector}
-        title="Select a Subscription"
-        onHide={() => {
-          this.setState({ showSubscriptionSelector: false })
-        }}
-      >
-        <>
-          <Content>
-            {this.state.products?.map((product, index: number) => {
-              const showProduct =
-                (userState.isOrg && product?.isOrgTier) ||
-                (!userState.isOrg && product?.isIndividualTier)
-              return showProduct ? (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    this.selectProduct(product)
-                  }}
-                >
-                  <Card>
-                    <CardItem>
-                      <Body>
-                        <Text
-                          style={{
-                            fontFamily: "Graphik-Bold-App",
-                            paddingRight: 0,
-                            fontSize: 20,
-                          }}
-                        >
-                          {product?.name}
-                        </Text>
-                        <Text
-                          style={{
-                            fontFamily: "Graphik-Bold-App",
-                            color: "#F0493E",
-                          }}
-                        >
-                          ${product?.price?.toFixed(2)}/{product?.pricePer}
-                        </Text>
-                        <EditableRichText
-                          value={product?.marketingDescription ?? null}
-                          isEditable={false}
-                        ></EditableRichText>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>
-              ) : null
-            })}
-          </Content>
-        </>
-      </JCModal>
-    )
-  }
 
   async makePayment(stripe: Stripe | null, elements: StripeElements | null): Promise<void> {
     this.setState({ processing: "processing" }, async () => {
       await this.createStripeUser()
-      const priceItems = this.getPriceItems()
+      const subscriptionPriceItems = this.getSubscriptionPriceItems()
+      const oneOffPriceItems = this.getOneOffPriceItems()
+
       try {
         if (stripe && elements) {
           console.log(this.state.freeDays)
@@ -366,7 +343,8 @@ class BillingImpl extends JCComponent<Props, State> {
             elements,
             this.state.idempotency,
             {
-              prices: priceItems,
+              subscriptionPrices: subscriptionPriceItems,
+              oneOffPrices: oneOffPriceItems,
               coupon: this.state.coupon ?? "",
             },
             this.state.freeDays,
@@ -1213,7 +1191,6 @@ class BillingImpl extends JCComponent<Props, State> {
                       </View>
                     </View>
                   </Content>
-                  {this.renderAddProductModal(userState)}
                 </>
               )
             }}

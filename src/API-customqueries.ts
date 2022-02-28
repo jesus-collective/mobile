@@ -661,14 +661,13 @@ export type Product = {
   id?: string
   price?: number | null
   pricePer?: string | null
+  isDefault?: boolean | null
   name?: string | null
-  description?: string | null
   confirmationMsg?: string | null
   payments?: ModelPaymentConnection
   isOrgTier?: string | null
   isIndividualTier?: string | null
   isLogin?: string | null
-  marketingDescription?: string | null
   eula?: string | null
   enabled?: string | null
   isStripe?: string | null
@@ -684,6 +683,7 @@ export type TieredProduct = {
   stripePaymentID?: string | null
   defaultAmount?: number | null
   amountIsEditable?: string | null
+  isSubscription?: boolean | null
 }
 
 export type AlertConfig = {

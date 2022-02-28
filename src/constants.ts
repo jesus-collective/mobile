@@ -50,12 +50,12 @@ export const constants: { [index: string]: boolean | string } = {
 export const Brand = (): "oneStory" | "jc" | null => {
   const params = new URLSearchParams(window.location.search)
   const brandParam = params.get("brand")
-  console.log({ hostname: window.location.hostname })
+
   if (window.location.hostname.includes("onestorycurriculum")) brand = "oneStory"
   else if (window.location.hostname.includes("jesuscollective")) brand = "jc"
   else if (brandParam === "jc") brand = "jc"
   else if (brandParam === "oneStory") brand = "oneStory"
   else brand = "jc"
-  console.log(brand)
+
   return brand as "oneStory" | "jc" | null
 }

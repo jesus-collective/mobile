@@ -8,24 +8,33 @@ async function asyncForEach(array, callback) {
   }
 }
 const handleSubscriptionCreated = async (paymentIntent) => {
-  console.log(paymentIntent)
+  console.log({ paymentIntent: paymentIntent })
 
   try {
     var customerId = paymentIntent.customer
     // customerId = "cus_IU6NZZETZUjCd2";
     var customer = (await JCStripe.retrieveCustomer(customerId)) as Stripe.Customer
-    console.log(customer)
+    var invoice = await JCStripe.retrieveInvoice(paymentIntent.invoice)
+    console.log({ invoice: invoice.lines.data })
+    var groupsA = invoice.lines.data.map((invoiceLine) => {
+      console.log(invoiceLine.price)
+      if (invoiceLine.price.type == "one_time")
+        if (invoiceLine.price.metadata.groups) return invoiceLine.price.metadata.groups.split(",")
+    })
+    console.log({ customer: customer })
     var userID = customer.metadata.userID
-    var groups = customer.subscriptions.data.map((item) => {
-      console.log(item)
+    var groupsB = customer.subscriptions.data.map((item) => {
+      console.log({ item: item })
       if (item.status == "active" || item.status == "trialing")
         return item.items.data.map((priceItems) => {
-          console.log(priceItems)
+          console.log({ priceItems: priceItems })
           if (priceItems.price.metadata.groups) return priceItems.price.metadata.groups.split(",")
         })
     })
+    var groups = [...groupsA, ...groupsB]
     let unique = [...new Set(groups.flat(Infinity))].filter((item) => item !== undefined)
     console.log(unique)
+    await JCDB.ensureLogin()
     await asyncForEach(unique, async (group) => {
       try {
         const z = await JCDB.cognitoAddUserToGroup(userID, group)

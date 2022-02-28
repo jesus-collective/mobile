@@ -350,6 +350,86 @@ export const createSubscription = /* GraphQL */ `
         trial_end
         trial_start
       }
+      payedInvoice {
+        id
+        object
+        account_country
+        account_name
+        account_tax_ids
+        amount_due
+        amount_paid
+        amount_remaining
+        application_fee_amount
+        attempt_count
+        attempted
+        auto_advance
+        billing_reason
+        charge
+        collection_method
+        created
+        currency
+        custom_fields
+        customer
+        customer_address {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        customer_email
+        customer_name
+        customer_phone
+        customer_shipping
+        customer_tax_exempt
+        customer_tax_ids
+        default_payment_method
+        default_source
+        default_tax_rates
+        description
+        discount
+        discounts
+        due_date
+        ending_balance
+        footer
+        hosted_invoice_url
+        invoice_pdf
+        last_finalization_error
+        lines {
+          has_more
+          object
+          url
+        }
+        livemode
+        metadata
+        next_payment_attempt
+        number
+        paid
+        payment_intent
+        period_end
+        period_start
+        post_payment_credit_notes_amount
+        pre_payment_credit_notes_amount
+        receipt_number
+        starting_balance
+        statement_descriptor
+        status
+        status_transitions {
+          finalized_at
+          marked_uncollectible_at
+          paid_at
+          voided_at
+        }
+        subscription
+        subtotal
+        tax
+        total
+        total_discount_amounts
+        total_tax_amounts
+        transfer_data
+        webhooks_delivered_at
+      }
     }
   }
 `
@@ -635,6 +715,86 @@ export const cancelSubscription = /* GraphQL */ `
         transfer_data
         trial_end
         trial_start
+      }
+      payedInvoice {
+        id
+        object
+        account_country
+        account_name
+        account_tax_ids
+        amount_due
+        amount_paid
+        amount_remaining
+        application_fee_amount
+        attempt_count
+        attempted
+        auto_advance
+        billing_reason
+        charge
+        collection_method
+        created
+        currency
+        custom_fields
+        customer
+        customer_address {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        customer_email
+        customer_name
+        customer_phone
+        customer_shipping
+        customer_tax_exempt
+        customer_tax_ids
+        default_payment_method
+        default_source
+        default_tax_rates
+        description
+        discount
+        discounts
+        due_date
+        ending_balance
+        footer
+        hosted_invoice_url
+        invoice_pdf
+        last_finalization_error
+        lines {
+          has_more
+          object
+          url
+        }
+        livemode
+        metadata
+        next_payment_attempt
+        number
+        paid
+        payment_intent
+        period_end
+        period_start
+        post_payment_credit_notes_amount
+        pre_payment_credit_notes_amount
+        receipt_number
+        starting_balance
+        statement_descriptor
+        status
+        status_transitions {
+          finalized_at
+          marked_uncollectible_at
+          paid_at
+          voided_at
+        }
+        subscription
+        subtotal
+        tax
+        total
+        total_discount_amounts
+        total_tax_amounts
+        transfer_data
+        webhooks_delivered_at
       }
     }
   }
@@ -4265,8 +4425,8 @@ export const createPayment = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -4274,7 +4434,6 @@ export const createPayment = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -4284,6 +4443,7 @@ export const createPayment = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -4403,8 +4563,8 @@ export const updatePayment = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -4412,7 +4572,6 @@ export const updatePayment = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -4422,6 +4581,7 @@ export const updatePayment = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -4541,8 +4701,8 @@ export const deletePayment = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -4550,7 +4710,6 @@ export const deletePayment = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -4560,6 +4719,7 @@ export const deletePayment = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -12020,8 +12180,8 @@ export const createProduct = /* GraphQL */ `
       id
       price
       pricePer
+      isDefault
       name
-      description
       confirmationMsg
       payments {
         items {
@@ -12039,7 +12199,6 @@ export const createProduct = /* GraphQL */ `
       isOrgTier
       isIndividualTier
       isLogin
-      marketingDescription
       eula
       enabled
       isStripe
@@ -12049,6 +12208,7 @@ export const createProduct = /* GraphQL */ `
         stripePaymentID
         defaultAmount
         amountIsEditable
+        isSubscription
       }
       createdAt
       updatedAt
@@ -12061,8 +12221,8 @@ export const updateProduct = /* GraphQL */ `
       id
       price
       pricePer
+      isDefault
       name
-      description
       confirmationMsg
       payments {
         items {
@@ -12080,7 +12240,6 @@ export const updateProduct = /* GraphQL */ `
       isOrgTier
       isIndividualTier
       isLogin
-      marketingDescription
       eula
       enabled
       isStripe
@@ -12090,6 +12249,7 @@ export const updateProduct = /* GraphQL */ `
         stripePaymentID
         defaultAmount
         amountIsEditable
+        isSubscription
       }
       createdAt
       updatedAt
@@ -12102,8 +12262,8 @@ export const deleteProduct = /* GraphQL */ `
       id
       price
       pricePer
+      isDefault
       name
-      description
       confirmationMsg
       payments {
         items {
@@ -12121,7 +12281,6 @@ export const deleteProduct = /* GraphQL */ `
       isOrgTier
       isIndividualTier
       isLogin
-      marketingDescription
       eula
       enabled
       isStripe
@@ -12131,6 +12290,7 @@ export const deleteProduct = /* GraphQL */ `
         stripePaymentID
         defaultAmount
         amountIsEditable
+        isSubscription
       }
       createdAt
       updatedAt

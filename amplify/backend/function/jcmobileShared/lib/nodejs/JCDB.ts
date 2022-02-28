@@ -6,7 +6,9 @@ import { GetUserQuery } from "./API"
 import * as mutations from "./mutations"
 import * as queries from "./queries"
 const aws = require("aws-sdk")
-
+let endpoint
+if (process.env.ENV == "beta") endpoint = "cvopa45zi3"
+else if (process.env.ENV == "dev") endpoint = "cvopa45zi3"
 Amplify.configure({
   aws_appsync_graphqlEndpoint: process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
   aws_appsync_region: process.env.region,
@@ -23,7 +25,7 @@ Amplify.configure({
   aws_cloud_logic_custom: [
     {
       name: "AdminQueries",
-      endpoint: "https://cvopa45zi3.execute-api.us-east-1.amazonaws.com/beta",
+      endpoint: "https://" + endpoint + ".execute-api.us-east-1.amazonaws.com/" + process.env.ENV,
       region: "us-east-1",
     },
   ],
@@ -31,7 +33,7 @@ Amplify.configure({
     endpoints: [
       {
         name: "AdminQueries",
-        endpoint: "https://cvopa45zi3.execute-api.us-east-1.amazonaws.com/beta",
+        endpoint: "https://" + endpoint + ".execute-api.us-east-1.amazonaws.com/" + process.env.ENV,
         region: "us-east-1",
       },
     ],
@@ -82,9 +84,7 @@ export default class JCDB {
 
   static async cognitoAddUserToGroup(user: string, groupname: string) {
     try {
-      console.log(user)
-      console.log(groupname)
-      const login = await JCDB.ensureLogin()
+      console.log({ user: user, groupname: groupname })
 
       const apiName = "AdminQueries"
       const path = "/addUserToGroup"
@@ -100,8 +100,9 @@ export default class JCDB {
       }
       const { ...rest } = await API.post(apiName, path, myInit)
       return rest
-    } catch (e) {
+    } catch (e: any) {
       console.log({ "ERROR:": e })
+      console.log({ "ERROR:": e.response })
       return false
     }
   }

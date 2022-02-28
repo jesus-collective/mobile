@@ -984,8 +984,8 @@ export const getPayment = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -993,7 +993,6 @@ export const getPayment = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -1003,6 +1002,7 @@ export const getPayment = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -1135,13 +1135,12 @@ export const listPayments = /* GraphQL */ `
           id
           price
           pricePer
+          isDefault
           name
-          description
           confirmationMsg
           isOrgTier
           isIndividualTier
           isLogin
-          marketingDescription
           eula
           enabled
           isStripe
@@ -4022,8 +4021,8 @@ export const getProduct = /* GraphQL */ `
       id
       price
       pricePer
+      isDefault
       name
-      description
       confirmationMsg
       payments {
         items {
@@ -4041,7 +4040,6 @@ export const getProduct = /* GraphQL */ `
       isOrgTier
       isIndividualTier
       isLogin
-      marketingDescription
       eula
       enabled
       isStripe
@@ -4051,6 +4049,7 @@ export const getProduct = /* GraphQL */ `
         stripePaymentID
         defaultAmount
         amountIsEditable
+        isSubscription
       }
       createdAt
       updatedAt
@@ -4064,8 +4063,8 @@ export const listProducts = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -4073,7 +4072,6 @@ export const listProducts = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -4083,6 +4081,7 @@ export const listProducts = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -4772,13 +4771,12 @@ export const paymentByUser = /* GraphQL */ `
           id
           price
           pricePer
+          isDefault
           name
-          description
           confirmationMsg
           isOrgTier
           isIndividualTier
           isLogin
-          marketingDescription
           eula
           enabled
           isStripe

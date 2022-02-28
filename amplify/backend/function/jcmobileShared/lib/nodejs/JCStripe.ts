@@ -125,6 +125,12 @@ export default class JCStripe {
       expand: ["subscriptions"],
     })
   }
+  static async retrieveInvoice(id: string): Promise<Stripe.Response<Stripe.Invoice>> {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    return await stripe.invoices.retrieve(id)
+  }
   static async retrieveUpcomingInvoices(
     sub: Stripe.InvoiceRetrieveUpcomingParams
   ): Promise<Stripe.Response<Stripe.Invoice>> {
@@ -154,6 +160,13 @@ export default class JCStripe {
       idempotencyKey: idempotency + "CC",
     })
     return subscriptionResult
+  }
+  static async payInvoice(id: string) {
+    const stripe = new Stripe(await this.getSecret("stripeSecret"), {
+      apiVersion: "2020-08-27",
+    })
+    const payResult = await stripe.invoices.pay(id)
+    return payResult
   }
   static async createPayment(
     payment: Stripe.PaymentIntentCreateParams,

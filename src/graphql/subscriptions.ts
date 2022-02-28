@@ -3267,8 +3267,8 @@ export const onCreatePayment = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -3276,7 +3276,6 @@ export const onCreatePayment = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -3286,6 +3285,7 @@ export const onCreatePayment = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -3405,8 +3405,8 @@ export const onUpdatePayment = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -3414,7 +3414,6 @@ export const onUpdatePayment = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -3424,6 +3423,7 @@ export const onUpdatePayment = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -3543,8 +3543,8 @@ export const onDeletePayment = /* GraphQL */ `
         id
         price
         pricePer
+        isDefault
         name
-        description
         confirmationMsg
         payments {
           nextToken
@@ -3552,7 +3552,6 @@ export const onDeletePayment = /* GraphQL */ `
         isOrgTier
         isIndividualTier
         isLogin
-        marketingDescription
         eula
         enabled
         isStripe
@@ -3562,6 +3561,7 @@ export const onDeletePayment = /* GraphQL */ `
           stripePaymentID
           defaultAmount
           amountIsEditable
+          isSubscription
         }
         createdAt
         updatedAt
@@ -11022,8 +11022,8 @@ export const onCreateProduct = /* GraphQL */ `
       id
       price
       pricePer
+      isDefault
       name
-      description
       confirmationMsg
       payments {
         items {
@@ -11041,7 +11041,6 @@ export const onCreateProduct = /* GraphQL */ `
       isOrgTier
       isIndividualTier
       isLogin
-      marketingDescription
       eula
       enabled
       isStripe
@@ -11051,6 +11050,7 @@ export const onCreateProduct = /* GraphQL */ `
         stripePaymentID
         defaultAmount
         amountIsEditable
+        isSubscription
       }
       createdAt
       updatedAt
@@ -11063,8 +11063,8 @@ export const onUpdateProduct = /* GraphQL */ `
       id
       price
       pricePer
+      isDefault
       name
-      description
       confirmationMsg
       payments {
         items {
@@ -11082,7 +11082,6 @@ export const onUpdateProduct = /* GraphQL */ `
       isOrgTier
       isIndividualTier
       isLogin
-      marketingDescription
       eula
       enabled
       isStripe
@@ -11092,6 +11091,7 @@ export const onUpdateProduct = /* GraphQL */ `
         stripePaymentID
         defaultAmount
         amountIsEditable
+        isSubscription
       }
       createdAt
       updatedAt
@@ -11104,8 +11104,8 @@ export const onDeleteProduct = /* GraphQL */ `
       id
       price
       pricePer
+      isDefault
       name
-      description
       confirmationMsg
       payments {
         items {
@@ -11123,7 +11123,6 @@ export const onDeleteProduct = /* GraphQL */ `
       isOrgTier
       isIndividualTier
       isLogin
-      marketingDescription
       eula
       enabled
       isStripe
@@ -11133,6 +11132,7 @@ export const onDeleteProduct = /* GraphQL */ `
         stripePaymentID
         defaultAmount
         amountIsEditable
+        isSubscription
       }
       createdAt
       updatedAt

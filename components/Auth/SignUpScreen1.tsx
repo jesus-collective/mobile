@@ -48,7 +48,7 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text style={this.styles.style.SignUpScreenSetupText}>
-                      We&apos;re getting you setup. This may takes several seconds.
+                      We&apos;re getting you setup. This may take several seconds.
                     </Text>
                     <ActivityIndicator />
                   </View>

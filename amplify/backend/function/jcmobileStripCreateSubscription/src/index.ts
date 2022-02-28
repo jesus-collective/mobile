@@ -1,3 +1,4 @@
+import Stripe from "stripe"
 import JCDB from "../../jcmobileShared/lib/nodejs/JCDB"
 import JCStripe from "../../jcmobileShared/lib/nodejs/JCStripe"
 
@@ -5,7 +6,8 @@ export const handler = async (event) => {
   console.log(event)
   try {
     const userID = event.identity.username
-    const priceInfo = event.arguments.priceInfo.prices
+    const subscriptionPriceInfo = event.arguments.priceInfo.subscriptionPrices
+    const oneOffPriceInfo = event.arguments.priceInfo.oneOffPrices
     const code = event.arguments.priceInfo.coupon
     const idempotency = event.arguments.idempotency
 
@@ -78,16 +80,45 @@ export const handler = async (event) => {
             promotionCode = promotionCodes.data[0].id
           else promotionCode = ""
           console.log({ promotionCode: promotionCode })
-          const sub = {
-            customer: stripeCustomerID,
-            items: priceInfo,
-            expand: ["latest_invoice.payment_intent"],
-            trial_period_days: freeDays,
+          if (subscriptionPriceInfo.length > 0) {
+            const sub = {
+              customer: stripeCustomerID,
+              items: subscriptionPriceInfo,
+              add_invoice_items: oneOffPriceInfo,
+              expand: ["latest_invoice.payment_intent"],
+              trial_period_days: freeDays,
+            }
+            if (promotionCode != "") sub["promotion_code"] = promotionCode
+            console.log({ "Creating subscription": sub })
+            subscription = await JCStripe.createSubscription(sub, idempotency + "SC")
+            await JCDB.updateSubscription(userID, subscription.id)
+          } else {
+            await Promise.all(
+              oneOffPriceInfo.map(async (priceInfo, index) => {
+                const sub: Stripe.InvoiceItemCreateParams = {
+                  customer: stripeCustomerID,
+                  price: priceInfo.price,
+                  quantity: priceInfo.quantity,
+                }
+
+                console.log({ "Creating invoice": sub })
+                await JCStripe.createInvoiceItem(sub, idempotency + "SC" + index)
+              })
+            )
+            const finalInvoice = await JCStripe.createInvoice(
+              { customer: stripeCustomerID, auto_advance: true },
+              idempotency + "DD"
+            )
+            console.log({ finalInvoice: finalInvoice })
+            const payedInvoice = await JCStripe.payInvoice(finalInvoice.id)
+            console.log({ payedInvoice: payedInvoice })
+            await JCDB.updateSubscription(userID, "PRODUCTONLY")
+            const response = {
+              statusCode: 200,
+              payedInvoice: payedInvoice,
+            }
+            return response
           }
-          if (promotionCode != "") sub["promotion_code"] = promotionCode
-          console.log({ "Creating subscription": sub })
-          subscription = await JCStripe.createSubscription(sub, idempotency + "SC")
-          await JCDB.updateSubscription(userID, subscription.id)
         } else {
           var promotionCodes = null
           if (code != "")
@@ -109,7 +140,8 @@ export const handler = async (event) => {
           console.log({ promotionCode: promotionCode })
           const sub2 = {
             customer: stripeCustomerID,
-            items: priceInfo,
+            items: subscriptionPriceInfo,
+            add_invoice_items: oneOffPriceInfo,
             expand: ["latest_invoice.payment_intent"],
           }
           if (promotionCode != "") sub2["promotion_code"] = promotionCode

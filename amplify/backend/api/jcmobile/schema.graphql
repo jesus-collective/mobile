@@ -142,7 +142,7 @@ input StripeAddressInput
   }
 input StripePriceInput{
   subscriptionPrices:[StripePriceDetail]
-  oneoffPrices:[StripePriceDetail]
+  oneOffPrices:[StripePriceDetail]
   coupon:String
 }
 input StripePriceDetail{
@@ -151,6 +151,7 @@ input StripePriceDetail{
 }
 type StripeSubscriptionData{
   subscription:StripeSubscription
+  payedInvoice:StripeInvoice
 }
 type StripeInvoiceData{
   invoice:StripeInvoice
@@ -1321,14 +1322,13 @@ type Product
     id: ID!
     price: Float
     pricePer:String
+    isDefault:Boolean
     name: String
-    description: String
     confirmationMsg: String
     payments: [Payment] @connection(name:"paymentProduct",keyField: "productID")
     isOrgTier:String
     isIndividualTier:String
     isLogin:String
-    marketingDescription:String
     eula:String
     enabled:String
     isStripe:String
@@ -1342,6 +1342,7 @@ type TieredProduct{
   stripePaymentID:String
   defaultAmount:Int
   amountIsEditable:String
+  isSubscription:Boolean
 }
 
 
