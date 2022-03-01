@@ -11,15 +11,18 @@ const handlePaymentIntentSucceeded = async (paymentIntent) => {
   console.log({ paymentIntent: paymentIntent })
   try {
     var customerId = paymentIntent.customer
+    var groupsA = []
     // customerId = "cus_IU6NZZETZUjCd2";
     var customer = (await JCStripe.retrieveCustomer(customerId)) as Stripe.Customer
-    var invoice = await JCStripe.retrieveInvoice(paymentIntent.invoice)
-    console.log({ invoice: invoice.lines.data })
-    var groupsA = invoice.lines.data.map((invoiceLine) => {
-      console.log(invoiceLine.price)
-      if (invoiceLine.price.type == "one_time")
-        if (invoiceLine.price.metadata.groups) return invoiceLine.price.metadata.groups.split(",")
-    })
+    if (paymentIntent.invoice) {
+      var invoice = await JCStripe.retrieveInvoice(paymentIntent.invoice)
+      console.log({ invoice: invoice.lines.data })
+      groupsA = invoice.lines.data.map((invoiceLine) => {
+        console.log(invoiceLine.price)
+        if (invoiceLine.price.type == "one_time")
+          if (invoiceLine.price.metadata.groups) return invoiceLine.price.metadata.groups.split(",")
+      })
+    }
     console.log({ customer: customer })
     var userID = customer.metadata.userID
     var groupsB = customer.subscriptions.data.map((item) => {

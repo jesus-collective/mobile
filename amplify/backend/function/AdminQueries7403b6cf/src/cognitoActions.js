@@ -25,6 +25,7 @@ async function addUserToGroup(username, groupname) {
   }
 
   console.log(`Attempting to add ${username} to ${groupname}`)
+  console.log(`Userpool ${userPoolId}`)
 
   try {
     const result = await cognitoIdentityServiceProvider.adminAddUserToGroup(params).promise()
@@ -58,7 +59,6 @@ async function removeUserFromGroup(username, groupname) {
     throw err
   }
 }
-
 // Confirms as an admin without using a confirmation code.
 async function confirmUserSignUp(username) {
   const params = {
