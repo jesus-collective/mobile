@@ -39,7 +39,7 @@
         },
         "AdminQueries7403b6cf": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/AdminQueries7403b6cf-544c346a684e50343973-build.zip"
+          "s3Key": "amplify-builds/AdminQueries7403b6cf-5467776f6b5534324c50-build.zip"
         },
         "jcmobilePreSignup": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
@@ -50,7 +50,7 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-435a726a62304b477a2b-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-392b31626f49504a4645-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_fe30GuOOt",
@@ -64,14 +64,14 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripWebhook-59644979453559704c4f-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripWebhook-5743304875366c4d7247-build.zip"
         },
         "jcmobileStripCreateSubscription": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-382f6667354871613854-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-78366233414431306c4b-build.zip"
         },
         "jcmobileStripCreateCustomer": {
           "userPoolId": "us-east-1_fe30GuOOt",
@@ -144,7 +144,7 @@
         "jcmobileStripListProducts": {},
         "jcmobileShared": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion54a5bca1-build.zip"
+          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersiona4839d24-build.zip"
         }
       },
       "video": {

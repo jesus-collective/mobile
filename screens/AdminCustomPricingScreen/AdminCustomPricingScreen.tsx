@@ -291,7 +291,7 @@ if (window.location === undefined) env = "mobile"
 else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"
 else if (window.location.hostname.includes("dev")) env = "dev"
-else env = "prod"
+else env = "beta"
 
 export default function AdminScreen(props: Props): JSX.Element {
   const route = useRoute()

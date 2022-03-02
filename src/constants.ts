@@ -4,7 +4,7 @@ else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"
 else if (window.location.hostname.includes("dev")) env = "dev"
 else if (window.location.hostname.includes("d13j9gfr4f50wr")) env = "jcfacelift"
-else env = "prod"
+else env = "beta"
 
 export const constants: { [index: string]: boolean | string } = {
   SETTING_ISVISIBLE_course: true,
@@ -51,10 +51,10 @@ export const Brand = (): "oneStory" | "jc" | null => {
   const params = new URLSearchParams(window.location.search)
   const brandParam = params.get("brand")
 
-  if (window.location.hostname.includes("onestorycurriculum")) brand = "oneStory"
-  else if (window.location.hostname.includes("jesuscollective")) brand = "jc"
-  else if (brandParam === "jc") brand = "jc"
+  if (brandParam === "jc") brand = "jc"
   else if (brandParam === "oneStory") brand = "oneStory"
+  else if (window.location.hostname.includes("onestorycurriculum")) brand = "oneStory"
+  else if (window.location.hostname.includes("jesuscollective")) brand = "jc"
   else brand = "jc"
 
   return brand as "oneStory" | "jc" | null

@@ -1178,7 +1178,9 @@ class BillingImpl extends JCComponent<Props, State> {
                           accessibilityLabel="Process Payment"
                           testID={"billing-processPayment-button"}
                           buttonType={
-                            this.state.brand ? ButtonTypes.SolidOneStory : ButtonTypes.Solid
+                            this.state.brand == "oneStory"
+                              ? ButtonTypes.SolidOneStory
+                              : ButtonTypes.Solid
                           }
                           onPress={() => {
                             this.setState({ errorMsg: "" })
@@ -1206,7 +1208,7 @@ else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"
 else if (window.location.hostname.includes("dev")) env = "dev"
 else if (window.location.hostname.includes("d13j9gfr4f50wr")) env = "jcfacelift"
-else env = "prod"
+else env = "beta"
 
 export default function Billing(props: Props): JSX.Element {
   const route = useRoute()

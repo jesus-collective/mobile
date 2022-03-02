@@ -8,7 +8,7 @@ import * as queries from "./queries"
 const aws = require("aws-sdk")
 let endpoint
 if (process.env.ENV == "beta") endpoint = "cvopa45zi3"
-else if (process.env.ENV == "dev") endpoint = "cvopa45zi3"
+else if (process.env.ENV == "dev") endpoint = "y214sfi50m"
 Amplify.configure({
   aws_appsync_graphqlEndpoint: process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
   aws_appsync_region: process.env.region,
