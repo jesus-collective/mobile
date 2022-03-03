@@ -88,7 +88,6 @@ export default function HomeScreen() {
           overflowY: "scroll",
           paddingTop: 24,
           paddingLeft: 12,
-          paddingRight: 12,
         }} // fix margins
       >
         <EventCarousel />
@@ -111,7 +110,9 @@ export default function HomeScreen() {
           >
             Explore The Map
           </Text>
-          <View style={{ borderRadius: 8, borderWidth: 1, borderColor: "#E4E1E1" }}>
+          <View
+            style={{ borderRadius: 8, borderWidth: 1, borderColor: "#E4E1E1", marginRight: 12 }}
+          >
             <MyMap type={"filters"} mapData={[]} visible={true}></MyMap>
           </View>
         </View>

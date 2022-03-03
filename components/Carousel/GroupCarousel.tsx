@@ -40,7 +40,7 @@ const GroupCarousel = () => {
       seeAllButton={() => navigation.navigate("GroupsScreen")}
       renderItem={renderItem}
       title={"Groups"}
-      data={groups.slice(0, 10)}
+      data={groups}
     />
   )
 }

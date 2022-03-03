@@ -40,7 +40,7 @@ const ResourceCarousel = () => {
       seeAllButton={() => navigation.push("ResourcesScreen")}
       renderItem={renderItem}
       title={"Resources"}
-      data={resources?.slice(0, 10)}
+      data={resources}
     />
   )
 }

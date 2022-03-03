@@ -52,7 +52,7 @@ const OrgCarousel = () => {
       seeAllButton={() => navigation.push("OrganizationsScreen")}
       renderItem={renderItem}
       title={"Orgs"}
-      data={orgs?.slice(0, 9)}
+      data={orgs}
     />
   )
 }
