@@ -54,7 +54,7 @@ type CrmMessages = NonNullable<NonNullable<GetCrmRootQuery["getCRMRoot"]>["messa
 interface State extends JCState {
   UserDetails: UserData | null
   interest: string | null
-  interestsArray: string[]
+  interestsArray: (string | null)[]
   profileImage: string
   validationText: string
   mapVisible: boolean

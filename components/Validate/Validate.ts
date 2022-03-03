@@ -8,7 +8,7 @@ type ValidationResult = {
 }
 export default class Validate {
   static Profile(data: any, profileConfig: any): ValidationResult {
-    //    return { result: true, validationError: "" }
+    if (!profileConfig) return { result: false, validationError: "No Config" }
     if (profileConfig["aboutMeShort"].isRequired)
       if (data.aboutMeShort == null || data.aboutMeShort == "")
         return { result: false, validationError: "Profile must have - short about me" }

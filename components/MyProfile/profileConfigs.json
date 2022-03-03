@@ -25,7 +25,7 @@
   {
     "name": "friends",
     "fullName": { "isVisible": true, "isRequired": true },
-    "currentRole": { "isVisible": true, "isRequired": false },
+    "currentRole": { "isVisible": true, "isRequired": true },
     "profileImage": { "isVisible": true, "isRequired": false },
     "aboutMeShort": { "isVisible": false, "isRequired": false },
     "joinedDate": { "isVisible": true, "isRequired": false },

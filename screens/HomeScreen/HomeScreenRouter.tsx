@@ -68,14 +68,12 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     this.setState({ user: user })
   }
   async componentDidMount(): Promise<void> {
-    const profiles = await Data.listCustomProfiles({})
-    this.setState({ customProfiles: profiles.data?.listCustomProfiles?.items ?? [] })
-
     try {
       await this.updateGroups()
     } catch (e) {
       console.log(e)
     }
+
     await this.getAuthInitialState()
     await this.performStartup()
   }
@@ -122,6 +120,15 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       })
     } catch (e) {
       console.log(e)
+    }
+    await this.updateProfile()
+  }
+  async updateProfile(): Promise<void> {
+    try {
+      const profiles = await Data.listCustomProfiles({})
+      this.setState({ customProfiles: profiles.data?.listCustomProfiles?.items ?? [] })
+    } catch (e) {
+      console.log({ error: e })
     }
   }
   async performStartup(): Promise<void> {
