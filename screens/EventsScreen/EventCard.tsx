@@ -54,7 +54,7 @@ export default function EventCard(props: Props) {
         <Text numberOfLines={3} style={EventCardStyle.NameText}>
           {name}
         </Text>
-        <Text style={EventCardStyle.TimeLocationText}>{moment(time).format("hh:mm")}</Text>
+        <Text style={EventCardStyle.TimeLocationText}>{moment(time).format("LT")}</Text>
         <Text numberOfLines={1} style={EventCardStyle.TimeLocationText}>
           {location}
         </Text>
