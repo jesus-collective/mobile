@@ -12,8 +12,15 @@ const PeopleCarousel = () => {
   const [people, setPeople] = useState<NonNullable<ListUsersQuery["listUsers"]>["items"]>([])
   const [isLoading, setIsLoading] = useState(true)
   const loadGroups = async () => {
-    const listUsers = await Data.listUsersForProfile(UserGroupType.All, null)
-    setPeople(listUsers?.data?.listUsers?.items ?? [])
+    try {
+      const listUsers = await Data.listUsersForProfile(UserGroupType.All, null)
+      setPeople(listUsers?.data?.listUsers?.items ?? [])
+    } catch (err: any) {
+      setPeople(err?.data?.listUsers?.items ?? [])
+      console.error({ err })
+    } finally {
+      setIsLoading(false)
+    }
   }
   useEffect(() => {
     loadGroups()

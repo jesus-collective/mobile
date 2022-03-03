@@ -13,11 +13,10 @@ const ResourceCarousel = () => {
   const loadResources = async () => {
     try {
       const resources = await Data.loadResources(null)
-
       setResources(resources.data?.groupByType?.items ?? [])
     } catch (err: any) {
       setResources(err?.data?.groupByType?.items ?? [])
-      console.error({ err })
+      console.error({ ResourceCarousel: err })
     } finally {
       setIsLoading(false)
     }

@@ -12,9 +12,15 @@ const GroupCarousel = () => {
   const [groups, setGroups] = useState<Group[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const loadGroups = async () => {
-    const listGroup = await Data.groupByTypeForMyGroups("group", ModelSortDirection.DESC, null)
-    setGroups(listGroup?.data?.groupByType?.items as Group[])
-    setIsLoading(false)
+    try {
+      const listGroup = await Data.groupByTypeForMyGroups("group", ModelSortDirection.DESC, null)
+      setGroups(listGroup?.data?.groupByType?.items as Group[])
+    } catch (err: any) {
+      console.error({ GroupCarousel: err })
+      setGroups(err?.data?.groupByType?.items as Group[])
+    } finally {
+      setIsLoading(false)
+    }
   }
   useEffect(() => {
     loadGroups()
