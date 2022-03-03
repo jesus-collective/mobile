@@ -2265,6 +2265,34 @@ export type DeleteSubMenuInput = {
   id: string,
 };
 
+export type CreateCustomProfileInput = {
+  id?: string | null,
+  order?: number | null,
+  type?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type CustomProfile = {
+  __typename: "CustomProfile",
+  id?: string,
+  order?: number | null,
+  type?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type UpdateCustomProfileInput = {
+  id: string,
+  order?: number | null,
+  type?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
+};
+
+export type DeleteCustomProfileInput = {
+  id: string,
+};
+
 export type CreateCustomPricingInput = {
   id?: string | null,
   emailAddress?: string | null,
@@ -3248,6 +3276,22 @@ export type SearchableUserConnection = {
   items?:  Array<User | null >,
   nextToken?: string | null,
   total?: number | null,
+};
+
+export type ModelCustomProfileFilterInput = {
+  id?: ModelIDFilterInput | null,
+  order?: ModelIntFilterInput | null,
+  type?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
+  and?: Array< ModelCustomProfileFilterInput | null > | null,
+  or?: Array< ModelCustomProfileFilterInput | null > | null,
+  not?: ModelCustomProfileFilterInput | null,
+};
+
+export type ModelCustomProfileConnection = {
+  __typename: "ModelCustomProfileConnection",
+  items?:  Array<CustomProfile | null >,
+  nextToken?: string | null,
 };
 
 export type ModelCustomPricingFilterInput = {
@@ -17672,6 +17716,54 @@ export type DeleteSubMenuMutation = {
   } | null,
 };
 
+export type CreateCustomProfileMutationVariables = {
+  input?: CreateCustomProfileInput,
+};
+
+export type CreateCustomProfileMutation = {
+  createCustomProfile?:  {
+    __typename: "CustomProfile",
+    id: string,
+    order?: number | null,
+    type?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCustomProfileMutationVariables = {
+  input?: UpdateCustomProfileInput,
+};
+
+export type UpdateCustomProfileMutation = {
+  updateCustomProfile?:  {
+    __typename: "CustomProfile",
+    id: string,
+    order?: number | null,
+    type?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCustomProfileMutationVariables = {
+  input?: DeleteCustomProfileInput,
+};
+
+export type DeleteCustomProfileMutation = {
+  deleteCustomProfile?:  {
+    __typename: "CustomProfile",
+    id: string,
+    order?: number | null,
+    type?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateCustomPricingMutationVariables = {
   input?: CreateCustomPricingInput,
 };
@@ -24161,6 +24253,44 @@ export type SearchUsersQuery = {
     } | null >,
     nextToken?: string | null,
     total?: number | null,
+  } | null,
+};
+
+export type GetCustomProfileQueryVariables = {
+  id?: string,
+};
+
+export type GetCustomProfileQuery = {
+  getCustomProfile?:  {
+    __typename: "CustomProfile",
+    id: string,
+    order?: number | null,
+    type?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCustomProfilesQueryVariables = {
+  filter?: ModelCustomProfileFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCustomProfilesQuery = {
+  listCustomProfiles?:  {
+    __typename: "ModelCustomProfileConnection",
+    items:  Array< {
+      __typename: "CustomProfile",
+      id: string,
+      order?: number | null,
+      type?: string | null,
+      readGroups?: Array< UserGroupType | null > | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -37789,6 +37919,42 @@ export type OnDeleteUserSubscription = {
       emailCourseMessage?: string | null,
       emailPromotions?: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCustomProfileSubscription = {
+  onCreateCustomProfile?:  {
+    __typename: "CustomProfile",
+    id: string,
+    order?: number | null,
+    type?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCustomProfileSubscription = {
+  onUpdateCustomProfile?:  {
+    __typename: "CustomProfile",
+    id: string,
+    order?: number | null,
+    type?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCustomProfileSubscription = {
+  onDeleteCustomProfile?:  {
+    __typename: "CustomProfile",
+    id: string,
+    order?: number | null,
+    type?: string | null,
+    readGroups?: Array< UserGroupType | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,

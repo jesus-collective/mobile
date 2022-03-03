@@ -1,3 +1,4 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql"
 import { createStackNavigator } from "@react-navigation/stack"
 import Amplify, { Analytics, Auth } from "aws-amplify"
 import * as Linking from "expo-linking"
@@ -9,6 +10,7 @@ import { AuthStateData, GetUserQueryResult, JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"
+import ProfileConfig from "../../components/MyProfile/profileConfigs.json"
 import Sentry from "../../components/Sentry"
 import Validate from "../../components/Validate/Validate"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
@@ -16,6 +18,7 @@ import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
   CreateUserInput,
+  ListCustomProfilesQuery,
   UserGroupType,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -35,6 +38,9 @@ interface Props {
 
 interface State extends UserState {
   initialUrl: string
+  customProfiles: NonNullable<
+    NonNullable<GraphQLResult<ListCustomProfilesQuery>["data"]>["listCustomProfiles"]
+  >["items"]
 }
 
 export default class HomeScreenRouter extends JCComponent<Props, State> {
@@ -55,12 +61,16 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       initialAuthType: null,
       idempotency: uuidv4(),
       initialUrl: "",
+      customProfiles: [],
     }
   }
   onSetUser = (user: any): void => {
     this.setState({ user: user })
   }
   async componentDidMount(): Promise<void> {
+    const profiles = await Data.listCustomProfiles({})
+    this.setState({ customProfiles: profiles.data?.listCustomProfiles?.items ?? [] })
+
     try {
       await this.updateGroups()
     } catch (e) {
@@ -79,6 +89,18 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
   isMemberOf = (group: string): boolean => {
     if (this.state.groups) return this.state.groups.includes(group)
     else return false
+  }
+  getProfileConfig = async (): Promise<any> => {
+    const profileList = this.state.customProfiles.sort((a, b) => (a?.order ?? 0) - (b?.order ?? 0))
+    console.log({ profileList: profileList })
+    const groups = (this.state.groups ?? []) as UserGroupType[]
+    console.log({ groups: groups })
+    const profile = profileList?.filter(
+      (z) => groups.filter((a) => z?.readGroups?.includes(a)).length > 0
+    )[0]
+    const list = ProfileConfig.filter((x) => x.name == (profile?.type ?? "partner"))
+    if (list.length > 0) return list[0]
+    else return ProfileConfig.filter((x) => x.name == "partner")[0]
   }
   updateGroups = async (): Promise<void> => {
     try {
@@ -360,33 +382,6 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
                   params: startup.props,
                 },
               })
-              /* if (
-                this.isMemberOf("friends") ||
-                this.isMemberOf("partners") ||
-                this.isMemberOf("admin") ||
-                this.isMemberOf("legacyUserGroup1") ||
-                this.isMemberOf("subscriptionPartners") ||
-                this.isMemberOf("courseAdmin") ||
-                this.isMemberOf("courseUser") ||
-                this.isMemberOf("courseCoach")
-              ) {
-                RootNavigation.navigate(isMobile ? "mainApp" : "mainApp2", {})
-                break
-              } else if (
-                !this.state.initialUrl.includes("app/resource") &&
-                (this.isMemberOf("subscriptionkyearlyyears") ||
-                  this.isMemberOf("subscriptionkykids") ||
-                  this.isMemberOf("subscriptionkyyouth"))
-              ) {
-                RootNavigation.navigate("mainApp2", {
-                  screen: "mainDrawer",
-                  params: {
-                    screen: "ResourceScreen",
-                    params: { create: false, id: constants["SETTING_KY_GROUP_ID"] },
-                  },
-                })
-                break
-              }*/
             }
             RootNavigation.navigate(isMobile ? "mainApp" : "mainApp2", {})
 
@@ -414,8 +409,8 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       hasPaidState: this.state.hasPaidState,
     })
     if (this.state.userExists) {
-      const handleUser = (getUser: GetUserQueryResult) => {
-        const response = Validate.Profile(getUser.data.getUser)
+      const handleUser = async (getUser: GetUserQueryResult) => {
+        const response = Validate.Profile(getUser.data?.getUser, await this.getProfileConfig())
         console.log({ Validate: response })
         console.debug({ checkIfCompletedProfileResult: response.result })
         if (response.result) return ProfileStatus.Completed
@@ -500,6 +495,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
               updateGroups: this.updateGroups,
               isReady: this.isReady,
               isMemberOf: this.isMemberOf,
+              getProfileConfig: this.getProfileConfig,
             },
           }}
         >

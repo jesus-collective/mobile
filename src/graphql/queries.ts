@@ -5671,6 +5671,37 @@ export const searchUsers = /* GraphQL */ `
     }
   }
 `
+export const getCustomProfile = /* GraphQL */ `
+  query GetCustomProfile($id: ID!) {
+    getCustomProfile(id: $id) {
+      id
+      order
+      type
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listCustomProfiles = /* GraphQL */ `
+  query ListCustomProfiles(
+    $filter: ModelCustomProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCustomProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        order
+        type
+        readGroups
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
 export const getCustomPricing = /* GraphQL */ `
   query GetCustomPricing($id: ID!) {
     getCustomPricing(id: $id) {

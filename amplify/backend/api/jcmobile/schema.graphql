@@ -1436,6 +1436,22 @@ enum CustomPricingType{
   yearly
   oneTime
 }
+type CustomProfile
+@model
+@auth(
+  rules: [
+      { allow: private, provider:iam, operations:[read]}
+      { allow: private, provider:userPools, operations:[read]}
+      { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+    {allow: groups, groups:["admin"], operations: [create, update, delete, read]},
+  ]
+){
+  id:ID!
+  order:Int
+  type:String
+  readGroups:[UserGroupType]
+}
+
 type CustomPricing
 @model
 @auth(

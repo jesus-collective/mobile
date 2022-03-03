@@ -12081,6 +12081,42 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `
+export const onCreateCustomProfile = /* GraphQL */ `
+  subscription OnCreateCustomProfile {
+    onCreateCustomProfile {
+      id
+      order
+      type
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateCustomProfile = /* GraphQL */ `
+  subscription OnUpdateCustomProfile {
+    onUpdateCustomProfile {
+      id
+      order
+      type
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteCustomProfile = /* GraphQL */ `
+  subscription OnDeleteCustomProfile {
+    onDeleteCustomProfile {
+      id
+      order
+      type
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const onCreateCustomPricing = /* GraphQL */ `
   subscription OnCreateCustomPricing {
     onCreateCustomPricing {

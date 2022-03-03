@@ -302,7 +302,7 @@
         },
         "jcmobileShared": {
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion479e2066-build.zip"
+          "s3Key": "amplify-builds/jcmobileShared-LambdaLayerVersion8b6b9d3c-build.zip"
         }
       },
       "video": {

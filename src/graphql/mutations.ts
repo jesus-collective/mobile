@@ -12579,6 +12579,42 @@ export const deleteSubMenu = /* GraphQL */ `
     }
   }
 `
+export const createCustomProfile = /* GraphQL */ `
+  mutation CreateCustomProfile($input: CreateCustomProfileInput!) {
+    createCustomProfile(input: $input) {
+      id
+      order
+      type
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateCustomProfile = /* GraphQL */ `
+  mutation UpdateCustomProfile($input: UpdateCustomProfileInput!) {
+    updateCustomProfile(input: $input) {
+      id
+      order
+      type
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteCustomProfile = /* GraphQL */ `
+  mutation DeleteCustomProfile($input: DeleteCustomProfileInput!) {
+    deleteCustomProfile(input: $input) {
+      id
+      order
+      type
+      readGroups
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const createCustomPricing = /* GraphQL */ `
   mutation CreateCustomPricing($input: CreateCustomPricingInput!) {
     createCustomPricing(input: $input) {

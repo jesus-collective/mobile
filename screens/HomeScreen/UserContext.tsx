@@ -26,6 +26,7 @@ export interface UserActions {
   updateGroups(): Promise<void> | null
   isMemberOf(group: string): boolean
   isReady(): boolean
+  getProfileConfig(): Promise<any>
 }
 export enum ProfileStatus {
   Completed,
@@ -66,6 +67,7 @@ export const UserContext = React.createContext<UserContextType>({
     isMemberOf: () => {
       return false
     },
+    getProfileConfig: async () => null,
   },
   userState: undefined,
 })

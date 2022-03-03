@@ -39,6 +39,8 @@ import {
   CreateCrmRootMutation,
   CreateCustomPricingInput,
   CreateCustomPricingMutation,
+  CreateCustomProfileInput,
+  CreateCustomProfileMutation,
   CreateDirectMessageInput,
   CreateDirectMessageMutation,
   CreateDirectMessageReplyInput,
@@ -95,6 +97,7 @@ import {
   DeleteCourseTriadUsersMutation,
   DeleteCourseWeekMutation,
   DeleteCustomPricingMutation,
+  DeleteCustomProfileMutation,
   DeleteDirectMessageRoomMutation,
   DeleteGroupMemberMutation,
   DeleteGroupMutation,
@@ -124,6 +127,8 @@ import {
   GroupByTypeQuery,
   GroupMemberByUserQuery,
   ListCustomPricingsQuery,
+  ListCustomProfilesQuery,
+  ListCustomProfilesQueryVariables,
   ListDirectMessagesQuery,
   ListDirectMessagesQueryVariables,
   ListGroupsQuery,
@@ -161,6 +166,8 @@ import {
   UpdateCourseWeekMutation,
   UpdateCustomPricingInput,
   UpdateCustomPricingMutation,
+  UpdateCustomProfileInput,
+  UpdateCustomProfileMutation,
   UpdateDirectMessageInput,
   UpdateDirectMessageMutation,
   UpdateGroupInput,
@@ -326,6 +333,13 @@ export class Data {
       variables: { input: { id: id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<DeleteCustomPricingMutation>>
+  }
+  static deleteCustomProfile(id: string) {
+    return API.graphql({
+      query: mutations.deleteCustomProfile,
+      variables: { input: { id: id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DeleteCustomProfileMutation>>
   }
   static deleteStartup(id: string) {
     return API.graphql({
@@ -510,6 +524,13 @@ export class Data {
       variables: { input: input },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<CreateCustomPricingMutation>>
+  }
+  static createCustomProfile(input: CreateCustomProfileInput) {
+    return API.graphql({
+      query: mutations.createCustomProfile,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<CreateCustomProfileMutation>>
   }
   static createStartup(input: CreateStartupInput) {
     return API.graphql({
@@ -801,6 +822,13 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListDirectMessageUsersQuery>>
   }
+  static listCustomProfiles(query: ListCustomProfilesQueryVariables) {
+    return API.graphql({
+      query: queries.listCustomProfiles,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<ListCustomProfilesQuery>>
+  }
   static listDirectMessageUsersForDMs(query: ListDirectMessageUsersQueryVariables) {
     return API.graphql({
       query: customQueries.listDirectMessageUsersForDMS,
@@ -1008,6 +1036,15 @@ export class Data {
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<UpdateCustomPricingMutation>>
+  }
+  static updateCustomProfile(input: UpdateCustomProfileInput) {
+    return API.graphql({
+      query: mutations.updateCustomProfile,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateCustomProfileMutation>>
   }
   static updateMenu(input: UpdateMenuInput) {
     return API.graphql({
