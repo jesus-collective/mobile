@@ -36,42 +36,27 @@ export default function GroupCard({ item }: { item: Group }) {
             <View style={Card.ProfileImageContainer}>
               <ProfileImage size={profileImageSize} user={owner} />
             </View>
-            {Dimensions.get("window").width < 960 && !isMobileOnly ? (
-              <GenericButton
-                style={{
-                  ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
-                  LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
-                  custom: { height: 32, width: 96 },
-                  customLabel: { fontFamily: "Graphik-Medium-App" },
-                }}
-                label="View"
-                action={() => navigation.push("GroupScreen", { id: item.id })}
-              />
-            ) : (
-              <View style={Card.OrganizerTextColumn}>
-                <Text numberOfLines={1} style={Card.OrganizerText}>
-                  Organizer
-                </Text>
-                <Text numberOfLines={3} style={Card.OrganizerNameText}>
-                  {ownerUser?.given_name + " " + ownerUser?.family_name}
-                </Text>
-              </View>
-            )}
 
-            {Dimensions.get("window").width > 960 || isMobileOnly ? (
-              <GenericButton
-                style={{
-                  ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
-                  LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
-                  custom: { height: 32, width: 76 },
-                  customLabel: { fontFamily: "Graphik-Medium-App" },
-                }}
-                label="View"
-                action={() => navigation.push("GroupScreen", { id: item.id })}
-              />
-            ) : null}
+            <View style={Card.OrganizerTextColumn}>
+              <Text numberOfLines={1} style={Card.OrganizerText}>
+                Organizer
+              </Text>
+              <Text numberOfLines={3} style={Card.OrganizerNameText}>
+                {ownerUser?.given_name + " " + ownerUser?.family_name}
+              </Text>
+            </View>
           </View>
         </View>
+        <GenericButton
+          style={{
+            ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
+            LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
+            custom: { height: 32, width: 96, alignSelf: "center", marginTop: 24 },
+            customLabel: { fontFamily: "Graphik-Medium-App" },
+          }}
+          label="View"
+          action={() => navigation.push("GroupScreen", { id: item.id })}
+        />
       </View>
     </TouchableOpacity>
   )
@@ -86,7 +71,7 @@ const Card = StyleSheet.create({
     flex: 1,
   },
   ContentContainer: {
-    padding: 24,
+    padding: Dimensions.get("window").width < 850 ? 16 : 24,
     flex: 1,
   },
   NameText: {
