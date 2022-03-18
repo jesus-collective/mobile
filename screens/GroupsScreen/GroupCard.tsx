@@ -6,7 +6,10 @@ import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 import { Group } from "src/API"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 
 export default function GroupCard({ item }: { item: Group }) {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
@@ -34,7 +37,12 @@ export default function GroupCard({ item }: { item: Group }) {
         <View style={Card.OrganizerContainer}>
           <View style={Card.OrganizerSubContainer}>
             <View style={Card.ProfileImageContainer}>
-              <ProfileImage size={profileImageSize} user={owner} />
+              <ProfileImageNew
+                style={ProfileImageStyle.UserSmall}
+                type="user"
+                quality={ProfileImageQuality.medium}
+                user={owner}
+              />
             </View>
 
             <View style={Card.OrganizerTextColumn}>
@@ -132,6 +140,6 @@ const Card = StyleSheet.create({
   },
   ProfileImageContainer: {
     flexDirection: "column",
-    marginRight: isMobileOnly ? 8 : 0,
+    marginRight: 8,
   },
 })

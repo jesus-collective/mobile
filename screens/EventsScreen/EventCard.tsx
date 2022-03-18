@@ -5,7 +5,10 @@ import React, { useState } from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import { JCEvent } from "./EventsList"
 import { joinGroup } from "./GroupUtils"
 
@@ -25,7 +28,6 @@ export default function EventCard(props: Props) {
     navigation.push("EventScreen", { id: item.id })
   }
   const handleAction = async () => {
-    // TODO: optimistically call updateJoined, undo if mutation fails
     setIsLoading(true)
     if (joined) {
       navigateToEventScreen()
@@ -75,7 +77,13 @@ export default function EventCard(props: Props) {
                     zIndex: index * -1,
                   }}
                 >
-                  <ProfileImage size="tiny" user={attendee?.userID ?? ""} />
+                  <ProfileImageNew
+                    containerStyle={{ backgroundColor: "transparent" }}
+                    style={ProfileImageStyle.UserXSmall2}
+                    quality={ProfileImageQuality.small}
+                    type={"user"}
+                    user={attendee?.userID ?? ""}
+                  />
                 </View>
               ))}
               {item?.members?.items && item?.members?.items.length > 4 ? (

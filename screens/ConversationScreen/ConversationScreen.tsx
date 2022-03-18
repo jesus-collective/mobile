@@ -13,7 +13,10 @@ import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import Header from "../../components/Header/Header"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import { useAndHandleDms } from "./useAndHandleDms"
 const style = StyleSheet.create({
   Container: {
@@ -257,10 +260,12 @@ const ConversationScreen = () => {
                     ]}
                     key={item?.room?.id}
                   >
-                    <ProfileImage
+                    <ProfileImageNew
                       user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
+                      type="user"
                       linkToProfile
-                      size="small8"
+                      style={ProfileImageStyle.UserMedium}
+                      quality={ProfileImageQuality.medium}
                     />
                     <View style={style.ConversationTextContainer}>
                       <View style={{ flexDirection: "row" }}>
@@ -294,7 +299,14 @@ const ConversationScreen = () => {
           {state.currentRoom ? (
             <>
               <View style={style.Header}>
-                <ProfileImage user={getUserId(state.currentRoom)} linkToProfile size="small7" />
+                <ProfileImageNew
+                  containerStyle={isMobileOnly ? {} : { marginRight: 8 }}
+                  user={getUserId(state.currentRoom)}
+                  type="user"
+                  linkToProfile
+                  style={ProfileImageStyle.UserSmall}
+                  quality={ProfileImageQuality.medium}
+                />
                 <Text numberOfLines={1} style={style.HeaderText}>
                   {getCurrentRoomTitle()}
                 </Text>

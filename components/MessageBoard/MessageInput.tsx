@@ -10,8 +10,11 @@ import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import GenericButton from "../GenericButton/GenericButton"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../ProfileImage/ProfileImageNew"
 import FileUpload from "./FileUpload"
 import { ReplyState } from "./MessageBoard"
 type Props = {
@@ -332,9 +335,10 @@ const MessageInput = (props: Props) => {
               isMobileOnly ? { marginRight: 12, justifyContent: "center" } : { marginRight: 16 }
             }
           >
-            <ProfileImage
-              linkToProfile
-              size={isMobileOnly ? "small6" : "small2"}
+            <ProfileImageNew
+              style={isMobileOnly ? ProfileImageStyle.UserXSmall : ProfileImageStyle.UserSmall}
+              quality={isMobileOnly ? ProfileImageQuality.small : ProfileImageQuality.medium}
+              type={"user"}
               user={state.userId}
             />
           </View>
@@ -402,9 +406,21 @@ const MessageInput = (props: Props) => {
           }}
         >
           <View style={props.directMessageInput ? { marginRight: -8, paddingLeft: 10 } : {}}>
-            <ProfileImage
+            <ProfileImageNew
               linkToProfile
-              size={isMobileOnly ? "small6" : props.directMessageInput ? "small7" : "editorLarge"}
+              style={
+                isMobileOnly
+                  ? ProfileImageStyle.UserXSmall
+                  : props.directMessageInput
+                  ? ProfileImageStyle.UserSmall
+                  : ProfileImageStyle.UserLarge3
+              }
+              quality={
+                isMobileOnly || props.directMessageInput
+                  ? ProfileImageQuality.small
+                  : ProfileImageQuality.medium
+              }
+              type={"user"}
               user={state.userId}
             />
           </View>

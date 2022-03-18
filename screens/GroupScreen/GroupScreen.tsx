@@ -14,7 +14,10 @@ import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
 import LastListItem from "../../components/LastListItem/LastListItem"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
 import { GetUserQuery } from "../../src/API"
 import { GetUser2Query } from "../../src/API-customqueries"
@@ -232,7 +235,13 @@ export default function GroupScreen(props: Props) {
           <View style={{ marginVertical: 132, marginHorizontal: "21.666vw" }}>
             <View style={style.HeadingContainer}>
               <Text style={style.OrganizedByText}>Organized by</Text>
-              <ProfileImage size="roundEvent" user={group?.ownerUser?.id} />
+              <ProfileImageNew
+                linkToProfile
+                style={ProfileImageStyle.UserXSmall2}
+                quality={ProfileImageQuality.small}
+                type={"user"}
+                user={group?.ownerUser?.id}
+              />
               <Text style={style.OrganizedByNameText}>
                 {group?.ownerUser?.given_name} {group?.ownerUser?.family_name}
               </Text>
@@ -338,7 +347,13 @@ export default function GroupScreen(props: Props) {
               >
                 Organized by
               </Text>
-              <ProfileImage size="roundEvent" user={group?.ownerUser?.id} />
+              <ProfileImageNew
+                linkToProfile
+                style={ProfileImageStyle.UserXSmall2}
+                quality={ProfileImageQuality.small}
+                type={"user"}
+                user={group?.ownerUser?.id}
+              />
               <Text style={style.OrganizedByNameText}>
                 {group?.ownerUser?.given_name} {group?.ownerUser?.family_name}
               </Text>

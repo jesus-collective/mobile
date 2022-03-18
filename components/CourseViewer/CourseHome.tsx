@@ -20,7 +20,6 @@ import ActivityBox from "../../components/Activity/ActivityBox"
 import EditableFileUpload from "../../components/Forms/EditableFileUpload"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableUsers from "../../components/Forms/EditableUsers"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
@@ -28,6 +27,10 @@ import { UserData } from "../../src/types"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../ProfileImage/ProfileImageNew"
 import { AgendaItems, CourseActions, CourseContext, CourseToDo } from "./CourseContext"
 
 interface Props {
@@ -65,7 +68,13 @@ class CourseHomeImpl extends JCComponent<Props> {
           <Card style={this.styles.style.courseConversationCard}>
             <CardItem>
               <Left style={this.styles.style.courseHomeConversationCard}>
-                <ProfileImage linkToProfile={true} user={user} size="large" style="my-people" />
+                <ProfileImageNew
+                  linkToProfile
+                  style={ProfileImageStyle.UserLarge}
+                  quality={ProfileImageQuality.medium}
+                  type="user"
+                  user={user}
+                />
                 <Body style={this.styles.style.dashboardConversationBody}>
                   <Text style={this.styles.style.courseFontConnectWithName}>
                     {user.given_name} {user.family_name}
@@ -303,13 +312,13 @@ class CourseHomeImpl extends JCComponent<Props> {
                       <Container style={this.styles.style.courseHomeLeftContainer}>
                         <Container style={this.styles.style.courseHomeSyllabusContainer}>
                           <Container style={this.styles.style.courseProfileImageButtonsContainer}>
-                            <ProfileImage
-                              linkToProfile={true}
+                            <ProfileImageNew
+                              style={ProfileImageStyle.UserLarge}
+                              quality={ProfileImageQuality.medium}
+                              type="user"
+                              containerStyle={{ alignSelf: "center" }}
                               user={state.courseData?.instructors?.items?.[0]?.user}
-                              size="medium"
-                              style="courseProfile"
                             />
-
                             <Text style={this.styles.style.courseFontConnectWithName}>
                               {state.courseData?.instructors?.items?.[0]?.user?.given_name}{" "}
                               {state.courseData?.instructors?.items?.[0]?.user?.family_name}

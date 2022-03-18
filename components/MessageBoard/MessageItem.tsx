@@ -6,7 +6,10 @@ import moment, { Moment } from "moment"
 import React from "react"
 import { isMobileOnly } from "react-device-detect"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../ProfileImage/ProfileImageNew"
 import { Message, Reply } from "./MessageList"
 import { DM } from "./MessageListDirect"
 import MessageUtils from "./MessageUtils"
@@ -113,16 +116,24 @@ const MessageItem = (props: Props) => {
             >
               {item && "owner" in item && (
                 <View style={isMobileOnly ? { marginRight: 12 } : { marginRight: 16 }}>
-                  <ProfileImage
-                    size={isMobileOnly ? "small7" : "editorLarge"}
+                  <ProfileImageNew
+                    style={
+                      isMobileOnly ? ProfileImageStyle.UserSmall : ProfileImageStyle.UserLarge3
+                    }
+                    quality={isMobileOnly ? ProfileImageQuality.small : ProfileImageQuality.medium}
+                    type={"user"}
                     user={item?.owner ?? null}
                   />
                 </View>
               )}
               {isReply && (
                 <View style={isMobileOnly ? { marginRight: 12 } : { marginRight: 16 }}>
-                  <ProfileImage
-                    size={isMobileOnly ? "small6" : "small2"}
+                  <ProfileImageNew
+                    style={
+                      isMobileOnly ? ProfileImageStyle.UserXSmall : ProfileImageStyle.UserSmall
+                    }
+                    quality={isMobileOnly ? ProfileImageQuality.small : ProfileImageQuality.medium}
+                    type={"user"}
                     user={item?.author?.id ?? null}
                   />
                 </View>
