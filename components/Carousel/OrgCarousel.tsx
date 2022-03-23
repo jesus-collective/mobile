@@ -26,7 +26,7 @@ const OrgCarousel = () => {
           tempOrgs = [...tempOrgs, ...(err?.data?.listOrganizations?.items ?? [])]
         if (err?.data?.listOrganizations?.nextToken && tempOrgs.length < 10)
           await loadNext(err?.data?.listOrganizations?.nextToken)
-        console.log({ err })
+        console.error({ OrgCarousel: err })
       }
     }
 
@@ -52,7 +52,7 @@ const OrgCarousel = () => {
       seeAllButton={() => navigation.push("OrganizationsScreen")}
       renderItem={renderItem}
       title={"Orgs"}
-      data={orgs?.slice(0, 9)}
+      data={orgs}
     />
   )
 }

@@ -32,7 +32,7 @@ const EventCarousel = () => {
       seeAllButton={() => navigation.push("EventsScreen")}
       title={"Events"}
       renderItem={renderItem}
-      data={events.slice(0, 10)}
+      data={events}
     />
   )
 }
