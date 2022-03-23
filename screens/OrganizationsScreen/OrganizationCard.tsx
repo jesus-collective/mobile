@@ -4,7 +4,10 @@ import React from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import { Org } from "./useOrgs"
 
 type Props = {
@@ -15,14 +18,19 @@ export default function OrganizationCard(props: Props) {
   const { orgName, location, aboutMeLong, aboutMeShort } = item
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const navigateToOrgScreen = () => {
-    navigation.push("OrganizationScreen", { id: item.id })
+    if (item?.id) navigation.push("OrganizationScreen", { id: item.id })
   }
   return (
     <TouchableOpacity style={{ marginTop: 32 }} delayPressIn={150} onPress={navigateToOrgScreen}>
       <View style={OrgCardStyle.Container}>
-        <View style={{ marginLeft: 20 }}>
-          <ProfileImage isOrg={true} user={item} style="org" />
-        </View>
+        <ProfileImageNew
+          containerStyle={{ top: -32, left: 16 }}
+          style={ProfileImageStyle.OrgSmall}
+          quality={ProfileImageQuality.small}
+          type={"org"}
+          user={item?.id}
+        />
+
         <View style={OrgCardStyle.ContentContainer}>
           <Text numberOfLines={3} style={OrgCardStyle.NameText}>
             {orgName}

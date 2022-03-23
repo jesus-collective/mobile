@@ -11,7 +11,10 @@ import { GenericButtonStyles } from "../../components/GenericButton/GenericButto
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
 import LastListItem from "../../components/LastListItem/LastListItem"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import TwoItemComponent, { CarouselType } from "../../components/TwoItemComponent/TwoItemComponent"
 import { WidgetItem, WidgetType } from "../../components/Widgets/JCWidget"
 import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
@@ -247,7 +250,12 @@ export default function ProfileScreen(props: Props) {
       <BrowserView>
         <View style={{ marginHorizontal: "7.778vw" }}>
           <View style={{ flexDirection: "row", marginBottom: 56, marginTop: 56 }}>
-            <ProfileImage user={id} size="profile" />
+            <ProfileImageNew
+              style={ProfileImageStyle.UserXLarge}
+              quality={ProfileImageQuality.medium}
+              type={"user"}
+              user={id}
+            />
             <View
               style={{
                 justifyContent: "center",
@@ -414,7 +422,12 @@ export default function ProfileScreen(props: Props) {
         {currentTab === ProfileTabType.ABOUT ? (
           <View style={{ padding: 12, paddingTop: 16, paddingBottom: 0 }}>
             <View style={style.HeadingContainer}>
-              <ProfileImage size="mobileProfile" user={id} />
+              <ProfileImageNew
+                style={ProfileImageStyle.UserLarge}
+                quality={ProfileImageQuality.medium}
+                type={"user"}
+                user={id}
+              />
             </View>
             <Text style={style.DescriptionText}>{userData?.location?.geocodeFull}</Text>
             <Text style={[style.DescriptionText, { marginBottom: 32 }]}>

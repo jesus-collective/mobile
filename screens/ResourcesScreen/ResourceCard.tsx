@@ -4,7 +4,10 @@ import React, { useState } from "react"
 import { isMobileOnly } from "react-device-detect"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Group } from "src/API"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 
 export default function ResourceCard({ item }: { item: Group }) {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
@@ -49,9 +52,10 @@ export default function ResourceCard({ item }: { item: Group }) {
             <View style={ResourceCardStyle.OrganizerSubContainer}>
               <View style={ResourceCardStyle.ProfileImageContainer}>
                 {ownerOrg?.orgName ? (
-                  <ProfileImage
-                    isOrg={Boolean(ownerOrg?.orgName)}
-                    style={"org"}
+                  <ProfileImageNew
+                    quality={ProfileImageQuality.medium}
+                    type="org"
+                    style={ProfileImageStyle.OrgSmall}
                     user={ownerOrgID}
                   />
                 ) : (

@@ -4,11 +4,13 @@ import moment from "moment"
 import React from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../../components/Forms/JCButton"
-import ProfileImage from "../../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../ProfileImage/ProfileImageNew"
 import MessageUtils from "../MessageUtils"
 import MessageCommentStyles from "./MessageCommentStyles"
 import { MessageComment } from "./MessageThread"
-
 type EntryType = "assignment" | "reply" | "replyToReply" // assignment is thread parent, reply is a response, and replyToReply is a reply to a response or reply
 
 interface CommentParams {
@@ -135,7 +137,13 @@ export default function Comment(props: CommentParams): JSX.Element {
         ) : (
           <View style={{ width: 38 }} />
         )}
-        <ProfileImage linkToProfile={true} size="small2" user={authorId ?? null} />
+        <ProfileImageNew
+          linkToProfile
+          style={ProfileImageStyle.UserSmall}
+          quality={ProfileImageQuality.small}
+          type={"user"}
+          user={authorId}
+        />
       </View>
       <View
         style={[

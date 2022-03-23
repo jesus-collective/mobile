@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { GetGroupQuery } from "../../src/API"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../ProfileImage/ProfileImageNew"
 
 export default function PeopleListWidget(props: Props) {
   const { title, emptyMessage, loadData, userData, buttonAction } = props
@@ -38,9 +41,11 @@ export default function PeopleListWidget(props: Props) {
           data?.map((item: any) => {
             return (
               <View key={item?.id} style={UpcomingCardStyle.MemberItemContainer}>
-                <ProfileImage
+                <ProfileImageNew
                   linkToProfile
-                  size={userData ? "small5" : "small6"}
+                  style={userData ? ProfileImageStyle.UserMedium : ProfileImageStyle.UserXSmall}
+                  quality={ProfileImageQuality.small}
+                  type={"user"}
                   user={userData ? item?.userID : item.id}
                 />
               </View>

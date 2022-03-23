@@ -2,7 +2,10 @@ import { Auth } from "aws-amplify"
 import React, { useEffect, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { JCCognitoUser } from "src/types"
-import ProfileImage from "../../ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../../components/ProfileImage/ProfileImageNew"
 import MessageComment from "./MessageComment"
 import MessageEditor from "./MessageEditor"
 import { replyCounter } from "./MessageThreadUtils"
@@ -124,7 +127,13 @@ export default function MessageThread(props: Props): JSX.Element {
         {open && user && roomId ? (
           <View style={{ flexDirection: "row" }}>
             <View style={{ justifyContent: "center" }}>
-              <ProfileImage linkToProfile={true} size="small2" user={user} />
+              <ProfileImageNew
+                linkToProfile
+                style={ProfileImageStyle.UserSmall}
+                quality={ProfileImageQuality.small}
+                type={"user"}
+                user={user}
+              />
             </View>
             <View ref={textRef} style={{ flex: 1 }}>
               <MessageEditor

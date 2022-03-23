@@ -6,7 +6,10 @@ import { isMobileOnly } from "react-device-detect"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 
 const ProfileCardStyle = StyleSheet.create({
   Container: {
@@ -58,7 +61,13 @@ export default function ProfileCard(props: Props) {
           borderBottomColor: "#E4E1E1",
         }}
       >
-        <ProfileImage size="small6" user={item?.id} />
+        <ProfileImageNew
+          user={item?.id}
+          style={ProfileImageStyle.UserXSmall}
+          type="user"
+          quality={ProfileImageQuality.medium}
+        />
+
         <View style={{ flexDirection: "column", flex: 1, marginLeft: 12 }}>
           <Text
             selectable
@@ -105,7 +114,13 @@ export default function ProfileCard(props: Props) {
       onPress={() => navigation.push("ProfileScreen", { id: item?.id })}
       style={ProfileCardStyle.Container}
     >
-      <ProfileImage style="personCard" user={item?.id} />
+      <ProfileImageNew
+        type="user"
+        user={item?.id}
+        style={ProfileImageStyle.UserLarge2}
+        quality={ProfileImageQuality.medium}
+        containerStyle={{ top: -32, left: 16 }}
+      />
       <View style={{ padding: 16, paddingTop: 0, flex: 1 }}>
         <Text
           selectable
