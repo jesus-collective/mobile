@@ -15,8 +15,8 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-const webpack = require('@cypress/webpack-preprocessor')
-const path = require("path");
+const webpack = require("@cypress/webpack-preprocessor")
+const path = require("path")
 module.exports = async (on, config) => {
   //const b = await z({ projectRoot: "/Users/georgebell/Desktop/Code/jc-mobile", }, { allowedHost: "localhost" })
   //console.log(b)
@@ -27,13 +27,12 @@ module.exports = async (on, config) => {
 
     webpackOptions: {
       resolve: {
-
         alias: {
           "react-native/Libraries/Renderer/shims/ReactNativePropRegistry":
             "react-native-web/dist/modules/ReactNativePropRegistry",
           "react-native": "react-native-web",
-          'react-native-maps': 'react-native-web-maps'
-        }
+          "react-native-maps": "react-native-web-maps",
+        },
       },
       module: {
         rules: [
@@ -41,14 +40,16 @@ module.exports = async (on, config) => {
             test: /\.[jt]sx?$/,
 
             use: {
-              loader: 'babel-loader',
+              loader: "babel-loader",
               options: {
                 presets: ["babel-preset-expo"],
-                plugins: ["@babel/plugin-proposal-class-properties", "@babel/plugin-transform-modules-commonjs"],
-                cacheDirectory: true
-              }
-            }
-            ,
+                plugins: [
+                  "@babel/plugin-proposal-class-properties",
+                  "@babel/plugin-transform-modules-commonjs",
+                ],
+                cacheDirectory: true,
+              },
+            },
             include: [
               path.resolve("../src/graphql/mutations"),
               path.resolve("node_modules/@aws-sdk"),
@@ -59,15 +60,13 @@ module.exports = async (on, config) => {
               path.resolve("node_modules/react-native-elements"),
               path.resolve("node_modules/react-native-safe-area-view"),
               path.resolve("node_modules/react-native-vector-icons"),
-              path.resolve(
-                "node_modules/react-native-keyboard-aware-scroll-view"
-              ),
+              path.resolve("node_modules/react-native-keyboard-aware-scroll-view"),
               path.resolve("node_modules/react-native-web"),
               path.resolve("node_modules/react-native-tab-view"),
               path.resolve("node_modules/aws-amplify-react-native"),
               path.resolve("node_modules/static-container"),
-              path.resolve("node_modules/@zoomus")
-            ]
+              path.resolve("node_modules/@zoomus"),
+            ],
           },
         ],
       },
@@ -75,9 +74,8 @@ module.exports = async (on, config) => {
     watchOptions: {},
   }
 
-  require('@cypress/code-coverage/task')(on, config)
+  require("@cypress/code-coverage/task")(on, config)
 
-  on('file:preprocessor', webpack(options.webpackOptions, config))
+  on("file:preprocessor", webpack(options.webpackOptions, config))
   return config
 }
-

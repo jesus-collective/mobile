@@ -47,7 +47,8 @@
     "**/*.native.tsx",
     "webpack.config.js",
     "src/version.js",
-    "src/aws-video-exports.js"
+    "src/aws-video-exports.js",
+    "metro.config.js"
   ],
   "extends": "expo/tsconfig.base"
 }
