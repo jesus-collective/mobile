@@ -219,7 +219,7 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-42334271706937447152-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-74336d38484f435a3761-build.zip"
         },
         "jcmobileStripWebhook": {
           "userPoolId": "us-east-1_Bq1YZMmzA",

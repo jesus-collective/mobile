@@ -16,7 +16,10 @@ import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
 import LastListItem from "../../components/LastListItem/LastListItem"
 import MessageBoard from "../../components/MessageBoard/MessageBoard"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import DetailsWidget from "../../components/Widgets/DetailsWidget"
 import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
 import { joinGroup, leaveGroup } from "../../screens/EventsScreen/GroupUtils"
@@ -165,7 +168,13 @@ export default function EventScreen(props: Props) {
           <View style={{ marginVertical: 132, marginHorizontal: "21.666vw" }}>
             <View style={style.HeadingContainer}>
               <Text style={style.OrganizedByText}>Organized by</Text>
-              <ProfileImage size="roundEvent" user={owner?.id} />
+              <ProfileImageNew
+                linkToProfile
+                style={ProfileImageStyle.UserXSmall2}
+                quality={ProfileImageQuality.small}
+                type={"user"}
+                user={owner?.id}
+              />
               <Text style={style.OrganizedByNameText}>
                 {owner?.given_name} {owner?.family_name}
               </Text>
@@ -317,7 +326,13 @@ export default function EventScreen(props: Props) {
               >
                 Organized by
               </Text>
-              <ProfileImage size="roundEvent" user={owner?.id} />
+              <ProfileImageNew
+                linkToProfile
+                style={ProfileImageStyle.UserXSmall2}
+                quality={ProfileImageQuality.small}
+                type={"user"}
+                user={owner?.id}
+              />
               <Text style={style.OrganizedByNameText}>
                 {owner?.given_name} {owner?.family_name}
               </Text>

@@ -6,7 +6,10 @@ import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 import { Group } from "src/API"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 
 export default function GroupCard({ item }: { item: Group }) {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
@@ -34,44 +37,34 @@ export default function GroupCard({ item }: { item: Group }) {
         <View style={Card.OrganizerContainer}>
           <View style={Card.OrganizerSubContainer}>
             <View style={Card.ProfileImageContainer}>
-              <ProfileImage size={profileImageSize} user={owner} />
+              <ProfileImageNew
+                style={ProfileImageStyle.UserSmall}
+                type="user"
+                quality={ProfileImageQuality.medium}
+                user={owner}
+              />
             </View>
-            {Dimensions.get("window").width < 960 && !isMobileOnly ? (
-              <GenericButton
-                style={{
-                  ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
-                  LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
-                  custom: { height: 32, width: 96 },
-                  customLabel: { fontFamily: "Graphik-Medium-App" },
-                }}
-                label="View"
-                action={() => navigation.push("GroupScreen", { id: item.id })}
-              />
-            ) : (
-              <View style={Card.OrganizerTextColumn}>
-                <Text numberOfLines={1} style={Card.OrganizerText}>
-                  Organizer
-                </Text>
-                <Text numberOfLines={3} style={Card.OrganizerNameText}>
-                  {ownerUser?.given_name + " " + ownerUser?.family_name}
-                </Text>
-              </View>
-            )}
 
-            {Dimensions.get("window").width > 960 || isMobileOnly ? (
-              <GenericButton
-                style={{
-                  ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
-                  LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
-                  custom: { height: 32, width: 76 },
-                  customLabel: { fontFamily: "Graphik-Medium-App" },
-                }}
-                label="View"
-                action={() => navigation.push("GroupScreen", { id: item.id })}
-              />
-            ) : null}
+            <View style={Card.OrganizerTextColumn}>
+              <Text numberOfLines={1} style={Card.OrganizerText}>
+                Organizer
+              </Text>
+              <Text numberOfLines={3} style={Card.OrganizerNameText}>
+                {ownerUser?.given_name + " " + ownerUser?.family_name}
+              </Text>
+            </View>
           </View>
         </View>
+        <GenericButton
+          style={{
+            ButtonStyle: GenericButtonStyles.TertiaryButtonStyle,
+            LabelStyle: GenericButtonStyles.TertiaryLabelStyle,
+            custom: { height: 32, width: 96, alignSelf: "center", marginTop: 24 },
+            customLabel: { fontFamily: "Graphik-Medium-App" },
+          }}
+          label="View"
+          action={() => navigation.push("GroupScreen", { id: item.id })}
+        />
       </View>
     </TouchableOpacity>
   )
@@ -86,7 +79,7 @@ const Card = StyleSheet.create({
     flex: 1,
   },
   ContentContainer: {
-    padding: 24,
+    padding: Dimensions.get("window").width < 850 ? 16 : 24,
     flex: 1,
   },
   NameText: {
@@ -147,6 +140,6 @@ const Card = StyleSheet.create({
   },
   ProfileImageContainer: {
     flexDirection: "column",
-    marginRight: isMobileOnly ? 8 : 0,
+    marginRight: 8,
   },
 })

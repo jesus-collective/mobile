@@ -2,7 +2,10 @@ import moment from "moment"
 import React from "react"
 import { isMobileOnly } from "react-device-detect"
 import { StyleSheet, Text, View } from "react-native"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../ProfileImage/ProfileImageNew"
 import { convertCommentFromJSONToHTML } from "./MessageItem"
 import { DM } from "./MessageListDirect"
 
@@ -29,7 +32,13 @@ const DMItem = (props: Props) => {
         <View style={isMobileOnly ? { marginRight: 8 } : {}}>
           {!isPreviousSameUser ? (
             <View style={hideDate ? { position: "absolute" } : {}}>
-              <ProfileImage size={isMobileOnly ? "small6" : "small7"} user={item?.userId} />
+              <ProfileImageNew
+                style={isMobileOnly ? ProfileImageStyle.UserXSmall : ProfileImageStyle.UserSmall}
+                containerStyle={!isMobileOnly ? { marginRight: 8 } : {}}
+                quality={ProfileImageQuality.small}
+                type={"user"}
+                user={item?.userId}
+              />
             </View>
           ) : (
             <View style={isMobileOnly ? { width: 40 } : { width: 56 }} />

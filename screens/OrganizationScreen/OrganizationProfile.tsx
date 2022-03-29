@@ -12,7 +12,10 @@ import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
 import { MapData } from "../../components/MyGroups/MyGroups"
 import MyMap from "../../components/MyMap/MyMap"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import OrgDetailsWidget from "../../components/Widgets/OrgDetailsWidget"
 import PeopleListWidgetWithInfo from "../../components/Widgets/PeopleListWidgetWithInfo"
 import { JCCognitoUser } from "../../src/types"
@@ -262,7 +265,12 @@ export default function OrganizationProfile(props: Props) {
               flex: 1,
             }}
           >
-            <ProfileImage isOrg={true} user={orgData} style="orgProfile" />
+            <ProfileImageNew
+              style={ProfileImageStyle.OrgXLarge}
+              quality={ProfileImageQuality.medium}
+              type={"org"}
+              user={orgData?.id}
+            />
             <View
               style={{
                 justifyContent: "center",
@@ -382,7 +390,12 @@ export default function OrganizationProfile(props: Props) {
             flex: 1,
           }}
         >
-          <ProfileImage isOrg={true} user={orgData} style="orgProfileMobile" />
+          <ProfileImageNew
+            style={ProfileImageStyle.OrgLarge}
+            quality={ProfileImageQuality.medium}
+            type={"org"}
+            user={orgData?.id}
+          />
           <Text
             style={{
               marginTop: 12,

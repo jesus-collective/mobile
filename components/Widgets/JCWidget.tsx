@@ -4,6 +4,10 @@ import moment from "moment"
 import React, { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../ProfileImage/ProfileImageNew"
 
 const UpcomingCardStyle = StyleSheet.create({
   CardContainer: {
@@ -159,15 +163,12 @@ export const WidgetItem = ({
         return <></>
       case WidgetType.Org:
         return (
-          <Image
-            style={{
-              width: 53,
-              height: 64,
-              borderRadius: 100,
-              backgroundColor: "white",
-            }}
-            source={require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")}
-          ></Image>
+          <ProfileImageNew
+            style={ProfileImageStyle.OrgSmall}
+            quality={ProfileImageQuality.medium}
+            type={"org"}
+            user={item?.id}
+          />
         )
       default:
         return <></>
