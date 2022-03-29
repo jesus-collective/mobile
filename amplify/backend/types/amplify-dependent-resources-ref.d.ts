@@ -103,19 +103,13 @@ export type AmplifyDependentResourcesAttributes = {
       Region: "string"
       LambdaExecutionRole: "string"
     }
-    jcmobileStripCancelSubscription: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
     jcmobileStripListInvoices: {
       Name: "string"
       Arn: "string"
       Region: "string"
       LambdaExecutionRole: "string"
     }
-    jcHandleActivity: {
+    jcmobileStripCancelSubscription: {
       Name: "string"
       Arn: "string"
       Region: "string"
@@ -127,12 +121,24 @@ export type AmplifyDependentResourcesAttributes = {
       Region: "string"
       LambdaExecutionRole: "string"
     }
+    jcHandleActivity: {
+      Name: "string"
+      Arn: "string"
+      Region: "string"
+      LambdaExecutionRole: "string"
+    }
     jcmobilePinpointCleanEndpoints: {
       Name: "string"
       Arn: "string"
       Region: "string"
       LambdaExecutionRole: "string"
       CloudWatchEventRule: "string"
+    }
+    jcmobileStripListProducts: {
+      Name: "string"
+      Arn: "string"
+      Region: "string"
+      LambdaExecutionRole: "string"
     }
     jcmobileShared: {
       Arn: "string"
@@ -216,6 +222,13 @@ export type AmplifyDependentResourcesAttributes = {
     jcProfile: {
       BucketName: "string"
       Region: "string"
+    }
+  }
+  video: {
+    jesuscollectiveCourses: {
+      oVODInputS3: "string"
+      oVODOutputS3: "string"
+      oVodOutputUrl: "string"
     }
   }
   geo: {

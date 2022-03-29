@@ -61,7 +61,7 @@ export const handler = async (event) => {
       try {
         var subscription = null
         if (stripeSubscriptionID == null) {
-          var promotionCodes = null
+          var promotionCodes: Stripe.ApiList<Stripe.PromotionCode> = null
           if (code != "")
             promotionCodes = await JCStripe.promotionCodesList({
               active: true,
@@ -70,16 +70,19 @@ export const handler = async (event) => {
             })
           console.log({ promotionCodes: promotionCodes })
 
-          var promotionCode = null
+          var promotionCode = ""
+          var couponCode = ""
           if (
             promotionCodes != null &&
             promotionCodes &&
             promotionCodes.data &&
             promotionCodes.data.length > 0
-          )
+          ) {
             promotionCode = promotionCodes.data[0].id
-          else promotionCode = ""
-          console.log({ promotionCode: promotionCode })
+            couponCode = promotionCodes.data[0].coupon.id
+          }
+
+          console.log({ promotionCode: promotionCode, couponCode: couponCode })
           if (subscriptionPriceInfo.length > 0) {
             const sub = {
               customer: stripeCustomerID,
@@ -100,15 +103,16 @@ export const handler = async (event) => {
                   price: priceInfo.price,
                   quantity: priceInfo.quantity,
                 }
-
                 console.log({ "Creating invoice": sub })
                 await JCStripe.createInvoiceItem(sub, idempotency + "SC" + index)
               })
             )
-            const finalInvoice = await JCStripe.createInvoice(
-              { customer: stripeCustomerID, auto_advance: true },
-              idempotency + "DD"
-            )
+            const invoiceArgs: Stripe.InvoiceCreateParams = {
+              customer: stripeCustomerID,
+              auto_advance: true,
+            }
+            if (promotionCode != "") invoiceArgs.discounts = [{ coupon: couponCode }]
+            const finalInvoice = await JCStripe.createInvoice(invoiceArgs, idempotency + "DD")
             console.log({ finalInvoice: finalInvoice })
             const payedInvoice = await JCStripe.payInvoice(finalInvoice.id)
             console.log({ payedInvoice: payedInvoice })
@@ -120,7 +124,7 @@ export const handler = async (event) => {
             return response
           }
         } else {
-          var promotionCodes = null
+          var promotionCodes: Stripe.ApiList<Stripe.PromotionCode> = null
           if (code != "")
             promotionCodes = await JCStripe.promotionCodesList({
               active: true,
@@ -128,16 +132,17 @@ export const handler = async (event) => {
               limit: 3,
             })
           console.log({ promotionCodes: promotionCodes })
-          var promotionCode = null
+          var promotionCode = ""
           if (
             promotionCodes != null &&
             promotionCodes &&
             promotionCodes.data &&
             promotionCodes.data.length > 0
-          )
+          ) {
             promotionCode = promotionCodes.data[0].id
-          else promotionCode = ""
-          console.log({ promotionCode: promotionCode })
+            couponCode = promotionCodes.data[0].coupon.id
+          }
+          console.log({ promotionCode: promotionCode, couponCode: couponCode })
           const sub2 = {
             customer: stripeCustomerID,
             items: subscriptionPriceInfo,
