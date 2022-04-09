@@ -67,7 +67,7 @@
     "jquery": "^3.6.0",
     "maplibre-gl": "^1.15.2",
     "maplibre-gl-js-amplify": "^1.1.3",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.31",
     "native-base": "^2.11.0",
     "only-last-promise": "^1.0.0",
