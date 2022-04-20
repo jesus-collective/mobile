@@ -1,18 +1,19 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Auth } from "aws-amplify"
-import { MessageComment } from "components/MessageBoard/AssignmentMessageBoard/MessageThread"
-import { Container } from "native-base"
 import React, { useContext, useEffect, useState } from "react"
-import { ActivityIndicator, Text, TouchableHighlight, View } from "react-native"
+import { View } from "react-native"
 import { Data } from "../../components/Data/Data"
+import { MessageComment } from "../../components/MessageBoard/AssignmentMessageBoard/MessageThread"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { CreateDirectMessageUserMutation, GetDirectMessageRoomQuery } from "../../src/API"
 import { JCCognitoUser } from "../../src/types"
-import ActivityBoxStyles from "../Activity/ActivityBoxStyles"
 import { CourseActions } from "../CourseViewer/CourseContext"
 import { JCState } from "../JCComponent/JCComponent"
 import MessageEditor from "../MessageBoard/AssignmentMessageBoard/MessageEditor"
-import Messages from "../MessageBoard/AssignmentMessageBoard/Messages"
+import AssignmentCourseReview from "./AssignmentCourseReview"
+import AssignmentLoadingSpinner from "./AssignmentLoadingSpinner"
+import AssignmentUserIndicatorBar from "./AssignmentUserIndicatorBar"
+import CreateAssignmentView from "./CreateAssignmentView"
 
 interface Props {
   wordCount: number
@@ -20,7 +21,7 @@ interface Props {
   actions: CourseActions
   userActions: UserActions
 }
-interface State extends JCState {
+export interface AssignmentState extends JCState {
   assignmentComplete: boolean
   data: Array<GetDirectMessageRoomQuery["getDirectMessageRoom"]>
   currentUser: any
@@ -36,7 +37,7 @@ interface State extends JCState {
 export default function EditableCourseAssignment2(props: Props): JSX.Element {
   const assignmentContext = useContext(UserContext)
   const { userActions } = assignmentContext
-  const [state, setState] = useState<State>({
+  const [state, setState] = useState<AssignmentState>({
     data: [],
     currentUser: null,
     showEdit: null,
@@ -191,220 +192,52 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
     console.log(ids)
     return ids
   }
-  const AssignmentsToggle = ({
-    optionState,
-    changeOption,
-    adminCoach,
-  }: {
-    optionState: string
-    changeOption: (newOption: string) => void
-    adminCoach: boolean
-  }): JSX.Element => {
-    const options = adminCoach
-      ? ["Assignments to Review"]
-      : ["Assignments to Review", "My Assignment"]
-    return (
-      <View style={[ActivityBoxStyles.ActivityButtonContainer, { borderBottomWidth: 0 }]}>
-        {options.map((option: string) => {
-          return (
-            <TouchableHighlight
-              underlayColor="rgba(255,255,255,0.2)"
-              key={option}
-              disabled={optionState === option}
-              onPress={() => changeOption(option)}
-              style={{
-                padding: 16,
-                borderBottomWidth: optionState === option ? 2 : 0,
-                borderBottomColor: optionState === option ? "#F0493E" : "none",
-              }}
-            >
-              <Text
-                style={[
-                  ActivityBoxStyles.ActivityButtonText,
-                  { fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Semibold-App" },
-                  optionState === option ? { color: "#F0493E" } : {},
-                ]}
-              >
-                {option}
-              </Text>
-            </TouchableHighlight>
-          )
-        })}
-      </View>
-    )
-  }
-  const CourseReview = ({
-    data,
-    myRoom,
-    userActions,
-  }: {
-    data: Array<GetDirectMessageRoomQuery["getDirectMessageRoom"]>
-    myRoom: GetDirectMessageRoomQuery["getDirectMessageRoom"]
-    userActions?: UserActions
-  }): JSX.Element => {
-    console.log("My Room", myRoom)
-    const isAdminOrIsCoach =
-      !!userActions?.isMemberOf("courseAdmin") || !!userActions?.isMemberOf("courseCoach")
-    const assignmentsMinusMine = data.filter(
-      (item) => item?.directMessage?.items?.length && !item?.id.includes(state.currentUser)
-    )
-    const NoAssignments = () => {
-      return (
-        <Text
-          style={{
-            paddingLeft: 16,
-            fontSize: 18,
-            lineHeight: 25,
-            fontFamily: "Graphik-Semibold-App",
-          }}
-        >
-          No assignments to review
-        </Text>
-      )
-    }
-    const showMine = state.assignmentOption === "My Assignment" && data.length
-    const showOthers = state.assignmentOption === "Assignments to Review" && data.length
-    const showNoAssignments = !assignmentsMinusMine.length
-    return (
-      <Container style={{ width: "100%", paddingBottom: 250 }}>
-        <AssignmentsToggle
-          adminCoach={isAdminOrIsCoach}
-          optionState={state.assignmentOption}
-          changeOption={(newSelection) => setState({ ...state, assignmentOption: newSelection })}
-        />
-        {showMine ? (
-          <Messages
-            showEdit={(assignment: MessageComment) => setState({ ...state, showEdit: assignment })}
-            wordCount={props.wordCount}
-            recipients={getCurrentRoomRecipients()}
-            open
-            room={myRoom}
-          />
-        ) : showNoAssignments ? (
-          <NoAssignments />
-        ) : showOthers ? (
-          assignmentsMinusMine.map((item, index: number) => {
-            return (
-              <Messages
-                wordCount={props.wordCount}
-                recipients={getCurrentRoomRecipients()}
-                room={item}
-                key={index}
-              />
-            )
-          })
-        ) : (
-          <Spinner />
-        )}
-      </Container>
-    )
-  }
-  const UserIndicatorBar = ({ label }: { label: string }): JSX.Element => {
-    let bgColor
-    switch (label) {
-      case "Assignment":
-        bgColor = "#F0493E"
-        break
-      case "Update Assignment":
-        bgColor = "#F0493E"
-        break
-      default:
-        bgColor = "#71C209"
-        break
-    }
-    return (
-      <View
-        style={{
-          padding: 4,
-          paddingLeft: 12,
-          marginTop: 20,
-          backgroundColor: bgColor,
-          borderRadius: 4,
-        }}
-      >
-        <Text
-          style={{
-            color: "#ffffff",
-            fontSize: 18,
-            fontFamily: "Graphik-Bold-App",
-            alignSelf: "flex-start",
-          }}
-        >
-          {label}
-        </Text>
-      </View>
-    )
-  }
-  const Spinner = (): JSX.Element => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          flexDirection: "column",
-          marginTop: 40,
-          minHeight: 400,
-        }}
-      >
-        <ActivityIndicator color="#F0493E" size="large"></ActivityIndicator>
-        <p style={{ marginTop: 12, fontFamily: "Graphik-Bold-App", fontSize: 16 }}>
-          Loading assignments...
-        </p>
-      </div>
-    )
-  }
-  const AssignmentEditView = () => {
-    return (
-      <View style={{ paddingBottom: 150 }}>
-        <UserIndicatorBar label="Update Assignment" />
-        <MessageEditor
-          assignment={state.showEdit}
-          wordCount={props.wordCount}
-          post={clearAndRefetch}
-          recipients={getCurrentRoomRecipients()}
-          roomId={state.currentRoomId ?? ""}
-        />
-      </View>
-    )
-  }
-  const AssignmentAdminCoachView = () => {
-    return (
-      <>
-        <UserIndicatorBar label="Admin/Coach View" />
-        <CourseReview myRoom={state.myRoom} data={state.data} userActions={userActions} />
-      </>
-    )
-  }
-  const CreateAssignmentView = () => {
-    return (
-      <View style={{ paddingBottom: 150 }}>
-        <UserIndicatorBar label="Assignment" />
-        <MessageEditor
-          wordCount={props.wordCount}
-          newAssignment={true}
-          post={clearAndRefetch}
-          recipients={getCurrentRoomRecipients()}
-          roomId={state.currentRoomId ?? ""}
-        />
-      </View>
-    )
-  }
-  const AssignmentsView = () => {
-    return <CourseReview myRoom={state.myRoom} data={state.data} userActions={userActions} />
-  }
+
   return (
     <View>
       {state.isLoading ? (
-        <Spinner />
+        <AssignmentLoadingSpinner />
       ) : state.showEdit ? (
-        <AssignmentEditView />
+        <View style={{ paddingBottom: 150 }}>
+          <AssignmentUserIndicatorBar label="Update Assignment" />
+          <MessageEditor
+            assignment={state.showEdit}
+            wordCount={props.wordCount}
+            post={clearAndRefetch}
+            recipients={getCurrentRoomRecipients()}
+            roomId={state.currentRoomId ?? ""}
+          />
+        </View>
       ) : userActions.isMemberOf("courseAdmin") || userActions.isMemberOf("courseCoach") ? (
-        <AssignmentAdminCoachView />
+        <>
+          <AssignmentUserIndicatorBar label="Admin/Coach View" />
+          <AssignmentCourseReview
+            getCurrentRoomRecipients={getCurrentRoomRecipients}
+            wordCount={props.wordCount}
+            setState={setState}
+            state={state}
+            myRoom={state.myRoom}
+            data={state.data}
+            userActions={userActions}
+          />
+        </>
       ) : state.initialPost ? (
-        <AssignmentsView />
+        <AssignmentCourseReview
+          getCurrentRoomRecipients={getCurrentRoomRecipients}
+          wordCount={props.wordCount}
+          setState={setState}
+          state={state}
+          myRoom={state.myRoom}
+          data={state.data}
+          userActions={userActions}
+        />
       ) : !state.initialPost && !state.isLoading ? (
-        <CreateAssignmentView />
+        <CreateAssignmentView
+          getCurrentRoomRecipients={getCurrentRoomRecipients}
+          clearAndRefetch={clearAndRefetch}
+          currentRoomId={state.currentRoomId}
+          wordCount={props.wordCount}
+        />
       ) : null}
     </View>
   )
