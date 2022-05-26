@@ -29,6 +29,7 @@ interface State extends JCState {
   eula: string
   productId: string
   confirmationMsg: string
+  submitButtonText: string
   price: string
   pricePer: string
   tiered: TieredProductInput[]
@@ -64,6 +65,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       eula: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
       productId: `JC-${Date.now()}`,
       confirmationMsg: "",
+      submitButtonText: "Process Payment",
       price: "",
       pricePer: "One-Time",
       mode: "save",
@@ -97,6 +99,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       productId: product.id,
       eula: product.eula,
       confirmationMsg: product.confirmationMsg,
+      submitButtonText: product.submitButtonText,
       price: product.price.toFixed(2),
       pricePer: product.pricePer,
       mode: "edit",
@@ -138,6 +141,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             eula: this.state.eula,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
+            submitButtonText: this.state.submitButtonText,
             isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
@@ -155,6 +159,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             eula: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
             productId: `JC-${Date.now()}`,
             confirmationMsg: "",
+            submitButtonText: "Process Payment",
             price: "",
             pricePer: "One-Time",
             isLogin: "false",
@@ -179,6 +184,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             eula: this.state.eula,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
+            submitButtonText: this.state.submitButtonText,
             isLogin: this.state.isLogin,
             isOrgTier: this.state.isOrgTier,
             isIndividualTier: this.state.isIndividualTier,
@@ -196,6 +202,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             eula: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
             productId: `JC-${Date.now()}`,
             confirmationMsg: "",
+            submitButtonText: "Process Payment",
             price: "",
             pricePer: "One-Time",
             isLogin: "false",
@@ -312,6 +319,17 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 placeholder="optional: 1-2 sentences"
                 multiline={false}
                 value={this.state.confirmationMsg}
+              ></TextInput>
+            </div>
+            <div style={{ flexDirection: "row" }}>
+              <Text>Purchase submit button text: </Text>
+              <TextInput
+                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                  this.setState({ submitButtonText: val.nativeEvent.text })
+                }}
+                placeholder="button text"
+                multiline={false}
+                value={this.state.submitButtonText}
               ></TextInput>
             </div>
             <JCSwitch

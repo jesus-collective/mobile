@@ -673,6 +673,7 @@ export type Product = {
   isStripe?: string | null
   isPaypal?: string | null
   tiered?: Array<TieredProduct | null> | null
+  submitButtonText?: string | null
   createdAt?: string
   updatedAt?: string
 }

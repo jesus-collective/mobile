@@ -1334,6 +1334,7 @@ type Product
     isStripe:String
     isPaypal:String
     tiered:[TieredProduct]  
+    submitButtonText:String
     }
 
 

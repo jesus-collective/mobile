@@ -1004,6 +1004,7 @@ export const getPayment = /* GraphQL */ `
           amountIsEditable
           isSubscription
         }
+        submitButtonText
         createdAt
         updatedAt
       }
@@ -1145,6 +1146,7 @@ export const listPayments = /* GraphQL */ `
           enabled
           isStripe
           isPaypal
+          submitButtonText
           createdAt
           updatedAt
         }
@@ -4051,6 +4053,7 @@ export const getProduct = /* GraphQL */ `
         amountIsEditable
         isSubscription
       }
+      submitButtonText
       createdAt
       updatedAt
     }
@@ -4083,6 +4086,7 @@ export const listProducts = /* GraphQL */ `
           amountIsEditable
           isSubscription
         }
+        submitButtonText
         createdAt
         updatedAt
       }
@@ -4781,6 +4785,7 @@ export const paymentByUser = /* GraphQL */ `
           enabled
           isStripe
           isPaypal
+          submitButtonText
           createdAt
           updatedAt
         }
