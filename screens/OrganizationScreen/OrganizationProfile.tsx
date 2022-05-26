@@ -10,7 +10,7 @@ import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
-import { MapData } from "../../components/MyGroups/MyGroups"
+import { MapData } from "../../components/MyGroups/MapData"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImageNew, {
   ProfileImageQuality,

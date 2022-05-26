@@ -3,9 +3,8 @@ import lightBlue from "@material-ui/core/colors/lightBlue"
 import { KeyboardDatePicker, KeyboardDateTimePicker } from "@material-ui/pickers"
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date"
 import moment from "moment-timezone"
-import { Container, Picker } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { Picker, Text, View } from "react-native"
 import JCComponent from "../JCComponent/JCComponent"
 import "./EditableDateStyle.ts"
 
@@ -79,7 +78,7 @@ export default class EditableDate extends JCComponent<Props, State> {
     if (this.props.isEditable) {
       if (this.props.type == "datetime")
         return (
-          <Container style={{ height: "unset", width: "55%", marginTop: 22 }}>
+          <View style={{ height: "unset", width: "55%", marginTop: 22 }}>
             <ThemeProvider theme={materialTheme}>
               <KeyboardDateTimePicker
                 data-testid={this.props.testID + "-datetime"}
@@ -123,11 +122,11 @@ export default class EditableDate extends JCComponent<Props, State> {
                 })}
               </Picker>
             </ThemeProvider>
-          </Container>
+          </View>
         )
       else
         return (
-          <Container style={{ height: "unset", width: "70%" }}>
+          <View style={{ height: "unset", width: "70%" }}>
             <ThemeProvider theme={materialTheme}>
               <KeyboardDatePicker
                 data-testid={this.props.testID + "-date"}
@@ -159,7 +158,7 @@ export default class EditableDate extends JCComponent<Props, State> {
                 })}
               </Picker>
             </ThemeProvider>
-          </Container>
+          </View>
         )
     } else if (this.props.type == "datetime")
       return (

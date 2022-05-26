@@ -1,9 +1,16 @@
-import { AntDesign } from "@expo/vector-icons"
+import { AntDesign, Ionicons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { convertToRaw, EditorState } from "draft-js"
-import { Container, Content, Icon, Picker, Text } from "native-base"
 import * as React from "react"
-import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, View } from "react-native"
+import {
+  NativeSyntheticEvent,
+  Picker,
+  ScrollView,
+  Text,
+  TextInput,
+  TextInputChangeEventData,
+  View,
+} from "react-native"
 import { Data } from "../../components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -283,7 +290,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               onStartShouldSetResponderCapture={() => true}
               onMoveShouldSetResponder={() => true}
               mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
+              iosIcon={<Ionicons name="arrow-down" />}
               style={{
                 width: "30%",
                 marginBottom: 0,
@@ -458,9 +465,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
         {({ userState, userActions }) => {
           if (!userState) return null
           return (
-            <Container>
+            <View>
               {userActions.isMemberOf("admin") ? (
-                <Content>
+                <ScrollView>
                   <JCButton
                     buttonType={ButtonTypes.Outline}
                     onPress={() => {
@@ -470,7 +477,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     Add product
                   </JCButton>
 
-                  <Container style={this.styles.style.fontRegular}>
+                  <View style={this.styles.style.fontRegular}>
                     <View
                       style={{
                         display: "flex",
@@ -591,19 +598,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         </View>
                       )
                     })}
-                  </Container>
-                </Content>
+                  </View>
+                </ScrollView>
               ) : (
-                <Content>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                <ScrollView>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
-                </Content>
+                    </View>
+                  </View>
+                </ScrollView>
               )}
               {this.renderAddProductModal()}
-            </Container>
+            </View>
           )
         }}
       </AdminScreen.UserConsumer>

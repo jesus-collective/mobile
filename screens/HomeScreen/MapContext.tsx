@@ -1,4 +1,4 @@
-import { MapData } from "components/MyGroups/MyGroups"
+import { MapData } from "components/MyGroups/MapData"
 import * as React from "react"
 import { JCState } from "../../components/JCComponent/JCComponent"
 export interface MapState extends JCState {

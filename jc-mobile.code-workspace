@@ -201,7 +201,6 @@
       "zoomus"
     ],
     "cSpell.ignorePaths": [
-      "**/native-base-theme/**",
       "**/package-lock.json",
       "**/node_modules/**",
       "**/vscode-extension/**",

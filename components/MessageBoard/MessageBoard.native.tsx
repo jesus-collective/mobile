@@ -1,245 +1,97 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { API, Auth, graphqlOperation } from "aws-amplify"
-import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } from "native-base"
-import * as React from "react"
-import { Editor } from "react-draft-wysiwyg"
-import { Text, TouchableOpacity } from "react-native"
-import { Data } from "../../components/Data/Data"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import getTheme from "../../native-base-theme/components"
-import material from "../../native-base-theme/variables/material"
-import { CreateMessageInput, ModelSortDirection } from "../../src/API"
-import * as subscriptions from "../../src/graphql/subscriptions"
-import { JCCognitoUser } from "../../src/types"
-//import './react-draft-wysiwyg.css';
-//TODO FIGURE OUT WHY THIS DOESN'T WORK
-//import './MessageBoard.css';
-import ErrorBoundary from "../ErrorBoundry"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { NavigationProp, RouteProp } from "@react-navigation/native"
+import { useState } from "react"
+import { View } from "react-native"
+import { MessagesByRoomQuery } from "../../src/API-messages"
+import MessageInput from "./MessageInput"
+import MessageList from "./MessageList"
+import MessageListDirect from "./MessageListDirect"
+type Messages = NonNullable<MessagesByRoomQuery["messagesByRoom"]>["items"]
+type Message = NonNullable<Messages>[0]
+type Reply = NonNullable<NonNullable<NonNullable<Message>["replies"]>["items"]>[0]
 
-interface Props {
-  groupId: string
-  navigation?: StackNavigationProp<any, any>
-  route?: any
+type Props = {
+  groupId?: string
+  roomId?: string
+  route?: RouteProp<any, any>
+  navigation?: NavigationProp<any, any>
+  style: "mini" | "regular" | "course" | "courseResponse"
+  recipients?: string[]
+  showWordCount?: boolean
+  totalWordCount?: number
+  inputAt?: "top" | "bottom"
+  toolbar?: boolean
+  replies?: boolean
+  reloadDMS?: any
 }
-interface State extends JCState {
-  data: any
-  created: boolean
-  message: string
-  UserDetails: any
-  textHeight: any
-  editorState: any
-}
-class MessageBoardImpl extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      data: null,
-      created: false,
-      message: "",
-      UserDetails: null,
-      textHeight: 10,
-      editorState: null,
-    }
-    this.setInitialData(props)
-    const subscription = API.graphql(
-      graphqlOperation(subscriptions.onCreateMessage, { roomId: this.props.groupId })
-    )
-    subscription.subscribe({
-      next: (todoData) => {
-        let temp: any = this.state.data
-        if (temp === null) temp = { items: [] }
-        if (temp.items == null) temp.items = [todoData.value.data.onCreateMessage]
-        else temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
-        this.setState({ data: temp })
-      },
-    })
-  }
-
-  async setInitialData(props) {
-    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-    try {
-      const getUser = await Data.getUser(user["username"])
-      this.setState({
-        UserDetails: getUser.data.getUser,
-      })
-    } catch (e) {
-      console.log(e)
-    }
-
-    if (props.route.params.create === "true" || props.route.params.create === true)
-      this.setState({ created: false })
-    else {
-      const messagesByRoom = Data.messagesByRoom({
-        roomId: this.props.groupId,
-        sortDirection: ModelSortDirection.DESC,
-      })
-      const processMessages = (json) => {
-        this.setState({
-          created: true,
-          data: json.data.messagesByRoom,
-          message: "",
-        })
-      }
-      messagesByRoom.then(processMessages).catch(processMessages)
-    }
-  }
-  updateEditorInput(value: any) {
-    this.setState({ editorState: value })
-  }
-  updateInput(value: any) {
-    this.setState({ message: JSON.stringify(value) })
-  }
-  saveMessage() {
-    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
-      const z: CreateMessageInput = {
-        id: Date.now().toString(),
-        content: this.state.message,
-        when: Date.now().toString(),
-        roomId: this.props.groupId,
-        userId: user.username,
-        owner: user.username,
-        authorOrgId: "0",
-      }
-      const createMessage = Data.createMessage(z)
-      createMessage
-        .then((json) => {
-          console.log({ "Success Data.createMessage": json })
-          this.setState({ message: "" })
-        })
-        .catch((err) => {
-          console.log({ "Error Data.createMessage": err })
-        })
-    })
-  }
-  showProfile(id) {
-    console.log("Navigate to profileScreen")
-    this.props.navigation.push("ProfileScreen", { id: id, create: false })
-  }
-  render() {
-    return this.state.message != null && this.state.created ? (
-      <ErrorBoundary>
-        <StyleProvider style={getTheme(material)}>
-          <Container style={this.styles.style.nativeMessageBoardContainer}>
-            <Content style={{ marginBottom: 40 }}>
-              {this.state.UserDetails != null ? (
-                <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
-              ) : null}
-              <Editor
-                placeholder="Write a message..."
-                editorState={this.state.editorState}
-                toolbarClassName="customToolbar"
-                wrapperClassName="customWrapperSendmessage"
-                editorClassName="customEditorSendmessage"
-                onEditorStateChange={(z) => {
-                  this.updateEditorInput(z)
-                }}
-                onContentStateChange={(z) => {
-                  this.updateInput(z)
-                }}
-                toolbar={{
-                  options: ["inline", "list"],
-                  inline: {
-                    options: ["bold", "italic", "underline"],
-                  },
-                  list: {
-                    options: ["unordered", "ordered"],
-                  },
-                }}
-              />
-              <JCButton
-                buttonType={ButtonTypes.SolidRightJustified}
-                onPress={() => {
-                  this.saveMessage()
-                }}
-              >
-                Post
-              </JCButton>
-            </Content>
-
-            {this.state.data.items.map((item: any) => {
-              return (
-                <TouchableOpacity
-                  key={item.id}
-                  onPress={() => {
-                    this.showProfile(item.author.id)
-                  }}
-                >
-                  <Card
-                    key={item.id}
-                    style={{
-                      borderRadius: 10,
-                      minHeight: 50,
-                      marginBottom: 35,
-                      borderColor: "#ffffff",
-                    }}
-                  >
-                    <CardItem
-                      style={{
-                        borderBottomLeftRadius: 0,
-                        borderBottomRightRadius: 0,
-                        borderTopLeftRadius: 10,
-                        borderTopRightRadius: 10,
-                        backgroundColor: "#F9FAFC",
-                      }}
-                    >
-                      <Left>
-                        <ProfileImage
-                          size="small"
-                          user={item.owner ? item.owner : null}
-                        ></ProfileImage>
-                        <Body>
-                          <Text style={this.styles.style.groupFormName}>
-                            {item.author != null ? item.author.given_name : null}{" "}
-                            {item.author != null ? item.author.family_name : null}
-                          </Text>
-                          <Text style={this.styles.style.groupFormRole}>
-                            {item.author != null ? item.author.currentRole : null}
-                          </Text>
-                        </Body>
-                      </Left>
-                      <Right>
-                        <Text style={this.styles.style.groupFormDate}>
-                          {new Date(parseInt(item.when, 10)).toLocaleString()}
-                        </Text>
-                      </Right>
-                    </CardItem>
-                    <CardItem
-                      style={{
-                        marginTop: 0,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                        borderTopLeftRadius: 0,
-                        borderTopRightRadius: 0,
-                        borderBottomLeftRadius: 10,
-                        borderBottomRightRadius: 10,
-                        backgroundColor: "#ffffff",
-                      }}
-                    >
-                      <Editor
-                        readOnly
-                        toolbarHidden
-                        initialContentState={JSON.parse(item.content)}
-                        toolbarClassName="customToolbar"
-                        wrapperClassName="customWrapper"
-                        editorClassName="customEditor"
-                      />
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>
-              )
-            })}
-          </Container>
-        </StyleProvider>
-      </ErrorBoundary>
-    ) : null
-  }
+export type ReplyState = {
+  replyToWho: string[]
+  replyToId: string
+  replyToRoomId: string
 }
 export default function MessageBoard(props: Props): JSX.Element {
-  const route = useRoute()
-  const navigation = useNavigation<StackNavigationProp<any, any>>()
-  return <MessageBoardImpl {...props} navigation={navigation} route={route} />
+  const [state, setState] = useState<ReplyState>({
+    replyToWho: [],
+    replyToId: "",
+    replyToRoomId: "",
+  })
+  const handlePressReply = (item: Message | Reply) => {
+    if (item) {
+      const peopleInThread: string[] = []
+
+      if (item.author?.given_name) {
+        peopleInThread.push(item.author.given_name)
+      }
+
+      if ("replies" in item) {
+        item.replies?.items?.slice(10).forEach((reply) => {
+          if (reply?.author?.given_name && !peopleInThread.includes(reply.author.given_name)) {
+            peopleInThread.push(reply?.author?.given_name)
+          }
+        })
+        console.log("item.id", item.id)
+        setState((prev) => ({ ...prev, replyToId: item.id }))
+      } else {
+        console.log("replies do not exist", item.messageId)
+        setState((prev) => ({ ...prev, replyToId: item.messageId }))
+      }
+      console.log("default exit", item.roomId, peopleInThread, item.roomId)
+      setState((prev) => ({
+        ...prev,
+        replyToWho: peopleInThread,
+        replyToRoomId: item.roomId ?? "",
+      }))
+    }
+  }
+  return props.roomId ? (
+    <>
+      <MessageListDirect roomId={props.roomId} />
+      <MessageInput
+        recipients={props.recipients}
+        roomId={props.roomId}
+        clearReplyState={() =>
+          setState({ ...state, replyToRoomId: "", replyToId: "", replyToWho: [] })
+        }
+        directMessageInput={true}
+        replyState={state}
+      />
+    </>
+  ) : (
+    <View>
+      <MessageInput
+        groupId={props.groupId}
+        clearReplyState={() =>
+          setState({ ...state, replyToRoomId: "", replyToId: "", replyToWho: [] })
+        }
+        replyState={state}
+      />
+      <MessageList
+        groupId={props.groupId}
+        replies={props.replies}
+        style={props.style}
+        inputAt={props.inputAt}
+        onHandlePressReply={handlePressReply}
+        onHandleCreated={() => null}
+      />
+    </View>
+  )
 }

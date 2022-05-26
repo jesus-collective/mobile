@@ -104,7 +104,6 @@ class AwesomeApp extends JCComponent<Props, State> {
         "Graphik-Semibold-App": require("./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Semibold-App.ttf"),
         "GraphikXXCondensed-Black-App": require("./assets/font/commercial-type-1906-WOIKTV-app/graphik_xx_condensed/GraphikXXCondensed-Black-App.ttf"),
 
-        // 'Helvetica Neue': require('native-base/Fonts/Roboto_medium.ttf')
         ...Ionicons.font,
       })
     } catch (e) {

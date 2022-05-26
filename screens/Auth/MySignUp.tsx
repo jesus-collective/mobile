@@ -2,7 +2,6 @@ import { Entypo } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
-import { View } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
 import {
@@ -15,6 +14,7 @@ import {
   TextInput,
   TextInputKeyPressEventData,
   TouchableOpacity,
+  View,
 } from "react-native"
 import { AuthStateData } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"

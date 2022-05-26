@@ -1,6 +1,6 @@
-import { Button } from "native-base"
 import React from "react"
 import { ActivityIndicator, Text, View } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import JCComponent from "../JCComponent/JCComponent"
 import styles from "./JCButtonStyle"
 
@@ -109,7 +109,7 @@ class JCButton extends JCComponent<Props> {
   }
   render(): React.ReactNode {
     return (
-      <Button
+      <TouchableOpacity
         accessible
         accessibilityState={{ disabled: !this.props.enabled || this.state.busy }}
         accessibilityLabel={this.props.accessibilityLabel}
@@ -133,7 +133,7 @@ class JCButton extends JCComponent<Props> {
             </View>
           ) : null}
         </Text>
-      </Button>
+      </TouchableOpacity>
     )
   }
 }

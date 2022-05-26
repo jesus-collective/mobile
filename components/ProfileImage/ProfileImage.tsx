@@ -59,16 +59,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
       profileImage: null,
       showEmpty: false,
     }
-
-    if (typeof props.user === "string" && props.user !== "") {
-      if (this.props.isOrg) {
-        this.getProfileImageFromOrgID(props.user)
-      } else {
-        this.getProfileImageFromUserID(props.user)
-      }
-    } else {
-      this.getProfileImage(props.user ? props.user.profileImage : null)
-    }
   }
   showProfile(): void {
     console.log("Navigate to profileScreen")
@@ -86,7 +76,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
   componentDidUpdate(prevProps: Props): void {
     if (prevProps.user !== this.props.user)
       if (typeof this.props.user === "string" && this.props.user !== "") {
-        this.getProfileImageFromUserID(this.props.user)
+        if (this.props.isOrg) {
+          this.getProfileImageFromOrgID(this.props.user)
+        } else {
+          this.getProfileImageFromUserID(this.props.user)
+        }
       } else {
         this.getProfileImage(this.props.user ? this.props.user.profileImage : null)
       }

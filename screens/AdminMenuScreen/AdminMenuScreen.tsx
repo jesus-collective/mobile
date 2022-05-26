@@ -1,8 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content, Picker, Text } from "native-base"
 import React from "react"
-import { TextInput, View } from "react-native"
+import { Picker, ScrollView, Text, TextInput, View } from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -224,7 +223,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -255,7 +254,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             >
               {this.state.showEditMenuItem != null ? "Edit Menu" : "Add Menu"}
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -331,7 +330,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -362,7 +361,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             >
               {this.state.showEditSubMenuItem != null ? "Edit Sub Menu" : "Add Sub Menu"}
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -526,12 +525,12 @@ export default class AdminScreen extends JCComponent<Props, State> {
           if (!userState) return null
           console.log("AdminScreen")
           return (
-            <Container testID="events">
+            <View testID="events">
               {userActions.isMemberOf("admin") ? (
-                <Content>
+                <ScrollView>
                   {this.renderPreview()}
 
-                  <Container style={this.styles.style.fontRegular}>
+                  <View style={this.styles.style.fontRegular}>
                     <JCButton buttonType={ButtonTypes.AdminAdd} onPress={this.addMenuItem}>
                       Add Root Menu
                     </JCButton>
@@ -658,20 +657,20 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         )
                       })}
                     </View>
-                  </Container>
-                </Content>
+                  </View>
+                </ScrollView>
               ) : (
-                <Content>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                <ScrollView>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
-                </Content>
+                    </View>
+                  </View>
+                </ScrollView>
               )}
               {this.renderAddMenuModal()}
               {this.renderAddSubMenuModal()}
-            </Container>
+            </View>
           )
         }}
       </AdminScreen.UserConsumer>

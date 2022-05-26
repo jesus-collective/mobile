@@ -3,10 +3,9 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
-import { Button, Container, Content, Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
-import { Picker, TextInput, TouchableOpacity, View } from "react-native"
+import { Picker, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import EditableText from "../../components/Forms/EditableText"
@@ -15,7 +14,7 @@ import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
-import { MapData } from "../../components/MyGroups/MyGroups"
+import { MapData } from "../../components/MyGroups/MapData"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateOrganizationInput,
@@ -562,8 +561,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Edit
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <TouchableOpacity
               onPress={() => {
                 this.showEdit(
                   item.Username,
@@ -572,7 +570,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
             >
               <Ionicons name="create-outline" style={this.styles.style.icon} />
-            </Button>
+            </TouchableOpacity>
           )}
         </View>
         <View style={this.styles.style.AdminGroupBTTableRow}>
@@ -586,14 +584,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Groups
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <TouchableOpacity
               onPress={() => {
                 this.showGroups(item.Username)
               }}
             >
               <Ionicons name="ios-people" style={this.styles.style.icon} />
-            </Button>
+            </TouchableOpacity>
           )}
         </View>
         <View style={this.styles.style.AdminPaymentBTTableRow}>
@@ -607,14 +604,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Payments
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <TouchableOpacity
               onPress={() => {
                 this.showPayments(item.Username)
               }}
             >
               <MaterialIcons name="payment" style={this.styles.style.icon} />
-            </Button>
+            </TouchableOpacity>
           )}
         </View>
       </View>
@@ -821,7 +817,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -855,7 +851,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             >
               Add Group
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -899,7 +895,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -934,7 +930,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             >
               Add Payment
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -1032,10 +1028,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
           if (!userState) return null
           console.log("AdminScreen")
           return (
-            <Container testID="events">
+            <View testID="events">
               {userActions.isMemberOf("admin") ? (
-                <Content>
-                  <Container style={this.styles.style.fontRegular}>
+                <ScrollView>
+                  <View style={this.styles.style.fontRegular}>
                     <View
                       style={{
                         flex: 1,
@@ -1113,22 +1109,22 @@ export default class AdminScreen extends JCComponent<Props, State> {
                           : null}
                       </View>
                     </View>
-                  </Container>
-                </Content>
+                  </View>
+                </ScrollView>
               ) : (
-                <Content>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                <ScrollView>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
-                </Content>
+                    </View>
+                  </View>
+                </ScrollView>
               )}
               {this.renderGroupsModal()}
               {this.renderPaymentsModal()}
               {this.renderInviteModal()}
               {this.renderEditModal()}
-            </Container>
+            </View>
           )
         }}
       </AdminScreen.UserConsumer>

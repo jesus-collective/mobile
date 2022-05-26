@@ -204,7 +204,7 @@ export default function HeaderJCC(props: Props) {
               {state.menus.map((mapItem) => {
                 if (mapItem == null) return null
                 return (mapItem?.subItems?.items?.length ?? 0) > 0 ? (
-                  <>
+                  <View key={mapItem.id}>
                     <button
                       data-testid="header-resources"
                       onClick={(e) => {
@@ -251,6 +251,7 @@ export default function HeaderJCC(props: Props) {
                         if (subItem == null) return null
                         return (
                           <MenuItem
+                            key={subItem.id}
                             onClick={() => {
                               openScreen(subItem.action ?? "", subItem.params)
                             }}
@@ -265,9 +266,10 @@ export default function HeaderJCC(props: Props) {
                         )
                       })}
                     </Menu>
-                  </>
+                  </View>
                 ) : (
                   <TouchableOpacity
+                    key={mapItem.id}
                     onPress={() => {
                       openScreen(mapItem.action ?? "", mapItem.params)
                     }}

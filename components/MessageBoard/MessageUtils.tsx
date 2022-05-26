@@ -1,7 +1,6 @@
 import { FontAwesome5 } from "@expo/vector-icons"
+import Badge from "@material-ui/core/Badge"
 import { Storage } from "aws-amplify"
-import { Badge } from "native-base"
-import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { DirectMessagesByRoomQuery, MessagesByRoomQuery } from "src/API-messages"
 import { MessageComment } from "./AssignmentMessageBoard/MessageThread"

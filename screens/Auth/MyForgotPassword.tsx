@@ -1,7 +1,6 @@
 import { Entypo } from "@expo/vector-icons"
 import { NavigationProp } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
-import { View } from "native-base"
 import React from "react"
 import {
   ActivityIndicator,
@@ -12,6 +11,7 @@ import {
   TextInput,
   TextInputKeyPressEventData,
   TouchableOpacity,
+  View,
 } from "react-native"
 import { Copyright } from "../../components/Auth/Copyright"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"

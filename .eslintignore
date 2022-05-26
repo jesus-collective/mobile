@@ -1,9 +1,6 @@
 web-build
 amplify
 cypress
-native-base-theme/**/*.js
-native-base-theme
-native-base-theme/components
 node_modules
 **/*.d.ts
 **/*.native.tsx

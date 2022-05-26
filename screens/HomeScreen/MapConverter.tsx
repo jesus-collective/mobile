@@ -1,4 +1,4 @@
-import { MapData } from "components/MyGroups/MyGroups"
+import { MapData } from "components/MyGroups/MapData"
 import { ListGroupsQuery, ListOrganizationsQuery, ListUsersQuery } from "src/API"
 export class MapConverter {
   static convertOrgToMapData(
