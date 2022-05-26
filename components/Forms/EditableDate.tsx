@@ -112,7 +112,6 @@ export default class EditableDate extends JCComponent<Props, State> {
                 }}
                 testID={this.props.testID + "-tz"}
                 selectedValue={this.props.tz}
-                placeholder="Timezone"
                 //placeholderStyle={{ color: "#bfc6ea" }}
                 //placeholderIconColor="#007aff"
                 onValueChange={(value) => this.onTzChanged(value)}
@@ -144,7 +143,6 @@ export default class EditableDate extends JCComponent<Props, State> {
                 mode="dropdown"
                 style={this.styles.style.pickerDropDown}
                 selectedValue={this.props.tz}
-                placeholder="Timezone"
                 testID={this.props.testID + "-tz"}
                 //placeholderStyle={{ color: "#bfc6ea" }}
                 //placeholderIconColor="#007aff"

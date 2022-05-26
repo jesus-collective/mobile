@@ -425,7 +425,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               paddingTop: 3,
               paddingBottom: 3,
             }}
-            selectedValue={null}
+            selectedValue={undefined}
             onValueChange={(value: string) => {
               console.log({ value: value })
               let tmp = this.state.data?.readGroups
@@ -727,7 +727,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                       isEditable={this.state.isEditable}
                     ></EditableUrl>
                   ) : (
-                    <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                    <View style={{ paddingLeft: 0, paddingRight: 0 }}>
                       <Image
                         style={{ width: "22px", height: "22px", marginRight: 5 }}
                         source={require("../../assets/svg/pin 2.svg")}
@@ -750,7 +750,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                         value={this.state.data.location ?? ""}
                         isEditable={this.state.isEditable}
                       ></EditableLocation>
-                    </CardItem>
+                    </View>
                   )}
                 </>
               )}

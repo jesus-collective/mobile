@@ -1,9 +1,9 @@
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import * as React from "react"
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps"
-import { MapData } from "../../components/MyGroups/MyGroups"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent from "../JCComponent/JCComponent"
+import { MapData } from "../MyGroups/MapData"
 
 interface Props {
   navigation?: NavigationProp<any, any>

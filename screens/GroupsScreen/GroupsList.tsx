@@ -101,8 +101,8 @@ const style = StyleSheet.create({
     marginRight: isMobileOnly ? "initial" : 32,
   },
   ContentContainer: {
-    paddingHorizontal: isMobileOnly ? 12 : "intial",
-    paddingTop: isMobileOnly ? 16 : "intial",
+    paddingHorizontal: isMobileOnly ? 12 : "initial",
+    paddingTop: isMobileOnly ? 16 : "initial",
   },
   Spinner: {
     marginTop: isMobileOnly ? 32 : 0,

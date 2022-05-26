@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Header } from "native-base"
 import React from "react"
 import { isDesktop } from "react-device-detect"
 import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
@@ -59,9 +58,8 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
             resetArrow: () => void
           ) => {
             return state?.isEditable ? (
-              <Button
+              <TouchableOpacity
                 testID="course-menu-createWeek"
-                transparent
                 onPress={async () => {
                   actions.createWeek()
                   resetArrow()
@@ -72,7 +70,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                 >
                   +
                 </Text>
-              </Button>
+              </TouchableOpacity>
             ) : null
           }
           const Weeks = Object.values(state.courseWeeks).filter((item) => item)
@@ -126,8 +124,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                 </ScrollView>
                 {Weeks.length ? AddWeekButton(state, actions, changeArrowState) : null}
                 {this.state.listLength > this.state.containerWidth && isDesktop ? (
-                  <Button
-                    transparent
+                  <TouchableOpacity
                     onPress={() => {
                       this.state.listEnd
                         ? menuListRef.current?.scrollTo({ animated: true, x: 0 })
@@ -140,7 +137,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                       name={this.state.listEnd ? "arrow-back" : "arrow-forward"}
                       style={this.headerStyles.style.icon}
                     />
-                  </Button>
+                  </TouchableOpacity>
                 ) : null}
                 {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
                   <View style={{ marginHorizontal: 12 }}>

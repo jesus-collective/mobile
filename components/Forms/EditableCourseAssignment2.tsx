@@ -1,7 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Auth } from "aws-amplify"
 import { MessageComment } from "components/MessageBoard/AssignmentMessageBoard/MessageThread"
-import { Container } from "native-base"
 import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, Text, TouchableHighlight, View } from "react-native"
 import { Data } from "../../components/Data/Data"
@@ -266,7 +265,7 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
     const showOthers = state.assignmentOption === "Assignments to Review" && data.length
     const showNoAssignments = !assignmentsMinusMine.length
     return (
-      <Container style={{ width: "100%", paddingBottom: 250 }}>
+      <View style={{ width: "100%", paddingBottom: 250 }}>
         <AssignmentsToggle
           adminCoach={isAdminOrIsCoach}
           optionState={state.assignmentOption}
@@ -296,7 +295,7 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
         ) : (
           <Spinner />
         )}
-      </Container>
+      </View>
     )
   }
   const UserIndicatorBar = ({ label }: { label: string }): JSX.Element => {

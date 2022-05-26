@@ -1,6 +1,6 @@
 import Amplify from "aws-amplify"
-import { Picker, View } from "native-base"
 import React from "react"
+import { Picker, View } from "react-native"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import { ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"

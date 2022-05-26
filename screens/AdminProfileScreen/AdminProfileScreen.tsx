@@ -111,7 +111,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
       >
         <>
           <Picker
-            placeholder="Enter Action Value"
             selectedValue={this.state.profileAction}
             onValueChange={(e) => {
               this.setState({ profileAction: e })

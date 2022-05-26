@@ -1,6 +1,5 @@
 import Amplify, { Storage } from "aws-amplify"
 import React from "react"
-import InputColor from "react-input-color"
 import { Animated, Image, View } from "react-native"
 import { ImageInput } from "src/API"
 import awsconfig from "../../src/aws-exports"

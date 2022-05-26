@@ -3,8 +3,8 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Analytics, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
-import { Container, Content } from "native-base"
 import * as React from "react"
+import { ScrollView, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
@@ -1197,11 +1197,11 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
             },
           }}
         >
-          <Container style={{ padding: 0, margin: 0 }}>
+          <View style={{ padding: 0, margin: 0 }}>
             <ErrorBoundary>
-              <Content>{this.renderRouter()}</Content>
+              <ScrollView>{this.renderRouter()}</ScrollView>
             </ErrorBoundary>
-          </Container>
+          </View>
         </ResourceViewerImpl.Provider>
       </ErrorBoundary>
     ) : null

@@ -1,9 +1,6 @@
-//import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Map, Marker } from "google-maps-react"
-import { Container, View } from "native-base"
 import * as React from "react"
-import { Text } from "react-native"
+import { Text, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 //import styles from '../../components/style'
@@ -55,7 +52,7 @@ class MapSelector extends JCComponent<Props, State> {
               Done
             </JCButton>
           </View>
-          <Container style={this.styles.style.mapView}>
+          <View style={this.styles.style.mapView}>
             <Map
               google={window.google}
               zoom={2}
@@ -83,7 +80,7 @@ class MapSelector extends JCComponent<Props, State> {
                 }}
               ></Marker>
             </Map>
-          </Container>
+          </View>
         </View>
       </View>
     ) : null

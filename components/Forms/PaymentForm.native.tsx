@@ -1,4 +1,3 @@
-import { Card, Text, View } from "native-base"
 import React from "react"
 import { StyleSheet, ViewStyle } from "react-native"
 import { GetProductQuery } from "../../src/API"

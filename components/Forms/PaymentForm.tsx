@@ -1,8 +1,7 @@
 import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
-import { Card, Text, View } from "native-base"
 import React from "react"
-import { StyleSheet, ViewStyle } from "react-native"
+import { StyleSheet, Text, View, ViewStyle } from "react-native"
 import { GetProductQuery } from "../../src/API"
 import PayPal from "./Paypal/PayPal"
 
@@ -56,7 +55,7 @@ export default function PaymentForm({
 
   return (
     <View style={containerStyle}>
-      <Card
+      <View
         style={{
           borderRadius: 4,
           padding: 35,
@@ -86,7 +85,7 @@ export default function PaymentForm({
             }}
           />
         </View>
-      </Card>
+      </View>
       <View
         style={{
           display: "flex",

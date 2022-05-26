@@ -1,7 +1,6 @@
-import { View } from "native-base"
 import React, { Component } from "react"
 import { isBrowser, isMobile } from "react-device-detect"
-import { Image, LayoutAnimation, Platform, TouchableOpacity, UIManager } from "react-native"
+import { Image, LayoutAnimation, Platform, TouchableOpacity, UIManager, View } from "react-native"
 
 interface Props {
   header: any

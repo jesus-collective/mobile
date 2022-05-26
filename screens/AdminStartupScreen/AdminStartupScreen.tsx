@@ -113,7 +113,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
       >
         <>
           <Picker
-            placeholder="Enter Action Value"
             selectedValue={this.state.startupAction}
             onValueChange={(e) => {
               this.setState({ startupAction: e })

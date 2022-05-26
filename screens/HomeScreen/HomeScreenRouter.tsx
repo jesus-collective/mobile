@@ -11,7 +11,6 @@ import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import ProfileConfig from "../../components/MyProfile/profileConfigs.json"
-import Sentry from "../../components/Sentry"
 import Validate from "../../components/Validate/Validate"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import {
@@ -151,10 +150,10 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
       const handleUser = async (getUser: GetUserQueryResult) => {
         console.log(getUser)
         if (getUser.data == null || getUser.data == undefined) {
-          Sentry.captureEvent(getUser)
+          //Sentry.captureEvent(getUser)
           console.log({ Errors: getUser.errors })
         }
-        if (getUser.data.getUser == null) {
+        if (getUser.data?.getUser == null) {
           console.log("Trying to create")
           const inputData: CreateUserInput = {
             id: this.user?.username,
@@ -188,20 +187,20 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           userExists = true
           console.log("User exists")
         }
-
-        if (attributes!["custom:isOrg"] === "true" && getUser) {
+        if (attributes == null || this.user == null) return
+        if (attributes["custom:isOrg"] === "true" && getUser) {
           this.setState({ isOrg: true })
           if (getUser?.data?.getUser?.organizations?.items?.length === 0) {
             console.log("creating Organization")
             const id = `organization-${Date.now()}`
             const orgInput: CreateOrganizationInput = {
               id: id,
-              orgName: attributes!["custom:orgName"] ?? "",
-              adminEmail: attributes!["email"],
-              phone: attributes!["phone_number"],
+              orgName: attributes["custom:orgName"] ?? "",
+              adminEmail: attributes["email"],
+              phone: attributes["phone_number"],
               profileState: "Incomplete",
-              admins: [this.user!["username"]],
-              superAdmin: this.user!["username"],
+              admins: [this.user["username"]],
+              superAdmin: this.user["username"],
               parentOrganizationId: id,
               joined: moment().format(),
             }
@@ -211,7 +210,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             try {
               const createOrg = await Data.createOrganization(orgInput)
               console.log({ createOrg: createOrg })
-              orgId = createOrg.data.createOrganization.id
+              orgId = createOrg.data?.createOrganization?.id ?? "UNKNOWN"
             } catch (e: any) {
               if (e?.data?.createOrganization) orgId = e.data.createOrganization.id
               console.error({ error: e })
@@ -221,7 +220,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
 
             const orgMember: CreateOrganizationMemberInput = {
               userRole: "superAdmin",
-              userId: this.user!["username"],
+              userId: this.user["username"],
               organizationId: orgId,
             }
 
@@ -256,6 +255,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
+      if (user?.attributes == null) return false
       const customer = await Data.createStripeCustomer({
         idempotency: this.state.idempotency,
         firstName: user?.attributes?.given_name,
@@ -263,7 +263,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         email: user?.attributes?.email,
         phone: user?.attributes?.phone_number,
         billingAddress: billingAddress,
-        orgName: user?.attributes!["custom:orgName"],
+        orgName: user?.attributes["custom:orgName"],
       })
       console.log({ customer: customer })
       return true
@@ -295,15 +295,15 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         )
           return PaidStatus.Success
         else {
-          if (getUser.data.getUser.stripeCustomerID == null)
-            if (await this.createStripeUser(getUser.data.getUser.billingAddress)) {
-              if (getUser.data.getUser.stripeSubscriptionID == null) {
+          if (getUser.data?.getUser?.stripeCustomerID == null)
+            if (await this.createStripeUser(getUser.data?.getUser?.billingAddress)) {
+              if (getUser.data?.getUser?.stripeSubscriptionID == null) {
                 console.log("No Stripe Subscription, No Stripe Customer")
                 return PaidStatus.InProgress
               } else {
                 return PaidStatus.MissingCustomer
               }
-            } else if (getUser.data.getUser.stripeSubscriptionID == null) {
+            } else if (getUser.data?.getUser?.stripeSubscriptionID == null) {
               console.log("No Stripe Subscription")
               return PaidStatus.InProgress
             } else {
@@ -319,7 +319,8 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           }
         }
       }
-      const getUser = Data.getUser(this.user!["username"])
+      if (this.user == null) return PaidStatus.Unknown
+      const getUser = Data.getUser(this.user["username"])
       return await getUser.then(handleGetUser).catch(handleGetUser)
     } else {
       return PaidStatus.Unknown
@@ -424,7 +425,8 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         else if (!response.result) return ProfileStatus.Incomplete
         else return ProfileStatus.Unknown
       }
-      const getUser = Data.getUser(this.user!["username"])
+      if (this.user == null) return ProfileStatus.Unknown
+      const getUser = Data.getUser(this.user["username"])
       return await getUser.then(handleUser).catch(handleUser)
     }
     return ProfileStatus.Unknown

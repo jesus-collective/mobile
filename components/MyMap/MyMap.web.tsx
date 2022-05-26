@@ -2,17 +2,14 @@ import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth, Storage } from "aws-amplify"
-import { MapData } from "components/MyGroups/MyGroups"
-import { Map, Marker } from "google-maps-react"
+import { MapData } from "components/MyGroups/MapData"
 import maplibregl from "maplibre-gl"
 import { createMap } from "maplibre-gl-js-amplify"
 import "maplibre-gl/dist/maplibre-gl.css"
 import moment from "moment"
-//import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem, View } from "native-base"
 import * as React from "react"
-import { Dimensions, ScrollView, Text, TouchableOpacity } from "react-native"
+import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -127,9 +124,9 @@ class MyMapImpl extends JCComponent<Props, State> {
 
   renderOrg() {
     return (
-      <Card style={this.styles.style.myMapDashboardConversationCard}>
-        <CardItem>
-          <Body style={{ flex: 1, flexDirection: "row" }}>
+      <View style={this.styles.style.myMapDashboardConversationCard}>
+        <View>
+          <View style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ marginRight: 10 }}>
               <ProfileImage
                 user={this.state.selectedPlace.mapItem.user.id}
@@ -161,14 +158,14 @@ class MyMapImpl extends JCComponent<Props, State> {
                 </JCButton>
               </View>
             </View>
-          </Body>
+          </View>
           <View style={{ position: "absolute", top: -10, right: 10 }}>
             <TouchableOpacity onPress={() => this.setState({ showingInfoWindow: false })}>
               <AntDesign name="close" size={24} color="#979797" />
             </TouchableOpacity>
           </View>
-        </CardItem>
-      </Card>
+        </View>
+      </View>
     )
   }
 
@@ -294,9 +291,9 @@ class MyMapImpl extends JCComponent<Props, State> {
 
   renderProfile() {
     return (
-      <Card style={this.styles.style.myMapDashboardConversationCard}>
-        <CardItem>
-          <Body style={this.styles.style.mapCardBody}>
+      <View style={this.styles.style.myMapDashboardConversationCard}>
+        <View>
+          <View style={this.styles.style.mapCardBody}>
             <View style={this.styles.style.mapCardImage}>
               <ProfileImage
                 user={this.state.selectedPlace.mapItem.user.id}
@@ -341,31 +338,31 @@ class MyMapImpl extends JCComponent<Props, State> {
                 </JCButton>
               </View>
             </View>
-          </Body>
+          </View>
           <View style={{ position: "absolute", top: -10, right: 10 }}>
             <TouchableOpacity onPress={() => this.setState({ showingInfoWindow: false })}>
               <AntDesign name="close" size={24} color="#979797" />
             </TouchableOpacity>
           </View>
-        </CardItem>
-      </Card>
+        </View>
+      </View>
     )
   }
 
   renderEvent() {
     return (
-      <Card style={this.styles.style.myMapCalloutEventContainer}>
-        <CardItem>
+      <View style={this.styles.style.myMapCalloutEventContainer}>
+        <View>
           <Text ellipsizeMode="tail" numberOfLines={1} style={this.styles.style.myMapFontDetailTop}>
             {moment(this.state.selectedPlace.mapItem.event.time).format("MMMM Do YYYY, h:mm a")}
           </Text>
-        </CardItem>
-        <CardItem style={this.styles.style.myMapCalloutEventName}>
+        </View>
+        <View style={this.styles.style.myMapCalloutEventName}>
           <Text ellipsizeMode="tail" numberOfLines={2} style={this.styles.style.myMapFontTitle}>
             {this.state.selectedPlace.mapItem.event.name}
           </Text>
-        </CardItem>
-        <CardItem style={this.styles.style.myMapCalloutEventDescription}>
+        </View>
+        <View style={this.styles.style.myMapCalloutEventDescription}>
           <Text
             ellipsizeMode="tail"
             numberOfLines={3}
@@ -373,8 +370,8 @@ class MyMapImpl extends JCComponent<Props, State> {
           >
             {this.state.selectedPlace.mapItem.event.description}
           </Text>
-        </CardItem>
-        <CardItem style={{ paddingBottom: 40 }}>
+        </View>
+        <View style={{ paddingBottom: 40 }}>
           {this.state.selectedPlace.mapItem.event.eventType == "location" ? (
             <Text
               ellipsizeMode="tail"
@@ -421,7 +418,7 @@ class MyMapImpl extends JCComponent<Props, State> {
               </a>
             </Text>
           )}
-        </CardItem>
+        </View>
         {/*
         {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
         {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
@@ -432,7 +429,7 @@ class MyMapImpl extends JCComponent<Props, State> {
             <AntDesign name="close" size={24} color="#979797" />
           </TouchableOpacity>
         </View>
-      </Card>
+      </View>
     )
   }
   mapRef: any

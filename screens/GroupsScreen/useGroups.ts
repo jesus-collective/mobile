@@ -33,7 +33,7 @@ export const sortByName = (data: Group[], reverse?: boolean) => {
     return 0
   })
 }
-export const useGroups = (filter, reverse) => {
+export const useGroups = (filter: string, reverse: boolean) => {
   const [groups, setGroups] = useState<Group[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [nextToken, setNextToken] = useState<string | null | undefined>(null)

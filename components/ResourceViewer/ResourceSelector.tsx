@@ -1,5 +1,5 @@
-import { Picker } from "native-base"
 import React from "react"
+import { Picker } from "react-native"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceActions, ResourceState } from "./ResourceContext"
 

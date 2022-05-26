@@ -1,6 +1,5 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import React from "react"
-import Chips, { Chip } from "react-chips"
 import { Text } from "react-native"
 import { Data } from "../../components/Data/Data"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
