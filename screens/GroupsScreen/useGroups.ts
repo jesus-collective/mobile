@@ -49,8 +49,16 @@ export const useGroups = (filter, reverse) => {
         else return { nextToken: groupData.nextToken }
       }
       const groupData = await loadAll(nextToken)
-
-      setGroups([...groups, ...allData])
+      const allGroups = [...groups, ...allData]
+      const revised = allGroups.filter(
+        (group, groupIndex) =>
+          groupIndex ===
+          allGroups.findIndex(
+            (existingGroup, existingGroupIndex) => existingGroup?.id === group?.id
+          )
+      )
+      console.log(revised.length)
+      setGroups(revised)
       setNextToken(groupData?.nextToken)
     } catch (err) {
       console.error({ err })
@@ -62,5 +70,5 @@ export const useGroups = (filter, reverse) => {
   useEffect(() => {
     loadGroupData()
   }, [reverse, filter])
-  return { groups: sortByName(groups), isLoading, loadMore, nextToken }
+  return { groups: sortByName(groups, reverse), isLoading, loadMore, nextToken }
 }
