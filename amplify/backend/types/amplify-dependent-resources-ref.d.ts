@@ -85,13 +85,13 @@ export type AmplifyDependentResourcesAttributes = {
       Region: "string"
       LambdaExecutionRole: "string"
     }
-    jcmobileCreateCognitoOrgUser: {
+    jcmobileGetOrgStripeSubs: {
       Name: "string"
       Arn: "string"
       Region: "string"
       LambdaExecutionRole: "string"
     }
-    jcmobileGetOrgStripeSubs: {
+    jcmobileCreateCognitoOrgUser: {
       Name: "string"
       Arn: "string"
       Region: "string"
@@ -142,6 +142,12 @@ export type AmplifyDependentResourcesAttributes = {
     }
     jcmobileShared: {
       Arn: "string"
+    }
+    deleteJCUser: {
+      Name: "string"
+      Arn: "string"
+      Region: "string"
+      LambdaExecutionRole: "string"
     }
   }
   auth: {
@@ -222,13 +228,6 @@ export type AmplifyDependentResourcesAttributes = {
     jcProfile: {
       BucketName: "string"
       Region: "string"
-    }
-  }
-  video: {
-    jesuscollectiveCourses: {
-      oVODInputS3: "string"
-      oVODOutputS3: "string"
-      oVodOutputUrl: "string"
     }
   }
   geo: {
