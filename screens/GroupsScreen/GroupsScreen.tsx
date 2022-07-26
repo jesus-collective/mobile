@@ -101,11 +101,9 @@ export default function GroupsScreen() {
   }
   return (
     <GenericDirectoryScreen
-      navigation={navigation}
-      ControlButtons={GroupsControlButtons}
-      MainContent={() => <GroupsList filter={filter} reverse={reverse} />}
-      Widgets={GroupWidgets}
-      route={route}
+      ControlButtons={<GroupsControlButtons />}
+      MainContent={<GroupsList reverse={reverse} filter={filter}></GroupsList>}
+      Widgets={<GroupWidgets />}
       pageTitle="Groups"
     />
   )

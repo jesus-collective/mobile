@@ -1,4 +1,4 @@
-﻿import { useNavigation, useRoute } from "@react-navigation/native"
+﻿import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { useEffect, useLayoutEffect, useState } from "react"
@@ -13,7 +13,6 @@ import OrganizationsList from "./OrganizationsList"
 
 export default function OrganizationsScreen() {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
-  const route = useRoute()
   const [reverse, setReverse] = useState(false)
   const [filter, setFilter] = useState("")
   useLayoutEffect(() => {
@@ -112,10 +111,8 @@ export default function OrganizationsScreen() {
   }
   return (
     <GenericDirectoryScreen
-      navigation={navigation}
-      ControlButtons={OrgControlButtons}
-      MainContent={() => <OrganizationsList filter={filter} reverse={reverse} />}
-      route={route}
+      ControlButtons={<OrgControlButtons />}
+      MainContent={<OrganizationsList filter={filter} reverse={reverse} />}
       pageTitle="Organizations"
     />
   )

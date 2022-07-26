@@ -1,4 +1,4 @@
-﻿import { useNavigation, useRoute } from "@react-navigation/native"
+﻿import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { useEffect, useLayoutEffect, useState } from "react"
@@ -14,7 +14,6 @@ import ResourceWidgets from "./ResourceWidgets"
 
 export default function ResourcesScreen() {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
-  const route = useRoute()
   const [reverse, setReverse] = useState(false)
   const [filter, setFilter] = useState("")
   useLayoutEffect(() => {
@@ -119,11 +118,9 @@ export default function ResourcesScreen() {
   }
   return (
     <GenericDirectoryScreen
-      navigation={navigation}
-      ControlButtons={GroupsControlButtons}
-      MainContent={() => <ResourceList filter={filter} reverse={reverse} />}
-      Widgets={ResourceWidgets}
-      route={route}
+      ControlButtons={<GroupsControlButtons />}
+      MainContent={<ResourceList filter={filter} reverse={reverse} />}
+      Widgets={<ResourceWidgets />}
       pageTitle="Resources"
     />
   )

@@ -1,4 +1,4 @@
-﻿import { useNavigation, useRoute } from "@react-navigation/native"
+﻿import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useLayoutEffect, useState } from "react"
 import { View } from "react-native"
@@ -9,7 +9,6 @@ import Header from "../../components/Header/Header"
 import ProfilesList from "./ProfilesList"
 export default function ProfilesScreen() {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
-  const route = useRoute()
   const [reverse, setReverse] = useState(false)
   const [filter, setFilter] = useState("")
   useLayoutEffect(() => {
@@ -77,10 +76,8 @@ export default function ProfilesScreen() {
   }
   return (
     <GenericDirectoryScreen
-      navigation={navigation}
-      ControlButtons={PeopleControlButtons}
-      MainContent={() => <ProfilesList filter={filter} reverse={reverse} />}
-      route={route}
+      ControlButtons={<PeopleControlButtons />}
+      MainContent={<ProfilesList filter={filter} reverse={reverse} />}
       pageTitle="People"
     />
   )
