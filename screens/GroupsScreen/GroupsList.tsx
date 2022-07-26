@@ -6,7 +6,7 @@ import { GenericButtonStyles } from "../../components/GenericButton/GenericButto
 import LastListItem from "../../components/LastListItem/LastListItem"
 import { useMyGroups } from "../../screens/EventsScreen/useMyGroups"
 import GroupCard from "./GroupCard"
-import { sortByName, useGroups } from "./useGroups"
+import { useGroups } from "./useGroups"
 
 type Props = {
   filter: string
@@ -49,12 +49,7 @@ export default function GroupsList(props: Props) {
           ) : null
         }
         data={
-          filter
-            ? sortByName(
-                groups.filter((a) => a?.id === joinedGroups.find((b) => b === a?.id)),
-                reverse
-              )
-            : sortByName(groups, reverse)
+          filter ? groups.filter((a) => a?.id === joinedGroups.find((b) => b === a?.id)) : groups
         }
         numColumns={isMobile ? 1 : 2}
         refreshing={isLoading}
