@@ -1,0 +1,17 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "auth": {
+      "jcmobile": [
+        "read",
+        "delete"
+      ]
+    },
+    "api": {
+      "jcmobile": [
+        "read",
+        "delete"
+      ]
+    }
+  }
+}
