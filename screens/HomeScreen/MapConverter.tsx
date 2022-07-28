@@ -1,5 +1,5 @@
-import { MapData } from "components/MyGroups/MyGroups"
 import { ListGroupsQuery, ListOrganizationsQuery, ListUsersQuery } from "src/API"
+import { MapData } from "src/types"
 export class MapConverter {
   static convertOrgToMapData(
     data: NonNullable<ListOrganizationsQuery["listOrganizations"]>["items"]

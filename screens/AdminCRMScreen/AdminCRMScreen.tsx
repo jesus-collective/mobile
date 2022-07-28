@@ -15,7 +15,6 @@ import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
-import { MapData } from "../../components/MyGroups/MyGroups"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateOrganizationInput,
@@ -28,7 +27,7 @@ import {
   PaymentByUserQuery,
   UserGroupType,
 } from "../../src/API"
-import { GetUserQueryResult, InviteType } from "../../src/types"
+import { GetUserQueryResult, InviteType, MapData } from "../../src/types"
 
 interface Props {
   navigation: StackNavigationProp<any, any>

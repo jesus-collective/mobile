@@ -2,12 +2,12 @@ import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth, Storage } from "aws-amplify"
-import { MapData } from "components/MyGroups/MyGroups"
 import { Map, Marker } from "google-maps-react"
 import maplibregl from "maplibre-gl"
 import { createMap } from "maplibre-gl-js-amplify"
 import "maplibre-gl/dist/maplibre-gl.css"
 import moment from "moment"
+import { MapData } from "src/types"
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Body, Card, CardItem, View } from "native-base"

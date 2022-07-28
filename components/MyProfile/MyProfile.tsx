@@ -16,6 +16,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native"
+import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -33,7 +34,6 @@ import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { MapData } from "../MyGroups/MyGroups"
 import Validate from "../Validate/Validate"
 import {
   interests,
