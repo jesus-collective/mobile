@@ -1,8 +1,8 @@
 import { Ionicons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content, Picker, Text } from "native-base"
+import { Container, Picker, Text } from "native-base"
 import React from "react"
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
@@ -233,7 +233,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           return (
             <Container testID="events">
               {userActions.isMemberOf("admin") ? (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.fontRegular}>
                     <JCButton buttonType={ButtonTypes.AdminAdd} onPress={this.addProfileItem}>
                       Add Profile Item
@@ -297,15 +297,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       })}
                     </View>
                   </Container>
-                </Content>
+                </ScrollView>
               ) : (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.eventsScreenMainContainer}>
                     <Container style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
                     </Container>
                   </Container>
-                </Content>
+                </ScrollView>
               )}
               {this.renderAddProfileModal()}
             </Container>

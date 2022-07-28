@@ -1,7 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content, Text } from "native-base"
+import { Container, Text } from "native-base"
 import React, { useEffect, useState } from "react"
-import { Image } from "react-native"
+import { Image, ScrollView } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Header from "../../components/Header/Header"
@@ -39,7 +39,7 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
     return (
       <Container>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
+        <ScrollView>
           <Container
             style={{ width: "50%", alignSelf: "center", marginVertical: 64, alignItems: "center" }}
           >
@@ -68,14 +68,14 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
               </JCButton>
             </Container>
           </Container>
-        </Content>
+        </ScrollView>
       </Container>
     )
   } else {
     return (
       <Container>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
+        <ScrollView>
           <Container style={{ marginTop: 50, alignItems: "center" }}>
             <Text style={{ fontSize: 36, fontFamily: "Graphik-Regular-App" }}>Page not found.</Text>
             <Container style={{ marginTop: 50 }}>
@@ -87,7 +87,7 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
               </JCButton>
             </Container>
           </Container>
-        </Content>
+        </ScrollView>
       </Container>
     )
   }

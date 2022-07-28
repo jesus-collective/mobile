@@ -2,9 +2,18 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
-import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Container, Left, Right, StyleProvider } from "native-base"
 import React from "react"
-import { Dimensions, FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native"
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { Calendar } from "react-native-calendars"
 import ActivityBox from "../../components/Activity/ActivityBox"
 import EditableFileUpload from "../../components/Forms/EditableFileUpload"
@@ -296,7 +305,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               <Container style={this.styles.style.courseHomeMainContainer}>
                 <CourseHeader groupData={state.data}></CourseHeader>
                 <Container style={{ flex: 80 }}>
-                  <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
+                  <ScrollView contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                     <Container style={this.styles.style.courseHomeScreenSubMainContainer}>
                       <Container style={this.styles.style.courseHomeLeftContainer}>
                         <Container style={this.styles.style.courseHomeSyllabusContainer}>
@@ -812,7 +821,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                         ) : null}
                       </Container>
                     </Container>
-                  </Content>
+                  </ScrollView>
                 </Container>
               </Container>
             </StyleProvider>

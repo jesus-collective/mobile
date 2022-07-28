@@ -1,8 +1,7 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
-import { Content } from "native-base"
 import React from "react"
-import { ActivityIndicator, Image, Text, View } from "react-native"
+import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native"
 import Billing from "../../components/Billing/Billing"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -45,14 +44,14 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
               <View style={this.styles.style.signUpScreen1PaymentBody}>
                 <SignUpSidebar position="3"></SignUpSidebar>
 
-                <Content>
+                <ScrollView>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text style={this.styles.style.SignUpScreenSetupText}>
                       We&apos;re getting you setup. This may take several seconds.
                     </Text>
                     <ActivityIndicator />
                   </View>
-                </Content>
+                </ScrollView>
               </View>
             )
           if (userState.hasPaidState == PaidStatus.InProgress) {
@@ -66,7 +65,7 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>
                 <SignUpSidebar position="3"></SignUpSidebar>
-                <Content>
+                <ScrollView>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Image
                       style={{
@@ -91,49 +90,49 @@ class SignUpScreen1Impl extends JCComponent<Props, JCState> {
                       </JCButton>
                     </Text>
                   </View>
-                </Content>
+                </ScrollView>
               </View>
             )
           } else if (userState.hasPaidState == PaidStatus.PermissionNotGranted) {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>
                 <SignUpSidebar position="3"></SignUpSidebar>
-                <Content>
+                <ScrollView>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text style={this.styles.style.SignUpScreenSetupText}>
                       Please wait a moment while we set up your account.
                       <br />
                     </Text>
                   </View>
-                </Content>
+                </ScrollView>
               </View>
             )
           } else if (userState.hasPaidState == PaidStatus.MissingCustomer) {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>
                 <SignUpSidebar position="3"></SignUpSidebar>
-                <Content>
+                <ScrollView>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text style={this.styles.style.SignUpScreenSetupText}>
                       There may have been a problem, please contact support!
                       <br />
                     </Text>
                   </View>
-                </Content>
+                </ScrollView>
               </View>
             )
           } else
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>
                 <SignUpSidebar position="3"></SignUpSidebar>
-                <Content>
+                <ScrollView>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text style={this.styles.style.SignUpScreenSetupText}>
                       There has been a problem, please contact support!
                       <br />
                     </Text>
                   </View>
-                </Content>
+                </ScrollView>
               </View>
             )
         }}

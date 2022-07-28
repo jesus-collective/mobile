@@ -2,9 +2,9 @@ import { useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
-import { Container, Content, Picker, Text } from "native-base"
+import { Container, Picker, Text } from "native-base"
 import React, { useState } from "react"
-import { TextInput, View } from "react-native"
+import { ScrollView, TextInput, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
@@ -230,7 +230,7 @@ class AdminScreenImpl extends JCComponent<Props, State> {
           return (
             <Container testID="events">
               {userActions.isMemberOf("admin") ? (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.fontRegular}>
                     <JCButton buttonType={ButtonTypes.AdminAdd} onPress={this.addPricingsItem}>
                       Add Custom Payment Item
@@ -269,15 +269,15 @@ class AdminScreenImpl extends JCComponent<Props, State> {
                       {this.renderAddPricingsModal()}
                     </View>
                   </Container>
-                </Content>
+                </ScrollView>
               ) : (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.eventsScreenMainContainer}>
                     <Container style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
                     </Container>
                   </Container>
-                </Content>
+                </ScrollView>
               )}
             </Container>
           )

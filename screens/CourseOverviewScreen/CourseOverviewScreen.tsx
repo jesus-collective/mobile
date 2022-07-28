@@ -4,9 +4,9 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, Content, Picker, StyleProvider, View } from "native-base"
+import { Container, Picker, StyleProvider, View } from "native-base"
 import React from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity } from "react-native"
 import { GetUserQueryResult, JCCognitoUser, MapData } from "src/types"
 import PaidUsersModal from "../../components/CourseViewer/PaidUsersModal"
 import { Data } from "../../components/Data/Data"
@@ -659,7 +659,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           return this.state.data ? (
             <StyleProvider style={getTheme()}>
               <Container>
-                <Content>
+                <ScrollView>
                   <MyMap
                     type={"no-filters"}
                     size={"25%"}
@@ -1011,7 +1011,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                     </Container>
                   </Container>
                   {this.renderPaidUsersModal()}
-                </Content>
+                </ScrollView>
               </Container>
             </StyleProvider>
           ) : null

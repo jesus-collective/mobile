@@ -2,9 +2,9 @@
 import { Tooltip } from "@material-ui/core"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
-import { Card, Container, Content, Icon, Picker, StyleProvider } from "native-base"
+import { Card, Container, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import EditableCourseAssignment2 from "../Forms/EditableCourseAssignment2"
@@ -1146,12 +1146,12 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                 {/* <CourseHeader groupData={state.data}></CourseHeader> */}
                 <CourseDetailMenu />
                 <Container style={{ flex: 80 }}>
-                  <Content style={{ flex: 85 }}>
+                  <ScrollView style={{ flex: 85 }}>
                     <Container style={this.styles.style.courseDetailMainContainer}>
                       {this.renderWeekDetails(state, actions, week)}
                       {this.renderLessonDetails(state, actions, week)}
                     </Container>
-                  </Content>
+                  </ScrollView>
                 </Container>
               </Container>
             </StyleProvider>

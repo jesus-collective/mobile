@@ -1,7 +1,7 @@
 ﻿import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content, StyleProvider } from "native-base"
+import { Container, StyleProvider } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { ScrollView, Text } from "react-native"
 import { Data } from "../../components/Data/Data"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -52,7 +52,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
             navigation={this.props.navigation}
             onMapChange={this.mapChanged}
           />
-          <Content>
+          <ScrollView>
             <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
             <Container>
               <input
@@ -66,7 +66,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
                 return <Text key={item.id}>{item.name}</Text>
               })}
             </Container>
-          </Content>
+          </ScrollView>
         </Container>
       </StyleProvider>
     )

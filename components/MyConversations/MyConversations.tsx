@@ -1,7 +1,7 @@
 import { NavigationProp } from "@react-navigation/native"
-import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Container, Left, Right, StyleProvider } from "native-base"
 import * as React from "react"
-import { Image, Pressable, Text } from "react-native"
+import { Image, Pressable, ScrollView, Text } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import { constants } from "../../src/constants"
 import JCComponent from "../JCComponent/JCComponent"
@@ -41,7 +41,7 @@ export default class MyConversations extends JCComponent<Props> {
             >
               <Text style={this.styles.style.fontConnectWith}>Latest Conversations</Text>
             </Pressable>
-            <Content>
+            <ScrollView>
               {items.map((item) => {
                 return (
                   <Card key={item.id} style={this.styles.style.conversationCard}>
@@ -73,7 +73,7 @@ export default class MyConversations extends JCComponent<Props> {
                   </Card>
                 )
               })}
-            </Content>
+            </ScrollView>
           </Container>
         </StyleProvider>
       )

@@ -1,9 +1,15 @@
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { convertToRaw, EditorState } from "draft-js"
-import { Container, Content, Icon, Picker, Text } from "native-base"
+import { Container, Icon, Picker, Text } from "native-base"
 import * as React from "react"
-import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, View } from "react-native"
+import {
+  NativeSyntheticEvent,
+  ScrollView,
+  TextInput,
+  TextInputChangeEventData,
+  View,
+} from "react-native"
 import { Data } from "../../components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -478,7 +484,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           return (
             <Container>
               {userActions.isMemberOf("admin") ? (
-                <Content>
+                <ScrollView>
                   <JCButton
                     buttonType={ButtonTypes.Outline}
                     onPress={() => {
@@ -610,15 +616,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       )
                     })}
                   </Container>
-                </Content>
+                </ScrollView>
               ) : (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.eventsScreenMainContainer}>
                     <Container style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
                     </Container>
                   </Container>
-                </Content>
+                </ScrollView>
               )}
               {this.renderAddProductModal()}
             </Container>

@@ -3,10 +3,10 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
-import { Container, Content, Text } from "native-base"
+import { Container, Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
-import { Picker, Pressable, TextInput, TouchableOpacity, View } from "react-native"
+import { Picker, Pressable, ScrollView, TextInput, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import EditableText from "../../components/Forms/EditableText"
@@ -1030,7 +1030,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           return (
             <Container testID="events">
               {userActions.isMemberOf("admin") ? (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.fontRegular}>
                     <View
                       style={{
@@ -1110,15 +1110,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       </View>
                     </View>
                   </Container>
-                </Content>
+                </ScrollView>
               ) : (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.eventsScreenMainContainer}>
                     <Container style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
                     </Container>
                   </Container>
-                </Content>
+                </ScrollView>
               )}
               {this.renderGroupsModal()}
               {this.renderPaymentsModal()}

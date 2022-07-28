@@ -5,13 +5,14 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
-import { Badge, Content, Form, Label, Picker, View } from "native-base"
+import { Badge, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import {
   ActivityIndicator,
   Image,
   Pressable,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -2050,7 +2051,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           if (!this.state.profileConfig) return null
 
           return this.state.UserDetails != null ? (
-            <Content ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
+            <ScrollView ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
               {this.renderTopBar(userActions)}
 
               <Form style={this.styles.style.myProfileMainContainer}>
@@ -2060,7 +2061,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 {this.state.showPage == "profile" && this.renderProfile()}
                 {this.state.showPage == "settings" && this.renderAccountSettings()}
               </Form>
-            </Content>
+            </ScrollView>
           ) : null
         }}
       </MyProfileImpl.UserConsumer>
