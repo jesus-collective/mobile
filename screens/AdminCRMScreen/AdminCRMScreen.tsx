@@ -3,10 +3,10 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
-import { Button, Container, Content, Text } from "native-base"
+import { Container, Content, Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
-import { Picker, TextInput, TouchableOpacity, View } from "react-native"
+import { Picker, Pressable, TextInput, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import EditableText from "../../components/Forms/EditableText"
@@ -562,8 +562,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Edit
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <Pressable
               onPress={() => {
                 this.showEdit(
                   item.Username,
@@ -572,7 +571,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
             >
               <Ionicons name="create-outline" style={this.styles.style.icon} />
-            </Button>
+            </Pressable>
           )}
         </View>
         <View style={this.styles.style.AdminGroupBTTableRow}>
@@ -586,14 +585,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Groups
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <Pressable
               onPress={() => {
                 this.showGroups(item.Username)
               }}
             >
               <Ionicons name="ios-people" style={this.styles.style.icon} />
-            </Button>
+            </Pressable>
           )}
         </View>
         <View style={this.styles.style.AdminPaymentBTTableRow}>
@@ -607,14 +605,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Payments
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <Pressable
               onPress={() => {
                 this.showPayments(item.Username)
               }}
             >
               <MaterialIcons name="payment" style={this.styles.style.icon} />
-            </Button>
+            </Pressable>
           )}
         </View>
       </View>

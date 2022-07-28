@@ -1,6 +1,6 @@
-import { Button, Input } from "native-base"
+import { Input } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { Pressable, Text } from "react-native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
@@ -69,29 +69,27 @@ export default class EditableButton extends JCComponent<Props, State> {
         )
       else
         return (
-          <Button
+          <Pressable
             testID={this.props.testID + "-button"}
             onLongPress={() => {
               this.setState({ isEditMode: true })
             }}
-            transparent
             onPress={() => {
               this.props.onPress()
             }}
           >
             <Text style={this.props.textStyle}>{this.props.value}</Text>
-          </Button>
+          </Pressable>
         )
     else
       return (
-        <Button
-          transparent
+        <Pressable
           onPress={() => {
             this.props.onPress()
           }}
         >
           <Text style={this.props.textStyle}>{this.props.value}</Text>
-        </Button>
+        </Pressable>
       )
   }
 }

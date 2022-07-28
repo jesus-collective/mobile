@@ -1,8 +1,8 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Button, Container, Icon, Picker, StyleProvider } from "native-base"
+import { Container, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Dimensions, Text } from "react-native"
+import { Dimensions, Pressable, Text } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -68,12 +68,12 @@ class CourseChatImpl extends JCComponent<Props, State> {
                   >
                     Cohort
                   </JCButton>
-                  <Button
+                  <Pressable
                     style={{ zIndex: 1000000, marginLeft: "auto", backgroundColor: "#ffffff00" }}
                     onPress={() => actions.setShowChat()}
                   >
                     <AntDesign name="close" size={24} color="black" />
-                  </Button>
+                  </Pressable>
                 </Container>
                 <Container style={{ marginTop: 38, marginHorizontal: 24 }}>
                   {state.activeMessageBoard == "cohort" ? (

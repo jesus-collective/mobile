@@ -2,7 +2,7 @@
 import Amplify from "aws-amplify"
 import { Authenticator } from "aws-amplify-react-native"
 import React from "react"
-import { Button } from "react-native"
+import { Pressable, Text } from "react-native"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import awsConfig from "../../src/aws-exports"
 
@@ -19,10 +19,9 @@ export default class TeachingScreen extends JCComponent<Props> {
     const { navigate } = this.props.navigation
     return (
       <Authenticator>
-        <Button
-          title="Go to Jane's profile"
-          onPress={() => navigate("Profile", { name: "Jane" })}
-        />
+        <Pressable onPress={() => navigate("Profile", { name: "Jane" })}>
+          <Text>Go to Jane's profile</Text>
+        </Pressable>
       </Authenticator>
     )
   }
