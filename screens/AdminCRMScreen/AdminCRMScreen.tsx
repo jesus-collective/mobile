@@ -18,14 +18,12 @@ import { MapData } from "../../components/MyGroups/MapData"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateOrganizationInput,
-  CreateOrganizationMemberInput,
-  CreateStripeCustomerAdminMutationVariables,
-  CreateUserInput,
+  CreateOrganizationMemberInput, CreateUserInput,
   GetUserQuery,
   GroupByTypeQuery,
   ListProductsQuery,
   PaymentByUserQuery,
-  UserGroupType,
+  UserGroupType
 } from "../../src/API"
 import { GetUserQueryResult, InviteType } from "../../src/types"
 
@@ -561,7 +559,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Edit
             </JCButton>
           ) : (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 this.showEdit(
                   item.Username,
@@ -570,7 +568,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
             >
               <Ionicons name="create-outline" style={this.styles.style.icon} />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
         <View style={this.styles.style.AdminGroupBTTableRow}>
@@ -584,13 +582,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Groups
             </JCButton>
           ) : (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 this.showGroups(item.Username)
               }}
             >
               <Ionicons name="ios-people" style={this.styles.style.icon} />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
         <View style={this.styles.style.AdminPaymentBTTableRow}>
@@ -604,13 +602,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Payments
             </JCButton>
           ) : (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 this.showPayments(item.Username)
               }}
             >
               <MaterialIcons name="payment" style={this.styles.style.icon} />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       </View>

@@ -9,7 +9,7 @@ import Sentry from "../../components/Sentry"
 import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
-  GetOrganizationQuery,
+  GetOrganizationQuery
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { Brand, constants } from "../../src/constants"
@@ -26,7 +26,7 @@ import {
   numberOfEmployees,
   orgTypesChurches,
   orgTypesNonChurch,
-  sundayAttendance,
+  sundayAttendance
 } from "../MyProfile/dropdown"
 import ProfileImage from "../ProfileImage/ProfileImage"
 import Validate from "../Validate/Validate"

@@ -26,7 +26,7 @@ import {
   CreateGroupInput,
   GetGroupQuery,
   GetUserQuery,
-  UserGroupType,
+  UserGroupType
 } from "../../src/API"
 import Accordion from "./Accordion"
 

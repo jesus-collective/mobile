@@ -4,7 +4,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
 import * as React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { ScrollView, Text, TouchableOpacity } from "react-native"
+import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
@@ -14,7 +15,6 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
-import { MapData } from "../../components/MyGroups/MyGroups"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
@@ -24,7 +24,7 @@ import {
   CreateGroupInput,
   GetGroupQuery,
   GetUserQuery,
-  UserGroupType,
+  UserGroupType
 } from "../../src/API"
 import { GetUserQueryResult, JCCognitoUser } from "../../src/types"
 import Accordion from "./Accordion"

@@ -23,7 +23,7 @@ import {
   GetGroupQuery,
   GetUserQuery,
   GroupMemberByUserQuery,
-  UserGroupType,
+  UserGroupType
 } from "../../src/API"
 const MessageBoard = lazy(() => import("../../components/MessageBoard/MessageBoard"))
 

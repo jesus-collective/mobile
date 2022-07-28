@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
   TextInputChangeEventData,
-  View,
+  View
 } from "react-native"
 import { Data } from "../../components/Data/Data"
 import EditableRichText from "../../components/Forms/EditableRichText"
@@ -23,7 +23,7 @@ import {
   ListProductsQuery,
   TieredProductInput,
   UpdateProductInput,
-  UserGroupType,
+  UserGroupType
 } from "../../src/API"
 interface Props {
   navigation: StackNavigationProp<any, any>

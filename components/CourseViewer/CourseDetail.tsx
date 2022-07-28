@@ -18,7 +18,7 @@ import {
   CourseLesson,
   CourseState,
   CourseWeek,
-  CourseWeekObj,
+  CourseWeekObj
 } from "./CourseContext"
 import CourseDetailMenu from "./CourseDetailMenu"
 

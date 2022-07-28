@@ -3,9 +3,17 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
 import React from "react"
-import { Dimensions, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import { Calendar } from "react-native-calendars"
-import { ScrollView } from "react-native-gesture-handler"
 import ActivityBox from "../../components/Activity/ActivityBox"
 import EditableFileUpload from "../../components/Forms/EditableFileUpload"
 import EditableRichText from "../../components/Forms/EditableRichText"
@@ -18,7 +26,7 @@ import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
 import ProfileImageNew, {
   ProfileImageQuality,
-  ProfileImageStyle,
+  ProfileImageStyle
 } from "../ProfileImage/ProfileImageNew"
 import { AgendaItems, CourseActions, CourseContext, CourseToDo } from "./CourseContext"
 
@@ -69,7 +77,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                     {user.given_name} {user.family_name}
                   </Text>
                   <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
-                  <TouchableOpacity
+                  <Pressable
                     style={this.styles.style.courseHomeConversationButton}
                     onPress={() => {
                       this.openConversation(user.id, user.given_name + " " + user.family_name)
@@ -78,7 +86,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                     <Text style={this.styles.style.courseFontStartConversation}>
                       Send a Message
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                   {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
                 </View>
               </View>

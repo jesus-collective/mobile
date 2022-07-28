@@ -5,16 +5,16 @@ import React, { useEffect, useLayoutEffect, useState } from "react"
 import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native"
 import { GetOrganizationQuery } from "src/API"
+import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../components/GenericButton/GenericButtonStyles"
 import Header from "../../components/Header/Header"
 import { SubHeader } from "../../components/Header/SubHeader"
-import { MapData } from "../../components/MyGroups/MapData"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImageNew, {
   ProfileImageQuality,
-  ProfileImageStyle,
+  ProfileImageStyle
 } from "../../components/ProfileImage/ProfileImageNew"
 import OrgDetailsWidget from "../../components/Widgets/OrgDetailsWidget"
 import PeopleListWidgetWithInfo from "../../components/Widgets/PeopleListWidgetWithInfo"

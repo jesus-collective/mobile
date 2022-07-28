@@ -1,6 +1,7 @@
 ﻿import Amplify, { Auth } from "aws-amplify"
 import React from "react"
-import { Button, Text, View } from "react-native"
+
+import { Pressable, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"
@@ -50,13 +51,14 @@ export default class SignUpScreen2 extends JCComponent<Props> {
               >
                 <Text>Payment Successful</Text>
 
-                <Button
-                  color="#F0493E"
-                  title="Setup Profile"
+                <Pressable
+                  style={{ backgroundColor: "#F0493E" }}
                   onPress={() => {
                     this.makePayment(userActions)
                   }}
-                />
+                >
+                  <Text>Setup Profile</Text>
+                </Pressable>
               </View>
             </View>
           )

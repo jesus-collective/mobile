@@ -1,11 +1,11 @@
 import { Ionicons } from "@expo/vector-icons"
 import React from "react"
-import { Dimensions, Picker, TouchableOpacity, View } from "react-native"
+import { Dimensions, Picker, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import {
   ResourceMenuItemType,
   ResourcePageItemStyle,
-  UpdateResourceMenuItemInput,
+  UpdateResourceMenuItemInput
 } from "../../src/API"
 import { ResourceSetupProp } from "../../src/types"
 import EditableButton from "../Forms/EditableButton"
@@ -183,13 +183,13 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                         style={[this.styles.style.resourceMenuLineBreak, { marginLeft: 0 }]}
                       ></View>
                       {resourceState.isEditable && (
-                        <TouchableOpacity
+                        <Pressable
                           onPress={async () => {
                             await resourceActions.deleteMenuItem(index)
                           }}
                         >
                           <Ionicons name="ios-close" style={this.headerStyles.style.icon} />
-                        </TouchableOpacity>
+                        </Pressable>
                       )}
                     </View>
                   ) : this.isMenuItemExpanded(resourceState, index) ? (
@@ -235,7 +235,7 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                       {resourceState.isEditable ? (
                         <>
                           {item.depth == "1" || item.depth == null ? (
-                            <TouchableOpacity
+                            <Pressable
                               onPress={async () => {
                                 await resourceActions.updateMenuItem(index, "depth", "2")
                               }}
@@ -244,9 +244,9 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                                 name="arrow-forward-outline"
                                 style={this.headerStyles.style.icon}
                               />
-                            </TouchableOpacity>
+                            </Pressable>
                           ) : (
-                            <TouchableOpacity
+                            <Pressable
                               onPress={async () => {
                                 await resourceActions.updateMenuItem(index, "depth", "1")
                               }}
@@ -255,10 +255,10 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                                 name="arrow-back-outline"
                                 style={this.headerStyles.style.icon}
                               />
-                            </TouchableOpacity>
+                            </Pressable>
                           )}
                           {index >= 1 && (
-                            <TouchableOpacity
+                            <Pressable
                               onPress={async () => {
                                 await resourceActions.moveMenuItemUp(index)
                               }}
@@ -267,7 +267,7 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
                                 name="arrow-up-outline"
                                 style={this.headerStyles.style.icon}
                               />
-                            </TouchableOpacity>
+                            </Pressable>
                           )}
                         </>
                       ) : null}

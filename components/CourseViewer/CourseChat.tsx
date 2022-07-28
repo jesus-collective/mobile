@@ -1,7 +1,8 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
-import { Dimensions, Picker, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, Picker, Pressable, Text, View } from "react-native"
+
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { CourseContext } from "./CourseContext"
@@ -65,12 +66,12 @@ class CourseChatImpl extends JCComponent<Props, State> {
                 >
                   Cohort
                 </JCButton>
-                <TouchableOpacity
+                <Pressable
                   style={{ zIndex: 1000000, marginLeft: "auto", backgroundColor: "#ffffff00" }}
                   onPress={() => actions.setShowChat()}
                 >
                   <AntDesign name="close" size={24} color="black" />
-                </TouchableOpacity>
+                </Pressable>
               </View>
               <View style={{ marginTop: 38, marginHorizontal: 24 }}>
                 {state.activeMessageBoard == "cohort" ? (
@@ -85,6 +86,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                   actions.myCourseGroups().completeTriad.length == 0 ? (
                     <Text>You have not been added to a cohort</Text>
                   ) : actions.myCourseGroups().completeTriad.length == 1 ? (
+
                     <MessageBoard
                       style="mini"
                       inputAt="bottom"

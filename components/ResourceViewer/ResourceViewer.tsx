@@ -1,4 +1,4 @@
-import {} from "@material-ui/core"
+import { } from "@material-ui/core"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Analytics, Auth } from "aws-amplify"
@@ -23,7 +23,7 @@ import {
   UpdateResourceEpisodeInput,
   UpdateResourceInput,
   UpdateResourceSeriesInput,
-  UserGroupType,
+  UserGroupType
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import {
@@ -36,7 +36,7 @@ import {
   GroupMemberByUserQueryResultPromise,
   JCCognitoUser,
   ListResourceRootsQueryResult,
-  PageItemIndex,
+  PageItemIndex
 } from "../../src/types"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent from "../JCComponent/JCComponent"

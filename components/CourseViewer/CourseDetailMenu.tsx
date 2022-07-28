@@ -3,7 +3,15 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
 import { isDesktop } from "react-device-detect"
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import { constants } from "../../src/constants"
 import EditableButton from "../Forms/EditableButton"
 import HeaderStyles from "../Header/style"
@@ -58,7 +66,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
             resetArrow: () => void
           ) => {
             return state?.isEditable ? (
-              <TouchableOpacity
+              <Pressable
                 testID="course-menu-createWeek"
                 onPress={async () => {
                   actions.createWeek()
@@ -70,7 +78,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                 >
                   +
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             ) : null
           }
           const Weeks = Object.values(state.courseWeeks).filter((item) => item)
@@ -124,7 +132,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                 </ScrollView>
                 {Weeks.length ? AddWeekButton(state, actions, changeArrowState) : null}
                 {this.state.listLength > this.state.containerWidth && isDesktop ? (
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => {
                       this.state.listEnd
                         ? menuListRef.current?.scrollTo({ animated: true, x: 0 })
@@ -137,7 +145,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                       name={this.state.listEnd ? "arrow-back" : "arrow-forward"}
                       style={this.headerStyles.style.icon}
                     />
-                  </TouchableOpacity>
+                  </Pressable>
                 ) : null}
                 {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
                   <View style={{ marginHorizontal: 12 }}>

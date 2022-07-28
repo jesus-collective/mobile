@@ -15,7 +15,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native"
 import { Data } from "../../components/Data/Data"
 import EditableLocation from "../../components/Forms/EditableLocation"
@@ -34,14 +34,13 @@ import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { MapData } from "../MyGroups/MapData"
 import Validate from "../Validate/Validate"
 import {
   interests,
   numberOfEmployees,
   orgTypesChurches,
   orgTypesNonChurch,
-  sundayAttendance,
+  sundayAttendance
 } from "./dropdown"
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
@@ -840,7 +839,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (!this.state.profileConfig["aboutMeShort"].isVisible) return
 
     return !this.state.isEditable ? (
-      <TouchableOpacity
+      <Pressable
         style={this.styles.style.connectWithSliderButton}
         onPress={() => {
           this.openConversation(
@@ -850,7 +849,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         }}
       >
         <Text style={this.styles.style.fontStartConversation}>Start Conversation</Text>
-      </TouchableOpacity>
+      </Pressable>
     ) : null
   }
   renderMessages() {
