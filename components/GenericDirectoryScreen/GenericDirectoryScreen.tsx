@@ -1,18 +1,15 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useEffect } from "react"
 import { BrowserView, MobileOnlyView } from "react-device-detect"
 import { StyleSheet, Text, View } from "react-native"
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated"
 
 interface Props {
-  navigation: StackNavigationProp<any, any>
-  route: any
   pageTitle: string
-  ControlButtons: () => JSX.Element
-  MainContent: (filter: any, reverse: boolean) => JSX.Element
+  ControlButtons: JSX.Element
+  MainContent: JSX.Element
   reverseContent?: boolean
   oneColumn?: boolean
-  Widgets?: () => JSX.Element
+  Widgets?: JSX.Element
 }
 
 export default function GenericDirectoryScreen(props: Props) {
@@ -42,9 +39,7 @@ export default function GenericDirectoryScreen(props: Props) {
           <Text style={style.PageTitle}>{pageTitle}</Text>
           <View style={style.HorizontalLine} />
 
-          <View style={{ backgroundColor: "#fffdfc", zIndex: 300000 }}>
-            <ControlButtons />
-          </View>
+          <View style={{ backgroundColor: "#fffdfc", zIndex: 300000 }}>{ControlButtons}</View>
 
           <View style={style.MainContainer}>
             <View
@@ -53,22 +48,16 @@ export default function GenericDirectoryScreen(props: Props) {
                 reverseContent ? { flexDirection: "row-reverse" } : {},
               ]}
             >
-              <View style={[style.MainContent, !Widgets ? { flex: 1 } : {}]}>
-                <MainContent />
-              </View>
+              <View style={[style.MainContent, !Widgets ? { flex: 1 } : {}]}>{MainContent}</View>
 
               {Widgets ? (
-                <Animated.View style={[animatedStyle, style.MinorContent]}>
-                  <Widgets />
-                </Animated.View>
+                <Animated.View style={[animatedStyle, style.MinorContent]}>{Widgets}</Animated.View>
               ) : null}
             </View>
           </View>
         </View>
       </BrowserView>
-      <MobileOnlyView style={{ overflow: "scroll" }}>
-        <MainContent />
-      </MobileOnlyView>
+      <MobileOnlyView style={{ overflow: "scroll" }}>{MainContent}</MobileOnlyView>
     </>
   )
 }

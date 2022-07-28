@@ -4445,6 +4445,7 @@ export const createPayment = /* GraphQL */ `
           amountIsEditable
           isSubscription
         }
+        submitButtonText
         createdAt
         updatedAt
       }
@@ -4583,6 +4584,7 @@ export const updatePayment = /* GraphQL */ `
           amountIsEditable
           isSubscription
         }
+        submitButtonText
         createdAt
         updatedAt
       }
@@ -4721,6 +4723,7 @@ export const deletePayment = /* GraphQL */ `
           amountIsEditable
           isSubscription
         }
+        submitButtonText
         createdAt
         updatedAt
       }
@@ -12210,6 +12213,7 @@ export const createProduct = /* GraphQL */ `
         amountIsEditable
         isSubscription
       }
+      submitButtonText
       createdAt
       updatedAt
     }
@@ -12251,6 +12255,7 @@ export const updateProduct = /* GraphQL */ `
         amountIsEditable
         isSubscription
       }
+      submitButtonText
       createdAt
       updatedAt
     }
@@ -12292,6 +12297,7 @@ export const deleteProduct = /* GraphQL */ `
         amountIsEditable
         isSubscription
       }
+      submitButtonText
       createdAt
       updatedAt
     }

@@ -93,10 +93,8 @@ export default function CoursesScreen() {
   }
   return (
     <GenericDirectoryScreen
-      navigation={navigation}
-      ControlButtons={CoursesControlButtons}
-      MainContent={() => <CoursesList filter={filter} reverse={reverse} />}
-      route={route}
+      ControlButtons={<CoursesControlButtons />}
+      MainContent={<CoursesList filter={filter} reverse={reverse} />}
       pageTitle="Courses"
     />
   )

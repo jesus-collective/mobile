@@ -1,17 +1,19 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Auth } from "aws-amplify"
-import { MessageComment } from "components/MessageBoard/AssignmentMessageBoard/MessageThread"
+import ActivityBoxStyles from "components/Activity/ActivityBoxStyles"
 import React, { useContext, useEffect, useState } from "react"
-import { ActivityIndicator, Text, TouchableHighlight, View } from "react-native"
+import { View } from "react-native"
 import { Data } from "../../components/Data/Data"
+import { MessageComment } from "../../components/MessageBoard/AssignmentMessageBoard/MessageThread"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { CreateDirectMessageUserMutation, GetDirectMessageRoomQuery } from "../../src/API"
 import { JCCognitoUser } from "../../src/types"
-import ActivityBoxStyles from "../Activity/ActivityBoxStyles"
 import { CourseActions } from "../CourseViewer/CourseContext"
 import { JCState } from "../JCComponent/JCComponent"
 import MessageEditor from "../MessageBoard/AssignmentMessageBoard/MessageEditor"
-import Messages from "../MessageBoard/AssignmentMessageBoard/Messages"
+import AssignmentCourseReview from "./AssignmentCourseReview"
+import AssignmentLoadingSpinner from "./AssignmentLoadingSpinner"
+import AssignmentUserIndicatorBar from "./AssignmentUserIndicatorBar"
 
 interface Props {
   wordCount: number
@@ -19,7 +21,7 @@ interface Props {
   actions: CourseActions
   userActions: UserActions
 }
-interface State extends JCState {
+export interface AssignmentState extends JCState {
   assignmentComplete: boolean
   data: Array<GetDirectMessageRoomQuery["getDirectMessageRoom"]>
   currentUser: any
@@ -35,7 +37,7 @@ interface State extends JCState {
 export default function EditableCourseAssignment2(props: Props): JSX.Element {
   const assignmentContext = useContext(UserContext)
   const { userActions } = assignmentContext
-  const [state, setState] = useState<State>({
+  const [state, setState] = useState<AssignmentState>({
     data: [],
     currentUser: null,
     showEdit: null,
@@ -395,15 +397,48 @@ export default function EditableCourseAssignment2(props: Props): JSX.Element {
   return (
     <View>
       {state.isLoading ? (
-        <Spinner />
+        <AssignmentLoadingSpinner />
       ) : state.showEdit ? (
-        <AssignmentEditView />
+        <View style={{ paddingBottom: 150 }}>
+          <AssignmentUserIndicatorBar label="Update Assignment" />
+          <MessageEditor
+            assignment={state.showEdit}
+            wordCount={props.wordCount}
+            post={clearAndRefetch}
+            recipients={getCurrentRoomRecipients()}
+            roomId={state.currentRoomId ?? ""}
+          />
+        </View>
       ) : userActions.isMemberOf("courseAdmin") || userActions.isMemberOf("courseCoach") ? (
-        <AssignmentAdminCoachView />
+        <>
+          <AssignmentUserIndicatorBar label="Admin/Coach View" />
+          <AssignmentCourseReview
+            getCurrentRoomRecipients={getCurrentRoomRecipients}
+            wordCount={props.wordCount}
+            setState={setState}
+            state={state}
+            myRoom={state.myRoom}
+            data={state.data}
+            userActions={userActions}
+          />
+        </>
       ) : state.initialPost ? (
-        <AssignmentsView />
+        <AssignmentCourseReview
+          getCurrentRoomRecipients={getCurrentRoomRecipients}
+          wordCount={props.wordCount}
+          setState={setState}
+          state={state}
+          myRoom={state.myRoom}
+          data={state.data}
+          userActions={userActions}
+        />
       ) : !state.initialPost && !state.isLoading ? (
-        <CreateAssignmentView />
+        <CreateAssignmentView
+          getCurrentRoomRecipients={getCurrentRoomRecipients}
+          clearAndRefetch={clearAndRefetch}
+          currentRoomId={state.currentRoomId}
+          wordCount={props.wordCount}
+        />
       ) : null}
     </View>
   )

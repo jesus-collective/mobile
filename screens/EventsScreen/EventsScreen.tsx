@@ -1,4 +1,4 @@
-﻿import { useNavigation, useRoute } from "@react-navigation/native"
+﻿import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useLayoutEffect, useState } from "react"
 import { View } from "react-native"
@@ -10,7 +10,6 @@ import EventsList from "./EventsList"
 import EventWidgets from "./EventWidgets"
 export default function EventsScreen() {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
-  const route = useRoute()
   const [reverse, setReverse] = useState(false)
   const [filter, setFilter] = useState("")
   const subNav = [
@@ -104,11 +103,9 @@ export default function EventsScreen() {
   }
   return (
     <GenericDirectoryScreen
-      navigation={navigation}
-      ControlButtons={EventsControlButtons}
-      MainContent={() => <EventsList filter={filter} reverse={reverse}></EventsList>}
-      Widgets={EventWidgets}
-      route={route}
+      ControlButtons={<EventsControlButtons />}
+      MainContent={<EventsList filter={filter} reverse={reverse}></EventsList>}
+      Widgets={<EventWidgets />}
       pageTitle="Events"
     />
   )

@@ -1189,7 +1189,14 @@ class BillingImpl extends JCComponent<Props, State> {
                           }}
                           enabled={this.isMakePaymentEnabled() && !!this.state.invoice}
                         >
-                          Process Payment
+                          {this.state.currentProduct &&
+                          this.state.currentProduct[0] &&
+                          this.state.currentProduct[0].submitButtonText != "" &&
+                          this.state.currentProduct[0].submitButtonText != null ? (
+                            this.state.currentProduct[0].submitButtonText
+                          ) : (
+                            <>Process Payment</>
+                          )}
                         </JCButton>
                       </View>
                     </View>
