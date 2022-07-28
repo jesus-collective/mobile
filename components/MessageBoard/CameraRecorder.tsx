@@ -1,7 +1,7 @@
 import { Camera } from "expo-camera"
 import * as Permissions from "expo-permissions"
 import React from "react"
-import { Button, Text, TouchableOpacity, View } from "react-native"
+import { Pressable, Text, TouchableOpacity, View } from "react-native"
 import { EmptyProps } from "src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 interface State extends JCState {
@@ -66,12 +66,13 @@ export default class MyCam extends JCComponent<EmptyProps, State> {
       return (
         <View>
           <Text>Permission is not granted</Text>
-          <Button
-            title="Grant permission"
+          <Pressable
             onPress={() => {
               this.askForPermission()
             }}
-          />
+          >
+            <Text>Grant permission</Text>
+          </Pressable>
         </View>
       )
     }

@@ -5,6 +5,7 @@ import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
+import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
 import {
@@ -20,7 +21,6 @@ import EditableText from "../Forms/EditableText"
 import EditableUsers from "../Forms/EditableUsers"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { MapData } from "../MyGroups/MyGroups"
 import MyMap from "../MyMap/MyMap"
 //import { AlertConfigInput } from '../../src/API'
 import {

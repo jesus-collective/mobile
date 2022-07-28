@@ -5,10 +5,18 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
-import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
+import { Badge, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
-import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native"
+import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -26,7 +34,6 @@ import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { MapData } from "../MyGroups/MyGroups"
 import Validate from "../Validate/Validate"
 import {
   interests,
@@ -831,8 +838,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (!this.state.profileConfig["aboutMeShort"].isVisible) return
 
     return !this.state.isEditable ? (
-      <Button
-        bordered
+      <Pressable
         style={this.styles.style.connectWithSliderButton}
         onPress={() => {
           this.openConversation(
@@ -842,7 +848,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         }}
       >
         <Text style={this.styles.style.fontStartConversation}>Start Conversation</Text>
-      </Button>
+      </Pressable>
     ) : null
   }
   renderMessages() {

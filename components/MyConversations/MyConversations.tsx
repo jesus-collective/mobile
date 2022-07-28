@@ -1,17 +1,7 @@
 import { NavigationProp } from "@react-navigation/native"
-import {
-  Body,
-  Button,
-  Card,
-  CardItem,
-  Container,
-  Content,
-  Left,
-  Right,
-  StyleProvider,
-} from "native-base"
+import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } from "native-base"
 import * as React from "react"
-import { Image, Text } from "react-native"
+import { Image, Pressable, Text } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import { constants } from "../../src/constants"
 import JCComponent from "../JCComponent/JCComponent"
@@ -44,14 +34,13 @@ export default class MyConversations extends JCComponent<Props> {
               marginTop: 50,
             }}
           >
-            <Button
-              transparent
+            <Pressable
               onPress={() => {
                 this.openConversation()
               }}
             >
               <Text style={this.styles.style.fontConnectWith}>Latest Conversations</Text>
-            </Button>
+            </Pressable>
             <Content>
               {items.map((item) => {
                 return (
@@ -68,15 +57,14 @@ export default class MyConversations extends JCComponent<Props> {
                         </Body>
                       </Left>
                       <Right>
-                        <Button
-                          bordered
+                        <Pressable
                           style={this.styles.style.connectWithSliderButton}
                           onPress={() => {
                             this.openConversation()
                           }}
                         >
                           <Text style={this.styles.style.fontStartConversation}>Open</Text>
-                        </Button>
+                        </Pressable>
                       </Right>
                     </CardItem>
                     <CardItem>

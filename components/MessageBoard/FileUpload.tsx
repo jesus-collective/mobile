@@ -1,6 +1,5 @@
-import { Button } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { Pressable, Text } from "react-native"
 
 interface Props {
   handleUploadCallback(e: React.ChangeEvent<HTMLInputElement>): Promise<void>
@@ -8,7 +7,7 @@ interface Props {
 
 export default function FileUpload({ handleUploadCallback }: Props): JSX.Element {
   return (
-    <Button
+    <Pressable
       style={{
         borderRadius: 2,
         backgroundColor: "#fff",
@@ -47,6 +46,6 @@ export default function FileUpload({ handleUploadCallback }: Props): JSX.Element
         accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
         onChange={(e) => handleUploadCallback(e)}
       />
-    </Button>
+    </Pressable>
   )
 }

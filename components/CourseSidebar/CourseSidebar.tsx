@@ -1,8 +1,8 @@
 import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Container } from "native-base"
+import { Container } from "native-base"
 import React from "react"
-import { Dimensions, Image, Text } from "react-native"
+import { Dimensions, Image, Pressable, Text } from "react-native"
 import HeaderStyles from "../CourseSidebar/style"
 import { CourseContext } from "../CourseViewer/CourseContext"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
@@ -77,12 +77,12 @@ class CourseSidebarImpl extends JCComponent<Props> {
 
           return (
             <Container style={this.styles.style.courseSideBar}>
-              <Button transparent testID="header-logo" onPress={this.openHome}>
+              <Pressable testID="header-logo" onPress={this.openHome}>
                 <Image
                   style={this.headerStyles.style.logo}
                   source={require("../../assets/header/icon.png")}
                 />
-              </Button>
+              </Pressable>
 
               <JCButton
                 testID={"course-menu-home"}

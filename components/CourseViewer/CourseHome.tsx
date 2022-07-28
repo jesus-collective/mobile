@@ -2,19 +2,9 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
-import {
-  Body,
-  Button,
-  Card,
-  CardItem,
-  Container,
-  Content,
-  Left,
-  Right,
-  StyleProvider,
-} from "native-base"
+import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } from "native-base"
 import React from "react"
-import { Dimensions, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native"
 import { Calendar } from "react-native-calendars"
 import ActivityBox from "../../components/Activity/ActivityBox"
 import EditableFileUpload from "../../components/Forms/EditableFileUpload"
@@ -80,8 +70,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                     {user.given_name} {user.family_name}
                   </Text>
                   <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
-                  <Button
-                    bordered
+                  <Pressable
                     style={this.styles.style.courseHomeConversationButton}
                     onPress={() => {
                       this.openConversation(user.id, user.given_name + " " + user.family_name)
@@ -90,7 +79,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                     <Text style={this.styles.style.courseFontStartConversation}>
                       Send a Message
                     </Text>
-                  </Button>
+                  </Pressable>
                   {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
                 </Body>
               </Left>
