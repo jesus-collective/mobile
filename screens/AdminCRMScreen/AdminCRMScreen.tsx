@@ -3,10 +3,18 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
-import { Button, Container, Content, Text } from "native-base"
-import React, { useEffect } from "react"
+import { Container, Content, Text } from "native-base"
+import React from "react"
 import { isMobile } from "react-device-detect"
-import { ActivityIndicator, Picker, TextInput, TouchableOpacity, View } from "react-native"
+import {
+  ActivityIndicator,
+  Image,
+  Picker,
+  Pressable,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import EditableText from "../../components/Forms/EditableText"
@@ -114,6 +122,7 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
     // search cognito users
     // search dynamo users
     try {
+      setIsLoading(true)
       const listUsers = async (limit: number, nextToken: string | null): Promise<any> => {
         const apiName = "AdminQueries"
         const path = "/listUsers"
@@ -143,10 +152,12 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
       setIsLoading(false)
     }
   }
-  useEffect(() => {
+  React.useEffect(() => {
     if (debouncedSearchterm) {
       doSearch(debouncedSearchterm)
-    } else setIsLoading(false)
+    } else {
+      setIsLoading(false)
+    }
   }, [debouncedSearchterm])
   const placeHolder = `Search by ${attribute.label}`
   return (
@@ -163,12 +174,22 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
         })}
       </Picker>
       <View style={{ flexDirection: "row", flex: 1 }}>
-        <ActivityIndicator size="small" animating={isLoading} />
+        <View style={{ alignSelf: "center", padding: 8 }}>
+          {!isLoading ? (
+            <Image
+              style={{ width: 20, height: 20 }}
+              source={require("../../assets/Facelift/svg/Search.svg")}
+            ></Image>
+          ) : (
+            <ActivityIndicator size="small" />
+          )}
+        </View>
+
         <TextInput
           style={{
             paddingVertical: 6,
-            marginLeft: -20,
-            paddingLeft: 24,
+            marginLeft: -36,
+            paddingLeft: 36,
             flex: 1,
             borderColor: "black",
             borderRadius: 4,
@@ -675,8 +696,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Edit
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <Pressable
               onPress={() => {
                 this.showEdit(
                   item.Username,
@@ -685,7 +705,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
             >
               <Ionicons name="create-outline" style={this.styles.style.icon} />
-            </Button>
+            </Pressable>
           )}
         </View>
         <View style={this.styles.style.AdminGroupBTTableRow}>
@@ -699,14 +719,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Groups
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <Pressable
               onPress={() => {
                 this.showGroups(item.Username)
               }}
             >
               <Ionicons name="ios-people" style={this.styles.style.icon} />
-            </Button>
+            </Pressable>
           )}
         </View>
         <View style={this.styles.style.AdminPaymentBTTableRow}>
@@ -720,14 +739,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               Payments
             </JCButton>
           ) : (
-            <Button
-              transparent
+            <Pressable
               onPress={() => {
                 this.showPayments(item.Username)
               }}
             >
               <MaterialIcons name="payment" style={this.styles.style.icon} />
-            </Button>
+            </Pressable>
           )}
         </View>
       </View>
