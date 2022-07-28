@@ -110,7 +110,7 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
   const [isLoading, setIsLoading] = React.useState(false)
   const debouncedSearchterm = useDebounce(search, 1000)
 
-  const doSearch = async (user: string) => {
+  const doSearch = async (searchTerm: string) => {
     // search cognito users
     // search dynamo users
     try {
@@ -122,7 +122,7 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
             limit: limit,
             token: nextToken,
             //eslint-disable-next-line
-            filter: `${attribute.value} ^= \"${search}\"`,
+            filter: `${attribute.value} ^= \"${searchTerm}\"`,
           },
           headers: {
             "Content-Type": "application/json",
@@ -136,7 +136,6 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
         return { nextToken, ...rest }
       }
       const users = await listUsers(60, null) // 60 is max api accepts
-      console.log({ searched: users })
       setFilteredData(users.Users)
     } catch (error) {
       console.log({ error })
