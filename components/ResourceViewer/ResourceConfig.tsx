@@ -1,5 +1,4 @@
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { CardItem } from "native-base"
 import React from "react"
 import {
   NativeSyntheticEvent,
@@ -134,9 +133,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <View>
-          <CardItem>
-            <Text>Return to JC Resource Pages</Text>
-          </CardItem>
+          <Text>Return to JC Resource Pages</Text>
         </View>
       </TouchableOpacity>
     )

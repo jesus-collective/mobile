@@ -3,7 +3,6 @@ import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { CardItem } from "native-base"
 import React, { lazy } from "react"
 import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser, MapData } from "src/types"
@@ -727,7 +726,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                       isEditable={this.state.isEditable}
                     ></EditableUrl>
                   ) : (
-                    <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                    <View style={{ paddingLeft: 0, paddingRight: 0 }}>
                       <Image
                         style={{ width: "22px", height: "22px", marginRight: 5 }}
                         source={require("../../assets/svg/pin 2.svg")}
@@ -750,7 +749,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                         value={this.state.data.location ?? ""}
                         isEditable={this.state.isEditable}
                       ></EditableLocation>
-                    </CardItem>
+                    </View>
                   )}
                 </>
               )}

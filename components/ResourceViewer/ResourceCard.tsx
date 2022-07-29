@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { Storage } from "aws-amplify"
-import { CardItem } from "native-base"
 import React from "react"
 import { isBrowser, isMobile, isTablet } from "react-device-detect"
 import { Animated, Image, Picker, Text, View } from "react-native"
@@ -301,7 +300,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
               },
             ]}
           >
-            <CardItem
+            <View
               style={{
                 paddingLeft: 0,
                 paddingTop: 0,
@@ -333,9 +332,9 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   ></Image>
                 </Animated.View>
               ) : null}
-            </CardItem>
+            </View>
 
-            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
+            <View style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
               <EditableText
                 multiline={false}
                 textStyle={{
@@ -363,8 +362,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 value={this.props.pageItem.title1 ?? ""}
                 isEditable={false}
               ></EditableText>
-            </CardItem>
-            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
+            </View>
+            <View style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
               <EditableText
                 multiline={false}
                 textStyle={{
@@ -390,8 +389,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 value={this.props.pageItem.title2 ?? ""}
                 isEditable={false}
               ></EditableText>
-            </CardItem>
-            <CardItem
+            </View>
+            <View
               style={{
                 paddingTop: 0,
                 paddingLeft: 27,
@@ -431,7 +430,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 numberOfLines={5}
                 ellipsizeMode="tail"
               ></EditableText>
-            </CardItem>
+            </View>
           </View>
         </TouchableOpacity>
         <PageItemSettings
@@ -548,7 +547,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         },
                       ]}
                     >
-                      <CardItem
+                      <View
                         style={{
                           paddingLeft: isMobile ? 20 : 0,
                           paddingRight: isMobile ? 20 : 0,
@@ -624,9 +623,9 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                             </Animated.View>
                           ) : null}
                         </>
-                      </CardItem>
+                      </View>
 
-                      <CardItem
+                      <View
                         style={{
                           zIndex: 6000 + this.props.pageItemIndex.length,
                           marginLeft: isMobile ? 10 : 82,
@@ -699,8 +698,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                             )}
                           </View>
                         ) : null}
-                      </CardItem>
-                      <CardItem>
+                      </View>
+                      <View>
                         <EditableText
                           multiline={true}
                           textStyle={{
@@ -722,8 +721,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           value={this.props.pageItem.title2 ?? ""}
                           isEditable={false}
                         ></EditableText>
-                      </CardItem>
-                      <CardItem style={{ zIndex: 0, marginLeft: isMobile ? 10 : "4rem" }}>
+                      </View>
+                      <View style={{ zIndex: 0, marginLeft: isMobile ? 10 : "4rem" }}>
                         <EditableText
                           multiline={true}
                           textStyle={{
@@ -746,8 +745,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           value={this.props.pageItem.description1 ?? ""}
                           isEditable={false}
                         ></EditableText>
-                      </CardItem>
-                      <CardItem>
+                      </View>
+                      <View>
                         <PageItemSettings
                           resourceActions={this.props.resourceActions}
                           resourceState={this.props.resourceState}
@@ -757,7 +756,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           pageItem={this.props.pageItem}
                           hideEditButton={this.props.hideEditButton}
                         ></PageItemSettings>
-                      </CardItem>
+                      </View>
                     </View>
                   </TouchableOpacity>
                 )
@@ -839,7 +838,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     },
                   ]}
                 >
-                  <CardItem>
+                  <View>
                     {youtubeID && (
                       <div>
                         <iframe
@@ -883,8 +882,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         ></Image>
                       </Animated.View>
                     ) : null}
-                  </CardItem>
-                  <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
+                  </View>
+                  <View style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
                     <EditableText
                       multiline={false}
                       textStyle={{
@@ -914,8 +913,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       value={this.props.pageItem.title1 ?? ""}
                       isEditable={false}
                     ></EditableText>
-                  </CardItem>
-                  <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
+                  </View>
+                  <View style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
                     <EditableText
                       multiline={false}
                       textStyle={{
@@ -943,8 +942,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       value={this.props.pageItem.title2 || (item?.title ?? "")}
                       isEditable={false}
                     ></EditableText>
-                  </CardItem>
-                  <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
+                  </View>
+                  <View style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27 }}>
                     <EditableText
                       multiline={false}
                       textStyle={{
@@ -974,7 +973,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       numberOfLines={6}
                       ellipsizeMode="tail"
                     ></EditableText>
-                  </CardItem>
+                  </View>
                 </View>
               </TouchableOpacity>
               <PageItemSettings

@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { CardItem } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
@@ -56,10 +55,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return state.isEditable ? (
       <TouchableOpacity onPress={actions.createSeries}>
         <View style={this.styles.style.resourceContentCurrentSeriesCard}>
-          <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
+          <View style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
             <Ionicons size={76} name="ios-add" style={this.styles.style.icon} />
-          </CardItem>
-          <CardItem
+          </View>
+          <View
             style={{
               width: "100%",
               padding: 0,
@@ -69,8 +68,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             }}
           >
             <Text style={this.styles.style.episodeTitle}>Add Series</Text>
-          </CardItem>
-          <CardItem
+          </View>
+          <View
             style={{
               width: "100%",
               padding: 0,
@@ -80,10 +79,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             }}
           >
             <Text style={this.styles.style.episodeDescription}></Text>
-          </CardItem>
-          <CardItem>
+          </View>
+          <View>
             <Text style={this.styles.style.episodeTitle}></Text>
-          </CardItem>
+          </View>
         </View>
       </TouchableOpacity>
     ) : null
@@ -207,10 +206,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           this.setState({ showPageConfigModal: true })
         }}
       >
-        <View>
-          <CardItem style={{ backgroundColor: "#FF4438" }}>
-            <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Page</Text>
-          </CardItem>
+        <View style={{ backgroundColor: "#FF4438" }}>
+          <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Page</Text>
         </View>
       </TouchableOpacity>
     )
@@ -222,10 +219,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           this.setState({ showJCResourceConfigModal: true })
         }}
       >
-        <View>
-          <CardItem style={{ backgroundColor: "#FF4438" }}>
-            <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure JC Group</Text>
-          </CardItem>
+        <View style={{ backgroundColor: "#FF4438" }}>
+          <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure JC Group</Text>
         </View>
       </TouchableOpacity>
     )
@@ -239,10 +234,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           })
         }}
       >
-        <View>
-          <CardItem style={{ backgroundColor: "#FF4438" }}>
-            <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Resources</Text>
-          </CardItem>
+        <View style={{ backgroundColor: "#FF4438" }}>
+          <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Resources</Text>
         </View>
       </TouchableOpacity>
     )

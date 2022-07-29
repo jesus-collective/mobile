@@ -2,7 +2,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
-import { Body, CardItem, Left, Right } from "native-base"
+import { Left, Right } from "native-base"
 import React from "react"
 import {
   Dimensions,
@@ -64,8 +64,8 @@ class CourseHomeImpl extends JCComponent<Props> {
           }}
         >
           <View style={this.styles.style.courseConversationCard}>
-            <CardItem>
-              <Left style={this.styles.style.courseHomeConversationCard}>
+            <View>
+              <View style={this.styles.style.courseHomeConversationCard}>
                 <ProfileImageNew
                   linkToProfile
                   style={ProfileImageStyle.UserLarge}
@@ -73,7 +73,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                   type="user"
                   user={user}
                 />
-                <Body style={this.styles.style.dashboardConversationBody}>
+                <View style={this.styles.style.dashboardConversationBody}>
                   <Text style={this.styles.style.courseFontConnectWithName}>
                     {user.given_name} {user.family_name}
                   </Text>
@@ -89,9 +89,9 @@ class CourseHomeImpl extends JCComponent<Props> {
                     </Text>
                   </Pressable>
                   {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
-                </Body>
-              </Left>
-            </CardItem>
+                </View>
+              </View>
+            </View>
           </View>
         </TouchableOpacity>
       )
@@ -137,7 +137,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             }}
             onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
-            <Left style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <Image
                 style={{
                   width: "40px",
@@ -146,8 +146,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                 }}
                 source={require("../../assets/svg/document.svg")}
               />
-            </Left>
-            <Right
+            </View>
+            <View
               style={{
                 flex: 9,
                 alignItems: "flex-start",
@@ -173,7 +173,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               >
                 Assignment due @ {item.time}
               </Text>
-            </Right>
+            </View>
           </TouchableOpacity>
         )
 
@@ -478,8 +478,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                     })
                                     return (
                                       <View key={index}>
-                                        <CardItem style={{ zIndex: -1 }}>
-                                          <Left style={{ zIndex: -1 }}>
+                                        <View style={{ zIndex: -1 }}>
+                                          <View style={{ zIndex: -1 }}>
                                             <Text
                                               style={{
                                                 zIndex: -1,
@@ -491,8 +491,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             >
                                               Facilitator
                                             </Text>
-                                          </Left>
-                                          <Right style={{ zIndex: -1 }}>
+                                          </View>
+                                          <View style={{ zIndex: -1 }}>
                                             <TouchableOpacity
                                               style={this.styles.style.courseHomeDeleteTriad}
                                               onPress={() => {
@@ -501,9 +501,9 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             >
                                               <AntDesign name="close" size={23} color="white" />
                                             </TouchableOpacity>
-                                          </Right>
-                                        </CardItem>
-                                        <CardItem style={{ zIndex: 99999 }}>
+                                          </View>
+                                        </View>
+                                        <View style={{ zIndex: 99999 }}>
                                           <EditableUsers
                                             limit={1}
                                             onChange={(value: any[]) => {
@@ -517,8 +517,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             value={coaches ? coaches : []}
                                             isEditable={true}
                                           ></EditableUsers>
-                                        </CardItem>
-                                        <CardItem style={{ zIndex: -1 }}>
+                                        </View>
+                                        <View style={{ zIndex: -1 }}>
                                           <Text
                                             style={{
                                               zIndex: -1,
@@ -530,8 +530,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                           >
                                             Cohort
                                           </Text>
-                                        </CardItem>
-                                        <CardItem>
+                                        </View>
+                                        <View>
                                           <EditableUsers
                                             limit={3}
                                             onChange={(value: any[]) => {
@@ -545,7 +545,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             value={users ? users : []}
                                             isEditable={true}
                                           ></EditableUsers>
-                                        </CardItem>
+                                        </View>
                                       </View>
                                     )
                                   })}
