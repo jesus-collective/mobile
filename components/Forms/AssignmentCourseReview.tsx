@@ -1,6 +1,5 @@
-import { Container } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { Text, View } from "react-native"
 import { GetDirectMessageRoomQuery } from "src/API"
 import Messages from "../../components/MessageBoard/AssignmentMessageBoard/Messages"
 import { MessageComment } from "../../components/MessageBoard/AssignmentMessageBoard/MessageThread"
@@ -50,7 +49,7 @@ const AssignmentCourseReview = ({
   const showOthers = state.assignmentOption === "Assignments to Review" && data.length
   const showNoAssignments = !assignmentsMinusMine.length
   return (
-    <Container style={{ width: "100%", paddingBottom: 250 }}>
+    <View style={{ width: "100%", paddingBottom: 250 }}>
       <AssignmentsToggle
         adminCoach={isAdminOrIsCoach}
         optionState={state.assignmentOption}
@@ -80,7 +79,7 @@ const AssignmentCourseReview = ({
       ) : (
         <AssignmentLoadingSpinner />
       )}
-    </Container>
+    </View>
   )
 }
 

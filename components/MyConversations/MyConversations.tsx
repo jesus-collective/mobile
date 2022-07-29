@@ -1,7 +1,7 @@
 import { NavigationProp } from "@react-navigation/native"
-import { Body, Card, CardItem, Container, Left, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Left, Right, StyleProvider } from "native-base"
 import * as React from "react"
-import { Image, Pressable, ScrollView, Text } from "react-native"
+import { Image, Pressable, ScrollView, Text, View } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import { constants } from "../../src/constants"
 import JCComponent from "../JCComponent/JCComponent"
@@ -25,7 +25,7 @@ export default class MyConversations extends JCComponent<Props> {
     else
       return (
         <StyleProvider style={getTheme()}>
-          <Container
+          <View
             style={{
               width: "100%",
               flexDirection: "column",
@@ -74,7 +74,7 @@ export default class MyConversations extends JCComponent<Props> {
                 )
               })}
             </ScrollView>
-          </Container>
+          </View>
         </StyleProvider>
       )
   }

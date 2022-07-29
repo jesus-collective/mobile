@@ -3,7 +3,7 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
-import { Container, Text } from "native-base"
+import { Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
 import { Picker, Pressable, ScrollView, TextInput, TouchableOpacity, View } from "react-native"
@@ -817,7 +817,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -851,7 +851,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             >
               Add Group
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -895,7 +895,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -930,7 +930,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             >
               Add Payment
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -1028,10 +1028,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
           if (!userState) return null
           console.log("AdminScreen")
           return (
-            <Container testID="events">
+            <View testID="events">
               {userActions.isMemberOf("admin") ? (
                 <ScrollView>
-                  <Container style={this.styles.style.fontRegular}>
+                  <View style={this.styles.style.fontRegular}>
                     <View
                       style={{
                         flex: 1,
@@ -1109,22 +1109,22 @@ export default class AdminScreen extends JCComponent<Props, State> {
                           : null}
                       </View>
                     </View>
-                  </Container>
+                  </View>
                 </ScrollView>
               ) : (
                 <ScrollView>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
+                    </View>
+                  </View>
                 </ScrollView>
               )}
               {this.renderGroupsModal()}
               {this.renderPaymentsModal()}
               {this.renderInviteModal()}
               {this.renderEditModal()}
-            </Container>
+            </View>
           )
         }}
       </AdminScreen.UserConsumer>

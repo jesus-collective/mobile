@@ -1,7 +1,7 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Card, Container, Icon, Picker, StyleProvider } from "native-base"
+import { Card, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Image, ScrollView, Text } from "react-native"
+import { Image, ScrollView, Text, View } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
@@ -27,19 +27,19 @@ class CourseCoachingImpl extends JCComponent<Props> {
           if (!state) return null
           return state.data && state.currentScreen == "Coaching" ? (
             <StyleProvider style={getTheme()}>
-              <Container style={{ flex: 85 }}>
+              <View style={{ flex: 85 }}>
                 <CourseHeader groupData={state.data}></CourseHeader>
 
-                <Container style={{ flex: 80 }}>
+                <View style={{ flex: 80 }}>
                   <ScrollView style={{ flex: 80 }}>
-                    <Container
+                    <View
                       style={{
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "flex-start",
                       }}
                     >
-                      <Container
+                      <View
                         style={{
                           flex: 70,
                           flexDirection: "column",
@@ -48,7 +48,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                           marginRight: 30,
                         }}
                       >
-                        <Container
+                        <View
                           style={{
                             flexDirection: "row",
                             paddingBottom: 30,
@@ -56,7 +56,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                             marginBottom: 250,
                           }}
                         >
-                          <Container style={{ flexDirection: "column", marginTop: 30, flex: 20 }}>
+                          <View style={{ flexDirection: "column", marginTop: 30, flex: 20 }}>
                             <Image
                               style={{
                                 margin: 0,
@@ -84,8 +84,8 @@ class CourseCoachingImpl extends JCComponent<Props> {
                             >
                               Send Message
                             </JCButton>
-                          </Container>
-                          <Container style={{ flex: 80, height: 200 }}>
+                          </View>
+                          <View style={{ flex: 80, height: 200 }}>
                             <Text
                               style={{
                                 marginTop: 30,
@@ -113,8 +113,8 @@ class CourseCoachingImpl extends JCComponent<Props> {
                               issues in more details. Let’s schedule our Coaching Calls - talk soon!
                               Thanks! - Jon
                             </Text>
-                          </Container>
-                        </Container>
+                          </View>
+                        </View>
                         <Card style={this.styles.style.courseCoachingCard}>
                           <Text
                             style={{
@@ -131,10 +131,8 @@ class CourseCoachingImpl extends JCComponent<Props> {
                             30 Minute Coaching Call
                           </Text>
 
-                          <Container style={{ flexDirection: "row" }}>
-                            <Container
-                              style={{ flex: 40, marginTop: 30, height: 50, marginRight: 30 }}
-                            >
+                          <View style={{ flexDirection: "row" }}>
+                            <View style={{ flex: 40, marginTop: 30, height: 50, marginRight: 30 }}>
                               <Picker
                                 mode="dropdown"
                                 iosIcon={<Icon name="arrow-down" />}
@@ -154,8 +152,8 @@ class CourseCoachingImpl extends JCComponent<Props> {
                                 }
                                 <Picker.Item label="Jon Hand" value="key0" />
                               </Picker>
-                            </Container>
-                            <Container
+                            </View>
+                            <View
                               style={{
                                 flex: 60,
                                 marginTop: 30,
@@ -163,7 +161,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                                 alignContent: "space-between",
                               }}
                             >
-                              <Container>
+                              <View>
                                 <Text
                                   style={{
                                     fontFamily: "Graphik-Regular-App",
@@ -201,7 +199,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                                 >
                                   Monday, August 23 - 1:30 PM – 2:00 PM
                                 </Text>
-                              </Container>
+                              </View>
                               <JCButton
                                 buttonType={ButtonTypes.CourseHome}
                                 onPress={() => {
@@ -210,11 +208,11 @@ class CourseCoachingImpl extends JCComponent<Props> {
                               >
                                 Yes, schedule call
                               </JCButton>
-                            </Container>
-                          </Container>
+                            </View>
+                          </View>
                         </Card>
-                      </Container>
-                      <Container
+                      </View>
+                      <View
                         style={{
                           flex: 30,
                           flexDirection: "column",
@@ -222,11 +220,11 @@ class CourseCoachingImpl extends JCComponent<Props> {
                           alignItems: "flex-start",
                           justifyContent: "flex-start",
                         }}
-                      ></Container>
-                    </Container>
+                      ></View>
+                    </View>
                   </ScrollView>
-                </Container>
-              </Container>
+                </View>
+              </View>
             </StyleProvider>
           ) : null
         }}

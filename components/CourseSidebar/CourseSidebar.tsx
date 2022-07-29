@@ -1,8 +1,7 @@
 import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container } from "native-base"
 import React from "react"
-import { Dimensions, Image, Pressable, Text } from "react-native"
+import { Dimensions, Image, Pressable, Text, View } from "react-native"
 import HeaderStyles from "../CourseSidebar/style"
 import { CourseContext } from "../CourseViewer/CourseContext"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
@@ -76,7 +75,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
           if (!state) return null
 
           return (
-            <Container style={this.styles.style.courseSideBar}>
+            <View style={this.styles.style.courseSideBar}>
               <Pressable testID="header-logo" onPress={this.openHome}>
                 <Image
                   style={this.headerStyles.style.logo}
@@ -131,7 +130,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
                 </Text>
               </JCButton>
               {/*  <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>*/}
-              {/* <Container style={this.styles.style.animatedCircleContainerSideBar}>
+              {/* <View style={this.styles.style.animatedCircleContainerSideBar}>
                                 <AnimatedProgressWheel
                                     size={120}
                                     width={10}
@@ -141,7 +140,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
                                     animateFromValue={0}
                                     duration={1000}
                                 />
-                                <Container style={{ backgroundColor: "#00000000", position: "absolute", top: 15, left: 15 }}>
+                                <View style={{ backgroundColor: "#00000000", position: "absolute", top: 15, left: 15 }}>
                                     <AnimatedProgressWheel
                                         size={90}
                                         width={10}
@@ -151,8 +150,8 @@ class CourseSidebarImpl extends JCComponent<Props> {
                                         animateFromValue={0}
                                         duration={1000}
                                     />
-                                </Container>
-                    </Container>*/}
+                                </View>
+                    </View>*/}
               {state.isEditable ? (
                 <JCButton
                   testID={"course-edit"}
@@ -166,7 +165,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
                   </Text>
                 </JCButton>
               ) : null}
-            </Container>
+            </View>
           )
         }}
       </CourseSidebarImpl.Consumer>

@@ -3,9 +3,9 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { Container, StyleProvider, View } from "native-base"
+import { StyleProvider } from "native-base"
 import * as React from "react"
-import { ScrollView, Text, TouchableOpacity } from "react-native"
+import { ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
@@ -517,7 +517,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   renderButtons(userActions: UserActions): React.ReactNode {
     return (
-      <Container style={{ minHeight: 30 }}>
+      <View style={{ minHeight: 30 }}>
         {this.isCourseClosed(userActions) ? <Text>Course Closed</Text> : null}
         {this.canPurchase(userActions) ? (
           <JCButton
@@ -573,7 +573,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           </JCButton>
         ) : null}
         <Text>{this.state.validationError}</Text>
-      </Container>
+      </View>
     )
   }
   static UserConsumer = UserContext.Consumer
@@ -585,7 +585,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           if (!userState) return null
           return this.state.data ? (
             <StyleProvider style={getTheme()}>
-              <Container>
+              <View>
                 <Header
                   title="Jesus Collective"
                   navigation={this.props.navigation}
@@ -598,9 +598,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
                     visible={this.state.showMap}
                     mapData={this.state.mapData}
                   ></MyMap>
-                  <Container style={this.styles.style.coursesScreenMainContainer}>
-                    <Container style={this.styles.style.detailScreenLeftCard}>
-                      <Container style={this.styles.style.courseSponsorContainer}>
+                  <View style={this.styles.style.coursesScreenMainContainer}>
+                    <View style={this.styles.style.detailScreenLeftCard}>
+                      <View style={this.styles.style.courseSponsorContainer}>
                         <Text
                           style={{
                             fontSize: 12,
@@ -639,7 +639,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             Sponsored
                           </Text>
                         ) : null}
-                      </Container>
+                      </View>
 
                       <View>
                         <EditableText
@@ -844,9 +844,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
                       </View>
 
                       {this.renderButtons(userActions)}
-                    </Container>
-                    <Container style={this.styles.style.detailScreenRightCard}>
-                      <Container style={this.styles.style.coursesRightCard}>
+                    </View>
+                    <View style={this.styles.style.detailScreenRightCard}>
+                      <View style={this.styles.style.coursesRightCard}>
                         {this.state.data ? (
                           <EditableRichText
                             onChange={(val) => {
@@ -893,11 +893,11 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             )
                           }
                         )}
-                      </Container>
-                    </Container>
-                  </Container>
+                      </View>
+                    </View>
+                  </View>
                 </ScrollView>
-              </Container>
+              </View>
             </StyleProvider>
           ) : null
         }}

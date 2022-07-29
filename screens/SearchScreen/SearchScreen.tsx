@@ -1,7 +1,7 @@
 ﻿import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, StyleProvider } from "native-base"
+import { StyleProvider } from "native-base"
 import React from "react"
-import { ScrollView, Text } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -46,7 +46,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
     console.log("SearchScreen")
     return (
       <StyleProvider style={getTheme(material)}>
-        <Container>
+        <View>
           <Header
             title="Jesus Collective"
             navigation={this.props.navigation}
@@ -54,7 +54,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
           />
           <ScrollView>
             <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
-            <Container>
+            <View>
               <input
                 onChange={(item) => {
                   this.search(item)
@@ -65,9 +65,9 @@ export default class GroupScreen extends JCComponent<Props, State> {
               {this.state.data.map((item: any) => {
                 return <Text key={item.id}>{item.name}</Text>
               })}
-            </Container>
+            </View>
           </ScrollView>
-        </Container>
+        </View>
       </StyleProvider>
     )
   }

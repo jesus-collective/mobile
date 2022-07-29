@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import Amplify from "aws-amplify"
-import { View } from "native-base"
 import React from "react"
+import { View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import EditableText from "../../components/Forms/EditableText"
 import { UserContext } from "../../screens/HomeScreen/UserContext"

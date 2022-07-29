@@ -4,9 +4,9 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, Drawer, StyleProvider } from "native-base"
+import { Drawer, StyleProvider } from "native-base"
 import React from "react"
-import { Dimensions } from "react-native"
+import { Dimensions, View } from "react-native"
 import {
   CreateCourseLessonInput,
   CreateCourseTriadsInput,
@@ -999,7 +999,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               tweenHandler={undefined}
               onClose={() => this.setState({ showChat: false })}
             >
-              <Container
+              <View
                 style={[
                   this.styles.style.courseHomeScreenMainContainer,
                   { opacity: this.state.showChat ? 0.5 : 1 },
@@ -1009,7 +1009,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
                 <CourseHome />
                 <CourseDetail />
                 <CourseCoaching />
-              </Container>
+              </View>
             </Drawer>
           </>
         </StyleProvider>

@@ -1,7 +1,7 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
-import { Container, View } from "native-base"
 import React from "react"
+import { View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyProfile from "../../components/MyProfile/MyProfile"
@@ -111,16 +111,16 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                     </View>
 
                     {this.state.selected === "profile" ? (
-                      <Container style={this.styles.style.signUpProfileOrg}>
+                      <View style={this.styles.style.signUpProfileOrg}>
                         <MyProfile
                           hideOrg
                           finalizeProfile={() => {
                             this.setState({ selected: "organization" })
                           }}
                         />
-                      </Container>
+                      </View>
                     ) : (
-                      <Container style={this.styles.style.signUpProfileOrg}>
+                      <View style={this.styles.style.signUpProfileOrg}>
                         <OrganizationViewer
                           finalizeProfile={() => {
                             this.onFinalizeProfile(userActions)
@@ -128,17 +128,17 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                           create={false}
                           loadId={userState.orgId}
                         />
-                      </Container>
+                      </View>
                     )}
                   </>
                 ) : (
-                  <Container style={this.styles.style.signUpProfile}>
+                  <View style={this.styles.style.signUpProfile}>
                     <MyProfile
                       finalizeProfile={() => {
                         this.onFinalizeProfile(userActions)
                       }}
                     />
-                  </Container>
+                  </View>
                 )}
               </View>
             )

@@ -1,7 +1,8 @@
 ﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, StyleProvider } from "native-base"
+import { StyleProvider } from "native-base"
 import React from "react"
+import { View } from "react-native"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import MyMap from "../../components/MyMap/MyMap"
 import ResourceViewer from "../../components/ResourceViewer/ResourceViewer"
@@ -29,13 +30,13 @@ class ResourceScreenImpl extends JCComponent<Props, State> {
     console.log(`ResourceScreen ${this.props.route.params.id}`)
     return (
       <StyleProvider style={getTheme(material)}>
-        <Container>
+        <View>
           <MyMap type={"no-filters"} mapData={[]} visible={this.state.showMap}></MyMap>
           <ResourceViewer
             navigation={this.props.navigation}
             groupId={this.props.route.params.id}
           ></ResourceViewer>
-        </Container>
+        </View>
       </StyleProvider>
     )
   }

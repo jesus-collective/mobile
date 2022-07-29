@@ -6,7 +6,7 @@ import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
-import { Badge, Card, CardItem, Container, Left, Right, StyleProvider } from "native-base"
+import { Badge, Card, CardItem, Left, Right, StyleProvider } from "native-base"
 import React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
@@ -610,7 +610,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
     if (this.props.messages && this.props.rootId) {
       return (
         <StyleProvider style={getTheme()}>
-          <Container style={this.styles.style.messageBoardContainerFullSize}>
+          <View style={this.styles.style.messageBoardContainerFullSize}>
             {this.renderMessageInput()}
             <FlatList
               scrollEnabled
@@ -618,7 +618,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
               data={messages}
               style={{ height: height - 280 }}
             />
-          </Container>
+          </View>
         </StyleProvider>
       )
     }

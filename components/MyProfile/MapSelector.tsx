@@ -1,6 +1,5 @@
-import { View } from "native-base"
 import * as React from "react"
-import { Text } from "react-native"
+import { Text, View } from "react-native"
 import MapView, { MapEvent, Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"

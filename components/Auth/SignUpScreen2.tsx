@@ -1,7 +1,6 @@
 ﻿import Amplify, { Auth } from "aws-amplify"
-import { View } from "native-base"
 import React from "react"
-import { Pressable, Text } from "react-native"
+import { Pressable, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"

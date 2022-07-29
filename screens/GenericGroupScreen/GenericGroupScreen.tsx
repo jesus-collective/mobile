@@ -3,9 +3,9 @@ import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { CardItem, Container, Icon, Picker, StyleProvider, View } from "native-base"
+import { CardItem, Icon, Picker, StyleProvider } from "native-base"
 import React, { lazy } from "react"
-import { Image, ScrollView, Text, TouchableOpacity } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser, MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
@@ -473,7 +473,7 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   renderButtons(): React.ReactNode {
     return (
-      <Container style={this.styles.style.eventCreationScreenCreateContainer}>
+      <View style={this.styles.style.eventCreationScreenCreateContainer}>
         {this.state.canJoin ? (
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
@@ -560,7 +560,7 @@ export default class EventScreen extends JCComponent<Props, State> {
             Delete {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
-      </Container>
+      </View>
     )
   }
 
@@ -569,7 +569,7 @@ export default class EventScreen extends JCComponent<Props, State> {
     console.log("Generic Group Screen")
     return this.state.data ? (
       <StyleProvider style={getTheme()}>
-        <Container>
+        <View>
           <ScrollView>
             <MyMap
               initCenter={this.state.initCenter}
@@ -578,9 +578,9 @@ export default class EventScreen extends JCComponent<Props, State> {
               visible={this.state.showMap}
               mapData={this.state.mapData}
             ></MyMap>
-            <Container style={this.styles.style.eventScreenMainContainer}>
-              <Container style={this.styles.style.detailScreenLeftCard}>
-                <Container
+            <View style={this.styles.style.eventScreenMainContainer}>
+              <View style={this.styles.style.detailScreenLeftCard}>
+                <View
                   style={{
                     flexDirection: "row",
                     width: "100%",
@@ -626,7 +626,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                       Sponsored
                     </Text>
                   ) : null}
-                </Container>
+                </View>
 
                 <View>
                   <EditableText
@@ -839,14 +839,14 @@ export default class EventScreen extends JCComponent<Props, State> {
                 <Text style={{ marginTop: 170, color: "red", fontWeight: "bold" }}>
                   {this.state.validationError}
                 </Text>
-              </Container>
-              <Container style={this.styles.style.detailScreenRightCard}>
+              </View>
+              <View style={this.styles.style.detailScreenRightCard}>
                 <MessageBoard replies style="regular" groupId={this.state.data.id}></MessageBoard>
                 {/*  <Zoom></Zoom>*/}
-              </Container>
-            </Container>
+              </View>
+            </View>
           </ScrollView>
-        </Container>
+        </View>
       </StyleProvider>
     ) : null
   }

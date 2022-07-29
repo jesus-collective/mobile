@@ -2,9 +2,9 @@
 import { Tooltip } from "@material-ui/core"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
-import { Card, Container, Icon, Picker, StyleProvider } from "native-base"
+import { Card, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Image, ScrollView, Text, TouchableOpacity } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import EditableCourseAssignment2 from "../Forms/EditableCourseAssignment2"
@@ -46,7 +46,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     item: CourseLesson
   ): React.ReactNode {
     return (
-      <Container
+      <View
         style={
           state.isEditable && state.editMode
             ? { flexDirection: "column", marginTop: 10, height: "unset" }
@@ -97,7 +97,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             isEditable={state.isEditable && state.editMode}
           ></EditableText>
         ) : null}
-      </Container>
+      </View>
     )
   }
   renderResponseConfig(
@@ -107,7 +107,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     item: CourseLesson
   ): React.ReactNode {
     return (
-      <Container
+      <View
         style={
           state.isEditable && state.editMode
             ? { flexDirection: "column", marginTop: 10, height: "unset" }
@@ -197,7 +197,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             ></EditableText>
           </>
         ) : null}
-      </Container>
+      </View>
     )
   }
   renderZoomConfig(
@@ -207,7 +207,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     item: CourseLesson
   ): React.ReactNode {
     return (
-      <Container
+      <View
         style={
           state.isEditable && state.editMode
             ? this.styles.style.courseActivityButtonEditable
@@ -256,7 +256,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             isEditable={state.isEditable && state.editMode}
           ></EditableDate>
         ) : null}
-      </Container>
+      </View>
     )
   }
   renderYoutubeConfig(
@@ -266,7 +266,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     item: CourseLesson
   ): React.ReactNode {
     return (
-      <Container
+      <View
         style={
           state.isEditable && state.editMode
             ? this.styles.style.courseActivityButtonEditable
@@ -304,7 +304,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             isEditable={state.isEditable && state.editMode}
           ></EditableDate>
         ) : null}
-      </Container>
+      </View>
     )
   }
   getMonth(week: CourseWeekObj, item: CourseLesson, lesson: number) {
@@ -444,10 +444,10 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
   ): React.ReactNode {
     return state.activeLesson === "" ? (
       week ? (
-        <Container style={this.styles.style.courseDetailLeftContainer}>
-          <Container style={this.styles.style.courseDetailCourseInfoContainer}>
+        <View style={this.styles.style.courseDetailLeftContainer}>
+          <View style={this.styles.style.courseDetailCourseInfoContainer}>
             {state.isEditable && state.editMode ? (
-              <Container
+              <View
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -475,7 +475,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                     style={{ marginLeft: 10 }}
                   />
                 </Tooltip>
-              </Container>
+              </View>
             ) : null}
             <EditableText
               onChange={(e) => {
@@ -510,8 +510,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               value={week.leader ?? null}
               isEditable={state.isEditable && state.editMode}
             ></EditableRichText>
-          </Container>
-          <Container style={this.styles.style.courseLessonContainer}>
+          </View>
+          <View style={this.styles.style.courseLessonContainer}>
             {Object.values(week.lessons)
               .filter(
                 (item) =>
@@ -536,8 +536,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                             : this.styles.style.courseDetailLessonCardNoEdit
                         }
                       >
-                        <Container style={this.styles.style.courseDetailActivityCard}>
-                          <Container style={this.styles.style.courseDetailActivityInnerCard}>
+                        <View style={this.styles.style.courseDetailActivityCard}>
+                          <View style={this.styles.style.courseDetailActivityInnerCard}>
                             <Text
                               style={{
                                 fontSize: 20,
@@ -560,8 +560,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                             >
                               {this.getDay(week, item, lesson)}
                             </Text>
-                          </Container>
-                          <Container style={this.styles.style.courseDetailActivityInnerCardCenter}>
+                          </View>
+                          <View style={this.styles.style.courseDetailActivityInnerCardCenter}>
                             <EditableText
                               onChange={(e) => {
                                 actions.updateLesson(state.activeWeek, item.id, "name", e)
@@ -589,7 +589,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                               isEditable={state.isEditable && state.editMode}
                             ></EditableText>
 
-                            <Container style={this.styles.style.courseActivityDetails}>
+                            <View style={this.styles.style.courseActivityDetails}>
                               <Text
                                 style={
                                   state.isEditable && state.editMode
@@ -695,9 +695,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                               ) : (
                                 this.renderLessonIcon(item)
                               )}
-                            </Container>
+                            </View>
                             {this.renderConfig(state, actions, lesson, item)}
-                          </Container>
+                          </View>
                           {item?.lessonType == "zoom" &&
                           moment.tz(item.time, item.tz as string) < moment() ? (
                             <Text style={this.styles.style.assignmentCheckmark}>
@@ -718,7 +718,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                               <AntDesign name="close" size={20} color="black" />
                             </TouchableOpacity>
                           ) : null}
-                        </Container>
+                        </View>
                       </Card>
                     </TouchableOpacity>
                   )
@@ -734,7 +734,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                 }}
               >
                 <Card style={this.styles.style.courseDetailLessonCardCreate}>
-                  <Container style={{ flexDirection: "row" }}>
+                  <View style={{ flexDirection: "row" }}>
                     <Text
                       style={{
                         fontSize: 16,
@@ -743,9 +743,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                         alignSelf: "center",
                       }}
                     ></Text>
-                    <Container
-                      style={{ flexDirection: "column", minHeight: "30px", maxHeight: "30px" }}
-                    >
+                    <View style={{ flexDirection: "column", minHeight: "30px", maxHeight: "30px" }}>
                       <Text
                         style={{
                           fontSize: 16,
@@ -757,15 +755,15 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                       >
                         Create New Lesson
                       </Text>
-                    </Container>
-                  </Container>
+                    </View>
+                  </View>
                 </Card>
               </TouchableOpacity>
             ) : null}
-          </Container>
-        </Container>
+          </View>
+        </View>
       ) : (
-        <Container
+        <View
           style={{
             flex: 70,
             flexDirection: "column",
@@ -775,7 +773,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           }}
         >
           <Text>Please create your first week</Text>
-        </Container>
+        </View>
       )
     ) : null
   }
@@ -789,7 +787,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     lesson: CourseLesson
   ) {
     return (
-      <Container style={this.styles.style.courseDetailLeftSide}>
+      <View style={this.styles.style.courseDetailLeftSide}>
         <JCButton
           testID={"course-returnToWeekButton"}
           buttonType={ButtonTypes.CourseHomeSidebarTop}
@@ -799,8 +797,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         >
           Return
         </JCButton>
-        <Container style={this.styles.style.courseDetailYoutube}>
-          <Container style={{ flex: 0.9, height: "auto" }}>
+        <View style={this.styles.style.courseDetailYoutube}>
+          <View style={{ flex: 0.9, height: "auto" }}>
             <Text
               style={{
                 fontSize: 20,
@@ -815,15 +813,15 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             <Text style={this.styles.style.courseDetailLessonText}>
               Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
-          </Container>
+          </View>
           <Image
             style={this.styles.style.courseDetailCalendarImage}
             source={require("../../assets/svg/calendar.svg")}
           ></Image>
           <Text style={this.styles.style.detailsYoutubeDateText}>{lesson?.time}</Text>
-        </Container>
-        <Container style={{ width: "100%" }}>
-          <Container style={this.styles.style.courseDetailHr}></Container>
+        </View>
+        <View style={{ width: "100%" }}>
+          <View style={this.styles.style.courseDetailHr}></View>
           {lesson?.zoomRecording ? (
             <iframe
               title="Youtube"
@@ -842,13 +840,13 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             value={lesson?.description ?? null}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
-        </Container>
-      </Container>
+        </View>
+      </View>
     )
   }
   renderZoom(state: CourseState, actions: CourseActions, week: CourseWeek, lesson: CourseLesson) {
     return (
-      <Container
+      <View
         style={{
           flex: 70,
           flexDirection: "column",
@@ -866,8 +864,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         >
           Return
         </JCButton>
-        <Container style={this.styles.style.courseZoomMainContainer}>
-          <Container style={this.styles.style.courseDetailSidebarTop}>
+        <View style={this.styles.style.courseZoomMainContainer}>
+          <View style={this.styles.style.courseDetailSidebarTop}>
             <Text
               style={{
                 fontSize: 20,
@@ -902,8 +900,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                 Watch Zoom Recording
               </JCButton>
             ) : null}
-          </Container>
-          <Container style={this.styles.style.courseDetailTime}>
+          </View>
+          <View style={this.styles.style.courseDetailTime}>
             <Image
               style={this.styles.style.courseDetailCalendarImage2}
               source={require("../../assets/svg/calendar.svg")}
@@ -911,10 +909,10 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             <Text style={this.styles.style.courseDetailCalendarText2}>
               {moment(lesson?.time).format("LLL")}
             </Text>
-          </Container>
-        </Container>
-        <Container>
-          <Container style={this.styles.style.courseDetailHR}></Container>
+          </View>
+        </View>
+        <View>
+          <View style={this.styles.style.courseDetailHR}></View>
           <EditableRichText
             testID={"course-lesson-description"}
             onChange={(val: string) => {
@@ -923,8 +921,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             value={lesson?.description ?? null}
             isEditable={state.isEditable && state.editMode}
           ></EditableRichText>
-        </Container>
-      </Container>
+        </View>
+      </View>
     )
   }
   renderRespond(
@@ -934,7 +932,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     lesson: CourseLesson
   ) {
     return (
-      <Container
+      <View
         style={{
           flex: 70,
           flexDirection: "column",
@@ -952,8 +950,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         >
           Return
         </JCButton>
-        <Container style={this.styles.style.courseZoomMainContainer}>
-          <Container style={{ flex: 0.6, height: "auto" }}>
+        <View style={this.styles.style.courseZoomMainContainer}>
+          <View style={{ flex: 0.6, height: "auto" }}>
             <Text
               style={{
                 fontSize: 20,
@@ -968,8 +966,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             <Text style={this.styles.style.courseDetailLessonText}>
               Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
-          </Container>
-          <Container style={this.styles.style.courseDetailAssignmentTime2}>
+          </View>
+          <View style={this.styles.style.courseDetailAssignmentTime2}>
             <Image
               style={this.styles.style.courseDetailCalendarImage}
               source={require("../../assets/svg/calendar.svg")}
@@ -977,10 +975,10 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             <Text style={this.styles.style.courseDetailCalendarText}>
               {moment(lesson?.time).format("LLL")}
             </Text>
-          </Container>
-        </Container>
-        <Container style={{ width: "100%" }}>
-          <Container
+          </View>
+        </View>
+        <View style={{ width: "100%" }}>
+          <View
             style={{
               borderBottomColor: "#333333",
               opacity: 0.2,
@@ -989,7 +987,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               marginBottom: 30,
               marginTop: 30,
             }}
-          ></Container>
+          ></View>
           <EditableRichText
             testID={"course-lesson-description"}
             onChange={(val: string) => {
@@ -1012,8 +1010,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               )
             }}
           </CourseDetailImpl.UserConsumer>
-        </Container>
-      </Container>
+        </View>
+      </View>
     )
   }
   renderAssignment(
@@ -1023,7 +1021,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     lesson: CourseLesson
   ) {
     return (
-      <Container
+      <View
         style={{
           flex: 70,
           flexDirection: "column",
@@ -1041,8 +1039,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         >
           Return
         </JCButton>
-        <Container style={this.styles.style.courseZoomMainContainer}>
-          <Container style={this.styles.style.courseDetailMainHeading}>
+        <View style={this.styles.style.courseZoomMainContainer}>
+          <View style={this.styles.style.courseDetailMainHeading}>
             <Text
               style={{
                 fontSize: 20,
@@ -1057,8 +1055,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             <Text style={this.styles.style.courseDetailLessonText}>
               Lesson {lesson?.lesson} - {lesson?.name}
             </Text>
-          </Container>
-          <Container style={[this.styles.style.courseDetailAssignmentTime, { top: -20 }]}>
+          </View>
+          <View style={[this.styles.style.courseDetailAssignmentTime, { top: -20 }]}>
             <Image
               style={this.styles.style.courseDetailCalendarImage}
               source={require("../../assets/svg/calendar.svg")}
@@ -1066,10 +1064,10 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             <Text style={this.styles.style.courseDetailCalendarText}>
               {moment(lesson?.time).format("LLL")}
             </Text>
-          </Container>
-        </Container>
-        <Container style={{ width: "100%" }}>
-          <Container
+          </View>
+        </View>
+        <View style={{ width: "100%" }}>
+          <View
             style={{
               borderBottomColor: "#333333",
               opacity: 0.2,
@@ -1078,7 +1076,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               marginBottom: 30,
               marginTop: 30,
             }}
-          ></Container>
+          ></View>
           <EditableRichText
             testID={"course-lesson-description"}
             onChange={(val: string) => {
@@ -1099,8 +1097,8 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               )
             }}
           </CourseDetailImpl.UserConsumer>
-        </Container>
-      </Container>
+        </View>
+      </View>
     )
   }
   renderLessonType(
@@ -1142,18 +1140,18 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           const week = state.courseWeeks[state.activeWeek]
           return state.data && state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
-              <Container style={{ flex: 85 }}>
+              <View style={{ flex: 85 }}>
                 {/* <CourseHeader groupData={state.data}></CourseHeader> */}
                 <CourseDetailMenu />
-                <Container style={{ flex: 80 }}>
+                <View style={{ flex: 80 }}>
                   <ScrollView style={{ flex: 85 }}>
-                    <Container style={this.styles.style.courseDetailMainContainer}>
+                    <View style={this.styles.style.courseDetailMainContainer}>
                       {this.renderWeekDetails(state, actions, week)}
                       {this.renderLessonDetails(state, actions, week)}
-                    </Container>
+                    </View>
                   </ScrollView>
-                </Container>
-              </Container>
+                </View>
+              </View>
             </StyleProvider>
           ) : null
         }}

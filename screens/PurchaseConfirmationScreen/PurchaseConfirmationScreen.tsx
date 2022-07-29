@@ -1,7 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Text } from "native-base"
+import { Text } from "native-base"
 import React, { useEffect, useState } from "react"
-import { Image, ScrollView } from "react-native"
+import { Image, ScrollView, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Header from "../../components/Header/Header"
@@ -32,15 +32,15 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
   }, [])
 
   if (productExists === "unknown") {
-    return <Container></Container>
+    return <View></View>
   }
 
   if (productExists) {
     return (
-      <Container>
+      <View>
         <Header title="Jesus Collective" navigation={navigation} />
         <ScrollView>
-          <Container
+          <View
             style={{ width: "50%", alignSelf: "center", marginVertical: 64, alignItems: "center" }}
           >
             <Image
@@ -59,36 +59,36 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
               {" "}
               Invoice number: {id}
             </Text>
-            <Container style={{ marginTop: 26 }}>
+            <View style={{ marginTop: 26 }}>
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => navigation.push("HomeScreen")}
               >
                 Back to Home
               </JCButton>
-            </Container>
-          </Container>
+            </View>
+          </View>
         </ScrollView>
-      </Container>
+      </View>
     )
   } else {
     return (
-      <Container>
+      <View>
         <Header title="Jesus Collective" navigation={navigation} />
         <ScrollView>
-          <Container style={{ marginTop: 50, alignItems: "center" }}>
+          <View style={{ marginTop: 50, alignItems: "center" }}>
             <Text style={{ fontSize: 36, fontFamily: "Graphik-Regular-App" }}>Page not found.</Text>
-            <Container style={{ marginTop: 50 }}>
+            <View style={{ marginTop: 50 }}>
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => navigation.push("HomeScreen")}
               >
                 Back to Home
               </JCButton>
-            </Container>
-          </Container>
+            </View>
+          </View>
         </ScrollView>
-      </Container>
+      </View>
     )
   }
 }

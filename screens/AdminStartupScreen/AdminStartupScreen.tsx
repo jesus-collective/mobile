@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Picker, Text } from "native-base"
+import { Picker, Text } from "native-base"
 import React from "react"
 import { ScrollView, TextInput, View } from "react-native"
 import { Data } from "../../components/Data/Data"
@@ -165,7 +165,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -196,7 +196,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             >
               {this.state.showEditStartupItem != null ? "Edit Startup" : "Add Startup"}
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -313,12 +313,12 @@ export default class AdminScreen extends JCComponent<Props, State> {
           if (!userState) return null
           console.log("AdminScreen")
           return (
-            <Container testID="events">
+            <View testID="events">
               {userActions.isMemberOf("admin") ? (
                 <ScrollView>
                   {this.renderPreview()}
 
-                  <Container style={this.styles.style.fontRegular}>
+                  <View style={this.styles.style.fontRegular}>
                     <JCButton buttonType={ButtonTypes.AdminAdd} onPress={this.addStartupItem}>
                       Add Startup Item
                     </JCButton>
@@ -380,19 +380,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         )
                       })}
                     </View>
-                  </Container>
+                  </View>
                 </ScrollView>
               ) : (
                 <ScrollView>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
+                    </View>
+                  </View>
                 </ScrollView>
               )}
               {this.renderAddStartupModal()}
-            </Container>
+            </View>
           )
         }}
       </AdminScreen.UserConsumer>

@@ -2,7 +2,7 @@ import { useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
-import { Container, Picker, Text } from "native-base"
+import { Picker, Text } from "native-base"
 import React, { useState } from "react"
 import { ScrollView, TextInput, View } from "react-native"
 import { Data } from "../../components/Data/Data"
@@ -157,7 +157,7 @@ class AdminScreenImpl extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -190,7 +190,7 @@ class AdminScreenImpl extends JCComponent<Props, State> {
             >
               {this.state.showEditPricingsItem != null ? "Edit Startup" : "Add Startup"}
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -228,10 +228,10 @@ class AdminScreenImpl extends JCComponent<Props, State> {
           if (!userState) return null
           console.log("AdminScreen")
           return (
-            <Container testID="events">
+            <View testID="events">
               {userActions.isMemberOf("admin") ? (
                 <ScrollView>
-                  <Container style={this.styles.style.fontRegular}>
+                  <View style={this.styles.style.fontRegular}>
                     <JCButton buttonType={ButtonTypes.AdminAdd} onPress={this.addPricingsItem}>
                       Add Custom Payment Item
                     </JCButton>
@@ -268,18 +268,18 @@ class AdminScreenImpl extends JCComponent<Props, State> {
                       })}
                       {this.renderAddPricingsModal()}
                     </View>
-                  </Container>
+                  </View>
                 </ScrollView>
               ) : (
                 <ScrollView>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
+                    </View>
+                  </View>
                 </ScrollView>
               )}
-            </Container>
+            </View>
           )
         }}
       </AdminScreenImpl.UserConsumer>

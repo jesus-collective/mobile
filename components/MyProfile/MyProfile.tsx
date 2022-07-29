@@ -5,7 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
-import { Badge, Form, Label, Picker, View } from "native-base"
+import { Badge, Form, Label, Picker } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import {
@@ -16,6 +16,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  View,
 } from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"

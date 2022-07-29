@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { convertToRaw, EditorState } from "draft-js"
-import { Container, Icon, Picker, Text } from "native-base"
+import { Icon, Picker, Text } from "native-base"
 import * as React from "react"
 import {
   NativeSyntheticEvent,
@@ -482,7 +482,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
         {({ userState, userActions }) => {
           if (!userState) return null
           return (
-            <Container>
+            <View>
               {userActions.isMemberOf("admin") ? (
                 <ScrollView>
                   <JCButton
@@ -494,7 +494,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     Add product
                   </JCButton>
 
-                  <Container style={this.styles.style.fontRegular}>
+                  <View style={this.styles.style.fontRegular}>
                     <View
                       style={{
                         display: "flex",
@@ -615,19 +615,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         </View>
                       )
                     })}
-                  </Container>
+                  </View>
                 </ScrollView>
               ) : (
                 <ScrollView>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
+                    </View>
+                  </View>
                 </ScrollView>
               )}
               {this.renderAddProductModal()}
-            </Container>
+            </View>
           )
         }}
       </AdminScreen.UserConsumer>

@@ -10,9 +10,9 @@ import moment from "moment"
 import { MapData } from "src/types"
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem, View } from "native-base"
+import { Body, Card, CardItem } from "native-base"
 import * as React from "react"
-import { Dimensions, ScrollView, Text, TouchableOpacity } from "react-native"
+import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"

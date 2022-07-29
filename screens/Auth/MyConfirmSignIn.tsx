@@ -1,7 +1,6 @@
 import { ConfirmSignIn } from "aws-amplify-react-native"
-import { View } from "native-base"
 import React from "react"
-import { Dimensions, Platform } from "react-native"
+import { Dimensions, Platform, View } from "react-native"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserContext } from "../../screens/HomeScreen/UserContext"

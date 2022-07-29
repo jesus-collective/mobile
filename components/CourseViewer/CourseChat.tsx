@@ -1,8 +1,8 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Container, Icon, Picker, StyleProvider } from "native-base"
+import { Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Dimensions, Pressable, Text } from "react-native"
+import { Dimensions, Pressable, Text, View } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -42,8 +42,8 @@ class CourseChatImpl extends JCComponent<Props, State> {
           if (!state?.data) return null
           return state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
-              <Container style={{ width: chatWidth }}>
-                <Container style={this.styles.style.courseDetailButtonTrio}>
+              <View style={{ width: chatWidth }}>
+                <View style={this.styles.style.courseDetailButtonTrio}>
                   <JCButton
                     buttonType={
                       state.activeMessageBoard === "cohort"
@@ -74,8 +74,8 @@ class CourseChatImpl extends JCComponent<Props, State> {
                   >
                     <AntDesign name="close" size={24} color="black" />
                   </Pressable>
-                </Container>
-                <Container style={{ marginTop: 38, marginHorizontal: 24 }}>
+                </View>
+                <View style={{ marginTop: 38, marginHorizontal: 24 }}>
                   {state.activeMessageBoard == "cohort" ? (
                     <MessageBoard
                       style="mini"
@@ -147,8 +147,8 @@ class CourseChatImpl extends JCComponent<Props, State> {
                   ) : null}
 
                   {/*state.activeMessageBoard == "instructor" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null*/}
-                </Container>
-              </Container>
+                </View>
+              </View>
             </StyleProvider>
           ) : null
         }}

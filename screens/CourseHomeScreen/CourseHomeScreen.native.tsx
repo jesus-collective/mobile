@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, StyleProvider } from "native-base"
+import { StyleProvider } from "native-base"
 import React from "react"
 import { Dimensions } from "react-native"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
@@ -970,12 +970,12 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         }}
       >
         <StyleProvider style={getTheme()}>
-          <Container style={this.styles.style.courseHomeScreenMainContainer}>
+          <View style={this.styles.style.courseHomeScreenMainContainer}>
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <CourseHome></CourseHome>
             <CourseDetail></CourseDetail>
             <CourseCoaching></CourseCoaching>
-          </Container>
+          </View>
         </StyleProvider>
       </CourseHomeScreenImpl.Provider>
     ) : null

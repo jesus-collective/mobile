@@ -2,7 +2,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
-import { Body, Card, CardItem, Container, Left, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Left, Right, StyleProvider } from "native-base"
 import React from "react"
 import {
   Dimensions,
@@ -302,14 +302,14 @@ class CourseHomeImpl extends JCComponent<Props> {
 
           return state.data && state.currentScreen == "Home" ? (
             <StyleProvider style={getTheme()}>
-              <Container style={this.styles.style.courseHomeMainContainer}>
+              <View style={this.styles.style.courseHomeMainContainer}>
                 <CourseHeader groupData={state.data}></CourseHeader>
-                <Container style={{ flex: 80 }}>
+                <View style={{ flex: 80 }}>
                   <ScrollView contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
-                    <Container style={this.styles.style.courseHomeScreenSubMainContainer}>
-                      <Container style={this.styles.style.courseHomeLeftContainer}>
-                        <Container style={this.styles.style.courseHomeSyllabusContainer}>
-                          <Container style={this.styles.style.courseProfileImageButtonsContainer}>
+                    <View style={this.styles.style.courseHomeScreenSubMainContainer}>
+                      <View style={this.styles.style.courseHomeLeftContainer}>
+                        <View style={this.styles.style.courseHomeSyllabusContainer}>
+                          <View style={this.styles.style.courseProfileImageButtonsContainer}>
                             <ProfileImageNew
                               style={ProfileImageStyle.UserLarge}
                               quality={ProfileImageQuality.medium}
@@ -340,8 +340,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 Start Conversation
                               </JCButton>
                             ) : null}
-                          </Container>
-                          <Container style={this.styles.style.courseHomeMainTextContainer}>
+                          </View>
+                          <View style={this.styles.style.courseHomeMainTextContainer}>
                             <Text style={this.styles.style.courseHomeDescriptionText}>
                               {state.courseData ? (
                                 <EditableRichText
@@ -354,10 +354,10 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 ></EditableRichText>
                               ) : null}
                             </Text>
-                          </Container>
-                        </Container>
+                          </View>
+                        </View>
 
-                        <Container style={this.styles.style.courseProfileImageContainer}>
+                        <View style={this.styles.style.courseProfileImageContainer}>
                           <Text
                             style={{
                               fontSize: 20,
@@ -687,10 +687,10 @@ class CourseHomeImpl extends JCComponent<Props> {
                               </View>
                             </>
                           )}
-                        </Container>
-                      </Container>
+                        </View>
+                      </View>
 
-                      <Container style={this.styles.style.courseHomeRightContainer}>
+                      <View style={this.styles.style.courseHomeRightContainer}>
                         {constants["SETTING_ISVISIBLE_COURSE_TODO"] ? (
                           <>
                             <Text
@@ -746,7 +746,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                               theme={{ todayTextColor: "#F0493E" }}
                               markingType="multi-dot"
                             />
-                            <Container style={this.styles.style.courseHomeCalendarLabels}>
+                            <View style={this.styles.style.courseHomeCalendarLabels}>
                               <Text
                                 style={{
                                   fontSize: 25,
@@ -807,23 +807,23 @@ class CourseHomeImpl extends JCComponent<Props> {
                                   Response
                                 </span>
                               </Text>
-                            </Container>
+                            </View>
                           </View>
                         ) : null}
                         {constants["SETTING_ISVISIBLE_COURSE_ACTIVITY"] ? (
-                          <Container style={this.styles.style.CourseHomeActivityContainer}>
+                          <View style={this.styles.style.CourseHomeActivityContainer}>
                             <ActivityBox
                               activityGroupType={"courses"}
                               activityGroupId={state.courseData?.id as string}
                               title="Course Activity"
                             />
-                          </Container>
+                          </View>
                         ) : null}
-                      </Container>
-                    </Container>
+                      </View>
+                    </View>
                   </ScrollView>
-                </Container>
-              </Container>
+                </View>
+              </View>
             </StyleProvider>
           ) : null
         }}

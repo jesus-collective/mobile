@@ -4,9 +4,9 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, Picker, StyleProvider, View } from "native-base"
+import { Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Image, ScrollView, Text, TouchableOpacity } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { GetUserQueryResult, JCCognitoUser, MapData } from "src/types"
 import PaidUsersModal from "../../components/CourseViewer/PaidUsersModal"
 import { Data } from "../../components/Data/Data"
@@ -579,7 +579,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   renderButtons(userActions: UserActions): React.ReactNode {
     return (
-      <Container style={{ minHeight: 30 }}>
+      <View style={{ minHeight: 30 }}>
         {this.isCourseClosed(userActions) ? <Text>Course Closed</Text> : null}
         {this.canPurchase(userActions) ? (
           <JCButton
@@ -635,7 +635,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           </JCButton>
         ) : null}
         <Text>{this.state.validationError}</Text>
-      </Container>
+      </View>
     )
   }
   static UserConsumer = UserContext.Consumer
@@ -658,7 +658,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           if (!userState) return null
           return this.state.data ? (
             <StyleProvider style={getTheme()}>
-              <Container>
+              <View>
                 <ScrollView>
                   <MyMap
                     type={"no-filters"}
@@ -666,9 +666,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
                     visible={this.state.showMap}
                     mapData={this.state.mapData}
                   ></MyMap>
-                  <Container style={this.styles.style.coursesScreenMainContainer}>
-                    <Container style={this.styles.style.detailScreenLeftCard}>
-                      <Container style={this.styles.style.courseSponsorContainer}>
+                  <View style={this.styles.style.coursesScreenMainContainer}>
+                    <View style={this.styles.style.detailScreenLeftCard}>
+                      <View style={this.styles.style.courseSponsorContainer}>
                         <Text
                           style={{
                             fontSize: 12,
@@ -708,7 +708,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             Sponsored
                           </Text>
                         ) : null}
-                      </Container>
+                      </View>
 
                       <View>
                         <EditableText
@@ -933,9 +933,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
                       {this.renderPermissions()}
                       {this.renderPaymentAdmin()}
                       {this.renderButtons(userActions)}
-                    </Container>
-                    <Container style={this.styles.style.detailScreenRightCard}>
-                      <Container style={this.styles.style.coursesRightCard}>
+                    </View>
+                    <View style={this.styles.style.detailScreenRightCard}>
+                      <View style={this.styles.style.coursesRightCard}>
                         {this.state.data ? (
                           <EditableRichText
                             onChange={(val) => {
@@ -1007,12 +1007,12 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             )
                           }
                         )}
-                      </Container>
-                    </Container>
-                  </Container>
+                      </View>
+                    </View>
+                  </View>
                   {this.renderPaidUsersModal()}
                 </ScrollView>
-              </Container>
+              </View>
             </StyleProvider>
           ) : null
         }}

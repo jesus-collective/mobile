@@ -1,8 +1,8 @@
 import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
-import { Card, Text, View } from "native-base"
+import { Card, Text } from "native-base"
 import React from "react"
-import { StyleSheet, ViewStyle } from "react-native"
+import { StyleSheet, View, ViewStyle } from "react-native"
 import { GetProductQuery } from "../../src/API"
 import PayPal from "./Paypal/PayPal"
 

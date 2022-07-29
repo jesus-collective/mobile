@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation } from "aws-amplify"
-import { Body, Card, CardItem, Container, Left, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Left, Right, StyleProvider } from "native-base"
 import * as React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { ScrollView, Text, TouchableOpacity } from "react-native"
@@ -123,7 +123,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     return this.state.message != null && this.state.created ? (
       <ErrorBoundary>
         <StyleProvider style={getTheme(material)}>
-          <Container style={this.styles.style.nativeMessageBoardContainer}>
+          <View style={this.styles.style.nativeMessageBoardContainer}>
             <ScrollView style={{ marginBottom: 40 }}>
               {this.state.UserDetails != null ? (
                 <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
@@ -232,7 +232,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 </TouchableOpacity>
               )
             })}
-          </Container>
+          </View>
         </StyleProvider>
       </ErrorBoundary>
     ) : null

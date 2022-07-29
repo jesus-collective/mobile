@@ -1,8 +1,7 @@
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment"
-import { Container } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { Text, View } from "react-native"
 import EditableText from "../Forms/EditableText"
 import JCComponent from "../JCComponent/JCComponent"
 interface Props {
@@ -17,7 +16,7 @@ class CourseHeaderImpl extends JCComponent<Props> {
 
   render(): React.ReactNode {
     return this.props.groupData ? (
-      <Container style={this.styles.style.courseHeaderContainer}>
+      <View style={this.styles.style.courseHeaderContainer}>
         <Text style={this.styles.style.fontCourseHeaderTime}>
           {moment(this.props.groupData.time).format("MMMM Do YYYY")} - {this.props.groupData.length}
         </Text>
@@ -34,7 +33,7 @@ class CourseHeaderImpl extends JCComponent<Props> {
           value={this.props.groupData.description}
           isEditable={false}
         ></EditableText>
-      </Container>
+      </View>
     ) : null
   }
 }
