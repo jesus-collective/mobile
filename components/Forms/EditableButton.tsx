@@ -1,6 +1,5 @@
-import { Input } from "native-base"
 import React from "react"
-import { Pressable, Text } from "react-native"
+import { Pressable, Text, TextInput } from "react-native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
@@ -51,7 +50,7 @@ export default class EditableButton extends JCComponent<Props, State> {
     if (this.state.isEditable)
       if (this.state.isEditMode)
         return (
-          <Input
+          <TextInput
             testID={this.props.testID + "-editor"}
             onBlur={(value: any) => {
               this.onChanged(value)
@@ -65,7 +64,7 @@ export default class EditableButton extends JCComponent<Props, State> {
             placeholder={this.state.placeholder}
             style={this.props.inputStyle}
             value={this.state.value}
-          ></Input>
+          ></TextInput>
         )
       else
         return (
