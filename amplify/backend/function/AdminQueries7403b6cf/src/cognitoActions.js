@@ -166,9 +166,7 @@ async function listUsers(Limit, PaginationToken, SearchQuery) {
     ...(Limit && { Limit }),
     ...(PaginationToken && { PaginationToken }),
   }
-  if (SearchQuery) {
-    params.Filter = SearchQuery
-  }
+  if (SearchQuery) params.Filter = SearchQuery
 
   console.log("Attempting to list users")
   console.log({ params })
