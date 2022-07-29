@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
-import { Form, Input, Item } from "native-base"
+import { Input, Item } from "native-base"
 import * as React from "react"
 import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
@@ -507,7 +507,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
           </View>
         </View>
 
-        <Form style={this.styles.style.myProfileMainContainer}>
+        <View style={this.styles.style.myProfileMainContainer}>
           <View style={this.styles.style.profileScreenLeftCard}>
             <View style={this.styles.style.myProfileImageWrapper}>
               <Image
@@ -1219,7 +1219,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Org Messages" initState={this.state.OrganizationDetails.alertConfig?.emailPromotions == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailPromotions") }}></JCSwitch>*/}
             </View>
           )}
-        </Form>
+        </View>
       </ScrollView>
     ) : null
   }

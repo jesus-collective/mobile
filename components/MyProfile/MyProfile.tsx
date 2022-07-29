@@ -5,7 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
-import { Badge, Form } from "native-base"
+import { Badge } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import {
@@ -2056,13 +2056,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <ScrollView ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
               {this.renderTopBar(userActions)}
 
-              <Form style={this.styles.style.myProfileMainContainer}>
+              <View style={this.styles.style.myProfileMainContainer}>
                 {this.renderLeftBar(userActions)}
                 {this.state.showPage == "admin" && this.renderAdmin(userActions)}
                 {this.state.showPage == "billing" && this.renderBilling()}
                 {this.state.showPage == "profile" && this.renderProfile()}
                 {this.state.showPage == "settings" && this.renderAccountSettings()}
-              </Form>
+              </View>
             </ScrollView>
           ) : null
         }}
