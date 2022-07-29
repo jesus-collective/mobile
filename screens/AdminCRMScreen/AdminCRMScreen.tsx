@@ -3,7 +3,6 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
-import { Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
 import {
@@ -12,6 +11,7 @@ import {
   Picker,
   Pressable,
   ScrollView,
+  Text,
   TextInput,
   TouchableOpacity,
   View,

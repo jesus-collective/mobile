@@ -1,11 +1,12 @@
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { convertToRaw, EditorState } from "draft-js"
-import { Icon, Picker, Text } from "native-base"
+import { Icon, Picker } from "native-base"
 import * as React from "react"
 import {
   NativeSyntheticEvent,
   ScrollView,
+  Text,
   TextInput,
   TextInputChangeEventData,
   View,

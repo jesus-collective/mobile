@@ -1,7 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Text } from "native-base"
 import React, { useEffect, useState } from "react"
-import { Image, ScrollView, View } from "react-native"
+import { Image, ScrollView, Text, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Header from "../../components/Header/Header"
