@@ -1,11 +1,11 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
+import Badge from "@material-ui/core/Badge"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
-import { Badge } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import {

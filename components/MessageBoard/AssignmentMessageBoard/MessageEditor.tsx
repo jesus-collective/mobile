@@ -1,7 +1,7 @@
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
+import Badge from "@material-ui/core/Badge"
 import { Auth, Storage } from "aws-amplify"
 import { convertFromRaw, convertToRaw, EditorState, RawDraftContentState } from "draft-js"
-import { Badge } from "native-base"
 import React, { useState } from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Text, TouchableOpacity, View } from "react-native"
