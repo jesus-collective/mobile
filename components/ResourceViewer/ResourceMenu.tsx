@@ -69,11 +69,11 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
 
   renderTopMenu(): React.ReactNode {
     return (
-      <Header style={this.headerStyles.style.resourceContainer}>
+      <View style={this.headerStyles.style.resourceContainer}>
         <View></View>
         <View style={this.styles.style.resourcesSubMenu}>{this.renderItems()}</View>
         <View></View>
-      </Header>
+      </View>
     )
   }
   renderLeftMenu(): React.ReactNode {

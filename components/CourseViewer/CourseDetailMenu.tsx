@@ -83,7 +83,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
           }
           const Weeks = Object.values(state.courseWeeks).filter((item) => item)
           return (
-            <Header style={this.headerStyles.style.resourceContainer}>
+            <View style={this.headerStyles.style.resourceContainer}>
               <View
                 style={{
                   flex: 1,
@@ -158,7 +158,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                   </View>
                 ) : null}
               </View>
-            </Header>
+            </View>
           )
         }}
       </CourseDetailMenuImpl.Consumer>

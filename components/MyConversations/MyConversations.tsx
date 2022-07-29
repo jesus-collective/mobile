@@ -48,10 +48,10 @@ export default class MyConversations extends JCComponent<Props> {
                         style={{ margin: 0, padding: 0, width: 40, height: 45 }}
                         source={require("../../assets/profile-placeholder.png")}
                       />
-                      <Body>
+                      <View>
                         <Text style={this.styles.style.fontConnectWithName}>{item.name}</Text>
                         <Text style={this.styles.style.fontConnectWithRole}>{item.role}</Text>
-                      </Body>
+                      </View>
                     </View>
                     <View>
                       <Pressable

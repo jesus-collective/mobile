@@ -6,14 +6,14 @@ import {
   TextInput,
   TextInputChangeEventData,
   TouchableOpacity,
-  View,
+  View
 } from "react-native"
 import {
   ImageInput,
   ResourceDetailInput,
   UpdateResourceEpisodeInput,
   UpdateResourceInput,
-  UpdateResourceSeriesInput,
+  UpdateResourceSeriesInput
 } from "../../src/API"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import ResourceConfigEpisodes from "./ResourceConfigEpisodes"

@@ -422,9 +422,9 @@ class MyMapImpl extends JCComponent<Props, State> {
           )}
         </View>
         {/*
-        {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
-        {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
-        {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
+        {this.canJoin(item.id) && !this.isOwner(item.id) ? <View ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></View> : null}
+        {this.canLeave(item.id) && !this.isOwner(item.id) ? <View ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></View> : null}
+        {this.isOwner(item.id) ? <View ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></View> : null}
         */}
         <View style={{ position: "absolute", top: 10, right: 10 }}>
           <TouchableOpacity onPress={() => this.setState({ showingInfoWindow: false })}>
