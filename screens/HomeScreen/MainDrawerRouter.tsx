@@ -9,14 +9,8 @@ export default class MainDrawerRouter extends JCComponent {
   render(): React.ReactNode {
     return (
       <Drawer.Navigator
-        screenOptions={({ route, navigation }) => ({
-          drawerType: "slide",
-          gestureEnabled: true,
-          swipeEnabled: true,
-          drawerStyle: {
-            width: "100vw",
-          },
-        })}
+        openByDefault={false}
+        headerMode="none"
         drawerContent={(props) => {
           return <SideBar {...props}></SideBar>
         }}
