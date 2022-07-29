@@ -6,7 +6,16 @@ import moment from "moment"
 import { Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
-import { Picker, Pressable, ScrollView, TextInput, TouchableOpacity, View } from "react-native"
+import {
+  ActivityIndicator,
+  Image,
+  Picker,
+  Pressable,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
 import EditableText from "../../components/Forms/EditableText"
@@ -15,6 +24,10 @@ import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import ProfileImageNew, {
+  ProfileImageQuality,
+  ProfileImageStyle,
+} from "../../components/ProfileImage/ProfileImageNew"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateOrganizationInput,
@@ -52,6 +65,7 @@ interface State extends JCState {
   showEmail: boolean
   showPhone: boolean
   showStatus: boolean
+  search: string
   groupToAdd: string | undefined
   groupList: string[]
   paymentsData: Payments
@@ -67,6 +81,131 @@ interface State extends JCState {
   >["items"]
 }
 
+function useDebounce(value: string, delay: number) {
+  // State and setters for debounced value
+  const [debouncedValue, setDebouncedValue] = React.useState(value)
+  React.useEffect(
+    () => {
+      // Update debounced value after delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value)
+      }, delay)
+      // Cancel the timeout if value changes (also on delay change or unmount)
+      // This is how we prevent debounced value from updating if value is changed ...
+      // .. within the delay period. Timeout gets cleared and restarted.
+      return () => {
+        clearTimeout(handler)
+      }
+    },
+    [value, delay] // Only re-call effect if value or delay changes
+  )
+  return debouncedValue
+}
+type SearchUserProps = {
+  setFilteredData: (data: any) => void
+}
+function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
+  const [search, setSearch] = React.useState("")
+  const attributes = [
+    { label: "ID", value: "username" },
+    { label: "E-mail", value: "email" },
+    { label: "Phone Number", value: "phone_number" },
+    { label: "First Name", value: "given_name" },
+    { label: "Last Name", value: "family_name" },
+    { label: "Enabled/Disabled", value: "status" },
+  ]
+  const [attribute, setAttribute] = React.useState(attributes[1])
+  const [isLoading, setIsLoading] = React.useState(false)
+  const debouncedSearchterm = useDebounce(search, 1000)
+
+  const doSearch = async (searchTerm: string) => {
+    // search cognito users
+    // search dynamo users
+    try {
+      setIsLoading(true)
+      const listUsers = async (limit: number, nextToken: string | null): Promise<any> => {
+        const apiName = "AdminQueries"
+        const path = "/listUsers"
+        const myInit = {
+          queryStringParameters: {
+            limit: limit,
+            token: nextToken,
+            //eslint-disable-next-line
+            filter: `${attribute.value} ^= \"${searchTerm}\"`,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+          },
+        }
+        const z = await API.get(apiName, path, myInit)
+        console.log({ z })
+        const { NextToken, ...rest } = z
+        nextToken = NextToken
+        return { nextToken, ...rest }
+      }
+      const users = await listUsers(60, null) // 60 is max api accepts
+      setFilteredData(users.Users)
+    } catch (error) {
+      console.log({ error })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  React.useEffect(() => {
+    if (debouncedSearchterm) {
+      doSearch(debouncedSearchterm)
+    } else {
+      setIsLoading(false)
+    }
+  }, [debouncedSearchterm])
+  const placeHolder = `Search by ${attribute.label}`
+  return (
+    <View style={{ flexDirection: "row" }}>
+      <Picker
+        selectedValue={attribute.value}
+        onValueChange={(val, index) => {
+          setAttribute(attributes[index])
+        }}
+      >
+        {" "}
+        {attributes.map((item, index: number) => {
+          return <Picker.Item key={index} value={item.value} label={item.label} />
+        })}
+      </Picker>
+      <View style={{ flexDirection: "row", flex: 1 }}>
+        <View style={{ alignSelf: "center", padding: 8 }}>
+          {!isLoading ? (
+            <Image
+              style={{ width: 20, height: 20 }}
+              source={require("../../assets/Facelift/svg/Search.svg")}
+            ></Image>
+          ) : (
+            <ActivityIndicator size="small" />
+          )}
+        </View>
+
+        <TextInput
+          style={{
+            paddingVertical: 6,
+            marginLeft: -36,
+            paddingLeft: 36,
+            flex: 1,
+            borderColor: "black",
+            borderRadius: 4,
+            borderWidth: 1,
+          }}
+          placeholder={placeHolder}
+          onChangeText={(text) => {
+            setIsLoading(true)
+            setSearch(text)
+          }}
+          value={search}
+        />
+      </View>
+    </View>
+  )
+}
 export default class AdminScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
@@ -83,6 +222,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       showGroupsId: null,
       showUid: false,
       showEmail: true,
+      search: "",
       showPhone: true,
       showEditEmail: "",
       showStatus: true,
@@ -97,38 +237,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
     }
     this.setInitialData()
   }
-  async getUsers(nextToken: string | null): Promise<void> {
-    console.log("getUsers")
-    const data = await this.listUsers(40, nextToken)
-    this.setState({ data: this.state.data.concat(data.Users) })
-    if (data.nextToken) this.getUsers(data.nextToken)
-  }
   async setInitialData(): Promise<void> {
-    this.getUsers(null)
-
     const listProducts = await Data.listProducts(null)
     console.log(listProducts)
     if (listProducts.data?.listProducts)
       this.setState({ productList: listProducts.data.listProducts.items })
-  }
-  async listUsers(limit: number, nextToken: string | null): Promise<any> {
-    const apiName = "AdminQueries"
-    const path = "/listUsers"
-    const myInit = {
-      queryStringParameters: {
-        limit: limit,
-        token: nextToken,
-      },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
-      },
-    }
-    const z = await API.get(apiName, path, myInit)
-    console.log(z)
-    const { NextToken, ...rest } = z
-    nextToken = NextToken
-    return { nextToken, ...rest }
   }
 
   async removeUserFromGroup(user: string, groupName: string): Promise<any> {
@@ -248,6 +361,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
           ]}
         >
           <Text>Name</Text>
+        </View>
+        <View
+          style={[
+            this.styles.style.AdminFirstNameTableHeader,
+            this.styles.style.adminCRMTableHeading,
+          ]}
+        >
+          <Text>Picture</Text>
         </View>
         {this.state.showUid ? (
           <View
@@ -418,7 +539,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       console.log({ "Error Updating": e })
     }
     this.setState({ data: [] }, async () => {
-      this.getUsers(null)
+      //this.getUsers(null)
     })
     this.closeEdit()
   }
@@ -497,6 +618,20 @@ export default class AdminScreen extends JCComponent<Props, State> {
             </Text>
           </TouchableOpacity>
         </View>
+        <View
+          style={[
+            this.styles.style.AdminFirstNameTableRow,
+            this.styles.style.adminCRMTableParagraph,
+          ]}
+        >
+          <ProfileImageNew
+            linkToProfile
+            user={item.Username}
+            quality={ProfileImageQuality.medium}
+            type="user"
+            style={ProfileImageStyle.UserXSmall2}
+          />
+        </View>
         {this.state.showUid ? (
           <View
             style={[
@@ -509,7 +644,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 this.showProfile(item.Username)
               }}
             >
-              <Text>{item.Username}</Text>
+              <Text selectable>{item.Username}</Text>
             </TouchableOpacity>
           </View>
         ) : null}
@@ -1100,9 +1235,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         </View>
                       </View>
                       <View style={{ width: "100%" }}>
+                        <SearchUser
+                          setFilteredData={(newData) => this.setState({ data: newData })}
+                        />
                         {this.renderHeader()}
+
                         {this.state.data
-                          ? this.state.data.map((item: any, index: number) => {
+                          ? this.state.data?.map((item: any, index: number) => {
                               // This will render a row for each data element.
                               return this.renderRow(item, index)
                             })
