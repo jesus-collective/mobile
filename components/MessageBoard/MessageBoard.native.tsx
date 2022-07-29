@@ -1,10 +1,10 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation } from "aws-amplify"
-import { Body, Card, CardItem, Left, Right } from "native-base"
+import { Body, CardItem, Left, Right } from "native-base"
 import * as React from "react"
 import { Editor } from "react-draft-wysiwyg"
-import { ScrollView, Text, TouchableOpacity } from "react-native"
+import { ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -165,7 +165,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   this.showProfile(item.author.id)
                 }}
               >
-                <Card
+                <View
                   key={item.id}
                   style={{
                     borderRadius: 10,
@@ -225,7 +225,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                       editorClassName="customEditor"
                     />
                   </CardItem>
-                </Card>
+                </View>
               </TouchableOpacity>
             )
           })}

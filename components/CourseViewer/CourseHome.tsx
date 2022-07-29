@@ -2,7 +2,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
-import { Body, Card, CardItem, Left, Right } from "native-base"
+import { Body, CardItem, Left, Right } from "native-base"
 import React from "react"
 import {
   Dimensions,
@@ -63,7 +63,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             this.showProfile(user.id)
           }}
         >
-          <Card style={this.styles.style.courseConversationCard}>
+          <View style={this.styles.style.courseConversationCard}>
             <CardItem>
               <Left style={this.styles.style.courseHomeConversationCard}>
                 <ProfileImageNew
@@ -92,7 +92,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                 </Body>
               </Left>
             </CardItem>
-          </Card>
+          </View>
         </TouchableOpacity>
       )
     return null
@@ -367,7 +367,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                         >
                           Learning Guide
                         </Text>
-                        <Card style={this.styles.style.courseHomeFileCard}>
+                        <View style={this.styles.style.courseHomeFileCard}>
                           {state.courseData ? (
                             <EditableFileUpload
                               textStyle={null}
@@ -391,7 +391,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                               }}
                             ></EditableFileUpload>
                           ) : null}
-                        </Card>
+                        </View>
                         {}
                         {state.editMode ? (
                           <>
@@ -406,7 +406,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                             >
                               User Setup
                             </Text>
-                            <Card style={this.styles.style.courseHomeUserEditCard}>
+                            <View style={this.styles.style.courseHomeUserEditCard}>
                               <Text
                                 style={{
                                   fontSize: 16,
@@ -477,7 +477,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       return item?.user
                                     })
                                     return (
-                                      <Card key={index}>
+                                      <View key={index}>
                                         <CardItem style={{ zIndex: -1 }}>
                                           <Left style={{ zIndex: -1 }}>
                                             <Text
@@ -546,7 +546,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             isEditable={true}
                                           ></EditableUsers>
                                         </CardItem>
-                                      </Card>
+                                      </View>
                                     )
                                   })}
                                   <TouchableOpacity
@@ -555,7 +555,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       actions.createTriad()
                                     }}
                                   >
-                                    <Card style={{ zIndex: -1 }}>
+                                    <View style={{ zIndex: -1 }}>
                                       <Text
                                         style={{
                                           fontSize: 16,
@@ -568,11 +568,11 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       >
                                         Add Cohort
                                       </Text>
-                                    </Card>
+                                    </View>
                                   </TouchableOpacity>
                                 </>
                               ) : null}
-                            </Card>
+                            </View>
                           </>
                         ) : (
                           <>
@@ -695,7 +695,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                           >
                             To-Do
                           </Text>
-                          <Card style={this.styles.style.courseHomeCoachingCard}>
+                          <View style={this.styles.style.courseHomeCoachingCard}>
                             {Dimensions.get("window").width > 720 ? (
                               <FlatList
                                 renderItem={({ item }) => this.renderToDo(item, actions)}
@@ -707,7 +707,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 return this.renderToDo(item, actions)
                               })
                             )}
-                          </Card>
+                          </View>
                         </>
                       ) : null}
                       {constants["SETTING_ISVISIBLE_COURSE_CALENDAR"] ? (

@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Card, CardItem } from "native-base"
+import { CardItem } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
@@ -55,7 +55,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   renderAddSeriesCard(state: ResourceState, actions: ResourceActions) {
     return state.isEditable ? (
       <TouchableOpacity onPress={actions.createSeries}>
-        <Card style={this.styles.style.resourceContentCurrentSeriesCard}>
+        <View style={this.styles.style.resourceContentCurrentSeriesCard}>
           <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
             <Ionicons size={76} name="ios-add" style={this.styles.style.icon} />
           </CardItem>
@@ -84,7 +84,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           <CardItem>
             <Text style={this.styles.style.episodeTitle}></Text>
           </CardItem>
-        </Card>
+        </View>
       </TouchableOpacity>
     ) : null
   }
@@ -207,11 +207,11 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           this.setState({ showPageConfigModal: true })
         }}
       >
-        <Card>
+        <View>
           <CardItem style={{ backgroundColor: "#FF4438" }}>
             <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Page</Text>
           </CardItem>
-        </Card>
+        </View>
       </TouchableOpacity>
     )
   }
@@ -222,11 +222,11 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           this.setState({ showJCResourceConfigModal: true })
         }}
       >
-        <Card>
+        <View>
           <CardItem style={{ backgroundColor: "#FF4438" }}>
             <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure JC Group</Text>
           </CardItem>
-        </Card>
+        </View>
       </TouchableOpacity>
     )
   }
@@ -239,11 +239,11 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           })
         }}
       >
-        <Card>
+        <View>
           <CardItem style={{ backgroundColor: "#FF4438" }}>
             <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Resources</Text>
           </CardItem>
-        </Card>
+        </View>
       </TouchableOpacity>
     )
   }

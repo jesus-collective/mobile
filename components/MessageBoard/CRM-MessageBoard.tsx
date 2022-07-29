@@ -6,7 +6,7 @@ import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
-import { Badge, Card, CardItem, Left, Right } from "native-base"
+import { Badge, CardItem, Left, Right } from "native-base"
 import React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
@@ -522,7 +522,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
   renderMessage(item: Message | Reply, index: number, parentId: string, isReply: boolean) {
     if (item) {
       return (
-        <Card
+        <View
           key={index}
           style={{
             borderRadius: 10,
@@ -596,7 +596,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
             </div>
           </CardItem>
           {item?.attachment ? <CardItem>{this.renderFileDownloadBadge(item)}</CardItem> : null}
-        </Card>
+        </View>
       )
     }
     return null

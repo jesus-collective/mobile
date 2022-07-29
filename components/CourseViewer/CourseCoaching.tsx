@@ -1,5 +1,4 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Card } from "native-base"
 import React from "react"
 import { Image, Picker, ScrollView, Text, View } from "react-native"
 import CourseHeader from "../CourseHeader/CourseHeader"
@@ -113,7 +112,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                           </Text>
                         </View>
                       </View>
-                      <Card style={this.styles.style.courseCoachingCard}>
+                      <View style={this.styles.style.courseCoachingCard}>
                         <Text
                           style={{
                             fontFamily: "Graphik-Regular-App",
@@ -208,7 +207,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                             </JCButton>
                           </View>
                         </View>
-                      </Card>
+                      </View>
                     </View>
                     <View
                       style={{

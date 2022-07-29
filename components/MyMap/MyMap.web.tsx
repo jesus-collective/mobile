@@ -10,7 +10,7 @@ import moment from "moment"
 import { MapData } from "src/types"
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem } from "native-base"
+import { Body, CardItem } from "native-base"
 import * as React from "react"
 import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { Data } from "../../components/Data/Data"
@@ -127,7 +127,7 @@ class MyMapImpl extends JCComponent<Props, State> {
 
   renderOrg() {
     return (
-      <Card style={this.styles.style.myMapDashboardConversationCard}>
+      <View style={this.styles.style.myMapDashboardConversationCard}>
         <CardItem>
           <Body style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ marginRight: 10 }}>
@@ -168,7 +168,7 @@ class MyMapImpl extends JCComponent<Props, State> {
             </TouchableOpacity>
           </View>
         </CardItem>
-      </Card>
+      </View>
     )
   }
 
@@ -294,7 +294,7 @@ class MyMapImpl extends JCComponent<Props, State> {
 
   renderProfile() {
     return (
-      <Card style={this.styles.style.myMapDashboardConversationCard}>
+      <View style={this.styles.style.myMapDashboardConversationCard}>
         <CardItem>
           <Body style={this.styles.style.mapCardBody}>
             <View style={this.styles.style.mapCardImage}>
@@ -348,13 +348,13 @@ class MyMapImpl extends JCComponent<Props, State> {
             </TouchableOpacity>
           </View>
         </CardItem>
-      </Card>
+      </View>
     )
   }
 
   renderEvent() {
     return (
-      <Card style={this.styles.style.myMapCalloutEventContainer}>
+      <View style={this.styles.style.myMapCalloutEventContainer}>
         <CardItem>
           <Text ellipsizeMode="tail" numberOfLines={1} style={this.styles.style.myMapFontDetailTop}>
             {moment(this.state.selectedPlace.mapItem.event.time).format("MMMM Do YYYY, h:mm a")}
@@ -432,7 +432,7 @@ class MyMapImpl extends JCComponent<Props, State> {
             <AntDesign name="close" size={24} color="#979797" />
           </TouchableOpacity>
         </View>
-      </Card>
+      </View>
     )
   }
   mapRef: any

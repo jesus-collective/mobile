@@ -2,7 +2,6 @@
 import { Tooltip } from "@material-ui/core"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
-import { Card } from "native-base"
 import React from "react"
 import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
@@ -528,7 +527,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                         !state.editMode ? actions.setActiveLesson(item?.id) : null
                       }}
                     >
-                      <Card
+                      <View
                         style={
                           state.isEditable && state.editMode
                             ? this.styles.style.courseDetailLessonCardEdit
@@ -718,7 +717,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                             </TouchableOpacity>
                           ) : null}
                         </View>
-                      </Card>
+                      </View>
                     </TouchableOpacity>
                   )
                 }
@@ -732,7 +731,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                   actions.createLesson()
                 }}
               >
-                <Card style={this.styles.style.courseDetailLessonCardCreate}>
+                <View style={this.styles.style.courseDetailLessonCardCreate}>
                   <View style={{ flexDirection: "row" }}>
                     <Text
                       style={{
@@ -756,7 +755,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                       </Text>
                     </View>
                   </View>
-                </Card>
+                </View>
               </TouchableOpacity>
             ) : null}
           </View>

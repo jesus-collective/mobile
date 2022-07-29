@@ -1,5 +1,5 @@
 import { NavigationProp } from "@react-navigation/native"
-import { Body, Card, CardItem, Left, Right } from "native-base"
+import { Body, CardItem, Left, Right } from "native-base"
 import * as React from "react"
 import { Image, Pressable, ScrollView, Text, View } from "react-native"
 import { constants } from "../../src/constants"
@@ -42,7 +42,7 @@ export default class MyConversations extends JCComponent<Props> {
           <ScrollView>
             {items.map((item) => {
               return (
-                <Card key={item.id} style={this.styles.style.conversationCard}>
+                <View key={item.id} style={this.styles.style.conversationCard}>
                   <CardItem style={{ paddingTop: 28 }}>
                     <Left>
                       <Image
@@ -68,7 +68,7 @@ export default class MyConversations extends JCComponent<Props> {
                   <CardItem>
                     <Text style={this.styles.style.fontConnectWithRole}>{item.message}</Text>
                   </CardItem>
-                </Card>
+                </View>
               )
             })}
           </ScrollView>

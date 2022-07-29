@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { Storage } from "aws-amplify"
-import { Card, CardItem } from "native-base"
+import { CardItem } from "native-base"
 import React from "react"
 import { isBrowser, isMobile, isTablet } from "react-device-detect"
 import { Animated, Image, Picker, Text, View } from "react-native"
@@ -288,8 +288,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
             }
           }}
         >
-          <Card
-            noShadow
+          <View
             style={[
               this.styles.style.resourceGroupCard,
               {
@@ -433,7 +432,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 ellipsizeMode="tail"
               ></EditableText>
             </CardItem>
-          </Card>
+          </View>
         </TouchableOpacity>
         <PageItemSettings
           resourceActions={this.props.resourceActions}
@@ -540,8 +539,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       }
                     }}
                   >
-                    <Card
-                      noShadow
+                    <View
                       style={[
                         this.styles.style.resourceSeries,
                         { zIndex: 6000 + this.props.pageItemIndex.length },
@@ -760,7 +758,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           hideEditButton={this.props.hideEditButton}
                         ></PageItemSettings>
                       </CardItem>
-                    </Card>
+                    </View>
                   </TouchableOpacity>
                 )
               }}
@@ -830,8 +828,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   }
                 }}
               >
-                <Card
-                  noShadow
+                <View
                   style={[
                     this.styles.style.resourceGroupCard,
                     {
@@ -978,7 +975,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       ellipsizeMode="tail"
                     ></EditableText>
                   </CardItem>
-                </Card>
+                </View>
               </TouchableOpacity>
               <PageItemSettings
                 resourceActions={this.props.resourceActions}
