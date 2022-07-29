@@ -3,7 +3,6 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { StyleProvider } from "native-base"
 import * as React from "react"
 import { ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
@@ -19,7 +18,6 @@ import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
-import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateCourseInfoInput,
@@ -584,321 +582,319 @@ export default class CourseScreen extends JCComponent<Props, State> {
         {({ userState, userActions }) => {
           if (!userState) return null
           return this.state.data ? (
-            <StyleProvider style={getTheme()}>
-              <View>
-                <Header
-                  title="Jesus Collective"
-                  navigation={this.props.navigation}
-                  onMapChange={this.state.createNew ? null : this.mapChanged}
-                />
-                <ScrollView>
-                  <MyMap
-                    type={"no-filters"}
-                    size={"25%"}
-                    visible={this.state.showMap}
-                    mapData={this.state.mapData}
-                  ></MyMap>
-                  <View style={this.styles.style.coursesScreenMainContainer}>
-                    <View style={this.styles.style.detailScreenLeftCard}>
-                      <View style={this.styles.style.courseSponsorContainer}>
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                            flex: 0,
-                          }}
-                        >
-                          Course
-                        </Text>
-                        {this.state.isEditable ? (
-                          <JCSwitch
-                            switchLabel="Sponsored"
-                            initState={
-                              this.state.data.isSponsored
-                                ? this.state.data.isSponsored === "true"
-                                : false
-                            }
-                            onPress={(status) => {
-                              this.updateValue("isSponsored", status ? "true" : "false")
-                            }}
-                          ></JCSwitch>
-                        ) : this.state.data.isSponsored == "true" ? (
-                          <Text
-                            style={{
-                              fontSize: 12,
-                              lineHeight: 16,
-                              fontFamily: "Graphik-Regular-App",
-                              color: "#979797",
-                              textTransform: "uppercase",
-                              flex: 0,
-                            }}
-                          >
-                            Sponsored
-                          </Text>
-                        ) : null}
-                      </View>
-
-                      <View>
-                        <EditableText
-                          onChange={(value: any) => {
-                            this.updateValue("name", value)
-                          }}
-                          testID="course-name"
-                          placeholder="Enter Course Name"
-                          multiline={false}
-                          textStyle={this.styles.style.courseMktNameInput}
-                          inputStyle={this.styles.style.courseMktNameInput}
-                          value={this.state.data.name}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-                        <EditableText
-                          onChange={(value: any) => {
-                            this.updateValue("description", value)
-                          }}
-                          testID="course-description"
-                          placeholder="Enter Course Description"
-                          multiline={true}
-                          textStyle={this.styles.style.courseMktDescriptionInput}
-                          inputStyle={this.styles.style.courseMktDescriptionInput}
-                          value={this.state.data.description}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                            flex: 0,
-                            marginTop: 20,
-                          }}
-                        >
-                          Start Date
-                        </Text>
-                        <EditableDate
-                          type="date"
-                          testID="course-startDate"
-                          onChange={(time: any, timeZone: any) => {
-                            this.updateValue("time", time)
-                            this.updateValue("tz", timeZone)
-                          }}
-                          placeholder="Enter Course Start Date"
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.time}
-                          tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
-                          isEditable={this.state.isEditable}
-                        ></EditableDate>
-
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                            flex: 0,
-                            marginTop: 8,
-                          }}
-                        >
-                          Duration
-                        </Text>
-                        <EditableText
-                          testID="course-duration"
-                          onChange={(value: any) => {
-                            this.updateValue("length", value)
-                          }}
-                          placeholder="Enter Course Length"
-                          multiline={false}
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.length}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                            flex: 0,
-                          }}
-                        >
-                          Effort
-                        </Text>
-                        <EditableText
-                          testID="course-effort"
-                          onChange={(value: any) => {
-                            this.updateValue("effort", value)
-                          }}
-                          placeholder="Enter Course Effort"
-                          multiline={false}
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.effort}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                            flex: 0,
-                          }}
-                        >
-                          Cost
-                        </Text>
-                        <EditableDollar
-                          onChange={(value: any) => {
-                            this.updateValue("cost", value)
-                          }}
-                          placeholder="Enter Course Cost"
-                          multiline={false}
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.cost}
-                          isEditable={this.state.isEditable}
-                        ></EditableDollar>
-                      </View>
-
+            <View>
+              <Header
+                title="Jesus Collective"
+                navigation={this.props.navigation}
+                onMapChange={this.state.createNew ? null : this.mapChanged}
+              />
+              <ScrollView>
+                <MyMap
+                  type={"no-filters"}
+                  size={"25%"}
+                  visible={this.state.showMap}
+                  mapData={this.state.mapData}
+                ></MyMap>
+                <View style={this.styles.style.coursesScreenMainContainer}>
+                  <View style={this.styles.style.detailScreenLeftCard}>
+                    <View style={this.styles.style.courseSponsorContainer}>
                       <Text
                         style={{
+                          fontSize: 12,
+                          lineHeight: 16,
                           fontFamily: "Graphik-Regular-App",
-                          fontSize: 16,
-                          lineHeight: 23,
                           color: "#333333",
-                          paddingBottom: 12,
-                          marginTop: 52,
+                          textTransform: "uppercase",
+                          flex: 0,
                         }}
                       >
-                        Organizer
+                        Course
                       </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.showProfile(
-                            this.state.data.ownerUser
-                              ? this.state.data.ownerUser.id
-                              : this.state.currentUserProfile.id
-                          )
-                        }}
-                      >
-                        <ProfileImage
-                          user={
-                            this.state.data.ownerUser
-                              ? this.state.data.ownerUser
-                              : this.state.currentUserProfile
+                      {this.state.isEditable ? (
+                        <JCSwitch
+                          switchLabel="Sponsored"
+                          initState={
+                            this.state.data.isSponsored
+                              ? this.state.data.isSponsored === "true"
+                              : false
                           }
-                          size="small"
-                        />
-                      </TouchableOpacity>
+                          onPress={(status) => {
+                            this.updateValue("isSponsored", status ? "true" : "false")
+                          }}
+                        ></JCSwitch>
+                      ) : this.state.data.isSponsored == "true" ? (
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            lineHeight: 16,
+                            fontFamily: "Graphik-Regular-App",
+                            color: "#979797",
+                            textTransform: "uppercase",
+                            flex: 0,
+                          }}
+                        >
+                          Sponsored
+                        </Text>
+                      ) : null}
+                    </View>
+
+                    <View>
+                      <EditableText
+                        onChange={(value: any) => {
+                          this.updateValue("name", value)
+                        }}
+                        testID="course-name"
+                        placeholder="Enter Course Name"
+                        multiline={false}
+                        textStyle={this.styles.style.courseMktNameInput}
+                        inputStyle={this.styles.style.courseMktNameInput}
+                        value={this.state.data.name}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+                      <EditableText
+                        onChange={(value: any) => {
+                          this.updateValue("description", value)
+                        }}
+                        testID="course-description"
+                        placeholder="Enter Course Description"
+                        multiline={true}
+                        textStyle={this.styles.style.courseMktDescriptionInput}
+                        inputStyle={this.styles.style.courseMktDescriptionInput}
+                        value={this.state.data.description}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+
                       <Text
                         style={{
-                          fontFamily: "Graphik-Bold-App",
-                          fontSize: 20,
-                          lineHeight: 25,
-                          letterSpacing: -0.3,
+                          fontSize: 12,
+                          lineHeight: 16,
+                          fontFamily: "Graphik-Regular-App",
                           color: "#333333",
-                          paddingTop: 48,
-                          paddingBottom: 12,
+                          textTransform: "uppercase",
+                          flex: 0,
+                          marginTop: 20,
                         }}
                       >
-                        Members ({this.state.memberIDs.length})
+                        Start Date
                       </Text>
-                      <View style={this.styles.style.groupAttendeesPictures}>
-                        {this.state.memberIDs.length == 0 ? (
-                          <Text
-                            style={{
-                              fontFamily: "Graphik-Bold-App",
-                              fontSize: 16,
-                              lineHeight: 24,
-                              letterSpacing: -0.3,
-                              color: "#333333",
-                              marginBottom: 30,
-                            }}
-                          >
-                            No Members Yet
-                          </Text>
-                        ) : (
-                          this.state.memberIDs.map((id: any, index: any) => {
-                            return (
-                              <TouchableOpacity
-                                key={index}
-                                onPress={() => {
-                                  this.showProfile(id)
-                                }}
-                              >
-                                <ProfileImage key={index} user={id} size="small" />
-                              </TouchableOpacity>
-                            )
-                          })
-                        )}
-                      </View>
+                      <EditableDate
+                        type="date"
+                        testID="course-startDate"
+                        onChange={(time: any, timeZone: any) => {
+                          this.updateValue("time", time)
+                          this.updateValue("tz", timeZone)
+                        }}
+                        placeholder="Enter Course Start Date"
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.time}
+                        tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
+                        isEditable={this.state.isEditable}
+                      ></EditableDate>
 
-                      {this.renderButtons(userActions)}
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          lineHeight: 16,
+                          fontFamily: "Graphik-Regular-App",
+                          color: "#333333",
+                          textTransform: "uppercase",
+                          flex: 0,
+                          marginTop: 8,
+                        }}
+                      >
+                        Duration
+                      </Text>
+                      <EditableText
+                        testID="course-duration"
+                        onChange={(value: any) => {
+                          this.updateValue("length", value)
+                        }}
+                        placeholder="Enter Course Length"
+                        multiline={false}
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.length}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          lineHeight: 16,
+                          fontFamily: "Graphik-Regular-App",
+                          color: "#333333",
+                          textTransform: "uppercase",
+                          flex: 0,
+                        }}
+                      >
+                        Effort
+                      </Text>
+                      <EditableText
+                        testID="course-effort"
+                        onChange={(value: any) => {
+                          this.updateValue("effort", value)
+                        }}
+                        placeholder="Enter Course Effort"
+                        multiline={false}
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.effort}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          lineHeight: 16,
+                          fontFamily: "Graphik-Regular-App",
+                          color: "#333333",
+                          textTransform: "uppercase",
+                          flex: 0,
+                        }}
+                      >
+                        Cost
+                      </Text>
+                      <EditableDollar
+                        onChange={(value: any) => {
+                          this.updateValue("cost", value)
+                        }}
+                        placeholder="Enter Course Cost"
+                        multiline={false}
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.cost}
+                        isEditable={this.state.isEditable}
+                      ></EditableDollar>
                     </View>
-                    <View style={this.styles.style.detailScreenRightCard}>
-                      <View style={this.styles.style.coursesRightCard}>
-                        {this.state.data ? (
-                          <EditableRichText
-                            onChange={(val) => {
-                              this.updateValue("promotionalText", val)
-                            }}
-                            value={this.state.data.promotionalText}
-                            isEditable={true}
-                          ></EditableRichText>
-                        ) : null}
 
-                        <Text style={this.styles.style.courseDetails}>Course Details</Text>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        lineHeight: 23,
+                        color: "#333333",
+                        paddingBottom: 12,
+                        marginTop: 52,
+                      }}
+                    >
+                      Organizer
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.showProfile(
+                          this.state.data.ownerUser
+                            ? this.state.data.ownerUser.id
+                            : this.state.currentUserProfile.id
+                        )
+                      }}
+                    >
+                      <ProfileImage
+                        user={
+                          this.state.data.ownerUser
+                            ? this.state.data.ownerUser
+                            : this.state.currentUserProfile
+                        }
+                        size="small"
+                      />
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 20,
+                        lineHeight: 25,
+                        letterSpacing: -0.3,
+                        color: "#333333",
+                        paddingTop: 48,
+                        paddingBottom: 12,
+                      }}
+                    >
+                      Members ({this.state.memberIDs.length})
+                    </Text>
+                    <View style={this.styles.style.groupAttendeesPictures}>
+                      {this.state.memberIDs.length == 0 ? (
+                        <Text
+                          style={{
+                            fontFamily: "Graphik-Bold-App",
+                            fontSize: 16,
+                            lineHeight: 24,
+                            letterSpacing: -0.3,
+                            color: "#333333",
+                            marginBottom: 30,
+                          }}
+                        >
+                          No Members Yet
+                        </Text>
+                      ) : (
+                        this.state.memberIDs.map((id: any, index: any) => {
+                          return (
+                            <TouchableOpacity
+                              key={index}
+                              onPress={() => {
+                                this.showProfile(id)
+                              }}
+                            >
+                              <ProfileImage key={index} user={id} size="small" />
+                            </TouchableOpacity>
+                          )
+                        })
+                      )}
+                    </View>
 
-                        {this.state.courseData?.courseWeeks?.items.map(
-                          (item: any, index1: number) => {
-                            return (
-                              <Accordion
-                                key={index1}
-                                header={
-                                  <>
-                                    <Text
-                                      style={{
-                                        fontFamily: "Graphik-Regular-App",
-                                        fontSize: 16,
-                                        lineHeight: 24,
-                                        letterSpacing: -0.3,
-                                        color: "#333333",
-                                      }}
-                                    >
-                                      Week {index1 + 1} - {item.title}
+                    {this.renderButtons(userActions)}
+                  </View>
+                  <View style={this.styles.style.detailScreenRightCard}>
+                    <View style={this.styles.style.coursesRightCard}>
+                      {this.state.data ? (
+                        <EditableRichText
+                          onChange={(val) => {
+                            this.updateValue("promotionalText", val)
+                          }}
+                          value={this.state.data.promotionalText}
+                          isEditable={true}
+                        ></EditableRichText>
+                      ) : null}
+
+                      <Text style={this.styles.style.courseDetails}>Course Details</Text>
+
+                      {this.state.courseData?.courseWeeks?.items.map(
+                        (item: any, index1: number) => {
+                          return (
+                            <Accordion
+                              key={index1}
+                              header={
+                                <>
+                                  <Text
+                                    style={{
+                                      fontFamily: "Graphik-Regular-App",
+                                      fontSize: 16,
+                                      lineHeight: 24,
+                                      letterSpacing: -0.3,
+                                      color: "#333333",
+                                    }}
+                                  >
+                                    Week {index1 + 1} - {item.title}
+                                  </Text>
+                                </>
+                              }
+                            >
+                              <View>
+                                {item.lessons.items.map((lesson, index2: number) => {
+                                  return (
+                                    <Text key={index2}>
+                                      {index1 + 1}.{index2 + 1} - {lesson.name}
                                     </Text>
-                                  </>
-                                }
-                              >
-                                <View>
-                                  {item.lessons.items.map((lesson, index2: number) => {
-                                    return (
-                                      <Text key={index2}>
-                                        {index1 + 1}.{index2 + 1} - {lesson.name}
-                                      </Text>
-                                    )
-                                  })}
-                                </View>
-                              </Accordion>
-                            )
-                          }
-                        )}
-                      </View>
+                                  )
+                                })}
+                              </View>
+                            </Accordion>
+                          )
+                        }
+                      )}
                     </View>
                   </View>
-                </ScrollView>
-              </View>
-            </StyleProvider>
+                </View>
+              </ScrollView>
+            </View>
           ) : null
         }}
       </CourseScreen.UserConsumer>

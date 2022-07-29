@@ -2,10 +2,9 @@
 import { Tooltip } from "@material-ui/core"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
-import { Card, Icon, Picker, StyleProvider } from "native-base"
+import { Card, Icon, Picker } from "native-base"
 import React from "react"
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import getTheme from "../../native-base-theme/components"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import EditableCourseAssignment2 from "../Forms/EditableCourseAssignment2"
 import EditableDate from "../Forms/EditableDate"
@@ -1139,20 +1138,18 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           if (!state) return null
           const week = state.courseWeeks[state.activeWeek]
           return state.data && state.currentScreen == "Details" ? (
-            <StyleProvider style={getTheme()}>
-              <View style={{ flex: 85 }}>
-                {/* <CourseHeader groupData={state.data}></CourseHeader> */}
-                <CourseDetailMenu />
-                <View style={{ flex: 80 }}>
-                  <ScrollView style={{ flex: 85 }}>
-                    <View style={this.styles.style.courseDetailMainContainer}>
-                      {this.renderWeekDetails(state, actions, week)}
-                      {this.renderLessonDetails(state, actions, week)}
-                    </View>
-                  </ScrollView>
-                </View>
+            <View style={{ flex: 85 }}>
+              {/* <CourseHeader groupData={state.data}></CourseHeader> */}
+              <CourseDetailMenu />
+              <View style={{ flex: 80 }}>
+                <ScrollView style={{ flex: 85 }}>
+                  <View style={this.styles.style.courseDetailMainContainer}>
+                    {this.renderWeekDetails(state, actions, week)}
+                    {this.renderLessonDetails(state, actions, week)}
+                  </View>
+                </ScrollView>
               </View>
-            </StyleProvider>
+            </View>
           ) : null
         }}
       </CourseDetailImpl.Consumer>

@@ -6,7 +6,7 @@ import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
-import { Badge, Card, CardItem, Left, Right, StyleProvider } from "native-base"
+import { Badge, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
@@ -15,7 +15,6 @@ import Observable, { ZenObservable } from "zen-observable-ts"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import getTheme from "../../native-base-theme/components"
 import {
   CreateCRMMessageInput,
   CreateCRMReplyInput,
@@ -609,17 +608,15 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
 
     if (this.props.messages && this.props.rootId) {
       return (
-        <StyleProvider style={getTheme()}>
-          <View style={this.styles.style.messageBoardContainerFullSize}>
-            {this.renderMessageInput()}
-            <FlatList
-              scrollEnabled
-              renderItem={({ item, index }) => this.renderMessageWithReplies(item, index)}
-              data={messages}
-              style={{ height: height - 280 }}
-            />
-          </View>
-        </StyleProvider>
+        <View style={this.styles.style.messageBoardContainerFullSize}>
+          {this.renderMessageInput()}
+          <FlatList
+            scrollEnabled
+            renderItem={({ item, index }) => this.renderMessageWithReplies(item, index)}
+            data={messages}
+            style={{ height: height - 280 }}
+          />
+        </View>
       )
     }
 

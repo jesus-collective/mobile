@@ -1,15 +1,13 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation } from "aws-amplify"
-import { Body, Card, CardItem, Left, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Left, Right } from "native-base"
 import * as React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { ScrollView, Text, TouchableOpacity } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import getTheme from "../../native-base-theme/components"
-import material from "../../native-base-theme/variables/material"
 import { CreateMessageInput, ModelSortDirection } from "../../src/API"
 import * as subscriptions from "../../src/graphql/subscriptions"
 import { JCCognitoUser } from "../../src/types"
@@ -122,118 +120,116 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   render() {
     return this.state.message != null && this.state.created ? (
       <ErrorBoundary>
-        <StyleProvider style={getTheme(material)}>
-          <View style={this.styles.style.nativeMessageBoardContainer}>
-            <ScrollView style={{ marginBottom: 40 }}>
-              {this.state.UserDetails != null ? (
-                <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
-              ) : null}
-              <Editor
-                placeholder="Write a message..."
-                editorState={this.state.editorState}
-                toolbarClassName="customToolbar"
-                wrapperClassName="customWrapperSendmessage"
-                editorClassName="customEditorSendmessage"
-                onEditorStateChange={(z) => {
-                  this.updateEditorInput(z)
-                }}
-                onContentStateChange={(z) => {
-                  this.updateInput(z)
-                }}
-                toolbar={{
-                  options: ["inline", "list"],
-                  inline: {
-                    options: ["bold", "italic", "underline"],
-                  },
-                  list: {
-                    options: ["unordered", "ordered"],
-                  },
-                }}
-              />
-              <JCButton
-                buttonType={ButtonTypes.SolidRightJustified}
+        <View style={this.styles.style.nativeMessageBoardContainer}>
+          <ScrollView style={{ marginBottom: 40 }}>
+            {this.state.UserDetails != null ? (
+              <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
+            ) : null}
+            <Editor
+              placeholder="Write a message..."
+              editorState={this.state.editorState}
+              toolbarClassName="customToolbar"
+              wrapperClassName="customWrapperSendmessage"
+              editorClassName="customEditorSendmessage"
+              onEditorStateChange={(z) => {
+                this.updateEditorInput(z)
+              }}
+              onContentStateChange={(z) => {
+                this.updateInput(z)
+              }}
+              toolbar={{
+                options: ["inline", "list"],
+                inline: {
+                  options: ["bold", "italic", "underline"],
+                },
+                list: {
+                  options: ["unordered", "ordered"],
+                },
+              }}
+            />
+            <JCButton
+              buttonType={ButtonTypes.SolidRightJustified}
+              onPress={() => {
+                this.saveMessage()
+              }}
+            >
+              Post
+            </JCButton>
+          </ScrollView>
+
+          {this.state.data.items.map((item: any) => {
+            return (
+              <TouchableOpacity
+                key={item.id}
                 onPress={() => {
-                  this.saveMessage()
+                  this.showProfile(item.author.id)
                 }}
               >
-                Post
-              </JCButton>
-            </ScrollView>
-
-            {this.state.data.items.map((item: any) => {
-              return (
-                <TouchableOpacity
+                <Card
                   key={item.id}
-                  onPress={() => {
-                    this.showProfile(item.author.id)
+                  style={{
+                    borderRadius: 10,
+                    minHeight: 50,
+                    marginBottom: 35,
+                    borderColor: "#ffffff",
                   }}
                 >
-                  <Card
-                    key={item.id}
+                  <CardItem
                     style={{
-                      borderRadius: 10,
-                      minHeight: 50,
-                      marginBottom: 35,
-                      borderColor: "#ffffff",
+                      borderBottomLeftRadius: 0,
+                      borderBottomRightRadius: 0,
+                      borderTopLeftRadius: 10,
+                      borderTopRightRadius: 10,
+                      backgroundColor: "#F9FAFC",
                     }}
                   >
-                    <CardItem
-                      style={{
-                        borderBottomLeftRadius: 0,
-                        borderBottomRightRadius: 0,
-                        borderTopLeftRadius: 10,
-                        borderTopRightRadius: 10,
-                        backgroundColor: "#F9FAFC",
-                      }}
-                    >
-                      <Left>
-                        <ProfileImage
-                          size="small"
-                          user={item.owner ? item.owner : null}
-                        ></ProfileImage>
-                        <Body>
-                          <Text style={this.styles.style.groupFormName}>
-                            {item.author != null ? item.author.given_name : null}{" "}
-                            {item.author != null ? item.author.family_name : null}
-                          </Text>
-                          <Text style={this.styles.style.groupFormRole}>
-                            {item.author != null ? item.author.currentRole : null}
-                          </Text>
-                        </Body>
-                      </Left>
-                      <Right>
-                        <Text style={this.styles.style.groupFormDate}>
-                          {new Date(parseInt(item.when, 10)).toLocaleString()}
+                    <Left>
+                      <ProfileImage
+                        size="small"
+                        user={item.owner ? item.owner : null}
+                      ></ProfileImage>
+                      <Body>
+                        <Text style={this.styles.style.groupFormName}>
+                          {item.author != null ? item.author.given_name : null}{" "}
+                          {item.author != null ? item.author.family_name : null}
                         </Text>
-                      </Right>
-                    </CardItem>
-                    <CardItem
-                      style={{
-                        marginTop: 0,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                        borderTopLeftRadius: 0,
-                        borderTopRightRadius: 0,
-                        borderBottomLeftRadius: 10,
-                        borderBottomRightRadius: 10,
-                        backgroundColor: "#ffffff",
-                      }}
-                    >
-                      <Editor
-                        readOnly
-                        toolbarHidden
-                        initialContentState={JSON.parse(item.content)}
-                        toolbarClassName="customToolbar"
-                        wrapperClassName="customWrapper"
-                        editorClassName="customEditor"
-                      />
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>
-              )
-            })}
-          </View>
-        </StyleProvider>
+                        <Text style={this.styles.style.groupFormRole}>
+                          {item.author != null ? item.author.currentRole : null}
+                        </Text>
+                      </Body>
+                    </Left>
+                    <Right>
+                      <Text style={this.styles.style.groupFormDate}>
+                        {new Date(parseInt(item.when, 10)).toLocaleString()}
+                      </Text>
+                    </Right>
+                  </CardItem>
+                  <CardItem
+                    style={{
+                      marginTop: 0,
+                      paddingTop: 0,
+                      paddingBottom: 0,
+                      borderTopLeftRadius: 0,
+                      borderTopRightRadius: 0,
+                      borderBottomLeftRadius: 10,
+                      borderBottomRightRadius: 10,
+                      backgroundColor: "#ffffff",
+                    }}
+                  >
+                    <Editor
+                      readOnly
+                      toolbarHidden
+                      initialContentState={JSON.parse(item.content)}
+                      toolbarClassName="customToolbar"
+                      wrapperClassName="customWrapper"
+                      editorClassName="customEditor"
+                    />
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>
+            )
+          })}
+        </View>
       </ErrorBoundary>
     ) : null
   }
