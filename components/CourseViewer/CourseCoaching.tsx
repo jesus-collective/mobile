@@ -1,7 +1,7 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Card, Container, Content, Icon, Picker, StyleProvider } from "native-base"
+import { Card, Container, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Image, Text } from "react-native"
+import { Image, ScrollView, Text } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
@@ -31,7 +31,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                 <CourseHeader groupData={state.data}></CourseHeader>
 
                 <Container style={{ flex: 80 }}>
-                  <Content style={{ flex: 80 }}>
+                  <ScrollView style={{ flex: 80 }}>
                     <Container
                       style={{
                         display: "flex",
@@ -224,7 +224,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                         }}
                       ></Container>
                     </Container>
-                  </Content>
+                  </ScrollView>
                 </Container>
               </Container>
             </StyleProvider>

@@ -1,8 +1,8 @@
 import { Ionicons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content, Picker, Text } from "native-base"
+import { Container, Picker, Text } from "native-base"
 import React from "react"
-import { TextInput, View } from "react-native"
+import { ScrollView, TextInput, View } from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -528,7 +528,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           return (
             <Container testID="events">
               {userActions.isMemberOf("admin") ? (
-                <Content>
+                <ScrollView>
                   {this.renderPreview()}
 
                   <Container style={this.styles.style.fontRegular}>
@@ -659,15 +659,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       })}
                     </View>
                   </Container>
-                </Content>
+                </ScrollView>
               ) : (
-                <Content>
+                <ScrollView>
                   <Container style={this.styles.style.eventsScreenMainContainer}>
                     <Container style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
                     </Container>
                   </Container>
-                </Content>
+                </ScrollView>
               )}
               {this.renderAddMenuModal()}
               {this.renderAddSubMenuModal()}

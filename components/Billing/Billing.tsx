@@ -17,10 +17,10 @@ import {
 } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import Amplify, { Auth } from "aws-amplify"
-import { Content, Label } from "native-base"
+import { Label } from "native-base"
 import onlyLastPromise, { DiscardSignal } from "only-last-promise"
 import React, { useState } from "react"
-import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
@@ -401,11 +401,11 @@ class BillingImpl extends JCComponent<Props, State> {
           this.setState({ showEULA: false })
         }}
       >
-        <Content>
+        <ScrollView>
           <View accessible>
             <EditableRichText value={eula ?? ""} isEditable={false}></EditableRichText>
           </View>
-        </Content>
+        </ScrollView>
       </JCModal>
     )
   }
@@ -667,7 +667,7 @@ class BillingImpl extends JCComponent<Props, State> {
             {({ userState, userActions }) => {
               if (!userState) return null
               return this.state.processing === "complete" ? (
-                <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
+                <ScrollView style={this.styles.style.signUpScreen1PaymentColumn1}>
                   <Image
                     style={{ alignSelf: "center", marginBottom: 20 }}
                     source={require("../../assets/svg/checkmark-circle.svg")}
@@ -709,11 +709,11 @@ class BillingImpl extends JCComponent<Props, State> {
                   >
                     {this.state.errorMsg}
                   </Text>
-                </Content>
+                </ScrollView>
               ) : (
                 <>
                   {this.state.processing == "processing" ? (
-                    <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <ScrollView style={this.styles.style.signUpScreen1PaymentColumn1}>
                       <Text
                         accessibilityRole="header"
                         style={this.styles.style.SignUpScreenSetupText}
@@ -724,10 +724,12 @@ class BillingImpl extends JCComponent<Props, State> {
                         Please wait while we process your payment. This may take several seconds.
                       </Text>
                       <ActivityIndicator accessibilityRole="alert" accessibilityLabel="Loading" />
-                    </Content>
+                    </ScrollView>
                   ) : null}
 
-                  <Content style={{ display: this.state.processing == "entry" ? "flex" : "none" }}>
+                  <ScrollView
+                    style={{ display: this.state.processing == "entry" ? "flex" : "none" }}
+                  >
                     <View style={this.styles.style.signUpScreen1PaymentColumn1Form}>
                       <Text
                         accessibilityRole="header"
@@ -1199,7 +1201,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         </JCButton>
                       </View>
                     </View>
-                  </Content>
+                  </ScrollView>
                 </>
               )
             }}

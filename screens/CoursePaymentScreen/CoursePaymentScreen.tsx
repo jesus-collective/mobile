@@ -1,7 +1,8 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
-import { Container, Content, Text } from "native-base"
+import { Container, Text } from "native-base"
 import React, { useEffect, useState } from "react"
+import { ScrollView } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -63,7 +64,7 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
     return (
       <Container>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
+        <ScrollView>
           <Container
             style={{ maxWidth: 800, alignSelf: "center", marginVertical: 48, marginHorizontal: 24 }}
           >
@@ -73,14 +74,14 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
               onFailureCallback={(e: any) => console.error(e)}
             />
           </Container>
-        </Content>
+        </ScrollView>
       </Container>
     )
   } else {
     return (
       <Container>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
+        <ScrollView>
           <Container style={{ width: "50%", alignSelf: "center", marginVertical: 64 }}>
             <Text style={{ fontSize: 36, fontFamily: "Graphik-Regular-App" }}>
               Something went wrong.
@@ -97,7 +98,7 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
               </JCButton>
             </Container>
           </Container>
-        </Content>
+        </ScrollView>
       </Container>
     )
   }

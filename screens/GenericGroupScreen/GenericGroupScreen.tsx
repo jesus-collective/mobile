@@ -3,9 +3,9 @@ import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { CardItem, Container, Content, Icon, Picker, StyleProvider, View } from "native-base"
+import { CardItem, Container, Icon, Picker, StyleProvider, View } from "native-base"
 import React, { lazy } from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity } from "react-native"
 import { JCCognitoUser, MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
@@ -570,7 +570,7 @@ export default class EventScreen extends JCComponent<Props, State> {
     return this.state.data ? (
       <StyleProvider style={getTheme()}>
         <Container>
-          <Content>
+          <ScrollView>
             <MyMap
               initCenter={this.state.initCenter}
               type={"no-filters"}
@@ -845,7 +845,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                 {/*  <Zoom></Zoom>*/}
               </Container>
             </Container>
-          </Content>
+          </ScrollView>
         </Container>
       </StyleProvider>
     ) : null

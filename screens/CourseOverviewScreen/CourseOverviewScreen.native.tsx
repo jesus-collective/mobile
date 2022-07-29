@@ -3,9 +3,9 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { Container, Content, StyleProvider, View } from "native-base"
+import { Container, StyleProvider, View } from "native-base"
 import * as React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { ScrollView, Text, TouchableOpacity } from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
@@ -591,7 +591,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                   navigation={this.props.navigation}
                   onMapChange={this.state.createNew ? null : this.mapChanged}
                 />
-                <Content>
+                <ScrollView>
                   <MyMap
                     type={"no-filters"}
                     size={"25%"}
@@ -896,7 +896,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                       </Container>
                     </Container>
                   </Container>
-                </Content>
+                </ScrollView>
               </Container>
             </StyleProvider>
           ) : null
