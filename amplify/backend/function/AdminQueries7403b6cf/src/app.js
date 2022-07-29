@@ -178,14 +178,15 @@ app.get("/getUser", async (req, res, next) => {
 })
 
 app.get("/listUsers", async (req, res, next) => {
+  console.log("Logging req.query", req.query)
   try {
     let response
     if (req.query.token) {
-      response = await listUsers(req.query.limit || 25, req.query.token)
+      response = await listUsers(req.query.limit || 25, req.query.token, req.query.filter || null)
     } else if (req.query.limit) {
-      response = await listUsers((Limit = req.query.limit))
+      response = await listUsers((Limit = req.query.limit), null, req.query.filter)
     } else {
-      response = await listUsers()
+      response = await listUsers(null, null, req.query.filter)
     }
     res.status(200).json(response)
   } catch (err) {
