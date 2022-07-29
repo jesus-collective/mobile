@@ -1,5 +1,5 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { AntDesign, Ionicons } from "@expo/vector-icons"
+import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
@@ -434,7 +434,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.updateValue("readGroups", tmp)
             }}
           >
-            <Picker.Item key={null} label={"Add Group"} value={null} />
+            <Picker.Item key={null} label={"Add Group"} value={undefined} />
             {Object.keys(UserGroupType).map((org: string) => {
               return <Picker.Item key={org} label={org} value={org} />
             })}
@@ -687,7 +687,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                   {this.state.isEditable ? (
                     <Picker
                       mode="dropdown"
-                      iosIcon={<Ionicons name="arrow-down" />}
+                      //   iosIcon={<Icon name="arrow-down" />}
                       style={{
                         width: "50%",
                         marginBottom: 30,
@@ -696,10 +696,10 @@ export default class EventScreen extends JCComponent<Props, State> {
                         height: 30,
                         flexGrow: 0,
                       }}
-                      placeholder="Event type"
-                      placeholderStyle={{ color: "#bfc6ea" }}
-                      placeholderIconColor="#007aff"
-                      selectedValue={this.state.data.eventType}
+                      //  placeholder="Event type"
+                      //  placeholderStyle={{ color: "#bfc6ea" }}
+                      //  placeholderIconColor="#007aff"
+                      selectedValue={this.state.data.eventType ?? undefined}
                       onValueChange={(value: any) => {
                         this.updateValue("eventType", value)
                       }}

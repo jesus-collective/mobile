@@ -88,7 +88,7 @@ class ResourceList extends JCComponent<Props, State> {
                   paddingTop: 3,
                   paddingBottom: 3,
                 }}
-                selectedValue={page.state.settings.style}
+                selectedValue={page.state.settings.style ?? undefined}
                 onValueChange={(value: any) => {
                   console.log({ value: value })
                   const tmp = page.state.settings

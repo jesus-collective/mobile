@@ -297,6 +297,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               onStartShouldSetResponderCapture={() => true}
               onMoveShouldSetResponder={() => true}
               mode="dropdown"
+              // iosIcon={<Icon name="arrow-down" />}
               style={{
                 width: "30%",
                 marginBottom: 0,
@@ -307,6 +308,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 marginRight: 0,
                 borderColor: "#dddddd",
               }}
+              // placeholder="Event type"
+              //placeholderStyle={{ color: "#bfc6ea" }}
+              //placeholderIconColor="#007aff"
               selectedValue={this.state.pricePer}
             >
               <Picker.Item label="One-Time" value="One-Time" />

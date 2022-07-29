@@ -132,12 +132,16 @@ class CourseCoachingImpl extends JCComponent<Props> {
                           <View style={{ flex: 40, marginTop: 30, height: 50, marginRight: 30 }}>
                             <Picker
                               mode="dropdown"
+                              //  iosIcon={<Icon name="arrow-down" />}
                               style={{
                                 width: "100%",
                                 height: 50,
                                 paddingLeft: 15,
                                 paddingRight: 15,
                               }}
+                              //  placeholder="Select your Coach"
+                              //   placeholderStyle={{ color: "#bfc6ea" }}
+                              //   placeholderIconColor="#007aff"
                             >
                               {
                                 //   selectedValue={this.state.selected2}

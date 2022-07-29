@@ -137,6 +137,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               onStartShouldSetResponderCapture={() => true}
               onMoveShouldSetResponder={() => true}
               mode="dropdown"
+              //    iosIcon={<Icon name="arrow-down" />}
               style={{
                 width: "50%",
                 marginBottom: 0,
@@ -147,6 +148,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                 marginRight: 0,
                 borderColor: "#dddddd",
               }}
+              // placeholder="Event type"
+              // placeholderStyle={{ color: "#bfc6ea" }}
+              // placeholderIconColor="#007aff"
               selectedValue={item?.courseLessonResponseId ?? undefined}
               onValueChange={(value) => {
                 actions.updateLesson(
@@ -657,6 +661,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                                   onStartShouldSetResponderCapture={() => true}
                                   onMoveShouldSetResponder={() => true}
                                   mode="dropdown"
+                                  //  iosIcon={<Icon name="arrow-down" />}
                                   style={{
                                     width: "30%",
                                     marginBottom: 0,
@@ -667,6 +672,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                                     marginRight: 0,
                                     borderColor: "#dddddd",
                                   }}
+                                  // placeholder="Event type"
+                                  // placeholderStyle={{ color: "#bfc6ea" }}
+                                  // placeholderIconColor="#007aff"
                                   selectedValue={item?.lessonType}
                                   onValueChange={(value) => {
                                     actions.updateLesson(

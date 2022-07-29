@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Image,
   Picker,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -1269,12 +1270,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (this.state.UserDetails)
       return (
         <View style={{ width: "100%" }}>
-          <Text style={this.styles.style.fontFormSmall}>
+          <View style={this.styles.style.fontFormSmall}>
             <Text style={this.styles.style.fontFormMandatory}>
               {this.state.isEditable && this.state.editMode ? "*" : ""}
             </Text>
             Current Role
-          </Text>
+          </View>
           <EditableText
             accessibilityLabel="Current role"
             onChange={(e) => {
@@ -1394,7 +1395,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (this.state.UserDetails)
       return (this.state.isEditable && this.state.editMode) || this.state.UserDetails.orgName ? (
         <View>
-          <Text style={this.styles.style.fontFormSmall}>Organization Name</Text>
+          <View style={this.styles.style.fontFormSmall}>Organization Name</View>
           <EditableText
             accessibilityLabel="Organization name"
             onChange={(e) => {
@@ -1418,7 +1419,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return (this.state.isEditable && this.state.editMode) ||
         (this.state.UserDetails.orgType && this.state.UserDetails.orgType !== "None") ? (
         <View style={{ marginTop: 15 }}>
-          <Text style={this.styles.style.fontFormSmall}>Type of Organization</Text>
+          <View style={this.styles.style.fontFormSmall}>Type of Organization</View>
           {this.state.isEditable && this.state.editMode ? (
             <View style={this.styles.style.myProfileOrgView}>
               <Picker
@@ -1482,9 +1483,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
       <View style={{ marginTop: 15 }}>
         {this.state.isEditable && this.state.editMode ? (
           <View>
-            <Text style={this.styles.style.fontFormSmall}>
+            <View style={this.styles.style.fontFormSmall}>
               How many employees are there in the organization?
-            </Text>
+            </View>
             <Picker
               accessibilityLabel="Number of employees in organization"
               testID="profile-orgSize"
@@ -1502,7 +1503,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
         ) : this.state.UserDetails.orgSize ? (
           <View>
-            <Text style={this.styles.style.fontFormSmall}>Employees</Text>
+            <View style={this.styles.style.fontFormSmall}>Employees</View>
 
             <EditableText
               multiline={true}
@@ -1524,7 +1525,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       <View style={{ marginTop: 15 }}>
         {this.state.isEditable && this.state.editMode ? (
           <View>
-            <Text style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</Text>
+            <View style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</View>
             <Picker
               accessibilityLabel="Average Sunday morning attendance"
               style={this.styles.style.myprofilePicker}
@@ -1541,7 +1542,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
         ) : this.state.UserDetails.sundayAttendance ? (
           <View>
-            <Text style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</Text>
+            <View style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</View>
             <EditableText
               accessibilityLabel="Average Sunday morning attendance"
               multiline={true}
@@ -1563,7 +1564,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       <View style={{ marginTop: 15 }}>
         {this.state.isEditable && this.state.editMode ? (
           <View>
-            <Text style={this.styles.style.fontFormSmall}>Number of volunteers</Text>
+            <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
             <Picker
               accessibilityLabel="Number of volunteers"
               style={this.styles.style.myprofilePicker}
@@ -1580,7 +1581,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
         ) : this.state.UserDetails.numberVolunteers ? (
           <View>
-            <Text style={this.styles.style.fontFormSmall}>Number of volunteers</Text>
+            <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
             <EditableText
               multiline={true}
               textStyle={this.styles.style.fontFormSmallDarkGrey}
@@ -2054,6 +2055,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <ScrollView ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
               {this.renderTopBar(userActions)}
               <View style={{ flexDirection: "row" }}>
+
+{/*              <View style={this.styles.style.myProfileMainContainer}>*/}
                 {this.renderLeftBar(userActions)}
                 {this.state.showPage == "admin" && this.renderAdmin(userActions)}
                 {this.state.showPage == "billing" && this.renderBilling()}

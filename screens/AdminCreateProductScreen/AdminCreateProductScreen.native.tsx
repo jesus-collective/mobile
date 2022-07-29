@@ -1,4 +1,4 @@
-import { AntDesign, Ionicons } from "@expo/vector-icons"
+import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import {
@@ -286,7 +286,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               onStartShouldSetResponderCapture={() => true}
               onMoveShouldSetResponder={() => true}
               mode="dropdown"
-              iosIcon={<Ionicons name="arrow-down" />}
+              // iosIcon={<Icon name="arrow-down" />}
               style={{
                 width: "30%",
                 marginBottom: 0,
@@ -297,9 +297,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 marginRight: 0,
                 borderColor: "#dddddd",
               }}
-              placeholder="Event type"
-              placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
+              //  placeholder="Event type"
+              // placeholderStyle={{ color: "#bfc6ea" }}
+              // placeholderIconColor="#007aff"
               selectedValue={this.state.pricePer}
             >
               <Picker.Item label="One-Time" value="One-Time" />

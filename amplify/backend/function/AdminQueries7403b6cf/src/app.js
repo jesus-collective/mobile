@@ -178,7 +178,6 @@ app.get("/getUser", async (req, res, next) => {
 })
 
 app.get("/listUsers", async (req, res, next) => {
-  console.log("Logging req.query", req.query)
   try {
     let response
     if (req.query.token) {

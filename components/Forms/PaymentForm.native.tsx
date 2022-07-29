@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, ViewStyle } from "react-native"
+import { StyleSheet, Text, View, ViewStyle } from "react-native"
 import { GetProductQuery } from "../../src/API"
 import PayPal from "./Paypal/PayPal"
 //import { convertFromRaw } from 'draft-js';

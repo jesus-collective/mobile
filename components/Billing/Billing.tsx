@@ -17,7 +17,6 @@ import {
 } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import Amplify, { Auth } from "aws-amplify"
-
 import onlyLastPromise, { DiscardSignal } from "only-last-promise"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"

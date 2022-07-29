@@ -531,7 +531,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
               paddingTop: 3,
               paddingBottom: 3,
             }}
-            selectedValue={null}
+            selectedValue={undefined}
             onValueChange={(value: string) => {
               console.log({ value: value })
               let tmp = this.state.data.readGroups
@@ -540,7 +540,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
               this.updateValue("readGroups", tmp)
             }}
           >
-            <Picker.Item key={null} label={"Add Group"} value={null} />
+            <Picker.Item key={null} label={"Add Group"} value={undefined} />
             {Object.keys(UserGroupType).map((org: string) => {
               return <Picker.Item key={org} label={org} value={org} />
             })}

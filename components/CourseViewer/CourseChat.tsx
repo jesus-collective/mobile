@@ -2,7 +2,6 @@
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import { Dimensions, Picker, Pressable, Text, View } from "react-native"
-
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { CourseContext } from "./CourseContext"
@@ -100,6 +99,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                         onStartShouldSetResponderCapture={() => true}
                         onMoveShouldSetResponder={() => true}
                         mode="dropdown"
+                        //                        iosIcon={<Icon name="arrow-down" />}
                         style={{
                           width: "50%",
                           marginBottom: 0,
@@ -110,9 +110,12 @@ class CourseChatImpl extends JCComponent<Props, State> {
                           marginRight: 0,
                           borderColor: "#dddddd",
                         }}
+                        //  placeholder="Triad"
+                        //  placeholderStyle={{ color: "#bfc6ea" }}
+                        //  placeholderIconColor="#007aff"
                         selectedValue={this.state.triadSelection.toString()}
-                        onValueChange={(value: string) => {
-                          this.setState({ triadSelection: parseInt(value) })
+                        onValueChange={(value: number) => {
+                          this.setState({ triadSelection: value })
                         }}
                       >
                         {actions.myCourseGroups().completeTriad?.map((item: any, index: number) => {

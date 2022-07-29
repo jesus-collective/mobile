@@ -172,6 +172,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
           <Picker
+            //placeholder="Enter Action Value"
             selectedValue={this.state.menuAction}
             onValueChange={(e) => {
               this.setState({ menuAction: e })
@@ -278,6 +279,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
           <Picker
+            //placeholder="Enter Action Value"
             selectedValue={this.state.subMenuAction}
             onValueChange={(e) => {
               this.setState({ subMenuAction: e })
