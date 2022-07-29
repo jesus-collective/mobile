@@ -4,9 +4,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Picker } from "native-base"
 import React from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { GetUserQueryResult, JCCognitoUser, MapData } from "src/types"
 import PaidUsersModal from "../../components/CourseViewer/PaidUsersModal"
 import { Data } from "../../components/Data/Data"
@@ -531,7 +530,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
               paddingTop: 3,
               paddingBottom: 3,
             }}
-            selectedValue={null}
+            selectedValue={undefined}
             onValueChange={(value: string) => {
               console.log({ value: value })
               let tmp = this.state.data.readGroups
@@ -540,7 +539,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
               this.updateValue("readGroups", tmp)
             }}
           >
-            <Picker.Item key={null} label={"Add Group"} value={null} />
+            <Picker.Item key={null} label={"Add Group"} value={undefined} />
             {Object.keys(UserGroupType).map((org: string) => {
               return <Picker.Item key={org} label={org} value={org} />
             })}

@@ -1,5 +1,5 @@
-import { Picker } from "native-base"
 import React from "react"
+import { Picker } from "react-native"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceActions, ResourceState } from "./ResourceContext"
 
@@ -31,7 +31,7 @@ export default class ResourceSelector {
             page.setState({ settings: tmp })
           }}
         >
-          <Picker.Item key={"null"} label={"None"} value={null} />
+          <Picker.Item key={"null"} label={"None"} value={undefined} />
           {resourceState.resourceData?.resources.items.map((org, index: number) => {
             return <Picker.Item key={index} label={org?.title ?? ""} value={org?.id} />
           })}
@@ -50,14 +50,14 @@ export default class ResourceSelector {
               paddingTop: 3,
               paddingBottom: 3,
             }}
-            selectedValue={page.state.settings.seriesID}
+            selectedValue={page.state.settings.seriesID ?? undefined}
             onValueChange={(value: any) => {
               const tmp = page.state.settings
               tmp.seriesID = value == "None" ? null : value
               page.setState({ settings: tmp })
             }}
           >
-            <Picker.Item key={"null"} label={"None"} value={null} />
+            <Picker.Item key={"null"} label={"None"} value={undefined} />
             {resourceActions &&
               resourceActions
                 .getResourceByID(page.state.settings.resourceID)!
@@ -82,14 +82,14 @@ export default class ResourceSelector {
                 paddingTop: 3,
                 paddingBottom: 3,
               }}
-              selectedValue={page.state.settings.episodeID}
+              selectedValue={page.state.settings.episodeID ?? undefined}
               onValueChange={(value: any) => {
                 const tmp = page.state.settings
                 tmp.episodeID = value == "None" ? null : value
                 page.setState({ settings: tmp })
               }}
             >
-              <Picker.Item key={"null"} label={"None"} value={null} />
+              <Picker.Item key={"null"} label={"None"} value={undefined} />
               {resourceActions
                 .getSeriesByID(page.state.settings.resourceID, page.state.settings.seriesID)!
                 .episodes?.items?.map((org, index: number) => {

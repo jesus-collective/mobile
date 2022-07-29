@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
-import { Picker } from "native-base"
 import React from "react"
+import { Picker } from "react-native"
 import { ResourceSetupProp } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"

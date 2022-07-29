@@ -2,9 +2,9 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
-import { Form, Input, Item, Label, Picker } from "native-base"
+import { Form, Input, Item, Label } from "native-base"
 import * as React from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
@@ -929,12 +929,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                               this.handleInputChange(itemValue, "orgType")
                             }}
                             selectedValue={
-                              orgTypes.includes(this.state.OrganizationDetails.orgType)
+                              (orgTypes.includes(this.state.OrganizationDetails.orgType)
                                 ? this.state.OrganizationDetails.orgType
                                 : this.state.OrganizationDetails.orgType === null ||
                                   this.state.OrganizationDetails.orgType === "None"
                                 ? "None"
-                                : ""
+                                : "") ?? undefined
                             }
                           >
                             <Picker.Item label={"None Selected"} value={"None"} />
@@ -985,7 +985,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "orgSize")
                             }}
-                            selectedValue={this.state.OrganizationDetails.orgSize}
+                            selectedValue={this.state.OrganizationDetails.orgSize ?? undefined}
                           >
                             <Picker.Item label={"None Selected"} value={""} />
                             {numberOfEmployees.map((item, index) => {
@@ -1022,7 +1022,9 @@ class OrganizationImpl extends JCComponent<Props, State> {
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "sundayAttendance")
                             }}
-                            selectedValue={this.state.OrganizationDetails.sundayAttendance}
+                            selectedValue={
+                              this.state.OrganizationDetails.sundayAttendance ?? undefined
+                            }
                           >
                             <Picker.Item label={"None Selected"} value={""} />
                             {sundayAttendance.map((item, index) => {
@@ -1060,7 +1062,9 @@ class OrganizationImpl extends JCComponent<Props, State> {
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "numberVolunteers")
                             }}
-                            selectedValue={this.state.OrganizationDetails.numberVolunteers}
+                            selectedValue={
+                              this.state.OrganizationDetails.numberVolunteers ?? undefined
+                            }
                           >
                             <Picker.Item label={"None Selected"} value={""} />
                             {numberOfEmployees.map((item, index) => {

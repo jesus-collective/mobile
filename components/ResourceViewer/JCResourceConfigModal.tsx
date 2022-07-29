@@ -116,7 +116,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
               paddingTop: 3,
               paddingBottom: 3,
             }}
-            selectedValue={null}
+            selectedValue={undefined}
             onValueChange={(value: string) => {
               console.log({ value: value })
               let tmp = resourceState?.groupData?.readGroups
@@ -125,7 +125,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
               resourceActions.updateValueGroup("readGroups", tmp)
             }}
           >
-            <Picker.Item key={null} label={"Add Group"} value={null} />
+            <Picker.Item key={null} label={"Add Group"} value={undefined} />
             {Object.keys(UserGroupType).map((org: string) => {
               return <Picker.Item key={org} label={org} value={org} />
             })}

@@ -1,9 +1,9 @@
 import { AntDesign } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Picker } from "native-base"
 import React from "react"
 import {
   NativeSyntheticEvent,
+  Picker,
   Text,
   TextInput,
   TextInputChangeEventData,
@@ -204,7 +204,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
             paddingTop: 3,
             paddingBottom: 3,
           }}
-          selectedValue={null}
+          selectedValue={undefined}
           onValueChange={(value: string) => {
             const readGroups = this.state.currentResource.readGroups
               ? [...this.state.currentResource.readGroups]
@@ -215,7 +215,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
             }))
           }}
         >
-          <Picker.Item key={null} label={"Add Group"} value={null} />
+          <Picker.Item key={null} label={"Add Group"} value={undefined} />
           {Object.keys(UserGroupType).map((org: string) => {
             return <Picker.Item key={org} label={org} value={org} />
           })}
