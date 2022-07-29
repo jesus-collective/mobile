@@ -1,7 +1,6 @@
 import { Entypo } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
-import { View } from "native-base"
 import React from "react"
 import {
   Dimensions,
@@ -11,6 +10,7 @@ import {
   TextInput,
   TextInputKeyPressEventData,
   TouchableOpacity,
+  View,
 } from "react-native"
 import { AuthStateData } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"

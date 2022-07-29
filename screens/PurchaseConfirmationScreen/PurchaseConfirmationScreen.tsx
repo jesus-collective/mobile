@@ -1,7 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Container, Content, Text } from "native-base"
 import React, { useEffect, useState } from "react"
-import { Image } from "react-native"
+import { Image, ScrollView, Text, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import Header from "../../components/Header/Header"
@@ -32,15 +31,15 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
   }, [])
 
   if (productExists === "unknown") {
-    return <Container></Container>
+    return <View></View>
   }
 
   if (productExists) {
     return (
-      <Container>
+      <View>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
-          <Container
+        <ScrollView>
+          <View
             style={{ width: "50%", alignSelf: "center", marginVertical: 64, alignItems: "center" }}
           >
             <Image
@@ -59,36 +58,36 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
               {" "}
               Invoice number: {id}
             </Text>
-            <Container style={{ marginTop: 26 }}>
+            <View style={{ marginTop: 26 }}>
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => navigation.push("HomeScreen")}
               >
                 Back to Home
               </JCButton>
-            </Container>
-          </Container>
-        </Content>
-      </Container>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     )
   } else {
     return (
-      <Container>
+      <View>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
-          <Container style={{ marginTop: 50, alignItems: "center" }}>
+        <ScrollView>
+          <View style={{ marginTop: 50, alignItems: "center" }}>
             <Text style={{ fontSize: 36, fontFamily: "Graphik-Regular-App" }}>Page not found.</Text>
-            <Container style={{ marginTop: 50 }}>
+            <View style={{ marginTop: 50 }}>
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => navigation.push("HomeScreen")}
               >
                 Back to Home
               </JCButton>
-            </Container>
-          </Container>
-        </Content>
-      </Container>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     )
   }
 }

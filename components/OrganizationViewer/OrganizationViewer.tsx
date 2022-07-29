@@ -2,9 +2,10 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
-import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
+import { Form, Input, Item, Label, Picker } from "native-base"
 import * as React from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
 import {
@@ -20,7 +21,6 @@ import EditableText from "../Forms/EditableText"
 import EditableUsers from "../Forms/EditableUsers"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { MapData } from "../MyGroups/MyGroups"
 import MyMap from "../MyMap/MyMap"
 //import { AlertConfigInput } from '../../src/API'
 import {
@@ -455,7 +455,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
   render(): React.ReactNode {
     const brand = Brand()
     return this.state.OrganizationDetails != null ? (
-      <Content>
+      <ScrollView>
         <View style={this.styles.style.myProfileTopButtons}>
           {this.state.isEditable && (this.state.editMode || this.state.showAccountSettings) ? (
             <Text style={this.styles.style.profileFontTitle}>
@@ -1220,7 +1220,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
             </View>
           )}
         </Form>
-      </Content>
+      </ScrollView>
     ) : null
   }
 }

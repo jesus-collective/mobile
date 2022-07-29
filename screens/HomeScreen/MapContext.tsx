@@ -1,5 +1,5 @@
-import { MapData } from "components/MyGroups/MyGroups"
 import * as React from "react"
+import { MapData } from "src/types"
 import { JCState } from "../../components/JCComponent/JCComponent"
 export interface MapState extends JCState {
   MapItems: MapData[]

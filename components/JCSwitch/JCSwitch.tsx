@@ -1,6 +1,5 @@
-import { View } from "native-base"
 import React from "react"
-import { Animated, Text, TouchableWithoutFeedback } from "react-native"
+import { Animated, Text, TouchableWithoutFeedback, View } from "react-native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {

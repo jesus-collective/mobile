@@ -3,10 +3,10 @@ import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { CardItem, Container, Content, Icon, Picker, StyleProvider, View } from "native-base"
+import { CardItem, Icon, Picker } from "native-base"
 import React, { lazy } from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
-import { JCCognitoUser } from "src/types"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { JCCognitoUser, MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableLocation from "../../components/Forms/EditableLocation"
@@ -15,11 +15,9 @@ import EditableUrl from "../../components/Forms/EditableUrl"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
-import { MapData } from "../../components/MyGroups/MyGroups"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
-import getTheme from "../../native-base-theme/components"
 import {
   CreateGroupInput,
   GetGroupQuery,
@@ -474,7 +472,7 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   renderButtons(): React.ReactNode {
     return (
-      <Container style={this.styles.style.eventCreationScreenCreateContainer}>
+      <View style={this.styles.style.eventCreationScreenCreateContainer}>
         {this.state.canJoin ? (
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
@@ -561,7 +559,7 @@ export default class EventScreen extends JCComponent<Props, State> {
             Delete {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
-      </Container>
+      </View>
     )
   }
 
@@ -569,286 +567,284 @@ export default class EventScreen extends JCComponent<Props, State> {
     //console.log(this.state.data)
     console.log("Generic Group Screen")
     return this.state.data ? (
-      <StyleProvider style={getTheme()}>
-        <Container>
-          <Content>
-            <MyMap
-              initCenter={this.state.initCenter}
-              type={"no-filters"}
-              size={"25%"}
-              visible={this.state.showMap}
-              mapData={this.state.mapData}
-            ></MyMap>
-            <Container style={this.styles.style.eventScreenMainContainer}>
-              <Container style={this.styles.style.detailScreenLeftCard}>
-                <Container
+      <View>
+        <ScrollView>
+          <MyMap
+            initCenter={this.state.initCenter}
+            type={"no-filters"}
+            size={"25%"}
+            visible={this.state.showMap}
+            mapData={this.state.mapData}
+          ></MyMap>
+          <View style={this.styles.style.eventScreenMainContainer}>
+            <View style={this.styles.style.detailScreenLeftCard}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: "100%",
+                  justifyContent: "space-between",
+                  flexGrow: 0,
+                  marginBottom: 20,
+                  height: "auto",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    width: "100%",
-                    justifyContent: "space-between",
-                    flexGrow: 0,
-                    marginBottom: 20,
-                    height: "auto",
+                    fontSize: 12,
+                    lineHeight: 16,
+                    fontFamily: "Graphik-Regular-App",
+                    color: "#333333",
+                    textTransform: "uppercase",
+                    flex: 0,
                   }}
                 >
+                  {this.capitalize(this.state.groupType)}
+                </Text>
+                {this.state.isEditable ? (
+                  <JCSwitch
+                    switchLabel="Sponsored"
+                    initState={
+                      this.state.data.isSponsored ? this.state.data.isSponsored === "true" : false
+                    }
+                    onPress={(status) => {
+                      this.updateValue("isSponsored", status ? "true" : "false")
+                    }}
+                  ></JCSwitch>
+                ) : this.state.data.isSponsored == "true" ? (
                   <Text
                     style={{
                       fontSize: 12,
                       lineHeight: 16,
                       fontFamily: "Graphik-Regular-App",
-                      color: "#333333",
+                      color: "#979797",
                       textTransform: "uppercase",
                       flex: 0,
                     }}
                   >
-                    {this.capitalize(this.state.groupType)}
+                    Sponsored
                   </Text>
+                ) : null}
+              </View>
+
+              <View>
+                <EditableText
+                  onChange={(value: any) => {
+                    this.updateValue("name", value)
+                  }}
+                  placeholder={"Enter " + this.capitalize(this.state.groupType) + " Name"}
+                  multiline={false}
+                  textStyle={this.styles.style.eventNameInput}
+                  inputStyle={this.styles.style.eventNameInput}
+                  value={this.state.data.name}
+                  isEditable={this.state.isEditable}
+                ></EditableText>
+                <EditableText
+                  onChange={(value: any) => {
+                    this.updateValue("description", value)
+                  }}
+                  placeholder={"Enter " + this.capitalize(this.state.groupType) + " Description"}
+                  multiline={true}
+                  textStyle={this.styles.style.eventDescriptionInput}
+                  inputStyle={this.styles.style.eventDescriptionInput}
+                  value={this.state.data.description}
+                  isEditable={this.state.isEditable}
+                ></EditableText>
+              </View>
+              {this.state.groupType == "event" && (
+                <>
+                  <View>
+                    {this.state.isEditable ? (
+                      <EditableDate
+                        type="datetime"
+                        onChange={(time: any, timeZone: any) => {
+                          this.updateValue("time", time)
+                          this.updateValue("tz", timeZone)
+                        }}
+                        placeholder="Enter Event Time"
+                        textStyle={this.styles.style.eventDateInput}
+                        inputStyle={this.styles.style.eventDateInput}
+                        value={this.state.data.time ?? ""}
+                        tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
+                        isEditable={this.state.isEditable}
+                      ></EditableDate>
+                    ) : (
+                      <EditableDate
+                        type="datetime"
+                        onChange={(time: any, timeZone: any) => {
+                          this.updateValue("time", time)
+                          this.updateValue("tz", timeZone)
+                        }}
+                        placeholder="Enter Event Time"
+                        textStyle={this.styles.style.eventDateInput}
+                        inputStyle={this.styles.style.eventDateInput}
+                        value={this.state.data.time ?? ""}
+                        tz={moment.tz.guess()}
+                        isEditable={this.state.isEditable}
+                      ></EditableDate>
+                    )}
+                  </View>
+
                   {this.state.isEditable ? (
-                    <JCSwitch
-                      switchLabel="Sponsored"
-                      initState={
-                        this.state.data.isSponsored ? this.state.data.isSponsored === "true" : false
-                      }
-                      onPress={(status) => {
-                        this.updateValue("isSponsored", status ? "true" : "false")
-                      }}
-                    ></JCSwitch>
-                  ) : this.state.data.isSponsored == "true" ? (
-                    <Text
+                    <Picker
+                      mode="dropdown"
+                      iosIcon={<Icon name="arrow-down" />}
                       style={{
-                        fontSize: 12,
-                        lineHeight: 16,
-                        fontFamily: "Graphik-Regular-App",
-                        color: "#979797",
-                        textTransform: "uppercase",
-                        flex: 0,
+                        width: "50%",
+                        marginBottom: 30,
+                        marginTop: 55,
+                        fontSize: 16,
+                        height: 30,
+                        flexGrow: 0,
+                      }}
+                      placeholder="Event type"
+                      placeholderStyle={{ color: "#bfc6ea" }}
+                      placeholderIconColor="#007aff"
+                      selectedValue={this.state.data.eventType}
+                      onValueChange={(value: any) => {
+                        this.updateValue("eventType", value)
                       }}
                     >
-                      Sponsored
-                    </Text>
+                      <Picker.Item label="Zoom" value="zoom" />
+                      <Picker.Item label="Location" value="location" />
+                      <Picker.Item label="Eventbrite" value="eventbrite" />
+                    </Picker>
                   ) : null}
-                </Container>
-
-                <View>
-                  <EditableText
-                    onChange={(value: any) => {
-                      this.updateValue("name", value)
-                    }}
-                    placeholder={"Enter " + this.capitalize(this.state.groupType) + " Name"}
-                    multiline={false}
-                    textStyle={this.styles.style.eventNameInput}
-                    inputStyle={this.styles.style.eventNameInput}
-                    value={this.state.data.name}
-                    isEditable={this.state.isEditable}
-                  ></EditableText>
-                  <EditableText
-                    onChange={(value: any) => {
-                      this.updateValue("description", value)
-                    }}
-                    placeholder={"Enter " + this.capitalize(this.state.groupType) + " Description"}
-                    multiline={true}
-                    textStyle={this.styles.style.eventDescriptionInput}
-                    inputStyle={this.styles.style.eventDescriptionInput}
-                    value={this.state.data.description}
-                    isEditable={this.state.isEditable}
-                  ></EditableText>
-                </View>
-                {this.state.groupType == "event" && (
-                  <>
-                    <View>
-                      {this.state.isEditable ? (
-                        <EditableDate
-                          type="datetime"
-                          onChange={(time: any, timeZone: any) => {
-                            this.updateValue("time", time)
-                            this.updateValue("tz", timeZone)
-                          }}
-                          placeholder="Enter Event Time"
-                          textStyle={this.styles.style.eventDateInput}
-                          inputStyle={this.styles.style.eventDateInput}
-                          value={this.state.data.time ?? ""}
-                          tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
-                          isEditable={this.state.isEditable}
-                        ></EditableDate>
-                      ) : (
-                        <EditableDate
-                          type="datetime"
-                          onChange={(time: any, timeZone: any) => {
-                            this.updateValue("time", time)
-                            this.updateValue("tz", timeZone)
-                          }}
-                          placeholder="Enter Event Time"
-                          textStyle={this.styles.style.eventDateInput}
-                          inputStyle={this.styles.style.eventDateInput}
-                          value={this.state.data.time ?? ""}
-                          tz={moment.tz.guess()}
-                          isEditable={this.state.isEditable}
-                        ></EditableDate>
-                      )}
-                    </View>
-
-                    {this.state.isEditable ? (
-                      <Picker
-                        mode="dropdown"
-                        iosIcon={<Icon name="arrow-down" />}
-                        style={{
-                          width: "50%",
-                          marginBottom: 30,
-                          marginTop: 55,
-                          fontSize: 16,
-                          height: 30,
-                          flexGrow: 0,
+                  {this.state.data.eventType != "location" ? (
+                    <EditableUrl
+                      title={
+                        this.state.data.eventType == "eventbrite"
+                          ? "Open in Eventbrite"
+                          : "Open in Zoom"
+                      }
+                      onChange={(value: any) => {
+                        this.updateValue("eventUrl", value)
+                      }}
+                      placeholder="Enter Event URL"
+                      multiline={false}
+                      textStyle={ButtonTypes.Solid}
+                      inputStyle={this.styles.style.eventEditableURL}
+                      value={this.state.data.eventUrl ?? ""}
+                      isEditable={this.state.isEditable}
+                    ></EditableUrl>
+                  ) : (
+                    <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                      <Image
+                        style={{ width: "22px", height: "22px", marginRight: 5 }}
+                        source={require("../../assets/svg/pin 2.svg")}
+                      ></Image>
+                      <EditableLocation
+                        onChange={(value: any, location: any) => {
+                          this.updateValue("location", value)
+                          console.log(location)
+                          if (location != undefined && location != null)
+                            this.updateValue("locationLatLong", {
+                              latitude: location.lat,
+                              longitude: location.lng,
+                            })
+                          else this.updateValue("locationLatLong", null)
                         }}
-                        placeholder="Event type"
-                        placeholderStyle={{ color: "#bfc6ea" }}
-                        placeholderIconColor="#007aff"
-                        selectedValue={this.state.data.eventType}
-                        onValueChange={(value: any) => {
-                          this.updateValue("eventType", value)
+                        placeholder="Enter Event Location"
+                        multiline={false}
+                        textStyle={this.styles.style.fontRegular}
+                        inputStyle={this.styles.style.groupNameInput}
+                        value={this.state.data.location ?? ""}
+                        isEditable={this.state.isEditable}
+                      ></EditableLocation>
+                    </CardItem>
+                  )}
+                </>
+              )}
+              <Text
+                style={{
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 23,
+                  color: "#333333",
+                  paddingBottom: 12,
+                  marginTop: 52,
+                }}
+              >
+                Organizer
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  if (this.state.data)
+                    this.state.data.ownerOrg
+                      ? this.showOrg(this.state.data.ownerOrg.id)
+                      : this.showProfile(
+                          this.state.data.ownerUser
+                            ? this.state.data.ownerUser.id
+                            : this.state.currentUserProfile?.id
+                        )
+                }}
+              >
+                <ProfileImage
+                  user={
+                    this.state.data.ownerOrg
+                      ? this.state.data.ownerOrg.id
+                      : this.state.data.ownerUser
+                      ? this.state.data.ownerUser
+                      : this.state.currentUserProfile
+                  }
+                  size="small"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "Graphik-Bold-App",
+                  fontSize: 20,
+                  lineHeight: 25,
+                  letterSpacing: -0.3,
+                  color: "#333333",
+                  paddingTop: 48,
+                  paddingBottom: 12,
+                }}
+              >
+                {this.state.groupType == "event" ? "Attending" : "Members"}(
+                {this.state.memberIDs.length})
+              </Text>
+              <View style={this.styles.style.eventAttendeesPictures}>
+                {this.state.memberIDs.length == 0 ? (
+                  <Text
+                    style={{
+                      fontFamily: "Graphik-Bold-App",
+                      fontSize: 16,
+                      lineHeight: 24,
+                      letterSpacing: -0.3,
+                      color: "#333333",
+                      marginBottom: 30,
+                    }}
+                  >
+                    No {this.state.groupType == "event" ? "Attendees" : "Members"} Yet
+                  </Text>
+                ) : (
+                  this.state.memberIDs.map((id: any, index: any) => {
+                    return (
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => {
+                          this.showProfile(id)
                         }}
                       >
-                        <Picker.Item label="Zoom" value="zoom" />
-                        <Picker.Item label="Location" value="location" />
-                        <Picker.Item label="Eventbrite" value="eventbrite" />
-                      </Picker>
-                    ) : null}
-                    {this.state.data.eventType != "location" ? (
-                      <EditableUrl
-                        title={
-                          this.state.data.eventType == "eventbrite"
-                            ? "Open in Eventbrite"
-                            : "Open in Zoom"
-                        }
-                        onChange={(value: any) => {
-                          this.updateValue("eventUrl", value)
-                        }}
-                        placeholder="Enter Event URL"
-                        multiline={false}
-                        textStyle={ButtonTypes.Solid}
-                        inputStyle={this.styles.style.eventEditableURL}
-                        value={this.state.data.eventUrl ?? ""}
-                        isEditable={this.state.isEditable}
-                      ></EditableUrl>
-                    ) : (
-                      <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
-                        <Image
-                          style={{ width: "22px", height: "22px", marginRight: 5 }}
-                          source={require("../../assets/svg/pin 2.svg")}
-                        ></Image>
-                        <EditableLocation
-                          onChange={(value: any, location: any) => {
-                            this.updateValue("location", value)
-                            console.log(location)
-                            if (location != undefined && location != null)
-                              this.updateValue("locationLatLong", {
-                                latitude: location.lat,
-                                longitude: location.lng,
-                              })
-                            else this.updateValue("locationLatLong", null)
-                          }}
-                          placeholder="Enter Event Location"
-                          multiline={false}
-                          textStyle={this.styles.style.fontRegular}
-                          inputStyle={this.styles.style.groupNameInput}
-                          value={this.state.data.location ?? ""}
-                          isEditable={this.state.isEditable}
-                        ></EditableLocation>
-                      </CardItem>
-                    )}
-                  </>
+                        <ProfileImage key={index} user={id} size="small" />
+                      </TouchableOpacity>
+                    )
+                  })
                 )}
-                <Text
-                  style={{
-                    fontFamily: "Graphik-Regular-App",
-                    fontSize: 16,
-                    lineHeight: 23,
-                    color: "#333333",
-                    paddingBottom: 12,
-                    marginTop: 52,
-                  }}
-                >
-                  Organizer
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (this.state.data)
-                      this.state.data.ownerOrg
-                        ? this.showOrg(this.state.data.ownerOrg.id)
-                        : this.showProfile(
-                            this.state.data.ownerUser
-                              ? this.state.data.ownerUser.id
-                              : this.state.currentUserProfile?.id
-                          )
-                  }}
-                >
-                  <ProfileImage
-                    user={
-                      this.state.data.ownerOrg
-                        ? this.state.data.ownerOrg.id
-                        : this.state.data.ownerUser
-                        ? this.state.data.ownerUser
-                        : this.state.currentUserProfile
-                    }
-                    size="small"
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    fontFamily: "Graphik-Bold-App",
-                    fontSize: 20,
-                    lineHeight: 25,
-                    letterSpacing: -0.3,
-                    color: "#333333",
-                    paddingTop: 48,
-                    paddingBottom: 12,
-                  }}
-                >
-                  {this.state.groupType == "event" ? "Attending" : "Members"}(
-                  {this.state.memberIDs.length})
-                </Text>
-                <View style={this.styles.style.eventAttendeesPictures}>
-                  {this.state.memberIDs.length == 0 ? (
-                    <Text
-                      style={{
-                        fontFamily: "Graphik-Bold-App",
-                        fontSize: 16,
-                        lineHeight: 24,
-                        letterSpacing: -0.3,
-                        color: "#333333",
-                        marginBottom: 30,
-                      }}
-                    >
-                      No {this.state.groupType == "event" ? "Attendees" : "Members"} Yet
-                    </Text>
-                  ) : (
-                    this.state.memberIDs.map((id: any, index: any) => {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            this.showProfile(id)
-                          }}
-                        >
-                          <ProfileImage key={index} user={id} size="small" />
-                        </TouchableOpacity>
-                      )
-                    })
-                  )}
-                </View>
-                {this.renderPermissions()}
-                {this.renderButtons()}
-                <Text style={{ marginTop: 170, color: "red", fontWeight: "bold" }}>
-                  {this.state.validationError}
-                </Text>
-              </Container>
-              <Container style={this.styles.style.detailScreenRightCard}>
-                <MessageBoard replies style="regular" groupId={this.state.data.id}></MessageBoard>
-                {/*  <Zoom></Zoom>*/}
-              </Container>
-            </Container>
-          </Content>
-        </Container>
-      </StyleProvider>
+              </View>
+              {this.renderPermissions()}
+              {this.renderButtons()}
+              <Text style={{ marginTop: 170, color: "red", fontWeight: "bold" }}>
+                {this.state.validationError}
+              </Text>
+            </View>
+            <View style={this.styles.style.detailScreenRightCard}>
+              <MessageBoard replies style="regular" groupId={this.state.data.id}></MessageBoard>
+              {/*  <Zoom></Zoom>*/}
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     ) : null
   }
 }

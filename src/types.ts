@@ -22,7 +22,16 @@ import {
 } from "./API"
 
 type WithoutKeys<T> = Omit<T, keyof T>
-
+export interface MapData {
+  id: string
+  latitude: any
+  longitude: any
+  name: string
+  user?: any
+  event?: any
+  link: string
+  type: any
+}
 export type EmptyProps = WithoutKeys<Record<string, never>>
 export type JCUserData = {
   sub: string

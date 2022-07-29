@@ -1,7 +1,6 @@
 import { Loading } from "aws-amplify-react-native"
-import { View } from "native-base"
 import React from "react"
-import { Dimensions } from "react-native"
+import { Dimensions, View } from "react-native"
 import MainStyles from "../../components/style"
 
 interface Props {

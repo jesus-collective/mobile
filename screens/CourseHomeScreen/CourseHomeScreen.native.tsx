@@ -3,9 +3,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, StyleProvider } from "native-base"
 import React from "react"
-import { Dimensions } from "react-native"
+import { Dimensions, View } from "react-native"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {
@@ -21,7 +20,6 @@ import CourseHome from "../../components/CourseViewer/CourseHome"
 import { Data } from "../../components/Data/Data"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
-import getTheme from "../../native-base-theme/components"
 import {
   CourseLesson,
   CreateCourseLessonInput,
@@ -969,14 +967,12 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           },
         }}
       >
-        <StyleProvider style={getTheme()}>
-          <Container style={this.styles.style.courseHomeScreenMainContainer}>
-            <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
-            <CourseHome></CourseHome>
-            <CourseDetail></CourseDetail>
-            <CourseCoaching></CourseCoaching>
-          </Container>
-        </StyleProvider>
+        <View style={this.styles.style.courseHomeScreenMainContainer}>
+          <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
+          <CourseHome></CourseHome>
+          <CourseDetail></CourseDetail>
+          <CourseCoaching></CourseCoaching>
+        </View>
       </CourseHomeScreenImpl.Provider>
     ) : null
   }

@@ -4,9 +4,9 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, Drawer, StyleProvider } from "native-base"
+import { Drawer } from "native-base"
 import React from "react"
-import { Dimensions } from "react-native"
+import { Dimensions, View } from "react-native"
 import {
   CreateCourseLessonInput,
   CreateCourseTriadsInput,
@@ -36,7 +36,6 @@ import FloatingButton from "../../components/FloatingButton/FloatingButton"
 import FloatingButtonStyles from "../../components/FloatingButton/FloatingButtonStyles"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
-import getTheme from "../../native-base-theme/components"
 
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -977,42 +976,40 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           },
         }}
       >
-        <StyleProvider style={getTheme()}>
-          <>
-            {this.state.currentScreen == "Details" && !this.state.showChat ? (
-              <FloatingButton
-                label="Chat"
-                customStyle={FloatingButtonStyles.ChatFloatingButtonStyle}
-                customLabelStyle={FloatingButtonStyles.ChatFloatingButtonTextStyle}
-                smallIcon={<MaterialCommunityIcons name="chat" size={24} color="white" />}
-                largeIcon={<AntDesign name="left" size={24} color="#333333" />}
-                setShow={() => this.setState({ showChat: true })}
-              />
-            ) : null}
+        <>
+          {this.state.currentScreen == "Details" && !this.state.showChat ? (
+            <FloatingButton
+              label="Chat"
+              customStyle={FloatingButtonStyles.ChatFloatingButtonStyle}
+              customLabelStyle={FloatingButtonStyles.ChatFloatingButtonTextStyle}
+              smallIcon={<MaterialCommunityIcons name="chat" size={24} color="white" />}
+              largeIcon={<AntDesign name="left" size={24} color="#333333" />}
+              setShow={() => this.setState({ showChat: true })}
+            />
+          ) : null}
 
-            <Drawer
-              content={<CourseChat />}
-              open={this.state.showChat}
-              openDrawerOffset={width - chatWidth}
-              side="right"
-              styles={{}}
-              tweenHandler={undefined}
-              onClose={() => this.setState({ showChat: false })}
+          <Drawer
+            content={<CourseChat />}
+            open={this.state.showChat}
+            openDrawerOffset={width - chatWidth}
+            side="right"
+            styles={{}}
+            tweenHandler={undefined}
+            onClose={() => this.setState({ showChat: false })}
+          >
+            <View
+              style={[
+                this.styles.style.courseHomeScreenMainContainer,
+                { opacity: this.state.showChat ? 0.5 : 1 },
+              ]}
             >
-              <Container
-                style={[
-                  this.styles.style.courseHomeScreenMainContainer,
-                  { opacity: this.state.showChat ? 0.5 : 1 },
-                ]}
-              >
-                <CourseSidebar courseId={this.state.data.id} />
-                <CourseHome />
-                <CourseDetail />
-                <CourseCoaching />
-              </Container>
-            </Drawer>
-          </>
-        </StyleProvider>
+              <CourseSidebar courseId={this.state.data.id} />
+              <CourseHome />
+              <CourseDetail />
+              <CourseCoaching />
+            </View>
+          </Drawer>
+        </>
       </CourseHomeScreenImpl.Provider>
     ) : null
   }

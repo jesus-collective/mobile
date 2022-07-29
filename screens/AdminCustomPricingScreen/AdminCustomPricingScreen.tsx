@@ -2,9 +2,9 @@ import { useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
-import { Container, Content, Picker, Text } from "native-base"
+import { Picker } from "native-base"
 import React, { useState } from "react"
-import { TextInput, View } from "react-native"
+import { ScrollView, Text, TextInput, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
@@ -157,7 +157,7 @@ class AdminScreenImpl extends JCComponent<Props, State> {
                 )
               })
             : null}
-          <Container
+          <View
             style={{
               flexDirection: "column",
               alignItems: "center",
@@ -190,7 +190,7 @@ class AdminScreenImpl extends JCComponent<Props, State> {
             >
               {this.state.showEditPricingsItem != null ? "Edit Startup" : "Add Startup"}
             </JCButton>
-          </Container>
+          </View>
         </>
       </JCModal>
     )
@@ -228,10 +228,10 @@ class AdminScreenImpl extends JCComponent<Props, State> {
           if (!userState) return null
           console.log("AdminScreen")
           return (
-            <Container testID="events">
+            <View testID="events">
               {userActions.isMemberOf("admin") ? (
-                <Content>
-                  <Container style={this.styles.style.fontRegular}>
+                <ScrollView>
+                  <View style={this.styles.style.fontRegular}>
                     <JCButton buttonType={ButtonTypes.AdminAdd} onPress={this.addPricingsItem}>
                       Add Custom Payment Item
                     </JCButton>
@@ -268,18 +268,18 @@ class AdminScreenImpl extends JCComponent<Props, State> {
                       })}
                       {this.renderAddPricingsModal()}
                     </View>
-                  </Container>
-                </Content>
+                  </View>
+                </ScrollView>
               ) : (
-                <Content>
-                  <Container style={this.styles.style.eventsScreenMainContainer}>
-                    <Container style={this.styles.style.eventsScreenLeftContainer}>
+                <ScrollView>
+                  <View style={this.styles.style.eventsScreenMainContainer}>
+                    <View style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
-                    </Container>
-                  </Container>
-                </Content>
+                    </View>
+                  </View>
+                </ScrollView>
               )}
-            </Container>
+            </View>
           )
         }}
       </AdminScreenImpl.UserConsumer>

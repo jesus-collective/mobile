@@ -1,7 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
-import { Container, Content, Text } from "native-base"
 import React, { useEffect, useState } from "react"
+import { ScrollView, Text, View } from "react-native"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -56,15 +56,15 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
   }
 
   if (product === "unknown") {
-    return <Container />
+    return <View />
   }
 
   if (productId && product) {
     return (
-      <Container>
+      <View>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
-          <Container
+        <ScrollView>
+          <View
             style={{ maxWidth: 800, alignSelf: "center", marginVertical: 48, marginHorizontal: 24 }}
           >
             <PaymentFrom
@@ -72,33 +72,33 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
               onSuccessCallback={success}
               onFailureCallback={(e: any) => console.error(e)}
             />
-          </Container>
-        </Content>
-      </Container>
+          </View>
+        </ScrollView>
+      </View>
     )
   } else {
     return (
-      <Container>
+      <View>
         <Header title="Jesus Collective" navigation={navigation} />
-        <Content>
-          <Container style={{ width: "50%", alignSelf: "center", marginVertical: 64 }}>
+        <ScrollView>
+          <View style={{ width: "50%", alignSelf: "center", marginVertical: 64 }}>
             <Text style={{ fontSize: 36, fontFamily: "Graphik-Regular-App" }}>
               Something went wrong.
             </Text>
             <Text style={{ fontSize: 16, fontFamily: "Graphik-Regular-App", marginTop: 16 }}>
               Product not found. Please contact the Jesus Collective team for assistance.
             </Text>
-            <Container style={{ marginTop: 50 }}>
+            <View style={{ marginTop: 50 }}>
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => navigation.push("HomeScreen")}
               >
                 Back to Home
               </JCButton>
-            </Container>
-          </Container>
-        </Content>
-      </Container>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     )
   }
 }

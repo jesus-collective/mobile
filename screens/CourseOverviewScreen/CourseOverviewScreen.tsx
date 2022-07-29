@@ -2,13 +2,12 @@
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
-import { MapData } from "components/MyGroups/MyGroups"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, Content, Picker, StyleProvider, View } from "native-base"
+import { Picker } from "native-base"
 import React from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
-import { GetUserQueryResult, JCCognitoUser } from "src/types"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { GetUserQueryResult, JCCognitoUser, MapData } from "src/types"
 import PaidUsersModal from "../../components/CourseViewer/PaidUsersModal"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
@@ -21,7 +20,6 @@ import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
-import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import {
   CreateCourseInfoInput,
@@ -580,7 +578,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   renderButtons(userActions: UserActions): React.ReactNode {
     return (
-      <Container style={{ minHeight: 30 }}>
+      <View style={{ minHeight: 30 }}>
         {this.isCourseClosed(userActions) ? <Text>Course Closed</Text> : null}
         {this.canPurchase(userActions) ? (
           <JCButton
@@ -636,7 +634,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           </JCButton>
         ) : null}
         <Text>{this.state.validationError}</Text>
-      </Container>
+      </View>
     )
   }
   static UserConsumer = UserContext.Consumer
@@ -658,18 +656,88 @@ export default class CourseScreen extends JCComponent<Props, State> {
         {({ userState, userActions }) => {
           if (!userState) return null
           return this.state.data ? (
-            <StyleProvider style={getTheme()}>
-              <Container>
-                <Content>
-                  <MyMap
-                    type={"no-filters"}
-                    size={"25%"}
-                    visible={this.state.showMap}
-                    mapData={this.state.mapData}
-                  ></MyMap>
-                  <Container style={this.styles.style.coursesScreenMainContainer}>
-                    <Container style={this.styles.style.detailScreenLeftCard}>
-                      <Container style={this.styles.style.courseSponsorContainer}>
+            <View>
+              <ScrollView>
+                <MyMap
+                  type={"no-filters"}
+                  size={"25%"}
+                  visible={this.state.showMap}
+                  mapData={this.state.mapData}
+                ></MyMap>
+                <View style={this.styles.style.coursesScreenMainContainer}>
+                  <View style={this.styles.style.detailScreenLeftCard}>
+                    <View style={this.styles.style.courseSponsorContainer}>
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          lineHeight: 16,
+                          fontFamily: "Graphik-Regular-App",
+                          color: "#333333",
+                          textTransform: "uppercase",
+                          flex: 0,
+                        }}
+                      >
+                        Course
+                      </Text>
+                      {this.state.isEditable ? (
+                        <JCSwitch
+                          switchLabel="Sponsored"
+                          initState={
+                            this.state.data.isSponsored
+                              ? this.state.data.isSponsored === "true"
+                              : false
+                          }
+                          onPress={(status) => {
+                            this.updateValue("isSponsored", status ? "true" : "false")
+                          }}
+                        ></JCSwitch>
+                      ) : this.state.data.isSponsored == "true" ? (
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            lineHeight: 16,
+                            fontFamily: "Graphik-Regular-App",
+                            color: "#979797",
+                            textTransform: "uppercase",
+                            flex: 0,
+                            marginRight: 20,
+                          }}
+                        >
+                          Sponsored
+                        </Text>
+                      ) : null}
+                    </View>
+
+                    <View>
+                      <EditableText
+                        onChange={(value: any) => {
+                          this.updateValue("name", value)
+                        }}
+                        testID="course-name"
+                        placeholder="Enter Course Name"
+                        multiline={false}
+                        textStyle={this.styles.style.courseMktNameInput}
+                        inputStyle={this.styles.style.courseMktNameInput}
+                        value={this.state.data.name}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+                      <EditableText
+                        onChange={(value: any) => {
+                          this.updateValue("description", value)
+                        }}
+                        testID="course-description"
+                        placeholder="Enter Course Description"
+                        multiline={true}
+                        textStyle={this.styles.style.courseMktDescriptionInput}
+                        inputStyle={this.styles.style.courseMktDescriptionInput}
+                        value={this.state.data.description}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+                      <View style={{ flexDirection: "row" }}>
+                        <Image
+                          style={this.styles.style.courseMainIcons}
+                          source={require("../../assets/svg/calendar_black.svg")}
+                        />
                         <Text
                           style={{
                             fontSize: 12,
@@ -677,344 +745,272 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             fontFamily: "Graphik-Regular-App",
                             color: "#333333",
                             textTransform: "uppercase",
-                            flex: 0,
+                            marginTop: 20,
                           }}
                         >
-                          Course
+                          Start Date
                         </Text>
-                        {this.state.isEditable ? (
-                          <JCSwitch
-                            switchLabel="Sponsored"
-                            initState={
-                              this.state.data.isSponsored
-                                ? this.state.data.isSponsored === "true"
-                                : false
-                            }
-                            onPress={(status) => {
-                              this.updateValue("isSponsored", status ? "true" : "false")
-                            }}
-                          ></JCSwitch>
-                        ) : this.state.data.isSponsored == "true" ? (
-                          <Text
-                            style={{
-                              fontSize: 12,
-                              lineHeight: 16,
-                              fontFamily: "Graphik-Regular-App",
-                              color: "#979797",
-                              textTransform: "uppercase",
-                              flex: 0,
-                              marginRight: 20,
-                            }}
-                          >
-                            Sponsored
-                          </Text>
-                        ) : null}
-                      </Container>
-
-                      <View>
-                        <EditableText
-                          onChange={(value: any) => {
-                            this.updateValue("name", value)
-                          }}
-                          testID="course-name"
-                          placeholder="Enter Course Name"
-                          multiline={false}
-                          textStyle={this.styles.style.courseMktNameInput}
-                          inputStyle={this.styles.style.courseMktNameInput}
-                          value={this.state.data.name}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-                        <EditableText
-                          onChange={(value: any) => {
-                            this.updateValue("description", value)
-                          }}
-                          testID="course-description"
-                          placeholder="Enter Course Description"
-                          multiline={true}
-                          textStyle={this.styles.style.courseMktDescriptionInput}
-                          inputStyle={this.styles.style.courseMktDescriptionInput}
-                          value={this.state.data.description}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image
-                            style={this.styles.style.courseMainIcons}
-                            source={require("../../assets/svg/calendar_black.svg")}
-                          />
-                          <Text
-                            style={{
-                              fontSize: 12,
-                              lineHeight: 16,
-                              fontFamily: "Graphik-Regular-App",
-                              color: "#333333",
-                              textTransform: "uppercase",
-                              marginTop: 20,
-                            }}
-                          >
-                            Start Date
-                          </Text>
-                        </View>
-                        <EditableDate
-                          type="date"
-                          testID="course-startDate"
-                          onChange={(time: any, timeZone: any) => {
-                            this.updateValue("time", time)
-                            this.updateValue("tz", timeZone)
-                          }}
-                          placeholder="Enter Course Start Date"
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.time}
-                          tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
-                          isEditable={this.state.isEditable}
-                        ></EditableDate>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image
-                            style={this.styles.style.courseMainIcons2}
-                            source={require("../../assets/svg/hourglass.svg")}
-                          />
-                          <Text
-                            style={{
-                              fontSize: 12,
-                              lineHeight: 16,
-                              fontFamily: "Graphik-Regular-App",
-                              color: "#333333",
-                              textTransform: "uppercase",
-                              marginTop: 5,
-                            }}
-                          >
-                            Duration
-                          </Text>
-                        </View>
-                        <EditableText
-                          testID="course-duration"
-                          onChange={(value: any) => {
-                            this.updateValue("length", value)
-                          }}
-                          placeholder="Enter Course Length"
-                          multiline={false}
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.length}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image
-                            style={this.styles.style.courseMainIcons}
-                            source={require("../../assets/svg/time_black.svg")}
-                          />
-                          <Text
-                            style={{
-                              fontSize: 12,
-                              lineHeight: 16,
-                              fontFamily: "Graphik-Regular-App",
-                              color: "#333333",
-                              textTransform: "uppercase",
-                              marginTop: 5,
-                            }}
-                          >
-                            Effort
-                          </Text>
-                        </View>
-                        <EditableText
-                          testID="course-effort"
-                          onChange={(value: any) => {
-                            this.updateValue("effort", value)
-                          }}
-                          placeholder="Enter Course Effort"
-                          multiline={false}
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.effort}
-                          isEditable={this.state.isEditable}
-                        ></EditableText>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image
-                            style={this.styles.style.courseMainIcons2}
-                            source={require("../../assets/svg/tag.svg")}
-                          />
-                          <Text
-                            style={{
-                              fontSize: 12,
-                              lineHeight: 16,
-                              fontFamily: "Graphik-Regular-App",
-                              color: "#333333",
-                              textTransform: "uppercase",
-                              marginTop: 5,
-                            }}
-                          >
-                            Cost
-                          </Text>
-                        </View>
-                        <EditableDollar
-                          testID="course-amount"
-                          onChange={(value: any) => {
-                            this.updateValue("cost", value)
-                          }}
-                          placeholder="Enter Course Cost"
-                          multiline={false}
-                          textStyle={this.styles.style.courseDateInput}
-                          inputStyle={this.styles.style.courseDescriptionInput}
-                          value={this.state.data.cost}
-                          isEditable={this.state.isEditable}
-                        ></EditableDollar>
                       </View>
-                      <Text
-                        style={{
-                          fontFamily: "Graphik-Regular-App",
-                          fontSize: 16,
-                          lineHeight: 23,
-                          color: "#333333",
-                          paddingBottom: 12,
-                          marginTop: 52,
+                      <EditableDate
+                        type="date"
+                        testID="course-startDate"
+                        onChange={(time: any, timeZone: any) => {
+                          this.updateValue("time", time)
+                          this.updateValue("tz", timeZone)
                         }}
-                      >
-                        Organizer
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.showProfile(
-                            this.state.data.ownerUser
-                              ? this.state.data.ownerUser.id
-                              : this.state.currentUserProfile.id
-                          )
-                        }}
-                      >
-                        <ProfileImage
-                          user={
-                            this.state.data.ownerUser
-                              ? this.state.data.ownerUser
-                              : this.state.currentUserProfile
-                          }
-                          size="small"
+                        placeholder="Enter Course Start Date"
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.time}
+                        tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
+                        isEditable={this.state.isEditable}
+                      ></EditableDate>
+                      <View style={{ flexDirection: "row" }}>
+                        <Image
+                          style={this.styles.style.courseMainIcons2}
+                          source={require("../../assets/svg/hourglass.svg")}
                         />
-                      </TouchableOpacity>
-                      <Text
-                        style={{
-                          fontFamily: "Graphik-Bold-App",
-                          fontSize: 20,
-                          lineHeight: 25,
-                          letterSpacing: -0.3,
-                          color: "#333333",
-                          paddingTop: 48,
-                          paddingBottom: 12,
-                        }}
-                      >
-                        Members ({this.state.memberIDs.length})
-                      </Text>
-                      <View style={this.styles.style.groupAttendeesPictures}>
-                        {this.state.memberIDs.length == 0 ? (
-                          <Text
-                            style={{
-                              fontFamily: "Graphik-Bold-App",
-                              fontSize: 16,
-                              lineHeight: 24,
-                              letterSpacing: -0.3,
-                              color: "#333333",
-                              marginBottom: 30,
-                            }}
-                          >
-                            No Members Yet
-                          </Text>
-                        ) : (
-                          this.state.memberIDs.map((id: any, index: any) => {
-                            return (
-                              <TouchableOpacity
-                                key={index}
-                                onPress={() => {
-                                  this.showProfile(id)
-                                }}
-                              >
-                                <ProfileImage key={index} user={id} size="small" />
-                              </TouchableOpacity>
-                            )
-                          })
-                        )}
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            lineHeight: 16,
+                            fontFamily: "Graphik-Regular-App",
+                            color: "#333333",
+                            textTransform: "uppercase",
+                            marginTop: 5,
+                          }}
+                        >
+                          Duration
+                        </Text>
                       </View>
-                      {this.renderPermissions()}
-                      {this.renderPaymentAdmin()}
-                      {this.renderButtons(userActions)}
-                    </Container>
-                    <Container style={this.styles.style.detailScreenRightCard}>
-                      <Container style={this.styles.style.coursesRightCard}>
-                        {this.state.data ? (
-                          <EditableRichText
-                            onChange={(val) => {
-                              this.updateValue("promotionalText", val)
-                            }}
-                            value={this.state.data.promotionalText}
-                            isEditable={true}
-                          ></EditableRichText>
-                        ) : null}
+                      <EditableText
+                        testID="course-duration"
+                        onChange={(value: any) => {
+                          this.updateValue("length", value)
+                        }}
+                        placeholder="Enter Course Length"
+                        multiline={false}
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.length}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+                      <View style={{ flexDirection: "row" }}>
+                        <Image
+                          style={this.styles.style.courseMainIcons}
+                          source={require("../../assets/svg/time_black.svg")}
+                        />
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            lineHeight: 16,
+                            fontFamily: "Graphik-Regular-App",
+                            color: "#333333",
+                            textTransform: "uppercase",
+                            marginTop: 5,
+                          }}
+                        >
+                          Effort
+                        </Text>
+                      </View>
+                      <EditableText
+                        testID="course-effort"
+                        onChange={(value: any) => {
+                          this.updateValue("effort", value)
+                        }}
+                        placeholder="Enter Course Effort"
+                        multiline={false}
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.effort}
+                        isEditable={this.state.isEditable}
+                      ></EditableText>
+                      <View style={{ flexDirection: "row" }}>
+                        <Image
+                          style={this.styles.style.courseMainIcons2}
+                          source={require("../../assets/svg/tag.svg")}
+                        />
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            lineHeight: 16,
+                            fontFamily: "Graphik-Regular-App",
+                            color: "#333333",
+                            textTransform: "uppercase",
+                            marginTop: 5,
+                          }}
+                        >
+                          Cost
+                        </Text>
+                      </View>
+                      <EditableDollar
+                        testID="course-amount"
+                        onChange={(value: any) => {
+                          this.updateValue("cost", value)
+                        }}
+                        placeholder="Enter Course Cost"
+                        multiline={false}
+                        textStyle={this.styles.style.courseDateInput}
+                        inputStyle={this.styles.style.courseDescriptionInput}
+                        value={this.state.data.cost}
+                        isEditable={this.state.isEditable}
+                      ></EditableDollar>
+                    </View>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        lineHeight: 23,
+                        color: "#333333",
+                        paddingBottom: 12,
+                        marginTop: 52,
+                      }}
+                    >
+                      Organizer
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.showProfile(
+                          this.state.data.ownerUser
+                            ? this.state.data.ownerUser.id
+                            : this.state.currentUserProfile.id
+                        )
+                      }}
+                    >
+                      <ProfileImage
+                        user={
+                          this.state.data.ownerUser
+                            ? this.state.data.ownerUser
+                            : this.state.currentUserProfile
+                        }
+                        size="small"
+                      />
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 20,
+                        lineHeight: 25,
+                        letterSpacing: -0.3,
+                        color: "#333333",
+                        paddingTop: 48,
+                        paddingBottom: 12,
+                      }}
+                    >
+                      Members ({this.state.memberIDs.length})
+                    </Text>
+                    <View style={this.styles.style.groupAttendeesPictures}>
+                      {this.state.memberIDs.length == 0 ? (
+                        <Text
+                          style={{
+                            fontFamily: "Graphik-Bold-App",
+                            fontSize: 16,
+                            lineHeight: 24,
+                            letterSpacing: -0.3,
+                            color: "#333333",
+                            marginBottom: 30,
+                          }}
+                        >
+                          No Members Yet
+                        </Text>
+                      ) : (
+                        this.state.memberIDs.map((id: any, index: any) => {
+                          return (
+                            <TouchableOpacity
+                              key={index}
+                              onPress={() => {
+                                this.showProfile(id)
+                              }}
+                            >
+                              <ProfileImage key={index} user={id} size="small" />
+                            </TouchableOpacity>
+                          )
+                        })
+                      )}
+                    </View>
+                    {this.renderPermissions()}
+                    {this.renderPaymentAdmin()}
+                    {this.renderButtons(userActions)}
+                  </View>
+                  <View style={this.styles.style.detailScreenRightCard}>
+                    <View style={this.styles.style.coursesRightCard}>
+                      {this.state.data ? (
+                        <EditableRichText
+                          onChange={(val) => {
+                            this.updateValue("promotionalText", val)
+                          }}
+                          value={this.state.data.promotionalText}
+                          isEditable={true}
+                        ></EditableRichText>
+                      ) : null}
 
-                        <Text style={this.styles.style.courseDetailsAccordion}>Course Details</Text>
+                      <Text style={this.styles.style.courseDetailsAccordion}>Course Details</Text>
 
-                        {this.state.courseData?.courseWeeks?.items.map(
-                          (item: any, index1: number) => {
-                            return (
-                              <Accordion
-                                key={index1}
-                                header={
-                                  <>
-                                    <View
+                      {this.state.courseData?.courseWeeks?.items.map(
+                        (item: any, index1: number) => {
+                          return (
+                            <Accordion
+                              key={index1}
+                              header={
+                                <>
+                                  <View
+                                    style={{
+                                      flexDirection: "row",
+                                      justifyContent: "space-between",
+                                      width: "100%",
+                                    }}
+                                  >
+                                    <Text
+                                      numberOfLines={1}
                                       style={{
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        width: "100%",
+                                        fontFamily: "Graphik-SemiBold-App",
+                                        fontSize: 16,
+                                        lineHeight: 24,
+                                        paddingRight: 4,
+                                        letterSpacing: -0.3,
+                                        color: "#ffffff",
+                                        alignSelf: "center",
                                       }}
                                     >
-                                      <Text
-                                        numberOfLines={1}
-                                        style={{
-                                          fontFamily: "Graphik-SemiBold-App",
-                                          fontSize: 16,
-                                          lineHeight: 24,
-                                          paddingRight: 4,
-                                          letterSpacing: -0.3,
-                                          color: "#ffffff",
-                                          alignSelf: "center",
-                                        }}
-                                      >
-                                        Week {index1 + 1} - {item.title}
-                                      </Text>
-                                    </View>
-                                  </>
-                                }
-                              >
-                                <View style={{ marginBottom: 30 }}>
-                                  {item.lessons.items.map((lesson, index2: number) => {
-                                    return (
-                                      <Text
-                                        key={index2}
-                                        style={{
-                                          fontFamily: "Graphik-Regular-App",
-                                          fontSize: 16,
-                                          lineHeight: 24,
-                                          letterSpacing: -0.3,
-                                          color: "#333333",
-                                          paddingLeft: 20,
-                                        }}
-                                      >
-                                        <Image
-                                          style={this.styles.style.courseAccordionIcons}
-                                          source={require("../../assets/svg/document.svg")}
-                                        />
-                                        {index1 + 1}.{index2 + 1} - {lesson.name}
-                                      </Text>
-                                    )
-                                  })}
-                                </View>
-                              </Accordion>
-                            )
-                          }
-                        )}
-                      </Container>
-                    </Container>
-                  </Container>
-                  {this.renderPaidUsersModal()}
-                </Content>
-              </Container>
-            </StyleProvider>
+                                      Week {index1 + 1} - {item.title}
+                                    </Text>
+                                  </View>
+                                </>
+                              }
+                            >
+                              <View style={{ marginBottom: 30 }}>
+                                {item.lessons.items.map((lesson, index2: number) => {
+                                  return (
+                                    <Text
+                                      key={index2}
+                                      style={{
+                                        fontFamily: "Graphik-Regular-App",
+                                        fontSize: 16,
+                                        lineHeight: 24,
+                                        letterSpacing: -0.3,
+                                        color: "#333333",
+                                        paddingLeft: 20,
+                                      }}
+                                    >
+                                      <Image
+                                        style={this.styles.style.courseAccordionIcons}
+                                        source={require("../../assets/svg/document.svg")}
+                                      />
+                                      {index1 + 1}.{index2 + 1} - {lesson.name}
+                                    </Text>
+                                  )
+                                })}
+                              </View>
+                            </Accordion>
+                          )
+                        }
+                      )}
+                    </View>
+                  </View>
+                </View>
+                {this.renderPaidUsersModal()}
+              </ScrollView>
+            </View>
           ) : null
         }}
       </CourseScreen.UserConsumer>
