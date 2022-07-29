@@ -76,7 +76,6 @@ class CourseSidebarImpl extends JCComponent<Props> {
 
           return (
             <View style={this.styles.style.courseSideBar}>
-             
               <Pressable testID="header-logo" onPress={this.openHome}>
                 <Image
                   style={this.headerStyles.style.logo}

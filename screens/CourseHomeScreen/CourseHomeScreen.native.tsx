@@ -4,7 +4,7 @@ import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import React from "react"
-import { Dimensions } from "react-native"
+import { Dimensions, View } from "react-native"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {

@@ -11,7 +11,7 @@ import {
   CreateCourseTriadsInput,
   CreateCourseWeekInput,
   GetGroupQuery,
-  SearchUsersQuery,
+  SearchUsersQuery
 } from "src/API"
 import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
@@ -26,7 +26,7 @@ import {
   CourseState,
   CourseToDo,
   CourseWeekObj,
-  MarkedDates,
+  MarkedDates
 } from "../../components/CourseViewer/CourseContext"
 import CourseDetail from "../../components/CourseViewer/CourseDetail"
 import CourseHome from "../../components/CourseViewer/CourseHome"

@@ -1,4 +1,4 @@
-import { } from "@material-ui/core"
+
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Analytics, Auth } from "aws-amplify"

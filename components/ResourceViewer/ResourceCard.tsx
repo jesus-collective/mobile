@@ -14,7 +14,7 @@ import {
   GetResourceData,
   GetResourceEpisodeData,
   GetResourceSeriesData,
-  ResourceSetupProp,
+  ResourceSetupProp
 } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import NotSubscribedModal, { NotSubscribedButton } from "./NotSubscribed"

@@ -1,6 +1,6 @@
 import { NavigationProp } from "@react-navigation/native"
 import * as React from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, ScrollView, Text, View } from "react-native"
 import { constants } from "../../src/constants"
 import JCComponent from "../JCComponent/JCComponent"
 
@@ -31,13 +31,13 @@ export default class MyConversations extends JCComponent<Props> {
             marginTop: 50,
           }}
         >
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               this.openConversation()
             }}
           >
             <Text style={this.styles.style.fontConnectWith}>Latest Conversations</Text>
-          </TouchableOpacity>
+          </Pressable>
           <ScrollView>
             {items.map((item) => {
               return (
@@ -54,14 +54,14 @@ export default class MyConversations extends JCComponent<Props> {
                       </Body>
                     </View>
                     <View>
-                      <TouchableOpacity
+                      <Pressable
                         style={this.styles.style.connectWithSliderButton}
                         onPress={() => {
                           this.openConversation()
                         }}
                       >
                         <Text style={this.styles.style.fontStartConversation}>Open</Text>
-                      </TouchableOpacity>
+                      </Pressable>
                     </View>
                   </View>
                   <View>

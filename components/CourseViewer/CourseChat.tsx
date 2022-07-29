@@ -86,7 +86,6 @@ class CourseChatImpl extends JCComponent<Props, State> {
                   actions.myCourseGroups().completeTriad.length == 0 ? (
                     <Text>You have not been added to a cohort</Text>
                   ) : actions.myCourseGroups().completeTriad.length == 1 ? (
-
                     <MessageBoard
                       style="mini"
                       inputAt="bottom"

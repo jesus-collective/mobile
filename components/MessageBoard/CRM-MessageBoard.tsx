@@ -20,13 +20,13 @@ import {
   CreateCRMReplyInput,
   GetUserQuery,
   OnCreateCrmMessageByRootIdSubscription,
-  OnCreateCrmReplyByRootIdSubscription,
+  OnCreateCrmReplyByRootIdSubscription
 } from "../../src/API"
 import { GetCrmRootQuery } from "../../src/API-crm"
 import { getUser } from "../../src/graphql/queries"
 import {
   onCreateCrmMessageByRootId,
-  onCreateCrmReplyByRootId,
+  onCreateCrmReplyByRootId
 } from "../../src/graphql/subscriptions"
 import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
