@@ -17,7 +17,6 @@ import {
 } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import Amplify, { Auth } from "aws-amplify"
-import { Label } from "native-base"
 import onlyLastPromise, { DiscardSignal } from "only-last-promise"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
@@ -507,7 +506,7 @@ class BillingImpl extends JCComponent<Props, State> {
           )
         })}
 
-        <Label>
+        <View>
           <Text
             style={[
               this.styles.style.fontFormMandatory,
@@ -526,7 +525,7 @@ class BillingImpl extends JCComponent<Props, State> {
               this.setState({ eula: e })
             }}
           ></JCSwitch>
-        </Label>
+        </View>
 
         <JCButton
           buttonType={ButtonTypes.TransparentNoPadding}
@@ -741,7 +740,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       </Text>
                       {this.state.userData && (
                         <>
-                          <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                             <Text
                               style={[
                                 this.styles.style.fontFormMandatory,
@@ -753,7 +752,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               *
                             </Text>
                             Billing Address Line 1
-                          </Label>
+                          </View>
 
                           <EditableText
                             accessibilityLabel="Billing Address Line 1"
@@ -783,9 +782,9 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                             Billing Address Line 2
-                          </Label>
+                          </View>
 
                           <EditableText
                             accessibilityLabel="Billing Address Line 2"
@@ -815,7 +814,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                             <Text
                               style={[
                                 this.styles.style.fontFormMandatory,
@@ -827,7 +826,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               *
                             </Text>
                             City
-                          </Label>
+                          </View>
 
                           <EditableText
                             accessibilityLabel="City"
@@ -857,7 +856,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                             <Text
                               style={[
                                 this.styles.style.fontFormMandatory,
@@ -869,7 +868,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               *
                             </Text>
                             State/Province
-                          </Label>
+                          </View>
 
                           <EditableText
                             accessibilityLabel="State/Province"
@@ -899,7 +898,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                             <Text
                               style={[
                                 this.styles.style.fontFormMandatory,
@@ -911,7 +910,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               *
                             </Text>
                             Country
-                          </Label>
+                          </View>
 
                           <EditableText
                             accessibilityLabel="Country"
@@ -941,7 +940,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                             <Text
                               style={[
                                 this.styles.style.fontFormMandatory,
@@ -953,7 +952,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               *
                             </Text>
                             Zip/Postal Code
-                          </Label>
+                          </View>
 
                           <EditableText
                             accessibilityLabel="Zip/Postal Code"
@@ -992,7 +991,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       <Text style={{ fontFamily: "Graphik-Bold-App" }}>
                         Credit Card Information
                       </Text>
-                      <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                      <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                         <Text
                           style={[
                             this.styles.style.fontFormMandatory,
@@ -1004,12 +1003,12 @@ class BillingImpl extends JCComponent<Props, State> {
                           *
                         </Text>
                         Credit Card Number
-                      </Label>
+                      </View>
                       <CardNumberElement
                         onChange={(el) => this.stripeFieldValidation(el, "cardNumber")}
                         options={CARD_ELEMENT_OPTIONS}
                       />
-                      <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                      <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                         <Text
                           style={[
                             this.styles.style.fontFormMandatory,
@@ -1021,12 +1020,12 @@ class BillingImpl extends JCComponent<Props, State> {
                           *
                         </Text>
                         Expiry Date
-                      </Label>
+                      </View>
                       <CardExpiryElement
                         onChange={(el) => this.stripeFieldValidation(el, "expiryDate")}
                         options={CARD_ELEMENT_OPTIONS}
                       />
-                      <Label style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
+                      <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
                         <Text
                           style={[
                             this.styles.style.fontFormMandatory,
@@ -1036,7 +1035,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           *
                         </Text>
                         CVC
-                      </Label>
+                      </View>
                       <CardCvcElement
                         onChange={(el) => this.stripeFieldValidation(el, "cvc")}
                         options={CARD_ELEMENT_OPTIONS}

@@ -1,6 +1,6 @@
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { Auth, Storage } from "aws-amplify"
-import { Badge, Label } from "native-base"
+import { Badge } from "native-base"
 import React from "react"
 import { Text, TextInput, TouchableOpacity, View } from "react-native"
 import JCComponent from "../JCComponent/JCComponent"
@@ -62,9 +62,9 @@ export default class EditableFileUpload extends JCComponent<Props> {
             </TouchableOpacity>
           </View>
         </Badge>
-        <Label style={{ fontSize: 12, marginLeft: 10, marginTop: 7 }}>
+        <View style={{ fontSize: 12, marginLeft: 10, marginTop: 7 }}>
           {this.processFileName(this.props.attachment)}
-        </Label>
+        </View>
       </View>
     ) : null
   }
