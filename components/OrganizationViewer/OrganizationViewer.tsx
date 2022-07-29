@@ -2,9 +2,9 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
-import { Input, Item } from "native-base"
+import { Item } from "native-base"
 import * as React from "react"
-import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, Picker, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
@@ -760,7 +760,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Address
                   </View>
-                  <Input
+                  <TextInput
                     testID="org-Address"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.address ?? ""}
@@ -773,7 +773,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>City
                   </View>
-                  <Input
+                  <TextInput
                     testID="org-City"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.city ?? ""}
@@ -786,7 +786,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Province/State
                   </View>
-                  <Input
+                  <TextInput
                     testID="org-Province"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.province ?? ""}
@@ -799,7 +799,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Postal/Zip Code
                   </View>
-                  <Input
+                  <TextInput
                     testID="org-PostalCode"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.postalCode ?? ""}
@@ -812,7 +812,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Country
                   </View>
-                  <Input
+                  <TextInput
                     testID="org-Country"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.country ?? ""}
@@ -825,7 +825,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Email Address
                   </View>
-                  <Input
+                  <TextInput
                     testID="org-Email"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.adminEmail ?? ""}
@@ -838,7 +838,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Phone #
                   </View>
-                  <Input
+                  <TextInput
                     testID="org-Phone"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.phone ?? ""}
