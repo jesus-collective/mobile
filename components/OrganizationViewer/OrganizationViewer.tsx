@@ -2,7 +2,6 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
-import { Item } from "native-base"
 import * as React from "react"
 import { Image, Picker, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
@@ -756,7 +755,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
             ) : null}
             {this.state.isEditable && this.state.editMode ? (
               <View style={{ backgroundColor: "#FFFFFF", width: "100%", marginBottom: 30 }}>
-                <Item stackedLabel>
+                <View>
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Address
                   </View>
@@ -768,8 +767,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "address")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
+                </View>
+                <View>
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>City
                   </View>
@@ -781,8 +780,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "city")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
+                </View>
+                <View>
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Province/State
                   </View>
@@ -794,8 +793,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "province")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
+                </View>
+                <View>
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Postal/Zip Code
                   </View>
@@ -807,8 +806,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "postalCode")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
+                </View>
+                <View>
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Country
                   </View>
@@ -820,8 +819,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "country")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
+                </View>
+                <View>
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Email Address
                   </View>
@@ -833,8 +832,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "adminEmail")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
+                </View>
+                <View>
                   <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Phone #
                   </View>
@@ -846,7 +845,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "phone")
                     }}
                   />
-                </Item>
+                </View>
               </View>
             ) : null}
           </View>

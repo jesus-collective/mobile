@@ -2,7 +2,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
-import { Left, Right } from "native-base"
 import React from "react"
 import {
   Dimensions,
@@ -188,7 +187,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             }}
             onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
-            <Left style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <Image
                 style={{
                   width: "40px",
@@ -197,8 +196,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                 }}
                 source={require("../../assets/svg/document.svg")}
               />
-            </Left>
-            <Right
+            </View>
+            <View
               style={{
                 flex: 9,
                 alignItems: "flex-start",
@@ -224,7 +223,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               >
                 Responses due @ {item.time}
               </Text>
-            </Right>
+            </View>
           </TouchableOpacity>
         )
 
@@ -240,7 +239,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             }}
             onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
-            <Left style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <Image
                 style={{
                   width: "40px",
@@ -249,8 +248,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                 }}
                 source={require("../../assets/svg/document.svg")}
               />
-            </Left>
-            <Right
+            </View>
+            <View
               style={{
                 flex: 9,
                 alignItems: "flex-start",
@@ -276,7 +275,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               >
                 Zoom call @ {item.time}
               </Text>
-            </Right>
+            </View>
           </TouchableOpacity>
         )
     }
