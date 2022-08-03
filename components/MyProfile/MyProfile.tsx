@@ -1,16 +1,17 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
+import Badge from "@material-ui/core/Badge"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
-import { Badge, Form, Label, Picker } from "native-base"
 import * as React from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import {
   ActivityIndicator,
   Image,
+  Picker,
   Pressable,
   ScrollView,
   Text,
@@ -1270,12 +1271,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (this.state.UserDetails)
       return (
         <View style={{ width: "100%" }}>
-          <Label style={this.styles.style.fontFormSmall}>
+          <View style={this.styles.style.fontFormSmall}>
             <Text style={this.styles.style.fontFormMandatory}>
               {this.state.isEditable && this.state.editMode ? "*" : ""}
             </Text>
             Current Role
-          </Label>
+          </View>
           <EditableText
             accessibilityLabel="Current role"
             onChange={(e) => {
@@ -1395,7 +1396,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (this.state.UserDetails)
       return (this.state.isEditable && this.state.editMode) || this.state.UserDetails.orgName ? (
         <View>
-          <Label style={this.styles.style.fontFormSmall}>Organization Name</Label>
+          <View style={this.styles.style.fontFormSmall}>Organization Name</View>
           <EditableText
             accessibilityLabel="Organization name"
             onChange={(e) => {
@@ -1419,7 +1420,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return (this.state.isEditable && this.state.editMode) ||
         (this.state.UserDetails.orgType && this.state.UserDetails.orgType !== "None") ? (
         <View style={{ marginTop: 15 }}>
-          <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
+          <View style={this.styles.style.fontFormSmall}>Type of Organization</View>
           {this.state.isEditable && this.state.editMode ? (
             <View style={this.styles.style.myProfileOrgView}>
               <Picker
@@ -1483,9 +1484,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
       <View style={{ marginTop: 15 }}>
         {this.state.isEditable && this.state.editMode ? (
           <View>
-            <Label style={this.styles.style.fontFormSmall}>
+            <View style={this.styles.style.fontFormSmall}>
               How many employees are there in the organization?
-            </Label>
+            </View>
             <Picker
               accessibilityLabel="Number of employees in organization"
               testID="profile-orgSize"
@@ -1503,7 +1504,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
         ) : this.state.UserDetails.orgSize ? (
           <View>
-            <Label style={this.styles.style.fontFormSmall}>Employees</Label>
+            <View style={this.styles.style.fontFormSmall}>Employees</View>
 
             <EditableText
               multiline={true}
@@ -1525,7 +1526,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       <View style={{ marginTop: 15 }}>
         {this.state.isEditable && this.state.editMode ? (
           <View>
-            <Label style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</Label>
+            <View style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</View>
             <Picker
               accessibilityLabel="Average Sunday morning attendance"
               style={this.styles.style.myprofilePicker}
@@ -1542,7 +1543,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
         ) : this.state.UserDetails.sundayAttendance ? (
           <View>
-            <Label style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</Label>
+            <View style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</View>
             <EditableText
               accessibilityLabel="Average Sunday morning attendance"
               multiline={true}
@@ -1564,7 +1565,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       <View style={{ marginTop: 15 }}>
         {this.state.isEditable && this.state.editMode ? (
           <View>
-            <Label style={this.styles.style.fontFormSmall}>Number of volunteers</Label>
+            <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
             <Picker
               accessibilityLabel="Number of volunteers"
               style={this.styles.style.myprofilePicker}
@@ -1581,7 +1582,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
         ) : this.state.UserDetails.numberVolunteers ? (
           <View>
-            <Label style={this.styles.style.fontFormSmall}>Number of volunteers</Label>
+            <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
             <EditableText
               multiline={true}
               textStyle={this.styles.style.fontFormSmallDarkGrey}
@@ -1757,14 +1758,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
           <View style={this.styles.style.changeNamePasswordContainer}>
             <View style={this.styles.style.changePasswordContainer}>
-              <Label
+              <View
                 style={{
                   ...this.styles.style.fontFormSmallDarkGrey,
                   marginBottom: 15,
                 }}
               >
                 Change your password
-              </Label>
+              </View>
               <TextInput
                 placeholder="Current password"
                 value={this.state.oldPass}
@@ -1787,14 +1788,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
               </JCButton>
             </View>
             <View>
-              <Label
+              <View
                 style={{
                   ...this.styles.style.fontFormSmallDarkGrey,
                   marginBottom: 15,
                 }}
               >
                 Change your name
-              </Label>
+              </View>
               <TextInput
                 placeholder="First name"
                 value={this.state.firstName}
@@ -1826,14 +1827,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
             {this.state.passError}
           </Text>
           <View style={{ marginTop: 40 }}>
-            <Label
+            <View
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
                 marginBottom: 15,
               }}
             >
               Alert Settings
-            </Label>
+            </View>
             <JCSwitch
               containerWidth={500}
               flexDirection={isTablet || isBrowser ? "row" : "column"}
@@ -1936,7 +1937,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         <View style={this.styles.style.profileScreenRightCard}>
           <Text style={this.styles.style.myprofileAboutMe}>Billing</Text>
           <View style={{ marginTop: 40 }}>
-            <Label
+            <View
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
                 marginBottom: 15,
@@ -1944,17 +1945,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
             >
               More billing features coming soon, please contact Jesus Collective directly for any
               billing concerns.
-            </Label>
+            </View>
           </View>
           <View style={{ marginTop: 40, width: "100%" }}>
-            <Label
+            <View
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
                 marginBottom: 15,
               }}
             >
               Invoices
-            </Label>
+            </View>
             {this.state.invoices ? (
               <>
                 <View style={{ flex: 1, flexDirection: "row" }}>
@@ -1993,34 +1994,34 @@ class MyProfileImpl extends JCComponent<Props, State> {
             )}
           </View>
           <View style={{ marginTop: 40 }}>
-            <Label
+            <View
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
                 marginBottom: 15,
               }}
             >
               Modify Subscription
-            </Label>
+            </View>
           </View>
           <View style={{ marginTop: 40 }}>
-            <Label
+            <View
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
                 marginBottom: 15,
               }}
             >
               Update Payment
-            </Label>
+            </View>
           </View>
           <View style={{ marginTop: 40 }}>
-            <Label
+            <View
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
                 marginBottom: 15,
               }}
             >
               Cancel Subscription
-            </Label>
+            </View>
           </View>
         </View>
       )
@@ -2055,13 +2056,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <ScrollView ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
               {this.renderTopBar(userActions)}
 
-              <Form style={this.styles.style.myProfileMainContainer}>
+              <View style={this.styles.style.myProfileMainContainer}>
                 {this.renderLeftBar(userActions)}
                 {this.state.showPage == "admin" && this.renderAdmin(userActions)}
                 {this.state.showPage == "billing" && this.renderBilling()}
                 {this.state.showPage == "profile" && this.renderProfile()}
                 {this.state.showPage == "settings" && this.renderAccountSettings()}
-              </Form>
+              </View>
             </ScrollView>
           ) : null
         }}

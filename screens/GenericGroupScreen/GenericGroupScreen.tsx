@@ -3,9 +3,8 @@ import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Analytics, Auth } from "aws-amplify"
 import moment from "moment-timezone"
-import { CardItem, Icon, Picker } from "native-base"
 import React, { lazy } from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { JCCognitoUser, MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableDate from "../../components/Forms/EditableDate"
@@ -425,7 +424,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               paddingTop: 3,
               paddingBottom: 3,
             }}
-            selectedValue={null}
+            selectedValue={undefined}
             onValueChange={(value: string) => {
               console.log({ value: value })
               let tmp = this.state.data?.readGroups
@@ -434,7 +433,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.updateValue("readGroups", tmp)
             }}
           >
-            <Picker.Item key={null} label={"Add Group"} value={null} />
+            <Picker.Item key={null} label={"Add Group"} value={undefined} />
             {Object.keys(UserGroupType).map((org: string) => {
               return <Picker.Item key={org} label={org} value={org} />
             })}
@@ -687,7 +686,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                   {this.state.isEditable ? (
                     <Picker
                       mode="dropdown"
-                      iosIcon={<Icon name="arrow-down" />}
+                      //   iosIcon={<Icon name="arrow-down" />}
                       style={{
                         width: "50%",
                         marginBottom: 30,
@@ -696,10 +695,10 @@ export default class EventScreen extends JCComponent<Props, State> {
                         height: 30,
                         flexGrow: 0,
                       }}
-                      placeholder="Event type"
-                      placeholderStyle={{ color: "#bfc6ea" }}
-                      placeholderIconColor="#007aff"
-                      selectedValue={this.state.data.eventType}
+                      //  placeholder="Event type"
+                      //  placeholderStyle={{ color: "#bfc6ea" }}
+                      //  placeholderIconColor="#007aff"
+                      selectedValue={this.state.data.eventType ?? undefined}
                       onValueChange={(value: any) => {
                         this.updateValue("eventType", value)
                       }}
@@ -727,7 +726,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                       isEditable={this.state.isEditable}
                     ></EditableUrl>
                   ) : (
-                    <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                    <View style={{ paddingLeft: 0, paddingRight: 0 }}>
                       <Image
                         style={{ width: "22px", height: "22px", marginRight: 5 }}
                         source={require("../../assets/svg/pin 2.svg")}
@@ -750,7 +749,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                         value={this.state.data.location ?? ""}
                         isEditable={this.state.isEditable}
                       ></EditableLocation>
-                    </CardItem>
+                    </View>
                   )}
                 </>
               )}

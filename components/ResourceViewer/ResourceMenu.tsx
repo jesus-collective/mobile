@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
-import { Body, Header, Left, Picker, Right } from "native-base"
 import React from "react"
-import { Dimensions, Pressable, View } from "react-native"
+import { Dimensions, Picker, Pressable, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import {
   ResourceMenuItemType,
@@ -50,7 +49,7 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
             paddingTop: 3,
             paddingBottom: 3,
           }}
-          selectedValue={page.state.settings.style}
+          selectedValue={page.state.settings.style ?? undefined}
           onValueChange={(value: any) => {
             const tmp = page.state.settings
             tmp.style = value
@@ -70,11 +69,11 @@ class ResourceMenu extends JCComponent<ResourceSetupProp> {
 
   renderTopMenu(): React.ReactNode {
     return (
-      <Header style={this.headerStyles.style.resourceContainer}>
-        <Left></Left>
-        <Body style={this.styles.style.resourcesSubMenu}>{this.renderItems()}</Body>
-        <Right></Right>
-      </Header>
+      <View style={this.headerStyles.style.resourceContainer}>
+        <View></View>
+        <View style={this.styles.style.resourcesSubMenu}>{this.renderItems()}</View>
+        <View></View>
+      </View>
     )
   }
   renderLeftMenu(): React.ReactNode {

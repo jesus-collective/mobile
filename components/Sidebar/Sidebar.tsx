@@ -1,5 +1,4 @@
 import { Entypo } from "@expo/vector-icons"
-import { useDrawerStatus } from "@react-navigation/drawer"
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -7,7 +6,6 @@ import { FlatList, Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
-import Header from "../../components/Header/Header"
 import { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
@@ -89,7 +87,6 @@ export default function SideBar(props: Props) {
   }
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Jesus Collective" drawerState={useDrawerStatus()} />
       <FlatList
         style={{ padding: 24, paddingTop: 36 }}
         data={state.menus}
@@ -159,7 +156,4 @@ export default function SideBar(props: Props) {
       />
     </View>
   )
-}
-function setState(arg0: (prev: any) => any) {
-  throw new Error("Function not implemented.")
 }

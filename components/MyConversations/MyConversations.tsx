@@ -1,5 +1,4 @@
 import { NavigationProp } from "@react-navigation/native"
-import { Body, Card, CardItem, Left, Right } from "native-base"
 import * as React from "react"
 import { Image, Pressable, ScrollView, Text, View } from "react-native"
 import { constants } from "../../src/constants"
@@ -42,19 +41,19 @@ export default class MyConversations extends JCComponent<Props> {
           <ScrollView>
             {items.map((item) => {
               return (
-                <Card key={item.id} style={this.styles.style.conversationCard}>
-                  <CardItem style={{ paddingTop: 28 }}>
-                    <Left>
+                <View key={item.id} style={this.styles.style.conversationCard}>
+                  <View style={{ paddingTop: 28 }}>
+                    <View>
                       <Image
                         style={{ margin: 0, padding: 0, width: 40, height: 45 }}
                         source={require("../../assets/profile-placeholder.png")}
                       />
-                      <Body>
+                      <View>
                         <Text style={this.styles.style.fontConnectWithName}>{item.name}</Text>
                         <Text style={this.styles.style.fontConnectWithRole}>{item.role}</Text>
-                      </Body>
-                    </Left>
-                    <Right>
+                      </View>
+                    </View>
+                    <View>
                       <Pressable
                         style={this.styles.style.connectWithSliderButton}
                         onPress={() => {
@@ -63,12 +62,12 @@ export default class MyConversations extends JCComponent<Props> {
                       >
                         <Text style={this.styles.style.fontStartConversation}>Open</Text>
                       </Pressable>
-                    </Right>
-                  </CardItem>
-                  <CardItem>
+                    </View>
+                  </View>
+                  <View>
                     <Text style={this.styles.style.fontConnectWithRole}>{item.message}</Text>
-                  </CardItem>
-                </Card>
+                  </View>
+                </View>
               )
             })}
           </ScrollView>

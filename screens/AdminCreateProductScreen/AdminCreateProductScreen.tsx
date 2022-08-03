@@ -1,10 +1,10 @@
 import { AntDesign } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { convertToRaw, EditorState } from "draft-js"
-import { Icon, Picker } from "native-base"
 import * as React from "react"
 import {
   NativeSyntheticEvent,
+  Picker,
   ScrollView,
   Text,
   TextInput,
@@ -297,7 +297,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
               onStartShouldSetResponderCapture={() => true}
               onMoveShouldSetResponder={() => true}
               mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
+              // iosIcon={<Icon name="arrow-down" />}
               style={{
                 width: "30%",
                 marginBottom: 0,
@@ -308,9 +308,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 marginRight: 0,
                 borderColor: "#dddddd",
               }}
-              placeholder="Event type"
-              placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
+              // placeholder="Event type"
+              //placeholderStyle={{ color: "#bfc6ea" }}
+              //placeholderIconColor="#007aff"
               selectedValue={this.state.pricePer}
             >
               <Picker.Item label="One-Time" value="One-Time" />

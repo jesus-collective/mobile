@@ -2,9 +2,8 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import moment from "moment"
-import { Form, Input, Item, Label, Picker } from "native-base"
 import * as React from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, Picker, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
@@ -507,7 +506,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
           </View>
         </View>
 
-        <Form style={this.styles.style.myProfileMainContainer}>
+        <View style={this.styles.style.myProfileMainContainer}>
           <View style={this.styles.style.profileScreenLeftCard}>
             <View style={this.styles.style.myProfileImageWrapper}>
               <Image
@@ -756,11 +755,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
             ) : null}
             {this.state.isEditable && this.state.editMode ? (
               <View style={{ backgroundColor: "#FFFFFF", width: "100%", marginBottom: 30 }}>
-                <Item stackedLabel>
-                  <Label style={this.styles.style.fontFormSmall}>
+                <View>
+                  <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Address
-                  </Label>
-                  <Input
+                  </View>
+                  <TextInput
                     testID="org-Address"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.address ?? ""}
@@ -768,12 +767,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "address")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={this.styles.style.fontFormSmall}>
+                </View>
+                <View>
+                  <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>City
-                  </Label>
-                  <Input
+                  </View>
+                  <TextInput
                     testID="org-City"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.city ?? ""}
@@ -781,12 +780,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "city")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={this.styles.style.fontFormSmall}>
+                </View>
+                <View>
+                  <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Province/State
-                  </Label>
-                  <Input
+                  </View>
+                  <TextInput
                     testID="org-Province"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.province ?? ""}
@@ -794,12 +793,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "province")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={this.styles.style.fontFormSmall}>
+                </View>
+                <View>
+                  <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Postal/Zip Code
-                  </Label>
-                  <Input
+                  </View>
+                  <TextInput
                     testID="org-PostalCode"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.postalCode ?? ""}
@@ -807,12 +806,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "postalCode")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={this.styles.style.fontFormSmall}>
+                </View>
+                <View>
+                  <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Country
-                  </Label>
-                  <Input
+                  </View>
+                  <TextInput
                     testID="org-Country"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.country ?? ""}
@@ -820,12 +819,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "country")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={this.styles.style.fontFormSmall}>
+                </View>
+                <View>
+                  <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Email Address
-                  </Label>
-                  <Input
+                  </View>
+                  <TextInput
                     testID="org-Email"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.adminEmail ?? ""}
@@ -833,12 +832,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "adminEmail")
                     }}
                   />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={this.styles.style.fontFormSmall}>
+                </View>
+                <View>
+                  <View style={this.styles.style.fontFormSmall}>
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Phone #
-                  </Label>
-                  <Input
+                  </View>
+                  <TextInput
                     testID="org-Phone"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.phone ?? ""}
@@ -846,7 +845,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       this.handleInputChange(e, "phone")
                     }}
                   />
-                </Item>
+                </View>
               </View>
             ) : null}
           </View>
@@ -900,7 +899,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   {(this.state.isEditable && this.state.editMode) ||
                   this.state.OrganizationDetails.orgName ? (
                     <View>
-                      <Label style={this.styles.style.fontFormSmall}>Organization Name</Label>
+                      <View style={this.styles.style.fontFormSmall}>Organization Name</View>
                       <EditableText
                         onChange={(e) => {
                           this.handleInputChange(e, "orgName")
@@ -919,7 +918,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   (this.state.OrganizationDetails.orgType &&
                     this.state.OrganizationDetails.orgType !== "None") ? (
                     <View style={{ marginTop: 15 }}>
-                      <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
+                      <View style={this.styles.style.fontFormSmall}>Type of Organization</View>
                       {this.state.isEditable && this.state.editMode ? (
                         <View style={this.styles.style.myProfileOrgView}>
                           <Picker
@@ -929,12 +928,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                               this.handleInputChange(itemValue, "orgType")
                             }}
                             selectedValue={
-                              orgTypes.includes(this.state.OrganizationDetails.orgType)
+                              (orgTypes.includes(this.state.OrganizationDetails.orgType)
                                 ? this.state.OrganizationDetails.orgType
                                 : this.state.OrganizationDetails.orgType === null ||
                                   this.state.OrganizationDetails.orgType === "None"
                                 ? "None"
-                                : ""
+                                : "") ?? undefined
                             }
                           >
                             <Picker.Item label={"None Selected"} value={"None"} />
@@ -976,16 +975,16 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <View style={{ marginTop: 15 }}>
                       {this.state.isEditable && this.state.editMode ? (
                         <View>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <View style={this.styles.style.fontFormSmall}>
                             How many employees are there in the organization?
-                          </Label>
+                          </View>
                           <Picker
                             testID="org-numEmployees"
                             style={this.styles.style.myprofilePicker}
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "orgSize")
                             }}
-                            selectedValue={this.state.OrganizationDetails.orgSize}
+                            selectedValue={this.state.OrganizationDetails.orgSize ?? undefined}
                           >
                             <Picker.Item label={"None Selected"} value={""} />
                             {numberOfEmployees.map((item, index) => {
@@ -995,7 +994,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                         </View>
                       ) : this.state.OrganizationDetails.orgSize ? (
                         <View>
-                          <Label style={this.styles.style.fontFormSmall}>Employees</Label>
+                          <View style={this.styles.style.fontFormSmall}>Employees</View>
 
                           <EditableText
                             multiline={true}
@@ -1013,16 +1012,18 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <View style={{ marginTop: 15 }}>
                       {this.state.isEditable && this.state.editMode ? (
                         <View>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <View style={this.styles.style.fontFormSmall}>
                             Average Sunday morning attendance
-                          </Label>
+                          </View>
                           <Picker
                             testID="org-aveSunday"
                             style={this.styles.style.myprofilePicker}
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "sundayAttendance")
                             }}
-                            selectedValue={this.state.OrganizationDetails.sundayAttendance}
+                            selectedValue={
+                              this.state.OrganizationDetails.sundayAttendance ?? undefined
+                            }
                           >
                             <Picker.Item label={"None Selected"} value={""} />
                             {sundayAttendance.map((item, index) => {
@@ -1032,9 +1033,9 @@ class OrganizationImpl extends JCComponent<Props, State> {
                         </View>
                       ) : this.state.OrganizationDetails.sundayAttendance ? (
                         <View>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <View style={this.styles.style.fontFormSmall}>
                             Average Sunday morning attendance
-                          </Label>
+                          </View>
                           <EditableText
                             multiline={true}
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
@@ -1051,16 +1052,16 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <View style={{ marginTop: 15 }}>
                       {this.state.isEditable && this.state.editMode ? (
                         <View>
-                          <Label style={this.styles.style.fontFormSmall}>
-                            Number of volunteers
-                          </Label>
+                          <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
                           <Picker
                             testID="org-numVolunteers"
                             style={this.styles.style.myprofilePicker}
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "numberVolunteers")
                             }}
-                            selectedValue={this.state.OrganizationDetails.numberVolunteers}
+                            selectedValue={
+                              this.state.OrganizationDetails.numberVolunteers ?? undefined
+                            }
                           >
                             <Picker.Item label={"None Selected"} value={""} />
                             {numberOfEmployees.map((item, index) => {
@@ -1070,9 +1071,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                         </View>
                       ) : this.state.OrganizationDetails.numberVolunteers ? (
                         <View>
-                          <Label style={this.styles.style.fontFormSmall}>
-                            Number of volunteers
-                          </Label>
+                          <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
                           <EditableText
                             multiline={true}
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
@@ -1209,7 +1208,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   inputStyle={this.styles.style.fontFormLargeInput}
                   value={this.state.removeAdmins} isEditable={true}></EditableUsers>
                 <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.removeAdmins()}><Text>Remove Admins</Text></JCButton>*/}
-              {/*<Label style={{ ...this.styles.style.fontFormSmallDarkGrey, marginBottom: 15 }}>Alert Settings</Label>
+              {/*<View style={{ ...this.styles.style.fontFormSmallDarkGrey, marginBottom: 15 }}>Alert Settings</View>
                   <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Direct Messages" initState={this.state.OrganizationDetails.alertConfig?.emailDirectMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailDirectMessage") }}></JCSwitch>
                   <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Group Messages" initState={this.state.OrganizationDetails.alertConfig?.emailGroupMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailGroupMessage") }}></JCSwitch>
                   <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Event Messages" initState={this.state.OrganizationDetails.alertConfig?.emailEventMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailEventMessage") }}></JCSwitch>
@@ -1219,7 +1218,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Org Messages" initState={this.state.OrganizationDetails.alertConfig?.emailPromotions == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailPromotions") }}></JCSwitch>*/}
             </View>
           )}
-        </Form>
+        </View>
       </ScrollView>
     ) : null
   }

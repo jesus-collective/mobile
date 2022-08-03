@@ -1,12 +1,12 @@
 import { GraphQLResult } from "@aws-amplify/api"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
+import Badge from "@material-ui/core/Badge"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
-import { Badge, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
@@ -522,7 +522,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
   renderMessage(item: Message | Reply, index: number, parentId: string, isReply: boolean) {
     if (item) {
       return (
-        <Card
+        <View
           key={index}
           style={{
             borderRadius: 10,
@@ -531,8 +531,8 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
             marginLeft: isReply ? 50 : 0,
           }}
         >
-          <CardItem style={this.styles.style.coursePageMessageBoard}>
-            <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
+          <View style={this.styles.style.coursePageMessageBoard}>
+            <View style={this.styles.style.coursePageMessageBoardLeftMini}>
               <TouchableOpacity
                 key={item?.id}
                 onPress={() =>
@@ -544,8 +544,8 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
               >
                 <ProfileImage size="small2" user={item?.authorId ?? null} />
               </TouchableOpacity>
-            </Left>
-            <Right style={this.styles.style.miniMessageBoardRight}>
+            </View>
+            <View style={this.styles.style.miniMessageBoardRight}>
               <View>
                 <Text style={this.styles.style.courseFormName}>{item?.authorName}</Text>
                 {item?.when && (
@@ -584,9 +584,9 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </Right>
-          </CardItem>
-          <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
+            </View>
+          </View>
+          <View style={this.styles.style.eventPageMessageBoardInnerCard}>
             <div id="comment-div">
               <div
                 dangerouslySetInnerHTML={{
@@ -594,9 +594,9 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
                 }}
               ></div>
             </div>
-          </CardItem>
-          {item?.attachment ? <CardItem>{this.renderFileDownloadBadge(item)}</CardItem> : null}
-        </Card>
+          </View>
+          {item?.attachment ? <View>{this.renderFileDownloadBadge(item)}</View> : null}
+        </View>
       )
     }
     return null

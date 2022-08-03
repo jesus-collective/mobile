@@ -49,7 +49,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                     paddingTop: 3,
                     paddingBottom: 3,
                   }}
-                  selectedValue={null}
+                  selectedValue={undefined}
                   onValueChange={(value: string) => {
                     console.log({ value: value })
                     const tmp: UpdateResourceMenuItemInput = resourceActions.getMenuItem(
@@ -65,7 +65,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                     )
                   }}
                 >
-                  <Picker.Item key={null} label={"Add Group"} value={null} />
+                  <Picker.Item key={null} label={"Add Group"} value={undefined} />
                   {Object.keys(UserGroupType).map((org: string) => {
                     return <Picker.Item key={org} label={org} value={org} />
                   })}

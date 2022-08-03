@@ -1,5 +1,6 @@
 import { CardCvcElement, CardExpiryElement, CardNumberElement } from "@stripe/react-stripe-js"
 import React from "react"
+import { View } from "react-native"
 import "./CardSectionStyles.css"
 
 const CARD_ELEMENT_OPTIONS = {
@@ -22,11 +23,11 @@ const CARD_ELEMENT_OPTIONS = {
 
 function CardSection(): React.ReactNode {
   return (
-    <label>
+    <View>
       <CardNumberElement options={CARD_ELEMENT_OPTIONS} />
       <CardExpiryElement options={CARD_ELEMENT_OPTIONS} />
       <CardCvcElement options={CARD_ELEMENT_OPTIONS} />
-    </label>
+    </View>
   )
 }
 

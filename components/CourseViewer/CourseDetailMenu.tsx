@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Header } from "native-base"
 import React from "react"
 import { isDesktop } from "react-device-detect"
 import {
@@ -84,7 +83,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
           }
           const Weeks = Object.values(state.courseWeeks).filter((item) => item)
           return (
-            <Header style={this.headerStyles.style.resourceContainer}>
+            <View style={this.headerStyles.style.resourceContainer}>
               <View
                 style={{
                   flex: 1,
@@ -159,7 +158,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                   </View>
                 ) : null}
               </View>
-            </Header>
+            </View>
           )
         }}
       </CourseDetailMenuImpl.Consumer>

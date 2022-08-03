@@ -1,8 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Picker } from "native-base"
 import React from "react"
-import { ScrollView, Text, View } from "react-native"
+import { Picker, ScrollView, Text, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
@@ -112,7 +111,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       >
         <>
           <Picker
-            placeholder="Enter Action Value"
+            //placeholder="Enter Action Value"
             selectedValue={this.state.profileAction}
             onValueChange={(e) => {
               this.setState({ profileAction: e })

@@ -2,7 +2,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import moment from "moment"
-import { Body, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
 import {
   Dimensions,
@@ -63,9 +62,9 @@ class CourseHomeImpl extends JCComponent<Props> {
             this.showProfile(user.id)
           }}
         >
-          <Card style={this.styles.style.courseConversationCard}>
-            <CardItem>
-              <Left style={this.styles.style.courseHomeConversationCard}>
+          <View style={this.styles.style.courseConversationCard}>
+            <View>
+              <View style={this.styles.style.courseHomeConversationCard}>
                 <ProfileImageNew
                   linkToProfile
                   style={ProfileImageStyle.UserLarge}
@@ -73,7 +72,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                   type="user"
                   user={user}
                 />
-                <Body style={this.styles.style.dashboardConversationBody}>
+                <View style={this.styles.style.dashboardConversationBody}>
                   <Text style={this.styles.style.courseFontConnectWithName}>
                     {user.given_name} {user.family_name}
                   </Text>
@@ -89,10 +88,10 @@ class CourseHomeImpl extends JCComponent<Props> {
                     </Text>
                   </Pressable>
                   {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
-                </Body>
-              </Left>
-            </CardItem>
-          </Card>
+                </View>
+              </View>
+            </View>
+          </View>
         </TouchableOpacity>
       )
     return null
@@ -137,7 +136,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             }}
             onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
-            <Left style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <Image
                 style={{
                   width: "40px",
@@ -146,8 +145,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                 }}
                 source={require("../../assets/svg/document.svg")}
               />
-            </Left>
-            <Right
+            </View>
+            <View
               style={{
                 flex: 9,
                 alignItems: "flex-start",
@@ -173,7 +172,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               >
                 Assignment due @ {item.time}
               </Text>
-            </Right>
+            </View>
           </TouchableOpacity>
         )
 
@@ -188,7 +187,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             }}
             onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
-            <Left style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <Image
                 style={{
                   width: "40px",
@@ -197,8 +196,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                 }}
                 source={require("../../assets/svg/document.svg")}
               />
-            </Left>
-            <Right
+            </View>
+            <View
               style={{
                 flex: 9,
                 alignItems: "flex-start",
@@ -224,7 +223,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               >
                 Responses due @ {item.time}
               </Text>
-            </Right>
+            </View>
           </TouchableOpacity>
         )
 
@@ -240,7 +239,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             }}
             onPress={() => this.goToLesson(actions, item.week, item.lesson)}
           >
-            <Left style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <Image
                 style={{
                   width: "40px",
@@ -249,8 +248,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                 }}
                 source={require("../../assets/svg/document.svg")}
               />
-            </Left>
-            <Right
+            </View>
+            <View
               style={{
                 flex: 9,
                 alignItems: "flex-start",
@@ -276,7 +275,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               >
                 Zoom call @ {item.time}
               </Text>
-            </Right>
+            </View>
           </TouchableOpacity>
         )
     }
@@ -367,7 +366,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                         >
                           Learning Guide
                         </Text>
-                        <Card style={this.styles.style.courseHomeFileCard}>
+                        <View style={this.styles.style.courseHomeFileCard}>
                           {state.courseData ? (
                             <EditableFileUpload
                               textStyle={null}
@@ -391,7 +390,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                               }}
                             ></EditableFileUpload>
                           ) : null}
-                        </Card>
+                        </View>
                         {}
                         {state.editMode ? (
                           <>
@@ -406,7 +405,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                             >
                               User Setup
                             </Text>
-                            <Card style={this.styles.style.courseHomeUserEditCard}>
+                            <View style={this.styles.style.courseHomeUserEditCard}>
                               <Text
                                 style={{
                                   fontSize: 16,
@@ -477,9 +476,9 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       return item?.user
                                     })
                                     return (
-                                      <Card key={index}>
-                                        <CardItem style={{ zIndex: -1 }}>
-                                          <Left style={{ zIndex: -1 }}>
+                                      <View key={index}>
+                                        <View style={{ zIndex: -1 }}>
+                                          <View style={{ zIndex: -1 }}>
                                             <Text
                                               style={{
                                                 zIndex: -1,
@@ -491,8 +490,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             >
                                               Facilitator
                                             </Text>
-                                          </Left>
-                                          <Right style={{ zIndex: -1 }}>
+                                          </View>
+                                          <View style={{ zIndex: -1 }}>
                                             <TouchableOpacity
                                               style={this.styles.style.courseHomeDeleteTriad}
                                               onPress={() => {
@@ -501,9 +500,9 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             >
                                               <AntDesign name="close" size={23} color="white" />
                                             </TouchableOpacity>
-                                          </Right>
-                                        </CardItem>
-                                        <CardItem style={{ zIndex: 99999 }}>
+                                          </View>
+                                        </View>
+                                        <View style={{ zIndex: 99999 }}>
                                           <EditableUsers
                                             limit={1}
                                             onChange={(value: any[]) => {
@@ -517,8 +516,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             value={coaches ? coaches : []}
                                             isEditable={true}
                                           ></EditableUsers>
-                                        </CardItem>
-                                        <CardItem style={{ zIndex: -1 }}>
+                                        </View>
+                                        <View style={{ zIndex: -1 }}>
                                           <Text
                                             style={{
                                               zIndex: -1,
@@ -530,8 +529,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                           >
                                             Cohort
                                           </Text>
-                                        </CardItem>
-                                        <CardItem>
+                                        </View>
+                                        <View>
                                           <EditableUsers
                                             limit={3}
                                             onChange={(value: any[]) => {
@@ -545,8 +544,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                             value={users ? users : []}
                                             isEditable={true}
                                           ></EditableUsers>
-                                        </CardItem>
-                                      </Card>
+                                        </View>
+                                      </View>
                                     )
                                   })}
                                   <TouchableOpacity
@@ -555,7 +554,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       actions.createTriad()
                                     }}
                                   >
-                                    <Card style={{ zIndex: -1 }}>
+                                    <View style={{ zIndex: -1 }}>
                                       <Text
                                         style={{
                                           fontSize: 16,
@@ -568,11 +567,11 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       >
                                         Add Cohort
                                       </Text>
-                                    </Card>
+                                    </View>
                                   </TouchableOpacity>
                                 </>
                               ) : null}
-                            </Card>
+                            </View>
                           </>
                         ) : (
                           <>
@@ -695,7 +694,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                           >
                             To-Do
                           </Text>
-                          <Card style={this.styles.style.courseHomeCoachingCard}>
+                          <View style={this.styles.style.courseHomeCoachingCard}>
                             {Dimensions.get("window").width > 720 ? (
                               <FlatList
                                 renderItem={({ item }) => this.renderToDo(item, actions)}
@@ -707,7 +706,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 return this.renderToDo(item, actions)
                               })
                             )}
-                          </Card>
+                          </View>
                         </>
                       ) : null}
                       {constants["SETTING_ISVISIBLE_COURSE_CALENDAR"] ? (

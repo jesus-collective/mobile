@@ -1,7 +1,6 @@
 import Amplify from "aws-amplify"
-import { Picker } from "native-base"
 import React from "react"
-import { View } from "react-native"
+import { Picker, View } from "react-native"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import { ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -35,7 +34,7 @@ class ResourceRichText extends JCComponent<Props> {
             paddingTop: 3,
             paddingBottom: 3,
           }}
-          selectedValue={page.state.settings.style}
+          selectedValue={page.state.settings.style ?? undefined}
           onValueChange={(value: any) => {
             const tmp = page.state.settings
             tmp.style = value

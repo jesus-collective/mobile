@@ -1,7 +1,6 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import { Card, Icon, Picker } from "native-base"
 import React from "react"
-import { Image, ScrollView, Text, View } from "react-native"
+import { Image, Picker, ScrollView, Text, View } from "react-native"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
@@ -113,7 +112,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                           </Text>
                         </View>
                       </View>
-                      <Card style={this.styles.style.courseCoachingCard}>
+                      <View style={this.styles.style.courseCoachingCard}>
                         <Text
                           style={{
                             fontFamily: "Graphik-Regular-App",
@@ -133,16 +132,16 @@ class CourseCoachingImpl extends JCComponent<Props> {
                           <View style={{ flex: 40, marginTop: 30, height: 50, marginRight: 30 }}>
                             <Picker
                               mode="dropdown"
-                              iosIcon={<Icon name="arrow-down" />}
+                              //  iosIcon={<Icon name="arrow-down" />}
                               style={{
                                 width: "100%",
                                 height: 50,
                                 paddingLeft: 15,
                                 paddingRight: 15,
                               }}
-                              placeholder="Select your Coach"
-                              placeholderStyle={{ color: "#bfc6ea" }}
-                              placeholderIconColor="#007aff"
+                              //  placeholder="Select your Coach"
+                              //   placeholderStyle={{ color: "#bfc6ea" }}
+                              //   placeholderIconColor="#007aff"
                             >
                               {
                                 //   selectedValue={this.state.selected2}
@@ -208,7 +207,7 @@ class CourseCoachingImpl extends JCComponent<Props> {
                             </JCButton>
                           </View>
                         </View>
-                      </Card>
+                      </View>
                     </View>
                     <View
                       style={{

@@ -4,9 +4,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Drawer } from "native-base"
 import React from "react"
-import { Dimensions, View } from "react-native"
+import { Dimensions } from "react-native"
 import {
   CreateCourseLessonInput,
   CreateCourseTriadsInput,
@@ -16,9 +15,6 @@ import {
 } from "src/API"
 import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
-import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
-import CourseChat from "../../components/CourseViewer/CourseChat"
-import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {
   AgendaItems,
   CourseContext,
@@ -29,8 +25,6 @@ import {
   CourseWeekObj,
   MarkedDates,
 } from "../../components/CourseViewer/CourseContext"
-import CourseDetail from "../../components/CourseViewer/CourseDetail"
-import CourseHome from "../../components/CourseViewer/CourseHome"
 import { Data } from "../../components/Data/Data"
 import FloatingButton from "../../components/FloatingButton/FloatingButton"
 import FloatingButtonStyles from "../../components/FloatingButton/FloatingButtonStyles"
@@ -987,7 +981,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               setShow={() => this.setState({ showChat: true })}
             />
           ) : null}
-
+          {/* Temporary remove for react-base removal}
           <Drawer
             content={<CourseChat />}
             open={this.state.showChat}
@@ -1008,7 +1002,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               <CourseDetail />
               <CourseCoaching />
             </View>
-          </Drawer>
+            </Drawer>*/}
         </>
       </CourseHomeScreenImpl.Provider>
     ) : null

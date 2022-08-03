@@ -2,9 +2,8 @@
 import { Tooltip } from "@material-ui/core"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
-import { Card, Icon, Picker } from "native-base"
 import React from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, Picker, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import EditableCourseAssignment2 from "../Forms/EditableCourseAssignment2"
 import EditableDate from "../Forms/EditableDate"
@@ -138,7 +137,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               onStartShouldSetResponderCapture={() => true}
               onMoveShouldSetResponder={() => true}
               mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
+              //    iosIcon={<Icon name="arrow-down" />}
               style={{
                 width: "50%",
                 marginBottom: 0,
@@ -149,10 +148,10 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                 marginRight: 0,
                 borderColor: "#dddddd",
               }}
-              placeholder="Event type"
-              placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
-              selectedValue={item?.courseLessonResponseId}
+              // placeholder="Event type"
+              // placeholderStyle={{ color: "#bfc6ea" }}
+              // placeholderIconColor="#007aff"
+              selectedValue={item?.courseLessonResponseId ?? undefined}
               onValueChange={(value) => {
                 actions.updateLesson(
                   state.activeWeek,
@@ -528,7 +527,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                         !state.editMode ? actions.setActiveLesson(item?.id) : null
                       }}
                     >
-                      <Card
+                      <View
                         style={
                           state.isEditable && state.editMode
                             ? this.styles.style.courseDetailLessonCardEdit
@@ -662,7 +661,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                                   onStartShouldSetResponderCapture={() => true}
                                   onMoveShouldSetResponder={() => true}
                                   mode="dropdown"
-                                  iosIcon={<Icon name="arrow-down" />}
+                                  //  iosIcon={<Icon name="arrow-down" />}
                                   style={{
                                     width: "30%",
                                     marginBottom: 0,
@@ -673,9 +672,9 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                                     marginRight: 0,
                                     borderColor: "#dddddd",
                                   }}
-                                  placeholder="Event type"
-                                  placeholderStyle={{ color: "#bfc6ea" }}
-                                  placeholderIconColor="#007aff"
+                                  // placeholder="Event type"
+                                  // placeholderStyle={{ color: "#bfc6ea" }}
+                                  // placeholderIconColor="#007aff"
                                   selectedValue={item?.lessonType}
                                   onValueChange={(value) => {
                                     actions.updateLesson(
@@ -718,7 +717,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                             </TouchableOpacity>
                           ) : null}
                         </View>
-                      </Card>
+                      </View>
                     </TouchableOpacity>
                   )
                 }
@@ -732,7 +731,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                   actions.createLesson()
                 }}
               >
-                <Card style={this.styles.style.courseDetailLessonCardCreate}>
+                <View style={this.styles.style.courseDetailLessonCardCreate}>
                   <View style={{ flexDirection: "row" }}>
                     <Text
                       style={{
@@ -756,7 +755,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                       </Text>
                     </View>
                   </View>
-                </Card>
+                </View>
               </TouchableOpacity>
             ) : null}
           </View>

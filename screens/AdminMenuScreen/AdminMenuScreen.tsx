@@ -1,8 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Picker } from "native-base"
 import React from "react"
-import { ScrollView, Text, TextInput, View } from "react-native"
+import { Picker, ScrollView, Text, TextInput, View } from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -173,7 +172,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
           <Picker
-            placeholder="Enter Action Value"
+            //placeholder="Enter Action Value"
             selectedValue={this.state.menuAction}
             onValueChange={(e) => {
               this.setState({ menuAction: e })
@@ -280,7 +279,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             style={this.styles.style.adminCRMModalInviteEmail}
           ></TextInput>
           <Picker
-            placeholder="Enter Action Value"
+            //placeholder="Enter Action Value"
             selectedValue={this.state.subMenuAction}
             onValueChange={(e) => {
               this.setState({ subMenuAction: e })

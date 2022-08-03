@@ -1,10 +1,9 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation } from "aws-amplify"
-import { Body, Card, CardItem, Left, Right } from "native-base"
 import * as React from "react"
 import { Editor } from "react-draft-wysiwyg"
-import { ScrollView, Text, TouchableOpacity } from "react-native"
+import { ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -165,7 +164,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   this.showProfile(item.author.id)
                 }}
               >
-                <Card
+                <View
                   key={item.id}
                   style={{
                     borderRadius: 10,
@@ -174,7 +173,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     borderColor: "#ffffff",
                   }}
                 >
-                  <CardItem
+                  <View
                     style={{
                       borderBottomLeftRadius: 0,
                       borderBottomRightRadius: 0,
@@ -183,12 +182,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                       backgroundColor: "#F9FAFC",
                     }}
                   >
-                    <Left>
+                    <View>
                       <ProfileImage
                         size="small"
                         user={item.owner ? item.owner : null}
                       ></ProfileImage>
-                      <Body>
+                      <View>
                         <Text style={this.styles.style.groupFormName}>
                           {item.author != null ? item.author.given_name : null}{" "}
                           {item.author != null ? item.author.family_name : null}
@@ -196,15 +195,15 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                         <Text style={this.styles.style.groupFormRole}>
                           {item.author != null ? item.author.currentRole : null}
                         </Text>
-                      </Body>
-                    </Left>
-                    <Right>
+                      </View>
+                    </View>
+                    <View>
                       <Text style={this.styles.style.groupFormDate}>
                         {new Date(parseInt(item.when, 10)).toLocaleString()}
                       </Text>
-                    </Right>
-                  </CardItem>
-                  <CardItem
+                    </View>
+                  </View>
+                  <View
                     style={{
                       marginTop: 0,
                       paddingTop: 0,
@@ -224,8 +223,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                       wrapperClassName="customWrapper"
                       editorClassName="customEditor"
                     />
-                  </CardItem>
-                </Card>
+                  </View>
+                </View>
               </TouchableOpacity>
             )
           })}
