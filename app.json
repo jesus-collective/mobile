@@ -3,7 +3,11 @@
     "name": "Jesus Collective",
     "slug": "JesusCollective",
     "privacy": "public",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "owner": "georgevicbell",
     "scheme": "jc",
     "version": "1.0.0",
@@ -23,7 +27,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.jesuscollective.iosapp",
@@ -35,8 +41,13 @@
     },
     "web": {
       "babel": {
-        "include": ["aws-amplify-react-native"]
+        "include": [
+          "aws-amplify-react-native"
+        ]
       }
-    }
+    },
+    "plugins": [
+      "sentry-expo"
+    ]
   }
 }

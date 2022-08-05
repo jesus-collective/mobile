@@ -1,71 +1,61 @@
 import { Ionicons } from "@expo/vector-icons"
-import Amplify from "aws-amplify"
-import React from "react"
+import React, { useContext, useState } from "react"
 import { View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import EditableText from "../../components/Forms/EditableText"
+import MainStyles from "../../components/style"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { ResourceDetailType } from "../../src/API"
-import awsconfig from "../../src/aws-exports"
 import {
   GetResourceData,
   GetResourceEpisodeData,
   GetResourceSeriesData,
+  ResourceAdminProp,
   ResourceSetupProp,
 } from "../../src/types"
-import JCComponent from "../JCComponent/JCComponent"
 import NotSubscribedModal, { NotSubscribedButton } from "./NotSubscribed"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 
-Amplify.configure(awsconfig)
-
-interface State {
-  notSubscribedModal: boolean
+export function ResourceDropDownPickerAdmin(props: ResourceAdminProp): JSX.Element {
+  return (
+    <>
+      <EditableText
+        multiline={false}
+        onChange={(val: string) => {
+          const tmp = props.settings
+          tmp.title1 = val
+          props.setSettings(tmp)
+        }}
+        textStyle={{
+          margin: 10,
+          fontSize: 18,
+          fontStyle: "normal",
+          fontWeight: 400,
+          lineHeight: 27,
+          letterSpacing: 0,
+          textAlign: "left",
+          color: "#404040",
+        }}
+        inputStyle={{ margin: 10 }}
+        value={props.settings.title1 ?? ""}
+        isEditable={true}
+      ></EditableText>
+    </>
+  )
 }
-
-class ResourceDropDownPicker extends JCComponent<ResourceSetupProp, State> {
-  static Consumer = ResourceContext.Consumer
-  static UserConsumer = UserContext.Consumer
-  constructor(props: ResourceSetupProp) {
-    super(props)
-    this.state = {
-      notSubscribedModal: false,
-    }
+function ResourceDropDownPicker(props: ResourceSetupProp) {
+  const resourceContext = useContext(ResourceContext)
+  const userContext = useContext(UserContext)
+  const [notSubscribedModal, setNotSubscribedModal] = useState<boolean>(false)
+  const styles = MainStyles.getInstance()
+  const [open, setOpen] = useState<boolean>(false)
+  const icon = (): React.ReactNode => {
+    return <Ionicons name="md-menu" style={styles.style.resourceIcon} />
   }
-
-  static renderAdmin(page: PageItemSettings): React.ReactNode {
-    return (
-      <>
-        <EditableText
-          multiline={false}
-          onChange={(val: string) => {
-            const tmp = page.state.settings
-            tmp.title1 = val
-            page.setState({ settings: tmp })
-          }}
-          textStyle={{
-            margin: 10,
-            fontSize: 18,
-            fontStyle: "normal",
-            fontWeight: 400,
-            lineHeight: 27,
-            letterSpacing: 0,
-            textAlign: "left",
-            color: "#404040",
-          }}
-          inputStyle={{ margin: 10 }}
-          value={page.state.settings.title1 ?? ""}
-          isEditable={true}
-        ></EditableText>
-      </>
-    )
-  }
-
-  icon = (): React.ReactNode => {
-    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
-  }
-  getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData): any {
+  const getButtonItems = (
+    items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
+  ): any => {
     return items && items.details
       ? items.details
           .filter((e) => e?.type == ResourceDetailType.Button)
@@ -73,133 +63,114 @@ class ResourceDropDownPicker extends JCComponent<ResourceSetupProp, State> {
             return {
               label: item?.text ?? "",
               value: item?.value ?? "",
-              icon: this.icon,
+              icon: icon,
             }
           })
       : []
   }
-  render(): React.ReactNode {
-    return (
-      <>
-        <NotSubscribedModal
-          visible={this.state.notSubscribedModal}
-          onHide={() => this.setState({ notSubscribedModal: false })}
-        />
-        <ResourceDropDownPicker.UserConsumer>
-          {({ userActions }) => {
-            if (!userActions) {
-              return null
-            }
-            return (
-              <ResourceDropDownPicker.Consumer>
-                {({ resourceState, resourceActions }) => {
-                  if (!resourceState) return null
-                  if (resourceState.currentResource == null) return null
-                  let item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
-                  let readGroups: NonNullable<GetResourceData>["readGroups"] | undefined = []
-                  let isSubscribed = false
-                  const resourceById = resourceActions.getResourceByID(
-                    this.props.pageItem.resourceID
-                  )
-                  readGroups = resourceById?.readGroups
-                  if (
-                    this.props.pageItem.episodeID != null &&
-                    this.props.pageItem.episodeID != undefined
-                  )
-                    item = resourceActions.getEpisodeByID(
-                      this.props.pageItem.resourceID,
-                      this.props.pageItem.seriesID,
-                      this.props.pageItem.episodeID
-                    )
-                  else if (
-                    this.props.pageItem.seriesID != null &&
-                    this.props.pageItem.seriesID != undefined
-                  )
-                    item = resourceActions.getSeriesByID(
-                      this.props.pageItem.resourceID,
-                      this.props.pageItem.seriesID
-                    )
-                  else {
-                    item = resourceActions.getResourceByID(this.props.pageItem.resourceID)
-                  }
-                  console.log({ ITEM: item })
-                  const buttonItems = this.getButtonItems(item)
+  if (!userContext.userActions) return null
 
-                  isSubscribed = !!readGroups?.some((group) => {
-                    return userActions.isMemberOf(group as string)
-                  })
+  if (!resourceContext.resourceState) return null
+  if (resourceContext.resourceState.currentResource == null) return null
 
-                  return (
-                    <View
-                      style={[
-                        this.styles.style.resourcesRichTextContainer,
-                        { zIndex: 6000 + this.props.pageItemIndex.length },
-                      ]}
-                    >
-                      <PageItemSettings
-                        resourceActions={this.props.resourceActions}
-                        resourceState={this.props.resourceState}
-                        pageItemIndex={this.props.pageItemIndex}
-                        save={this.props.save}
-                        delete={this.props.delete}
-                        pageItem={this.props.pageItem}
-                        hideEditButton={this.props.hideEditButton}
-                      ></PageItemSettings>
-                      {buttonItems?.length && buttonItems.length > 0 ? (
-                        <>
-                          {isSubscribed ? (
-                            <DropDownPicker
-                              zIndex={6000 + this.props.pageItemIndex.length}
-                              items={buttonItems}
-                              placeholder={this.props.pageItem.title1 ?? ""}
-                              containerStyle={{
-                                height: 40,
-                                width: 200,
-                                zIndex: 5000 + this.props.pageItemIndex.length,
-                              }}
-                              dropDownStyle={{
-                                backgroundColor: "#FF4438",
-                                width: 200,
-                                zIndex: 5000 + this.props.pageItemIndex.length,
-                              }}
-                              style={{
-                                backgroundColor: "#FF4438",
-                                zIndex: 5000 + this.props.pageItemIndex.length,
-                              }}
-                              itemStyle={{
-                                justifyContent: "flex-start",
-                                width: 100,
-                                zIndex: 5000 + this.props.pageItemIndex.length,
-                              }}
-                              labelStyle={{
-                                fontSize: 14,
-                                textAlign: "left",
-                                color: "#FFFFFF",
-                                fontWeight: "600",
-                                alignSelf: "center",
-                                zIndex: 5000 + this.props.pageItemIndex.length,
-                              }}
-                              arrowColor="#FFFFFF"
-                              onChangeItem={(item: typeof buttonItems[0]) => {
-                                window.location.href = item.value
-                              }}
-                            />
-                          ) : (
-                            <NotSubscribedButton
-                              onPress={() => this.setState({ notSubscribedModal: true })}
-                            />
-                          )}
-                        </>
-                      ) : null}
-                    </View>
-                  )
-                }}
-              </ResourceDropDownPicker.Consumer>
-            )
-          }}
-        </ResourceDropDownPicker.UserConsumer>
-      </>
+  let item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
+  let readGroups: NonNullable<GetResourceData>["readGroups"] | undefined = []
+  let isSubscribed = false
+  const resourceById = resourceContext.resourceActions.getResourceByID(props.pageItem.resourceID)
+  readGroups = resourceById?.readGroups
+  if (props.pageItem.episodeID != null && props.pageItem.episodeID != undefined)
+    item = resourceContext.resourceActions.getEpisodeByID(
+      props.pageItem.resourceID,
+      props.pageItem.seriesID,
+      props.pageItem.episodeID
     )
+  else if (props.pageItem.seriesID != null && props.pageItem.seriesID != undefined)
+    item = resourceContext.resourceActions.getSeriesByID(
+      props.pageItem.resourceID,
+      props.pageItem.seriesID
+    )
+  else {
+    item = resourceContext.resourceActions.getResourceByID(props.pageItem.resourceID)
   }
+  console.log({ ITEM: item })
+  const buttonItems = getButtonItems(item)
+
+  isSubscribed = !!readGroups?.some((group) => {
+    return userContext.userActions.isMemberOf(group as string)
+  })
+
+  return (
+    <>
+      <NotSubscribedModal
+        visible={notSubscribedModal}
+        onHide={() => setNotSubscribedModal(false)}
+      />
+      {
+        <View
+          style={[
+            styles.style.resourcesRichTextContainer,
+            { zIndex: 6000 + props.pageItemIndex.length },
+          ]}
+        >
+          <PageItemSettings
+            pageItemIndex={props.pageItemIndex}
+            save={props.save}
+            delete={props.delete}
+            pageItem={props.pageItem}
+            hideEditButton={props.hideEditButton}
+          ></PageItemSettings>
+          {buttonItems?.length && buttonItems.length > 0 ? (
+            <>
+              {isSubscribed ? (
+                <DropDownPicker
+                  open={open}
+                  setOpen={setOpen}
+                  zIndex={6000 + props.pageItemIndex.length}
+                  items={buttonItems}
+                  placeholder={props.pageItem.title1 ?? ""}
+                  containerStyle={{
+                    height: 40,
+                    width: 200,
+                    zIndex: 5000 + props.pageItemIndex.length,
+                  }}
+                  dropDownContainerStyle={{
+                    backgroundColor: "#FF4438",
+                    width: 200,
+                    zIndex: 5000 + props.pageItemIndex.length,
+                  }}
+                  style={{
+                    padding: 3,
+                    flexDirection: "row",
+                    backgroundColor: "#FF4438",
+                    zIndex: 5000 + props.pageItemIndex.length,
+                  }}
+                  listItemContainerStyle={{
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    width: 100,
+                    zIndex: 5000 + props.pageItemIndex.length,
+                  }}
+                  labelStyle={{
+                    fontSize: 14,
+                    textAlign: "left",
+                    color: "#FFFFFF",
+                    fontWeight: "600",
+                    alignSelf: "center",
+                    zIndex: 5000 + props.pageItemIndex.length,
+                  }}
+                  // arrowColor="#FFFFFF"
+                  onChangeValue={(item: typeof buttonItems[0]) => {
+                    window.location.href = item.value
+                  }}
+                />
+              ) : (
+                <NotSubscribedButton onPress={() => setNotSubscribedModal(true)} />
+              )}
+            </>
+          ) : null}
+        </View>
+      }
+    </>
+  )
 }
 export default ResourceDropDownPicker

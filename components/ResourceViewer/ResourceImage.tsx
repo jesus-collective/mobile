@@ -33,7 +33,7 @@ class ResourceImage extends JCComponent<Props, State> {
       const z = await Storage.get(this.props.currentImage?.filenameUpload, {
         level: "protected",
         contentType: "image/png",
-        identityId: this.props.currentImage?.userId,
+        identityId: this.props.currentImage?.userId ?? "",
       })
       this.setState({ imageUrl: z })
     }
@@ -91,6 +91,7 @@ class ResourceImage extends JCComponent<Props, State> {
                     .replace("." + ext, ".png")
 
                   console.log("putting")
+
                   await Storage.put(fn, file, {
                     level: "protected",
                     contentType: file.type,

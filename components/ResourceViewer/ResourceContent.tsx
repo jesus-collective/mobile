@@ -1,17 +1,17 @@
 import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import React from "react"
+import React, { useContext, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import { PageItemIndex } from "src/types"
 import { v4 as uuidv4 } from "uuid"
+import MainStyles from "../../components/style"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import JCResourceConfigModal from "./JCResourceConfigModal"
 import PageConfigModal from "./PageConfigModal"
 import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
-import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
+import { ResourceContext } from "./ResourceContext"
 import ResourceDropDownPicker from "./ResourceDropDownPicker"
 import ResourceGrid from "./ResourceGrid"
 import ResourceHeader from "./ResourceHeader"
@@ -28,136 +28,64 @@ interface Props {
   hideEditButton?: boolean
 }
 
-interface State extends JCState {
-  showEditorModal: boolean
-  showJCResourceConfigModal: boolean
-  showPageConfigModal: boolean
-  showResourceConfigModal: boolean
-}
+function ResourceContentImpl(props: Props) {
+  const resourceContext = useContext(ResourceContext)
+  const [showPageConfigModal, setShowPageConfigModal] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
+  const [value, setValue] = useState<string>("")
 
-class ResourceContentImpl extends JCComponent<Props, State> {
-  static Consumer = ResourceContext.Consumer
+  const [showJCResourceConfigModal, setShowJCResourceConfigModal] = useState<boolean>(
+    props.route.params.create === "true" || props.route.params.create === true ? true : false
+  )
+  const styles = MainStyles.getInstance()
 
-  constructor(props: Props) {
-    super(props)
-    console.log({ create: props.route.params.create })
-    this.state = {
-      ...super.getInitialState(),
-      showPageConfigModal: false,
-      showResourceConfigModal: false,
-      showJCResourceConfigModal:
-        props.route.params.create === "true" || props.route.params.create === true ? true : false,
-      showEditorModal: false,
-    }
+  const icon = () => {
+    return <Ionicons name="md-menu" style={styles.style.resourceIcon} />
   }
 
-  renderAddSeriesCard(state: ResourceState, actions: ResourceActions) {
-    return state.isEditable ? (
-      <TouchableOpacity onPress={actions.createSeries}>
-        <View style={this.styles.style.resourceContentCurrentSeriesCard}>
-          <View style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
-            <Ionicons size={76} name="ios-add" style={this.styles.style.icon} />
-          </View>
-          <View
-            style={{
-              width: "100%",
-              padding: 0,
-              margin: 0,
-              paddingBottom: 0,
-              backgroundColor: "#F9FAFC",
-            }}
-          >
-            <Text style={this.styles.style.episodeTitle}>Add Series</Text>
-          </View>
-          <View
-            style={{
-              width: "100%",
-              padding: 0,
-              margin: 0,
-              paddingBottom: 0,
-              backgroundColor: "#F9FAFC",
-            }}
-          >
-            <Text style={this.styles.style.episodeDescription}></Text>
-          </View>
-          <View>
-            <Text style={this.styles.style.episodeTitle}></Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    ) : null
-  }
-
-  generateKey(state: ResourceState): string {
-    return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
-  }
-  showEditorModal(): void {
-    this.setState({
-      showEditorModal: true,
-    })
-  }
-
-  stripHTMLTags(data: string): string {
-    return data
-      .replace(/<\/?[^>]+(>|$)/g, "")
-      .replace(/&nbsp;/g, "")
-      .replace(/&gt;/g, "")
-  }
-
-  findFirstEpisode(series: any[]): number {
-    let firstEpisodeIndex = 0
-    series.forEach((episode, index) => {
-      if (episode.episodeNumber === 1) firstEpisodeIndex = index
-    })
-    return firstEpisodeIndex
-  }
-  icon = () => {
-    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
-  }
-
-  renderAddPageItemButton(
-    resourceState: ResourceState,
-    resourceActions: ResourceActions,
-    pageItemIndex: PageItemIndex
-  ) {
+  const renderAddPageItemButton = (pageItemIndex: PageItemIndex) => {
     return (
       <DropDownPicker
+        value={value}
+        setValue={setValue}
+        open={open}
+        setOpen={setOpen}
         zIndex={5000 + pageItemIndex.length}
         items={[
           {
             label: "Menu",
             value: ResourcePageItemType.Menu,
-            icon: this.icon,
+            icon: icon,
           },
           {
             label: "Header",
             value: ResourcePageItemType.Header,
-            icon: this.icon,
+            icon: icon,
           },
           {
             label: "Rich Text",
             value: ResourcePageItemType.RichText,
-            icon: this.icon,
+            icon: icon,
           },
           {
             label: "List",
             value: ResourcePageItemType.List,
-            icon: this.icon,
+            icon: icon,
           },
           {
             label: "Grid",
             value: ResourcePageItemType.Grid,
-            icon: this.icon,
+            icon: icon,
           },
           {
             label: "Column",
             value: ResourcePageItemType.Column,
-            icon: this.icon,
+            icon: icon,
           },
           {
             label: "Card",
             value: ResourcePageItemType.Card,
-            icon: this.icon,
+            icon: icon,
           },
         ]}
         placeholder="Add Page Item"
@@ -168,13 +96,19 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           marginTop: 5,
           marginBottom: 100,
         }}
-        dropDownStyle={{
+        dropDownContainerStyle={{
           backgroundColor: "#FF4438",
           width: 150,
           zIndex: 5000 + pageItemIndex.length,
         }}
-        style={{ backgroundColor: "#FF4438", zIndex: 5000 + pageItemIndex.length }}
-        itemStyle={{
+        style={{
+          padding: 3,
+          backgroundColor: "#FF4438",
+          zIndex: 5000 + pageItemIndex.length,
+          flexDirection: "row",
+        }}
+        listItemContainerStyle={{
+          flexDirection: "row",
           justifyContent: "flex-start",
           width: 100,
           zIndex: 5000 + pageItemIndex.length,
@@ -187,23 +121,31 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           fontWeight: "600",
           alignSelf: "center",
         }}
-        arrowColor="#FFFFFF"
-        onChangeItem={(item) => {
-          const pageItem: ResourcePageItemInput = {
-            id: uuidv4(),
-            type: item.value,
+        // arrowColor="#FFFFFF"
+        onChangeValue={(item) => {
+          console.log({ item: item })
+          if (item != "") {
+            const pageItem: ResourcePageItemInput = {
+              id: uuidv4(),
+              type: item as ResourcePageItemType,
+            }
+            resourceContext.resourceActions.createPageItem(
+              resourceContext.resourceState?.currentMenuItem ?? 0,
+              pageItemIndex,
+              pageItem
+            )
+            setValue("")
           }
-          resourceActions.createPageItem(resourceState.currentMenuItem, pageItemIndex, pageItem)
-          item.value = null
+          // item.value = null
         }}
       />
     )
   }
-  renderPageConfigButton() {
+  const renderPageConfigButton = () => {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.setState({ showPageConfigModal: true })
+          setShowPageConfigModal(true)
         }}
       >
         <View style={{ backgroundColor: "#FF4438" }}>
@@ -212,11 +154,11 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </TouchableOpacity>
     )
   }
-  renderJCResourceConfigButton() {
+  const renderJCResourceConfigButton = () => {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.setState({ showJCResourceConfigModal: true })
+          setShowJCResourceConfigModal(true)
         }}
       >
         <View style={{ backgroundColor: "#FF4438" }}>
@@ -225,12 +167,12 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </TouchableOpacity>
     )
   }
-  renderResourceConfigButton(resourceState: ResourceState) {
+  const renderResourceConfigButton = () => {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation?.navigate("ResourceConfigureScreen", {
-            id: resourceState.loadId,
+          props.navigation?.navigate("ResourceConfigureScreen", {
+            id: resourceContext.resourceState?.loadId,
           })
         }}
       >
@@ -240,40 +182,26 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </TouchableOpacity>
     )
   }
-  save(
-    resourceActions: ResourceActions,
-    resourceState: ResourceState,
+  const saveResource = (
     menuItemIndex: number,
     pageItemIndex: PageItemIndex,
     value: ResourcePageItemInput
-  ) {
-    resourceActions.updatePageItem(menuItemIndex, pageItemIndex, value)
+  ) => {
+    resourceContext.resourceActions.updatePageItem(menuItemIndex, pageItemIndex, value)
   }
-  delete(
-    resourceActions: ResourceActions,
-    resourceState: ResourceState,
-    menuItemIndex: number,
-    pageItemIndex: PageItemIndex
-  ) {
-    resourceActions.deletePageItem(menuItemIndex, pageItemIndex)
+  const deleteResource = (menuItemIndex: number, pageItemIndex: PageItemIndex) => {
+    resourceContext.resourceActions.deletePageItem(menuItemIndex, pageItemIndex)
   }
-  renderRouter(
-    resourceActions: ResourceActions,
-    resourceState: ResourceState,
-    pageItemIndex: number,
-    item: ResourcePageItemInput
-  ): React.ReactNode {
+  const renderRouter = (pageItemIndex: number, item: ResourcePageItemInput): React.ReactNode => {
     switch (item.type) {
       case ResourcePageItemType.Column:
         return (
           <ResourceColumn
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceColumn>
         )
@@ -281,12 +209,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         return (
           <ResourceHeader
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceHeader>
         )
@@ -294,12 +220,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         return (
           <ResourceMenu
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceMenu>
         )
@@ -307,12 +231,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         return (
           <ResourceRichText
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceRichText>
         )
@@ -320,12 +242,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         return (
           <ResourceCard
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceCard>
         )
@@ -333,12 +253,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         return (
           <ResourceDropDownPicker
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceDropDownPicker>
         )
@@ -346,12 +264,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         return (
           <ResourceList
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceList>
         )
@@ -359,86 +275,66 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         return (
           <ResourceGrid
             key={pageItemIndex}
-            resourceActions={resourceActions}
-            resourceState={resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
-            save={this.save}
-            delete={this.delete}
-            hideEditButton={this.props.hideEditButton}
+            pageItemIndex={props.pageItemIndex?.concat(pageItemIndex)}
+            save={saveResource}
+            delete={deleteResource}
+            hideEditButton={props.hideEditButton}
             pageItem={item}
           ></ResourceGrid>
         )
     }
   }
-  renderColumnConfig(
-    resourceState: ResourceState,
-    resourceActions: ResourceActions
-  ): React.ReactNode {
-    console.log({ ColumnConfig: this.props.pageItemIndex })
-    return resourceState?.isEditable ? (
-      <View style={{ flexDirection: "row", zIndex: 5000 + this.props.pageItemIndex.length }}>
-        {this.renderAddPageItemButton(resourceState, resourceActions, this.props.pageItemIndex)}
+  const renderColumnConfig = (): React.ReactNode => {
+    console.log({ ColumnConfig: props.pageItemIndex })
+    return resourceContext.resourceState?.isEditable ? (
+      <View style={{ flexDirection: "row", zIndex: 5000 + props.pageItemIndex.length }}>
+        {renderAddPageItemButton(props.pageItemIndex)}
       </View>
     ) : null
   }
-  renderPageConfig(
-    resourceState: ResourceState,
-    resourceActions: ResourceActions
-  ): React.ReactNode {
-    return resourceState?.isEditable ? (
-      <View style={{ flexDirection: "row", zIndex: 5000 + this.props.pageItemIndex.length }}>
-        {this.renderAddPageItemButton(resourceState, resourceActions, [])}
-        {this.renderPageConfigButton()}
-        {this.renderResourceConfigButton(resourceState)}
-        {this.renderJCResourceConfigButton()}
+  const renderPageConfig = (): React.ReactNode => {
+    return resourceContext.resourceState?.isEditable ? (
+      <View style={{ flexDirection: "row", zIndex: 5000 + props.pageItemIndex.length }}>
+        {renderAddPageItemButton([])}
+        {renderPageConfigButton()}
+        {renderResourceConfigButton()}
+        {renderJCResourceConfigButton()}
         <JCResourceConfigModal
-          visible={this.state.showJCResourceConfigModal}
+          visible={showJCResourceConfigModal}
           onClose={() => {
-            this.setState({ showJCResourceConfigModal: false })
+            setShowJCResourceConfigModal(false)
           }}
         ></JCResourceConfigModal>
         <PageConfigModal
-          visible={this.state.showPageConfigModal}
+          visible={showPageConfigModal}
           onClose={() => {
-            this.setState({ showPageConfigModal: false })
+            setShowPageConfigModal(false)
           }}
         ></PageConfigModal>
       </View>
     ) : null
   }
-  renderItems(
-    resourceActions: ResourceActions,
-    resourceState: ResourceState,
-    pageItems: (ResourcePageItemInput | null)[] | null | undefined
-  ) {
+  const renderItems = (pageItems: (ResourcePageItemInput | null)[] | null | undefined) => {
     return pageItems?.map((item: ResourcePageItemInput | null, index: number) => {
-      if (item) return this.renderRouter(resourceActions, resourceState, index, item)
+      if (item) return renderRouter(index, item)
     })
   }
 
-  render(): React.ReactNode {
-    return (
-      <ResourceContentImpl.Consumer>
-        {({ resourceState, resourceActions }) => {
-          if (!resourceState) return null
-          if (resourceState.currentResource == null) return null
-          let pageItems: null | undefined | (ResourcePageItemInput | null)[] =
-            resourceActions.getMenuItem(resourceState.currentMenuItem)?.pageItems
-          if (!this.props.isBase) pageItems = this.props.pageItems
-          console.log({ pageItems: pageItems })
-          return (
-            <>
-              {this.renderItems(resourceActions, resourceState, pageItems)}
+  if (!resourceContext.resourceState) return null
+  if (resourceContext.resourceState?.currentResource == null) return null
+  let pageItems: null | undefined | (ResourcePageItemInput | null)[] =
+    resourceContext.resourceActions.getMenuItem(
+      resourceContext.resourceState?.currentMenuItem
+    )?.pageItems
+  if (!props.isBase) pageItems = props.pageItems
+  console.log({ pageItems: pageItems })
+  return (
+    <>
+      {renderItems(pageItems)}
 
-              {this.props.isBase
-                ? this.renderPageConfig(resourceState, resourceActions)
-                : this.renderColumnConfig(resourceState, resourceActions)}
-            </>
-          )
-        }}
-      </ResourceContentImpl.Consumer>
-    )
-  }
+      {props.isBase ? renderPageConfig() : renderColumnConfig()}
+    </>
+  )
 }
 
 export default function ResourceContent(props: Props): JSX.Element {

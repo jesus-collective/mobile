@@ -1,6 +1,5 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { CognitoUser } from "@aws-amplify/auth"
-import { ResourceActions, ResourceState } from "../components/ResourceViewer/ResourceContext"
 import {
   CreateResourceMenuItemMutation,
   CreateResourceRootMutation,
@@ -135,22 +134,14 @@ export type UpdateResourceMenuItemMutationResult = GraphQLResult<UpdateResourceM
 export type DeleteResourceMenuItemMutationResult = GraphQLResult<DeleteResourceMenuItemMutation>
 export type PageItemIndex = (number | "pageItemsLeft" | "pageItemsRight")[]
 export interface ResourceSetupProp {
-  resourceActions: ResourceActions
-  resourceState: ResourceState
   pageItemIndex: PageItemIndex
   pageItem: ResourcePageItemInput
   hideEditButton?: boolean
-  save?(
-    resourceActions: ResourceActions,
-    resourceState: ResourceState,
-    menuItemIndex: number,
-    pageItemIndex: PageItemIndex,
-    value: ResourcePageItemInput
-  ): void
-  delete?(
-    resourceActions: ResourceActions,
-    resourceState: ResourceState,
-    index: number,
-    pageItemIndex: PageItemIndex
-  ): void
+  save?(menuItemIndex: number, pageItemIndex: PageItemIndex, value: ResourcePageItemInput): void
+  delete?(index: number, pageItemIndex: PageItemIndex): void
+}
+
+export interface ResourceAdminProp {
+  settings: ResourcePageItemInput
+  setSettings: React.Dispatch<React.SetStateAction<ResourcePageItemInput>>
 }

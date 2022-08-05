@@ -1,8 +1,7 @@
 import { AntDesign } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth, Storage } from "aws-amplify"
-import { Map, Marker } from "google-maps-react"
+//import { Map, Marker } from "google-maps-react"
 import maplibregl from "maplibre-gl"
 import { createMap } from "maplibre-gl-js-amplify"
 import "maplibre-gl/dist/maplibre-gl.css"
@@ -10,6 +9,7 @@ import moment from "moment"
 import { MapData } from "src/types"
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useNavigation, useRoute } from "@react-navigation/native"
 import * as React from "react"
 import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { Data } from "../../components/Data/Data"
@@ -20,8 +20,6 @@ import { GetUserQueryResult, JCCognitoUser } from "../../src/types"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import JCSwitch from "../JCSwitch/JCSwitch"
-import mapStyle from "./mapstyle.json"
-
 interface Props {
   navigation?: StackNavigationProp<any, any>
   route?: any
@@ -49,7 +47,7 @@ interface State extends JCState {
 class MyMapImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
-    this.mapRef = React.createRef<Map>()
+    // this.mapRef = React.createRef<Map>()
     this.popupRef = null
     this.state = {
       ...super.getInitialState(),
@@ -116,12 +114,6 @@ class MyMapImpl extends JCComponent<Props, State> {
   }
   showOrg(id: string) {
     this.props.navigation?.push("OrganizationScreen", { id: id, create: false })
-  }
-
-  _mapLoaded(map: any) {
-    map.setOptions({
-      styles: mapStyle,
-    })
   }
 
   renderOrg() {
@@ -565,11 +557,7 @@ class MyMapImpl extends JCComponent<Props, State> {
             await this.renderPopup(JSON.parse(props.item) as MapData)
           )
         }
-        //.setText(
-        //  (JSON.parse(props.item) as MapData).name
-        // )
         const id = props.id
-        console.log()
         let marker = this.markers[id]
 
         if (!marker) {
@@ -654,51 +642,69 @@ class MyMapImpl extends JCComponent<Props, State> {
     // colors to use for the categories
 
     this.addSource()
+    if (this.props.type == "no-filters") {
+      if (this.map) {
+        this.props.mapData.map((item, index) => {
+          const marker = new maplibregl.Marker()
+            .setLngLat([item.latitude, item.longitude])
+            .addTo(this.map)
+        })
+      }
+    }
+    if (this.props.type === "profile") {
+      if (this.map) {
+        this.props.mapData.map((item, index) => {
+          const marker = new maplibregl.Marker()
+            .setLngLat([item.latitude, item.longitude])
+            .addTo(this.map)
+        })
+      }
+    }
+    if (this.props.type === "filters") {
+      this.map?.addLayer({
+        id: "earthquake_circle",
+        type: "circle",
+        source: "earthquakes",
+        filter: ["==", "cluster", true],
+        paint: {
+          "circle-color": [
+            "case",
+            this.groupEvent,
+            this.colors[0],
+            this.groupOrg,
+            this.colors[1],
+            this.groupProfile,
+            this.colors[2],
+            this.colors[3],
+          ],
+          "circle-opacity": 0.6,
+          "circle-radius": 12,
+        },
+      })
+      this.map?.addLayer({
+        id: "earthquake_circle2",
+        type: "circle",
+        source: "earthquakes",
+        filter: ["!=", "cluster", true],
+        paint: {
+          "circle-color": [
+            "case",
+            this.groupEvent,
+            this.colors[0],
+            this.groupOrg,
+            this.colors[1],
+            this.groupProfile,
+            this.colors[2],
+            this.colors[3],
+          ],
+          "circle-opacity": 0.6,
+          "circle-radius": 12,
+        },
+      })
 
-    this.map?.addLayer({
-      id: "earthquake_circle",
-      type: "circle",
-      source: "earthquakes",
-      filter: ["==", "cluster", true],
-      paint: {
-        "circle-color": [
-          "case",
-          this.groupEvent,
-          this.colors[0],
-          this.groupOrg,
-          this.colors[1],
-          this.groupProfile,
-          this.colors[2],
-          this.colors[3],
-        ],
-        "circle-opacity": 0.6,
-        "circle-radius": 12,
-      },
-    })
-    this.map?.addLayer({
-      id: "earthquake_circle2",
-      type: "circle",
-      source: "earthquakes",
-      filter: ["!=", "cluster", true],
-      paint: {
-        "circle-color": [
-          "case",
-          this.groupEvent,
-          this.colors[0],
-          this.groupOrg,
-          this.colors[1],
-          this.groupProfile,
-          this.colors[2],
-          this.colors[3],
-        ],
-        "circle-opacity": 0.6,
-        "circle-radius": 12,
-      },
-    })
-
-    // after the GeoJSON data is loaded, update markers on the screen and do so on every map move/moveend
-    this.map?.on("data", await this.dataUpdate)
-    console.log("MOUNDED2")
+      // after the GeoJSON data is loaded, update markers on the screen and do so on every map move/moveend
+      this.map?.on("data", await this.dataUpdate)
+    }
   }
   dataUpdate = async (e) => {
     if (e.sourceId !== "earthquakes" || !e.isSourceLoaded) return
@@ -708,12 +714,12 @@ class MyMapImpl extends JCComponent<Props, State> {
     await this.updateMarkers()
   }
   async componentDidMount() {
-    console.log("MOUNDED")
     if (this.mapRef != null) {
-      console.log("MOUNDED1")
       this.map = await createMap({
         container: this.mapRef,
-        center: this.state.currentUserLocation
+        center: this.props.initCenter
+          ? [Number(this.props.initCenter.lng), Number(this.props.initCenter.lat)]
+          : this.state.currentUserLocation
           ? [Number(this.state.currentUserLocation.lng), Number(this.state.currentUserLocation.lat)]
           : [-78, 44],
         zoom: 0.3,
@@ -808,102 +814,6 @@ class MyMapImpl extends JCComponent<Props, State> {
               style={{ position: "relative", width: "100%", height: "100%" }}
               id="map"
             />
-
-            {/*window.google ? (
-              <Map
-                ref={(x) => (this.mapRef = x)}
-                google={window.google}
-                zoom={6}
-                center={
-                  this.state.currentUserLocation
-                    ? {
-                        lat: Number(this.state.currentUserLocation.lat),
-                        lng: Number(this.state.currentUserLocation.lng),
-                      }
-                    : { lat: 44, lng: -78 }
-                }
-                mapTypeControl={false}
-                onClick={this.onMapClicked}
-                onReady={(mapProps, map) => this._mapLoaded(map)}
-                style={{ position: "relative", width: "100%", height: "100%" }}
-                streetViewControl={false}
-                fullscreenControl={false}
-              >
-                {this.getBBox() &&
-                  mapState.superCluster
-                    ?.getClusters(this.getBBox(), this.getZoom())
-                    .map((mapItem, index) => {
-                      console.log({ MAP: mapItem })
-                      const filters = []
-                      if (this.state.organizationsEnabled) {
-                        filters.push("organization")
-                      }
-                      if (this.state.eventsEnabled) {
-                        filters.push("event")
-                      }
-                      if (this.state.profilesEnabled) {
-                        filters.push("profile")
-                      }
-                      if (mapItem.properties.cluster)
-                        return (
-                          <Marker
-                            key={index}
-                            title={"CLUSTER"}
-                            mapItemType={mapItem.type}
-                            mapItem={mapItem}
-                            onClick={this.onMarkerClick}
-                            position={{
-                              lat: mapItem.geometry.coordinates[0],
-                              lng: mapItem.geometry.coordinates[1],
-                            }}
-                            icon={{
-                              url: require("../../assets/svg/map-icon-red.svg"),
-                              scaledSize: new google.maps.Size(32, 32),
-                            }}
-                          ></Marker>
-                        )
-                      if (filters.find((item) => item === mapItem.type) === mapItem.type) {
-                        return (
-                          <Marker
-                            key={index}
-                            title={mapItem.properties.mapItem.name}
-                            mapItemType={mapItem.properties.mapItem.type}
-                            mapItem={mapItem}
-                            onClick={this.onMarkerClick}
-                            position={{
-                              lat: mapItem.geometry.coordinates[0],
-                              lng: mapItem.geometry.coordinates[1],
-                            }}
-                            icon={
-                              mapItem.properties.mapItem.type === "event" &&
-                              this.state.eventsEnabled
-                                ? {
-                                    url: require("../../assets/svg/map-icon-red.svg"),
-                                    scaledSize: new google.maps.Size(32, 32),
-                                  }
-                                : mapItem.properties.mapItem.type === "organization" &&
-                                  this.state.organizationsEnabled
-                                ? {
-                                    url: require("../../assets/svg/map-icon-darkred.svg"),
-                                    scaledSize: new google.maps.Size(32, 32),
-                                  }
-                                : mapItem.properties.mapItem.type === "profile" &&
-                                  this.state.profilesEnabled
-                                ? {
-                                    url: require("../../assets/svg/map-icon-yellow.svg"),
-                                    scaledSize: new google.maps.Size(32, 32),
-                                  }
-                                : undefined
-                            }
-                          ></Marker>
-                        )
-                      }
-
-                      //will need later for friends
-                      //url: require("../../assets/svg/map-icon-yellow.svg"),
-                    })}
-              </Map>
-                  ) : null*/}
           </View>
           {this.state.showingInfoWindow ? (
             <View
@@ -930,33 +840,13 @@ class MyMapImpl extends JCComponent<Props, State> {
     } else if (this.props.visible && this.props.type === "profile") {
       return (
         <View style={{ height: 362, width: "100%" }}>
-          {window.google ? (
-            <Map
-              google={window.google}
-              zoom={6}
-              center={this.props.initCenter}
-              mapTypeControl={false}
-              onClick={this.onMapClicked}
-              onReady={(mapProps, map) => this._mapLoaded(map)}
+          <View style={{ flex: 9 }}>
+            <div
+              ref={(x) => (this.mapRef = x)}
               style={{ position: "relative", width: "100%", height: "100%" }}
-              streetViewControl={false}
-              fullscreenControl={false}
-            >
-              {this.props.mapData.map((item, index) => {
-                return (
-                  <Marker
-                    key={index}
-                    position={{ lat: item.latitude, lng: item.longitude }}
-                    icon={{
-                      url: require("../../assets/svg/map-location.svg"),
-                      anchor: new google.maps.Point(50, 50),
-                      scaledSize: new google.maps.Size(100, 100),
-                    }}
-                  />
-                )
-              })}
-            </Map>
-          ) : null}
+              id="map"
+            />
+          </View>
         </View>
       )
     } else if (this.props.type === "no-filters") {
@@ -965,42 +855,14 @@ class MyMapImpl extends JCComponent<Props, State> {
         <View
           style={{ height: this.props.visible ? (this.props.size ? this.props.size : 510) : 0 }}
         >
-          {window.google ? (
-            <Map
-              google={window.google}
-              zoom={5}
-              center={
-                this.props.initCenter
-                  ? this.props.initCenter
-                  : this.state.currentUserLocation
-                  ? this.state.currentUserLocation
-                  : { lat: 44, lng: -78 }
-              }
-              mapTypeControl={false}
-              onClick={this.onMapClicked}
-              onReady={(mapProps, map) => this._mapLoaded(map)}
+          <View style={{ flex: 9 }}>
+            <div
+              ref={(x) => (this.mapRef = x)}
               style={{ position: "relative", width: "100%", height: "100%" }}
-              streetViewControl={false}
-              fullscreenControl={false}
-            >
-              {this.props.mapData.map((mapItem, index) => {
-                return (
-                  <Marker
-                    key={index}
-                    title={mapItem.name}
-                    mapItemType={mapItem.type}
-                    mapItem={mapItem}
-                    onClick={this.onMarkerClick}
-                    position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
-                    icon={{
-                      url: require("../../assets/svg/map-icon-red.svg"),
-                      scaledSize: new google.maps.Size(32, 32),
-                    }}
-                  ></Marker>
-                )
-              })}
-            </Map>
-          ) : null}
+              id="map"
+            />
+          </View>
+
           {this.state.showingInfoWindow ? (
             <View
               style={{
