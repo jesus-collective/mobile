@@ -431,7 +431,7 @@ class MyMapImpl extends JCComponent<Props, State> {
   componentWillUnmount() {
     this.map?.remove()
   }
-  map: maplibregl.Map | undefined
+  map!: maplibregl.Map
 
   createDonutChart(props: any): HTMLElement {
     const offsets = []
@@ -554,7 +554,7 @@ class MyMapImpl extends JCComponent<Props, State> {
         let popup = undefined
         if (props.item) {
           popup = new maplibregl.Popup({ maxWidth: "500", offset: 25 }).setHTML(
-            await this.renderPopup(JSON.parse(props.item) as MapData)
+            (await this.renderPopup(JSON.parse(props.item) as MapData)) ?? ""
           )
         }
         const id = props.id
@@ -644,19 +644,15 @@ class MyMapImpl extends JCComponent<Props, State> {
     this.addSource()
     if (this.props.type == "no-filters") {
       if (this.map) {
-        this.props.mapData.map((item, index) => {
-          const marker = new maplibregl.Marker()
-            .setLngLat([item.latitude, item.longitude])
-            .addTo(this.map)
+        this.props.mapData.map((item) => {
+          new maplibregl.Marker().setLngLat([item.latitude, item.longitude]).addTo(this.map)
         })
       }
     }
     if (this.props.type === "profile") {
       if (this.map) {
-        this.props.mapData.map((item, index) => {
-          const marker = new maplibregl.Marker()
-            .setLngLat([item.latitude, item.longitude])
-            .addTo(this.map)
+        this.props.mapData.map((item) => {
+          new maplibregl.Marker().setLngLat([item.latitude, item.longitude]).addTo(this.map)
         })
       }
     }
@@ -706,7 +702,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       this.map?.on("data", await this.dataUpdate)
     }
   }
-  dataUpdate = async (e) => {
+  dataUpdate = async (e: any) => {
     if (e.sourceId !== "earthquakes" || !e.isSourceLoaded) return
 
     this.map?.on("move", await this.updateMarkers)

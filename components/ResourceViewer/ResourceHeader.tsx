@@ -1,9 +1,9 @@
 import Amplify, { Storage } from "aws-amplify"
 import React, { useContext, useState } from "react"
-import MainStyles from "../../components/style"
-//import InputColor from "react-input-color"
+import InputColor from "react-input-color"
 import { Animated, Image, View } from "react-native"
 import { ImageInput } from "src/API"
+import MainStyles from "../../components/style"
 import awsconfig from "../../src/aws-exports"
 import { ResourceAdminProp, ResourceSetupProp } from "../../src/types"
 import EditableText from "../Forms/EditableText"
@@ -47,7 +47,7 @@ export function ResourceHeaderAdmin(props: ResourceAdminProp): JSX.Element | nul
         value={props.settings.title2 ?? ""}
         isEditable={true}
       ></EditableText>
-      <EditableText
+      {/*}  <EditableText
         onChange={(val) => {
           const tmp = props.settings
           tmp.color = val
@@ -59,17 +59,17 @@ export function ResourceHeaderAdmin(props: ResourceAdminProp): JSX.Element | nul
         textStyle={styles.style.fontCourseHeaderBold}
         value={props.settings.color ?? "#aa0000"}
         isEditable={true}
-      ></EditableText>
-      {/*}  Needs update for REACT 17/18 - use textfield for now
-        <InputColor
-              initialValue={page.state.settings.color ?? "#aa0000"}
-              onChange={(c) => {
-                const tmp = page.state.settings
-                tmp.color = c.hex
-                page.setState({ settings: tmp })
-              }}
-              placement="right"
-            />*/}
+      ></EditableText>*/}
+
+      <InputColor
+        initialValue={props.settings.color ?? "#aa0000"}
+        onChange={(c) => {
+          const tmp = props.settings
+          tmp.color = c.hex
+          props.setSettings(tmp)
+        }}
+        placement="right"
+      />
       <ResourceImage
         onUpdate={(image: ImageInput) => {
           const tmp = props.settings

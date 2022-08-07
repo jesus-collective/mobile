@@ -1,10 +1,11 @@
 import React from "react"
 import { Data } from "../../components/Data/Data"
 import JCWidget, { WidgetType } from "../../components/Widgets/JCWidget"
+import { ModelSortDirection } from "../../src/API"
 
 export default function ResourceWidgets() {
   const loadUpcoming = async () => {
-    const listGroup = await Data.groupByTypeForMyGroups("resource", null)
+    const listGroup = await Data.groupByTypeForMyGroups("resource", ModelSortDirection.ASC, null)
     return listGroup.data?.groupByType?.items ?? []
   }
   const loadSponsored = async () => {

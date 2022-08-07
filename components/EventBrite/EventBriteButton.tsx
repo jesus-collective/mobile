@@ -1,5 +1,6 @@
 import PropTypes from "prop-types"
 import React, { Component } from "react"
+import { View } from "react-native"
 import { v4 as uuid } from "uuid"
 interface Props {
   onClick: any
@@ -97,14 +98,9 @@ export default class EventbritePopupCheckout extends React.Component<Props> {
     const { children, className, component: Component, componentProps } = this.props
 
     return (
-      <Component
-        id={this.buttonId}
-        className={className}
-        onClick={this.handleClick}
-        {...componentProps}
-      >
+      <View id={this.buttonId} className={className} onClick={this.handleClick} {...componentProps}>
         {children}
-      </Component>
+      </View>
     )
   }
 

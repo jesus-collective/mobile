@@ -1,8 +1,8 @@
 import { Auth } from "aws-amplify"
 import { useCallback, useEffect, useState } from "react"
-import { Group } from "src/API"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
+import { Group, ModelSortDirection } from "../../src/API"
 
 export const useCourses = () => {
   const [nextToken, setNextToken] = useState<string | undefined | null>(null)
@@ -14,7 +14,7 @@ export const useCourses = () => {
     let tempArr: Group[] = []
     const loadNext = async (next: string | undefined | null = null) => {
       try {
-        const json = await Data.groupByTypeForMyGroups("course", next)
+        const json = await Data.groupByTypeForMyGroups("course", ModelSortDirection.ASC, next)
         const items = json?.data?.groupByType?.items ?? []
         const token = json?.data?.groupByType?.nextToken ?? null
         if (items.length) {

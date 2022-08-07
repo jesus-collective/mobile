@@ -88,7 +88,7 @@ const MessageItem = (props: Props) => {
     if (id) navigation?.push("ProfileScreen", { id: id, create: false })
   }
   const currentTime = now
-  const datePosted = moment(parseInt(item?.when))
+  const datePosted = moment(parseInt(item?.when ?? ""))
   const daysSince = currentTime.diff(datePosted, "days")
   const hoursSince = currentTime.diff(datePosted, "hours")
   const minutesSince = currentTime.diff(datePosted, "minutes")

@@ -189,7 +189,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         const orgMember: CreateOrganizationMemberInput = {
           userRole: "superAdmin",
           userId: this.state.currentUser,
-          organizationId: createOrg.data.createOrganization.id,
+          organizationId: createOrg.data?.createOrganization?.id,
         }
 
         try {
@@ -201,7 +201,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
         this.setState(
           {
-            OrganizationDetails: createOrg.data.createOrganization,
+            OrganizationDetails: createOrg.data?.createOrganization,
             isEditable: true,
             editMode: true,
           },
@@ -310,7 +310,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       if (this.state.OrganizationDetails.profileImage.filenameUpload)
         Storage.get(this.state.OrganizationDetails.profileImage.filenameUpload, {
           level: "protected",
-          identityId: this.state.OrganizationDetails.profileImage.userId,
+          identityId: this.state.OrganizationDetails.profileImage.userId ?? "",
         })
           .then((result) => this.setState({ profileImage: result }))
           .catch((err) => {
@@ -433,7 +433,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       this.setState({ editMode: !this.state.editMode, showAccountSettings: false })
   }
 
-  renderMainUserGroup(group) {
+  renderMainUserGroup(group: string) {
     switch (group) {
       case "verifiedUser":
         return <Text style={this.styles.style.fontFormUserType}>Verified</Text>
@@ -928,7 +928,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                               this.handleInputChange(itemValue, "orgType")
                             }}
                             selectedValue={
-                              (orgTypes.includes(this.state.OrganizationDetails.orgType)
+                              (orgTypes.includes(this.state.OrganizationDetails.orgType ?? "")
                                 ? this.state.OrganizationDetails.orgType
                                 : this.state.OrganizationDetails.orgType === null ||
                                   this.state.OrganizationDetails.orgType === "None"
@@ -943,7 +943,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                             <Picker.Item label={"Other"} value={""} />
                           </Picker>
                           {this.state.OrganizationDetails.orgType === "" ||
-                          (!orgTypes.includes(this.state.OrganizationDetails.orgType) &&
+                          (!orgTypes.includes(this.state.OrganizationDetails.orgType ?? "") &&
                             this.state.OrganizationDetails.orgType !== "None" &&
                             this.state.OrganizationDetails.orgType !== null) ? (
                             <EditableText
@@ -953,7 +953,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                               multiline={false}
                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                               inputStyle={this.styles.style.myProfileOrgTypeInput}
-                              value={this.state.OrganizationDetails.orgType}
+                              value={this.state.OrganizationDetails.orgType ?? ""}
                               isEditable={this.state.isEditable && this.state.editMode}
                             ></EditableText>
                           ) : null}
@@ -970,7 +970,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     </View>
                   ) : null}
 
-                  {orgTypes.includes(this.state.OrganizationDetails.orgType) &&
+                  {orgTypes.includes(this.state.OrganizationDetails.orgType ?? "") &&
                   (this.state.OrganizationDetails.orgSize || this.state.editMode) ? (
                     <View style={{ marginTop: 15 }}>
                       {this.state.isEditable && this.state.editMode ? (
@@ -1007,7 +1007,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     </View>
                   ) : null}
 
-                  {orgTypesChurches.includes(this.state.OrganizationDetails.orgType) &&
+                  {orgTypesChurches.includes(this.state.OrganizationDetails.orgType ?? "") &&
                   (this.state.OrganizationDetails.sundayAttendance || this.state.editMode) ? (
                     <View style={{ marginTop: 15 }}>
                       {this.state.isEditable && this.state.editMode ? (
@@ -1047,7 +1047,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     </View>
                   ) : null}
 
-                  {orgTypes.includes(this.state.OrganizationDetails.orgType) &&
+                  {orgTypes.includes(this.state.OrganizationDetails.orgType ?? "") &&
                   (this.state.OrganizationDetails.numberVolunteers || this.state.editMode) ? (
                     <View style={{ marginTop: 15 }}>
                       {this.state.isEditable && this.state.editMode ? (
@@ -1083,7 +1083,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     </View>
                   ) : null}
 
-                  {orgTypesChurches.includes(this.state.OrganizationDetails.orgType) &&
+                  {orgTypesChurches.includes(this.state.OrganizationDetails.orgType ?? "") &&
                   (this.state.OrganizationDetails.denomination || this.state.editMode) ? (
                     <View style={{ marginTop: 15 }}>
                       <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
@@ -1114,7 +1114,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     </View>
                   ) : null}
 
-                  {orgTypesNonChurch.includes(this.state.OrganizationDetails.orgType) &&
+                  {orgTypesNonChurch.includes(this.state.OrganizationDetails.orgType ?? "") &&
                   (this.state.OrganizationDetails.pplServed || this.state.editMode) ? (
                     <View style={{ marginTop: 15 }}>
                       <Text style={this.styles.style.fontFormSmall}>

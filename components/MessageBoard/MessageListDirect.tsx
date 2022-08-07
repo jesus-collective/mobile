@@ -18,7 +18,7 @@ type Props = {
   roomId: string
 }
 export default function MessageListDirect(props: Props) {
-  const { directMessages, isLoading, loadMore, appendDM } = useDirectMessages(props.roomId)
+  const { directMessages, isLoading, appendDM } = useDirectMessages(props.roomId)
   const listRef = useRef<ScrollView | null>(null)
   const [userData, setUserData] = useState<JCCognitoUser["username"]>("")
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function MessageListDirect(props: Props) {
     return () => {
       dmSub.unsubscribe()
     }
-  }, [props.roomId])
+  }, [props.roomId, appendDM])
   useLayoutEffect(() => {
     if (listRef.current) listRef.current.scrollToEnd({ animated: false })
   }, [directMessages])
@@ -90,7 +90,7 @@ export default function MessageListDirect(props: Props) {
               <DMItem
                 previousMsg={index > 0 ? directMessages[index - 1] : null}
                 nextMsg={index < directMessages.length - 1 ? directMessages[index + 1] : null}
-                key={msg.id}
+                key={msg?.id}
                 isMine={userData === msg?.userId}
                 index={index}
                 item={msg}

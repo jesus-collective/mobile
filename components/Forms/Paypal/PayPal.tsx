@@ -108,7 +108,9 @@ const PayPal = ({
       <Button
         createOrder={(data: any, actions: any) => createOrder(data, actions)}
         onApprove={(data: any, actions: any) => onApprove(data, actions)}
-        onError={(err: any) => onErrorCallback(err)}
+        onError={(err: any) => {
+          if (onErrorCallback) onErrorCallback(err)
+        }}
       />
     )
   }
