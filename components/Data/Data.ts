@@ -1019,7 +1019,15 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<UpdateUserMutation>>
   }
-
+  static updateUserNoData(input: UpdateUserInput) {
+    return API.graphql({
+      query: customMutations.updateUser,
+      variables: {
+        input: input,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateUserMutation>>
+  }
   static getGroupForItemPage(groupId: Group["id"]) {
     return API.graphql({
       query: customQueries.getGroupForProfile,

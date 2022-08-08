@@ -9,7 +9,14 @@ export const createDirectMessageUser = /* GraphQL */ `
     }
   }
 `
-
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      id
+      updatedAt
+    }
+  }
+`
 export const updateDirectMessage = /* GraphQL */ `
   mutation UpdateDirectMessage($input: UpdateDirectMessageInput!) {
     updateDirectMessage(input: $input) {
