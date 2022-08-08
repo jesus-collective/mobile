@@ -1205,7 +1205,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             <TouchableOpacity
                               accessibilityLabel={`Remove ${item} from interests`}
                               accessibilityRole="button"
-                              onPress={() => this.handleDeleteInterest(item)}
+                              onPress={() => this.handleDeleteInterest(item ?? "")}
                             >
                               <AntDesign name="close" size={20} color="#979797" />
                             </TouchableOpacity>
@@ -1448,7 +1448,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               </Picker>
               {this.state.UserDetails.orgType === "" ||
               (this.state.UserDetails.orgType !== null &&
-                !orgTypes.includes(this.state.UserDetails?.orgType) &&
+                !orgTypes.includes(this.state.UserDetails?.orgType ?? "") &&
                 this.state.UserDetails.orgType !== "None") ? (
                 <EditableText
                   accessibilityLabel="Organization type"
@@ -1491,7 +1491,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               accessibilityLabel="Number of employees in organization"
               testID="profile-orgSize"
               style={this.styles.style.myprofilePicker}
-              onValueChange={(itemValue) => {
+              onValueChange={(itemValue: any) => {
                 this.handleInputChange(itemValue, "orgSize")
               }}
               selectedValue={this.state.UserDetails.orgSize ?? ""}
@@ -1530,7 +1530,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <Picker
               accessibilityLabel="Average Sunday morning attendance"
               style={this.styles.style.myprofilePicker}
-              onValueChange={(itemValue) => {
+              onValueChange={(itemValue: any) => {
                 this.handleInputChange(itemValue, "sundayAttendance")
               }}
               selectedValue={this.state.UserDetails.sundayAttendance ?? ""}
@@ -1569,7 +1569,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <Picker
               accessibilityLabel="Number of volunteers"
               style={this.styles.style.myprofilePicker}
-              onValueChange={(itemValue) => {
+              onValueChange={(itemValue: any) => {
                 this.handleInputChange(itemValue, "numberVolunteers")
               }}
               selectedValue={this.state.UserDetails.numberVolunteers ?? ""}

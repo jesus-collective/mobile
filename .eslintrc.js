@@ -22,6 +22,7 @@ module.exports = {
     },
   },
   extends: [
+    "plugin:react-hooks/recommended",
     "eslint:recommended", // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
     "plugin:@typescript-eslint/recommended",
   ],

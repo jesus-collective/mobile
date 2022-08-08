@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import React from "react"
-import Chips, { Chip } from "react-chips"
+//import Chips, { Chip } from "react-chips"
 import { Text } from "react-native"
 import { Data } from "../../components/Data/Data"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -72,6 +72,7 @@ export default class EditableText extends JCComponent<Props> {
   render(): React.ReactNode {
     if (this.props.isEditable) {
       return (
+        /*
         <Chips
           fromSuggestionsOnly={true}
           uniqueChips={true}
@@ -128,7 +129,8 @@ export default class EditableText extends JCComponent<Props> {
               </Text>
             )
           }}
-        />
+        />*/
+        null
       )
     } else
       return (

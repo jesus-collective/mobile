@@ -41,7 +41,7 @@ const MessageThread = ({
       {item?.replies?.items
         .filter((it, ind) => ind < showCount)
         .map((reply, index) => {
-          return <MessageItem now={now} key={reply.id} item={reply} index={index} isReply={true} />
+          return <MessageItem now={now} key={reply?.id} item={reply} index={index} isReply={true} />
         })}
       <TouchableOpacity onPress={() => setShowCount(Infinity)}>
         {item?.replies?.items?.length && showCount < item?.replies?.items?.length ? (
@@ -63,7 +63,7 @@ const MessageThread = ({
         replyMode={true}
         replyState={{
           replyToWho: [],
-          replyToId: item?.id,
+          replyToId: item?.id ?? "",
           replyToRoomId: groupId ?? "",
         }}
         clearReplyState={() => setShowCount(Infinity)}

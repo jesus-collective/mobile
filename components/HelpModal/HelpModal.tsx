@@ -36,7 +36,7 @@ export default function HelpModal({ setShow }: Props): JSX.Element {
         setShowEmailField(true)
         setisLoading(false)
       })
-  }, [showEmailField])
+  }, [showEmailField, formData])
   if (isLoading) {
     return (
       <View style={HelpModalStyles.HelpModalContainer}>

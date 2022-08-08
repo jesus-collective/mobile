@@ -21,7 +21,7 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
     async function getProduct() {
       try {
         const getProduct = await Data.getProduct(productId)
-        setProductExists(Boolean(getProduct.data.getProduct))
+        setProductExists(Boolean(getProduct.data?.getProduct))
         setMessage(getProduct.data.getProduct?.confirmationMsg)
       } catch (e) {
         console.error(e)

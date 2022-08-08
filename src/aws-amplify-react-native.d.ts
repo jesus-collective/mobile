@@ -3,5 +3,5 @@ declare module "@zoomus/websdk"
 declare interface String {
   replaceAll(find: any, replace: any): any
 }
-declare module "react-chips"
+//declare module "react-chips"
 declare module "only-last-promise"

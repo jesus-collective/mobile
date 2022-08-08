@@ -1,145 +1,128 @@
 import { Ionicons } from "@expo/vector-icons"
-import React from "react"
+import React, { useContext, useState } from "react"
 import { Picker } from "react-native"
 import { ResourceSetupProp } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
-import JCComponent from "../../components/JCComponent/JCComponent"
-import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
-import { ResourceCardImpl } from "./ResourceCard"
-import ResourceColumn from "./ResourceColumn"
-import ResourceDropDownPicker from "./ResourceDropDownPicker"
-import ResourceGrid from "./ResourceGrid"
-import ResourceHeader from "./ResourceHeader"
-import ResourceList from "./ResourceList"
-import ResourceMenu from "./ResourceMenu"
-import ResourceRichText from "./ResourceRichText"
+import MainStyles from "../../components/style"
+import { ResourcePageItemType } from "../../src/API"
+import { ResourceCardAdmin } from "./ResourceCard"
+import { ResourceColumnAdmin } from "./ResourceColumn"
+import { ResourceContext } from "./ResourceContext"
+import { ResourceDropDownPickerAdmin } from "./ResourceDropDownPicker"
+import { ResourceGridAdmin } from "./ResourceGrid"
+import { ResourceHeaderAdmin } from "./ResourceHeader"
+import { ResourceListAdmin } from "./ResourceList"
+import { ResourceMenuAdmin } from "./ResourceMenu"
+import { ResourceRichTextAdmin } from "./ResourceRichText"
 
-interface State {
-  showSettingsModal: boolean
-  settings: ResourcePageItemInput
-}
-export default class PageItemSettings extends JCComponent<ResourceSetupProp, State> {
-  constructor(props: ResourceSetupProp) {
-    super(props)
-    this.state = {
-      showSettingsModal: false,
-      settings: this.props.pageItem,
-    }
+export default function PageItemSettings(props: ResourceSetupProp) {
+  const resourceContext = useContext(ResourceContext)
+  const [settings, setSettings] = useState(props.pageItem)
+  const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false)
+  const styles = MainStyles.getInstance()
+
+  const componentDidUpdate = (prevProps: ResourceSetupProp): void => {
+    if (prevProps.pageItem != props.pageItem) setSettings(props.pageItem)
   }
-  componentDidUpdate(prevProps: ResourceSetupProp): void {
-    if (prevProps.pageItem != this.props.pageItem) this.setState({ settings: this.props.pageItem })
+  const saveResource = (): void => {
+    if (props.save && resourceContext.resourceState)
+      props.save(resourceContext.resourceState?.currentMenuItem, props.pageItemIndex, settings)
   }
-  save(): void {
-    if (this.props.save)
-      this.props.save(
-        this.props.resourceActions,
-        this.props.resourceState,
-        this.props.resourceState.currentMenuItem,
-        this.props.pageItemIndex,
-        this.state.settings
-      )
+  const deleteResource = (): void => {
+    if (props.delete && resourceContext.resourceState)
+      props.delete(resourceContext.resourceState?.currentMenuItem, props.pageItemIndex)
   }
-  delete(): void {
-    if (this.props.delete)
-      this.props.delete(
-        this.props.resourceActions,
-        this.props.resourceState,
-        this.props.resourceState.currentMenuItem,
-        this.props.pageItemIndex
-      )
-  }
-  renderAdminRouter(): React.ReactNode {
-    switch (this.state.settings.type) {
+  const renderAdminRouter = (): React.ReactNode => {
+    switch (settings.type) {
       case ResourcePageItemType.Header:
-        return ResourceHeader.renderAdmin(this)
+        return <ResourceHeaderAdmin settings={settings} setSettings={setSettings} />
       case ResourcePageItemType.Menu:
-        return ResourceMenu.renderAdmin(this)
+        return <ResourceMenuAdmin settings={settings} setSettings={setSettings} />
       case ResourcePageItemType.RichText:
-        return ResourceRichText.renderAdmin(this)
+        return <ResourceRichTextAdmin settings={settings} setSettings={setSettings} />
       case ResourcePageItemType.Column:
-        return ResourceColumn.renderAdmin(this)
+        return <ResourceColumnAdmin settings={settings} setSettings={setSettings} />
       case ResourcePageItemType.Card:
-        return ResourceCardImpl.renderAdmin(this)
+        return <ResourceCardAdmin settings={settings} setSettings={setSettings} />
       case ResourcePageItemType.List:
-        return ResourceList.renderAdmin(this)
+        return <ResourceListAdmin settings={settings} setSettings={setSettings} />
       case ResourcePageItemType.Grid:
-        return ResourceGrid.renderAdmin(this)
+        return <ResourceGridAdmin settings={settings} setSettings={setSettings} />
       case ResourcePageItemType.DropDownPicker:
-        return ResourceDropDownPicker.renderAdmin(this)
+        return <ResourceDropDownPickerAdmin settings={settings} setSettings={setSettings} />
     }
   }
-  render(): React.ReactNode {
-    return (
-      <>
-        {!this.props.hideEditButton && this.props.resourceState.isEditable && (
-          <JCButton
-            buttonType={ButtonTypes.AdminModal}
-            onPress={() => {
-              this.setState({ showSettingsModal: true })
-            }}
-          >
-            <Ionicons name="ios-settings" style={this.styles.style.icon} size={32} />
-          </JCButton>
-        )}
-        {this.state.showSettingsModal ? (
-          <JCModal
-            visible={this.state.showSettingsModal}
-            title="Configure Page Item"
-            onHide={() => {
-              this.setState({ showSettingsModal: false })
-            }}
-          >
-            <>
-              <Picker
-                mode="dropdown"
-                style={{
-                  width: "100%",
-                  marginTop: 10,
-                  marginBottom: 15,
-                  fontSize: 16,
-                  height: 30,
-                  flexGrow: 0,
-                  paddingTop: 3,
-                  paddingBottom: 3,
-                }}
-                selectedValue={this.state.settings.type ?? undefined}
-                onValueChange={(value: any) => {
-                  const tmp = this.state.settings
-                  tmp.type = value
-                  if (tmp.type == ResourcePageItemType.RichText) {
-                    tmp.title1 = null
-                  }
-                  this.setState({ settings: tmp })
-                }}
-              >
-                {Object.keys(ResourcePageItemType).map((org) => {
-                  return <Picker.Item key={org} label={org} value={org} />
-                })}
-              </Picker>
-              {this.renderAdminRouter()}
-              <JCButton
-                buttonType={ButtonTypes.ResourceModalSolid}
-                onPress={() => {
-                  this.save()
-                  this.setState({ showSettingsModal: false })
-                }}
-              >
-                Save
-              </JCButton>
-              <JCButton
-                buttonType={ButtonTypes.ResourceModalSolid}
-                onPress={() => {
-                  this.delete()
-                  this.setState({ showSettingsModal: false })
-                }}
-              >
-                Delete
-              </JCButton>
-            </>
-          </JCModal>
-        ) : null}
-      </>
-    )
-  }
+
+  return (
+    <>
+      {!props.hideEditButton && resourceContext.resourceState?.isEditable && (
+        <JCButton
+          buttonType={ButtonTypes.AdminModal}
+          onPress={() => {
+            setShowSettingsModal(true)
+          }}
+        >
+          <Ionicons name="ios-settings" style={styles.style.icon} size={32} />
+        </JCButton>
+      )}
+      {showSettingsModal ? (
+        <JCModal
+          visible={showSettingsModal}
+          title="Configure Page Item"
+          onHide={() => {
+            setShowSettingsModal(false)
+          }}
+        >
+          <>
+            <Picker
+              mode="dropdown"
+              style={{
+                width: "100%",
+                marginTop: 10,
+                marginBottom: 15,
+                fontSize: 16,
+                height: 30,
+                flexGrow: 0,
+                paddingTop: 3,
+                paddingBottom: 3,
+              }}
+              selectedValue={settings.type ?? undefined}
+              onValueChange={(value: any) => {
+                const tmp = settings
+                tmp.type = value
+                if (tmp.type == ResourcePageItemType.RichText) {
+                  tmp.title1 = null
+                }
+                setSettings(tmp)
+              }}
+            >
+              {Object.keys(ResourcePageItemType).map((org) => {
+                return <Picker.Item key={org} label={org} value={org} />
+              })}
+            </Picker>
+            {renderAdminRouter()}
+            <JCButton
+              buttonType={ButtonTypes.ResourceModalSolid}
+              onPress={() => {
+                saveResource()
+                setShowSettingsModal(false)
+              }}
+            >
+              Save
+            </JCButton>
+            <JCButton
+              buttonType={ButtonTypes.ResourceModalSolid}
+              onPress={() => {
+                deleteResource()
+                setShowSettingsModal(false)
+              }}
+            >
+              Delete
+            </JCButton>
+          </>
+        </JCModal>
+      ) : null}
+    </>
+  )
 }

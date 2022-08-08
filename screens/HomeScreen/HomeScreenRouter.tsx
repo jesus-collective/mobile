@@ -154,7 +154,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
           Sentry.captureEvent(getUser)
           console.log({ Errors: getUser.errors })
         }
-        if (getUser.data.getUser == null) {
+        if (getUser.data?.getUser == null) {
           console.log("Trying to create")
           const inputData: CreateUserInput = {
             id: this.user?.username,
@@ -211,7 +211,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
             try {
               const createOrg = await Data.createOrganization(orgInput)
               console.log({ createOrg: createOrg })
-              orgId = createOrg.data.createOrganization.id
+              orgId = createOrg.data?.createOrganization?.id
             } catch (e: any) {
               if (e?.data?.createOrganization) orgId = e.data.createOrganization.id
               console.error({ error: e })
@@ -295,15 +295,15 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         )
           return PaidStatus.Success
         else {
-          if (getUser.data.getUser.stripeCustomerID == null)
-            if (await this.createStripeUser(getUser.data.getUser.billingAddress)) {
-              if (getUser.data.getUser.stripeSubscriptionID == null) {
+          if (getUser.data?.getUser?.stripeCustomerID == null)
+            if (await this.createStripeUser(getUser.data?.getUser?.billingAddress)) {
+              if (getUser.data?.getUser?.stripeSubscriptionID == null) {
                 console.log("No Stripe Subscription, No Stripe Customer")
                 return PaidStatus.InProgress
               } else {
                 return PaidStatus.MissingCustomer
               }
-            } else if (getUser.data.getUser.stripeSubscriptionID == null) {
+            } else if (getUser.data?.getUser?.stripeSubscriptionID == null) {
               console.log("No Stripe Subscription")
               return PaidStatus.InProgress
             } else {

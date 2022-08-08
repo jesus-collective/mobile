@@ -1,118 +1,107 @@
-import Amplify from "aws-amplify"
-import React from "react"
+import React, { useContext } from "react"
 import { Picker, Text, View, ViewStyle } from "react-native"
 import EditableText from "../../components/Forms/EditableText"
+import MainStyles from "../../components/style"
 import { ResourcePageItemInput, ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"
-import awsconfig from "../../src/aws-exports"
 import {
   GetResourceData,
   GetResourceSeriesData,
   ListResourceEpisodesData,
   ListResourcesData,
   ListResourceSeriessData,
+  ResourceAdminProp,
   ResourceSetupProp,
 } from "../../src/types"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import ResourceCard from "./ResourceCard"
-import { ResourceActions, ResourceContext } from "./ResourceContext"
+import { ResourceContext } from "./ResourceContext"
 import ResourceSelector from "./ResourceSelector"
 
-Amplify.configure(awsconfig)
-
 type Props = ResourceSetupProp
-type State = JCState
-class ResourceList extends JCComponent<Props, State> {
-  static Consumer = ResourceContext.Consumer
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-    }
-  }
-  static renderAdmin(page: PageItemSettings): React.ReactNode {
-    return (
-      <ResourceList.Consumer>
-        {({ resourceState, resourceActions }) => {
-          if (!resourceState) return null
-          if (resourceState.currentResource == null) return null
-          return (
-            <>
-              <Text style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}>
-                Title 1:
-              </Text>
-              <EditableText
-                onChange={(val: string) => {
-                  const tmp = page.state.settings
-                  tmp.title1 = val
-                  page.setState({ settings: tmp })
-                }}
-                placeholder="Title 1"
-                multiline={false}
-                textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
-                inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
-                value={page.state.settings.title1 ?? ""}
-                isEditable={true}
-              ></EditableText>
-              <Text style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}>
-                Title 2:
-              </Text>
 
-              <EditableText
-                onChange={(val: string) => {
-                  const tmp = page.state.settings
-                  tmp.title2 = val
-                  page.setState({ settings: tmp })
-                }}
-                placeholder="Title 2"
-                multiline={false}
-                textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
-                inputStyle={{
-                  textAlign: "left",
-                  width: "100%",
-                  fontWeight: "400",
-                  marginBottom: 15,
-                }}
-                value={page.state.settings.title2 ?? ""}
-                isEditable={true}
-              ></EditableText>
-              <Picker
-                mode="dropdown"
-                style={{
-                  width: "100%",
-                  marginTop: 10,
-                  marginBottom: 30,
-                  fontSize: 16,
-                  height: 30,
-                  flexGrow: 0,
-                  paddingTop: 3,
-                  paddingBottom: 3,
-                }}
-                selectedValue={page.state.settings.style ?? undefined}
-                onValueChange={(value: any) => {
-                  console.log({ value: value })
-                  const tmp = page.state.settings
-                  tmp.style = value
-                  page.setState({ settings: tmp })
-                }}
-              >
-                {Object.keys(ResourcePageItemStyle)
-                  .filter((z) => z.startsWith("List"))
-                  .map((org) => {
-                    return <Picker.Item key={org} label={org} value={org} />
-                  })}
-              </Picker>
-              {console.log({ style: page.state.settings.style })}
-              {page.state.settings.style == ResourcePageItemStyle.ListAuto
-                ? ResourceSelector.render(page, resourceState, resourceActions)
-                : null}
-            </>
-          )
+export function ResourceListAdmin(props: ResourceAdminProp): JSX.Element | null {
+  const resourceContext = useContext(ResourceContext)
+
+  if (!resourceContext.resourceState) return null
+  if (resourceContext.resourceState.currentResource == null) return null
+  return (
+    <>
+      <Text style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}>
+        Title 1:
+      </Text>
+      <EditableText
+        onChange={(val: string) => {
+          const tmp = props.settings
+          tmp.title1 = val
+          props.setSettings(tmp)
         }}
-      </ResourceList.Consumer>
-    )
-  }
-  renderManualCards(): React.ReactNode {
+        placeholder="Title 1"
+        multiline={false}
+        textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+        inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+        value={props.settings.title1 ?? ""}
+        isEditable={true}
+      ></EditableText>
+      <Text style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}>
+        Title 2:
+      </Text>
+
+      <EditableText
+        onChange={(val: string) => {
+          const tmp = props.settings
+          tmp.title2 = val
+          props.setSettings(tmp)
+        }}
+        placeholder="Title 2"
+        multiline={false}
+        textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+        inputStyle={{
+          textAlign: "left",
+          width: "100%",
+          fontWeight: "400",
+          marginBottom: 15,
+        }}
+        value={props.settings.title2 ?? ""}
+        isEditable={true}
+      ></EditableText>
+      <Picker
+        mode="dropdown"
+        style={{
+          width: "100%",
+          marginTop: 10,
+          marginBottom: 30,
+          fontSize: 16,
+          height: 30,
+          flexGrow: 0,
+          paddingTop: 3,
+          paddingBottom: 3,
+        }}
+        selectedValue={props.settings.style ?? undefined}
+        onValueChange={(value: any) => {
+          console.log({ value: value })
+          const tmp = props.settings
+          tmp.style = value
+          props.setSettings(tmp)
+        }}
+      >
+        {Object.keys(ResourcePageItemStyle)
+          .filter((z) => z.startsWith("List"))
+          .map((org) => {
+            return <Picker.Item key={org} label={org} value={org} />
+          })}
+      </Picker>
+      {console.log({ style: props.settings.style })}
+      {props.settings.style == ResourcePageItemStyle.ListAuto ? (
+        <ResourceSelector {...props} />
+      ) : null}
+    </>
+  )
+}
+function ResourceList(props: Props) {
+  const resourceContext = useContext(ResourceContext)
+  const styles = MainStyles.getInstance()
+
+  const renderManualCards = (): React.ReactNode => {
     const z: ResourcePageItemInput = {
       id: "z",
       type: ResourcePageItemType.Card,
@@ -135,191 +124,23 @@ class ResourceList extends JCComponent<Props, State> {
     return (
       <>
         <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-          pageItem={z}
-          hideEditButton={true}
-        ></ResourceCard>
-        <ResourceCard
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+          pageItemIndex={props.pageItemIndex?.concat(props.pageItemIndex)}
           pageItem={z}
           hideEditButton={true}
         ></ResourceCard>
       </>
     )
   }
-  renderEpisodes(
-    resourceActions: ResourceActions,
+  const renderEpisodes = (
     resourceID: string | null | undefined,
     seriesID: string | null | undefined
-  ): React.ReactNode {
-    if (this.props.pageItem.episodeID == null || this.props.pageItem.episodeID == undefined) {
-      const resource: GetResourceData = resourceActions.getResourceByID(resourceID)
-      const series: GetResourceSeriesData = resourceActions.getSeriesByID(resourceID, seriesID)
+  ): React.ReactNode => {
+    if (props.pageItem.episodeID == null || props.pageItem.episodeID == undefined) {
+      const resource: GetResourceData = resourceContext.resourceActions.getResourceByID(resourceID)
+      const series: GetResourceSeriesData = resourceContext.resourceActions.getSeriesByID(
+        resourceID,
+        seriesID
+      )
       const items: ListResourceEpisodesData | null | undefined = series?.episodes?.items
       return items
         ?.sort((a, b) => (a?.episodeNumber ?? 0) - (b?.episodeNumber ?? 0))
@@ -340,9 +161,7 @@ class ResourceList extends JCComponent<Props, State> {
             return (
               <ResourceCard
                 key={index}
-                resourceActions={this.props.resourceActions}
-                resourceState={this.props.resourceState}
-                pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+                pageItemIndex={props.pageItemIndex?.concat(props.pageItemIndex)}
                 pageItem={z}
                 hideEditButton={true}
               ></ResourceCard>
@@ -351,12 +170,9 @@ class ResourceList extends JCComponent<Props, State> {
         })
     } else return null
   }
-  renderSeries(
-    resourceActions: ResourceActions,
-    resourceID: string | null | undefined
-  ): React.ReactNode {
-    if (this.props.pageItem.seriesID == null || this.props.pageItem.seriesID == undefined) {
-      const resource: GetResourceData = resourceActions.getResourceByID(resourceID)
+  const renderSeries = (resourceID: string | null | undefined): React.ReactNode => {
+    if (props.pageItem.seriesID == null || props.pageItem.seriesID == undefined) {
+      const resource: GetResourceData = resourceContext.resourceActions.getResourceByID(resourceID)
       const items: ListResourceSeriessData = resource?.series?.items
       return items?.map((item, index: number) => {
         if (item) {
@@ -375,9 +191,7 @@ class ResourceList extends JCComponent<Props, State> {
           return (
             <ResourceCard
               key={index}
-              resourceActions={this.props.resourceActions}
-              resourceState={this.props.resourceState}
-              pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+              pageItemIndex={props.pageItemIndex?.concat(props.pageItemIndex)}
               pageItem={z}
               hideEditButton={true}
             ></ResourceCard>
@@ -386,9 +200,9 @@ class ResourceList extends JCComponent<Props, State> {
       })
     } else return null
   }
-  renderResources(items: ListResourcesData): React.ReactNode {
-    if (this.props.pageItem.resourceID == null || this.props.pageItem.resourceID == undefined) {
-      return items?.map((item, index: number) => {
+  const renderResources = (items: ListResourcesData): React.ReactNode => {
+    if (props.pageItem.resourceID == null || props.pageItem.resourceID == undefined) {
+      return items?.map((item: ListResourcesData[0], index: number) => {
         if (item) {
           const z: ResourcePageItemInput = {
             id: item.id,
@@ -403,9 +217,7 @@ class ResourceList extends JCComponent<Props, State> {
           return (
             <ResourceCard
               key={index}
-              resourceActions={this.props.resourceActions}
-              resourceState={this.props.resourceState}
-              pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+              pageItemIndex={props.pageItemIndex?.concat(props.pageItemIndex)}
               pageItem={z}
               hideEditButton={true}
             ></ResourceCard>
@@ -414,65 +226,54 @@ class ResourceList extends JCComponent<Props, State> {
       })
     } else return null
   }
-  renderAutoCards(): React.ReactNode {
+  const renderAutoCards = (): React.ReactNode => {
+    if (!resourceContext.resourceState) return null
+    if (resourceContext.resourceState.currentResource == null) return null
     return (
-      <ResourceList.Consumer>
-        {({ resourceState, resourceActions }) => {
-          if (!resourceState) return null
-          if (resourceState.currentResource == null) return null
-          return (
-            <>
-              {this.renderResources(resourceState.resourceData?.resources.items)}
+      <>
+        {resourceContext.resourceState.resourceData?.resources.items
+          ? renderResources(resourceContext.resourceState.resourceData?.resources.items)
+          : null}
 
-              {this.renderSeries(resourceActions, this.props.pageItem.resourceID)}
-              {this.renderEpisodes(
-                resourceActions,
-                this.props.pageItem.resourceID,
-                this.props.pageItem.seriesID
-              )}
-            </>
-          )
-        }}
-      </ResourceList.Consumer>
+        {renderSeries(props.pageItem.resourceID)}
+        {renderEpisodes(props.pageItem.resourceID, props.pageItem.seriesID)}
+      </>
     )
   }
-  render(): React.ReactNode {
-    const border: ViewStyle = { borderWidth: 1, borderStyle: "dashed" }
 
-    //  console.log({ COLUMns: this.props.pageItemIndex })
-    return (
-      <View
-        style={[
-          {
-            flexDirection: "column",
-            width: "100%",
-            zIndex: 5000 + this.props.pageItemIndex.length,
-          },
-          this.props.resourceState.isEditable && border,
-        ]}
-      >
-        <PageItemSettings
-          resourceActions={this.props.resourceActions}
-          resourceState={this.props.resourceState}
-          pageItemIndex={this.props.pageItemIndex}
-          save={this.props.save}
-          delete={this.props.delete}
-          pageItem={this.props.pageItem}
-          hideEditButton={this.props.hideEditButton}
-        ></PageItemSettings>
-        <View style={{ paddingBottom: 9, paddingTop: 50 }}>
-          <Text style={this.styles.style.resourcesListText}>{this.props.pageItem.title1}</Text>
-          <Text style={this.styles.style.resourcesListText2}>{this.props.pageItem.title2}</Text>
-        </View>
-        <View style={{ overflow: "scroll" }}>
-          <View style={{ flexDirection: "row" }}>
-            {this.props.pageItem.style == ResourcePageItemStyle.ListManual
-              ? this.renderManualCards()
-              : this.renderAutoCards()}
-          </View>
+  const border: ViewStyle = { borderWidth: 1, borderStyle: "dashed" }
+
+  //  console.log({ COLUMns: this.props.pageItemIndex })
+  return (
+    <View
+      style={[
+        {
+          flexDirection: "column",
+          width: "100%",
+          zIndex: 5000 + props.pageItemIndex.length,
+        },
+        resourceContext.resourceState?.isEditable && border,
+      ]}
+    >
+      <PageItemSettings
+        pageItemIndex={props.pageItemIndex}
+        save={props.save}
+        delete={props.delete}
+        pageItem={props.pageItem}
+        hideEditButton={props.hideEditButton}
+      ></PageItemSettings>
+      <View style={{ paddingBottom: 9, paddingTop: 50 }}>
+        <Text style={styles.style.resourcesListText}>{props.pageItem.title1}</Text>
+        <Text style={styles.style.resourcesListText2}>{props.pageItem.title2}</Text>
+      </View>
+      <View style={{ overflow: "scroll" }}>
+        <View style={{ flexDirection: "row" }}>
+          {props.pageItem.style == ResourcePageItemStyle.ListManual
+            ? renderManualCards()
+            : renderAutoCards()}
         </View>
       </View>
-    )
-  }
+    </View>
+  )
 }
 export default ResourceList

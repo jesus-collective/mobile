@@ -5,7 +5,7 @@ import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import React from "react"
-import { Dimensions } from "react-native"
+import { Dimensions, View } from "react-native"
 import {
   CreateCourseLessonInput,
   CreateCourseTriadsInput,
@@ -15,6 +15,8 @@ import {
 } from "src/API"
 import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
+import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
+import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {
   AgendaItems,
   CourseContext,
@@ -25,6 +27,8 @@ import {
   CourseWeekObj,
   MarkedDates,
 } from "../../components/CourseViewer/CourseContext"
+import CourseDetail from "../../components/CourseViewer/CourseDetail"
+import CourseHome from "../../components/CourseViewer/CourseHome"
 import { Data } from "../../components/Data/Data"
 import FloatingButton from "../../components/FloatingButton/FloatingButton"
 import FloatingButtonStyles from "../../components/FloatingButton/FloatingButtonStyles"
@@ -981,28 +985,18 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               setShow={() => this.setState({ showChat: true })}
             />
           ) : null}
-          {/* Temporary remove for react-base removal}
-          <Drawer
-            content={<CourseChat />}
-            open={this.state.showChat}
-            openDrawerOffset={width - chatWidth}
-            side="right"
-            styles={{}}
-            tweenHandler={undefined}
-            onClose={() => this.setState({ showChat: false })}
+
+          <View
+            style={[
+              this.styles.style.courseHomeScreenMainContainer,
+              { opacity: this.state.showChat ? 0.5 : 1 },
+            ]}
           >
-            <View
-              style={[
-                this.styles.style.courseHomeScreenMainContainer,
-                { opacity: this.state.showChat ? 0.5 : 1 },
-              ]}
-            >
-              <CourseSidebar courseId={this.state.data.id} />
-              <CourseHome />
-              <CourseDetail />
-              <CourseCoaching />
-            </View>
-            </Drawer>*/}
+            <CourseSidebar courseId={this.state.data.id} />
+            <CourseHome />
+            <CourseDetail />
+            <CourseCoaching />
+          </View>
         </>
       </CourseHomeScreenImpl.Provider>
     ) : null

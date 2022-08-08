@@ -20,10 +20,10 @@ type Props = {
 const DMItem = (props: Props) => {
   const { item, isMine, previousMsg, nextMsg } = props
 
-  const isPreviousSameUser = previousMsg ? previousMsg.userId === item.userId : false
-  const isNextSameUser = nextMsg ? nextMsg.userId === item.userId : false
+  const isPreviousSameUser = previousMsg ? previousMsg.userId === item?.userId : false
+  const isNextSameUser = nextMsg ? nextMsg.userId === item?.userId : false
   const sameNextTimeStamp = nextMsg
-    ? moment(item.createdAt).diff(moment(nextMsg.createdAt), "minutes") === 0
+    ? moment(item?.createdAt).diff(moment(nextMsg.createdAt), "minutes") === 0
     : false
   const hideDate = sameNextTimeStamp && isNextSameUser
   return (

@@ -4,7 +4,7 @@ import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import React from "react"
-import { Dimensions, View } from "react-native"
+import { Dimensions, Text, View } from "react-native"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {
@@ -924,7 +924,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
 
     const { width } = Dimensions.get("window")
     const chatWidth = Math.min(width, 563)
-
+    console.log({ data: this.state.data })
     return this.state.data ? (
       <CourseHomeScreenImpl.Provider
         value={{
@@ -968,6 +968,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         }}
       >
         <View style={this.styles.style.courseHomeScreenMainContainer}>
+          <Text>HELLO</Text>
           <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
           <CourseHome></CourseHome>
           <CourseDetail></CourseDetail>
