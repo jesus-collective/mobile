@@ -252,6 +252,7 @@ export default function HeaderJCC(props: Props) {
                         return (
                           <MenuItem
                             onClick={() => {
+                              handleMenuDropdownClose(mapItem.id)
                               openScreen(subItem.action ?? "", subItem.params)
                             }}
                           >
