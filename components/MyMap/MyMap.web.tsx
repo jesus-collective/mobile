@@ -756,7 +756,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   }
                 ></JCSwitch>*/}
                 <JCSwitch
-                  switchLabel="Show Profiles"
+                  switchLabel="Profiles"
                   initState={true}
                   onPress={() =>
                     this.setState({ profilesEnabled: !this.state.profilesEnabled }, () => {
@@ -765,7 +765,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   }
                 ></JCSwitch>
                 <JCSwitch
-                  switchLabel="Show Organizations"
+                  switchLabel="Organizations"
                   initState={true}
                   containerWidth={200}
                   onPress={() =>
