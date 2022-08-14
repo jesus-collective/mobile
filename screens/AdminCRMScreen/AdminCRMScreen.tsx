@@ -104,6 +104,33 @@ function useDebounce(value: string, delay: number) {
 type SearchUserProps = {
   setFilteredData: (data: any) => void
 }
+
+const toggleUserEnabled = async (username: string, currentEnabledStatus: boolean) => {
+  try {
+    let path = ""
+    if (currentEnabledStatus) path = "/disableUser"
+    else path = "/enableUser"
+    const apiName = "AdminQueries"
+
+    const myInit = {
+      body: {
+        username: username,
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+      },
+    }
+    console.log(path, myInit)
+    const z = await API.post(apiName, path, myInit)
+    console.log({ z })
+    return true
+  } catch (error) {
+    console.error({ "failed to disable user": error })
+    alert(`An error occurred ${error}`)
+    return false
+  }
+}
 function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
   const [search, setSearch] = React.useState("")
   const attributes = [
@@ -598,6 +625,38 @@ export default class AdminScreen extends JCComponent<Props, State> {
   showProfile(id: string): void {
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
+  async handleToggleEnabled(item: any, index: number): Promise<boolean> {
+    console.log({ item })
+    try {
+      const successCognito = await toggleUserEnabled(item.Username, item.Enabled)
+      if (!successCognito) return false
+      let successAppsync = false
+      try {
+        const updateUser = await Data.updateUserNoData({
+          id: item.Username,
+          // uncomment this once schema is updated
+          // isArchived: !item.Enabled,
+        })
+        console.log({ updateUser })
+        successAppsync = true
+        const tempData = [...this.state.data]
+        tempData[index].Enabled = !tempData[index].Enabled
+        this.setState({ data: tempData })
+      } catch (error: any) {
+        // undo cognito
+        await toggleUserEnabled(item.Username, !item.Enabled)
+
+        console.error({ "failed to toggle user enabled": error })
+        alert("There was a problem toggling user enabled status")
+        return false
+      }
+      return successAppsync
+    } catch (error) {
+      console.error({ "failed to toggle user enabled": error })
+      alert("There was a problem toggling user enabled status")
+      return false
+    }
+  }
   renderRow(item: any, index: number): React.ReactNode {
     return (
       <View key={index} style={this.styles.style.AdminTableRowContainer}>
@@ -679,7 +738,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
               this.styles.style.adminCRMTableParagraph,
             ]}
           >
-            <Text>{item.Enabled.toString()}</Text>
+            <JCSwitch
+              containerWidth={1}
+              switchLabel=""
+              initState={item.Enabled}
+              asyncOnPress={async () => await this.handleToggleEnabled(item, index)}
+              onPress={() => null}
+            />
           </View>
         ) : null}
         <View style={this.styles.style.AdminGroupBTTableRow}>

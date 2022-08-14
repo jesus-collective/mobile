@@ -1,11 +1,12 @@
 import React from "react"
-import { Animated, Text, TouchableWithoutFeedback, View } from "react-native"
+import { ActivityIndicator, Animated, Text, TouchableWithoutFeedback, View } from "react-native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
   switchLabel: string
   initState: boolean
   onPress(status: boolean): any
+  asyncOnPress?(): Promise<boolean>
   /**
    * Set a larger value if switchLabel does not fit on a single line.
    * @default 170
@@ -40,6 +41,7 @@ interface Props {
 }
 interface State extends JCState {
   enabled: boolean
+  loading?: boolean
   animationState: Animated.Value
   onColor: string
   offColor: string
@@ -52,6 +54,7 @@ export default class JCSwitch extends JCComponent<Props, State> {
     this.state = {
       ...super.getInitialState(),
       enabled: this.props.initState,
+      loading: false,
       animationState: new Animated.Value(this.props.initState ? 1 : 0),
       onColor: this.props.onColor ? this.props.onColor : "#333333",
       offColor: this.props.offColor ? this.props.offColor : "#aaaaaa",
@@ -59,15 +62,31 @@ export default class JCSwitch extends JCComponent<Props, State> {
     }
   }
 
-  onPress(): void {
-    Animated.timing(this.state.animationState, {
-      toValue: this.state.enabled ? 0 : 1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start()
-    this.setState({ enabled: !this.state.enabled }, () => {
-      this.props.onPress(this.state.enabled)
-    })
+  async onPress(): Promise<void> {
+    if (this.props.asyncOnPress) {
+      this.setState({ loading: true })
+      const success = await this.props.asyncOnPress()
+      if (success) {
+        Animated.timing(this.state.animationState, {
+          toValue: this.state.enabled ? 0 : 1,
+          duration: 200,
+          useNativeDriver: true,
+        }).start(() => {
+          this.setState({ enabled: !this.state.enabled, loading: false })
+        })
+      } else {
+        this.setState({ loading: false })
+      }
+    } else {
+      Animated.timing(this.state.animationState, {
+        toValue: this.state.enabled ? 0 : 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start()
+      this.setState({ enabled: !this.state.enabled }, () => {
+        this.props.onPress(this.state.enabled)
+      })
+    }
   }
 
   render(): React.ReactNode {
@@ -81,14 +100,17 @@ export default class JCSwitch extends JCComponent<Props, State> {
           marginBottom: this.props.toggleMargin ? 10 : undefined,
         }}
       >
-        <Text style={this.styles.style.fontMyMapOptions}>{this.props.switchLabel}</Text>
+        {this.props.switchLabel ? (
+          <Text style={this.styles.style.fontMyMapOptions}>{this.props.switchLabel}</Text>
+        ) : null}
+
         <TouchableWithoutFeedback
           accessible
           accessibilityState={{ checked: this.state.enabled }}
           accessibilityLabel={this.props.switchLabel}
           accessibilityRole="switch"
           testID={this.props.testId}
-          onPress={() => this.onPress()}
+          onPress={() => (!this.state.loading ? this.onPress() : null)}
         >
           <View
             style={{
@@ -120,7 +142,15 @@ export default class JCSwitch extends JCComponent<Props, State> {
                   },
                 ],
               }}
-            />
+            >
+              {this.state.loading && this.props.asyncOnPress ? (
+                <ActivityIndicator
+                  color="rgb(240, 73, 62)"
+                  style={{ position: "absolute", zIndex: 10000, marginTop: -2, marginLeft: -2 }}
+                  size="small"
+                />
+              ) : null}
+            </Animated.View>
           </View>
         </TouchableWithoutFeedback>
       </View>
