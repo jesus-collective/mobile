@@ -15,7 +15,6 @@ import ProfileImageNew, {
   ProfileImageQuality,
   ProfileImageStyle,
 } from "../../components/ProfileImage/ProfileImageNew"
-import TwoItemComponent, { CarouselType } from "../../components/TwoItemComponent/TwoItemComponent"
 import { WidgetItem, WidgetType } from "../../components/Widgets/JCWidget"
 import PeopleListWidget from "../../components/Widgets/PeopleListWidget"
 import ProfileDetailsWidget from "../../components/Widgets/ProfileDetailsWidget"
@@ -161,7 +160,7 @@ export default function ProfileScreen(props: Props) {
       title: "About",
       hide: !ProfileSettings.SETTING_ISVISIBLE_TOGGLEBAR_ABOUT,
       action: navigateToAbout,
-    },
+      /*}
     {
       title: "Groups",
       hide: !ProfileSettings.SETTING_ISVISIBLE_TOGGLEBAR_GROUPS,
@@ -171,6 +170,7 @@ export default function ProfileScreen(props: Props) {
       title: "Events",
       hide: !ProfileSettings.SETTING_ISVISIBLE_TOGGLEBAR_EVENTS,
       action: navigateToEvents,
+    },*/
     },
     {
       title: "Resources",
@@ -321,6 +321,7 @@ export default function ProfileScreen(props: Props) {
               <View style={style.MainContent}>
                 {currentTab === ProfileTabType.ABOUT ? (
                   <>
+                    {/*}
                     <TwoItemComponent
                       data={groups}
                       updateEvents={() => Promise.resolve()}
@@ -336,7 +337,7 @@ export default function ProfileScreen(props: Props) {
                       joinedGroups={joinedGroups}
                       title="Upcoming Events"
                       showMore={navigateToEvents}
-                    />
+                />*/}
                   </>
                 ) : currentTab === ProfileTabType.GROUPS ? (
                   <FlatList

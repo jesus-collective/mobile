@@ -50,8 +50,8 @@ export default function HomeScreen() {
     <>
       <BrowserView style={{ overflowX: "hidden", overflowY: "scroll" }}>
         <View style={{ marginHorizontal: "7.778vw" }}>
-          <EventCarousel />
-          <GroupCarousel />
+          {/*} <EventCarousel />
+          <GroupCarousel />*/}
           <ResourceCarousel />
           <PeopleCarousel />
           <OrgCarousel />
