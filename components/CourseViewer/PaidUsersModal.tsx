@@ -2,13 +2,13 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment"
 import React from "react"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import { Data } from "../../components/Data/Data"
 import EditableText from "../../components/Forms/EditableText"
-import EditableUsers from "../../components/Forms/EditableUsers"
+import EditableUsers, { SearchUser } from "../../components/Forms/EditableUsers"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
-import { ListPaymentsQuery, SearchUsersQuery } from "../../src/API"
+import { ListPaymentsQuery } from "../../src/API"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
@@ -20,12 +20,17 @@ interface Props {
 }
 interface State {
   data: NonNullable<NonNullable<GraphQLResult<ListPaymentsQuery>["data"]>["listPayments"]>["items"]
-  users: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
+  users: SearchUser[]
   paymentNote: string | null
 }
 class PaidUsersModalImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
+    this.state = {
+      data: [],
+      users: [],
+      paymentNote: null,
+    }
   }
   componentDidMount() {
     this.setInitialData()
@@ -37,38 +42,59 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
         console.log(json)
         this.setState({
           data: json.data?.listPayments?.items ?? [],
-          users: null,
+          users: [],
           paymentNote: null,
         })
       })
       .catch((json) => {
         this.setState({
           data: json.data?.listPayments?.items ?? [],
-          users: null,
+          users: [],
           paymentNote: null,
         })
         console.log({ error: json })
       })
   }
-  addUser() {
+  async addUser() {
     if (this.state.users) {
-      const addPayment = Data.createPayment({
-        id: this.props.groupId + "-" + this.state.users[0]!.id,
-        productID: this.props.groupId,
-        userID: this.state.users[0]!.id,
-        dateCompleted: moment().toString(),
-        paymentType: "manual",
-        paymentInfo: this.state.paymentNote,
-      })
-      addPayment
-        .then(() => {
+      for await (const user of this.state.users) {
+        try {
+          console.log("adding", this.props.groupId + "-" + this.state.users[0]!.id)
+          const addPayment = await Data.createPayment({
+            id: this.props.groupId + "-" + this.state.users[0]!.id,
+            productID: this.props.groupId,
+            userID: this.state.users[0]!.id,
+            dateCompleted: moment().toString(),
+            paymentType: "manual",
+            paymentInfo: this.state.paymentNote,
+          })
+          console.log({ addPayment })
           this.setInitialData()
-        })
-        .catch(() => {
+        } catch (error) {
+          console.log("could not add ", user?.given_name + " " + user?.family_name)
           this.setInitialData()
-        })
+        }
+      }
     }
+    console.log(this.state.users)
   }
+  // async removeUser() {
+  //   if(this.state.users) {
+  //     for await (const user of this.state.users) {
+  //       try {
+  //         console.log("removing", this.props.groupId + "-" + this.state.users[0]!.id)
+  //         const removePayment = await Data.deletePayment(
+  //           this.props.groupId + "-" + this.state.users[0]!.id,
+  //         )
+  //       console.log({removePayment})
+  //         this.setInitialData()
+  //       } catch (error) {
+  //         console.log("could not remove ", user?.given_name + " " + user?.family_name)
+  //         this.setInitialData()
+  //       }
+  //     }
+  //   }
+  // }
   render() {
     return (
       <JCModal
@@ -79,16 +105,6 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
         }}
       >
         <View>
-          {this.state.data?.map((item) => {
-            return (
-              <View key={item?.id}>
-                <Text style={{ fontWeight: "bold" }}>
-                  {item?.user?.given_name ?? ""} {item?.user?.family_name ?? ""}
-                </Text>
-                <Text style={{ fontWeight: "bold" }}>{item?.user?.email ?? ""}</Text>
-              </View>
-            )
-          })}
           <EditableUsers
             limit={1}
             onChange={(value) => {
@@ -99,7 +115,7 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
             showProfileImages={true}
             textStyle={this.styles.style.fontFormSmallDarkGrey}
             inputStyle={this.styles.style.fontFormLargeInput}
-            value={this.state.users ? this.state.users : []}
+            value={this.state.data}
             isEditable={true}
           ></EditableUsers>
           <EditableText
@@ -118,6 +134,7 @@ class PaidUsersModalImpl extends JCComponent<Props, State> {
             testID="course-purchase"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
+              console.log("add users")
               this.addUser()
             }}
           >
