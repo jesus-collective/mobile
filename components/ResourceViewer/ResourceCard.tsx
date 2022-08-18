@@ -212,7 +212,7 @@ export function ResourceCardImpl(props: Props) {
   const [fadeValue, setFadeValue] = useState<Animated.Value>(new Animated.Value(0))
   const [retries, setRetries] = useState<number>(0)
   const [notSubscribedModal, setNotSubscribedModal] = useState<boolean>(false)
-
+  const [dropdownValue, setDropdownValue] = useState<any>()
   const componentDidMount = (): void => {
     setImageUrl(null)
     setImage(null)
@@ -608,6 +608,8 @@ export function ResourceCardImpl(props: Props) {
               <View style={{ zIndex: 6000 + props.pageItemIndex.length }}>
                 {isSubscribed ? (
                   <DropDownPicker
+                    value={dropdownValue}
+                    setValue={setDropdownValue}
                     open={open}
                     setOpen={setOpen}
                     zIndex={6000 + props.pageItemIndex.length}
@@ -647,7 +649,8 @@ export function ResourceCardImpl(props: Props) {
                     }}
                     // arrowColor="#FFFFFF"
                     onChangeValue={(item: typeof buttonItems[0]) => {
-                      window.location.href = item.value
+                      console.log(item)
+                      if (item) window.location.href = item.value
                     }}
                   />
                 ) : (
