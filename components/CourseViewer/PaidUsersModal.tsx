@@ -1,153 +1,130 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
+import { NavigationProp, RouteProp } from "@react-navigation/native"
 import moment from "moment"
 import React from "react"
-import { View } from "react-native"
-import { Data } from "../../components/Data/Data"
-import EditableText from "../../components/Forms/EditableText"
-import EditableUsers, { SearchUser } from "../../components/Forms/EditableUsers"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import JCModal from "../../components/Forms/JCModal"
-import { ListPaymentsQuery } from "../../src/API"
-import JCComponent from "../JCComponent/JCComponent"
-
-interface Props {
+import { Payment } from "src/API"
+import { Data } from "../Data/Data"
+import EditableText from "../Forms/EditableText"
+import EditableUsers, { SearchUser } from "../Forms/EditableUsers"
+import JCModal from "../Forms/JCModal"
+type PaidUsersModal2Props = {
   visible: boolean
   onClose(): void
   navigation?: NavigationProp<any, any>
-  route?: any
+  route?: RouteProp<any, any>
   groupId: string
 }
-interface State {
-  data: NonNullable<NonNullable<GraphQLResult<ListPaymentsQuery>["data"]>["listPayments"]>["items"]
-  users: SearchUser[]
-  paymentNote: string | null
-}
-class PaidUsersModalImpl extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      data: [],
-      users: [],
-      paymentNote: null,
-    }
-  }
-  componentDidMount() {
-    this.setInitialData()
-  }
-  setInitialData() {
-    const listPayment = Data.listPayments({ id: { beginsWith: this.props.groupId } })
-    listPayment
-      .then((json) => {
-        console.log(json)
-        this.setState({
-          data: json.data?.listPayments?.items ?? [],
-          users: [],
-          paymentNote: null,
-        })
-      })
-      .catch((json) => {
-        this.setState({
-          data: json.data?.listPayments?.items ?? [],
-          users: [],
-          paymentNote: null,
-        })
-        console.log({ error: json })
-      })
-  }
-  async addUser() {
-    if (this.state.users) {
-      for await (const user of this.state.users) {
-        try {
-          console.log("adding", this.props.groupId + "-" + this.state.users[0]!.id)
-          const addPayment = await Data.createPayment({
-            id: this.props.groupId + "-" + this.state.users[0]!.id,
-            productID: this.props.groupId,
-            userID: this.state.users[0]!.id,
-            dateCompleted: moment().toString(),
-            paymentType: "manual",
-            paymentInfo: this.state.paymentNote,
-          })
-          console.log({ addPayment })
-          this.setInitialData()
-        } catch (error) {
-          console.log("could not add ", user?.given_name + " " + user?.family_name)
-          this.setInitialData()
-        }
-      }
-    }
-    console.log(this.state.users)
-  }
-  // async removeUser() {
-  //   if(this.state.users) {
-  //     for await (const user of this.state.users) {
-  //       try {
-  //         console.log("removing", this.props.groupId + "-" + this.state.users[0]!.id)
-  //         const removePayment = await Data.deletePayment(
-  //           this.props.groupId + "-" + this.state.users[0]!.id,
-  //         )
-  //       console.log({removePayment})
-  //         this.setInitialData()
-  //       } catch (error) {
-  //         console.log("could not remove ", user?.given_name + " " + user?.family_name)
-  //         this.setInitialData()
-  //       }
-  //     }
-  //   }
-  // }
-  render() {
-    return (
-      <JCModal
-        visible={this.props.visible}
-        title="Paid Users for this Course"
-        onHide={() => {
-          this.props.onClose()
-        }}
-      >
-        <View>
-          <EditableUsers
-            limit={1}
-            onChange={(value) => {
-              this.setState({ users: value })
-            }}
-            multiline={false}
-            testID="profile-currentRole"
-            showProfileImages={true}
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            inputStyle={this.styles.style.fontFormLargeInput}
-            value={this.state.data}
-            isEditable={true}
-          ></EditableUsers>
-          <EditableText
-            onChange={(value) => {
-              this.setState({ paymentNote: value })
-            }}
-            testID="course-name"
-            placeholder="Payment Note"
-            multiline={true}
-            textStyle={this.styles.style.courseMktNameInput}
-            inputStyle={this.styles.style.courseMktNameInput}
-            value={this.state.paymentNote ?? ""}
-            isEditable={true}
-          ></EditableText>
-          <JCButton
-            testID="course-purchase"
-            buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
-            onPress={() => {
-              console.log("add users")
-              this.addUser()
-            }}
-          >
-            Add User
-          </JCButton>
-        </View>
-      </JCModal>
-    )
-  }
-}
 
-export default function PaidUsersModal(props: Props): JSX.Element {
-  const route = useRoute()
-  const navigation = useNavigation()
-  return <PaidUsersModalImpl {...props} navigation={navigation} route={route} />
+export default function PaidUsersModal({ groupId, visible, onClose }: PaidUsersModal2Props) {
+  const [paymentsData, setPaymentsData] = React.useState<Payment[]>([])
+  const [paymentNote, setPaymentNote] = React.useState<string | null>(null)
+  const getPayments = () => {
+    console.log("getting payments")
+    const listPayments = Data.listPayments({ id: { beginsWith: groupId } })
+    listPayments
+      .then(({ data, errors }) => {
+        setPaymentsData(data?.listPayments?.items as Payment[])
+      })
+      .catch((data) => {
+        console.error({ data })
+        setPaymentsData((data?.listPayments?.items as Payment[]) ?? [])
+      })
+      .finally(() => {
+        setPaymentNote(null)
+      })
+  }
+  React.useEffect(getPayments, [groupId])
+  const addUser = async (users: SearchUser[]) => {
+    console.log({ addingUser: users[0] })
+    if (!users.length) return false
+    const newUser = users[0]
+    const newUserID = newUser?.id
+    if (!newUserID) return false
+    console.log("id exists", newUserID)
+    try {
+      // in EditableUsers value is the id of the object being passed
+      if (!newUserID || !groupId) return false
+
+      console.log("adding", users[0])
+      const addPayment = await Data.createPayment({
+        id: groupId + "-" + newUserID,
+        productID: groupId,
+        userID: newUserID,
+        dateCompleted: moment().toString(),
+        paymentType: "manual",
+        paymentInfo: paymentNote,
+      })
+      if (!addPayment.data?.createPayment) return false
+      console.log({ addPayment })
+      return true
+    } catch (error) {
+      console.error({ "failed to add": error })
+      return false
+    } finally {
+      getPayments()
+      setPaymentNote(null)
+    }
+  }
+  const removeUser = async (users: any[]) => {
+    // in EditableUsers value is the id of the object being passed
+    if (!users.length) return false
+    try {
+      console.log("removing", users[0])
+      const removePayment = await Data.deletePayment(users[0]!.id)
+      if (!removePayment.data?.deletePayment) return false
+      console.log({ removePayment })
+
+      return true
+    } catch (error) {
+      console.error({ "failed to remove": error })
+      return false
+    } finally {
+      getPayments()
+      setPaymentNote(null)
+    }
+  }
+  return (
+    <JCModal unsetOverflow visible={visible} title="Paid Users for this Course" onHide={onClose}>
+      <EditableUsers
+        limit={1}
+        onAdd={(users) => addUser(users)}
+        onRemove={(users) => removeUser(users)}
+        multiline={false}
+        testID="profile-currentRole"
+        showProfileImages={true}
+        textStyle={{
+          fontFamily: "Graphik-Regular-App",
+          fontSize: 16,
+          lineHeight: 26,
+          color: "#333333",
+          paddingTop: 6,
+          width: "100%",
+        }}
+        inputStyle={{
+          fontFamily: "Graphik-Regular-App",
+          fontSize: 16,
+          lineHeight: 28,
+          letterSpacing: -0.3,
+          color: "#333333",
+          width: "100%",
+          height: 30,
+          borderWidth: 0,
+          borderColor: "#dddddd",
+          overflow: "hidden",
+          marginTop: 7,
+        }}
+        value={paymentsData}
+        isEditable={true}
+      ></EditableUsers>
+      <EditableText
+        onChange={(value) => setPaymentNote(value)}
+        testID="course-name"
+        placeholder="Payment Note(optional)"
+        multiline={true}
+        textStyle={{ width: "100%" }}
+        inputStyle={{ width: "100%" }}
+        value={paymentNote ?? ""}
+        isEditable={true}
+      ></EditableText>
+    </JCModal>
+  )
 }

@@ -391,7 +391,6 @@ class CourseHomeImpl extends JCComponent<Props> {
                             ></EditableFileUpload>
                           ) : null}
                         </View>
-                        {}
                         {state.editMode ? (
                           <>
                             <Text
@@ -419,8 +418,11 @@ class CourseHomeImpl extends JCComponent<Props> {
 
                               <EditableUsers
                                 limit={1}
-                                onChange={(value: any[]) => {
-                                  actions.updateInstructors(value)
+                                onRemove={async (value) => {
+                                  return actions.deleteInstructor(value)
+                                }}
+                                onAdd={async (value) => {
+                                  return actions.addInstructor(value)
                                 }}
                                 multiline={false}
                                 testID="profile-currentRole"
@@ -443,8 +445,11 @@ class CourseHomeImpl extends JCComponent<Props> {
                               </Text>
                               <EditableUsers
                                 limit={1}
-                                onChange={(value: any[]) => {
-                                  actions.updateBackOfficeStaff(value)
+                                onAdd={async (value) => {
+                                  return actions.addBackOfficeStaff(value)
+                                }}
+                                onRemove={async (value) => {
+                                  return actions.deleteBackOfficeStaff(value)
                                 }}
                                 multiline={false}
                                 testID="profile-backOfficeStaff"
@@ -475,6 +480,9 @@ class CourseHomeImpl extends JCComponent<Props> {
                                     const users = item?.users?.items?.map((item) => {
                                       return item?.user
                                     })
+                                    console.log(item)
+                                    console.log({ users })
+                                    console.log({ coaches })
                                     return (
                                       <View key={index}>
                                         <View style={{ zIndex: -1 }}>
@@ -505,8 +513,11 @@ class CourseHomeImpl extends JCComponent<Props> {
                                         <View style={{ zIndex: 99999 }}>
                                           <EditableUsers
                                             limit={1}
-                                            onChange={(value: any[]) => {
-                                              actions.updateTriadCoaches(index, value)
+                                            onAdd={async (value) => {
+                                              return actions.addTriadCoach(index, value)
+                                            }}
+                                            onRemove={async (value) => {
+                                              return actions.deleteTriadCoach(index, value)
                                             }}
                                             multiline={false}
                                             testID="profile-currentRole"
@@ -533,8 +544,11 @@ class CourseHomeImpl extends JCComponent<Props> {
                                         <View>
                                           <EditableUsers
                                             limit={3}
-                                            onChange={(value: any[]) => {
-                                              actions.updateTriadUsers(index, value)
+                                            onAdd={async (value) => {
+                                              return actions.addTriadUser(index, value)
+                                            }}
+                                            onRemove={async (value) => {
+                                              return actions.deleteTriadUser(index, value)
                                             }}
                                             multiline={false}
                                             testID="profile-currentRole"

@@ -26,6 +26,22 @@ export const createGroupMember = /* GraphQL */ `
   }
 `
 
+export const createPayment = /* GraphQL */ `
+  mutation CreatePayment($input: CreatePaymentInput!) {
+    createPayment(input: $input) {
+      id
+    }
+  }
+`
+
+export const deletePayment = /* GraphQL */ `
+  mutation DeletePayment($input: DeletePaymentInput!) {
+    deletePayment(input: $input) {
+      id
+    }
+  }
+`
+
 export const deleteGroupMember = /* GraphQL */ `
   mutation DeleteGroupMember($input: DeleteGroupMemberInput!) {
     deleteGroupMember(input: $input) {
