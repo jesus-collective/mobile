@@ -2,6 +2,7 @@
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
+import { SearchUser } from "components/Forms/EditableUsers"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import React from "react"
@@ -11,7 +12,6 @@ import {
   CreateCourseTriadsInput,
   CreateCourseWeekInput,
   GetGroupQuery,
-  SearchUsersQuery,
 } from "src/API"
 import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
@@ -222,208 +222,235 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
 
     console.debug("SORT COMPLETE")
   }
-
-  updateBackOfficeStaff = async (
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ): Promise<void> => {
-    console.log(this.state.courseData?.backOfficeStaff?.items)
-    const del = this.state.courseData?.backOfficeStaff?.items?.filter(
-      (x) => !value?.map((z) => z.id).includes(x?.userID)
-    )
-    const add = value?.filter(
-      (x) => !this.state.courseData?.backOfficeStaff?.items?.map((z) => z.userID).includes(x.id)
-    )
-    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
-    console.log({ del: del })
-    add?.map(async (item) => {
-      let createCourseBackOfficeStaff: any
-      try {
-        console.log({ Adding: item })
-
-        createCourseBackOfficeStaff = await Data.createCourseBackOfficeStaff({
-          courseInfoID: this.state.courseData?.id,
-          userID: item.id,
-        })
-        console.log(createCourseBackOfficeStaff)
-        const temp = this.state.courseData
-        temp?.backOfficeStaff?.items?.push(
-          createCourseBackOfficeStaff.data.createCourseBackOfficeStaff
+  addBackOfficeStaff = async (userToAddArray: SearchUser[]): Promise<boolean> => {
+    const newUser = userToAddArray[0]
+    const newUserID = newUser?.id
+    if (!newUserID) return false
+    try {
+      console.log({ Adding: newUser })
+      const createCourseBackOfficeStaff = await Data.createCourseBackOfficeStaff({
+        courseInfoID: this.state.courseData?.id,
+        userID: newUserID,
+      })
+      console.log({ createCourseBackOfficeStaff })
+      const createdCourseBackOfficeStaff =
+        createCourseBackOfficeStaff.data?.createCourseBackOfficeStaff
+      if (!createdCourseBackOfficeStaff) return false
+      const temp = this.state.courseData
+      temp?.backOfficeStaff?.items?.push(createdCourseBackOfficeStaff)
+      console.log({ temp })
+      this.setState({ courseData: temp })
+      return true
+    } catch (error: any) {
+      const createdCourseBackOfficeStaff = error.data?.createCourseBackOfficeStaff
+      if (!createdCourseBackOfficeStaff) return false
+      const temp = this.state.courseData
+      temp?.backOfficeStaff?.items?.push(createdCourseBackOfficeStaff)
+      console.log({ temp })
+      this.setState({ courseData: temp })
+      return true
+    }
+  }
+  deleteBackOfficeStaff = async (userToRemoveArray: SearchUser[]) => {
+    const userToRemove = userToRemoveArray[0]
+    const backOfficeStaff = this.state.courseData?.backOfficeStaff?.items ?? []
+    const userToRemoveID = userToRemove?.id
+    const backOfficeStaffexists = backOfficeStaff.find((staff) => staff?.userID === userToRemoveID)
+    if (!backOfficeStaffexists) return false
+    try {
+      console.log("deleting")
+      const deleteCourseBackOfficeStaff = await Data.deleteCourseBackOfficeStaff(
+        backOfficeStaffexists?.id
+      )
+      console.log({ deleteCourseBackOfficeStaff })
+      const deletedCourseBackOfficeStaff =
+        deleteCourseBackOfficeStaff.data?.deleteCourseBackOfficeStaff
+      if (!deletedCourseBackOfficeStaff) return false
+      const temp = this.state.courseData
+      if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
+        temp.backOfficeStaff.items = temp.backOfficeStaff?.items?.filter(
+          (user) => user?.id !== userToRemoveID
         )
         console.log(temp)
         this.setState({ courseData: temp })
-      } catch (createCourseBackOfficeStaff: any) {
-        console.log(createCourseBackOfficeStaff)
-        const temp = this.state.courseData
-        temp?.backOfficeStaff?.items?.push(
-          createCourseBackOfficeStaff.data.createCourseBackOfficeStaff
+      }
+      return true
+    } catch (error) {
+      console.log(error)
+      const temp = this.state.courseData
+      if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
+        temp.backOfficeStaff.items = temp.backOfficeStaff.items.filter(
+          (user) => user?.id !== userToRemoveID
         )
         console.log(temp)
         this.setState({ courseData: temp })
       }
-    })
-
-    del?.map(async (item) => {
-      try {
-        console.log({ Deleting: item })
-
-        const deleteCourseBackOfficeStaff = await Data.deleteCourseBackOfficeStaff(item?.id)
-        console.log(deleteCourseBackOfficeStaff)
-        const temp = this.state.courseData
-        if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
-          temp.backOfficeStaff.items = temp.backOfficeStaff?.items?.filter(
-            (user) => user?.id !== item?.id
-          )
-          console.log(temp)
-          this.setState({ courseData: temp })
-        }
-      } catch (createCourseTriadUsers) {
-        console.log(createCourseTriadUsers)
-        const temp = this.state.courseData
-        if (temp && temp.backOfficeStaff && temp.backOfficeStaff.items) {
-          temp.backOfficeStaff.items = temp.backOfficeStaff.items.filter(
-            (user) => user?.id !== item?.id
-          )
-          console.log(temp)
-          this.setState({ courseData: temp })
-        }
-      }
-    })
+      return true
+    }
   }
-  updateInstructors = async (
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ): Promise<void> => {
-    console.log(this.state.courseData?.instructors?.items)
-    const del = this.state.courseData?.instructors?.items?.filter(
-      (x) => !value?.map((z) => z?.id).includes(x?.userID)
-    )
-    const add = value?.filter(
-      (x) => !this.state.courseData?.instructors?.items?.map((z) => z?.userID).includes(x.id)
-    )
-    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
-    console.log({ del: del })
-    add?.map(async (item) => {
-      let createCourseInstructors: any
-      try {
-        console.log({ Adding: item })
-
-        createCourseInstructors = await Data.createCourseInstructors({
-          courseInfoID: this.state.courseData?.id,
-          userID: item?.id,
-        })
-        console.log(createCourseInstructors)
-        const temp = this.state.courseData
-        if (temp && temp.instructors && temp.instructors.items) {
-          temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
-          console.log(temp)
-          this.setState({ courseData: temp })
-        }
-      } catch (createCourseInstructors: any) {
-        console.log(createCourseInstructors)
-        const temp = this.state.courseData
-        if (temp && temp.instructors && temp.instructors.items) {
-          temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
-          console.log(temp)
-          this.setState({ courseData: temp })
-        }
+  addInstructor = async (userToAddArray: SearchUser[]): Promise<boolean> => {
+    const newUser = userToAddArray[0]
+    const newUserID = newUser?.id
+    const instructors = this.state.courseData?.instructors?.items ?? []
+    const instructorExists = instructors.find((instructor) => instructor?.userID === newUserID)
+    if (instructorExists) return false
+    if (!newUserID) {
+      console.log("Could not locate user ID")
+      return false // Could not locate user ID
+    }
+    try {
+      console.log({ Adding: newUser })
+      const createCourseInstructors = await Data.createCourseInstructors({
+        courseInfoID: this.state.courseData?.id,
+        userID: newUserID,
+      })
+      console.log({ createCourseInstructors })
+      if (!createCourseInstructors?.data?.createCourseInstructors) return false
+      const temp = this.state.courseData
+      if (temp && temp.instructors && temp.instructors.items) {
+        temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
+        console.log(temp)
+        this.setState({ courseData: temp })
+        return true
       }
-    })
-
-    del.map(async (item) => {
-      try {
-        console.log({ Deleting: item })
-
-        const deleteCourseInstructors = await Data.deleteCourseInstructors(item.id)
-        console.log(deleteCourseInstructors)
-        const temp = this.state.courseData
-        if (temp && temp.instructors && temp.instructors.items) {
-          temp.instructors.items = temp.instructors.items.filter((user) => user.id !== item.id)
-          console.log(temp)
-          this.setState({ courseData: temp })
-        }
-      } catch (createCourseTriadUsers) {
-        console.log(createCourseTriadUsers)
-        const temp = this.state.courseData
-        if (temp && temp.instructors && temp.instructors.items) {
-          temp.instructors.items = temp.instructors.items.filter((user) => user.id !== item.id)
-          console.log(temp)
-          this.setState({ courseData: temp })
-        }
+      return false
+    } catch (createCourseInstructors: any) {
+      console.log({ error: createCourseInstructors })
+      const temp = this.state.courseData
+      if (temp && temp.instructors && temp.instructors.items) {
+        const createdCourseInstructor = createCourseInstructors.data.createCourseInstructors
+        if (!createdCourseInstructor) return false
+        temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
+        console.log(temp)
+        this.setState({ courseData: temp })
+        return true
       }
-    })
+      return false
+    }
   }
-  updateTriadUsers = async (
-    index: number,
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ): Promise<void> => {
-    if (this.state.courseData?.triads?.items) {
-      const del = this.state.courseData.triads.items[index]!.users?.items?.filter(
-        (x) => !value?.map((z) => z.id).includes(x.userID)
-      )
-      const add = value?.filter(
-        (x) =>
-          !this.state.courseData?.triads
-            ?.items![index]!.users?.items?.map((z) => z?.userID)
-            ?.includes(x?.id)
-      )
-      // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
-      console.log({ del: del })
-      add?.map(async (item) => {
-        let createCourseTriadUsers: any
-        try {
-          console.log({ Adding: item })
-
-          createCourseTriadUsers = await Data.createCourseTriadUsers({
-            triadID: this.state.courseData?.triads?.items![index]?.id,
-            userID: item?.id,
-          })
-          console.log(createCourseTriadUsers)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items) {
-            temp.triads.items[index]!.users?.items?.push(
-              createCourseTriadUsers.data.createCourseTriadUsers
-            )
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        } catch (createCourseTriadUsers: any) {
-          console.log(createCourseTriadUsers)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items) {
-            temp.triads.items[index]!.users?.items?.push(
-              createCourseTriadUsers.data.createCourseTriadUsers
-            )
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        }
+  deleteInstructor = async (userToRemoveArray: SearchUser[]): Promise<boolean> => {
+    const userToRemove = userToRemoveArray[0]
+    const instructors = this.state.courseData?.instructors?.items ?? []
+    const userToRemoveID = userToRemove?.id
+    const instructorExists = instructors.find((instructor) => instructor?.userID === userToRemoveID)
+    if (!instructorExists) return false
+    if (!userToRemoveID) {
+      console.log("Could not locate user ID")
+      return false // Could not locate user ID
+    }
+    try {
+      console.log({ Deleting: userToRemove })
+      if (!userToRemoveID) return false
+      const deleteCourseInstructors = await Data.deleteCourseInstructors(instructorExists.id)
+      console.log({ deleteCourseInstructors })
+      const deletedCourseInstructor = deleteCourseInstructors.data?.deleteCourseInstructors
+      if (!deletedCourseInstructor) return false
+      const temp = this.state.courseData
+      if (temp && temp.instructors && temp.instructors.items) {
+        temp.instructors.items = temp.instructors.items.filter(
+          (user) => user?.userID !== userToRemoveID
+        )
+        console.log(temp)
+        this.setState({ courseData: temp })
+      }
+      return true
+    } catch (createCourseTriadUsers) {
+      console.log({ error: createCourseTriadUsers })
+      const temp = this.state.courseData
+      if (temp && temp.instructors && temp.instructors.items) {
+        temp.instructors.items = temp.instructors.items.filter(
+          (user) => user?.userID !== userToRemoveID
+        )
+        console.log(temp)
+        this.setState({ courseData: temp })
+      }
+      return false
+    }
+  }
+  addTriadUser = async (triadIndex: number, newUserArray: SearchUser[]): Promise<boolean> => {
+    console.log("Adding user to triad")
+    const usersInTriad = this.state.courseData?.triads?.items[triadIndex]?.users?.items ?? []
+    const newUser = newUserArray[0]
+    console.log({ newUser })
+    const newUserID = newUser?.id
+    if (!newUserID) {
+      console.log("Could not locate user ID")
+      return false // Could not locate user ID
+    }
+    const userExists = usersInTriad.find((userInTriad) => userInTriad?.userID === newUserID)
+    if (userExists) {
+      console.log("User already exists in triad", { usersInTriad }, { newUserID })
+      return false //User already exists in triad
+    }
+    try {
+      const createCourseTriadUsers = await Data.createCourseTriadUsers({
+        triadID: this.state.courseData?.triads?.items![triadIndex]?.id,
+        userID: newUserID,
       })
+      const newCourseTriadUser = createCourseTriadUsers?.data?.createCourseTriadUsers
+      if (!newCourseTriadUser) return false // There was a problem creating courseTriadUser
+      console.log(
+        "Successfully added ",
+        newUserID,
+        " to triad",
+        createCourseTriadUsers.data?.createCourseTriadUsers
+      )
+      const temp = this.state.courseData
+      if (!temp || !temp.triads || !temp.triads.items) return false
+      temp.triads.items[triadIndex]!.users?.items?.push(newCourseTriadUser)
+      console.log({ newTemp: temp })
+      this.setState({ courseData: temp })
 
-      del?.map(async (item) => {
-        try {
-          console.log({ Deleting: item })
+      return true
+    } catch (error) {
+      console.log({ "Error adding user to triad": error })
 
-          const createCourseTriadUsers = await Data.deleteCourseTriadUsers(item.id)
-          console.log(createCourseTriadUsers)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items && temp.triads.items[index]) {
-            temp.triads.items[index].users.items = temp.triads.items[index]!.users?.items?.filter(
-              (user) => user.id !== item.id
-            )
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        } catch (createCourseTriadUsers) {
-          console.log(createCourseTriadUsers)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items && temp.triads.items[index]) {
-            temp.triads.items![index].users.items = temp.triads.items[index]!.users?.items?.filter(
-              (user) => user.id !== item.id
-            )
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        }
-      })
+      return false
+    }
+  }
+  deleteTriadUser = async (
+    triadIndex: number,
+    usersToRemoveArray: SearchUser[]
+  ): Promise<boolean> => {
+    const triad = this.state.courseData?.triads?.items[triadIndex]
+    const usersInTriad = triad?.users?.items ?? []
+    const userToRemove = usersToRemoveArray[0]
+    const userToRemoveID = userToRemove?.id
+
+    if (!userToRemoveID) {
+      console.log("Could not locate user ID")
+      return false // Could not locate user ID
+    } else console.log(userToRemoveID)
+
+    const userExists = usersInTriad.find((userInTriad) => userInTriad?.userID === userToRemoveID)
+    if (!userExists) {
+      console.log("User doesn't exist")
+      return false // User doesn't exist
+    }
+
+    try {
+      const deleteCourseTriadUser = await Data.deleteCourseTriadUsers(userExists.id)
+      console.log({ deleteCourseTriadUser })
+      const deleteTriadUser = deleteCourseTriadUser?.data?.deleteCourseTriadUsers
+      if (!deleteTriadUser) return false // There was a problem deleting courseTriadUser
+      console.log(
+        "Successfully deleted ",
+        userToRemoveID,
+        " from triad",
+        deleteCourseTriadUser.data?.deleteCourseTriadUsers
+      )
+      const temp = this.state.courseData
+      if (!temp || !temp.triads || !temp.triads.items) return false
+      const filteredUsers = usersInTriad.filter((user) => user?.userID !== userToRemoveID)
+
+      temp.triads.items[triadIndex].users.items = filteredUsers
+      console.log({ temp })
+      this.setState({ courseData: temp })
+
+      return true
+    } catch (error) {
+      console.log({ "Error adding user to triad": error })
+      return false
     }
   }
   removeDuplicates(originalArray: CourseUser[], prop: string): any[] {
@@ -521,80 +548,98 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     console.log(final)
     return final
   }
-  updateTriadCoaches = async (
-    index: number,
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ): Promise<void> => {
-    if (this.state.courseData?.triads?.items) {
-      const del = this.state.courseData.triads.items[index]!.coaches?.items?.filter(
-        (x) => !value?.map((z) => z?.id).includes(x?.userID)
-      )
-      const add = value?.filter(
-        (x) =>
-          !this.state.courseData?.triads
-            ?.items![index]?.coaches?.items?.map((z) => z?.userID)
-            .includes(x?.id)
-      )
-
-      // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
-      add.map(async (item: any) => {
-        try {
-          console.log({ Adding: item })
-
-          const createCourseTriadCoaches = await Data.createCourseTriadCoaches({
-            triadID: this.state.courseData?.triads?.items![index]?.id,
-            userID: item.id,
-          })
-          console.log(createCourseTriadCoaches)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items) {
-            temp.triads.items[index]!.coaches?.items?.push(
-              createCourseTriadCoaches.data.createCourseTriadCoaches
-            )
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        } catch (createCourseTriadCoaches: any) {
-          console.log(createCourseTriadCoaches)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items) {
-            temp.triads.items[index]!.coaches?.items?.push(
-              createCourseTriadCoaches.data.createCourseTriadCoaches
-            )
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        }
+  addTriadCoach = async (triadIndex: number, userToAddArray: SearchUser[]): Promise<boolean> => {
+    const newUser = userToAddArray[0]
+    const newUserID = newUser?.id
+    const triads = this.state.courseData?.triads?.items ?? []
+    const triad = triads[triadIndex]
+    const coaches = triad?.coaches?.items ?? []
+    if (!triad) return false
+    if (!newUserID) return false
+    try {
+      console.log({ Adding: newUser })
+      const createCourseTriadCoaches = await Data.createCourseTriadCoaches({
+        triadID: triad?.id,
+        userID: newUserID,
       })
-
-      del?.map(async (item) => {
-        try {
-          console.log({ Deleting: item })
-
-          const deleteCourseTriadCoaches = await Data.deleteCourseTriadCoaches(item?.id)
-          console.log(deleteCourseTriadCoaches)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items) {
-            temp.triads.items[index].coaches.items = temp.triads.items[
-              index
-            ]!.coaches?.items?.filter((user) => user?.id !== item?.id)
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        } catch (deleteCourseTriadCoaches) {
-          console.log(deleteCourseTriadCoaches)
-          const temp = this.state.courseData
-          if (temp && temp.triads && temp.triads.items) {
-            temp.triads.items![index].coaches.items = temp.triads.items[
-              index
-            ]!.coaches?.items?.filter((user) => user?.id !== item?.id)
-            console.log(temp)
-            this.setState({ courseData: temp })
-          }
-        }
-      })
+      console.log({ createCourseTriadCoaches })
+      const createdCourseTriadCoach = createCourseTriadCoaches.data?.createCourseTriadCoaches
+      if (!createdCourseTriadCoach) return false
+      const temp = this.state.courseData
+      if (temp && temp.triads && temp.triads.items) {
+        temp.triads.items[triadIndex]!.coaches?.items?.push(createdCourseTriadCoach)
+        console.log(temp)
+        this.setState({ courseData: temp })
+        return true
+      }
+      return false
+    } catch (createCourseTriadCoaches: any) {
+      console.log({ createCourseTriadCoaches })
+      const createdCourseTriadCoach = createCourseTriadCoaches.data?.createCourseTriadCoaches
+      if (!createdCourseTriadCoach) return false
+      const temp = this.state.courseData
+      if (temp && temp.triads && temp.triads.items) {
+        temp.triads.items[triadIndex]!.coaches?.items?.push(createdCourseTriadCoach)
+        console.log(temp)
+        this.setState({ courseData: temp })
+        return true
+      }
+      return false
     }
   }
+  deleteTriadCoach = async (
+    triadIndex: number,
+    userToRemoveArray: SearchUser[]
+  ): Promise<boolean> => {
+    const triad = this.state.courseData?.triads?.items[triadIndex]
+    const coachesInTriad = triad?.coaches?.items ?? []
+    const userToRemove = userToRemoveArray[0]
+    const userToRemoveID = userToRemove?.id
+
+    if (!userToRemoveID) {
+      console.log("Could not locate user ID")
+      return false // Could not locate user ID
+    } else console.log(userToRemoveID)
+
+    const userExists = coachesInTriad.find(
+      (coachInTriad) => coachInTriad?.userID === userToRemoveID
+    )
+    if (!userExists) {
+      console.log("User doesn't exist")
+      return false // User doesn't exist
+    }
+    try {
+      console.log({ Deleting: userToRemove })
+
+      const deleteCourseTriadCoaches = await Data.deleteCourseTriadCoaches(userExists.id)
+      console.log({ deleteCourseTriadCoaches })
+      const deletedCourseTriadCoach = deleteCourseTriadCoaches.data?.deleteCourseTriadCoaches
+      if (!deletedCourseTriadCoach) return false
+      const temp = this.state.courseData
+      if (temp && temp.triads && temp.triads.items) {
+        temp.triads.items[triadIndex].coaches.items = temp.triads.items[
+          triadIndex
+        ]!.coaches?.items?.filter((user) => user?.id !== userToRemoveID)
+        console.log(temp)
+        this.setState({ courseData: temp })
+        return true
+      }
+      return false
+    } catch (deleteCourseTriadCoaches) {
+      console.log(deleteCourseTriadCoaches)
+      const temp = this.state.courseData
+      if (temp && temp.triads && temp.triads.items) {
+        temp.triads.items![triadIndex].coaches.items = temp.triads.items[
+          triadIndex
+        ]!.coaches?.items?.filter((user) => user?.id !== userToRemoveID)
+        console.log(temp)
+        this.setState({ courseData: temp })
+        return true
+      }
+      return false
+    }
+  }
+
   updateTriad = async (index: number, item: string, value: any): Promise<void> => {
     try {
       console.log({ "Updating Triad": index })
@@ -957,10 +1002,14 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             updateTriad: this.updateTriad,
             deleteTriad: this.deleteTriad,
             setEditMode: this.setEditMode,
-            updateTriadCoaches: this.updateTriadCoaches,
-            updateTriadUsers: this.updateTriadUsers,
-            updateInstructors: this.updateInstructors,
-            updateBackOfficeStaff: this.updateBackOfficeStaff,
+            addTriadCoach: this.addTriadCoach,
+            deleteTriadCoach: this.deleteTriadCoach,
+            addTriadUser: this.addTriadUser,
+            deleteTriadUser: this.deleteTriadUser,
+            addInstructor: this.addInstructor,
+            deleteInstructor: this.deleteInstructor,
+            addBackOfficeStaff: this.addBackOfficeStaff,
+            deleteBackOfficeStaff: this.deleteBackOfficeStaff,
             setActiveMessageBoard: this.setActiveMessageBoard,
             myCourseGroups: this.myCourseGroups,
             setActiveCourseActivity: this.setActiveCourseActivity,

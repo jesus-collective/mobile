@@ -1,8 +1,8 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { SearchUser } from "components/Forms/EditableUsers"
 import { Moment } from "moment"
 import * as React from "react"
 import { JCState } from "../../components/JCComponent/JCComponent"
-import { GetGroupQuery, SearchUsersQuery } from "../../src/API"
+import { GetGroupQuery } from "../../src/API"
 import { GetCourseInfoQuery } from "../../src/API-courses"
 
 export type CourseInfo = NonNullable<GetCourseInfoQuery>["getCourseInfo"]
@@ -77,20 +77,14 @@ export interface CourseActions {
   createTriad: () => Promise<void>
   deleteTriad: (index: number) => Promise<void>
   setEditMode: (editMode: boolean) => void
-  updateTriadUsers: (
-    index: number,
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ) => Promise<void>
-  updateTriadCoaches: (
-    index: number,
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ) => Promise<void>
-  updateInstructors: (
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ) => Promise<void>
-  updateBackOfficeStaff: (
-    value: NonNullable<NonNullable<GraphQLResult<SearchUsersQuery>["data"]>["searchUsers"]>["items"]
-  ) => Promise<void>
+  addTriadUser: (triadIndex: number, newUserArray: SearchUser[]) => Promise<boolean>
+  deleteTriadUser: (triadIndex: number, usersToRemoveArray: SearchUser[]) => Promise<boolean>
+  addTriadCoach: (triadIndex: number, newUserArray: SearchUser[]) => Promise<boolean>
+  deleteTriadCoach: (triadIndex: number, usersToRemoveArray: SearchUser[]) => Promise<boolean>
+  addInstructor: (newUserArray: SearchUser[]) => Promise<boolean>
+  deleteInstructor: (usersToRemoveArray: SearchUser[]) => Promise<boolean>
+  addBackOfficeStaff: (newUserArray: SearchUser[]) => Promise<boolean>
+  deleteBackOfficeStaff: (usersToRemoveArray: SearchUser[]) => Promise<boolean>
   setActiveMessageBoard: (messageBoard: string) => void
   setActiveCourseActivity: (courseActivity: string) => void
   myCourseGroups: () => { all: any[]; cohort: any[]; completeTriad: any[] }
@@ -128,10 +122,14 @@ export const CourseContext = React.createContext<CourseContextType>({
     createTriad: () => Promise.resolve(),
     deleteTriad: () => Promise.resolve(),
     setEditMode: () => null,
-    updateTriadUsers: () => Promise.resolve(),
-    updateTriadCoaches: () => Promise.resolve(),
-    updateInstructors: () => Promise.resolve(),
-    updateBackOfficeStaff: () => Promise.resolve(),
+    addTriadUser: () => Promise.resolve(true),
+    deleteTriadUser: () => Promise.resolve(true),
+    addTriadCoach: () => Promise.resolve(true),
+    deleteTriadCoach: () => Promise.resolve(true),
+    addInstructor: () => Promise.resolve(true),
+    deleteInstructor: () => Promise.resolve(true),
+    addBackOfficeStaff: () => Promise.resolve(true),
+    deleteBackOfficeStaff: () => Promise.resolve(true),
     setActiveMessageBoard: () => null,
     setActiveCourseActivity: () => null,
     myCourseGroups: () => {

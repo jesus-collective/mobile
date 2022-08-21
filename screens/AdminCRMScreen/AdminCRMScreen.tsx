@@ -81,7 +81,7 @@ interface State extends JCState {
   >["items"]
 }
 
-function useDebounce(value: string, delay: number) {
+export function useDebounce(value: string, delay: number) {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = React.useState(value)
   React.useEffect(

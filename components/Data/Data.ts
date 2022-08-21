@@ -433,7 +433,7 @@ export class Data {
   }
   static deletePayment(id: string) {
     return API.graphql({
-      query: mutations.deletePayment,
+      query: customMutations.deletePayment,
       variables: { input: { id: id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<DeletePaymentMutation>>
@@ -722,7 +722,7 @@ export class Data {
   }
   static createPayment(input: CreatePaymentInput) {
     return API.graphql({
-      query: mutations.createPayment,
+      query: customMutations.createPayment,
       variables: {
         input: input,
       },
