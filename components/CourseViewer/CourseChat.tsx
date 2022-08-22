@@ -39,7 +39,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
         {({ state, actions }) => {
           if (!state?.data) return null
           return state.currentScreen == "Details" ? (
-            <View style={{ width: chatWidth }}>
+            <View style={{ width: chatWidth, backgroundColor: "#fff" }}>
               <View style={this.styles.style.courseDetailButtonTrio}>
                 <JCButton
                   buttonType={
