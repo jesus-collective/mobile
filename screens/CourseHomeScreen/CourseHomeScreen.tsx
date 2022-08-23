@@ -2,11 +2,10 @@
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
-import { SearchUser } from "components/Forms/EditableUsers"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import React from "react"
-import { Dimensions, View } from "react-native"
+import { Dimensions, Modal, View } from "react-native"
 import {
   CreateCourseLessonInput,
   CreateCourseTriadsInput,
@@ -16,6 +15,7 @@ import {
 import { GetCourseInfoQuery } from "src/API-courses"
 import { JCCognitoUser } from "src/types"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
+import CourseChat from "../../components/CourseViewer/CourseChat"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import {
   AgendaItems,
@@ -32,6 +32,7 @@ import CourseHome from "../../components/CourseViewer/CourseHome"
 import { Data } from "../../components/Data/Data"
 import FloatingButton from "../../components/FloatingButton/FloatingButton"
 import FloatingButtonStyles from "../../components/FloatingButton/FloatingButtonStyles"
+import { SearchUser } from "../../components/Forms/EditableUsers"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
 
@@ -1034,7 +1035,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
               setShow={() => this.setState({ showChat: true })}
             />
           ) : null}
-
+          <Modal transparent animationType="slide" visible={this.state.showChat}>
+            <View style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
+              <CourseChat />
+            </View>
+          </Modal>
           <View
             style={[
               this.styles.style.courseHomeScreenMainContainer,
