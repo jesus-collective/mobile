@@ -607,17 +607,11 @@ const courseStyles = EStyleSheet.create({
   courseDetailButtonTrio:
     Platform.OS === "web"
       ? {
-          flex: "auto",
-          flexDirection: "row",
-          alignContent: "flex-end",
+          marginBottom: 30,
           marginTop: 30,
-          borderBottomWidth: 1,
-          borderBottomStyle: "solid",
-          borderBottomColor: "#333333",
-          borderBottomOpacity: 0.5,
-          width: "100%",
-          height: 45,
-          paddingHorizontal: 25,
+          marginHorizontal: 24,
+          flexDirection: "row",
+          flex: 1,
         }
       : {
           flex: "auto",

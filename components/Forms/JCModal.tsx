@@ -10,6 +10,7 @@ interface Props {
   onHide(): void
   title: string
   noScroll?: boolean
+  unsetOverflow?: boolean
 }
 
 export default class JCModal extends JCComponent<Props> {
@@ -62,7 +63,11 @@ export default class JCModal extends JCComponent<Props> {
               shadowRadius: 3.84,
               elevation: 5,
               maxHeight: "80vh",
-              overflow: this.props.noScroll ? "hidden" : "scroll",
+              overflow: this.props.unsetOverflow
+                ? undefined
+                : this.props.noScroll
+                ? "hidden"
+                : "scroll",
             }}
           >
             <View
