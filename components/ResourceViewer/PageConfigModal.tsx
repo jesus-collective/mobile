@@ -64,7 +64,7 @@ function JCResourceConfigModalImpl(props: Props) {
         </Picker>
         {resourceContext.resourceActions
           .getMenuItem(resourceContext.resourceState.currentMenuItem)
-          .readGroups?.map((item: UserGroupType, index: number) => {
+          ?.readGroups?.map((item: UserGroupType, index: number) => {
             return (
               <React.Fragment key={index}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>

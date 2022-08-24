@@ -13,7 +13,7 @@ import EditableButton from "../Forms/EditableButton"
 import HeaderStyles from "../Header/style"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
-
+import ResourceMenuBreakItem from "./ResourceMenu/ResourceMenuBreakItem"
 export function ResourceMenuAdmin(props: ResourceAdminProp): JSX.Element {
   return (
     <>
@@ -54,13 +54,12 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
     headerStyles.update()
     // forceUpdate()
   }
-  const componentDidMount = (): void => {
-    Dimensions.addEventListener("change", updateStyles)
-  }
-  const componentWillUnmount = (): void => {
-    // Important to stop updating state after unmount
-    Dimensions.removeEventListener("change", updateStyles)
-  }
+  React.useEffect(() => {
+    const dimensionsSubscription = Dimensions.addEventListener("change", updateStyles)
+    return () => {
+      dimensionsSubscription.remove()
+    }
+  }, [])
   const headerStyles: HeaderStyles = new HeaderStyles()
 
   const renderTopMenu = (): JSX.Element => {
@@ -184,18 +183,11 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
             console.log({ item })
             if (item != null)
               return item.type == ResourceMenuItemType.break ? (
-                <View key={index} style={{ flexDirection: "row" }}>
-                  <View style={[styles.style.resourceMenuLineBreak, { marginLeft: 0 }]}></View>
-                  {resourceContext.resourceState?.isEditable && (
-                    <Pressable
-                      onPress={async () => {
-                        await resourceContext.resourceActions.deleteMenuItem(index)
-                      }}
-                    >
-                      <Ionicons name="ios-close" style={headerStyles.style.icon} />
-                    </Pressable>
-                  )}
-                </View>
+                <ResourceMenuBreakItem
+                  isEditable={resourceContext.resourceState?.isEditable}
+                  deleteItem={() => resourceContext.resourceActions.deleteMenuItem(index)}
+                  style={[styles.style.resourceMenuLineBreak, { marginLeft: 0 }]}
+                />
               ) : isMenuItemExpanded(index) ? (
                 <View
                   key={index}
@@ -284,6 +276,8 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
           <DropDownPicker
             open={open}
             setOpen={setOpen}
+            setValue={() => null}
+            value={"menuitem"}
             items={[
               {
                 label: "Menu Item",
@@ -323,11 +317,12 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
               alignSelf: "center",
             }}
             // arrowColor="#FFFFFF"
-            onChangeValue={(item) => {
-              if (item == "menuitem")
+            onSelectItem={(item) => {
+              if (item.value == "menuitem")
                 resourceContext.resourceActions.createMenuItem(ResourceMenuItemType.menuItem)
-              else if (item == "break")
+              else if (item.value == "break")
                 resourceContext.resourceActions.createMenuItem(ResourceMenuItemType.break)
+              else console.log("unknown selection")
             }}
           />
         ) : null}
