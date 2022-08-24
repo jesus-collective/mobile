@@ -27,6 +27,8 @@ export default class HeaderStyles {
       },
       resourceContainer: {
         backgroundColor: "#292929",
+        paddingTop: 8,
+        paddingBottom: 8,
         overflowX: width >= 320 && width <= 480 ? "scroll" : "visible",
       },
       adminContainer: {

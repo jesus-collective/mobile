@@ -117,7 +117,7 @@ class JCButton extends JCComponent<Props> {
         disabled={!this.props.enabled || this.state.busy}
         testID={this.props.testID + "-" + this.props.enabled}
         style={[
-          { alignSelf: "flex-start" },
+          { justifyContent: "center", alignItems: "center", alignSelf: "flex-start" },
           styles[ButtonTypes[this.props.buttonType] + "Button"],
           !this.props.enabled ? styles[ButtonTypes[this.props.buttonType] + "ButtonDisabled"] : "",
         ]}
