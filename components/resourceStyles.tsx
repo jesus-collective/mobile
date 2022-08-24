@@ -598,13 +598,13 @@ const resourceStyles = EStyleSheet.create({
   resourcefileFieldWrapper:
     Platform.OS === "web"
       ? {
+          marginTop: -85,
           alignSelf: "center",
-          top: "24vw",
           width: "75%",
           overflow: "none",
           borderWidth: 1,
           borderColor: "#E4E1E1",
-          position: "absolute",
+          position: "unset",
           backgroundColor: "#ffffff",
           height: 195,
           borderRadius: 8,
@@ -643,6 +643,7 @@ const resourceStyles = EStyleSheet.create({
   resourceHeaderContainer: {
     //    backgroundColor: "#000000",
     height: Dimensions.get("window").width * (24 / 100) + " + 200px",
+    marginBottom: "calc(16px + 3vw)",
   },
   resourceHeaderImgContainer: {
     //    backgroundColor: "#000000",
