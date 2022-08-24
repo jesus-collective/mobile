@@ -266,7 +266,7 @@ export function ResourceCardImpl(props: Props) {
                 backgroundColor: "#fff",
                 borderWidth: 1,
                 borderColor: "#E4E1E1",
-                width: 352.4,
+
                 borderRadius: 8,
                 marginBottom: 30,
               },
