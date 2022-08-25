@@ -14,6 +14,7 @@ import ProfileImageNew, {
 const ProfileCardStyle = StyleSheet.create({
   Container: {
     minHeight: 308,
+    maxHeight: 308,
     flex: 1,
     marginTop: 32,
     borderWidth: 1,

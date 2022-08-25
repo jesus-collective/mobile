@@ -131,7 +131,12 @@ function ResourceHeader(props: Props) {
   if (resourceContext.resourceState.currentResource == null) return null
   if (imageUrl == null || image != props.pageItem.image) getImage(props.pageItem.image)
   return (
-    <View style={styles.style.resourceHeaderContainer}>
+    <View
+      style={[
+        styles.style.resourceHeaderContainer,
+        !imageUrl ? { height: 300, marginBottom: 0 } : {},
+      ]}
+    >
       <View style={styles.style.resourceHeaderImgContainer}>
         {imageUrl ? (
           <Animated.View style={[styles.style.resourceHeaderImgView, { opacity: fadeValue }]}>
@@ -145,7 +150,7 @@ function ResourceHeader(props: Props) {
             ></Image>
           </Animated.View>
         ) : null}
-        <View style={styles.style.resourcefileFieldWrapper}>
+        <View style={[styles.style.resourcefileFieldWrapper, !imageUrl ? { marginTop: 40 } : {}]}>
           <EditableText
             multiline={false}
             placeholder="Title"

@@ -63,32 +63,28 @@ class CourseHomeImpl extends JCComponent<Props> {
           }}
         >
           <View style={this.styles.style.courseConversationCard}>
-            <View>
-              <View style={this.styles.style.courseHomeConversationCard}>
-                <ProfileImageNew
-                  linkToProfile
-                  style={ProfileImageStyle.UserLarge}
-                  quality={ProfileImageQuality.medium}
-                  type="user"
-                  user={user}
-                />
-                <View style={this.styles.style.dashboardConversationBody}>
-                  <Text style={this.styles.style.courseFontConnectWithName}>
-                    {user.given_name} {user.family_name}
-                  </Text>
-                  <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
-                  <Pressable
-                    style={this.styles.style.courseHomeConversationButton}
-                    onPress={() => {
-                      this.openConversation(user.id, user.given_name + " " + user.family_name)
-                    }}
-                  >
-                    <Text style={this.styles.style.courseFontStartConversation}>
-                      Send a Message
-                    </Text>
-                  </Pressable>
-                  {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
-                </View>
+            <View style={this.styles.style.courseHomeConversationCard}>
+              <ProfileImageNew
+                linkToProfile
+                style={ProfileImageStyle.UserLarge}
+                quality={ProfileImageQuality.medium}
+                type="user"
+                user={user}
+              />
+              <View style={this.styles.style.dashboardConversationBody}>
+                <Text style={this.styles.style.courseFontConnectWithName}>
+                  {user.given_name} {user.family_name}
+                </Text>
+                <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
+                <Pressable
+                  style={this.styles.style.courseHomeConversationButton}
+                  onPress={() => {
+                    this.openConversation(user.id, user.given_name + " " + user.family_name)
+                  }}
+                >
+                  <Text style={this.styles.style.courseFontStartConversation}>Send a Message</Text>
+                </Pressable>
+                {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
               </View>
             </View>
           </View>

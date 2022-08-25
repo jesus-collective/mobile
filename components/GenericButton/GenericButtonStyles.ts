@@ -18,6 +18,7 @@ export const GenericButtonStyles = StyleSheet.create({
     color: "#FFFFFF",
     fontFamily: "Graphik-Regular-App",
     fontWeight: "600",
+    alignSelf: "center",
     letterSpacing: 1,
     fontSize: 16,
     textTransform: "uppercase",
@@ -33,6 +34,7 @@ export const GenericButtonStyles = StyleSheet.create({
   SecondaryLabelStyle: {
     color: "#FF4438",
     fontFamily: "Graphik-Regular-App",
+    alignSelf: "center",
     fontWeight: "600",
     letterSpacing: 1,
     fontSize: 16,
@@ -50,6 +52,7 @@ export const GenericButtonStyles = StyleSheet.create({
   TertiaryLabelStyle: {
     color: "#FFFFFF",
     fontFamily: "Graphik-Regular-App",
+    alignSelf: "center",
     fontSize: 15,
     textAlign: "center",
   },
@@ -65,6 +68,7 @@ export const GenericButtonStyles = StyleSheet.create({
   QuarternaryLabelStyle: {
     color: "white",
     fontFamily: "Graphik-Semibold-App",
+    alignSelf: "center",
     fontSize: 15,
     lineHeight: 24,
   },
