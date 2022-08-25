@@ -450,6 +450,7 @@ enum PaidState{
 type User
   @searchable
   @model
+  @key(name: "byIsArchived", fields: ["isArchived"], queryField: "byIsArchived")
   @auth(
     rules: [
       { allow: private, provider:iam, operations:[read]}
@@ -492,7 +493,7 @@ type User
   numberVolunteers: String
   orgDescription: String
   joined: String
- 
+  isArchived: String
   primaryOrganization: String
   organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
 
