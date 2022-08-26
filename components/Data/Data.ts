@@ -32,11 +32,11 @@ import {
   CreateCourseWeekInput,
   CreateCourseWeekMutation,
   CreateCRMMessageInput,
-  CreateCrmMessageMutation,
+  CreateCRMMessageMutation,
   CreateCRMReplyInput,
-  CreateCrmReplyMutation,
+  CreateCRMReplyMutation,
   CreateCRMRootInput,
-  CreateCrmRootMutation,
+  CreateCRMRootMutation,
   CreateCustomPricingInput,
   CreateCustomPricingMutation,
   CreateCustomProfileInput,
@@ -548,24 +548,24 @@ export class Data {
   }
   static createCrmRoot(input: CreateCRMRootInput) {
     return API.graphql({
-      query: mutations.createCrmRoot,
+      query: mutations.createCRMRoot,
       variables: { input: input },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<CreateCrmRootMutation>>
+    }) as Promise<GraphQLResult<CreateCRMRootMutation>>
   }
   static createCrmReply(input: CreateCRMReplyInput) {
     return API.graphql({
-      query: mutations.createCrmReply,
+      query: mutations.createCRMReply,
       variables: { input },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<CreateCrmReplyMutation>>
+    }) as Promise<GraphQLResult<CreateCRMReplyMutation>>
   }
   static createCrmMessage(input: CreateCRMMessageInput) {
     return API.graphql({
-      query: mutations.createCrmMessage,
+      query: mutations.createCRMMessage,
       variables: { input: input },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as Promise<GraphQLResult<CreateCrmMessageMutation>>
+    }) as Promise<GraphQLResult<CreateCRMMessageMutation>>
   }
   static createCourseInfo(input: CreateCourseInfoInput) {
     return API.graphql({

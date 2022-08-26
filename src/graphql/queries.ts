@@ -349,6 +349,7 @@ export const getGroup = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -494,6 +495,7 @@ export const listGroups = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -874,6 +876,7 @@ export const getActivity = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -966,6 +969,7 @@ export const listActivitys = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -1065,6 +1069,7 @@ export const getPayment = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -1183,6 +1188,7 @@ export const listPayments = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -1451,6 +1457,7 @@ export const getCourseBackOfficeStaff = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -1552,6 +1559,7 @@ export const listCourseBackOfficeStaffs = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -1644,6 +1652,7 @@ export const getCourseInstructors = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -1745,6 +1754,7 @@ export const listCourseInstructorss = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -1837,6 +1847,7 @@ export const getCourseTriadCoaches = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -1932,6 +1943,7 @@ export const listCourseTriadCoachess = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -2024,6 +2036,7 @@ export const getCourseTriadUsers = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2127,6 +2140,7 @@ export const listCourseTriadUserss = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -2387,6 +2401,7 @@ export const getDirectMessageUser = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2484,6 +2499,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -2651,6 +2667,7 @@ export const getDirectMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2756,6 +2773,7 @@ export const listDirectMessages = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -2765,8 +2783,8 @@ export const listDirectMessages = /* GraphQL */ `
     }
   }
 `
-export const getCrmRoot = /* GraphQL */ `
-  query GetCrmRoot($id: ID!) {
+export const getCRMRoot = /* GraphQL */ `
+  query GetCRMRoot($id: ID!) {
     getCRMRoot(id: $id) {
       id
       messages {
@@ -2789,8 +2807,8 @@ export const getCrmRoot = /* GraphQL */ `
     }
   }
 `
-export const listCrmRoots = /* GraphQL */ `
-  query ListCrmRoots($filter: ModelCRMRootFilterInput, $limit: Int, $nextToken: String) {
+export const listCRMRoots = /* GraphQL */ `
+  query ListCRMRoots($filter: ModelCRMRootFilterInput, $limit: Int, $nextToken: String) {
     listCRMRoots(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -2804,8 +2822,8 @@ export const listCrmRoots = /* GraphQL */ `
     }
   }
 `
-export const getCrmMessage = /* GraphQL */ `
-  query GetCrmMessage($id: ID!) {
+export const getCRMMessage = /* GraphQL */ `
+  query GetCRMMessage($id: ID!) {
     getCRMMessage(id: $id) {
       id
       rootId
@@ -2844,8 +2862,8 @@ export const getCrmMessage = /* GraphQL */ `
     }
   }
 `
-export const listCrmMessages = /* GraphQL */ `
-  query ListCrmMessages($filter: ModelCRMMessageFilterInput, $limit: Int, $nextToken: String) {
+export const listCRMMessages = /* GraphQL */ `
+  query ListCRMMessages($filter: ModelCRMMessageFilterInput, $limit: Int, $nextToken: String) {
     listCRMMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -2871,8 +2889,8 @@ export const listCrmMessages = /* GraphQL */ `
     }
   }
 `
-export const getCrmReply = /* GraphQL */ `
-  query GetCrmReply($id: ID!) {
+export const getCRMReply = /* GraphQL */ `
+  query GetCRMReply($id: ID!) {
     getCRMReply(id: $id) {
       id
       rootId
@@ -2908,8 +2926,8 @@ export const getCrmReply = /* GraphQL */ `
     }
   }
 `
-export const listCrmReplys = /* GraphQL */ `
-  query ListCrmReplys($filter: ModelCRMReplyFilterInput, $limit: Int, $nextToken: String) {
+export const listCRMReplys = /* GraphQL */ `
+  query ListCRMReplys($filter: ModelCRMReplyFilterInput, $limit: Int, $nextToken: String) {
     listCRMReplys(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -3046,6 +3064,7 @@ export const getMessage = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -3121,6 +3140,7 @@ export const getMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -3240,6 +3260,7 @@ export const listMessages = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4357,6 +4378,7 @@ export const groupMemberByGroup = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4440,6 +4462,7 @@ export const groupMemberByUser = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4559,6 +4582,7 @@ export const groupByTypeByTime = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4678,6 +4702,7 @@ export const groupByType = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4744,6 +4769,7 @@ export const activityByGroup = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4822,6 +4848,7 @@ export const paymentByUser = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4885,6 +4912,7 @@ export const courseTriadUserByUser = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -4952,6 +4980,7 @@ export const dmUsersByUser = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -5027,6 +5056,7 @@ export const directMessagesByRoom = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -5120,6 +5150,7 @@ export const messagesByRoom = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -5231,6 +5262,7 @@ export const searchGroups = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -5294,6 +5326,7 @@ export const getUser = /* GraphQL */ `
       numberVolunteers
       orgDescription
       joined
+      isArchived
       primaryOrganization
       organizations {
         items {
@@ -5515,6 +5548,7 @@ export const listUsers = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -5625,6 +5659,7 @@ export const searchUsers = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
