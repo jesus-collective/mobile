@@ -4,58 +4,58 @@
 
 export type CRMRoot = {
   __typename: "CRMRoot"
-  id?: string
-  messages?: ModelCRMMessageConnection
-  createdAt?: string
-  updatedAt?: string
+  id: string
+  messages?: ModelCRMMessageConnection | null
+  createdAt: string
+  updatedAt: string
 }
 
 export type ModelCRMMessageConnection = {
   __typename: "ModelCRMMessageConnection"
-  items?: Array<CRMMessage | null>
+  items: Array<CRMMessage | null>
   nextToken?: string | null
 }
 
 export type CRMMessage = {
   __typename: "CRMMessage"
-  id?: string
-  rootId?: string
-  crmRoot?: CRMRoot
-  content?: string
-  when?: string
-  authorName?: string
-  authorId?: string
+  id: string
+  rootId: string
+  crmRoot?: CRMRoot | null
+  content: string
+  when: string
+  authorName: string
+  authorId: string
   attachment?: string | null
   attachmentOwner?: string | null
-  thread?: ModelCRMReplyConnection
-  createdAt?: string
-  updatedAt?: string
+  thread?: ModelCRMReplyConnection | null
+  createdAt: string
+  updatedAt: string
 }
 
 export type ModelCRMReplyConnection = {
   __typename: "ModelCRMReplyConnection"
-  items?: Array<CRMReply | null>
+  items: Array<CRMReply | null>
   nextToken?: string | null
 }
 
 export type CRMReply = {
   __typename: "CRMReply"
-  id?: string
-  rootId?: string
-  content?: string
-  when?: string
-  authorName?: string
-  authorId?: string
+  id: string
+  rootId: string
+  content: string
+  when: string
+  authorName: string
+  authorId: string
   attachment?: string | null
   attachmentOwner?: string | null
-  parentId?: string
-  parent?: CRMMessage
-  createdAt?: string
-  updatedAt?: string
+  parentId: string
+  parent?: CRMMessage | null
+  createdAt: string
+  updatedAt: string
 }
 
 export type GetCrmRootQueryVariables = {
-  id?: string
+  id: string
 }
 
 export type GetCrmRootQuery = {

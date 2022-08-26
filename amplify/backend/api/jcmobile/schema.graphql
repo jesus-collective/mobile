@@ -450,7 +450,6 @@ enum PaidState{
 type User
   @searchable
   @model
-  @key(name: "byIsArchived", fields: ["isArchived"], queryField: "byIsArchived")
   @auth(
     rules: [
       { allow: private, provider:iam, operations:[read]}

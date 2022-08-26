@@ -75,6 +75,7 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -887,6 +888,7 @@ export const createUser = /* GraphQL */ `
       numberVolunteers
       orgDescription
       joined
+      isArchived
       primaryOrganization
       organizations {
         items {
@@ -1107,6 +1109,7 @@ export const updateUser = /* GraphQL */ `
       numberVolunteers
       orgDescription
       joined
+      isArchived
       primaryOrganization
       organizations {
         items {
@@ -1327,6 +1330,7 @@ export const deleteUser = /* GraphQL */ `
       numberVolunteers
       orgDescription
       joined
+      isArchived
       primaryOrganization
       organizations {
         items {
@@ -1593,6 +1597,7 @@ export const createGroupMember = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -1651,6 +1656,7 @@ export const createGroupMember = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -1799,6 +1805,7 @@ export const updateGroupMember = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -1857,6 +1864,7 @@ export const updateGroupMember = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2005,6 +2013,7 @@ export const deleteGroupMember = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -2063,6 +2072,7 @@ export const deleteGroupMember = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2308,6 +2318,7 @@ export const createGroup = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2553,6 +2564,7 @@ export const updateGroup = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2798,6 +2810,7 @@ export const deleteGroup = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -2992,6 +3005,7 @@ export const createOrganizationMember = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -3186,6 +3200,7 @@ export const updateOrganizationMember = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -3380,6 +3395,7 @@ export const deleteOrganizationMember = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -4137,6 +4153,7 @@ export const createActivity = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -4252,6 +4269,7 @@ export const updateActivity = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -4367,6 +4385,7 @@ export const deleteActivity = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -4506,6 +4525,7 @@ export const createPayment = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -4645,6 +4665,7 @@ export const updatePayment = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -4784,6 +4805,7 @@ export const deletePayment = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -5258,6 +5280,7 @@ export const createCourseBackOfficeStaff = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -5390,6 +5413,7 @@ export const updateCourseBackOfficeStaff = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -5522,6 +5546,7 @@ export const deleteCourseBackOfficeStaff = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -5654,6 +5679,7 @@ export const createCourseInstructors = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -5786,6 +5812,7 @@ export const updateCourseInstructors = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -5918,6 +5945,7 @@ export const deleteCourseInstructors = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -6050,6 +6078,7 @@ export const createCourseTriadCoaches = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -6182,6 +6211,7 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -6314,6 +6344,7 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -6446,6 +6477,7 @@ export const createCourseTriadUsers = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -6578,6 +6610,7 @@ export const updateCourseTriadUsers = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -6710,6 +6743,7 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -7156,6 +7190,7 @@ export const createDirectMessageUser = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -7278,6 +7313,7 @@ export const updateDirectMessageUser = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -7400,6 +7436,7 @@ export const deleteDirectMessageUser = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -7659,6 +7696,7 @@ export const createDirectMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -7804,6 +7842,7 @@ export const updateDirectMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -7949,6 +7988,7 @@ export const deleteDirectMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -8059,6 +8099,7 @@ export const createDirectMessageReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -8138,6 +8179,7 @@ export const createDirectMessageReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -8214,6 +8256,7 @@ export const createDirectMessageReply = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -8324,6 +8367,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -8403,6 +8447,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -8479,6 +8524,7 @@ export const updateDirectMessageReply = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -8589,6 +8635,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -8668,6 +8715,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -8744,6 +8792,7 @@ export const deleteDirectMessageReply = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -8793,8 +8842,8 @@ export const deleteDirectMessageReply = /* GraphQL */ `
     }
   }
 `
-export const createCrmRoot = /* GraphQL */ `
-  mutation CreateCrmRoot($input: CreateCRMRootInput!) {
+export const createCRMRoot = /* GraphQL */ `
+  mutation CreateCRMRoot($input: CreateCRMRootInput!) {
     createCRMRoot(input: $input) {
       id
       messages {
@@ -8817,8 +8866,8 @@ export const createCrmRoot = /* GraphQL */ `
     }
   }
 `
-export const updateCrmRoot = /* GraphQL */ `
-  mutation UpdateCrmRoot($input: UpdateCRMRootInput!) {
+export const updateCRMRoot = /* GraphQL */ `
+  mutation UpdateCRMRoot($input: UpdateCRMRootInput!) {
     updateCRMRoot(input: $input) {
       id
       messages {
@@ -8841,8 +8890,8 @@ export const updateCrmRoot = /* GraphQL */ `
     }
   }
 `
-export const deleteCrmRoot = /* GraphQL */ `
-  mutation DeleteCrmRoot($input: DeleteCRMRootInput!) {
+export const deleteCRMRoot = /* GraphQL */ `
+  mutation DeleteCRMRoot($input: DeleteCRMRootInput!) {
     deleteCRMRoot(input: $input) {
       id
       messages {
@@ -8865,8 +8914,8 @@ export const deleteCrmRoot = /* GraphQL */ `
     }
   }
 `
-export const createCrmMessage = /* GraphQL */ `
-  mutation CreateCrmMessage($input: CreateCRMMessageInput!) {
+export const createCRMMessage = /* GraphQL */ `
+  mutation CreateCRMMessage($input: CreateCRMMessageInput!) {
     createCRMMessage(input: $input) {
       id
       rootId
@@ -8905,8 +8954,8 @@ export const createCrmMessage = /* GraphQL */ `
     }
   }
 `
-export const updateCrmMessage = /* GraphQL */ `
-  mutation UpdateCrmMessage($input: UpdateCRMMessageInput!) {
+export const updateCRMMessage = /* GraphQL */ `
+  mutation UpdateCRMMessage($input: UpdateCRMMessageInput!) {
     updateCRMMessage(input: $input) {
       id
       rootId
@@ -8945,8 +8994,8 @@ export const updateCrmMessage = /* GraphQL */ `
     }
   }
 `
-export const deleteCrmMessage = /* GraphQL */ `
-  mutation DeleteCrmMessage($input: DeleteCRMMessageInput!) {
+export const deleteCRMMessage = /* GraphQL */ `
+  mutation DeleteCRMMessage($input: DeleteCRMMessageInput!) {
     deleteCRMMessage(input: $input) {
       id
       rootId
@@ -8985,8 +9034,8 @@ export const deleteCrmMessage = /* GraphQL */ `
     }
   }
 `
-export const createCrmReply = /* GraphQL */ `
-  mutation CreateCrmReply($input: CreateCRMReplyInput!) {
+export const createCRMReply = /* GraphQL */ `
+  mutation CreateCRMReply($input: CreateCRMReplyInput!) {
     createCRMReply(input: $input) {
       id
       rootId
@@ -9022,8 +9071,8 @@ export const createCrmReply = /* GraphQL */ `
     }
   }
 `
-export const updateCrmReply = /* GraphQL */ `
-  mutation UpdateCrmReply($input: UpdateCRMReplyInput!) {
+export const updateCRMReply = /* GraphQL */ `
+  mutation UpdateCRMReply($input: UpdateCRMReplyInput!) {
     updateCRMReply(input: $input) {
       id
       rootId
@@ -9059,8 +9108,8 @@ export const updateCrmReply = /* GraphQL */ `
     }
   }
 `
-export const deleteCrmReply = /* GraphQL */ `
-  mutation DeleteCrmReply($input: DeleteCRMReplyInput!) {
+export const deleteCRMReply = /* GraphQL */ `
+  mutation DeleteCRMReply($input: DeleteCRMReplyInput!) {
     deleteCRMReply(input: $input) {
       id
       rootId
@@ -9202,6 +9251,7 @@ export const createMessage = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -9277,6 +9327,7 @@ export const createMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -9432,6 +9483,7 @@ export const updateMessage = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -9507,6 +9559,7 @@ export const updateMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -9662,6 +9715,7 @@ export const deleteMessage = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -9737,6 +9791,7 @@ export const deleteMessage = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -9864,6 +9919,7 @@ export const createReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -9942,6 +9998,7 @@ export const createReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -10017,6 +10074,7 @@ export const createReply = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -10144,6 +10202,7 @@ export const updateReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -10222,6 +10281,7 @@ export const updateReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -10297,6 +10357,7 @@ export const updateReply = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken
@@ -10424,6 +10485,7 @@ export const deleteReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -10502,6 +10564,7 @@ export const deleteReply = /* GraphQL */ `
           numberVolunteers
           orgDescription
           joined
+          isArchived
           primaryOrganization
           createdAt
           updatedAt
@@ -10577,6 +10640,7 @@ export const deleteReply = /* GraphQL */ `
         numberVolunteers
         orgDescription
         joined
+        isArchived
         primaryOrganization
         organizations {
           nextToken

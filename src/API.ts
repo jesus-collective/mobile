@@ -10,89 +10,89 @@ export type batchCreateDirectMessageUsersInput = {
 
 export type DirectMessageUser = {
   __typename: "DirectMessageUser",
-  id?: string,
+  id: string,
   userName?: string | null,
-  userID?: string,
-  roomID?: string,
-  room?: DirectMessageRoom,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  userID: string,
+  roomID: string,
+  room?: DirectMessageRoom | null,
+  createdAt: string,
+  updatedAt: string,
+  user?: User | null,
 };
 
 export type DirectMessageRoom = {
   __typename: "DirectMessageRoom",
-  id?: string,
+  id: string,
   name?: string | null,
-  messageUsers?: ModelDirectMessageUserConnection,
-  directMessage?: ModelDirectMessageConnection,
+  messageUsers?: ModelDirectMessageUserConnection | null,
+  directMessage?: ModelDirectMessageConnection | null,
   roomType?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelDirectMessageUserConnection = {
   __typename: "ModelDirectMessageUserConnection",
-  items?:  Array<DirectMessageUser | null >,
+  items:  Array<DirectMessageUser | null >,
   nextToken?: string | null,
 };
 
 export type ModelDirectMessageConnection = {
   __typename: "ModelDirectMessageConnection",
-  items?:  Array<DirectMessage | null >,
+  items:  Array<DirectMessage | null >,
   nextToken?: string | null,
 };
 
 export type DirectMessage = {
   __typename: "DirectMessage",
-  id?: string,
+  id: string,
   content?: string | null,
   attachment?: string | null,
   attachmentName?: string | null,
   attachmentOwner?: string | null,
-  when?: string,
-  recipients?: Array< string | null >,
-  userId?: string,
-  replies?: ModelDirectMessageReplyConnection,
-  messageRoomID?: string,
-  messageRoom?: DirectMessageRoom,
-  createdAt?: string,
-  updatedAt?: string,
-  author?: User,
+  when: string,
+  recipients: Array< string | null >,
+  userId: string,
+  replies?: ModelDirectMessageReplyConnection | null,
+  messageRoomID: string,
+  messageRoom?: DirectMessageRoom | null,
+  createdAt: string,
+  updatedAt: string,
+  author?: User | null,
 };
 
 export type ModelDirectMessageReplyConnection = {
   __typename: "ModelDirectMessageReplyConnection",
-  items?:  Array<DirectMessageReply | null >,
+  items:  Array<DirectMessageReply | null >,
   nextToken?: string | null,
 };
 
 export type DirectMessageReply = {
   __typename: "DirectMessageReply",
-  id?: string,
+  id: string,
   content?: string | null,
-  when?: string,
+  when: string,
   attachment?: string | null,
   attachmentName?: string | null,
   attachmentOwner?: string | null,
-  recipients?: Array< string | null >,
-  userId?: string,
-  messageId?: string,
-  parentMessage?: DirectMessage,
+  recipients: Array< string | null >,
+  userId: string,
+  messageId: string,
+  parentMessage?: DirectMessage | null,
   messageRoomID?: string | null,
-  parentReplyId?: string,
-  parentReply?: DirectMessageReply,
-  subReplies?: ModelDirectMessageReplyConnection,
-  createdAt?: string,
-  updatedAt?: string,
-  author?: User,
+  parentReplyId: string,
+  parentReply?: DirectMessageReply | null,
+  subReplies?: ModelDirectMessageReplyConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  author?: User | null,
 };
 
 export type User = {
   __typename: "User",
-  id?: string,
-  given_name?: string,
-  family_name?: string,
+  id: string,
+  given_name: string,
+  family_name: string,
   email?: string | null,
   phone?: string | null,
   owner?: string | null,
@@ -101,9 +101,9 @@ export type User = {
   stripeSubscriptionID?: string | null,
   hasPaidState?: PaidState | null,
   profileState?: string | null,
-  billingAddress?: Address,
-  location?: LatLong,
-  profileImage?: Image,
+  billingAddress?: Address | null,
+  location?: LatLong | null,
+  profileImage?: Image | null,
   aboutMeShort?: string | null,
   aboutMeLong?: string | null,
   interests?: Array< string | null > | null,
@@ -119,21 +119,22 @@ export type User = {
   numberVolunteers?: string | null,
   orgDescription?: string | null,
   joined?: string | null,
+  isArchived?: string | null,
   primaryOrganization?: string | null,
-  organizations?: ModelOrganizationMemberConnection,
-  owns?: ModelGroupConnection,
-  groups?: ModelGroupMemberConnection,
-  messages?: ModelMessageConnection,
-  directMessages?: ModelDirectMessageConnection,
-  messageReplies?: ModelReplyConnection,
-  coachingTriad?: ModelCourseTriadCoachesConnection,
-  userTriad?: ModelCourseTriadUsersConnection,
-  courseInstructing?: ModelCourseInstructorsConnection,
-  courseBackOfficeStaff?: ModelCourseBackOfficeStaffConnection,
-  payments?: ModelPaymentConnection,
-  alertConfig?: AlertConfig,
-  createdAt?: string,
-  updatedAt?: string,
+  organizations?: ModelOrganizationMemberConnection | null,
+  owns?: ModelGroupConnection | null,
+  groups?: ModelGroupMemberConnection | null,
+  messages?: ModelMessageConnection | null,
+  directMessages?: ModelDirectMessageConnection | null,
+  messageReplies?: ModelReplyConnection | null,
+  coachingTriad?: ModelCourseTriadCoachesConnection | null,
+  userTriad?: ModelCourseTriadUsersConnection | null,
+  courseInstructing?: ModelCourseInstructorsConnection | null,
+  courseBackOfficeStaff?: ModelCourseBackOfficeStaffConnection | null,
+  payments?: ModelPaymentConnection | null,
+  alertConfig?: AlertConfig | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export enum PaidState {
@@ -176,31 +177,31 @@ export type Image = {
 
 export type ModelOrganizationMemberConnection = {
   __typename: "ModelOrganizationMemberConnection",
-  items?:  Array<OrganizationMember | null >,
+  items:  Array<OrganizationMember | null >,
   nextToken?: string | null,
 };
 
 export type OrganizationMember = {
   __typename: "OrganizationMember",
-  id?: string,
-  userRole?: string,
-  userId?: string,
-  organizationId?: string,
+  id: string,
+  userRole: string,
+  userId: string,
+  organizationId: string,
   organizationName?: string | null,
-  organization?: Organization,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  organization: Organization,
+  createdAt: string,
+  updatedAt: string,
+  user: User,
 };
 
 export type Organization = {
   __typename: "Organization",
-  id?: string,
-  orgName?: string,
+  id: string,
+  orgName: string,
   adminEmail?: string | null,
   phone?: string | null,
-  admins?: Array< string >,
-  superAdmin?: string,
+  admins: Array< string >,
+  superAdmin: string,
   hasPaidState?: string | null,
   profileState?: string | null,
   address?: string | null,
@@ -208,8 +209,8 @@ export type Organization = {
   province?: string | null,
   postalCode?: string | null,
   country?: string | null,
-  location?: LatLong,
-  profileImage?: Image,
+  location?: LatLong | null,
+  profileImage?: Image | null,
   aboutMeShort?: string | null,
   aboutMeLong?: string | null,
   orgType?: string | null,
@@ -220,57 +221,57 @@ export type Organization = {
   numberVolunteers?: string | null,
   orgDescription?: string | null,
   joined?: string | null,
-  parentOrganizationId?: string,
-  parentOrganization?: Organization,
-  subOrganizations?: ModelOrganizationConnection,
-  members?: ModelOrganizationMemberConnection,
-  ownsGroups?: ModelGroupConnection,
-  resource?: ModelResourceRootConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  parentOrganizationId: string,
+  parentOrganization?: Organization | null,
+  subOrganizations?: ModelOrganizationConnection | null,
+  members?: ModelOrganizationMemberConnection | null,
+  ownsGroups?: ModelGroupConnection | null,
+  resource?: ModelResourceRootConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelOrganizationConnection = {
   __typename: "ModelOrganizationConnection",
-  items?:  Array<Organization | null >,
+  items:  Array<Organization | null >,
   nextToken?: string | null,
 };
 
 export type ModelGroupConnection = {
   __typename: "ModelGroupConnection",
-  items?:  Array<Group | null >,
+  items:  Array<Group | null >,
   nextToken?: string | null,
 };
 
 export type Group = {
   __typename: "Group",
-  id?: string,
-  owner?: string,
+  id: string,
+  owner: string,
   readGroups?: Array< UserGroupType | null > | null,
-  ownerOrgID?: string,
-  ownerOrg?: Organization,
-  type?: string,
-  name?: string,
-  description?: string,
+  ownerOrgID: string,
+  ownerOrg?: Organization | null,
+  type: string,
+  name: string,
+  description: string,
   memberCount?: number | null,
-  members?: ModelGroupMemberConnection,
-  image?: string,
+  members?: ModelGroupMemberConnection | null,
+  image: string,
   time?: string | null,
   lastUpdated?: string | null,
   location?: string | null,
-  locationLatLong?: LatLong,
+  locationLatLong?: LatLong | null,
   length?: string | null,
   effort?: string | null,
   cost?: string | null,
   promotionalText?: string | null,
-  messages?: ModelMessageConnection,
+  messages?: ModelMessageConnection | null,
   eventType?: string | null,
   eventUrl?: string | null,
   tz?: string | null,
   isSponsored?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
-  ownerUser?: User,
+  createdAt: string,
+  updatedAt: string,
+  ownerUser?: User | null,
 };
 
 export enum UserGroupType {
@@ -303,32 +304,32 @@ export enum UserGroupType {
 
 export type ModelGroupMemberConnection = {
   __typename: "ModelGroupMemberConnection",
-  items?:  Array<GroupMember | null >,
+  items:  Array<GroupMember | null >,
   nextToken?: string | null,
 };
 
 export type GroupMember = {
   __typename: "GroupMember",
-  id?: string,
+  id: string,
   groupID?: string | null,
   userID?: string | null,
-  group?: Group,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  group?: Group | null,
+  createdAt: string,
+  updatedAt: string,
+  user?: User | null,
 };
 
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection",
-  items?:  Array<Message | null >,
+  items:  Array<Message | null >,
   nextToken?: string | null,
 };
 
 export type Message = {
   __typename: "Message",
-  id?: string,
-  content?: string,
-  when?: string,
+  id: string,
+  content: string,
+  when: string,
   attachment?: string | null,
   attachmentName?: string | null,
   attachmentOwner?: string | null,
@@ -336,84 +337,84 @@ export type Message = {
   userId?: string | null,
   postingAs?: string | null,
   owner?: string | null,
-  room?: Group,
-  replies?: ModelReplyConnection,
-  createdAt?: string,
-  updatedAt?: string,
-  author?: User,
+  room?: Group | null,
+  replies?: ModelReplyConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  author?: User | null,
 };
 
 export type ModelReplyConnection = {
   __typename: "ModelReplyConnection",
-  items?:  Array<Reply | null >,
+  items:  Array<Reply | null >,
   nextToken?: string | null,
 };
 
 export type Reply = {
   __typename: "Reply",
-  id?: string,
-  content?: string,
-  when?: string,
+  id: string,
+  content: string,
+  when: string,
   attachment?: string | null,
   attachmentName?: string | null,
   attachmentOwner?: string | null,
-  userId?: string,
-  messageId?: string,
-  parentMessage?: Message,
+  userId: string,
+  messageId: string,
+  parentMessage?: Message | null,
   roomId?: string | null,
-  parentReplyId?: string,
-  parentReply?: Reply,
-  subReplies?: ModelReplyConnection,
-  createdAt?: string,
-  updatedAt?: string,
-  author?: User,
+  parentReplyId: string,
+  parentReply?: Reply | null,
+  subReplies?: ModelReplyConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  author?: User | null,
 };
 
 export type ModelResourceRootConnection = {
   __typename: "ModelResourceRootConnection",
-  items?:  Array<ResourceRoot | null >,
+  items:  Array<ResourceRoot | null >,
   nextToken?: string | null,
 };
 
 export type ResourceRoot = {
   __typename: "ResourceRoot",
-  id?: string,
+  id: string,
   type?: string | null,
   groupId?: string | null,
-  organizationId?: string,
+  organizationId: string,
   owner?: string | null,
-  resources?: ModelResourceConnection,
-  organization?: Organization,
-  menuItems?: ModelResourceMenuItemConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  resources?: ModelResourceConnection | null,
+  organization?: Organization | null,
+  menuItems?: ModelResourceMenuItemConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelResourceConnection = {
   __typename: "ModelResourceConnection",
-  items?:  Array<Resource | null >,
+  items:  Array<Resource | null >,
   nextToken?: string | null,
 };
 
 export type Resource = {
   __typename: "Resource",
-  id?: string,
+  id: string,
   owner?: string | null,
   type?: string | null,
   order?: string | null,
   title?: string | null,
   subtitle?: string | null,
-  image?: Image,
+  image?: Image | null,
   description?: string | null,
   whoIsThisFor?: string | null,
   extendedDescription?: string | null,
   readGroups?: Array< UserGroupType | null > | null,
   details?:  Array<ResourceDetail | null > | null,
-  series?: ModelResourceSeriesConnection,
-  resourceID?: string,
-  resourceRoot?: ResourceRoot,
-  createdAt?: string,
-  updatedAt?: string,
+  series?: ModelResourceSeriesConnection | null,
+  resourceID: string,
+  resourceRoot: ResourceRoot,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ResourceDetail = {
@@ -422,7 +423,7 @@ export type ResourceDetail = {
   name?: string | null,
   text?: string | null,
   value?: string | null,
-  image?: Image,
+  image?: Image | null,
 };
 
 export enum ResourceDetailType {
@@ -435,62 +436,62 @@ export enum ResourceDetailType {
 
 export type ModelResourceSeriesConnection = {
   __typename: "ModelResourceSeriesConnection",
-  items?:  Array<ResourceSeries | null >,
+  items:  Array<ResourceSeries | null >,
   nextToken?: string | null,
 };
 
 export type ResourceSeries = {
   __typename: "ResourceSeries",
-  id?: string,
+  id: string,
   owner?: string | null,
   type?: string | null,
   title?: string | null,
   order?: number | null,
   description?: string | null,
   whoIsThisFor?: string | null,
-  imageFile?: Image,
+  imageFile?: Image | null,
   category?: Array< string | null > | null,
   status?: string | null,
   details?:  Array<ResourceDetail | null > | null,
-  episodes?: ModelResourceEpisodeConnection,
-  seriesID?: string,
-  parentResource?: Resource,
-  createdAt?: string,
-  updatedAt?: string,
+  episodes?: ModelResourceEpisodeConnection | null,
+  seriesID: string,
+  parentResource: Resource,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelResourceEpisodeConnection = {
   __typename: "ModelResourceEpisodeConnection",
-  items?:  Array<ResourceEpisode | null >,
+  items:  Array<ResourceEpisode | null >,
   nextToken?: string | null,
 };
 
 export type ResourceEpisode = {
   __typename: "ResourceEpisode",
-  id?: string,
+  id: string,
   owner?: string | null,
   episodeNumber?: number | null,
   type?: string | null,
   title?: string | null,
   description?: string | null,
-  imageFile?: Image,
+  imageFile?: Image | null,
   whoIsThisFor?: string | null,
   details?:  Array<ResourceDetail | null > | null,
-  episodeID?: string,
-  parentSeries?: ResourceSeries,
-  createdAt?: string,
-  updatedAt?: string,
+  episodeID: string,
+  parentSeries: ResourceSeries,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelResourceMenuItemConnection = {
   __typename: "ModelResourceMenuItemConnection",
-  items?:  Array<ResourceMenuItem | null >,
+  items:  Array<ResourceMenuItem | null >,
   nextToken?: string | null,
 };
 
 export type ResourceMenuItem = {
   __typename: "ResourceMenuItem",
-  id?: string,
+  id: string,
   owner?: string | null,
   readGroups?: Array< UserGroupType | null > | null,
   type?: ResourceMenuItemType | null,
@@ -498,10 +499,10 @@ export type ResourceMenuItem = {
   order?: string | null,
   depth?: string | null,
   pageItems?:  Array<ResourcePageItem | null > | null,
-  resourceRootID?: string,
-  resourceRoot?: ResourceRoot,
-  createdAt?: string,
-  updatedAt?: string,
+  resourceRootID: string,
+  resourceRoot: ResourceRoot,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export enum ResourceMenuItemType {
@@ -527,7 +528,7 @@ export type ResourcePageItem = {
   seriesID?: string | null,
   episodeID?: string | null,
   color?: string | null,
-  image?: Image,
+  image?: Image | null,
   url?: string | null,
   order?: number | null,
   pageItemsLeft?:  Array<ResourcePageItem | null > | null,
@@ -580,59 +581,59 @@ export enum ResourcePageItemStyle {
 
 export type ModelCourseTriadCoachesConnection = {
   __typename: "ModelCourseTriadCoachesConnection",
-  items?:  Array<CourseTriadCoaches | null >,
+  items:  Array<CourseTriadCoaches | null >,
   nextToken?: string | null,
 };
 
 export type CourseTriadCoaches = {
   __typename: "CourseTriadCoaches",
-  id?: string,
+  id: string,
   triadID?: string | null,
-  triad?: CourseTriads,
+  triad?: CourseTriads | null,
   userID?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  createdAt: string,
+  updatedAt: string,
+  user?: User | null,
 };
 
 export type CourseTriads = {
   __typename: "CourseTriads",
-  id?: string,
+  id: string,
   courseInfoID?: string | null,
-  courseInfo?: CourseInfo,
-  coaches?: ModelCourseTriadCoachesConnection,
-  users?: ModelCourseTriadUsersConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  courseInfo?: CourseInfo | null,
+  coaches?: ModelCourseTriadCoachesConnection | null,
+  users?: ModelCourseTriadUsersConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type CourseInfo = {
   __typename: "CourseInfo",
-  id?: string,
+  id: string,
   designedBy?: string | null,
   summary?: string | null,
-  courseWeeks?: ModelCourseWeekConnection,
+  courseWeeks?: ModelCourseWeekConnection | null,
   subTitle?: string | null,
-  instructors?: ModelCourseInstructorsConnection,
-  backOfficeStaff?: ModelCourseBackOfficeStaffConnection,
-  triads?: ModelCourseTriadsConnection,
+  instructors?: ModelCourseInstructorsConnection | null,
+  backOfficeStaff?: ModelCourseBackOfficeStaffConnection | null,
+  triads?: ModelCourseTriadsConnection | null,
   introduction?: string | null,
   sylabusAttachment?: string | null,
   sylabusAttachmentName?: string | null,
   sylabusAttachmentOwner?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelCourseWeekConnection = {
   __typename: "ModelCourseWeekConnection",
-  items?:  Array<CourseWeek | null >,
+  items:  Array<CourseWeek | null >,
   nextToken?: string | null,
 };
 
 export type CourseWeek = {
   __typename: "CourseWeek",
-  id?: string,
+  id: string,
   week?: string | null,
   date?: string | null,
   tz?: string | null,
@@ -640,21 +641,21 @@ export type CourseWeek = {
   title?: string | null,
   leader?: string | null,
   courseInfoID?: string | null,
-  courseInfo?: CourseInfo,
-  lessons?: ModelCourseLessonConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  courseInfo?: CourseInfo | null,
+  lessons?: ModelCourseLessonConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelCourseLessonConnection = {
   __typename: "ModelCourseLessonConnection",
-  items?:  Array<CourseLesson | null >,
+  items:  Array<CourseLesson | null >,
   nextToken?: string | null,
 };
 
 export type CourseLesson = {
   __typename: "CourseLesson",
-  id?: string,
+  id: string,
   lesson?: string | null,
   lessonType?: string | null,
   name?: string | null,
@@ -667,97 +668,97 @@ export type CourseLesson = {
   wordCount?: string | null,
   description?: string | null,
   courseWeekID?: string | null,
-  courseWeek?: CourseWeek,
-  createdAt?: string,
-  updatedAt?: string,
+  courseWeek?: CourseWeek | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelCourseInstructorsConnection = {
   __typename: "ModelCourseInstructorsConnection",
-  items?:  Array<CourseInstructors | null >,
+  items:  Array<CourseInstructors | null >,
   nextToken?: string | null,
 };
 
 export type CourseInstructors = {
   __typename: "CourseInstructors",
-  id?: string,
+  id: string,
   courseInfoID?: string | null,
-  courseInfo?: CourseInfo,
+  courseInfo?: CourseInfo | null,
   userID?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  createdAt: string,
+  updatedAt: string,
+  user?: User | null,
 };
 
 export type ModelCourseBackOfficeStaffConnection = {
   __typename: "ModelCourseBackOfficeStaffConnection",
-  items?:  Array<CourseBackOfficeStaff | null >,
+  items:  Array<CourseBackOfficeStaff | null >,
   nextToken?: string | null,
 };
 
 export type CourseBackOfficeStaff = {
   __typename: "CourseBackOfficeStaff",
-  id?: string,
+  id: string,
   courseInfoID?: string | null,
-  courseInfo?: CourseInfo,
+  courseInfo?: CourseInfo | null,
   userID?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  createdAt: string,
+  updatedAt: string,
+  user?: User | null,
 };
 
 export type ModelCourseTriadsConnection = {
   __typename: "ModelCourseTriadsConnection",
-  items?:  Array<CourseTriads | null >,
+  items:  Array<CourseTriads | null >,
   nextToken?: string | null,
 };
 
 export type ModelCourseTriadUsersConnection = {
   __typename: "ModelCourseTriadUsersConnection",
-  items?:  Array<CourseTriadUsers | null >,
+  items:  Array<CourseTriadUsers | null >,
   nextToken?: string | null,
 };
 
 export type CourseTriadUsers = {
   __typename: "CourseTriadUsers",
-  id?: string,
+  id: string,
   triadID?: string | null,
-  triad?: CourseTriads,
+  triad?: CourseTriads | null,
   userID?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  createdAt: string,
+  updatedAt: string,
+  user?: User | null,
 };
 
 export type ModelPaymentConnection = {
   __typename: "ModelPaymentConnection",
-  items?:  Array<Payment | null >,
+  items:  Array<Payment | null >,
   nextToken?: string | null,
 };
 
 export type Payment = {
   __typename: "Payment",
-  id?: string,
+  id: string,
   productID?: string | null,
-  product?: Product,
+  product?: Product | null,
   userID?: string | null,
   dateCompleted?: string | null,
   paymentType?: string | null,
   paymentInfo?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
-  user?: User,
+  createdAt: string,
+  updatedAt: string,
+  user?: User | null,
 };
 
 export type Product = {
   __typename: "Product",
-  id?: string,
+  id: string,
   price?: number | null,
   pricePer?: string | null,
   isDefault?: boolean | null,
   name?: string | null,
   confirmationMsg?: string | null,
-  payments?: ModelPaymentConnection,
+  payments?: ModelPaymentConnection | null,
   isOrgTier?: string | null,
   isIndividualTier?: string | null,
   isLogin?: string | null,
@@ -767,8 +768,8 @@ export type Product = {
   isPaypal?: string | null,
   tiered?:  Array<TieredProduct | null > | null,
   submitButtonText?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type TieredProduct = {
@@ -809,7 +810,7 @@ export type StripeAddressInput = {
 
 export type StripeCustomerData = {
   __typename: "StripeCustomerData",
-  customer?: StripeCustomer,
+  customer?: StripeCustomer | null,
 };
 
 export type StripeCustomer = {
@@ -826,7 +827,7 @@ export type StripeCustomer = {
   discount?: string | null,
   email?: string | null,
   invoice_prefix?: string | null,
-  invoice_settings?: StripeInvoiceSettings,
+  invoice_settings?: StripeInvoiceSettings | null,
   livemode?: string | null,
   metadata?: string | null,
   name?: string | null,
@@ -857,8 +858,8 @@ export type StripePriceDetail = {
 
 export type StripeSubscriptionData = {
   __typename: "StripeSubscriptionData",
-  subscription?: StripeSubscription,
-  payedInvoice?: StripeInvoice,
+  subscription?: StripeSubscription | null,
+  payedInvoice?: StripeInvoice | null,
 };
 
 export type StripeSubscription = {
@@ -882,8 +883,8 @@ export type StripeSubscription = {
   default_tax_rates?: Array< string | null > | null,
   discount?: string | null,
   ended_at?: string | null,
-  items?: StripeSubscriptionItems,
-  latest_invoice?: StripeInvoice,
+  items?: StripeSubscriptionItems | null,
+  latest_invoice?: StripeInvoice | null,
   livemode?: string | null,
   metadata?: string | null,
   next_pending_invoice_item_invoice?: string | null,
@@ -914,7 +915,7 @@ export type StripeSubscriptionItemData = {
   billing_thresholds?: string | null,
   created?: string | null,
   metadata?: string | null,
-  price?: StripePrice,
+  price?: StripePrice | null,
   quantity?: string | null,
   subscription?: string | null,
   tax_rates?: string | null,
@@ -933,7 +934,7 @@ export type StripePrice = {
   metadata?: string | null,
   nickname?: string | null,
   product?: string | null,
-  recurring?: StripeRecurring,
+  recurring?: StripeRecurring | null,
   tiers_mode?: string | null,
   transform_quantity?: string | null,
   type?: string | null,
@@ -970,7 +971,7 @@ export type StripeInvoice = {
   currency?: string | null,
   custom_fields?: string | null,
   customer?: string | null,
-  customer_address?: StripeAddress,
+  customer_address?: StripeAddress | null,
   customer_email?: string | null,
   customer_name?: string | null,
   customer_phone?: string | null,
@@ -989,7 +990,7 @@ export type StripeInvoice = {
   hosted_invoice_url?: string | null,
   invoice_pdf?: string | null,
   last_finalization_error?: string | null,
-  lines?: StripeLines,
+  lines?: StripeLines | null,
   livemode?: string | null,
   metadata?: string | null,
   next_payment_attempt?: string | null,
@@ -1004,7 +1005,7 @@ export type StripeInvoice = {
   starting_balance?: string | null,
   statement_descriptor?: string | null,
   status?: string | null,
-  status_transitions?: StripeTransition,
+  status_transitions?: StripeTransition | null,
   subscription?: string | null,
   subtotal?: string | null,
   tax?: string | null,
@@ -1045,8 +1046,8 @@ export type StripeLineData = {
   discounts?: Array< string | null > | null,
   livemode?: string | null,
   metadata?: string | null,
-  period?: StripePeriod,
-  price?: StripePrice,
+  period?: StripePeriod | null,
+  price?: StripePrice | null,
   proration?: string | null,
   quantity?: string | null,
   subscription?: string | null,
@@ -1072,7 +1073,7 @@ export type StripeTransition = {
 
 export type StripeInvoiceData = {
   __typename: "StripeInvoiceData",
-  invoice?: StripeInvoice,
+  invoice?: StripeInvoice | null,
 };
 
 export type StripeInvoicesListData = {
@@ -1092,9 +1093,9 @@ export type CreateApplicationProcessInput = {
 
 export type ApplicationProcess = {
   __typename: "ApplicationProcess",
-  id?: string,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateApplicationProcessInput = {
@@ -1135,6 +1136,7 @@ export type CreateUserInput = {
   numberVolunteers?: string | null,
   orgDescription?: string | null,
   joined?: string | null,
+  isArchived?: string | null,
   primaryOrganization?: string | null,
   alertConfig?: AlertConfigInput | null,
 };
@@ -1206,6 +1208,7 @@ export type UpdateUserInput = {
   numberVolunteers?: string | null,
   orgDescription?: string | null,
   joined?: string | null,
+  isArchived?: string | null,
   primaryOrganization?: string | null,
   alertConfig?: AlertConfigInput | null,
 };
@@ -1395,19 +1398,19 @@ export enum ActivityActionType {
 
 export type Activity = {
   __typename: "Activity",
-  id?: string,
-  readUser?: string,
-  ownerName?: string,
-  ownerID?: string,
-  activityGroupId?: string,
-  activityGroupType?: ActivityGroupType,
-  activityActionType?: ActivityActionType,
-  time?: string,
-  date?: string,
-  expirationDate?: number,
-  createdAt?: string,
-  updatedAt?: string,
-  owner?: User,
+  id: string,
+  readUser: string,
+  ownerName: string,
+  ownerID: string,
+  activityGroupId: string,
+  activityGroupType: ActivityGroupType,
+  activityActionType: ActivityActionType,
+  time: string,
+  date: string,
+  expirationDate: number,
+  createdAt: string,
+  updatedAt: string,
+  owner?: User | null,
 };
 
 export type UpdateActivityInput = {
@@ -1715,54 +1718,54 @@ export type CreateCRMRootInput = {
 
 export type CRMRoot = {
   __typename: "CRMRoot",
-  id?: string,
-  messages?: ModelCRMMessageConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  messages?: ModelCRMMessageConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelCRMMessageConnection = {
   __typename: "ModelCRMMessageConnection",
-  items?:  Array<CRMMessage | null >,
+  items:  Array<CRMMessage | null >,
   nextToken?: string | null,
 };
 
 export type CRMMessage = {
   __typename: "CRMMessage",
-  id?: string,
-  rootId?: string,
-  crmRoot?: CRMRoot,
-  content?: string,
-  when?: string,
-  authorName?: string,
-  authorId?: string,
+  id: string,
+  rootId: string,
+  crmRoot?: CRMRoot | null,
+  content: string,
+  when: string,
+  authorName: string,
+  authorId: string,
   attachment?: string | null,
   attachmentOwner?: string | null,
-  thread?: ModelCRMReplyConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  thread?: ModelCRMReplyConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelCRMReplyConnection = {
   __typename: "ModelCRMReplyConnection",
-  items?:  Array<CRMReply | null >,
+  items:  Array<CRMReply | null >,
   nextToken?: string | null,
 };
 
 export type CRMReply = {
   __typename: "CRMReply",
-  id?: string,
-  rootId?: string,
-  content?: string,
-  when?: string,
-  authorName?: string,
-  authorId?: string,
+  id: string,
+  rootId: string,
+  content: string,
+  when: string,
+  authorName: string,
+  authorId: string,
   attachment?: string | null,
   attachmentOwner?: string | null,
-  parentId?: string,
-  parent?: CRMMessage,
-  createdAt?: string,
-  updatedAt?: string,
+  parentId: string,
+  parent?: CRMMessage | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateCRMRootInput = {
@@ -2120,19 +2123,19 @@ export type CreateVodAssetInput = {
 
 export type vodAsset = {
   __typename: "vodAsset",
-  id?: string,
-  title?: string,
-  description?: string,
-  video?: videoObject,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  title: string,
+  description: string,
+  video?: videoObject | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type videoObject = {
   __typename: "videoObject",
-  id?: string,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateVodAssetInput = {
@@ -2168,13 +2171,13 @@ export type CreateStartupInput = {
 
 export type Startup = {
   __typename: "Startup",
-  id?: string,
+  id: string,
   order?: number | null,
   action?: string | null,
   params?: string | null,
   readGroups?: Array< UserGroupType | null > | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateStartupInput = {
@@ -2200,35 +2203,35 @@ export type CreateMenuInput = {
 
 export type Menu = {
   __typename: "Menu",
-  id?: string,
+  id: string,
   order?: number | null,
   name?: string | null,
   action?: string | null,
   params?: string | null,
   readGroups?: Array< UserGroupType | null > | null,
-  subItems?: ModelSubMenuConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  subItems?: ModelSubMenuConnection | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelSubMenuConnection = {
   __typename: "ModelSubMenuConnection",
-  items?:  Array<SubMenu | null >,
+  items:  Array<SubMenu | null >,
   nextToken?: string | null,
 };
 
 export type SubMenu = {
   __typename: "SubMenu",
-  id?: string,
+  id: string,
   menuID?: string | null,
   order?: number | null,
-  menu?: Menu,
+  menu?: Menu | null,
   name?: string | null,
   action?: string | null,
   params?: string | null,
   readGroups?: Array< UserGroupType | null > | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateMenuInput = {
@@ -2277,12 +2280,12 @@ export type CreateCustomProfileInput = {
 
 export type CustomProfile = {
   __typename: "CustomProfile",
-  id?: string,
+  id: string,
   order?: number | null,
   type?: string | null,
   readGroups?: Array< UserGroupType | null > | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateCustomProfileInput = {
@@ -2320,12 +2323,12 @@ export type LineItemInput = {
 
 export type CustomPricing = {
   __typename: "CustomPricing",
-  id?: string,
+  id: string,
   emailAddress?: string | null,
   type?: CustomPricingType | null,
   lineItems?:  Array<LineItem | null > | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type LineItem = {
@@ -2349,7 +2352,7 @@ export type DeleteCustomPricingInput = {
 
 export type EventBriteEventList = {
   __typename: "EventBriteEventList",
-  pagination?: EventBritePagination,
+  pagination?: EventBritePagination | null,
   events?:  Array<EventBriteEvent | null > | null,
 };
 
@@ -2364,11 +2367,11 @@ export type EventBritePagination = {
 
 export type EventBriteEvent = {
   __typename: "EventBriteEvent",
-  name?: EventBriteText,
-  description?: EventBriteText,
+  name?: EventBriteText | null,
+  description?: EventBriteText | null,
   url?: string | null,
-  start?: EventBriteTime,
-  end?: EventBriteTime,
+  start?: EventBriteTime | null,
+  end?: EventBriteTime | null,
   organization_id?: string | null,
   created?: string | null,
   changed?: string | null,
@@ -2427,7 +2430,7 @@ export type EventBriteTime = {
 
 export type EventBriteEventTicketClasses = {
   __typename: "EventBriteEventTicketClasses",
-  pagination?: EventBritePagination,
+  pagination?: EventBritePagination | null,
   ticket_classes?:  Array<EventBriteTicketClass | null > | null,
 };
 
@@ -2496,7 +2499,7 @@ export type ModelIDFilterInput = {
 
 export type ModelApplicationProcessConnection = {
   __typename: "ModelApplicationProcessConnection",
-  items?:  Array<ApplicationProcess | null >,
+  items:  Array<ApplicationProcess | null >,
   nextToken?: string | null,
 };
 
@@ -2614,7 +2617,7 @@ export type ModelActivityActionTypeFilterInput = {
 
 export type ModelActivityConnection = {
   __typename: "ModelActivityConnection",
-  items?:  Array<Activity | null >,
+  items:  Array<Activity | null >,
   nextToken?: string | null,
 };
 
@@ -2652,7 +2655,7 @@ export type ModelCourseInfoFilterInput = {
 
 export type ModelCourseInfoConnection = {
   __typename: "ModelCourseInfoConnection",
-  items?:  Array<CourseInfo | null >,
+  items:  Array<CourseInfo | null >,
   nextToken?: string | null,
 };
 
@@ -2754,7 +2757,7 @@ export type ModelDirectMessageRoomFilterInput = {
 
 export type ModelDirectMessageRoomConnection = {
   __typename: "ModelDirectMessageRoomConnection",
-  items?:  Array<DirectMessageRoom | null >,
+  items:  Array<DirectMessageRoom | null >,
   nextToken?: string | null,
 };
 
@@ -2782,7 +2785,7 @@ export type ModelCRMRootFilterInput = {
 
 export type ModelCRMRootConnection = {
   __typename: "ModelCRMRootConnection",
-  items?:  Array<CRMRoot | null >,
+  items:  Array<CRMRoot | null >,
   nextToken?: string | null,
 };
 
@@ -2945,7 +2948,7 @@ export type ModelBooleanFilterInput = {
 
 export type ModelProductConnection = {
   __typename: "ModelProductConnection",
-  items?:  Array<Product | null >,
+  items:  Array<Product | null >,
   nextToken?: string | null,
 };
 
@@ -2960,7 +2963,7 @@ export type ModelvodAssetFilterInput = {
 
 export type ModelvodAssetConnection = {
   __typename: "ModelvodAssetConnection",
-  items?:  Array<vodAsset | null >,
+  items:  Array<vodAsset | null >,
   nextToken?: string | null,
 };
 
@@ -2973,7 +2976,7 @@ export type ModelvideoObjectFilterInput = {
 
 export type ModelvideoObjectConnection = {
   __typename: "ModelvideoObjectConnection",
-  items?:  Array<videoObject | null >,
+  items:  Array<videoObject | null >,
   nextToken?: string | null,
 };
 
@@ -2990,7 +2993,7 @@ export type ModelStartupFilterInput = {
 
 export type ModelStartupConnection = {
   __typename: "ModelStartupConnection",
-  items?:  Array<Startup | null >,
+  items:  Array<Startup | null >,
   nextToken?: string | null,
 };
 
@@ -3008,7 +3011,7 @@ export type ModelMenuFilterInput = {
 
 export type ModelMenuConnection = {
   __typename: "ModelMenuConnection",
-  items?:  Array<Menu | null >,
+  items:  Array<Menu | null >,
   nextToken?: string | null,
 };
 
@@ -3159,7 +3162,7 @@ export enum SearchableSortDirection {
 
 export type SearchableGroupConnection = {
   __typename: "SearchableGroupConnection",
-  items?:  Array<Group | null >,
+  items:  Array<Group | null >,
   nextToken?: string | null,
   total?: number | null,
 };
@@ -3191,6 +3194,7 @@ export type ModelUserFilterInput = {
   numberVolunteers?: ModelStringFilterInput | null,
   orgDescription?: ModelStringFilterInput | null,
   joined?: ModelStringFilterInput | null,
+  isArchived?: ModelStringFilterInput | null,
   primaryOrganization?: ModelStringFilterInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
@@ -3204,7 +3208,7 @@ export type ModelPaidStateFilterInput = {
 
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
-  items?:  Array<User | null >,
+  items:  Array<User | null >,
   nextToken?: string | null,
 };
 
@@ -3234,6 +3238,7 @@ export type SearchableUserFilterInput = {
   numberVolunteers?: SearchableStringFilterInput | null,
   orgDescription?: SearchableStringFilterInput | null,
   joined?: SearchableStringFilterInput | null,
+  isArchived?: SearchableStringFilterInput | null,
   primaryOrganization?: SearchableStringFilterInput | null,
   and?: Array< SearchableUserFilterInput | null > | null,
   or?: Array< SearchableUserFilterInput | null > | null,
@@ -3271,13 +3276,14 @@ export enum SearchableUserSortableFields {
   numberVolunteers = "numberVolunteers",
   orgDescription = "orgDescription",
   joined = "joined",
+  isArchived = "isArchived",
   primaryOrganization = "primaryOrganization",
 }
 
 
 export type SearchableUserConnection = {
   __typename: "SearchableUserConnection",
-  items?:  Array<User | null >,
+  items:  Array<User | null >,
   nextToken?: string | null,
   total?: number | null,
 };
@@ -3294,7 +3300,7 @@ export type ModelCustomProfileFilterInput = {
 
 export type ModelCustomProfileConnection = {
   __typename: "ModelCustomProfileConnection",
-  items?:  Array<CustomProfile | null >,
+  items:  Array<CustomProfile | null >,
   nextToken?: string | null,
 };
 
@@ -3314,7 +3320,7 @@ export type ModelCustomPricingTypeFilterInput = {
 
 export type ModelCustomPricingConnection = {
   __typename: "ModelCustomPricingConnection",
-  items?:  Array<CustomPricing | null >,
+  items:  Array<CustomPricing | null >,
   nextToken?: string | null,
 };
 
@@ -3402,6 +3408,7 @@ export type BatchCreateDirectMessageUsersMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -4170,7 +4177,7 @@ export type SendHelpRequestMutation = {
 };
 
 export type CreateApplicationProcessMutationVariables = {
-  input?: CreateApplicationProcessInput,
+  input: CreateApplicationProcessInput,
 };
 
 export type CreateApplicationProcessMutation = {
@@ -4183,7 +4190,7 @@ export type CreateApplicationProcessMutation = {
 };
 
 export type UpdateApplicationProcessMutationVariables = {
-  input?: UpdateApplicationProcessInput,
+  input: UpdateApplicationProcessInput,
 };
 
 export type UpdateApplicationProcessMutation = {
@@ -4196,7 +4203,7 @@ export type UpdateApplicationProcessMutation = {
 };
 
 export type DeleteApplicationProcessMutationVariables = {
-  input?: DeleteApplicationProcessInput,
+  input: DeleteApplicationProcessInput,
 };
 
 export type DeleteApplicationProcessMutation = {
@@ -4209,7 +4216,7 @@ export type DeleteApplicationProcessMutation = {
 };
 
 export type CreateUserMutationVariables = {
-  input?: CreateUserInput,
+  input: CreateUserInput,
 };
 
 export type CreateUserMutation = {
@@ -4268,6 +4275,7 @@ export type CreateUserMutation = {
     numberVolunteers?: string | null,
     orgDescription?: string | null,
     joined?: string | null,
+    isArchived?: string | null,
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
@@ -4459,7 +4467,7 @@ export type CreateUserMutation = {
 };
 
 export type UpdateUserMutationVariables = {
-  input?: UpdateUserInput,
+  input: UpdateUserInput,
 };
 
 export type UpdateUserMutation = {
@@ -4518,6 +4526,7 @@ export type UpdateUserMutation = {
     numberVolunteers?: string | null,
     orgDescription?: string | null,
     joined?: string | null,
+    isArchived?: string | null,
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
@@ -4709,7 +4718,7 @@ export type UpdateUserMutation = {
 };
 
 export type DeleteUserMutationVariables = {
-  input?: DeleteUserInput,
+  input: DeleteUserInput,
 };
 
 export type DeleteUserMutation = {
@@ -4768,6 +4777,7 @@ export type DeleteUserMutation = {
     numberVolunteers?: string | null,
     orgDescription?: string | null,
     joined?: string | null,
+    isArchived?: string | null,
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
@@ -4959,7 +4969,7 @@ export type DeleteUserMutation = {
 };
 
 export type CreateGroupMemberMutationVariables = {
-  input?: CreateGroupMemberInput,
+  input: CreateGroupMemberInput,
 };
 
 export type CreateGroupMemberMutation = {
@@ -5067,6 +5077,7 @@ export type CreateGroupMemberMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -5129,6 +5140,7 @@ export type CreateGroupMemberMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -5191,7 +5203,7 @@ export type CreateGroupMemberMutation = {
 };
 
 export type UpdateGroupMemberMutationVariables = {
-  input?: UpdateGroupMemberInput,
+  input: UpdateGroupMemberInput,
 };
 
 export type UpdateGroupMemberMutation = {
@@ -5299,6 +5311,7 @@ export type UpdateGroupMemberMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -5361,6 +5374,7 @@ export type UpdateGroupMemberMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -5423,7 +5437,7 @@ export type UpdateGroupMemberMutation = {
 };
 
 export type DeleteGroupMemberMutationVariables = {
-  input?: DeleteGroupMemberInput,
+  input: DeleteGroupMemberInput,
 };
 
 export type DeleteGroupMemberMutation = {
@@ -5531,6 +5545,7 @@ export type DeleteGroupMemberMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -5593,6 +5608,7 @@ export type DeleteGroupMemberMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -5655,7 +5671,7 @@ export type DeleteGroupMemberMutation = {
 };
 
 export type CreateGroupMutationVariables = {
-  input?: CreateGroupInput,
+  input: CreateGroupInput,
 };
 
 export type CreateGroupMutation = {
@@ -5871,6 +5887,7 @@ export type CreateGroupMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -5933,7 +5950,7 @@ export type CreateGroupMutation = {
 };
 
 export type UpdateGroupMutationVariables = {
-  input?: UpdateGroupInput,
+  input: UpdateGroupInput,
 };
 
 export type UpdateGroupMutation = {
@@ -6149,6 +6166,7 @@ export type UpdateGroupMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -6211,7 +6229,7 @@ export type UpdateGroupMutation = {
 };
 
 export type DeleteGroupMutationVariables = {
-  input?: DeleteGroupInput,
+  input: DeleteGroupInput,
 };
 
 export type DeleteGroupMutation = {
@@ -6427,6 +6445,7 @@ export type DeleteGroupMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -6489,7 +6508,7 @@ export type DeleteGroupMutation = {
 };
 
 export type CreateOrganizationMemberMutationVariables = {
-  input?: CreateOrganizationMemberInput,
+  input: CreateOrganizationMemberInput,
 };
 
 export type CreateOrganizationMemberMutation = {
@@ -6649,6 +6668,7 @@ export type CreateOrganizationMemberMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -6711,7 +6731,7 @@ export type CreateOrganizationMemberMutation = {
 };
 
 export type UpdateOrganizationMemberMutationVariables = {
-  input?: UpdateOrganizationMemberInput,
+  input: UpdateOrganizationMemberInput,
 };
 
 export type UpdateOrganizationMemberMutation = {
@@ -6871,6 +6891,7 @@ export type UpdateOrganizationMemberMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -6933,7 +6954,7 @@ export type UpdateOrganizationMemberMutation = {
 };
 
 export type DeleteOrganizationMemberMutationVariables = {
-  input?: DeleteOrganizationMemberInput,
+  input: DeleteOrganizationMemberInput,
 };
 
 export type DeleteOrganizationMemberMutation = {
@@ -7093,6 +7114,7 @@ export type DeleteOrganizationMemberMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -7155,7 +7177,7 @@ export type DeleteOrganizationMemberMutation = {
 };
 
 export type CreateOrganizationMutationVariables = {
-  input?: CreateOrganizationInput,
+  input: CreateOrganizationInput,
 };
 
 export type CreateOrganizationMutation = {
@@ -7391,7 +7413,7 @@ export type CreateOrganizationMutation = {
 };
 
 export type UpdateOrganizationMutationVariables = {
-  input?: UpdateOrganizationInput,
+  input: UpdateOrganizationInput,
 };
 
 export type UpdateOrganizationMutation = {
@@ -7627,7 +7649,7 @@ export type UpdateOrganizationMutation = {
 };
 
 export type DeleteOrganizationMutationVariables = {
-  input?: DeleteOrganizationInput,
+  input: DeleteOrganizationInput,
 };
 
 export type DeleteOrganizationMutation = {
@@ -7863,7 +7885,7 @@ export type DeleteOrganizationMutation = {
 };
 
 export type CreateActivityMutationVariables = {
-  input?: CreateActivityInput,
+  input: CreateActivityInput,
 };
 
 export type CreateActivityMutation = {
@@ -7936,6 +7958,7 @@ export type CreateActivityMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -7998,7 +8021,7 @@ export type CreateActivityMutation = {
 };
 
 export type UpdateActivityMutationVariables = {
-  input?: UpdateActivityInput,
+  input: UpdateActivityInput,
 };
 
 export type UpdateActivityMutation = {
@@ -8071,6 +8094,7 @@ export type UpdateActivityMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -8133,7 +8157,7 @@ export type UpdateActivityMutation = {
 };
 
 export type DeleteActivityMutationVariables = {
-  input?: DeleteActivityInput,
+  input: DeleteActivityInput,
 };
 
 export type DeleteActivityMutation = {
@@ -8206,6 +8230,7 @@ export type DeleteActivityMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -8268,7 +8293,7 @@ export type DeleteActivityMutation = {
 };
 
 export type CreatePaymentMutationVariables = {
-  input?: CreatePaymentInput,
+  input: CreatePaymentInput,
 };
 
 export type CreatePaymentMutation = {
@@ -8368,6 +8393,7 @@ export type CreatePaymentMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -8430,7 +8456,7 @@ export type CreatePaymentMutation = {
 };
 
 export type UpdatePaymentMutationVariables = {
-  input?: UpdatePaymentInput,
+  input: UpdatePaymentInput,
 };
 
 export type UpdatePaymentMutation = {
@@ -8530,6 +8556,7 @@ export type UpdatePaymentMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -8592,7 +8619,7 @@ export type UpdatePaymentMutation = {
 };
 
 export type DeletePaymentMutationVariables = {
-  input?: DeletePaymentInput,
+  input: DeletePaymentInput,
 };
 
 export type DeletePaymentMutation = {
@@ -8692,6 +8719,7 @@ export type DeletePaymentMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -8754,7 +8782,7 @@ export type DeletePaymentMutation = {
 };
 
 export type CreateCourseInfoMutationVariables = {
-  input?: CreateCourseInfoInput,
+  input: CreateCourseInfoInput,
 };
 
 export type CreateCourseInfoMutation = {
@@ -8826,7 +8854,7 @@ export type CreateCourseInfoMutation = {
 };
 
 export type UpdateCourseInfoMutationVariables = {
-  input?: UpdateCourseInfoInput,
+  input: UpdateCourseInfoInput,
 };
 
 export type UpdateCourseInfoMutation = {
@@ -8898,7 +8926,7 @@ export type UpdateCourseInfoMutation = {
 };
 
 export type DeleteCourseInfoMutationVariables = {
-  input?: DeleteCourseInfoInput,
+  input: DeleteCourseInfoInput,
 };
 
 export type DeleteCourseInfoMutation = {
@@ -8970,7 +8998,7 @@ export type DeleteCourseInfoMutation = {
 };
 
 export type CreateCourseTriadsMutationVariables = {
-  input?: CreateCourseTriadsInput,
+  input: CreateCourseTriadsInput,
 };
 
 export type CreateCourseTriadsMutation = {
@@ -9037,7 +9065,7 @@ export type CreateCourseTriadsMutation = {
 };
 
 export type UpdateCourseTriadsMutationVariables = {
-  input?: UpdateCourseTriadsInput,
+  input: UpdateCourseTriadsInput,
 };
 
 export type UpdateCourseTriadsMutation = {
@@ -9104,7 +9132,7 @@ export type UpdateCourseTriadsMutation = {
 };
 
 export type DeleteCourseTriadsMutationVariables = {
-  input?: DeleteCourseTriadsInput,
+  input: DeleteCourseTriadsInput,
 };
 
 export type DeleteCourseTriadsMutation = {
@@ -9171,7 +9199,7 @@ export type DeleteCourseTriadsMutation = {
 };
 
 export type CreateCourseBackOfficeStaffMutationVariables = {
-  input?: CreateCourseBackOfficeStaffInput,
+  input: CreateCourseBackOfficeStaffInput,
 };
 
 export type CreateCourseBackOfficeStaffMutation = {
@@ -9266,6 +9294,7 @@ export type CreateCourseBackOfficeStaffMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -9328,7 +9357,7 @@ export type CreateCourseBackOfficeStaffMutation = {
 };
 
 export type UpdateCourseBackOfficeStaffMutationVariables = {
-  input?: UpdateCourseBackOfficeStaffInput,
+  input: UpdateCourseBackOfficeStaffInput,
 };
 
 export type UpdateCourseBackOfficeStaffMutation = {
@@ -9423,6 +9452,7 @@ export type UpdateCourseBackOfficeStaffMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -9485,7 +9515,7 @@ export type UpdateCourseBackOfficeStaffMutation = {
 };
 
 export type DeleteCourseBackOfficeStaffMutationVariables = {
-  input?: DeleteCourseBackOfficeStaffInput,
+  input: DeleteCourseBackOfficeStaffInput,
 };
 
 export type DeleteCourseBackOfficeStaffMutation = {
@@ -9580,6 +9610,7 @@ export type DeleteCourseBackOfficeStaffMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -9642,7 +9673,7 @@ export type DeleteCourseBackOfficeStaffMutation = {
 };
 
 export type CreateCourseInstructorsMutationVariables = {
-  input?: CreateCourseInstructorsInput,
+  input: CreateCourseInstructorsInput,
 };
 
 export type CreateCourseInstructorsMutation = {
@@ -9737,6 +9768,7 @@ export type CreateCourseInstructorsMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -9799,7 +9831,7 @@ export type CreateCourseInstructorsMutation = {
 };
 
 export type UpdateCourseInstructorsMutationVariables = {
-  input?: UpdateCourseInstructorsInput,
+  input: UpdateCourseInstructorsInput,
 };
 
 export type UpdateCourseInstructorsMutation = {
@@ -9894,6 +9926,7 @@ export type UpdateCourseInstructorsMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -9956,7 +9989,7 @@ export type UpdateCourseInstructorsMutation = {
 };
 
 export type DeleteCourseInstructorsMutationVariables = {
-  input?: DeleteCourseInstructorsInput,
+  input: DeleteCourseInstructorsInput,
 };
 
 export type DeleteCourseInstructorsMutation = {
@@ -10051,6 +10084,7 @@ export type DeleteCourseInstructorsMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -10113,7 +10147,7 @@ export type DeleteCourseInstructorsMutation = {
 };
 
 export type CreateCourseTriadCoachesMutationVariables = {
-  input?: CreateCourseTriadCoachesInput,
+  input: CreateCourseTriadCoachesInput,
 };
 
 export type CreateCourseTriadCoachesMutation = {
@@ -10207,6 +10241,7 @@ export type CreateCourseTriadCoachesMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -10269,7 +10304,7 @@ export type CreateCourseTriadCoachesMutation = {
 };
 
 export type UpdateCourseTriadCoachesMutationVariables = {
-  input?: UpdateCourseTriadCoachesInput,
+  input: UpdateCourseTriadCoachesInput,
 };
 
 export type UpdateCourseTriadCoachesMutation = {
@@ -10363,6 +10398,7 @@ export type UpdateCourseTriadCoachesMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -10425,7 +10461,7 @@ export type UpdateCourseTriadCoachesMutation = {
 };
 
 export type DeleteCourseTriadCoachesMutationVariables = {
-  input?: DeleteCourseTriadCoachesInput,
+  input: DeleteCourseTriadCoachesInput,
 };
 
 export type DeleteCourseTriadCoachesMutation = {
@@ -10519,6 +10555,7 @@ export type DeleteCourseTriadCoachesMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -10581,7 +10618,7 @@ export type DeleteCourseTriadCoachesMutation = {
 };
 
 export type CreateCourseTriadUsersMutationVariables = {
-  input?: CreateCourseTriadUsersInput,
+  input: CreateCourseTriadUsersInput,
 };
 
 export type CreateCourseTriadUsersMutation = {
@@ -10675,6 +10712,7 @@ export type CreateCourseTriadUsersMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -10737,7 +10775,7 @@ export type CreateCourseTriadUsersMutation = {
 };
 
 export type UpdateCourseTriadUsersMutationVariables = {
-  input?: UpdateCourseTriadUsersInput,
+  input: UpdateCourseTriadUsersInput,
 };
 
 export type UpdateCourseTriadUsersMutation = {
@@ -10831,6 +10869,7 @@ export type UpdateCourseTriadUsersMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -10893,7 +10932,7 @@ export type UpdateCourseTriadUsersMutation = {
 };
 
 export type DeleteCourseTriadUsersMutationVariables = {
-  input?: DeleteCourseTriadUsersInput,
+  input: DeleteCourseTriadUsersInput,
 };
 
 export type DeleteCourseTriadUsersMutation = {
@@ -10987,6 +11026,7 @@ export type DeleteCourseTriadUsersMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -11049,7 +11089,7 @@ export type DeleteCourseTriadUsersMutation = {
 };
 
 export type CreateCourseWeekMutationVariables = {
-  input?: CreateCourseWeekInput,
+  input: CreateCourseWeekInput,
 };
 
 export type CreateCourseWeekMutation = {
@@ -11120,7 +11160,7 @@ export type CreateCourseWeekMutation = {
 };
 
 export type UpdateCourseWeekMutationVariables = {
-  input?: UpdateCourseWeekInput,
+  input: UpdateCourseWeekInput,
 };
 
 export type UpdateCourseWeekMutation = {
@@ -11191,7 +11231,7 @@ export type UpdateCourseWeekMutation = {
 };
 
 export type DeleteCourseWeekMutationVariables = {
-  input?: DeleteCourseWeekInput,
+  input: DeleteCourseWeekInput,
 };
 
 export type DeleteCourseWeekMutation = {
@@ -11262,7 +11302,7 @@ export type DeleteCourseWeekMutation = {
 };
 
 export type CreateCourseLessonMutationVariables = {
-  input?: CreateCourseLessonInput,
+  input: CreateCourseLessonInput,
 };
 
 export type CreateCourseLessonMutation = {
@@ -11317,7 +11357,7 @@ export type CreateCourseLessonMutation = {
 };
 
 export type UpdateCourseLessonMutationVariables = {
-  input?: UpdateCourseLessonInput,
+  input: UpdateCourseLessonInput,
 };
 
 export type UpdateCourseLessonMutation = {
@@ -11372,7 +11412,7 @@ export type UpdateCourseLessonMutation = {
 };
 
 export type DeleteCourseLessonMutationVariables = {
-  input?: DeleteCourseLessonInput,
+  input: DeleteCourseLessonInput,
 };
 
 export type DeleteCourseLessonMutation = {
@@ -11427,7 +11467,7 @@ export type DeleteCourseLessonMutation = {
 };
 
 export type CreateDirectMessageUserMutationVariables = {
-  input?: CreateDirectMessageUserInput,
+  input: CreateDirectMessageUserInput,
 };
 
 export type CreateDirectMessageUserMutation = {
@@ -11510,6 +11550,7 @@ export type CreateDirectMessageUserMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -11572,7 +11613,7 @@ export type CreateDirectMessageUserMutation = {
 };
 
 export type UpdateDirectMessageUserMutationVariables = {
-  input?: UpdateDirectMessageUserInput,
+  input: UpdateDirectMessageUserInput,
 };
 
 export type UpdateDirectMessageUserMutation = {
@@ -11655,6 +11696,7 @@ export type UpdateDirectMessageUserMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -11717,7 +11759,7 @@ export type UpdateDirectMessageUserMutation = {
 };
 
 export type DeleteDirectMessageUserMutationVariables = {
-  input?: DeleteDirectMessageUserInput,
+  input: DeleteDirectMessageUserInput,
 };
 
 export type DeleteDirectMessageUserMutation = {
@@ -11800,6 +11842,7 @@ export type DeleteDirectMessageUserMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -11862,7 +11905,7 @@ export type DeleteDirectMessageUserMutation = {
 };
 
 export type CreateDirectMessageRoomMutationVariables = {
-  input?: CreateDirectMessageRoomInput,
+  input: CreateDirectMessageRoomInput,
 };
 
 export type CreateDirectMessageRoomMutation = {
@@ -11908,7 +11951,7 @@ export type CreateDirectMessageRoomMutation = {
 };
 
 export type UpdateDirectMessageRoomMutationVariables = {
-  input?: UpdateDirectMessageRoomInput,
+  input: UpdateDirectMessageRoomInput,
 };
 
 export type UpdateDirectMessageRoomMutation = {
@@ -11954,7 +11997,7 @@ export type UpdateDirectMessageRoomMutation = {
 };
 
 export type DeleteDirectMessageRoomMutationVariables = {
-  input?: DeleteDirectMessageRoomInput,
+  input: DeleteDirectMessageRoomInput,
 };
 
 export type DeleteDirectMessageRoomMutation = {
@@ -12000,7 +12043,7 @@ export type DeleteDirectMessageRoomMutation = {
 };
 
 export type CreateDirectMessageMutationVariables = {
-  input?: CreateDirectMessageInput,
+  input: CreateDirectMessageInput,
 };
 
 export type CreateDirectMessageMutation = {
@@ -12108,6 +12151,7 @@ export type CreateDirectMessageMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -12170,7 +12214,7 @@ export type CreateDirectMessageMutation = {
 };
 
 export type UpdateDirectMessageMutationVariables = {
-  input?: UpdateDirectMessageInput,
+  input: UpdateDirectMessageInput,
 };
 
 export type UpdateDirectMessageMutation = {
@@ -12278,6 +12322,7 @@ export type UpdateDirectMessageMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -12340,7 +12385,7 @@ export type UpdateDirectMessageMutation = {
 };
 
 export type DeleteDirectMessageMutationVariables = {
-  input?: DeleteDirectMessageInput,
+  input: DeleteDirectMessageInput,
 };
 
 export type DeleteDirectMessageMutation = {
@@ -12448,6 +12493,7 @@ export type DeleteDirectMessageMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -12510,7 +12556,7 @@ export type DeleteDirectMessageMutation = {
 };
 
 export type CreateDirectMessageReplyMutationVariables = {
-  input?: CreateDirectMessageReplyInput,
+  input: CreateDirectMessageReplyInput,
 };
 
 export type CreateDirectMessageReplyMutation = {
@@ -12578,6 +12624,7 @@ export type CreateDirectMessageReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -12662,6 +12709,7 @@ export type CreateDirectMessageReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -12744,6 +12792,7 @@ export type CreateDirectMessageReplyMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -12806,7 +12855,7 @@ export type CreateDirectMessageReplyMutation = {
 };
 
 export type UpdateDirectMessageReplyMutationVariables = {
-  input?: UpdateDirectMessageReplyInput,
+  input: UpdateDirectMessageReplyInput,
 };
 
 export type UpdateDirectMessageReplyMutation = {
@@ -12874,6 +12923,7 @@ export type UpdateDirectMessageReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -12958,6 +13008,7 @@ export type UpdateDirectMessageReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -13040,6 +13091,7 @@ export type UpdateDirectMessageReplyMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -13102,7 +13154,7 @@ export type UpdateDirectMessageReplyMutation = {
 };
 
 export type DeleteDirectMessageReplyMutationVariables = {
-  input?: DeleteDirectMessageReplyInput,
+  input: DeleteDirectMessageReplyInput,
 };
 
 export type DeleteDirectMessageReplyMutation = {
@@ -13170,6 +13222,7 @@ export type DeleteDirectMessageReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -13254,6 +13307,7 @@ export type DeleteDirectMessageReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -13336,6 +13390,7 @@ export type DeleteDirectMessageReplyMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -13397,11 +13452,11 @@ export type DeleteDirectMessageReplyMutation = {
   } | null,
 };
 
-export type CreateCrmRootMutationVariables = {
-  input?: CreateCRMRootInput,
+export type CreateCRMRootMutationVariables = {
+  input: CreateCRMRootInput,
 };
 
-export type CreateCrmRootMutation = {
+export type CreateCRMRootMutation = {
   createCRMRoot?:  {
     __typename: "CRMRoot",
     id: string,
@@ -13427,11 +13482,11 @@ export type CreateCrmRootMutation = {
   } | null,
 };
 
-export type UpdateCrmRootMutationVariables = {
-  input?: UpdateCRMRootInput,
+export type UpdateCRMRootMutationVariables = {
+  input: UpdateCRMRootInput,
 };
 
-export type UpdateCrmRootMutation = {
+export type UpdateCRMRootMutation = {
   updateCRMRoot?:  {
     __typename: "CRMRoot",
     id: string,
@@ -13457,11 +13512,11 @@ export type UpdateCrmRootMutation = {
   } | null,
 };
 
-export type DeleteCrmRootMutationVariables = {
-  input?: DeleteCRMRootInput,
+export type DeleteCRMRootMutationVariables = {
+  input: DeleteCRMRootInput,
 };
 
-export type DeleteCrmRootMutation = {
+export type DeleteCRMRootMutation = {
   deleteCRMRoot?:  {
     __typename: "CRMRoot",
     id: string,
@@ -13487,11 +13542,11 @@ export type DeleteCrmRootMutation = {
   } | null,
 };
 
-export type CreateCrmMessageMutationVariables = {
-  input?: CreateCRMMessageInput,
+export type CreateCRMMessageMutationVariables = {
+  input: CreateCRMMessageInput,
 };
 
-export type CreateCrmMessageMutation = {
+export type CreateCRMMessageMutation = {
   createCRMMessage?:  {
     __typename: "CRMMessage",
     id: string,
@@ -13535,11 +13590,11 @@ export type CreateCrmMessageMutation = {
   } | null,
 };
 
-export type UpdateCrmMessageMutationVariables = {
-  input?: UpdateCRMMessageInput,
+export type UpdateCRMMessageMutationVariables = {
+  input: UpdateCRMMessageInput,
 };
 
-export type UpdateCrmMessageMutation = {
+export type UpdateCRMMessageMutation = {
   updateCRMMessage?:  {
     __typename: "CRMMessage",
     id: string,
@@ -13583,11 +13638,11 @@ export type UpdateCrmMessageMutation = {
   } | null,
 };
 
-export type DeleteCrmMessageMutationVariables = {
-  input?: DeleteCRMMessageInput,
+export type DeleteCRMMessageMutationVariables = {
+  input: DeleteCRMMessageInput,
 };
 
-export type DeleteCrmMessageMutation = {
+export type DeleteCRMMessageMutation = {
   deleteCRMMessage?:  {
     __typename: "CRMMessage",
     id: string,
@@ -13631,11 +13686,11 @@ export type DeleteCrmMessageMutation = {
   } | null,
 };
 
-export type CreateCrmReplyMutationVariables = {
-  input?: CreateCRMReplyInput,
+export type CreateCRMReplyMutationVariables = {
+  input: CreateCRMReplyInput,
 };
 
-export type CreateCrmReplyMutation = {
+export type CreateCRMReplyMutation = {
   createCRMReply?:  {
     __typename: "CRMReply",
     id: string,
@@ -13675,11 +13730,11 @@ export type CreateCrmReplyMutation = {
   } | null,
 };
 
-export type UpdateCrmReplyMutationVariables = {
-  input?: UpdateCRMReplyInput,
+export type UpdateCRMReplyMutationVariables = {
+  input: UpdateCRMReplyInput,
 };
 
-export type UpdateCrmReplyMutation = {
+export type UpdateCRMReplyMutation = {
   updateCRMReply?:  {
     __typename: "CRMReply",
     id: string,
@@ -13719,11 +13774,11 @@ export type UpdateCrmReplyMutation = {
   } | null,
 };
 
-export type DeleteCrmReplyMutationVariables = {
-  input?: DeleteCRMReplyInput,
+export type DeleteCRMReplyMutationVariables = {
+  input: DeleteCRMReplyInput,
 };
 
-export type DeleteCrmReplyMutation = {
+export type DeleteCRMReplyMutation = {
   deleteCRMReply?:  {
     __typename: "CRMReply",
     id: string,
@@ -13764,7 +13819,7 @@ export type DeleteCrmReplyMutation = {
 };
 
 export type CreateMessageMutationVariables = {
-  input?: CreateMessageInput,
+  input: CreateMessageInput,
 };
 
 export type CreateMessageMutation = {
@@ -13879,6 +13934,7 @@ export type CreateMessageMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -13960,6 +14016,7 @@ export type CreateMessageMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -14022,7 +14079,7 @@ export type CreateMessageMutation = {
 };
 
 export type UpdateMessageMutationVariables = {
-  input?: UpdateMessageInput,
+  input: UpdateMessageInput,
 };
 
 export type UpdateMessageMutation = {
@@ -14137,6 +14194,7 @@ export type UpdateMessageMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -14218,6 +14276,7 @@ export type UpdateMessageMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -14280,7 +14339,7 @@ export type UpdateMessageMutation = {
 };
 
 export type DeleteMessageMutationVariables = {
-  input?: DeleteMessageInput,
+  input: DeleteMessageInput,
 };
 
 export type DeleteMessageMutation = {
@@ -14395,6 +14454,7 @@ export type DeleteMessageMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -14476,6 +14536,7 @@ export type DeleteMessageMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -14538,7 +14599,7 @@ export type DeleteMessageMutation = {
 };
 
 export type CreateReplyMutationVariables = {
-  input?: CreateReplyInput,
+  input: CreateReplyInput,
 };
 
 export type CreateReplyMutation = {
@@ -14623,6 +14684,7 @@ export type CreateReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -14706,6 +14768,7 @@ export type CreateReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -14787,6 +14850,7 @@ export type CreateReplyMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -14849,7 +14913,7 @@ export type CreateReplyMutation = {
 };
 
 export type UpdateReplyMutationVariables = {
-  input?: UpdateReplyInput,
+  input: UpdateReplyInput,
 };
 
 export type UpdateReplyMutation = {
@@ -14934,6 +14998,7 @@ export type UpdateReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -15017,6 +15082,7 @@ export type UpdateReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -15098,6 +15164,7 @@ export type UpdateReplyMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -15160,7 +15227,7 @@ export type UpdateReplyMutation = {
 };
 
 export type DeleteReplyMutationVariables = {
-  input?: DeleteReplyInput,
+  input: DeleteReplyInput,
 };
 
 export type DeleteReplyMutation = {
@@ -15245,6 +15312,7 @@ export type DeleteReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -15328,6 +15396,7 @@ export type DeleteReplyMutation = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -15409,6 +15478,7 @@ export type DeleteReplyMutation = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -15471,7 +15541,7 @@ export type DeleteReplyMutation = {
 };
 
 export type CreateResourceRootMutationVariables = {
-  input?: CreateResourceRootInput,
+  input: CreateResourceRootInput,
 };
 
 export type CreateResourceRootMutation = {
@@ -15617,7 +15687,7 @@ export type CreateResourceRootMutation = {
 };
 
 export type UpdateResourceRootMutationVariables = {
-  input?: UpdateResourceRootInput,
+  input: UpdateResourceRootInput,
 };
 
 export type UpdateResourceRootMutation = {
@@ -15763,7 +15833,7 @@ export type UpdateResourceRootMutation = {
 };
 
 export type DeleteResourceRootMutationVariables = {
-  input?: DeleteResourceRootInput,
+  input: DeleteResourceRootInput,
 };
 
 export type DeleteResourceRootMutation = {
@@ -15909,7 +15979,7 @@ export type DeleteResourceRootMutation = {
 };
 
 export type CreateResourceMenuItemMutationVariables = {
-  input?: CreateResourceMenuItemInput,
+  input: CreateResourceMenuItemInput,
 };
 
 export type CreateResourceMenuItemMutation = {
@@ -16035,7 +16105,7 @@ export type CreateResourceMenuItemMutation = {
 };
 
 export type UpdateResourceMenuItemMutationVariables = {
-  input?: UpdateResourceMenuItemInput,
+  input: UpdateResourceMenuItemInput,
 };
 
 export type UpdateResourceMenuItemMutation = {
@@ -16161,7 +16231,7 @@ export type UpdateResourceMenuItemMutation = {
 };
 
 export type DeleteResourceMenuItemMutationVariables = {
-  input?: DeleteResourceMenuItemInput,
+  input: DeleteResourceMenuItemInput,
 };
 
 export type DeleteResourceMenuItemMutation = {
@@ -16287,7 +16357,7 @@ export type DeleteResourceMenuItemMutation = {
 };
 
 export type CreateResourceMutationVariables = {
-  input?: CreateResourceInput,
+  input: CreateResourceInput,
 };
 
 export type CreateResourceMutation = {
@@ -16399,7 +16469,7 @@ export type CreateResourceMutation = {
 };
 
 export type UpdateResourceMutationVariables = {
-  input?: UpdateResourceInput,
+  input: UpdateResourceInput,
 };
 
 export type UpdateResourceMutation = {
@@ -16511,7 +16581,7 @@ export type UpdateResourceMutation = {
 };
 
 export type DeleteResourceMutationVariables = {
-  input?: DeleteResourceInput,
+  input: DeleteResourceInput,
 };
 
 export type DeleteResourceMutation = {
@@ -16623,7 +16693,7 @@ export type DeleteResourceMutation = {
 };
 
 export type CreateResourceSeriesMutationVariables = {
-  input?: CreateResourceSeriesInput,
+  input: CreateResourceSeriesInput,
 };
 
 export type CreateResourceSeriesMutation = {
@@ -16730,7 +16800,7 @@ export type CreateResourceSeriesMutation = {
 };
 
 export type UpdateResourceSeriesMutationVariables = {
-  input?: UpdateResourceSeriesInput,
+  input: UpdateResourceSeriesInput,
 };
 
 export type UpdateResourceSeriesMutation = {
@@ -16837,7 +16907,7 @@ export type UpdateResourceSeriesMutation = {
 };
 
 export type DeleteResourceSeriesMutationVariables = {
-  input?: DeleteResourceSeriesInput,
+  input: DeleteResourceSeriesInput,
 };
 
 export type DeleteResourceSeriesMutation = {
@@ -16944,7 +17014,7 @@ export type DeleteResourceSeriesMutation = {
 };
 
 export type CreateResourceEpisodeMutationVariables = {
-  input?: CreateResourceEpisodeInput,
+  input: CreateResourceEpisodeInput,
 };
 
 export type CreateResourceEpisodeMutation = {
@@ -17037,7 +17107,7 @@ export type CreateResourceEpisodeMutation = {
 };
 
 export type UpdateResourceEpisodeMutationVariables = {
-  input?: UpdateResourceEpisodeInput,
+  input: UpdateResourceEpisodeInput,
 };
 
 export type UpdateResourceEpisodeMutation = {
@@ -17130,7 +17200,7 @@ export type UpdateResourceEpisodeMutation = {
 };
 
 export type DeleteResourceEpisodeMutationVariables = {
-  input?: DeleteResourceEpisodeInput,
+  input: DeleteResourceEpisodeInput,
 };
 
 export type DeleteResourceEpisodeMutation = {
@@ -17223,7 +17293,7 @@ export type DeleteResourceEpisodeMutation = {
 };
 
 export type CreateProductMutationVariables = {
-  input?: CreateProductInput,
+  input: CreateProductInput,
 };
 
 export type CreateProductMutation = {
@@ -17272,7 +17342,7 @@ export type CreateProductMutation = {
 };
 
 export type UpdateProductMutationVariables = {
-  input?: UpdateProductInput,
+  input: UpdateProductInput,
 };
 
 export type UpdateProductMutation = {
@@ -17321,7 +17391,7 @@ export type UpdateProductMutation = {
 };
 
 export type DeleteProductMutationVariables = {
-  input?: DeleteProductInput,
+  input: DeleteProductInput,
 };
 
 export type DeleteProductMutation = {
@@ -17370,7 +17440,7 @@ export type DeleteProductMutation = {
 };
 
 export type CreateVodAssetMutationVariables = {
-  input?: CreateVodAssetInput,
+  input: CreateVodAssetInput,
 };
 
 export type CreateVodAssetMutation = {
@@ -17391,7 +17461,7 @@ export type CreateVodAssetMutation = {
 };
 
 export type UpdateVodAssetMutationVariables = {
-  input?: UpdateVodAssetInput,
+  input: UpdateVodAssetInput,
 };
 
 export type UpdateVodAssetMutation = {
@@ -17412,7 +17482,7 @@ export type UpdateVodAssetMutation = {
 };
 
 export type DeleteVodAssetMutationVariables = {
-  input?: DeleteVodAssetInput,
+  input: DeleteVodAssetInput,
 };
 
 export type DeleteVodAssetMutation = {
@@ -17433,7 +17503,7 @@ export type DeleteVodAssetMutation = {
 };
 
 export type CreateVideoObjectMutationVariables = {
-  input?: CreateVideoObjectInput,
+  input: CreateVideoObjectInput,
 };
 
 export type CreateVideoObjectMutation = {
@@ -17446,7 +17516,7 @@ export type CreateVideoObjectMutation = {
 };
 
 export type UpdateVideoObjectMutationVariables = {
-  input?: UpdateVideoObjectInput,
+  input: UpdateVideoObjectInput,
 };
 
 export type UpdateVideoObjectMutation = {
@@ -17459,7 +17529,7 @@ export type UpdateVideoObjectMutation = {
 };
 
 export type DeleteVideoObjectMutationVariables = {
-  input?: DeleteVideoObjectInput,
+  input: DeleteVideoObjectInput,
 };
 
 export type DeleteVideoObjectMutation = {
@@ -17472,7 +17542,7 @@ export type DeleteVideoObjectMutation = {
 };
 
 export type CreateStartupMutationVariables = {
-  input?: CreateStartupInput,
+  input: CreateStartupInput,
 };
 
 export type CreateStartupMutation = {
@@ -17489,7 +17559,7 @@ export type CreateStartupMutation = {
 };
 
 export type UpdateStartupMutationVariables = {
-  input?: UpdateStartupInput,
+  input: UpdateStartupInput,
 };
 
 export type UpdateStartupMutation = {
@@ -17506,7 +17576,7 @@ export type UpdateStartupMutation = {
 };
 
 export type DeleteStartupMutationVariables = {
-  input?: DeleteStartupInput,
+  input: DeleteStartupInput,
 };
 
 export type DeleteStartupMutation = {
@@ -17523,7 +17593,7 @@ export type DeleteStartupMutation = {
 };
 
 export type CreateMenuMutationVariables = {
-  input?: CreateMenuInput,
+  input: CreateMenuInput,
 };
 
 export type CreateMenuMutation = {
@@ -17557,7 +17627,7 @@ export type CreateMenuMutation = {
 };
 
 export type UpdateMenuMutationVariables = {
-  input?: UpdateMenuInput,
+  input: UpdateMenuInput,
 };
 
 export type UpdateMenuMutation = {
@@ -17591,7 +17661,7 @@ export type UpdateMenuMutation = {
 };
 
 export type DeleteMenuMutationVariables = {
-  input?: DeleteMenuInput,
+  input: DeleteMenuInput,
 };
 
 export type DeleteMenuMutation = {
@@ -17625,7 +17695,7 @@ export type DeleteMenuMutation = {
 };
 
 export type CreateSubMenuMutationVariables = {
-  input?: CreateSubMenuInput,
+  input: CreateSubMenuInput,
 };
 
 export type CreateSubMenuMutation = {
@@ -17659,7 +17729,7 @@ export type CreateSubMenuMutation = {
 };
 
 export type UpdateSubMenuMutationVariables = {
-  input?: UpdateSubMenuInput,
+  input: UpdateSubMenuInput,
 };
 
 export type UpdateSubMenuMutation = {
@@ -17693,7 +17763,7 @@ export type UpdateSubMenuMutation = {
 };
 
 export type DeleteSubMenuMutationVariables = {
-  input?: DeleteSubMenuInput,
+  input: DeleteSubMenuInput,
 };
 
 export type DeleteSubMenuMutation = {
@@ -17727,7 +17797,7 @@ export type DeleteSubMenuMutation = {
 };
 
 export type CreateCustomProfileMutationVariables = {
-  input?: CreateCustomProfileInput,
+  input: CreateCustomProfileInput,
 };
 
 export type CreateCustomProfileMutation = {
@@ -17743,7 +17813,7 @@ export type CreateCustomProfileMutation = {
 };
 
 export type UpdateCustomProfileMutationVariables = {
-  input?: UpdateCustomProfileInput,
+  input: UpdateCustomProfileInput,
 };
 
 export type UpdateCustomProfileMutation = {
@@ -17759,7 +17829,7 @@ export type UpdateCustomProfileMutation = {
 };
 
 export type DeleteCustomProfileMutationVariables = {
-  input?: DeleteCustomProfileInput,
+  input: DeleteCustomProfileInput,
 };
 
 export type DeleteCustomProfileMutation = {
@@ -17775,7 +17845,7 @@ export type DeleteCustomProfileMutation = {
 };
 
 export type CreateCustomPricingMutationVariables = {
-  input?: CreateCustomPricingInput,
+  input: CreateCustomPricingInput,
 };
 
 export type CreateCustomPricingMutation = {
@@ -17797,7 +17867,7 @@ export type CreateCustomPricingMutation = {
 };
 
 export type UpdateCustomPricingMutationVariables = {
-  input?: UpdateCustomPricingInput,
+  input: UpdateCustomPricingInput,
 };
 
 export type UpdateCustomPricingMutation = {
@@ -17819,7 +17889,7 @@ export type UpdateCustomPricingMutation = {
 };
 
 export type DeleteCustomPricingMutationVariables = {
-  input?: DeleteCustomPricingInput,
+  input: DeleteCustomPricingInput,
 };
 
 export type DeleteCustomPricingMutation = {
@@ -17985,7 +18055,7 @@ export type EventBriteListTicketClassesQuery = {
 };
 
 export type GetApplicationProcessQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetApplicationProcessQuery = {
@@ -18017,7 +18087,7 @@ export type ListApplicationProcesssQuery = {
 };
 
 export type GetGroupQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetGroupQuery = {
@@ -18233,6 +18303,7 @@ export type GetGroupQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -18402,6 +18473,7 @@ export type ListGroupsQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -18412,7 +18484,7 @@ export type ListGroupsQuery = {
 };
 
 export type GetOrganizationQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetOrganizationQuery = {
@@ -18753,7 +18825,7 @@ export type ListOrganizationsQuery = {
 };
 
 export type GetActivityQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetActivityQuery = {
@@ -18826,6 +18898,7 @@ export type GetActivityQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -18938,6 +19011,7 @@ export type ListActivitysQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -18948,7 +19022,7 @@ export type ListActivitysQuery = {
 };
 
 export type GetPaymentQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetPaymentQuery = {
@@ -19048,6 +19122,7 @@ export type GetPaymentQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -19177,6 +19252,7 @@ export type ListPaymentsQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -19187,7 +19263,7 @@ export type ListPaymentsQuery = {
 };
 
 export type GetCourseInfoQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseInfoQuery = {
@@ -19301,7 +19377,7 @@ export type ListCourseInfosQuery = {
 };
 
 export type GetCourseTriadsQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseTriadsQuery = {
@@ -19409,7 +19485,7 @@ export type ListCourseTriadssQuery = {
 };
 
 export type GetCourseBackOfficeStaffQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseBackOfficeStaffQuery = {
@@ -19504,6 +19580,7 @@ export type GetCourseBackOfficeStaffQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -19622,6 +19699,7 @@ export type ListCourseBackOfficeStaffsQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -19632,7 +19710,7 @@ export type ListCourseBackOfficeStaffsQuery = {
 };
 
 export type GetCourseInstructorsQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseInstructorsQuery = {
@@ -19727,6 +19805,7 @@ export type GetCourseInstructorsQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -19845,6 +19924,7 @@ export type ListCourseInstructorssQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -19855,7 +19935,7 @@ export type ListCourseInstructorssQuery = {
 };
 
 export type GetCourseTriadCoachesQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseTriadCoachesQuery = {
@@ -19949,6 +20029,7 @@ export type GetCourseTriadCoachesQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -20061,6 +20142,7 @@ export type ListCourseTriadCoachessQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -20071,7 +20153,7 @@ export type ListCourseTriadCoachessQuery = {
 };
 
 export type GetCourseTriadUsersQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseTriadUsersQuery = {
@@ -20165,6 +20247,7 @@ export type GetCourseTriadUsersQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -20279,6 +20362,7 @@ export type ListCourseTriadUserssQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -20289,7 +20373,7 @@ export type ListCourseTriadUserssQuery = {
 };
 
 export type GetCourseWeekQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseWeekQuery = {
@@ -20403,7 +20487,7 @@ export type ListCourseWeeksQuery = {
 };
 
 export type GetCourseLessonQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseLessonQuery = {
@@ -20502,7 +20586,7 @@ export type ListCourseLessonsQuery = {
 };
 
 export type GetDirectMessageUserQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetDirectMessageUserQuery = {
@@ -20585,6 +20669,7 @@ export type GetDirectMessageUserQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -20699,6 +20784,7 @@ export type ListDirectMessageUsersQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -20709,7 +20795,7 @@ export type ListDirectMessageUsersQuery = {
 };
 
 export type GetDirectMessageRoomQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetDirectMessageRoomQuery = {
@@ -20784,7 +20870,7 @@ export type ListDirectMessageRoomsQuery = {
 };
 
 export type GetDirectMessageQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetDirectMessageQuery = {
@@ -20892,6 +20978,7 @@ export type GetDirectMessageQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -21015,6 +21102,7 @@ export type ListDirectMessagesQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -21024,11 +21112,11 @@ export type ListDirectMessagesQuery = {
   } | null,
 };
 
-export type GetCrmRootQueryVariables = {
-  id?: string,
+export type GetCRMRootQueryVariables = {
+  id: string,
 };
 
-export type GetCrmRootQuery = {
+export type GetCRMRootQuery = {
   getCRMRoot?:  {
     __typename: "CRMRoot",
     id: string,
@@ -21054,13 +21142,13 @@ export type GetCrmRootQuery = {
   } | null,
 };
 
-export type ListCrmRootsQueryVariables = {
+export type ListCRMRootsQueryVariables = {
   filter?: ModelCRMRootFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListCrmRootsQuery = {
+export type ListCRMRootsQuery = {
   listCRMRoots?:  {
     __typename: "ModelCRMRootConnection",
     items:  Array< {
@@ -21077,11 +21165,11 @@ export type ListCrmRootsQuery = {
   } | null,
 };
 
-export type GetCrmMessageQueryVariables = {
-  id?: string,
+export type GetCRMMessageQueryVariables = {
+  id: string,
 };
 
-export type GetCrmMessageQuery = {
+export type GetCRMMessageQuery = {
   getCRMMessage?:  {
     __typename: "CRMMessage",
     id: string,
@@ -21125,13 +21213,13 @@ export type GetCrmMessageQuery = {
   } | null,
 };
 
-export type ListCrmMessagesQueryVariables = {
+export type ListCRMMessagesQueryVariables = {
   filter?: ModelCRMMessageFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListCrmMessagesQuery = {
+export type ListCRMMessagesQuery = {
   listCRMMessages?:  {
     __typename: "ModelCRMMessageConnection",
     items:  Array< {
@@ -21161,11 +21249,11 @@ export type ListCrmMessagesQuery = {
   } | null,
 };
 
-export type GetCrmReplyQueryVariables = {
-  id?: string,
+export type GetCRMReplyQueryVariables = {
+  id: string,
 };
 
-export type GetCrmReplyQuery = {
+export type GetCRMReplyQuery = {
   getCRMReply?:  {
     __typename: "CRMReply",
     id: string,
@@ -21205,13 +21293,13 @@ export type GetCrmReplyQuery = {
   } | null,
 };
 
-export type ListCrmReplysQueryVariables = {
+export type ListCRMReplysQueryVariables = {
   filter?: ModelCRMReplyFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListCrmReplysQuery = {
+export type ListCRMReplysQuery = {
   listCRMReplys?:  {
     __typename: "ModelCRMReplyConnection",
     items:  Array< {
@@ -21246,7 +21334,7 @@ export type ListCrmReplysQuery = {
 };
 
 export type GetMessageQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetMessageQuery = {
@@ -21361,6 +21449,7 @@ export type GetMessageQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -21442,6 +21531,7 @@ export type GetMessageQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -21583,6 +21673,7 @@ export type ListMessagesQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -21593,7 +21684,7 @@ export type ListMessagesQuery = {
 };
 
 export type GetResourceRootQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetResourceRootQuery = {
@@ -21799,7 +21890,7 @@ export type ListResourceRootsQuery = {
 };
 
 export type GetResourceMenuItemQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetResourceMenuItemQuery = {
@@ -21978,7 +22069,7 @@ export type ListResourceMenuItemsQuery = {
 };
 
 export type GetResourceQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetResourceQuery = {
@@ -22148,7 +22239,7 @@ export type ListResourcesQuery = {
 };
 
 export type GetResourceSeriesQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetResourceSeriesQuery = {
@@ -22318,7 +22409,7 @@ export type ListResourceSeriessQuery = {
 };
 
 export type GetResourceEpisodeQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetResourceEpisodeQuery = {
@@ -22467,7 +22558,7 @@ export type ListResourceEpisodesQuery = {
 };
 
 export type GetProductQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetProductQuery = {
@@ -22560,7 +22651,7 @@ export type ListProductsQuery = {
 };
 
 export type GetVodAssetQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetVodAssetQuery = {
@@ -22608,7 +22699,7 @@ export type ListVodAssetsQuery = {
 };
 
 export type GetVideoObjectQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetVideoObjectQuery = {
@@ -22640,7 +22731,7 @@ export type ListVideoObjectsQuery = {
 };
 
 export type GetStartupQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetStartupQuery = {
@@ -22680,7 +22771,7 @@ export type ListStartupsQuery = {
 };
 
 export type GetMenuQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetMenuQuery = {
@@ -22742,7 +22833,7 @@ export type ListMenusQuery = {
 };
 
 export type GetSubMenuQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetSubMenuQuery = {
@@ -22883,6 +22974,7 @@ export type GroupMemberByGroupQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -22964,6 +23056,7 @@ export type GroupMemberByUserQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23084,6 +23177,7 @@ export type GroupByTypeByTimeQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23204,6 +23298,7 @@ export type GroupByTypeQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23267,6 +23362,7 @@ export type ActivityByGroupQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23344,6 +23440,7 @@ export type PaymentByUserQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23406,6 +23503,7 @@ export type CourseTriadUserByUserQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23471,6 +23569,7 @@ export type DmUsersByUserQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23545,6 +23644,7 @@ export type DirectMessagesByRoomQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23637,6 +23737,7 @@ export type MessagesByRoomQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23756,6 +23857,7 @@ export type SearchGroupsQuery = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -23767,7 +23869,7 @@ export type SearchGroupsQuery = {
 };
 
 export type GetUserQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetUserQuery = {
@@ -23826,6 +23928,7 @@ export type GetUserQuery = {
     numberVolunteers?: string | null,
     orgDescription?: string | null,
     joined?: string | null,
+    isArchived?: string | null,
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
@@ -24080,6 +24183,7 @@ export type ListUsersQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -24208,6 +24312,7 @@ export type SearchUsersQuery = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -24272,7 +24377,7 @@ export type SearchUsersQuery = {
 };
 
 export type GetCustomProfileQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCustomProfileQuery = {
@@ -24310,7 +24415,7 @@ export type ListCustomProfilesQuery = {
 };
 
 export type GetCustomPricingQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCustomPricingQuery = {
@@ -24360,7 +24465,7 @@ export type ListCustomPricingsQuery = {
 };
 
 export type OnCreateMessageByRoomIdSubscriptionVariables = {
-  roomId?: string,
+  roomId: string,
 };
 
 export type OnCreateMessageByRoomIdSubscription = {
@@ -24475,6 +24580,7 @@ export type OnCreateMessageByRoomIdSubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -24556,6 +24662,7 @@ export type OnCreateMessageByRoomIdSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -24618,7 +24725,7 @@ export type OnCreateMessageByRoomIdSubscription = {
 };
 
 export type OnCreateCrmMessageByRootIdSubscriptionVariables = {
-  rootId?: string,
+  rootId: string,
 };
 
 export type OnCreateCrmMessageByRootIdSubscription = {
@@ -24666,7 +24773,7 @@ export type OnCreateCrmMessageByRootIdSubscription = {
 };
 
 export type OnCreateCrmReplyByRootIdSubscriptionVariables = {
-  rootId?: string,
+  rootId: string,
 };
 
 export type OnCreateCrmReplyByRootIdSubscription = {
@@ -24841,6 +24948,7 @@ export type OnCreateGroupMemberSubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -24903,6 +25011,7 @@ export type OnCreateGroupMemberSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -25069,6 +25178,7 @@ export type OnUpdateGroupMemberSubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -25131,6 +25241,7 @@ export type OnUpdateGroupMemberSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -25297,6 +25408,7 @@ export type OnDeleteGroupMemberSubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -25359,6 +25471,7 @@ export type OnDeleteGroupMemberSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -25638,6 +25751,7 @@ export type OnCreateGroupSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -25917,6 +26031,7 @@ export type OnUpdateGroupSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -26196,6 +26311,7 @@ export type OnDeleteGroupSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -26414,6 +26530,7 @@ export type OnCreateOrganizationMemberSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -26632,6 +26749,7 @@ export type OnUpdateOrganizationMemberSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -26850,6 +26968,7 @@ export type OnDeleteOrganizationMemberSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -27681,6 +27800,7 @@ export type OnCreateActivitySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -27816,6 +27936,7 @@ export type OnUpdateActivitySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -27951,6 +28072,7 @@ export type OnDeleteActivitySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -28109,6 +28231,7 @@ export type OnCreatePaymentSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -28267,6 +28390,7 @@ export type OnUpdatePaymentSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -28425,6 +28549,7 @@ export type OnDeletePaymentSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -28983,6 +29108,7 @@ export type OnCreateCourseBackOfficeStaffSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -29136,6 +29262,7 @@ export type OnUpdateCourseBackOfficeStaffSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -29289,6 +29416,7 @@ export type OnDeleteCourseBackOfficeStaffSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -29442,6 +29570,7 @@ export type OnCreateCourseInstructorsSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -29595,6 +29724,7 @@ export type OnUpdateCourseInstructorsSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -29748,6 +29878,7 @@ export type OnDeleteCourseInstructorsSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -29900,6 +30031,7 @@ export type OnCreateCourseTriadCoachesSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -30052,6 +30184,7 @@ export type OnUpdateCourseTriadCoachesSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -30204,6 +30337,7 @@ export type OnDeleteCourseTriadCoachesSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -30356,6 +30490,7 @@ export type OnCreateCourseTriadUsersSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -30508,6 +30643,7 @@ export type OnUpdateCourseTriadUsersSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -30660,6 +30796,7 @@ export type OnDeleteCourseTriadUsersSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -31179,6 +31316,7 @@ export type OnCreateDirectMessageUserSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -31320,6 +31458,7 @@ export type OnUpdateDirectMessageUserSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -31461,6 +31600,7 @@ export type OnDeleteDirectMessageUserSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -31753,6 +31893,7 @@ export type OnCreateDirectMessageSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -31919,6 +32060,7 @@ export type OnUpdateDirectMessageSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -32085,6 +32227,7 @@ export type OnDeleteDirectMessageSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -32211,6 +32354,7 @@ export type OnCreateDirectMessageReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -32295,6 +32439,7 @@ export type OnCreateDirectMessageReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -32377,6 +32522,7 @@ export type OnCreateDirectMessageReplySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -32503,6 +32649,7 @@ export type OnUpdateDirectMessageReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -32587,6 +32734,7 @@ export type OnUpdateDirectMessageReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -32669,6 +32817,7 @@ export type OnUpdateDirectMessageReplySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -32795,6 +32944,7 @@ export type OnDeleteDirectMessageReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -32879,6 +33029,7 @@ export type OnDeleteDirectMessageReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -32961,6 +33112,7 @@ export type OnDeleteDirectMessageReplySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -33022,7 +33174,7 @@ export type OnDeleteDirectMessageReplySubscription = {
   } | null,
 };
 
-export type OnCreateCrmRootSubscription = {
+export type OnCreateCRMRootSubscription = {
   onCreateCRMRoot?:  {
     __typename: "CRMRoot",
     id: string,
@@ -33048,7 +33200,7 @@ export type OnCreateCrmRootSubscription = {
   } | null,
 };
 
-export type OnUpdateCrmRootSubscription = {
+export type OnUpdateCRMRootSubscription = {
   onUpdateCRMRoot?:  {
     __typename: "CRMRoot",
     id: string,
@@ -33074,7 +33226,7 @@ export type OnUpdateCrmRootSubscription = {
   } | null,
 };
 
-export type OnDeleteCrmRootSubscription = {
+export type OnDeleteCRMRootSubscription = {
   onDeleteCRMRoot?:  {
     __typename: "CRMRoot",
     id: string,
@@ -33100,7 +33252,7 @@ export type OnDeleteCrmRootSubscription = {
   } | null,
 };
 
-export type OnCreateCrmMessageSubscription = {
+export type OnCreateCRMMessageSubscription = {
   onCreateCRMMessage?:  {
     __typename: "CRMMessage",
     id: string,
@@ -33144,7 +33296,7 @@ export type OnCreateCrmMessageSubscription = {
   } | null,
 };
 
-export type OnUpdateCrmMessageSubscription = {
+export type OnUpdateCRMMessageSubscription = {
   onUpdateCRMMessage?:  {
     __typename: "CRMMessage",
     id: string,
@@ -33188,7 +33340,7 @@ export type OnUpdateCrmMessageSubscription = {
   } | null,
 };
 
-export type OnDeleteCrmMessageSubscription = {
+export type OnDeleteCRMMessageSubscription = {
   onDeleteCRMMessage?:  {
     __typename: "CRMMessage",
     id: string,
@@ -33232,7 +33384,7 @@ export type OnDeleteCrmMessageSubscription = {
   } | null,
 };
 
-export type OnCreateCrmReplySubscription = {
+export type OnCreateCRMReplySubscription = {
   onCreateCRMReply?:  {
     __typename: "CRMReply",
     id: string,
@@ -33272,7 +33424,7 @@ export type OnCreateCrmReplySubscription = {
   } | null,
 };
 
-export type OnUpdateCrmReplySubscription = {
+export type OnUpdateCRMReplySubscription = {
   onUpdateCRMReply?:  {
     __typename: "CRMReply",
     id: string,
@@ -33312,7 +33464,7 @@ export type OnUpdateCrmReplySubscription = {
   } | null,
 };
 
-export type OnDeleteCrmReplySubscription = {
+export type OnDeleteCRMReplySubscription = {
   onDeleteCRMReply?:  {
     __typename: "CRMReply",
     id: string,
@@ -33464,6 +33616,7 @@ export type OnCreateMessageSubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -33545,6 +33698,7 @@ export type OnCreateMessageSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -33718,6 +33872,7 @@ export type OnUpdateMessageSubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -33799,6 +33954,7 @@ export type OnUpdateMessageSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -33972,6 +34128,7 @@ export type OnDeleteMessageSubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -34053,6 +34210,7 @@ export type OnDeleteMessageSubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -34196,6 +34354,7 @@ export type OnCreateReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -34279,6 +34438,7 @@ export type OnCreateReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -34360,6 +34520,7 @@ export type OnCreateReplySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -34503,6 +34664,7 @@ export type OnUpdateReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -34586,6 +34748,7 @@ export type OnUpdateReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -34667,6 +34830,7 @@ export type OnUpdateReplySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -34810,6 +34974,7 @@ export type OnDeleteReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -34893,6 +35058,7 @@ export type OnDeleteReplySubscription = {
         numberVolunteers?: string | null,
         orgDescription?: string | null,
         joined?: string | null,
+        isArchived?: string | null,
         primaryOrganization?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -34974,6 +35140,7 @@ export type OnDeleteReplySubscription = {
       numberVolunteers?: string | null,
       orgDescription?: string | null,
       joined?: string | null,
+      isArchived?: string | null,
       primaryOrganization?: string | null,
       organizations?:  {
         __typename: "ModelOrganizationMemberConnection",
@@ -37263,6 +37430,7 @@ export type OnCreateUserSubscription = {
     numberVolunteers?: string | null,
     orgDescription?: string | null,
     joined?: string | null,
+    isArchived?: string | null,
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
@@ -37509,6 +37677,7 @@ export type OnUpdateUserSubscription = {
     numberVolunteers?: string | null,
     orgDescription?: string | null,
     joined?: string | null,
+    isArchived?: string | null,
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
@@ -37755,6 +37924,7 @@ export type OnDeleteUserSubscription = {
     numberVolunteers?: string | null,
     orgDescription?: string | null,
     joined?: string | null,
+    isArchived?: string | null,
     primaryOrganization?: string | null,
     organizations?:  {
       __typename: "ModelOrganizationMemberConnection",
