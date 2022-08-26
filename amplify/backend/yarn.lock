@@ -973,9 +973,9 @@ concat-map@0.0.1:
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
 constructs@^3.3.125, constructs@^3.3.69:
-  version "3.4.79"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.79.tgz#a906b7339836be068979801e6162e37eee9ca45e"
-  integrity sha512-j2LmKMooc4Vbd68h5stHvTFboMjfGZZgebq8ha6d8Ux7pPe92wADeOPZOMTi3vmKg8F4F//vdu+7v2VYs8lzdw==
+  version "3.4.80"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.80.tgz#f6c14e3a1faf6d575da04918d6850839c1e7bb02"
+  integrity sha512-uRRurSj2byuJarXYmXqcIzdi+oaWJC9A2iem8k/BRJHdoiyuEL+LO86eoxDhyVYVkXkZuU1SP6YaNvPqThL9Xg==
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -2135,9 +2135,9 @@ typescript-json-schema@~0.52.0:
     yargs "^17.1.1"
 
 typescript@^4.2.4:
-  version "4.7.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
-  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.8.2.tgz#e3b33d5ccfb5914e4eeab6699cf208adee3fd790"
+  integrity sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==
 
 typescript@~4.4.4:
   version "4.4.4"
