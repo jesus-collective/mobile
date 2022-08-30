@@ -280,6 +280,7 @@ export const getCourseInfoForOverview = /* GraphQL */ `
       id
       designedBy
       summary
+      separatedTriads
       sylabusAttachmentName
       sylabusAttachmentOwner
       sylabusAttachment

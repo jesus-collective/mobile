@@ -1250,6 +1250,7 @@ export const getCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      separatedTriads
       sylabusAttachment
       sylabusAttachmentName
       sylabusAttachmentOwner
@@ -1279,6 +1280,7 @@ export const listCourseInfos = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -1312,6 +1314,7 @@ export const getCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -1355,6 +1358,7 @@ export const listCourseTriadss = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -1397,6 +1401,7 @@ export const getCourseBackOfficeStaff = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -1523,6 +1528,7 @@ export const listCourseBackOfficeStaffs = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -1592,6 +1598,7 @@ export const getCourseInstructors = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -1718,6 +1725,7 @@ export const listCourseInstructorss = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -1778,6 +1786,7 @@ export const getCourseTriadCoaches = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -1967,6 +1976,7 @@ export const getCourseTriadUsers = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -2179,6 +2189,7 @@ export const getCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -2228,6 +2239,7 @@ export const listCourseWeeks = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -2275,6 +2287,7 @@ export const getCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner

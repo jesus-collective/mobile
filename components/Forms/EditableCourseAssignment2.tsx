@@ -7,7 +7,7 @@ import { MessageComment } from "../../components/MessageBoard/AssignmentMessageB
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { CreateDirectMessageUserMutation, GetDirectMessageRoomQuery } from "../../src/API"
 import { JCCognitoUser } from "../../src/types"
-import { CourseActions } from "../CourseViewer/CourseContext"
+import { CourseActions, CourseContext } from "../CourseViewer/CourseContext"
 import { JCState } from "../JCComponent/JCComponent"
 import MessageEditor from "../MessageBoard/AssignmentMessageBoard/MessageEditor"
 import AssignmentCourseReview from "./AssignmentCourseReview"
@@ -36,7 +36,11 @@ export interface AssignmentState extends JCState {
 }
 export default function EditableCourseAssignment2(props: Props): JSX.Element {
   const assignmentContext = useContext(UserContext)
+  const courseContext = useContext(CourseContext)
+
   const { userActions } = assignmentContext
+
+  const myTriad = courseContext.actions.myCourseGroups().completeTriad
   const [state, setState] = useState<AssignmentState>({
     data: [],
     currentUser: null,

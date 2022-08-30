@@ -1,6 +1,7 @@
 import React from "react"
 import { Text, View } from "react-native"
 import { GetDirectMessageRoomQuery } from "src/API"
+import { CourseContext } from "../../components/CourseViewer/CourseContext"
 import Messages from "../../components/MessageBoard/AssignmentMessageBoard/Messages"
 import { MessageComment } from "../../components/MessageBoard/AssignmentMessageBoard/MessageThread"
 import { UserActions } from "../../screens/HomeScreen/UserContext"
@@ -25,12 +26,24 @@ const AssignmentCourseReview = ({
   getCurrentRoomRecipients: () => string[]
   wordCount: number
 }): JSX.Element => {
-  console.log("My Room", myRoom)
   const isAdminOrIsCoach =
     !!userActions?.isMemberOf("courseAdmin") || !!userActions?.isMemberOf("courseCoach")
+  const { state: courseState, actions } = React.useContext(CourseContext)
+  const shouldSeparateTriads =
+    Boolean(courseState?.courseData?.separatedTriads) && !isAdminOrIsCoach
+
+  const cohortUserIDS =
+    actions.myCourseGroups()?.completeTriad?.[0]?.triad?.map(({ id }: { id: string }) => id) ?? []
+
   const assignmentsMinusMine = data.filter(
     (item) => item?.directMessage?.items?.length && !item?.id.includes(state.currentUser)
   )
+  const cohortMembersAssignments = assignmentsMinusMine.filter((item) => {
+    return cohortUserIDS.includes(item?.directMessage?.items?.[0]?.userId)
+  })
+  console.log({ assignmentsMinusMine })
+  const filteredAssignments = shouldSeparateTriads ? cohortMembersAssignments : assignmentsMinusMine
+  console.log({ [`${shouldSeparateTriads}`]: filteredAssignments })
   const NoAssignments = () => {
     return (
       <Text
@@ -47,7 +60,7 @@ const AssignmentCourseReview = ({
   }
   const showMine = state.assignmentOption === "My Assignment" && data.length
   const showOthers = state.assignmentOption === "Assignments to Review" && data.length
-  const showNoAssignments = !assignmentsMinusMine.length
+  const showNoAssignments = !filteredAssignments.length
   return (
     <View style={{ width: "100%", paddingBottom: 250 }}>
       <AssignmentsToggle
@@ -66,7 +79,7 @@ const AssignmentCourseReview = ({
       ) : showNoAssignments ? (
         <NoAssignments />
       ) : showOthers ? (
-        assignmentsMinusMine.map((item, index: number) => {
+        filteredAssignments.map((item, index: number) => {
           return (
             <Messages
               wordCount={wordCount}

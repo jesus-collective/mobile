@@ -4907,6 +4907,7 @@ export const createCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      separatedTriads
       sylabusAttachment
       sylabusAttachmentName
       sylabusAttachmentOwner
@@ -4967,6 +4968,7 @@ export const updateCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      separatedTriads
       sylabusAttachment
       sylabusAttachmentName
       sylabusAttachmentOwner
@@ -5027,6 +5029,7 @@ export const deleteCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      separatedTriads
       sylabusAttachment
       sylabusAttachmentName
       sylabusAttachmentOwner
@@ -5058,6 +5061,7 @@ export const createCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5112,6 +5116,7 @@ export const updateCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5166,6 +5171,7 @@ export const deleteCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5220,6 +5226,7 @@ export const createCourseBackOfficeStaff = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5353,6 +5360,7 @@ export const updateCourseBackOfficeStaff = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5486,6 +5494,7 @@ export const deleteCourseBackOfficeStaff = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5619,6 +5628,7 @@ export const createCourseInstructors = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5752,6 +5762,7 @@ export const updateCourseInstructors = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -5885,6 +5896,7 @@ export const deleteCourseInstructors = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -6009,6 +6021,7 @@ export const createCourseTriadCoaches = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -6142,6 +6155,7 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -6275,6 +6289,7 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -6408,6 +6423,7 @@ export const createCourseTriadUsers = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -6541,6 +6557,7 @@ export const updateCourseTriadUsers = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -6674,6 +6691,7 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -6822,6 +6840,7 @@ export const createCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -6882,6 +6901,7 @@ export const updateCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -6942,6 +6962,7 @@ export const deleteCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        separatedTriads
         sylabusAttachment
         sylabusAttachmentName
         sylabusAttachmentOwner
@@ -7004,6 +7025,7 @@ export const createCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -7052,6 +7074,7 @@ export const updateCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner
@@ -7100,6 +7123,7 @@ export const deleteCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          separatedTriads
           sylabusAttachment
           sylabusAttachmentName
           sylabusAttachmentOwner

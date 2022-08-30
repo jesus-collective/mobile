@@ -648,6 +648,26 @@ export default class CourseScreen extends JCComponent<Props, State> {
       />
     )
   }
+  async updateTriadSeparationStatus({ courseData }: any): Promise<boolean> {
+    console.log("logging segregation status", this.state)
+    try {
+      const response = await Data.updateCourseInfo({
+        id: courseData.id,
+        separatedTriads: !courseData?.separatedTriads,
+      })
+      console.log({ response })
+      if (response.data?.updateCourseInfo) {
+        return true
+      }
+      return false
+    } catch (error: any) {
+      console.log({ error })
+      if (error?.data?.updateCourseInfo) {
+        return true
+      }
+      return false
+    }
+  }
   render(): React.ReactNode {
     console.log("CourseScreen")
     return (
@@ -898,6 +918,39 @@ export default class CourseScreen extends JCComponent<Props, State> {
                     >
                       Members ({this.state.memberIDs.length})
                     </Text>
+                    {this.state.isEditable ? (
+                      <Text
+                        style={{
+                          fontFamily: "Graphik-Bold-App",
+                          fontSize: 20,
+                          lineHeight: 25,
+                          letterSpacing: -0.3,
+                          color: "#333333",
+                          paddingTop: 48,
+                          paddingBottom: 12,
+                        }}
+                      >
+                        {this.state?.courseData?.separatedTriads ? "closed" : "open"} {"cohorts  "}
+                        {this.state.courseData ? (
+                          <JCSwitch
+                            switchLabel=""
+                            asyncOnPress={async () => {
+                              const success = await this.updateTriadSeparationStatus(this.state)
+                              if (success)
+                                this.setState((prev) => ({
+                                  courseData: {
+                                    ...prev.courseData,
+                                    separatedTriads: !prev.courseData.separatedTriads,
+                                  },
+                                }))
+                              return success
+                            }}
+                            onPress={() => null}
+                            initState={!this.state.courseData?.separatedTriads}
+                          />
+                        ) : null}
+                      </Text>
+                    ) : null}
                     <View style={this.styles.style.groupAttendeesPictures}>
                       {this.state.memberIDs.length == 0 ? (
                         <Text
