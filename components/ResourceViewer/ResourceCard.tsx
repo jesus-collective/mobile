@@ -436,20 +436,53 @@ function RenderLargeCard(props: Props): JSX.Element | null {
                   zIndex={6000 + props.pageItemIndex.length}
                   items={buttonItems}
                   placeholder="Download"
+                  placeholderStyle={{
+                    marginLeft: 4,
+                    color: "white",
+                    fontFamily: "Graphik-Regular-App",
+                    fontWeight: "600",
+                  }}
+                  ArrowUpIconComponent={() => (
+                    <Ionicons
+                      color="white"
+                      name="caret-up"
+                      style={{
+                        width: 20,
+                        height: 20,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    />
+                  )}
+                  ArrowDownIconComponent={() => (
+                    <Ionicons
+                      color="white"
+                      name="caret-down"
+                      style={{
+                        width: 20,
+                        height: 20,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    />
+                  )}
                   containerStyle={{
-                    height: 40,
                     width: 200,
                     zIndex: 5000 + props.pageItemIndex.length,
-                    marginTop: 5,
-                    marginBottom: 5,
                   }}
                   dropDownContainerStyle={{
                     backgroundColor: "#FF4438",
                     width: 200,
+                    borderWidth: 0,
                     zIndex: 5000 + props.pageItemIndex.length,
                   }}
                   style={{
-                    margin: 3,
+                    padding: 3,
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
                     flexDirection: "row",
                     backgroundColor: "#FF4438",
                     zIndex: 5000 + props.pageItemIndex.length,
@@ -457,21 +490,34 @@ function RenderLargeCard(props: Props): JSX.Element | null {
                   listItemContainerStyle={{
                     flexDirection: "row",
                     justifyContent: "flex-start",
-                    width: 100,
+                    width: 200,
+                    height: 40,
                     zIndex: 5000 + props.pageItemIndex.length,
                   }}
-                  labelStyle={{
+                  iconContainerStyle={{
+                    justifyContent: "center",
+                    marginLeft: 4,
+                    alignItems: "center",
+                  }}
+                  listItemLabelStyle={{
+                    marginLeft: 4,
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    fontFamily: "Graphik-Regular-App",
+                    borderBottomWidth: 1,
+                    borderBottomColor: "#ff7c74",
+                    alignItems: "center",
                     fontSize: 14,
                     textAlign: "left",
+                    height: "100%",
+                    textAlignVertical: "center",
                     color: "#FFFFFF",
                     fontWeight: "600",
                     alignSelf: "center",
                     zIndex: 5000 + props.pageItemIndex.length,
                   }}
-                  // arrowColor="#FFFFFF"
-                  onChangeValue={(item: typeof buttonItems[0]) => {
-                    console.log(item)
-                    if (item) window.location.href = item.value
+                  onSelectItem={(item) => {
+                    window.location.href = encodeURI(item.value as string)
                   }}
                 />
               ) : (
