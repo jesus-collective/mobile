@@ -525,6 +525,7 @@ export type CourseInfo = {
   backOfficeStaff?: ModelCourseBackOfficeStaffConnection | null
   triads?: ModelCourseTriadsConnection | null
   introduction?: string | null
+  separatedTriads?: boolean | null
   sylabusAttachment?: string | null
   sylabusAttachmentName?: string | null
   sylabusAttachmentOwner?: string | null
@@ -1432,6 +1433,7 @@ export type GetCourseInfoQuery = {
     id: string
     designedBy?: string | null
     summary?: string | null
+    separatedTriads?: boolean | null
     sylabusAttachmentName?: string | null
     sylabusAttachmentOwner?: string | null
     sylabusAttachment?: string | null

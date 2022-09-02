@@ -13,6 +13,7 @@ export type CourseInfo = {
   backOfficeStaff?: ModelCourseBackOfficeStaffConnection | null
   triads?: ModelCourseTriadsConnection | null
   introduction?: string | null
+  separatedTriads?: boolean | null
   sylabusAttachment?: string | null
   sylabusAttachmentName?: string | null
   sylabusAttachmentOwner?: string | null
@@ -792,6 +793,7 @@ export type GetCourseInfoQuery = {
     summary?: string | null
     sylabusAttachmentName?: string | null
     sylabusAttachmentOwner?: string | null
+    separatedTriads?: boolean | null
     sylabusAttachment?: string | null
     backOfficeStaff?: {
       __typename: "ModelCourseBackOfficeStaffConnection"

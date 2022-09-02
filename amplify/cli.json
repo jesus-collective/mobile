@@ -49,8 +49,5 @@
     "project": {
       "overrides": true
     }
-  },
-  "debug": {
-    "shareProjectConfig": false
   }
 }
