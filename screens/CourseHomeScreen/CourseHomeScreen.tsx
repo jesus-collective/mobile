@@ -5,7 +5,7 @@ import { Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import React from "react"
-import { Dimensions, Modal, View } from "react-native"
+import { Dimensions, Modal, ScrollView, View } from "react-native"
 import {
   CreateCourseLessonInput,
   CreateCourseTriadsInput,
@@ -1036,9 +1036,14 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             />
           ) : null}
           <Modal transparent animationType="slide" visible={this.state.showChat}>
-            <View style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
+            <ScrollView
+              contentContainerStyle={{
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
               <CourseChat />
-            </View>
+            </ScrollView>
           </Modal>
           <View
             style={[
