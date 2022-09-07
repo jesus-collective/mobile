@@ -174,15 +174,17 @@ export function SearchUsers({
     setSearchTerm(value)
   }
   return (
-    <View style={{ zIndex: searchOpen ? 10000 + 1 : 10000 }}>
+    <View style={{ zIndex: searchOpen ? 10000 + 1 : 10000, width: "100%" }}>
       <DropDownPicker
-        style={{
-          padding: 4,
-          flexDirection: "column",
-          maxHeight: 250,
-          overflow: "scroll",
-          flex: 1,
-        }}
+        style={
+          {
+            padding: 4,
+            flexDirection: "column",
+            overflow: "auto", // not RN friendly
+            maxHeight: 250,
+            flex: 1,
+          } as any
+        }
         listItemContainerStyle={{
           flexDirection: "row",
           padding: 4,
@@ -265,7 +267,7 @@ export function SearchUsers({
         ArrowUpIconComponent={() => <ExpandIcon isLoading={isLoading} />}
         closeOnBackPressed
         mode="BADGE"
-        dropDownContainerStyle={{ maxHeight: 200, zIndex: 5002 }}
+        dropDownContainerStyle={{ maxHeight: 200 }}
         dropDownDirection="BOTTOM"
         showArrowIcon={true}
         selectedItemContainerStyle={{ backgroundColor: "lightgrey", flex: 1 }}
