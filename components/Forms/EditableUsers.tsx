@@ -174,111 +174,114 @@ export function SearchUsers({
     setSearchTerm(value)
   }
   return (
-    <DropDownPicker
-      zIndex={100000}
-      style={{
-        padding: 4,
-        flexDirection: "column",
-        maxHeight: 250,
-        overflow: "scroll",
-        flex: 1,
-      }}
-      listItemContainerStyle={{
-        flexDirection: "row",
-        padding: 4,
-        flex: 1,
-      }}
-      listItemLabelStyle={{ alignSelf: "center", marginLeft: 6, flex: 1 }}
-      selectedItemLabelStyle={{ flex: 1 }}
-      open={searchOpen}
-      value={selectedUserIDS}
-      multiple
-      max={limit}
-      renderBadgeItem={(item) => {
-        return (
-          <UserBadge
-            removeUser={async () => {
-              const userToRemove = users.find(
-                (a) => a?.userID === item.value || a?.id === item.value
-              )
-              if (userToRemove) {
-                const success = await onRemove(new Array(userToRemove))
-                if (!success) return
-                setSelectedUserIDS((prev) => prev.filter((id) => id !== item.value))
+    <View style={{ zIndex: searchOpen ? 10000 + 1 : 10000, width: "100%" }}>
+      <DropDownPicker
+        style={
+          {
+            padding: 4,
+            flexDirection: "column",
+            overflow: "auto", // not RN friendly
+            maxHeight: 250,
+            flex: 1,
+          } as any
+        }
+        listItemContainerStyle={{
+          flexDirection: "row",
+          padding: 4,
+          flex: 1,
+        }}
+        listItemLabelStyle={{ alignSelf: "center", marginLeft: 6, flex: 1 }}
+        selectedItemLabelStyle={{ flex: 1 }}
+        open={searchOpen}
+        value={selectedUserIDS}
+        multiple
+        max={limit}
+        renderBadgeItem={(item) => {
+          return (
+            <UserBadge
+              removeUser={async () => {
+                const userToRemove = users.find(
+                  (a) => a?.userID === item.value || a?.id === item.value
+                )
+                if (userToRemove) {
+                  const success = await onRemove(new Array(userToRemove))
+                  if (!success) return
+                  setSelectedUserIDS((prev) => prev.filter((id) => id !== item.value))
+                }
+              }}
+              item={item}
+            />
+          )
+        }}
+        extendableBadgeContainer
+        onClose={() => {
+          setItems([])
+        }}
+        onSelectItem={async (items) => {
+          if (limit && users.length >= limit) {
+            console.log("Not work")
+            return
+          }
+          if (selectedUserIDS && items.length > selectedUserIDS.length) {
+            setSearchOpen(false)
+            const newUser = items.filter((item) => {
+              if (!item.value) return false
+              return !selectedUserIDS.includes(item.value.toString())
+            })
+            if (newUser?.length) {
+              const n1 = allUsers.find((a) => a?.id === newUser[0]?.value)
+              const userData = [n1] ?? newUser
+              console.log({ n1 }, { newUser })
+
+              const success = await onAdd(userData)
+              if (!success) {
+                // On failure dropdown should remove newly added user
+                setSelectedUserIDS((prev) => prev.filter((id) => id !== newUser[0]!.value))
               }
-            }}
-            item={item}
-          />
-        )
-      }}
-      extendableBadgeContainer
-      onClose={() => {
-        setItems([])
-      }}
-      onSelectItem={async (items) => {
-        if (limit && users.length >= limit) {
-          console.log("Not work")
-          return
-        }
-        if (selectedUserIDS && items.length > selectedUserIDS.length) {
-          setSearchOpen(false)
-          const newUser = items.filter((item) => {
-            if (!item.value) return false
-            return !selectedUserIDS.includes(item.value.toString())
-          })
-          if (newUser?.length) {
-            const n1 = allUsers.find((a) => a?.id === newUser[0]?.value)
-            const userData = [n1] ?? newUser
-            console.log({ n1 }, { newUser })
 
-            const success = await onAdd(userData)
-            if (!success) {
-              // On failure dropdown should remove newly added user
-              setSelectedUserIDS((prev) => prev.filter((id) => id !== newUser[0]!.value))
+              console.log({ added: success })
             }
-
-            console.log({ added: success })
-          }
-        } else if (selectedUserIDS && items.length < selectedUserIDS.length) {
-          const removedUserID = selectedUserIDS.filter((val) => {
-            return !items.find((item) => item?.value === val)
-          })?.[0]
-          console.log({ removedUserID })
-          const removedUser = users.filter((user) => user.userID === removedUserID)
-          if (removedUser?.length) {
-            const success = await onRemove(removedUser)
-            console.log({ removed: success })
-            if (!success) {
-              // setSelectedUserIDS((prev) => [...prev, removedUserID])
-              // On failure dropdown should re-add users
+          } else if (selectedUserIDS && items.length < selectedUserIDS.length) {
+            const removedUserID = selectedUserIDS.filter((val) => {
+              return !items.find((item) => item?.value === val)
+            })?.[0]
+            console.log({ removedUserID })
+            const removedUser = users.filter((user) => user.userID === removedUserID)
+            if (removedUser?.length) {
+              const success = await onRemove(removedUser)
+              console.log({ removed: success })
+              if (!success) {
+                // setSelectedUserIDS((prev) => [...prev, removedUserID])
+                // On failure dropdown should re-add users
+              }
             }
+          } else {
+            // Users may have added users but number of users stayed the same.
+            // This piece of code assumes removing/adding one user at a time
+            // If this ever gets changed to allow for multiple additions, i.e. with a save button..
+            // This condition can be triggered even though changes have been made if the number of users is the same.
           }
-        } else {
-          // Users may have added users but number of users stayed the same.
-          // This piece of code assumes removing/adding one user at a time
-          // If this ever gets changed to allow for multiple additions, i.e. with a save button..
-          // This condition can be triggered even though changes have been made if the number of users is the same.
-        }
-      }}
-      arrowIconContainerStyle={{ alignItems: "flex-end", flex: 1, marginRight: 8 }}
-      ArrowDownIconComponent={() => <ExpandIcon isLoading={isLoading} />}
-      ArrowUpIconComponent={() => <ExpandIcon isLoading={isLoading} />}
-      closeOnBackPressed
-      mode="BADGE"
-      dropDownContainerStyle={{ maxHeight: 200 }}
-      dropDownDirection="BOTTOM"
-      showArrowIcon={true}
-      selectedItemContainerStyle={{ backgroundColor: "lightgrey", flex: 1 }}
-      placeholder="Add a user"
-      searchPlaceholder="Type user's name here..."
-      onChangeSearchText={onSearchTermChange}
-      searchable={true}
-      disableLocalSearch={true}
-      items={items}
-      setOpen={setSearchOpen}
-      setValue={setSelectedUserIDS}
-      setItems={setItems}
-    />
+        }}
+        arrowIconContainerStyle={{ alignItems: "flex-end", flex: 1, marginRight: 8 }}
+        ArrowDownIconComponent={() => <ExpandIcon isLoading={isLoading} />}
+        ArrowUpIconComponent={() => <ExpandIcon isLoading={isLoading} />}
+        closeOnBackPressed
+        mode="BADGE"
+        dropDownContainerStyle={{ maxHeight: 200 }}
+        dropDownDirection="BOTTOM"
+        showArrowIcon={true}
+        selectedItemContainerStyle={{ backgroundColor: "lightgrey", flex: 1 }}
+        placeholder="Add a user"
+        searchPlaceholder="Type user's name here..."
+        onChangeSearchText={onSearchTermChange}
+        searchable={true}
+        disableLocalSearch={true}
+        items={items}
+        setOpen={setSearchOpen}
+        setValue={setSelectedUserIDS}
+        setItems={setItems}
+      />
+    </View>
   )
 }
 

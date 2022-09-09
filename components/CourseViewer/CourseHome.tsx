@@ -480,81 +480,72 @@ class CourseHomeImpl extends JCComponent<Props> {
                                     console.log({ users })
                                     console.log({ coaches })
                                     return (
-                                      <View key={index}>
-                                        <View style={{ zIndex: -1 }}>
-                                          <View style={{ zIndex: -1 }}>
-                                            <Text
-                                              style={{
-                                                zIndex: -1,
-                                                fontSize: 16,
-                                                lineHeight: 25,
-                                                fontFamily: "Graphik-Bold-App",
-                                                marginTop: 20,
-                                              }}
-                                            >
-                                              Facilitator
-                                            </Text>
-                                          </View>
-                                          <View style={{ zIndex: -1 }}>
-                                            <TouchableOpacity
-                                              style={this.styles.style.courseHomeDeleteTriad}
-                                              onPress={() => {
-                                                actions.deleteTriad(index)
-                                              }}
-                                            >
-                                              <AntDesign name="close" size={23} color="white" />
-                                            </TouchableOpacity>
-                                          </View>
-                                        </View>
-                                        <View style={{ zIndex: 99999 }}>
-                                          <EditableUsers
-                                            limit={1}
-                                            onAdd={async (value) => {
-                                              return actions.addTriadCoach(index, value)
-                                            }}
-                                            onRemove={async (value) => {
-                                              return actions.deleteTriadCoach(index, value)
-                                            }}
-                                            multiline={false}
-                                            testID="profile-currentRole"
-                                            showProfileImages={true}
-                                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                            inputStyle={this.styles.style.fontFormLargeInput}
-                                            value={coaches ? coaches : []}
-                                            isEditable={true}
-                                          ></EditableUsers>
-                                        </View>
-                                        <View style={{ zIndex: -1 }}>
-                                          <Text
-                                            style={{
-                                              zIndex: -1,
-                                              fontSize: 16,
-                                              lineHeight: 25,
-                                              fontFamily: "Graphik-Bold-App",
-                                              marginTop: 30,
-                                            }}
-                                          >
-                                            Cohort
-                                          </Text>
-                                        </View>
-                                        <View>
-                                          <EditableUsers
-                                            limit={3}
-                                            onAdd={async (value) => {
-                                              return actions.addTriadUser(index, value)
-                                            }}
-                                            onRemove={async (value) => {
-                                              return actions.deleteTriadUser(index, value)
-                                            }}
-                                            multiline={false}
-                                            testID="profile-currentRole"
-                                            showProfileImages={true}
-                                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                            inputStyle={this.styles.style.fontFormLargeInput}
-                                            value={users ? users : []}
-                                            isEditable={true}
-                                          ></EditableUsers>
-                                        </View>
+                                      <View key={index} style={{ zIndex: 5000 - index }}>
+                                        <Text
+                                          style={{
+                                            fontSize: 16,
+                                            lineHeight: 25,
+                                            fontFamily: "Graphik-Bold-App",
+                                            marginTop: 20,
+                                          }}
+                                        >
+                                          Facilitator
+                                        </Text>
+
+                                        <TouchableOpacity
+                                          style={this.styles.style.courseHomeDeleteTriad}
+                                          onPress={() => {
+                                            actions.deleteTriad(index)
+                                          }}
+                                        >
+                                          <AntDesign name="close" size={23} color="white" />
+                                        </TouchableOpacity>
+
+                                        <EditableUsers
+                                          limit={1}
+                                          onAdd={async (value) => {
+                                            return actions.addTriadCoach(index, value)
+                                          }}
+                                          onRemove={async (value) => {
+                                            return actions.deleteTriadCoach(index, value)
+                                          }}
+                                          multiline={false}
+                                          testID="profile-currentRole"
+                                          showProfileImages={true}
+                                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                          inputStyle={this.styles.style.fontFormLargeInput}
+                                          value={coaches ? coaches : []}
+                                          isEditable={true}
+                                        ></EditableUsers>
+
+                                        <Text
+                                          style={{
+                                            zIndex: -1,
+                                            fontSize: 16,
+                                            lineHeight: 25,
+                                            fontFamily: "Graphik-Bold-App",
+                                            marginTop: 30,
+                                          }}
+                                        >
+                                          Cohort
+                                        </Text>
+
+                                        <EditableUsers
+                                          limit={3}
+                                          onAdd={async (value) => {
+                                            return actions.addTriadUser(index, value)
+                                          }}
+                                          onRemove={async (value) => {
+                                            return actions.deleteTriadUser(index, value)
+                                          }}
+                                          multiline={false}
+                                          testID="profile-currentRole"
+                                          showProfileImages={true}
+                                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                          inputStyle={this.styles.style.fontFormLargeInput}
+                                          value={users ? users : []}
+                                          isEditable={true}
+                                        ></EditableUsers>
                                       </View>
                                     )
                                   })}
