@@ -634,8 +634,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       try {
         const updateUser = await Data.updateUserNoData({
           id: item.Username,
-          // uncomment this once schema is updated
-          // isArchived: !item.Enabled,
+          isArchived: Boolean(item.Enabled).toString(),
         })
         console.log({ updateUser })
         successAppsync = true

@@ -93,8 +93,34 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     const getGroup = Data.getGroup(props.route.params.id)
     const getCourse = Data.getCourseInfo(props.route.params.id)
     const processResults2 = (json: GraphQLResult<GetCourseInfoQuery>) => {
+      const isActive = (user: any) => {
+        return !user?.user?.isArchived || user?.user?.isArchived === "false"
+      }
       console.log({ courseData: json })
-      this.setState({ courseData: json.data?.getCourseInfo })
+      // remove archived users
+      const courseInfo = json.data?.getCourseInfo
+      if (courseInfo?.triads) {
+        // from triads
+        courseInfo.triads.items = courseInfo?.triads?.items.map((triad) => ({
+          ...triad,
+          users: {
+            ...triad?.users,
+            items: triad?.users?.items.filter((user) => isActive(user)),
+          },
+          coaches: {
+            ...triad?.coaches,
+            items: triad?.coaches?.items.filter((user) => isActive(user)),
+          },
+        }))
+      }
+      if (courseInfo?.backOfficeStaff) {
+        // from backOffice
+        courseInfo.backOfficeStaff.items = courseInfo?.backOfficeStaff?.items.filter(
+          (backOfficeStaff) => isActive(backOfficeStaff)
+        )
+      }
+      console.log({ courseInfo })
+      this.setState({ courseData: courseInfo })
 
       const courseWeeks: CourseState["courseWeeks"] = {}
 
@@ -501,6 +527,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         cohortTemp = cohortTemp?.concat(item?.coaches?.items?.map((item) => item?.user))
         // cohort.push(item.coaches.items)
       }
+      console.log("a#", { completeTriad }, cohortTemp)
       return { completeTriad: completeTriad, cohort: cohortTemp }
     })
     let fromTriads: (CourseUser | null | undefined)[] | undefined | null =
