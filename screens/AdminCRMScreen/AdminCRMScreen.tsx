@@ -740,6 +740,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCSwitch
               containerWidth={1}
               switchLabel=""
+              disabled={item.UserStatus !== "CONFIRMED"}
               initState={item.Enabled}
               asyncOnPress={async () => await this.handleToggleEnabled(item, index)}
               onPress={() => null}
