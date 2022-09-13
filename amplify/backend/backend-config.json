@@ -513,7 +513,16 @@
             }
           }
         }
-      }
+      },
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     },
     "AdminQueries": {
       "service": "API Gateway",
@@ -593,8 +602,16 @@
       "providerPlugin": "awscloudformation",
       "service": "Map",
       "mapStyle": "VectorEsriLightGrayCanvas",
-      "pricingPlan": "RequestBasedUsage",
-      "accessType": "AuthorizedUsers"
+      "accessType": "AuthorizedUsers",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     },
     "jcPeople": {
       "isDefault": true,
