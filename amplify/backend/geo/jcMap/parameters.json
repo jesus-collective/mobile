@@ -6,6 +6,6 @@
     "Ref": "UnauthRoleName"
   },
   "mapName": "jcMap",
-  "mapStyle": "VectorEsriStreets",
+  "mapStyle": "VectorEsriLightGrayCanvas",
   "isDefault": true
 }
