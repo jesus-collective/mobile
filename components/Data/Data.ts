@@ -1237,7 +1237,7 @@ export class Data {
     })
     const query: ListUsersQueryVariables = {
       limit: 100,
-      filter: { profileState: { eq: "Complete" }, or: userGroupList },
+      filter: { isArchived: { ne: "true" }, profileState: { eq: "Complete" }, or: userGroupList },
       nextToken: nextToken,
     }
     return API.graphql({
@@ -1267,7 +1267,7 @@ export class Data {
     })
     const query: ListUsersQueryVariables = {
       limit: 100,
-      filter: { profileState: { eq: "Complete" }, or: userGroupList },
+      filter: { isArchived: { ne: "true" }, profileState: { eq: "Complete" }, or: userGroupList },
       nextToken: nextToken,
     }
     return API.graphql({

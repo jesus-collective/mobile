@@ -138,7 +138,6 @@ export default function Comment(props: CommentParams): JSX.Element {
           <View style={{ width: 38 }} />
         )}
         <ProfileImageNew
-          linkToProfile
           style={ProfileImageStyle.UserSmall}
           quality={ProfileImageQuality.small}
           type={"user"}

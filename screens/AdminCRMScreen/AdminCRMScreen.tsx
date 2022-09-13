@@ -634,8 +634,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       try {
         const updateUser = await Data.updateUserNoData({
           id: item.Username,
-          // uncomment this once schema is updated
-          // isArchived: !item.Enabled,
+          isArchived: Boolean(item.Enabled).toString(),
         })
         console.log({ updateUser })
         successAppsync = true
@@ -741,6 +740,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCSwitch
               containerWidth={1}
               switchLabel=""
+              disabled={item.UserStatus !== "CONFIRMED"}
               initState={item.Enabled}
               asyncOnPress={async () => await this.handleToggleEnabled(item, index)}
               onPress={() => null}

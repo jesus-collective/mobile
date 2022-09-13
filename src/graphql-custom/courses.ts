@@ -17,6 +17,7 @@ export const getCourseInfo = /* GraphQL */ `
             id
             given_name
             family_name
+            isArchived
             email
             phone
             owner
@@ -104,6 +105,7 @@ export const getCourseInfo = /* GraphQL */ `
             id
             given_name
             family_name
+            isArchived
             email
             phone
             owner
@@ -229,6 +231,7 @@ export const getCourseInfo = /* GraphQL */ `
               user {
                 id
                 given_name
+                isArchived
                 family_name
                 email
                 phone
@@ -254,6 +257,7 @@ export const getCourseInfo = /* GraphQL */ `
               user {
                 id
                 given_name
+                isArchived
                 family_name
                 email
                 phone

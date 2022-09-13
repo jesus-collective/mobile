@@ -30,7 +30,7 @@ interface Props {
    * @example <JCSwitch offColor="#F0493E"/>
    */
   thumbColor?: string
-
+  disabled?: boolean
   toggleSpacing?: string
   toggleMargin?: number
   flexDirection?: "row" | "column" | "row-reverse" | "column-reverse" | undefined
@@ -110,12 +110,21 @@ export default class JCSwitch extends JCComponent<Props, State> {
           accessibilityLabel={this.props.switchLabel}
           accessibilityRole="switch"
           testID={this.props.testId}
+          disabled={this.props.disabled}
           onPress={() => (!this.state.loading ? this.onPress() : null)}
         >
           <View
             style={{
-              backgroundColor: this.state.enabled ? this.state.onColor : this.state.offColor,
-              borderColor: this.state.enabled ? this.state.onColor : this.state.offColor,
+              backgroundColor: this.props.disabled
+                ? this.state.offColor
+                : this.state.enabled
+                ? this.state.onColor
+                : this.state.offColor,
+              borderColor: this.props.disabled
+                ? this.state.offColor
+                : this.state.enabled
+                ? this.state.onColor
+                : this.state.offColor,
               borderWidth: 2,
               borderRadius: 25,
               width: 50,
