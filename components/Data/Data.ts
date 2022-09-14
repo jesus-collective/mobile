@@ -1227,6 +1227,7 @@ export class Data {
       mainUserGroups = ["Admin", "Friend", "Verified"]
     else if (userGroupType == UserGroupType.OneStory)
       mainUserGroups = ["Admin", "OneStory", "Verified"]
+    else if (userGroupType == UserGroupType.Partners) mainUserGroups = ["Partner"]
     else mainUserGroups = ["Partner", "Admin"]
     const userGroupList = mainUserGroups?.map((i) => {
       return {
@@ -1237,7 +1238,13 @@ export class Data {
     })
     const query: ListUsersQueryVariables = {
       limit: 100,
-      filter: { isArchived: { ne: "true" }, profileState: { eq: "Complete" }, or: userGroupList },
+      filter: {
+        and: [
+          { isArchived: { ne: "true" } },
+          { profileState: { eq: "Complete" } },
+          { or: userGroupList },
+        ],
+      },
       nextToken: nextToken,
     }
     return API.graphql({
