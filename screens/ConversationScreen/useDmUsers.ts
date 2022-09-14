@@ -33,15 +33,16 @@ export const loadDmsForRoom = async (roomId: string | undefined) => {
   if (!roomId) return
   const directMessages: any = []
   const loadNext = async (next: string | null | undefined = null) => {
-    const dms = await Data.listDirectMessages({
+    const dms = await Data.directMessagesByRoom({
       limit: 200,
-      filter: { messageRoomID: { eq: roomId } },
+      messageRoomID: roomId,
       nextToken: next,
     })
-    if (dms?.data?.listDirectMessages?.items?.length)
-      directMessages.push(...dms.data.listDirectMessages.items)
-    if (dms?.data?.listDirectMessages?.nextToken)
-      await loadNext(dms?.data?.listDirectMessages?.nextToken)
+    console.log({ dms })
+    if (dms?.data?.directMessagesByRoom?.items?.length)
+      directMessages.push(...dms.data.directMessagesByRoom.items)
+    if (dms?.data?.directMessagesByRoom?.nextToken)
+      await loadNext(dms?.data?.directMessagesByRoom?.nextToken)
   }
 
   await loadNext()

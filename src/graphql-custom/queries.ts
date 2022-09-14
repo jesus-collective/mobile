@@ -901,6 +901,33 @@ export const getUserForProfile = /* GraphQL */ `
     }
   }
 `
+export const directMessagesByRoom = /* GraphQL */ `
+  query DirectMessagesByRoom(
+    $messageRoomID: ID
+    $when: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    directMessagesByRoom(
+      messageRoomID: $messageRoomID
+      when: $when
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        createdAt
+      }
+      nextToken
+    }
+  }
+`
+
 export const listDirectMessagesForDms = /* GraphQL */ `
   query ListDirectMessages(
     $filter: ModelDirectMessageFilterInput
