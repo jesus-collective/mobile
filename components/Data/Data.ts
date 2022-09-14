@@ -111,6 +111,8 @@ import {
   DeleteResourceSeriesMutation,
   DeleteStartupMutation,
   DeleteUserMutation,
+  DmUsersByUserIDQuery,
+  DmUsersByUserIDQueryVariables,
   EventBriteListEventsQuery,
   EventBriteListTicketClassesQuery,
   EventBriteListTicketClassesQueryVariables,
@@ -835,6 +837,13 @@ export class Data {
       variables: query,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListDirectMessageUsersQuery>>
+  }
+  static dmUsersByUserID(query: DmUsersByUserIDQueryVariables) {
+    return API.graphql({
+      query: customQueries.dmUsersByUserID,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DmUsersByUserIDQuery>>
   }
   static listCustomPricings(filter: ModelCustomPricingFilterInput | null) {
     return API.graphql({

@@ -917,7 +917,67 @@ export const listDirectMessagesForDms = /* GraphQL */ `
     }
   }
 `
-
+export const dmUsersByUserID = /* GraphQL */ `
+  query DmUsersByUserID(
+    $userID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectMessageUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    dmUsersByUserID(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userName
+        userID
+        roomID
+        room {
+          id
+          name
+          roomType
+          messageUsers {
+            items {
+              id
+              userName
+              userID
+              roomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          directMessage {
+            items {
+              id
+              content
+              when
+              messageRoomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        user {
+          id
+          given_name
+          family_name
+        }
+      }
+      nextToken
+    }
+  }
+`
 export const listDirectMessageUsersForDMS = /* GraphQL */ `
   query ListDirectMessageUsersForDMS(
     $filter: ModelDirectMessageUserFilterInput
