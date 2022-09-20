@@ -26,11 +26,29 @@ const AssignmentCourseReview = ({
   getCurrentRoomRecipients: () => string[]
   wordCount: number
 }): JSX.Element => {
-  const isAdminOrIsCoach =
-    !!userActions?.isMemberOf("courseAdmin") || !!userActions?.isMemberOf("courseCoach")
   const { state: courseState, actions } = React.useContext(CourseContext)
-  const shouldSeparateTriads =
-    Boolean(courseState?.courseData?.separatedTriads) && !isAdminOrIsCoach
+
+  const isInstructor = Boolean(
+    courseState?.courseData?.instructors?.items?.find((item) => item?.userID === state.currentUser)
+  )
+
+  const isBackOfficeStaff = Boolean(
+    courseState?.courseData?.backOfficeStaff?.items?.find(
+      (item) => item?.userID === state.currentUser
+    )
+  )
+
+  const isAdmin = Boolean(
+    userActions?.isMemberOf("courseAdmin") || userActions?.isMemberOf("admin")
+  )
+
+  const isCoach = Boolean(userActions?.isMemberOf("courseCoach"))
+
+  const isSeparatedTriads = Boolean(courseState?.courseData?.separatedTriads)
+
+  const shouldSeeEverything = isInstructor || isBackOfficeStaff || isAdmin
+
+  const shouldSeparateTriads = isSeparatedTriads && !shouldSeeEverything
 
   const cohortUserIDS =
     actions.myCourseGroups()?.completeTriad?.[0]?.triad?.map(({ id }: { id: string }) => id) ?? []
@@ -41,30 +59,16 @@ const AssignmentCourseReview = ({
   const cohortMembersAssignments = assignmentsMinusMine.filter((item) => {
     return cohortUserIDS.includes(item?.directMessage?.items?.[0]?.userId)
   })
-  console.log({ assignmentsMinusMine })
+
   const filteredAssignments = shouldSeparateTriads ? cohortMembersAssignments : assignmentsMinusMine
   console.log({ [`${shouldSeparateTriads}`]: filteredAssignments })
-  const NoAssignments = () => {
-    return (
-      <Text
-        style={{
-          paddingLeft: 16,
-          fontSize: 18,
-          lineHeight: 25,
-          fontFamily: "Graphik-Semibold-App",
-        }}
-      >
-        No assignments to review
-      </Text>
-    )
-  }
   const showMine = state.assignmentOption === "My Assignment" && data.length
   const showOthers = state.assignmentOption === "Assignments to Review" && data.length
   const showNoAssignments = !filteredAssignments.length
   return (
     <View style={{ width: "100%", paddingBottom: 250 }}>
       <AssignmentsToggle
-        adminCoach={isAdminOrIsCoach}
+        adminCoach={isAdmin || isCoach}
         optionState={state.assignmentOption}
         changeOption={(newSelection) => setState({ ...state, assignmentOption: newSelection })}
       />
@@ -77,7 +81,16 @@ const AssignmentCourseReview = ({
           room={myRoom}
         />
       ) : showNoAssignments ? (
-        <NoAssignments />
+        <Text
+          style={{
+            paddingLeft: 16,
+            fontSize: 18,
+            lineHeight: 25,
+            fontFamily: "Graphik-Semibold-App",
+          }}
+        >
+          No assignments to review
+        </Text>
       ) : showOthers ? (
         filteredAssignments.map((item, index: number) => {
           return (
