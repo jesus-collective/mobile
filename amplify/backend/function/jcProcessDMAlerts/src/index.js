@@ -57,6 +57,54 @@ async function getUser(id) {
   }
 }
 
+async function getCourseLesson(id) {
+  try {
+    console.log("Starting getCourseLesson", id)
+    const getCourseLesson = await Amplify.API.graphql({
+      query: queries.getCourseLesson,
+      variables: { id: id },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })
+    console.log(getCourseLesson)
+    return getCourseLesson?.data?.getCourseLesson
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+async function getCourseWeek(id) {
+  try {
+    console.log("Starting getCourseWeek", id)
+    const getCourseWeek = await Amplify.API.graphql({
+      query: queries.getCourseWeek,
+      variables: { id: id },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })
+    console.log(getCourseWeek)
+    return getCourseWeek?.data?.getCourseWeek
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+async function getCourseInfo(id) {
+  try {
+    console.log("Starting getCourseInfo", id)
+    const getCourseInfo = await Amplify.API.graphql({
+      query: queries.getCourseInfo,
+      variables: { id: id },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })
+    console.log(getCourseInfo)
+    return getCourseInfo?.data?.getCourseInfo
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
 async function sendEmail(recipient, message, name, type) {
   console.log("Setting Up Email")
   const sender = "Jesus Collective <donot-reply@jesuscollective.com>"
@@ -203,6 +251,7 @@ async function emailRouter(html, text, fromInfo, messageRoomID, recipientInfo) {
 
 async function Execute(event) {
   await asyncForEach(event.Records, async (record) => {
+    console.log(record)
     if (record.eventName == "INSERT") {
       console.log("Insert Detected")
       console.log("Loading Secret")
@@ -227,7 +276,8 @@ async function Execute(event) {
         }
         console.log("Loading Secret Done")
 
-        await Amplify.Auth.signIn(secret.userName, secret.password)
+        const cognitoUser = await Amplify.Auth.signIn(secret.userName, secret.password)
+        console.log(cognitoUser)
         const currentSession = await Amplify.Auth.currentSession()
         Amplify.default.configure({
           Authorization: currentSession.getIdToken().getJwtToken(),
@@ -238,24 +288,57 @@ async function Execute(event) {
         const content = record.dynamodb.NewImage.content.S
         const from = record.dynamodb.NewImage.userId.S
         const recipients = record.dynamodb.NewImage.recipients.L.map((item) => item.S)
-        console.log(recipients)
+        let recipientsToBeNotified = recipients
+        console.log({ recipients })
+        const lessonID = messageRoomID.split("-").slice(1, 6).join("-") // is assignment id
+        const courseLesson = await getCourseLesson(lessonID)
+        const courseWeek = await getCourseWeek(courseLesson.courseWeekID)
+        const courseInfo = await getCourseInfo(courseWeek.courseInfoID)
+        console.log({ courseInfo })
+        if (courseInfo?.separatedTriads) {
+          console.log("Filtering recipients.")
+          const backOfficeStaff =
+            courseInfo?.backOfficeStaff?.items?.map((item) => item?.userID) ?? []
+          console.log({ backOfficeStaff })
+          const instructors = courseInfo?.instructors?.items?.map((item) => item?.userID) ?? []
+          console.log({ instructors })
+          const triads = courseInfo?.triads?.items ?? []
+          const userTriad = triads?.find(
+            (triad) =>
+              triad?.coaches?.items?.find((item) => item?.userID === from) ||
+              triad?.users?.items?.find((item) => item?.userID === from)
+          )
+          console.log({ userTriad })
+          const coaches = userTriad?.coaches?.items?.map((item) => item?.userID) ?? []
+          const users = userTriad?.users?.items?.map((item) => item?.userID) ?? []
+          console.log({ coaches })
+          console.log({ users })
+          recipientsToBeNotified = recipients.filter(
+            (item) =>
+              coaches.includes(item) ||
+              users.includes(item) ||
+              instructors.includes(item) ||
+              backOfficeStaff.includes(item)
+          )
+        } else {
+          console.log("Skipped filtering recipients.")
+        }
+        recipientsToBeNotified = recipientsToBeNotified.filter((item) => item != from)
+        console.log({ recipientsToBeNotified })
         console.log("Starting Send Loop")
         const fromInfo = await getUser(from)
-        await asyncForEach(
-          recipients.filter((item) => item != from),
-          async (recipientID) => {
-            console.log({ "Lookup user": recipientID })
-            const recipientInfo = await getUser(recipientID)
-            if (recipientInfo) {
-              console.log({ "Sending a DM to": recipientInfo })
-              const html = convertCommentFromJSONToHTML(content)
-              const text = convertCommentFromJSONToTEXT(content)
-              if (html && text) {
-                await emailRouter(html, text, fromInfo, messageRoomID, recipientInfo)
-              }
+        await asyncForEach(recipientsToBeNotified, async (recipientID) => {
+          console.log({ "Lookup user": recipientID })
+          const recipientInfo = await getUser(recipientID)
+          if (recipientInfo) {
+            console.log({ "Sending a DM to": recipientInfo })
+            const html = convertCommentFromJSONToHTML(content)
+            const text = convertCommentFromJSONToTEXT(content)
+            if (html && text) {
+              await emailRouter(html, text, fromInfo, messageRoomID, recipientInfo)
             }
           }
-        )
+        })
       } catch (e) {
         console.log({ "Login Error": e })
       }

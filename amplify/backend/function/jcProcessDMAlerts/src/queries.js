@@ -1,7 +1,6 @@
-const graphql = require('graphql');
-const { print } = graphql;
-const gql = require('graphql-tag');
-
+const graphql = require("graphql")
+const { print } = graphql
+const gql = require("graphql-tag")
 
 const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
@@ -32,5 +31,60 @@ const getUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
-exports.getUser = getUser;
+`
+
+const getCourseInfo = /* GraphQL */ `
+  query GetCourseInfo($id: ID!) {
+    getCourseInfo(id: $id) {
+      id
+      separatedTriads
+      instructors {
+        items {
+          userID
+        }
+      }
+      backOfficeStaff {
+        items {
+          userID
+        }
+      }
+      triads {
+        items {
+          users {
+            items {
+              userID
+            }
+          }
+          coaches {
+            items {
+              userID
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+const getCourseWeek = /* GraphQL */ `
+  query GetCourseWeek($id: ID!) {
+    getCourseWeek(id: $id) {
+      courseInfoID
+    }
+  }
+`
+
+const getCourseLesson = /* GraphQL */ `
+  query GetCourseLesson($id: ID!) {
+    getCourseLesson(id: $id) {
+      courseWeekID
+    }
+  }
+`
+
+module.exports = {
+  getUser,
+  getCourseWeek,
+  getCourseLesson,
+  getCourseInfo,
+}
