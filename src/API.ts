@@ -23620,6 +23620,71 @@ export type DmUsersByUserQuery = {
   } | null,
 };
 
+export type DmUsersByUserIDQueryVariables = {
+  userID?: string | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelDirectMessageUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type DmUsersByUserIDQuery = {
+  dmUsersByUserID?:  {
+    __typename: "ModelDirectMessageUserConnection",
+    items:  Array< {
+      __typename: "DirectMessageUser",
+      id: string,
+      userName?: string | null,
+      userID: string,
+      roomID: string,
+      room?:  {
+        __typename: "DirectMessageRoom",
+        id: string,
+        name?: string | null,
+        roomType?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      user?:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email?: string | null,
+        phone?: string | null,
+        owner?: string | null,
+        mainUserGroup?: string | null,
+        stripeCustomerID?: string | null,
+        stripeSubscriptionID?: string | null,
+        hasPaidState?: PaidState | null,
+        profileState?: string | null,
+        aboutMeShort?: string | null,
+        aboutMeLong?: string | null,
+        interests?: Array< string | null > | null,
+        currentRole?: string | null,
+        currentScope?: string | null,
+        personality?: string | null,
+        orgName?: string | null,
+        orgType?: string | null,
+        orgSize?: string | null,
+        denomination?: string | null,
+        pplServed?: string | null,
+        sundayAttendance?: string | null,
+        numberVolunteers?: string | null,
+        orgDescription?: string | null,
+        joined?: string | null,
+        isArchived?: string | null,
+        primaryOrganization?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type DirectMessagesByRoomQueryVariables = {
   messageRoomID?: string | null,
   when?: ModelStringKeyConditionInput | null,

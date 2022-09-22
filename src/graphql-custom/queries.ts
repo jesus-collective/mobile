@@ -901,6 +901,33 @@ export const getUserForProfile = /* GraphQL */ `
     }
   }
 `
+export const directMessagesByRoom = /* GraphQL */ `
+  query DirectMessagesByRoom(
+    $messageRoomID: ID
+    $when: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    directMessagesByRoom(
+      messageRoomID: $messageRoomID
+      when: $when
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        createdAt
+      }
+      nextToken
+    }
+  }
+`
+
 export const listDirectMessagesForDms = /* GraphQL */ `
   query ListDirectMessages(
     $filter: ModelDirectMessageFilterInput
@@ -917,7 +944,67 @@ export const listDirectMessagesForDms = /* GraphQL */ `
     }
   }
 `
-
+export const dmUsersByUserID = /* GraphQL */ `
+  query DmUsersByUserID(
+    $userID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectMessageUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    dmUsersByUserID(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userName
+        userID
+        roomID
+        room {
+          id
+          name
+          roomType
+          messageUsers {
+            items {
+              id
+              userName
+              userID
+              roomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          directMessage {
+            items {
+              id
+              content
+              when
+              messageRoomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        user {
+          id
+          given_name
+          family_name
+        }
+      }
+      nextToken
+    }
+  }
+`
 export const listDirectMessageUsersForDMS = /* GraphQL */ `
   query ListDirectMessageUsersForDMS(
     $filter: ModelDirectMessageUserFilterInput

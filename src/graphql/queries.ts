@@ -5003,6 +5003,72 @@ export const dmUsersByUser = /* GraphQL */ `
     }
   }
 `
+export const dmUsersByUserID = /* GraphQL */ `
+  query DmUsersByUserID(
+    $userID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectMessageUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    dmUsersByUserID(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userName
+        userID
+        roomID
+        room {
+          id
+          name
+          roomType
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          isArchived
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
 export const directMessagesByRoom = /* GraphQL */ `
   query DirectMessagesByRoom(
     $messageRoomID: ID

@@ -33,15 +33,16 @@ export const loadDmsForRoom = async (roomId: string | undefined) => {
   if (!roomId) return
   const directMessages: any = []
   const loadNext = async (next: string | null | undefined = null) => {
-    const dms = await Data.listDirectMessages({
+    const dms = await Data.directMessagesByRoom({
       limit: 200,
-      filter: { messageRoomID: { eq: roomId } },
+      messageRoomID: roomId,
       nextToken: next,
     })
-    if (dms?.data?.listDirectMessages?.items?.length)
-      directMessages.push(...dms.data.listDirectMessages.items)
-    if (dms?.data?.listDirectMessages?.nextToken)
-      await loadNext(dms?.data?.listDirectMessages?.nextToken)
+    console.log({ dms })
+    if (dms?.data?.directMessagesByRoom?.items?.length)
+      directMessages.push(...dms.data.directMessagesByRoom.items)
+    if (dms?.data?.directMessagesByRoom?.nextToken)
+      await loadNext(dms?.data?.directMessagesByRoom?.nextToken)
   }
 
   await loadNext()
@@ -86,23 +87,26 @@ export const useDmUsers = () => {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const loadAllDmUsers = async () => {
+      let count = 0
       if (!isLoading) setIsLoading(true)
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       let tempData: DMUser[] = []
       const loadNext = async (next: string | null = null) => {
+        count++
         try {
           const query = {
+            userID: user["username"],
             limit: 200,
-            filter: { userID: { eq: user["username"] }, roomID: { notContains: "course" } },
+            filter: { roomID: { notContains: "course" } },
             nextToken: next,
           }
-          const json = await Data.listDirectMessageUsersForDMs(query)
-          console.log({ json })
-          if (json?.data?.listDirectMessageUsers?.nextToken) {
-            tempData = [...tempData, ...(json?.data?.listDirectMessageUsers?.items ?? [])]
-            loadNext(json?.data?.listDirectMessageUsers?.nextToken)
-          } else if (json?.data?.listDirectMessageUsers) {
-            tempData = [...tempData, ...(json?.data?.listDirectMessageUsers?.items ?? [])]
+          const json = await Data.dmUsersByUserID(query)
+          console.log({ [count]: json })
+          if (json?.data?.dmUsersByUserID?.nextToken) {
+            tempData = [...tempData, ...(json?.data?.dmUsersByUserID?.items ?? [])]
+            loadNext(json?.data?.dmUsersByUserID?.nextToken)
+          } else if (json?.data?.dmUsersByUserID) {
+            tempData = [...tempData, ...(json?.data?.dmUsersByUserID?.items ?? [])]
             // for rooms that have more than 100 dms
             for await (const a of tempData) {
               if (a?.room?.directMessage?.items && a?.room?.directMessage?.nextToken)
@@ -112,7 +116,7 @@ export const useDmUsers = () => {
             if (isLoading) setIsLoading(false)
           }
         } catch (err: any) {
-          const tempData = err?.data?.listDirectMessageUsers?.items ?? []
+          const tempData = err?.data?.dmUsersByUserID?.items ?? []
           setDmUsers(tempData)
           if (isLoading) setIsLoading(false)
           console.error({ err })

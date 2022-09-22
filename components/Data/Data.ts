@@ -12,6 +12,7 @@ import {
   ListMenusQuery,
   ModelGroupFilterInput,
 } from "src/API-customqueries"
+import { DirectMessagesByRoomQueryVariables } from "src/API-messages"
 import { InviteType } from "src/types"
 import {
   CourseTriadUserByUserQuery,
@@ -111,6 +112,9 @@ import {
   DeleteResourceSeriesMutation,
   DeleteStartupMutation,
   DeleteUserMutation,
+  DirectMessagesByRoomQuery,
+  DmUsersByUserIDQuery,
+  DmUsersByUserIDQueryVariables,
   EventBriteListEventsQuery,
   EventBriteListTicketClassesQuery,
   EventBriteListTicketClassesQueryVariables,
@@ -815,6 +819,13 @@ export class Data {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListDirectMessagesQuery>>
   }
+  static directMessagesByRoom(query: DirectMessagesByRoomQueryVariables) {
+    return API.graphql({
+      query: customQueries.directMessagesByRoom,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DirectMessagesByRoomQuery>>
+  }
   static listDirectMessageUsers(query: ListDirectMessageUsersQueryVariables) {
     return API.graphql({
       query: customQueries.listDirectMessageUsers,
@@ -835,6 +846,13 @@ export class Data {
       variables: query,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListDirectMessageUsersQuery>>
+  }
+  static dmUsersByUserID(query: DmUsersByUserIDQueryVariables) {
+    return API.graphql({
+      query: customQueries.dmUsersByUserID,
+      variables: query,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<DmUsersByUserIDQuery>>
   }
   static listCustomPricings(filter: ModelCustomPricingFilterInput | null) {
     return API.graphql({

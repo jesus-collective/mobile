@@ -807,6 +807,7 @@ export type GetCourseInfoQuery = {
           id: string
           given_name: string
           family_name: string
+          isArchived?: string | null
           email?: string | null
           phone?: string | null
           owner?: string | null
@@ -905,6 +906,7 @@ export type GetCourseInfoQuery = {
           id: string
           given_name: string
           family_name: string
+          isArchived?: string | null
           email?: string | null
           phone?: string | null
           owner?: string | null
@@ -1047,6 +1049,7 @@ export type GetCourseInfoQuery = {
               __typename: "User"
               id: string
               given_name: string
+              isArchived?: string | null
               family_name: string
               email?: string | null
               phone?: string | null
@@ -1076,6 +1079,7 @@ export type GetCourseInfoQuery = {
               __typename: "User"
               id: string
               given_name: string
+              isArchived?: string | null
               family_name: string
               email?: string | null
               phone?: string | null

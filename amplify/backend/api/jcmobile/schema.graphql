@@ -889,6 +889,7 @@ type DirectMessageUser
 @model
  @key(name: "byMessageRoom", fields: ["userID", "roomID"])
  @key(name: "byUser", fields: ["roomID", "userID"], queryField: "dmUsersByUser")
+ @key(name: "byUserID", fields: ["userID"], queryField: "dmUsersByUserID")
 {
   id:ID!
   userName:String  
