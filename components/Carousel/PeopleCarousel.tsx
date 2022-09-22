@@ -13,7 +13,7 @@ const PeopleCarousel = () => {
   const [isLoading, setIsLoading] = useState(true)
   const loadGroups = async () => {
     try {
-      const listUsers = await Data.listUsersForProfile(UserGroupType.All, null)
+      const listUsers = await Data.listUsersForProfile(UserGroupType.Partners, null)
       setPeople(listUsers?.data?.listUsers?.items ?? [])
     } catch (err: any) {
       setPeople(err?.data?.listUsers?.items ?? [])

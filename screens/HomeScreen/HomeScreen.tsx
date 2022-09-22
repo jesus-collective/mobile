@@ -4,8 +4,6 @@ import React, { lazy, useLayoutEffect } from "react"
 import { BrowserView, isMobileOnly, MobileOnlyView } from "react-device-detect"
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import Cookies from "universal-cookie"
-import EventCarousel from "../../components/Carousel/EventCarousel"
-import GroupCarousel from "../../components/Carousel/GroupCarousel"
 import OrgCarousel from "../../components/Carousel/OrgCarousel"
 import PeopleCarousel from "../../components/Carousel/PeopleCarousel"
 import ResourceCarousel from "../../components/Carousel/ResourceCarousel"
@@ -90,8 +88,8 @@ export default function HomeScreen() {
           paddingLeft: 12,
         }} // fix margins
       >
-        <EventCarousel />
-        <GroupCarousel />
+        {/*<EventCarousel />
+        <GroupCarousel />*/}
         <ResourceCarousel />
         <PeopleCarousel />
         <OrgCarousel />

@@ -17,7 +17,7 @@ export default function ProfilesList(props: Props) {
   const [isLoading, setIsLoading] = useState(true)
   const [nextToken, setNextToken] = useState<string | null>(null)
   const loadProfiles = async (next: string | undefined | null = null) => {
-    const userGroup = filter ? UserGroupType.Friends : UserGroupType.All
+    const userGroup = UserGroupType.Partners
     const listUsers = await Data.listUsersForProfile(userGroup, next)
     setData((prev) =>
       [...prev, ...(listUsers?.data?.listUsers?.items ?? [])].sort((userA, userB) =>
