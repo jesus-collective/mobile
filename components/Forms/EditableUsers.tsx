@@ -126,15 +126,19 @@ export function SearchUsers({
   onAdd: Props["onAdd"]
   onRemove: Props["onRemove"]
 }): JSX.Element {
-  console.log({ users })
   const [searchOpen, setSearchOpen] = React.useState(false)
-  const originalUsers = users.map((user) => {
-    return generateDropdownItem({
-      given_name: user?.user?.given_name ?? user?.given_name ?? user?.label,
-      family_name: user?.user?.family_name ?? user?.family_name ?? user?.label,
-      id: user?.userID ?? user?.id ?? user?.value,
+  const originalUsers = users
+    .filter((user) => {
+      const userData = user?.user ?? user
+      return userData?.isArchived !== "true"
     })
-  })
+    .map((user) => {
+      return generateDropdownItem({
+        given_name: user?.user?.given_name ?? user?.given_name ?? user?.label,
+        family_name: user?.user?.family_name ?? user?.family_name ?? user?.label,
+        id: user?.userID ?? user?.id ?? user?.value,
+      })
+    })
   const [selectedUserIDS, setSelectedUserIDS] = React.useState<string[]>(
     originalUsers.map((user) => user?.value)
   )
@@ -156,9 +160,11 @@ export function SearchUsers({
   const doSearch = async (value: string) => {
     const newUsers = await autoCompleteUser(value)
     if (newUsers) {
-      const usersForDropdown: UserDropdownType[] = newUsers.map((user) => {
-        return generateDropdownItem(user)
-      })
+      const usersForDropdown: UserDropdownType[] = newUsers
+        .filter((user) => user?.isArchived !== "true")
+        .map((user) => {
+          return generateDropdownItem(user)
+        })
       setIsLoading(false)
       setAllUsers((prev) => [...prev, ...newUsers])
       setItems(usersForDropdown)
