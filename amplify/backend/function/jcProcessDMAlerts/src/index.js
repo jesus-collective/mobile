@@ -251,10 +251,13 @@ async function emailRouter(html, text, fromInfo, messageRoomID, recipientInfo) {
 
 async function Execute(event) {
   await asyncForEach(event.Records, async (record) => {
-    console.log(record)
     if (record.eventName == "INSERT") {
+      console.log("======== New DirectMessage ========")
+      console.log("messageRoomID", record.dynamodb.NewImage?.messageRoomID?.S)
+      console.log("DirectMessage id", record.dynamodb.NewImage?.id?.S)
+      console.log("DirectMessage userId", record.dynamodb.NewImage?.userId?.S)
       console.log("Insert Detected")
-      console.log("Loading Secret")
+      console.log("======== Loading Secret ========")
       var AWS = require("aws-sdk"),
         region = "us-east-1",
         secretName = "jcmobile/" + process.env.ENV + "/lamdaSecrets",
@@ -274,15 +277,14 @@ async function Execute(event) {
           let buff = new Buffer(data.SecretBinary, "base64")
           decodedBinarySecret = buff.toString("ascii")
         }
-        console.log("Loading Secret Done")
+        console.log("======== Loading Secret Done ========")
 
-        const cognitoUser = await Amplify.Auth.signIn(secret.userName, secret.password)
-        console.log(cognitoUser)
+        await Amplify.Auth.signIn(secret.userName, secret.password)
         const currentSession = await Amplify.Auth.currentSession()
         Amplify.default.configure({
           Authorization: currentSession.getIdToken().getJwtToken(),
         })
-        console.log("Logged in")
+        console.log("======== Logged in ========")
         const messageRoomID = record.dynamodb.NewImage.messageRoomID.S
         const when = record.dynamodb.NewImage.when.S
         const content = record.dynamodb.NewImage.content.S
@@ -290,42 +292,46 @@ async function Execute(event) {
         const recipients = record.dynamodb.NewImage.recipients.L.map((item) => item.S)
         let recipientsToBeNotified = recipients
         console.log({ recipients })
-        const lessonID = messageRoomID.split("-").slice(1, 6).join("-") // is assignment id
-        const courseLesson = await getCourseLesson(lessonID)
-        const courseWeek = await getCourseWeek(courseLesson.courseWeekID)
-        const courseInfo = await getCourseInfo(courseWeek.courseInfoID)
-        console.log({ courseInfo })
-        if (courseInfo?.separatedTriads) {
-          console.log("Filtering recipients.")
-          const backOfficeStaff =
-            courseInfo?.backOfficeStaff?.items?.map((item) => item?.userID) ?? []
-          console.log({ backOfficeStaff })
-          const instructors = courseInfo?.instructors?.items?.map((item) => item?.userID) ?? []
-          console.log({ instructors })
-          const triads = courseInfo?.triads?.items ?? []
-          const userTriad = triads?.find(
-            (triad) =>
-              triad?.coaches?.items?.find((item) => item?.userID === from) ||
-              triad?.users?.items?.find((item) => item?.userID === from)
-          )
-          console.log({ userTriad })
-          const coaches = userTriad?.coaches?.items?.map((item) => item?.userID) ?? []
-          const users = userTriad?.users?.items?.map((item) => item?.userID) ?? []
-          console.log({ coaches })
-          console.log({ users })
-          recipientsToBeNotified = recipients.filter(
-            (item) =>
-              coaches.includes(item) ||
-              users.includes(item) ||
-              instructors.includes(item) ||
-              backOfficeStaff.includes(item)
-          )
+        if (messageRoomID.startsWith("course")) {
+          const lessonID = messageRoomID.split("-").slice(1, 6).join("-") // is assignment id
+          const courseLesson = await getCourseLesson(lessonID)
+          const courseWeek = await getCourseWeek(courseLesson.courseWeekID)
+          const courseInfo = await getCourseInfo(courseWeek.courseInfoID)
+          console.log({ courseInfo })
+          if (courseInfo?.separatedTriads) {
+            console.log("======== Filtering recipients ========")
+            const backOfficeStaff =
+              courseInfo?.backOfficeStaff?.items?.map((item) => item?.userID) ?? []
+            console.log({ backOfficeStaff })
+            const instructors = courseInfo?.instructors?.items?.map((item) => item?.userID) ?? []
+            console.log({ instructors })
+            const triads = courseInfo?.triads?.items ?? []
+            const userTriad = triads?.find(
+              (triad) =>
+                triad?.coaches?.items?.find((item) => item?.userID === from) ||
+                triad?.users?.items?.find((item) => item?.userID === from)
+            )
+            console.log({ userTriad })
+            const coaches = userTriad?.coaches?.items?.map((item) => item?.userID) ?? []
+            const users = userTriad?.users?.items?.map((item) => item?.userID) ?? []
+            console.log({ coaches })
+            console.log({ users })
+            recipientsToBeNotified = recipients.filter(
+              (item) =>
+                coaches.includes(item) ||
+                users.includes(item) ||
+                instructors.includes(item) ||
+                backOfficeStaff.includes(item)
+            )
+          } else {
+            console.log("======== Skipped filtering recipients ========")
+          }
         } else {
-          console.log("Skipped filtering recipients.")
+          console.log("======== Not a course. Skipped ========")
         }
         recipientsToBeNotified = recipientsToBeNotified.filter((item) => item != from)
         console.log({ recipientsToBeNotified })
-        console.log("Starting Send Loop")
+        console.log("======== Starting Send Loop ========")
         const fromInfo = await getUser(from)
         await asyncForEach(recipientsToBeNotified, async (recipientID) => {
           console.log({ "Lookup user": recipientID })
