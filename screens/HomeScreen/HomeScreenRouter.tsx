@@ -67,6 +67,11 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
   onSetUser = (user: any): void => {
     this.setState({ user: user })
   }
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+    if (!this.state.groups) {
+      this.updateGroups()
+    }
+  }
   async componentDidMount(): Promise<void> {
     try {
       await this.updateGroups()
@@ -119,7 +124,7 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         "DONE ": user.getSignInUserSession()?.getAccessToken().payload["cognito:groups"],
       })
     } catch (e) {
-      console.log(e)
+      console.log({ error: e })
     }
     await this.updateProfile()
   }
