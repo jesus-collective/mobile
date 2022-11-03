@@ -44,7 +44,6 @@ export default function CourseCard({
     })
   }
   const [cardWidth, setCardWidth] = useState(200)
-  console.log({ item })
   return (
     <TouchableOpacity
       delayPressIn={150}
