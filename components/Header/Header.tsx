@@ -61,7 +61,7 @@ const resourcesStyle2 = {
   cursor: "pointer",
 }
 
-export default function HeaderJCC(props: Props) {
+export default function HeaderJC(props: Props) {
   const { width } = useWindowDimensions()
   const isOpen = props?.drawerState // useDrawerStatus() is needed when in a drawer navigator to determine hamburger icon state
   /* 
@@ -204,7 +204,7 @@ export default function HeaderJCC(props: Props) {
               {state.menus.map((mapItem) => {
                 if (mapItem == null) return null
                 return (mapItem?.subItems?.items?.length ?? 0) > 0 ? (
-                  <>
+                  <View key={mapItem?.id}>
                     <button
                       data-testid="header-resources"
                       onClick={(e) => {
@@ -251,6 +251,7 @@ export default function HeaderJCC(props: Props) {
                         if (subItem == null) return null
                         return (
                           <MenuItem
+                            key={subItem?.id}
                             onClick={() => {
                               handleMenuDropdownClose(mapItem.id)
                               openScreen(subItem.action ?? "", subItem.params)
@@ -266,9 +267,10 @@ export default function HeaderJCC(props: Props) {
                         )
                       })}
                     </Menu>
-                  </>
+                  </View>
                 ) : (
                   <TouchableOpacity
+                    key={mapItem?.id}
                     onPress={() => {
                       openScreen(mapItem.action ?? "", mapItem.params)
                     }}
