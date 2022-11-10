@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import { DrawerActions, useNavigation } from "@react-navigation/native"
@@ -11,6 +10,7 @@ import { ListMenusQuery } from "src/API-customqueries"
 import { Data } from "../../components/Data/Data"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
+import SearchBar from "../Forms/SearchBar"
 import HeaderStyles from "../Header/style"
 import { JCState } from "../JCComponent/JCComponent"
 import ProfileImageNew, {
@@ -28,6 +28,7 @@ interface Props {
   controls?: any
   drawerState?: boolean
   showAdmin?: boolean
+  search?: any
   overrideMenu?: NonNullable<ListMenusQuery["listMenus"]>["items"]
 }
 
@@ -115,10 +116,6 @@ export default function HeaderJCC(props: Props) {
 
   const openScreen = (screen: string, params: any): void => {
     navigation?.push(screen, params == "" ? null : JSON.parse(params))
-  }
-
-  const openSearch = (): void => {
-    navigation?.push("SearchScreen")
   }
 
   const openMessages = (): void => {
@@ -283,6 +280,7 @@ export default function HeaderJCC(props: Props) {
             <View
               style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
             >
+              {constants["SETTING_ISVISIBLE_SEARCH"] ? <SearchBar /> : null}
               <ProfileImageNew
                 linkToProfile
                 user={state?.user?.username}
@@ -290,13 +288,6 @@ export default function HeaderJCC(props: Props) {
                 type="user"
                 style={width < 1300 ? ProfileImageStyle.UserXXSmall : ProfileImageStyle.UserSmall}
               />
-              {constants["SETTING_ISVISIBLE_SEARCH"] ? (
-                <View style={{ marginHorizontal: 12 }}>
-                  <TouchableOpacity testID="header-search" onPress={openSearch}>
-                    <Ionicons name="md-search" style={headerStyles.style.icon} />
-                  </TouchableOpacity>
-                </View>
-              ) : null}
 
               {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
                 <View style={{ marginHorizontal: 12 }}>
@@ -389,6 +380,7 @@ export default function HeaderJCC(props: Props) {
             {props.controls ? <HeaderControls controls={props.controls} /> : null}
           </View>
           {props.subnav ? <SubHeader navItems={props.subnav} /> : null}
+          {props.search}
         </View>
       </MobileOnlyView>
     </>

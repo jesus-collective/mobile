@@ -22,6 +22,7 @@ export default function GenericButton(props: Props) {
   const [hovered, setHovered] = useState(false)
   const buttonRef = React.createRef<TouchableOpacityWithListener>()
   useEffect(() => {
+    const button = buttonRef.current
     const handleHover = (action: string) => {
       if (!disabled) {
         if (action === "mouseIn") setHovered(true)
@@ -29,18 +30,18 @@ export default function GenericButton(props: Props) {
       }
     }
     if (Platform.OS === "web")
-      if (buttonRef?.current) {
-        buttonRef.current.addEventListener("mouseenter", () => handleHover("mouseIn"))
-        buttonRef.current.addEventListener("mouseleave", () => handleHover("mouseOut"))
+      if (button) {
+        button.addEventListener("mouseenter", () => handleHover("mouseIn"))
+        button.addEventListener("mouseleave", () => handleHover("mouseOut"))
       }
     return () => {
       if (Platform.OS === "web")
-        if (buttonRef?.current) {
-          buttonRef.current.removeEventListener("mouseenter", () => handleHover("mouseIn"))
-          buttonRef.current.removeEventListener("mouseleave", () => handleHover("mouseOut"))
+        if (button) {
+          button.removeEventListener("mouseenter", () => handleHover("mouseIn"))
+          button.removeEventListener("mouseleave", () => handleHover("mouseOut"))
         }
     }
-  }, [disabled])
+  }, [disabled, buttonRef])
   return (
     <TouchableOpacity
       ref={buttonRef}
