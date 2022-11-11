@@ -5,8 +5,17 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { HTMLAttributes, useEffect, useState } from "react"
 import { BrowserView, MobileOnlyView } from "react-device-detect"
-import { Dimensions, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
+import SearchInactiveIcon from "../../assets/Facelift/svg/Search-2.svg"
 import { Data } from "../../components/Data/Data"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
@@ -172,7 +181,13 @@ export default function HeaderJCC(props: Props) {
       menuDropdown: z,
     }))
   }
-
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  let menu = state.menus
+  if (isSearchOpen) {
+    menu = []
+  } else {
+    menu = state.menus
+  }
   return (
     <>
       <BrowserView>
@@ -198,7 +213,7 @@ export default function HeaderJCC(props: Props) {
               />
             </TouchableOpacity>
             <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-              {state.menus.map((mapItem) => {
+              {menu.map((mapItem) => {
                 if (mapItem == null) return null
                 return (mapItem?.subItems?.items?.length ?? 0) > 0 ? (
                   <>
@@ -280,7 +295,27 @@ export default function HeaderJCC(props: Props) {
             <View
               style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
             >
-              {constants["SETTING_ISVISIBLE_SEARCH"] ? <SearchBar /> : null}
+              {constants["SETTING_ISVISIBLE_SEARCH"] ? (
+                width < 1000 ? (
+                  <>
+                    <View style={isSearchOpen ? {} : { display: "none" }}>
+                      <SearchBar closeSearchBar={() => setIsSearchOpen(false)} />
+                    </View>
+
+                    {!isSearchOpen ? (
+                      <Pressable
+                        style={{ padding: 8, marginRight: 8 }}
+                        onPress={() => setIsSearchOpen(true)}
+                      >
+                        <Image style={{ height: 24, width: 24 }} source={SearchInactiveIcon} />
+                      </Pressable>
+                    ) : null}
+                  </>
+                ) : (
+                  <SearchBar />
+                )
+              ) : null}
+
               <ProfileImageNew
                 linkToProfile
                 user={state?.user?.username}

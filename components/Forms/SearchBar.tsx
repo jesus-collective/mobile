@@ -26,8 +26,13 @@ import ProfileImageNew, {
 type SearchBarProps = {
   passDataToParent?: (data: User[]) => void
   passIsListEmpty?: (isEmpty: boolean) => void
+  closeSearchBar?: () => void
 }
-export default function SearchBar({ passDataToParent, passIsListEmpty }: SearchBarProps) {
+export default function SearchBar({
+  passDataToParent,
+  passIsListEmpty,
+  closeSearchBar,
+}: SearchBarProps) {
   const [data, setData] = useState<User[]>([])
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [isLoading, setIsLoading] = useState(false)
@@ -87,7 +92,9 @@ export default function SearchBar({ passDataToParent, passIsListEmpty }: SearchB
   useEffect(() => {
     if (passIsListEmpty) passIsListEmpty(showListEmpty)
   }, [showListEmpty, passIsListEmpty])
-
+  useEffect(() => {
+    if (!isComponentVisible && closeSearchBar) closeSearchBar()
+  }, [isComponentVisible])
   return (
     <>
       <BrowserView>
@@ -115,7 +122,7 @@ export default function SearchBar({ passDataToParent, passIsListEmpty }: SearchB
               ref={ref}
               onFocus={() => setIsComponentVisible(true)}
               style={{
-                paddingVertical: 12,
+                paddingVertical: 10,
                 zIndex: 1000,
                 flex: 1,
                 paddingRight: 8,
