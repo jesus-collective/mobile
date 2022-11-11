@@ -6,7 +6,7 @@ import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
 import { User } from "../../src/API"
 export default function SearchScreen2(props: any) {
   const [data, setData] = useState<User[]>([])
-  const [isLoading, setIsLoading] = useState()
+  const [showListEmpty, setShowListEmpty] = useState(false)
   useEffect(() => {
     props.navigation.setOptions({
       header: () => (
@@ -14,7 +14,10 @@ export default function SearchScreen2(props: any) {
           title="Search"
           search={
             <View style={{ paddingBottom: 16 }}>
-              <SearchBar passDataToParent={(dataFromChild) => setData(dataFromChild)} />
+              <SearchBar
+                passIsListEmpty={(isEmpty) => setShowListEmpty(isEmpty)}
+                passDataToParent={(dataFromChild) => setData(dataFromChild)}
+              />
             </View>
           }
         />
@@ -44,7 +47,9 @@ export default function SearchScreen2(props: any) {
                   }}
                   source={require("../../assets/undraw_people_search_re_5rre.svg")}
                 ></Image>
-                <Text style={{ marginTop: 4 }}>Uh oh.. No people found.</Text>
+                {showListEmpty ? (
+                  <Text style={{ marginTop: 4 }}>Uh oh.. No people found.</Text>
+                ) : null}
               </View>
             )
       }

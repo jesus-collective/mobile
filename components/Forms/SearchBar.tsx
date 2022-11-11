@@ -25,8 +25,9 @@ import ProfileImageNew, {
 
 type SearchBarProps = {
   passDataToParent?: (data: User[]) => void
+  passIsListEmpty?: (isEmpty: boolean) => void
 }
-export default function SearchBar({ passDataToParent }: SearchBarProps) {
+export default function SearchBar({ passDataToParent, passIsListEmpty }: SearchBarProps) {
   const [data, setData] = useState<User[]>([])
   const navigation = useNavigation<StackNavigationProp<any, any>>()
   const [isLoading, setIsLoading] = useState(false)
@@ -34,34 +35,26 @@ export default function SearchBar({ passDataToParent }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState("")
   const debouncedSearchterm = useDebounce(searchTerm, 1000)
   const doSearch = async (newSearchTerm: string) => {
-    console.log("Performing Search")
+    const names = newSearchTerm.split(" ")
+    const or = names
+      .map((name) => {
+        return [
+          { given_name: { wildcard: name.toLowerCase() + "*" } },
+          { family_name: { wildcard: name.toLowerCase() + "*" } },
+        ]
+      })
+      .flat()
+
     const userResult = await Data.searchUsers({
       and: [
         { isArchived: { ne: "true" } },
         {
-          or: [
-            { given_name: { wildcard: newSearchTerm.toLowerCase() + "*" } },
-            { family_name: { wildcard: newSearchTerm.toLowerCase() + "*" } },
-            {
-              and: [
-                {
-                  given_name: { wildcard: newSearchTerm.toLowerCase() + "*" },
-                },
-                {
-                  family_name: { wildcard: newSearchTerm.toLowerCase() + "*" },
-                },
-              ],
-            },
-          ],
+          or: or,
         },
         { profileState: { eq: "Complete" } },
         { mainUserGroup: { eq: "Partner" } },
       ],
     })
-    // const groupData = await Data.searchGroups({
-    //   or: [{ name: { wildcard: newSearchTerm.toLowerCase() + "*" } }],
-    // })
-    // console.log({ groupData })
     const users = userResult.data?.searchUsers?.items as User[]
     if (!users.length) setShowListEmpty(true)
     else setShowListEmpty(false)
@@ -86,10 +79,15 @@ export default function SearchBar({ passDataToParent }: SearchBarProps) {
     }
     setSearchTerm(value)
   }
-  console.log("SearchBarRender")
+
   useEffect(() => {
     if (passDataToParent) passDataToParent(data)
   }, [data, passDataToParent])
+
+  useEffect(() => {
+    if (passIsListEmpty) passIsListEmpty(showListEmpty)
+  }, [showListEmpty, passIsListEmpty])
+
   return (
     <>
       <BrowserView>
