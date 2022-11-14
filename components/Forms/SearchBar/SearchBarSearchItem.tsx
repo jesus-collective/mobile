@@ -1,7 +1,14 @@
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
-import { GestureResponderEvent, StyleSheet, Text, TouchableHighlight, View } from "react-native"
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  useWindowDimensions,
+  View,
+} from "react-native"
 import ProfileImageNew, {
   ProfileImageQuality,
   ProfileImageStyle,
@@ -24,13 +31,27 @@ export default function SearchBarSearchItem({
     clearData()
     navigation.navigate("ProfileScreen", { id: item.id })
   }
+  const { width } = useWindowDimensions()
   const ContainerStyle =
     isLast && isFirst
-      ? [SearchBarItemStyle.Container, SearchBarItemStyle.isLast, SearchBarItemStyle.isFirst]
+      ? [
+          SearchBarItemStyle.Container,
+          SearchBarItemStyle.isLast,
+          SearchBarItemStyle.isFirst,
+          width < 1000
+            ? { borderTopRightRadius: 0, borderTopLeftRadius: 0, borderTopWidth: 2 }
+            : {},
+        ]
       : isLast
       ? [SearchBarItemStyle.Container, SearchBarItemStyle.isLast]
       : isFirst
-      ? [SearchBarItemStyle.Container, SearchBarItemStyle.isFirst]
+      ? [
+          SearchBarItemStyle.Container,
+          SearchBarItemStyle.isFirst,
+          width < 1000
+            ? { borderTopRightRadius: 0, borderTopLeftRadius: 0, borderTopWidth: 2 }
+            : {},
+        ]
       : SearchBarItemStyle.Container
   return (
     <TouchableHighlight

@@ -1,6 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
 import { BrowserView, MobileOnlyView } from "react-device-detect"
-import { ActivityIndicator, FlatList, Image, Pressable, StyleSheet, View } from "react-native"
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native"
 import { TextInput } from "react-native-gesture-handler"
 import SearchActiveIcon from "../../../assets/Facelift/svg/Search-Active.svg"
 import SearchInactiveIcon from "../../../assets/Facelift/svg/Search.svg"
@@ -21,6 +29,7 @@ export default function SearchBar({
   passIsListEmpty,
   closeSearchBar,
 }: SearchBarProps) {
+  const { width } = useWindowDimensions()
   const [data, setData] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [showListEmpty, setShowListEmpty] = useState(false)
@@ -161,7 +170,10 @@ export default function SearchBar({
           {isComponentVisible ? (
             <FlatList
               ListEmptyComponent={showListEmpty && !isLoading ? <SearchBarListEmpty /> : null}
-              style={SearchBarStyle.ListStyle}
+              style={[
+                SearchBarStyle.ListStyle,
+                width < 1000 ? { width: "100%", marginLeft: 0 } : {},
+              ]}
               data={data}
               renderItem={({ item, index }) => {
                 const isLast = index === data.length - 1
@@ -282,8 +294,8 @@ const SearchBarStyle = StyleSheet.create({
   ListStyle: {
     flex: 1,
     top: 42.5,
-    width: "calc(100% + 40px)",
-    marginLeft: -20,
+    width: "calc(100% + 30px)",
+    marginLeft: -15,
     marginTop: -4,
     display: "flex",
     maxHeight: 348,
