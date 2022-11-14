@@ -309,7 +309,11 @@ export default function HeaderJCC(props: Props) {
               {constants["SETTING_ISVISIBLE_SEARCH"] ? (
                 width < 1000 ? (
                   <>
-                    <View style={isSearchOpen ? { width: "65vw" } : { display: "none" }}>
+                    <View
+                      style={
+                        isSearchOpen ? { width: "65vw", marginHorizontal: 20 } : { display: "none" }
+                      }
+                    >
                       <SearchBar closeSearchBar={() => setIsSearchOpen(false)} />
                     </View>
 
@@ -323,7 +327,9 @@ export default function HeaderJCC(props: Props) {
                     ) : null}
                   </>
                 ) : (
-                  <SearchBar />
+                  <View style={{ marginHorizontal: 20 }}>
+                    <SearchBar />
+                  </View>
                 )
               ) : null}
 

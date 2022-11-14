@@ -232,7 +232,6 @@ const SearchBarStyle = StyleSheet.create({
   SearchBarContainer: {
     flex: 1,
     flexDirection: "row",
-    marginHorizontal: 20,
     backgroundColor: "#F6F5F5",
     borderRadius: 4,
   },
@@ -283,10 +282,11 @@ const SearchBarStyle = StyleSheet.create({
   ListStyle: {
     flex: 1,
     top: 42.5,
-    width: "100%",
+    width: "calc(100% + 40px)",
+    marginLeft: -20,
     marginTop: -4,
     display: "flex",
-    maxHeight: 400,
+    maxHeight: 348,
     position: "absolute",
   },
 })
