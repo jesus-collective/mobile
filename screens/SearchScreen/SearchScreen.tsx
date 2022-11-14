@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { FlatList, Image, Text, View } from "react-native"
-import SearchBar from "../../components/Forms/SearchBar"
+import SearchBar from "../../components/Forms/SearchBar/SearchBar"
 import Header from "../../components/Header/Header"
 import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
 import { User } from "../../src/API"

@@ -19,7 +19,7 @@ import SearchInactiveIcon from "../../assets/Facelift/svg/Search-2.svg"
 import { Data } from "../../components/Data/Data"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
-import SearchBar from "../Forms/SearchBar"
+import SearchBar from "../Forms/SearchBar/SearchBar"
 import HeaderStyles from "../Header/style"
 import { JCState } from "../JCComponent/JCComponent"
 import ProfileImageNew, {
