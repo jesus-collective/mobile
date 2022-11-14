@@ -212,7 +212,13 @@ export default function HeaderJCC(props: Props) {
                 }`)}
               />
             </TouchableOpacity>
-            <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={
+                isSearchOpen
+                  ? { display: "none" }
+                  : { flex: 1, flexDirection: "row", alignItems: "center" }
+              }
+            >
               {menu.map((mapItem) => {
                 if (mapItem == null) return null
                 return (mapItem?.subItems?.items?.length ?? 0) > 0 ? (
@@ -293,12 +299,17 @@ export default function HeaderJCC(props: Props) {
             </View>
 
             <View
-              style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
             >
               {constants["SETTING_ISVISIBLE_SEARCH"] ? (
                 width < 1000 ? (
                   <>
-                    <View style={isSearchOpen ? {} : { display: "none" }}>
+                    <View style={isSearchOpen ? { width: "65vw" } : { display: "none" }}>
                       <SearchBar closeSearchBar={() => setIsSearchOpen(false)} />
                     </View>
 
