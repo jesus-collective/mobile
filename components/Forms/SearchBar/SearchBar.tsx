@@ -42,6 +42,7 @@ export default function SearchBar({
         return [
           { given_name: { wildcard: name.toLowerCase() + "*" } },
           { family_name: { wildcard: name.toLowerCase() + "*" } },
+          { email: { wildcard: name.toLowerCase() + "*" } },
         ]
       })
       .flat()
@@ -173,6 +174,7 @@ export default function SearchBar({
               style={[
                 SearchBarStyle.ListStyle,
                 width < 1000 ? { width: "100%", marginLeft: 0 } : {},
+                !data.length ? { borderColor: "transparent" } : {},
               ]}
               data={data}
               renderItem={({ item, index }) => {
@@ -249,7 +251,7 @@ const SearchBarStyle = StyleSheet.create({
   },
   TextInput: {
     zIndex: 1000,
-    paddingRight: 8,
+    paddingRight: 32,
     flex: 1,
     height: 40,
     paddingLeft: 40,
@@ -295,6 +297,9 @@ const SearchBarStyle = StyleSheet.create({
     flex: 1,
     top: 42.5,
     width: "calc(100% + 30px)",
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#E4E1E1",
     marginLeft: -15,
     marginTop: -4,
     display: "flex",

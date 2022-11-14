@@ -37,9 +37,8 @@ export default function SearchBarSearchItem({
       ? [
           SearchBarItemStyle.Container,
           SearchBarItemStyle.isLast,
-          SearchBarItemStyle.isFirst,
           width < 1000
-            ? { borderTopRightRadius: 0, borderTopLeftRadius: 0, borderTopWidth: 2 }
+            ? { borderTopRightRadius: 0, borderTopLeftRadius: 0, borderTopWidth: 1 }
             : {},
         ]
       : isLast
@@ -47,9 +46,8 @@ export default function SearchBarSearchItem({
       : isFirst
       ? [
           SearchBarItemStyle.Container,
-          SearchBarItemStyle.isFirst,
           width < 1000
-            ? { borderTopRightRadius: 0, borderTopLeftRadius: 0, borderTopWidth: 2 }
+            ? { borderTopRightRadius: 0, borderTopLeftRadius: 0, borderTopWidth: 1 }
             : {},
         ]
       : SearchBarItemStyle.Container
@@ -83,28 +81,13 @@ const SearchBarItemStyle = StyleSheet.create({
   TouchableContainer: {
     zIndex: 10000,
   },
-  isFirst: {
-    borderTopWidth: 1,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
-  isLast: {
-    borderBottomWidth: 1,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-  },
+  isLast: { borderBottomWidth: 0 },
   Container: {
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "#e4e1e1",
     backgroundColor: "#ffffff",
+    borderBottomWidth: 1,
+    borderColor: "#E4E1E1",
     flexDirection: "row",
     flex: 1,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
     paddingVertical: 12,
     paddingHorizontal: 8,
   },
