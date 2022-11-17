@@ -84,7 +84,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
               setUserDetails(getUser.data.getUser)
               setIsEditable(getUser.data.getUser.id == user["username"])
               setInterestsArray(getUser.data.getUser.interests ?? [])
-              getProfileImage()
+              getProfileImage(getUser.data.getUser as UserData)
               convertProfileToMapData()
             } else setNoUserFound(true)
           } catch (e: any) {
@@ -92,7 +92,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
             if (e.data?.getUser != null) {
               setUserDetails(e.data.getUser)
               setInterestsArray(e.data.getUser.interests ?? [])
-              getProfileImage()
+              getProfileImage(e.data.getUser as UserData)
               convertProfileToMapData()
             } else setNoUserFound(true)
           }
@@ -104,7 +104,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
               setIsEditable(getUser.data?.getUser?.id == user["username"])
               setEditMode(true)
               setInterestsArray(getUser.data?.getUser?.interests ?? [])
-              getProfileImage()
+              getProfileImage(getUser.data?.getUser as UserData)
               convertProfileToMapData()
             }
             console.log(getUser.data?.getUser)
@@ -148,13 +148,11 @@ export default function MyProfile(props: Props): JSX.Element | null {
     getUserDetails()
     fetchCrm()
   }, [userActions, props.loadId])
-  const getProfileImage = (): void => {
-    console.log("get profile image")
-    //console.log(this.state.UserDetails.profileImage)
-    if (userDetails?.profileImage?.filenameUpload)
-      Storage.get(userDetails.profileImage.filenameUpload, {
+  const getProfileImage = (userData: UserData): void => {
+    if (userData?.profileImage?.filenameUpload)
+      Storage.get(userData.profileImage.filenameUpload, {
         level: "protected",
-        identityId: userDetails.profileImage.userId ?? "",
+        identityId: userData.profileImage.userId ?? "",
       })
         .then((result) => setProfileImage(result as string))
         .catch((err) => {
@@ -1188,8 +1186,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
         }
         setUserDetails(updateData as UserData)
         setDirty(true)
-        // await setStates
-        getProfileImage()
+        getProfileImage(updateData as UserData)
       })
       .catch((err: unknown) => console.log(err))
   }
@@ -1241,7 +1238,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
             profileImage == "" ? require("../../assets/profile-placeholder.png") : profileImage
           }
           onError={() => {
-            getProfileImage()
+            getProfileImage(userDetails as UserData)
           }}
         ></Image>
         {isEditable && editMode ? (

@@ -322,7 +322,7 @@ export default function HeaderJCC(props: Props) {
                 </View>
               ) : null}
               <View style={{ marginHorizontal: 12 }}>
-                <TouchableOpacity onPress={() => navigation.navigate("MyAccountScreen")}>
+                <TouchableOpacity onPress={() => navigation.push("MyAccountScreen")}>
                   <Image
                     style={headerStyles.style.icon}
                     source={require("../../assets/Facelift/svg/Cog-Menu.svg")}
