@@ -102,6 +102,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
             if (getUser) {
               setUserDetails(getUser.data?.getUser)
               setIsEditable(getUser.data?.getUser?.id == user["username"])
+              setEditMode(true)
               setInterestsArray(getUser.data?.getUser?.interests ?? [])
               getProfileImage()
               convertProfileToMapData()
@@ -210,6 +211,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     }
   }
   const finalizeProfile = async (): Promise<void> => {
+    console.log("finalize profile")
     const validation = Validate.Profile(userDetails, profileConfig)
     if (validation.result) {
       try {
@@ -1220,7 +1222,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     // const name = target.name;
     console.log(value)
     const updateData = { ...userDetails } as any
-    if (updateData && name && updateData[name]) {
+    if (updateData && name) {
       updateData[name] = value
       setUserDetails(updateData)
     }

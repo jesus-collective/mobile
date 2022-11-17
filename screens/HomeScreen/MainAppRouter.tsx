@@ -47,7 +47,6 @@ const AdminCustomPricingScreen = lazy(
 const AdminMenuScreen = lazy(() => import("../AdminMenuScreen/AdminMenuScreen"))
 const AdminStartupScreen = lazy(() => import("../AdminStartupScreen/AdminStartupScreen"))
 const AdminProfileScreen = lazy(() => import("../AdminProfileScreen/AdminProfileScreen"))
-const AdminSignUpScreen = lazy(() => import("../AdminSignUpScreen/AdminSignUpScreen"))
 class Nothing extends Component {
   render() {
     return null
@@ -120,9 +119,9 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
     this.setState({ MapItems: [] }, async () => {
       console.log("LOAD ALL S")
 
-      // await this.loadAllUsers(null)
-      // await this.loadAllOrgs(null)
-      // await this.loadAllEvents(null)
+      await this.loadAllUsers(null)
+      await this.loadAllOrgs(null)
+      await this.loadAllEvents(null)
     })
   }
   static UserConsumer = UserContext.Consumer
@@ -315,11 +314,6 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
-                      name="AdminSignUpScreen"
-                      component={AdminSignUpScreen}
-                      options={{ title: "Jesus Collective" }}
-                    />
-                    <Stack.Screen
                       name="AdminStartupScreen"
                       component={AdminStartupScreen}
                       options={{ title: "Jesus Collective" }}
@@ -447,11 +441,6 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                     <Stack.Screen
                       name="AdminStartupScreen"
                       component={AdminStartupScreen}
-                      options={{ title: "Jesus Collective" }}
-                    />
-                    <Stack.Screen
-                      name="AdminSignUpScreen"
-                      component={AdminSignUpScreen}
                       options={{ title: "Jesus Collective" }}
                     />
                     <Stack.Screen
