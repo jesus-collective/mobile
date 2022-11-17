@@ -1,5 +1,5 @@
 import isAbsoluteUrl from "is-absolute-url"
-import { orgTypesChurches, orgTypesNonChurch } from "../MyProfile/dropdown"
+import { orgTypesChurches, orgTypesNonChurch } from "../MyProfile/DropdownOptions"
 import { OrganizationData } from "../OrganizationViewer/OrganizationViewer"
 
 type ValidationResult = {

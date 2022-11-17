@@ -32,7 +32,7 @@ export default class SignUpSidebar extends JCComponent<Props> {
                 <Text style={this.styles.style.signUpSidebarProgressText1}>Account Creation</Text>
                 <Text style={this.styles.style.signUpSidebarProgressText2}>Authentication</Text>
                 <Text style={this.styles.style.signUpSidebarProgressText3}>Payment</Text>
-                <Text style={this.styles.style.signUpSidebarProgressText4}>Individual Profile</Text>
+                <Text style={this.styles.style.signUpSidebarProgressText4}>About You</Text>
                 <Text style={this.styles.style.signUpSidebarProgressText5}>Get In</Text>
               </>
             ) : (

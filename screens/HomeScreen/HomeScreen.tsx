@@ -44,6 +44,7 @@ export default function HomeScreen() {
         ),
       })
   }, [])
+  return null
   return (
     <>
       <BrowserView style={{ overflowX: "hidden", overflowY: "scroll" }}>

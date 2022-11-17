@@ -2,6 +2,22 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const listInvoices = /* GraphQL */ `
+  mutation ListInvoices($idempotency: String) {
+    listInvoices(idempotency: $idempotency) {
+      data {
+        id
+        status
+        total
+        currency
+        invoice_pdf
+        number
+        created
+      }
+    }
+  }
+`
+
 export const createDirectMessageUser = /* GraphQL */ `
   mutation CreateDirectMessageUser($input: CreateDirectMessageUserInput!) {
     createDirectMessageUser(input: $input) {

@@ -2,7 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import React from "react"
 import { Image } from "react-native"
 import Header from "../../components/Header/Header"
-import MyProfile from "../../components/ProfileImage/ProfileImage"
+//import MyProfile from "../../components/ProfileImage/ProfileImage"
+import MyAccountScreen from "../../screens/MyAccountScreen/MyAccountScreen"
 import { constants } from "../../src/constants"
 import ConversationScreen from "../ConversationScreen/ConversationScreen"
 import MainAppRouter from "./MainAppRouter"
@@ -85,7 +86,7 @@ export default function MainBottomTabsRouter() {
         <Tab.Screen
           options={{ title: "Jesus Collective", headerShown: true }}
           name="profile"
-          component={MyProfile}
+          component={MyAccountScreen}
         />
       ) : null}
     </Tab.Navigator>

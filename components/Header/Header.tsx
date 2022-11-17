@@ -283,13 +283,16 @@ export default function HeaderJCC(props: Props) {
             <View
               style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
             >
-              <ProfileImageNew
-                linkToProfile
-                user={state?.user?.username}
-                quality={ProfileImageQuality.medium}
-                type="user"
-                style={width < 1300 ? ProfileImageStyle.UserXXSmall : ProfileImageStyle.UserSmall}
-              />
+              <View style={{ marginHorizontal: 12 }}>
+                <ProfileImageNew
+                  linkToProfile
+                  user={state?.user?.username}
+                  quality={ProfileImageQuality.medium}
+                  type="user"
+                  style={width < 1300 ? ProfileImageStyle.UserXXSmall : ProfileImageStyle.UserSmall}
+                />
+              </View>
+
               {constants["SETTING_ISVISIBLE_SEARCH"] ? (
                 <View style={{ marginHorizontal: 12 }}>
                   <TouchableOpacity testID="header-search" onPress={openSearch}>
@@ -318,6 +321,14 @@ export default function HeaderJCC(props: Props) {
                   </TouchableOpacity>
                 </View>
               ) : null}
+              <View style={{ marginHorizontal: 12 }}>
+                <TouchableOpacity onPress={() => navigation.navigate("MyAccountScreen")}>
+                  <Image
+                    style={headerStyles.style.icon}
+                    source={require("../../assets/Facelift/svg/Cog-Menu.svg")}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
               <TouchableOpacity
