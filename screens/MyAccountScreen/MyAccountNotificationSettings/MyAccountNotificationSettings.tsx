@@ -64,16 +64,18 @@ export default function MyAccountNotificationSettings() {
             Controls whether or not you would like to receive direct message alerts.
           </Text>
         </View>
-        <JCSwitch
-          onColor="#FF4438"
-          containerWidth={50}
-          flexDirection={"row"}
-          switchLabel=""
-          initState={state.user.alertConfig?.emailDirectMessage == "true"}
-          onPress={(e) => {
-            handleAlertInputChange(e, "emailDirectMessage")
-          }}
-        ></JCSwitch>
+        <View style={style.JCSwitchWrapper}>
+          <JCSwitch
+            onColor="#FF4438"
+            containerWidth={50}
+            flexDirection={"row"}
+            switchLabel=""
+            initState={state.user.alertConfig?.emailDirectMessage == "true"}
+            onPress={(e) => {
+              handleAlertInputChange(e, "emailDirectMessage")
+            }}
+          ></JCSwitch>
+        </View>
       </View>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.NotificationAlertContainer}>
@@ -83,16 +85,18 @@ export default function MyAccountNotificationSettings() {
             Controls whether or not you would like to receive group message alerts.
           </Text>
         </View>
-        <JCSwitch
-          onColor="#FF4438"
-          containerWidth={50}
-          flexDirection={"row"}
-          switchLabel=""
-          initState={state.user.alertConfig?.emailGroupMessage == "true"}
-          onPress={(e) => {
-            handleAlertInputChange(e, "emailGroupMessage")
-          }}
-        ></JCSwitch>
+        <View style={style.JCSwitchWrapper}>
+          <JCSwitch
+            onColor="#FF4438"
+            containerWidth={50}
+            flexDirection={"row"}
+            switchLabel=""
+            initState={state.user.alertConfig?.emailGroupMessage == "true"}
+            onPress={(e) => {
+              handleAlertInputChange(e, "emailGroupMessage")
+            }}
+          ></JCSwitch>
+        </View>
       </View>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.NotificationAlertContainer}>
@@ -102,16 +106,18 @@ export default function MyAccountNotificationSettings() {
             Controls whether or not you would like to receive event message alerts.
           </Text>
         </View>
-        <JCSwitch
-          onColor="#FF4438"
-          containerWidth={50}
-          flexDirection={"row"}
-          switchLabel=""
-          initState={state.user.alertConfig?.emailEventMessage == "true"}
-          onPress={(e) => {
-            handleAlertInputChange(e, "emailEventMessage")
-          }}
-        ></JCSwitch>
+        <View style={style.JCSwitchWrapper}>
+          <JCSwitch
+            onColor="#FF4438"
+            containerWidth={50}
+            flexDirection={"row"}
+            switchLabel=""
+            initState={state.user.alertConfig?.emailEventMessage == "true"}
+            onPress={(e) => {
+              handleAlertInputChange(e, "emailEventMessage")
+            }}
+          ></JCSwitch>
+        </View>
       </View>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.NotificationAlertContainer}>
@@ -121,16 +127,18 @@ export default function MyAccountNotificationSettings() {
             Controls whether or not you would like to receive resource message alerts.
           </Text>
         </View>
-        <JCSwitch
-          onColor="#FF4438"
-          containerWidth={50}
-          flexDirection={"row"}
-          switchLabel=""
-          initState={state.user.alertConfig?.emailResourceMessage == "true"}
-          onPress={(e) => {
-            handleAlertInputChange(e, "emailResourceMessage")
-          }}
-        ></JCSwitch>
+        <View style={style.JCSwitchWrapper}>
+          <JCSwitch
+            onColor="#FF4438"
+            containerWidth={50}
+            flexDirection={"row"}
+            switchLabel=""
+            initState={state.user.alertConfig?.emailResourceMessage == "true"}
+            onPress={(e) => {
+              handleAlertInputChange(e, "emailResourceMessage")
+            }}
+          ></JCSwitch>
+        </View>
       </View>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.NotificationAlertContainer}>
@@ -140,16 +148,18 @@ export default function MyAccountNotificationSettings() {
             Controls whether or not you would like to receive course messages alerts.
           </Text>
         </View>
-        <JCSwitch
-          onColor="#FF4438"
-          containerWidth={50}
-          flexDirection={"row"}
-          switchLabel=""
-          initState={state.user.alertConfig?.emailCourseMessage == "true"}
-          onPress={(e) => {
-            handleAlertInputChange(e, "emailCourseMessage")
-          }}
-        ></JCSwitch>
+        <View style={style.JCSwitchWrapper}>
+          <JCSwitch
+            onColor="#FF4438"
+            containerWidth={50}
+            flexDirection={"row"}
+            switchLabel=""
+            initState={state.user.alertConfig?.emailCourseMessage == "true"}
+            onPress={(e) => {
+              handleAlertInputChange(e, "emailCourseMessage")
+            }}
+          ></JCSwitch>
+        </View>
       </View>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.NotificationAlertContainer}>
@@ -159,16 +169,18 @@ export default function MyAccountNotificationSettings() {
             Controls whether or not you would like to receive organization messages alerts.
           </Text>
         </View>
-        <JCSwitch
-          onColor="#FF4438"
-          containerWidth={50}
-          flexDirection={"row"}
-          switchLabel=""
-          initState={state.user.alertConfig?.emailOrgMessage == "true"}
-          onPress={(e) => {
-            handleAlertInputChange(e, "emailOrgMessage")
-          }}
-        ></JCSwitch>
+        <View style={style.JCSwitchWrapper}>
+          <JCSwitch
+            onColor="#FF4438"
+            containerWidth={50}
+            flexDirection={"row"}
+            switchLabel=""
+            initState={state.user.alertConfig?.emailOrgMessage == "true"}
+            onPress={(e) => {
+              handleAlertInputChange(e, "emailOrgMessage")
+            }}
+          ></JCSwitch>
+        </View>
       </View>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.NotificationAlertContainer}>
@@ -178,17 +190,18 @@ export default function MyAccountNotificationSettings() {
             Controls whether or not you would like to receive org messages/email promotions.
           </Text>
         </View>
-
-        <JCSwitch
-          onColor="#FF4438"
-          containerWidth={50}
-          flexDirection={"row"}
-          switchLabel=""
-          initState={state.user.alertConfig?.emailPromotions == "true"}
-          onPress={(e) => {
-            handleAlertInputChange(e, "emailPromotions")
-          }}
-        ></JCSwitch>
+        <View style={style.JCSwitchWrapper}>
+          <JCSwitch
+            onColor="#FF4438"
+            containerWidth={50}
+            flexDirection={"row"}
+            switchLabel=""
+            initState={state.user.alertConfig?.emailPromotions == "true"}
+            onPress={(e) => {
+              handleAlertInputChange(e, "emailPromotions")
+            }}
+          ></JCSwitch>
+        </View>
       </View>
       <View style={style.HeaderHorizontalLine} />
     </View>
@@ -197,7 +210,11 @@ export default function MyAccountNotificationSettings() {
 const style = StyleSheet.create({
   NotificationAlertContainer: {
     paddingVertical: 16,
+    alignItems: "center",
     flexDirection: "row",
+  },
+  JCSwitchWrapper: {
+    maxHeight: 30,
   },
   PrimaryText: {
     color: "#1A0706",
