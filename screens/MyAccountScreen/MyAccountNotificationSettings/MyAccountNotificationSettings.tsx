@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import { isMobileOnly } from "react-device-detect"
 import { StyleSheet, Text, View } from "react-native"
 import { Data } from "../../../components/Data/Data"
 import JCSwitch from "../../../components/JCSwitch/JCSwitch"
@@ -53,7 +54,7 @@ export default function MyAccountNotificationSettings() {
     }
   }
   return (
-    <View>
+    <View style={isMobileOnly ? { padding: 12, paddingBottom: 85 } : {}}>
       <Text style={style.Header}>Your Notifications</Text>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.NotificationAlertContainer}>

@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useContext } from "react"
+import { isMobileOnly } from "react-device-detect"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import GenericButton from "../../../components/GenericButton/GenericButton"
 import { GenericButtonStyles } from "../../../components/GenericButton/GenericButtonStyles"
@@ -18,16 +19,15 @@ export default function MyInformation() {
   if (!state.user) return null
   const { given_name, family_name, id, location } = state.user
   return (
-    <View>
+    <View style={isMobileOnly ? { padding: 12 } : {}}>
       <Text style={style.Header}>Your Information</Text>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.Container}>
         <View style={style.SubContainer}>
           <View style={style.ContentContainer}>
             <ProfileImageNew
-              linkToProfile
               style={ProfileImageStyle.UserLarge2}
-              quality={ProfileImageQuality.medium}
+              quality={ProfileImageQuality.small}
               type="user"
               user={id}
             />

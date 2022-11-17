@@ -1,6 +1,7 @@
 import API, { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
+import { isMobileOnly } from "react-device-detect"
 import {
   ActivityIndicator,
   Image,
@@ -42,7 +43,7 @@ export default function MyAccountInvoices() {
     getInvoices()
   }, [])
   return (
-    <View>
+    <View style={isMobileOnly ? { padding: 12, paddingBottom: 85 } : {}}>
       <Text style={style.Header}>Your Invoices</Text>
       <View style={style.HeaderHorizontalLine} />
       {isLoading ? (

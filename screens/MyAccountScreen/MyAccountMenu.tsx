@@ -1,4 +1,5 @@
 import React from "react"
+import { isMobileOnly } from "react-device-detect"
 import { StyleSheet, Text, View } from "react-native"
 import GenericButton from "../../components/GenericButton/GenericButton"
 import { MyAccountContext } from "./MyAccountContext"
@@ -30,7 +31,7 @@ export default function MyAccountMenu() {
     })
   }
   return (
-    <View style={DetailsCard.Container}>
+    <View style={[DetailsCard.Container, isMobileOnly ? { margin: 12 } : {}]}>
       <View style={DetailsCard.MainHeaderContainer}>
         <Text style={DetailsCard.HeaderText}>Browse</Text>
       </View>

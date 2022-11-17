@@ -1,11 +1,12 @@
 import React, { useContext } from "react"
+import { isMobileOnly } from "react-device-detect"
 import { StyleSheet, Text, View } from "react-native"
 import { MyAccountContext } from "../MyAccountContext"
 export default function MyAccountSummary() {
   const { state } = useContext(MyAccountContext)
   if (!state.user) return null
   return (
-    <View>
+    <View style={isMobileOnly ? { padding: 12, paddingBottom: 85 } : {}}>
       <Text style={style.Header}>Account Summary</Text>
       <View style={style.HeaderHorizontalLine} />
       <View style={style.Container}>
