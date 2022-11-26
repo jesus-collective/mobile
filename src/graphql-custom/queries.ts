@@ -29,7 +29,27 @@ export const listMenus = /* GraphQL */ `
     }
   }
 `
-
+export const searchUsers = /* GraphQL */ `
+  query SearchUsers(
+    $filter: SearchableUserFilterInput
+    $sort: SearchableUserSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchUsers(filter: $filter, sort: $sort, limit: $limit, nextToken: $nextToken, from: $from) {
+      items {
+        id
+        given_name
+        family_name
+        location {
+          geocodeFull
+        }
+      }
+      total
+    }
+  }
+`
 export const listOrganizations = /* GraphQL */ `
   query ListOrganizations($filter: ModelOrganizationFilterInput, $limit: Int, $nextToken: String) {
     listOrganizations(filter: $filter, limit: $limit, nextToken: $nextToken) {

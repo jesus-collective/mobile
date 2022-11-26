@@ -42,7 +42,7 @@ export default function ProfileCard(props: Props) {
   return !props.forceDesktop && isMobileOnly ? (
     <TouchableOpacity
       onPress={() =>
-        item?.isArchived === "true" ? null : navigation.push("ProfileScreen", { id: item?.id })
+        item?.isArchived === "true" ? null : navigation.navigate("ProfileScreen", { id: item?.id })
       }
       delayPressIn={150}
       style={{
