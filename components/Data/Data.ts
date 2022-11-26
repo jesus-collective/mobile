@@ -915,10 +915,10 @@ export class Data {
   }
   static searchUsers(filter: SearchableUserFilterInput) {
     return API.graphql({
-      query: queries.searchUsers,
+      query: customQueries.searchUsers,
       variables: {
         filter: filter,
-        limit: 10,
+        limit: 20,
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<SearchUsersQuery>>

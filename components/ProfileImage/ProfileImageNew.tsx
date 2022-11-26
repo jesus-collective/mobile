@@ -21,6 +21,7 @@ export enum ProfileImageQuality {
 export enum ProfileImageStyle {
   UserXSmall = "UserXSmall",
   UserXSmall2 = "UserXSmall2",
+  UserXSmall3 = "UserXSmall3",
   UserXXSmall = "UserXXSmall",
   UserSmall = "UserSmall",
   UserMedium = "UserMedium",
@@ -79,6 +80,10 @@ export const ProfileImageStyles = StyleSheet.create({
   UserXSmall: {
     height: 40,
     width: 32,
+  },
+  UserXSmall3: {
+    width: 40,
+    height: 50,
   },
   UserSmall: {
     height: 60,

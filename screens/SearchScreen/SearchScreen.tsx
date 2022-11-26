@@ -1,69 +1,58 @@
-﻿import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
-import { ScrollView, Text, View } from "react-native"
-import { Data } from "../../components/Data/Data"
+import React, { useEffect, useState } from "react"
+import { FlatList, Image, Text, View } from "react-native"
+import SearchBar from "../../components/Forms/SearchBar/SearchBar"
 import Header from "../../components/Header/Header"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import MyMap from "../../components/MyMap/MyMap"
-
-interface Props {
-  navigation: StackNavigationProp<any, any>
-}
-interface State extends JCState {
-  showMap: boolean
-  data: any
-}
-
-export default class GroupScreen extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      showMap: false,
-      data: [],
-    }
-  }
-  mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap })
-  }
-  search(item: React.ChangeEvent<HTMLInputElement>): void {
-    console.log(item.target.value)
-    const searchGroups = Data.searchGroups({ name: { match: item.target.value } })
-
-    searchGroups
-      .then((json) => {
-        // console.log(json)
-        this.setState({ data: json.data?.searchGroups?.items })
-      })
-      .catch((e: any) => {
-        console.log(e)
-      })
-  }
-  render(): React.ReactNode {
-    console.log("SearchScreen")
-    return (
-      <View>
+import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
+import { User } from "../../src/API"
+export default function SearchScreen2(props: any) {
+  const [data, setData] = useState<User[]>([])
+  const [showListEmpty, setShowListEmpty] = useState(false)
+  useEffect(() => {
+    props.navigation.setOptions({
+      header: () => (
         <Header
-          title="Jesus Collective"
-          navigation={this.props.navigation}
-          onMapChange={this.mapChanged}
+          title="Search"
+          search={
+            <View style={{ paddingBottom: 16 }}>
+              <SearchBar
+                passIsListEmpty={(isEmpty) => setShowListEmpty(isEmpty)}
+                passDataToParent={(dataFromChild) => setData(dataFromChild)}
+              />
+            </View>
+          }
         />
-        <ScrollView>
-          <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
-          <View>
-            <input
-              onChange={(item) => {
-                this.search(item)
-              }}
-              placeholder="Search..."
-            ></input>
-            <Text>Results:</Text>
-            {this.state.data.map((item: any) => {
-              return <Text key={item.id}>{item.name}</Text>
-            })}
-          </View>
-        </ScrollView>
-      </View>
-    )
-  }
+      ),
+    })
+  }, [])
+  return (
+    <FlatList
+      data={data}
+      contentContainerStyle={
+        data?.length ? { flex: 1 } : { flex: 1, justifyContent: "center", alignItems: "center" }
+      }
+      style={{ flex: 1 }}
+      renderItem={({ item, index }) => {
+        return <ProfileCard item={item} />
+      }}
+      ListEmptyComponent={
+        data?.length
+          ? null
+          : () => (
+              <View style={{ flex: 1, justifyContent: "center", marginTop: -40 }}>
+                <Image
+                  style={{
+                    width: 60,
+                    alignSelf: "center",
+                    height: 60,
+                  }}
+                  source={require("../../assets/undraw_people_search_re_5rre.svg")}
+                ></Image>
+                {showListEmpty ? (
+                  <Text style={{ marginTop: 4 }}>Uh oh.. No people found.</Text>
+                ) : null}
+              </View>
+            )
+      }
+    />
+  )
 }
