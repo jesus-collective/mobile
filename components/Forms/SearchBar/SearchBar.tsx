@@ -45,7 +45,7 @@ export default function SearchBar({
         and: [{ given_name: { match: firstName } }, { family_name: { match: lastName } }],
       })
     else {
-      conditions.push({ given_name: { match: firstName.toLowerCase() } })
+      conditions.push({ given_name: { match: firstName } })
     }
     if (newSearchTerm.includes("@")) {
       conditions.push({ email: { eq: newSearchTerm } })
