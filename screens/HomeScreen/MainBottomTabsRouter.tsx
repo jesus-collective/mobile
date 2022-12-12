@@ -6,6 +6,7 @@ import Header from "../../components/Header/Header"
 import MyAccountScreen from "../../screens/MyAccountScreen/MyAccountScreen"
 import { constants } from "../../src/constants"
 import ConversationScreen from "../ConversationScreen/ConversationScreen"
+import SearchScreen from "../SearchScreen/SearchScreen"
 import MainAppRouter from "./MainAppRouter"
 const Tab = createBottomTabNavigator()
 
@@ -67,7 +68,7 @@ export default function MainBottomTabsRouter() {
         <Tab.Screen
           options={{ title: "Jesus Collective", headerShown: true }}
           name="search"
-          component={MainAppRouter}
+          component={SearchScreen}
         />
       ) : null}
       <Tab.Screen

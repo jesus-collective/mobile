@@ -85,14 +85,14 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcmobileStripListInvoices-66486143556150723951-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripListInvoices-4e4c54756e78546f5a39-build.zip"
         },
         "jcProcessDMAlerts": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653",
           "deploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
-          "s3Key": "amplify-builds/jcProcessDMAlerts-7a334d335662504c6176-build.zip"
+          "s3Key": "amplify-builds/jcProcessDMAlerts-6f364546663143487764-build.zip"
         },
         "jcProcessMessageAlerts": {
           "userPoolId": "us-east-1_Bq1YZMmzA",

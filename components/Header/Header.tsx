@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import { DrawerActions, useNavigation } from "@react-navigation/native"
@@ -6,11 +5,21 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { HTMLAttributes, useEffect, useState } from "react"
 import { BrowserView, MobileOnlyView } from "react-device-detect"
-import { Dimensions, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
+import SearchInactiveIcon from "../../assets/Facelift/svg/Search-2.svg"
 import { Data } from "../../components/Data/Data"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
+import SearchBar from "../Forms/SearchBar/SearchBar"
 import HeaderStyles from "../Header/style"
 import { JCState } from "../JCComponent/JCComponent"
 import ProfileImageNew, {
@@ -28,6 +37,7 @@ interface Props {
   controls?: any
   drawerState?: boolean
   showAdmin?: boolean
+  search?: any
   overrideMenu?: NonNullable<ListMenusQuery["listMenus"]>["items"]
 }
 
@@ -61,7 +71,7 @@ const resourcesStyle2 = {
   cursor: "pointer",
 }
 
-export default function HeaderJCC(props: Props) {
+export default function HeaderJC(props: Props) {
   const { width } = useWindowDimensions()
   const isOpen = props?.drawerState // useDrawerStatus() is needed when in a drawer navigator to determine hamburger icon state
   /* 
@@ -115,10 +125,6 @@ export default function HeaderJCC(props: Props) {
 
   const openScreen = (screen: string, params: any): void => {
     navigation?.push(screen, params == "" ? null : JSON.parse(params))
-  }
-
-  const openSearch = (): void => {
-    navigation?.push("SearchScreen")
   }
 
   const openMessages = (): void => {
@@ -175,7 +181,13 @@ export default function HeaderJCC(props: Props) {
       menuDropdown: z,
     }))
   }
-
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  let menu = state.menus
+  if (isSearchOpen) {
+    menu = []
+  } else {
+    menu = state.menus
+  }
   return (
     <>
       <BrowserView>
@@ -200,11 +212,17 @@ export default function HeaderJCC(props: Props) {
                 }`)}
               />
             </TouchableOpacity>
-            <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-              {state.menus.map((mapItem) => {
+            <View
+              style={
+                isSearchOpen
+                  ? { display: "none" }
+                  : { flex: 1, flexDirection: "row", alignItems: "center" }
+              }
+            >
+              {menu.map((mapItem) => {
                 if (mapItem == null) return null
                 return (mapItem?.subItems?.items?.length ?? 0) > 0 ? (
-                  <>
+                  <View key={mapItem?.id}>
                     <button
                       data-testid="header-resources"
                       onClick={(e) => {
@@ -251,6 +269,7 @@ export default function HeaderJCC(props: Props) {
                         if (subItem == null) return null
                         return (
                           <MenuItem
+                            key={subItem?.id}
                             onClick={() => {
                               handleMenuDropdownClose(mapItem.id)
                               openScreen(subItem.action ?? "", subItem.params)
@@ -266,9 +285,10 @@ export default function HeaderJCC(props: Props) {
                         )
                       })}
                     </Menu>
-                  </>
+                  </View>
                 ) : (
                   <TouchableOpacity
+                    key={mapItem?.id}
                     onPress={() => {
                       openScreen(mapItem.action ?? "", mapItem.params)
                     }}
@@ -281,25 +301,47 @@ export default function HeaderJCC(props: Props) {
             </View>
 
             <View
-              style={{ justifyContent: "flex-end", flexDirection: "row", alignItems: "center" }}
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
             >
-              <View style={{ marginHorizontal: 12 }}>
-                <ProfileImageNew
-                  linkToProfile
-                  user={state?.user?.username}
-                  quality={ProfileImageQuality.medium}
-                  type="user"
-                  style={width < 1300 ? ProfileImageStyle.UserXXSmall : ProfileImageStyle.UserSmall}
-                />
-              </View>
-
               {constants["SETTING_ISVISIBLE_SEARCH"] ? (
-                <View style={{ marginHorizontal: 12 }}>
-                  <TouchableOpacity testID="header-search" onPress={openSearch}>
-                    <Ionicons name="md-search" style={headerStyles.style.icon} />
-                  </TouchableOpacity>
-                </View>
+                width < 1000 ? (
+                  <>
+                    <View
+                      style={
+                        isSearchOpen ? { width: "65vw", marginHorizontal: 20 } : { display: "none" }
+                      }
+                    >
+                      <SearchBar closeSearchBar={() => setIsSearchOpen(false)} />
+                    </View>
+
+                    {!isSearchOpen ? (
+                      <Pressable
+                        style={{ padding: 8, marginRight: 8 }}
+                        onPress={() => setIsSearchOpen(true)}
+                      >
+                        <Image style={{ height: 24, width: 24 }} source={SearchInactiveIcon} />
+                      </Pressable>
+                    ) : null}
+                  </>
+                ) : (
+                  <View style={{ marginHorizontal: 20 }}>
+                    <SearchBar />
+                  </View>
+                )
               ) : null}
+
+              <ProfileImageNew
+                linkToProfile
+                user={state?.user?.username}
+                quality={ProfileImageQuality.medium}
+                type="user"
+                style={width < 1300 ? ProfileImageStyle.UserXXSmall : ProfileImageStyle.UserSmall}
+              />
 
               {constants["SETTING_ISVISIBLE_MESSAGES"] ? (
                 <View style={{ marginHorizontal: 12 }}>
@@ -400,6 +442,7 @@ export default function HeaderJCC(props: Props) {
             {props.controls ? <HeaderControls controls={props.controls} /> : null}
           </View>
           {props.subnav ? <SubHeader navItems={props.subnav} /> : null}
+          {props.search}
         </View>
       </MobileOnlyView>
     </>
