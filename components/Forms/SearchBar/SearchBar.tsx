@@ -37,21 +37,24 @@ export default function SearchBar({
   const debouncedSearchterm = useDebounce(searchTerm, 1000)
   const doSearch = async (newSearchTerm: string) => {
     const names = newSearchTerm.split(" ")
-    const or = names
-      .map((name) => {
-        return [
-          { given_name: { wildcard: name.toLowerCase() + "*" } },
-          { family_name: { wildcard: name.toLowerCase() + "*" } },
-          { email: { wildcard: name.toLowerCase() + "*" } },
-        ]
+    const firstName = names[0]
+    const lastName = names.slice(1, names.length).join(" ")
+    const conditions = []
+    if (firstName && lastName)
+      conditions.push({
+        and: [{ given_name: { match: firstName } }, { family_name: { match: lastName } }],
       })
-      .flat()
-
+    else {
+      conditions.push({ given_name: { match: firstName } })
+    }
+    if (newSearchTerm.includes("@")) {
+      conditions.push({ email: { eq: newSearchTerm } })
+    }
     const userResult = await Data.searchUsers({
       and: [
         { isArchived: { ne: "true" } },
         {
-          or: or,
+          or: conditions,
         },
         { profileState: { eq: "Complete" } },
         { mainUserGroup: { eq: "Partner" } },
