@@ -76,6 +76,7 @@ const linking = {
               EventScreen: "events/:id",
               ResourceScreen: "resource",
               ResourceConfigureScreen: "resourceconfig/:id",
+              MyAccountScreen: "myaccount",
               ResourceDisplayScreen: "resourcedisplay/:id",
               ResourcesScreen: "resources",
               OrganizationScreen: "organization/:id",

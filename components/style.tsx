@@ -452,7 +452,6 @@ export default class MainStyles {
         fontFamily: "Graphik-Bold-App",
         fontWeight: "bold",
         fontSize: 24,
-        marginTop: 60,
       },
 
       fontTitle: {

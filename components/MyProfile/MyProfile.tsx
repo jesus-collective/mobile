@@ -1,42 +1,29 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import Badge from "@material-ui/core/Badge"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { API, Auth, Storage } from "aws-amplify"
+import { Amplify, API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import * as React from "react"
-import { isBrowser, isTablet } from "react-device-detect"
-import {
-  ActivityIndicator,
-  Image,
-  Picker,
-  Pressable,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native"
+import { Image, Picker, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import CrmMessageBoard from "../../components/MessageBoard/CRM-MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
 import Sentry from "../../components/Sentry"
+import style from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { GetUserQuery, ListInvoicesMutation } from "../../src/API"
+import { GetUserQuery } from "../../src/API"
 import { GetCrmRootQuery } from "../../src/API-crm"
 import awsconfig from "../../src/aws-exports"
-import { Brand, constants } from "../../src/constants"
+import { Brand } from "../../src/constants"
 import { getCrmRoot } from "../../src/graphql-custom/crm"
-import * as mutations from "../../src/graphql/mutations"
 import { JCCognitoUser } from "../../src/types"
 import EditableText from "../Forms/EditableText"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import Validate from "../Validate/Validate"
 import {
   interests,
@@ -44,7 +31,7 @@ import {
   orgTypesChurches,
   orgTypesNonChurch,
   sundayAttendance,
-} from "./dropdown"
+} from "./DropdownOptions"
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
 Amplify.configure(awsconfig)
@@ -61,295 +48,118 @@ export type UserData = NonNullable<GetUserQuery["getUser"]>
 
 type CrmMessages = NonNullable<NonNullable<GetCrmRootQuery["getCRMRoot"]>["messages"]>["items"]
 
-interface State extends JCState {
-  UserDetails: UserData | null
-  interest: string | null
-  interestsArray: (string | null)[]
-  profileImage: string
-  validationText: string
-  mapVisible: boolean
-  isEditable: boolean
-  showPage: "profile" | "settings" | "billing" | "admin"
-  editMode: boolean
-  mapData: MapData[]
-  initCenter: any
-  dirty: boolean
-  oldPass: string
-  newPass: string
-  passError: string
-  noUserFound: boolean
-  invoices: NonNullable<NonNullable<ListInvoicesMutation>["listInvoices"]>["data"]
-  firstName: string
-  lastName: string
-  messages: CrmMessages
-  profileConfig: any
-}
-
-type ScrollRef = {
-  _root: {
-    scrollToPosition(x: number, y: number): void
-  }
-} | null
-
-class MyProfileImpl extends JCComponent<Props, State> {
-  scrollRef?: ScrollRef = null
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      UserDetails: null,
-      interest: null,
-      interestsArray: [],
-      profileImage: "",
-      validationText: "",
-      showPage: "profile",
-      mapVisible: false,
-      isEditable: false,
-      editMode: false,
-      mapData: [],
-      initCenter: { lat: 44, lng: -78.0 },
-      dirty: false,
-      oldPass: "",
-      newPass: "",
-      passError: "",
-      noUserFound: false,
-      firstName: "",
-      lastName: "",
-      messages: [],
-
-      profileConfig: null,
+export default function MyProfile(props: Props): JSX.Element | null {
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  const styles = style.getInstance()
+  const [showPage, setShowPage] = React.useState<"profile" | "settings" | "billing" | "admin">(
+    "profile"
+  )
+  const [userDetails, setUserDetails] = React.useState<UserData | null>()
+  const [profileConfig, setProfileConfig] = React.useState<any>()
+  const [noUserFound, setNoUserFound] = React.useState(false)
+  const [editMode, setEditMode] = React.useState(false)
+  const [isEditable, setIsEditable] = React.useState(false)
+  const scrollRef = React.useRef<ScrollView>(null)
+  const [profileImage, setProfileImage] = React.useState("")
+  const { userActions, userState } = React.useContext(UserContext)
+  const [dirty, setDirty] = React.useState(false)
+  const [mapData, setMapData] = React.useState<MapData[]>([])
+  const [initCenter, setInitCenter] = React.useState<any>({ lat: 44, lng: -78.0 })
+  const [interestsArray, setInterestsArray] = React.useState<any>([])
+  const [interest, setInterest] = React.useState<any>([])
+  const [validationText, setValidationText] = React.useState("")
+  const [messages, setMessages] = React.useState<CrmMessages>([])
+  React.useEffect(() => {
+    const getInitialData = async () => {
+      if (userActions.getProfileConfig) setProfileConfig(await userActions.getProfileConfig())
     }
-  }
-  static contextType = UserContext
-  async getInitialData() {
-    const userActions = this.context.userActions as UserActions
-
-    this.setState({
-      profileConfig: await userActions.getProfileConfig(),
-    })
-  }
-  async componentDidMount() {
-    await this.getInitialData()
-    await this.getUserDetails()
-    await this.fetchCrm()
-  }
-
-  async fetchCrm() {
-    if (this.props.userActions?.isMemberOf("admin")) {
-      const variables = { id: this.state.UserDetails?.id }
+    const getUserDetails = async (): Promise<void> => {
+      console.log("getUserDetails")
       try {
-        // fetch CRM root
-        const crmRoot = (await API.graphql({
-          query: getCrmRoot,
-          variables,
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as GraphQLResult<GetCrmRootQuery>
-
-        if (crmRoot.data?.getCRMRoot) {
-          console.debug("crmRoot exists:", crmRoot.data.getCRMRoot)
-          this.setState({ messages: crmRoot.data?.getCRMRoot?.messages?.items ?? [] })
-        } else {
-          // if CRM does not exist, create it
-          const createCrmRoot = await Data.createCrmRoot(variables)
-
-          console.debug("crmRoot created:", createCrmRoot.data?.createCRMRoot)
-          // recursive call to fetch data after CRM root is created
-          this.fetchCrm()
-        }
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  }
-
-  async listInvoices() {
-    try {
-      const invoice = (await API.graphql({
-        query: mutations.listInvoices,
-        variables: {
-          idempotency: "",
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<ListInvoicesMutation>
-      console.log({ invoice: invoice })
-      this.setState({ invoices: invoice.data?.listInvoices?.data ?? [] })
-    } catch (e: any) {
-      Sentry.captureException(e.errors || e)
-      console.log(e)
-    }
-  }
-  convertProfileToMapData() {
-    if (
-      this.state.UserDetails?.location &&
-      this.state.UserDetails?.location.latitude &&
-      this.state.UserDetails?.location.longitude
-    )
-      this.setState({
-        mapData: [
-          {
-            latitude:
-              Number(this.state.UserDetails.location.latitude) +
-              Number(this.state.UserDetails.location.randomLatitude),
-            longitude:
-              Number(this.state.UserDetails.location.longitude) +
-              Number(this.state.UserDetails.location.randomLatitude),
-            name: this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name,
-            user: this.state.UserDetails,
-            link: "",
-            type: "profile",
-          },
-        ],
-        initCenter: {
-          lat:
-            Number(this.state.UserDetails.location.latitude) +
-            Number(this.state.UserDetails.location.randomLatitude),
-          lng:
-            Number(this.state.UserDetails.location.longitude) +
-            Number(this.state.UserDetails.location.randomLatitude),
-        },
-      })
-  }
-  async getUserDetails(): Promise<void> {
-    console.log("getUserDetails")
-    try {
-      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      if (this.props.loadId) {
-        try {
-          const getUser = await Data.getUser(this.props.loadId)
-          if (getUser.data?.getUser != null)
-            this.setState(
-              {
-                UserDetails: getUser.data.getUser,
-                isEditable: getUser.data.getUser.id == user["username"],
-                interestsArray: getUser.data.getUser.interests ?? [],
-                firstName: getUser.data.getUser.given_name,
-                lastName: getUser.data.getUser.family_name,
-              },
-              () => {
-                this.getProfileImage()
-                this.convertProfileToMapData()
-              }
-            )
-          else this.setState({ noUserFound: true })
-        } catch (e: any) {
-          console.log({ Error: e })
-          if (e.data?.getUser != null)
-            this.setState(
-              {
-                UserDetails: e.data.getUser,
-                interestsArray: e.data.getUser.interests,
-              },
-              () => {
-                this.getProfileImage()
-                this.convertProfileToMapData()
-              }
-            )
-          else this.setState({ noUserFound: true })
-        }
-      } else {
-        try {
-          const getUser = await Data.getUser(user["username"])
-          if (getUser) {
-            this.setState(
-              {
-                UserDetails: getUser.data?.getUser,
-                isEditable: true,
-                editMode: true,
-                interestsArray: getUser.data?.getUser?.interests ?? [],
-                firstName: getUser.data?.getUser?.given_name ?? "",
-                lastName: getUser.data?.getUser?.family_name ?? "",
-              },
-              () => {
-                this.getProfileImage()
-                this.convertProfileToMapData()
-              }
-            )
-          }
-          console.log(this.state.UserDetails)
-        } catch (e) {
-          console.log(e)
-        }
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
-  handleAlertInputChange(event: any, name: string): void {
-    const value =
-      event.target === undefined
-        ? event
-        : event.target.type === "checkbox"
-        ? event.target.checked
-        : event.target.value
-    // const name = target.name;
-    console.log(value)
-    const updateData = { ...this.state.UserDetails }
-    if (updateData.alertConfig == null) {
-      const z: {
-        __typename: "AlertConfig"
-        emailDirectMessage: string
-        emailGroupMessage: string
-        emailEventMessage: string
-        emailOrgMessage: string
-        emailResourceMessage: string
-        emailCourseMessage: string
-        emailPromotions: string
-      } = {
-        __typename: "AlertConfig",
-        emailDirectMessage: "true",
-        emailGroupMessage: "true",
-        emailEventMessage: "true",
-        emailOrgMessage: "true",
-        emailResourceMessage: "true",
-        emailCourseMessage: "true",
-        emailPromotions: "true",
-      }
-      updateData.alertConfig = z
-      delete updateData.alertConfig.__typename
-    }
-    updateData.alertConfig[name] = value.toString()
-    this.setState(
-      {
-        UserDetails: updateData,
-        dirty: true,
-      },
-      async () => {
-        if (this.state.UserDetails)
+        const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+        if (props.loadId) {
           try {
-            const updateUser = await Data.updateUser({
-              id: this.state.UserDetails.id,
-              alertConfig: this.state.UserDetails.alertConfig,
-            })
-            console.log(updateUser)
+            const getUser = await Data.getUser(props.loadId)
+            if (getUser.data?.getUser != null) {
+              setUserDetails(getUser.data.getUser)
+              setIsEditable(getUser.data.getUser.id == user["username"])
+              setInterestsArray(getUser.data.getUser.interests ?? [])
+              getProfileImage(getUser.data.getUser as UserData)
+              convertProfileToMapData()
+            } else setNoUserFound(true)
           } catch (e: any) {
-            Sentry.captureException(e.errors || e)
+            console.log({ Error: e })
+            if (e.data?.getUser != null) {
+              setUserDetails(e.data.getUser)
+              setInterestsArray(e.data.getUser.interests ?? [])
+              getProfileImage(e.data.getUser as UserData)
+              convertProfileToMapData()
+            } else setNoUserFound(true)
+          }
+        } else {
+          try {
+            const getUser = await Data.getUser(user["username"])
+            if (getUser) {
+              setUserDetails(getUser.data?.getUser)
+              setIsEditable(getUser.data?.getUser?.id == user["username"])
+              setEditMode(true)
+              setInterestsArray(getUser.data?.getUser?.interests ?? [])
+              getProfileImage(getUser.data?.getUser as UserData)
+              convertProfileToMapData()
+            }
+            console.log(getUser.data?.getUser)
+          } catch (e) {
             console.log(e)
           }
+        }
+      } catch (e) {
+        console.log(e)
       }
-    )
-  }
-  handleInputChange(event: any, name: string): void {
-    const value =
-      event.target === undefined
-        ? event
-        : event.target.type === "checkbox"
-        ? event.target.checked
-        : event.target.value
-    // const name = target.name;
-    console.log(value)
-    const updateData = { ...this.state.UserDetails }
-    updateData[name] = value
-    this.setState(
-      {
-        UserDetails: updateData,
-        dirty: true,
-      },
-      () => {
-        if (name === "location") this.convertProfileToMapData()
+    }
+    const fetchCrm = async () => {
+      if (userActions?.isMemberOf("admin")) {
+        const variables = { id: userDetails?.id }
+        try {
+          // fetch CRM root
+          const crmRoot = (await API.graphql({
+            query: getCrmRoot,
+            variables,
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })) as GraphQLResult<GetCrmRootQuery>
+
+          if (crmRoot.data?.getCRMRoot) {
+            console.debug("crmRoot exists:", crmRoot.data.getCRMRoot)
+            const messages = crmRoot?.data?.getCRMRoot?.messages as CrmMessages
+            setMessages(messages)
+          } else {
+            // if CRM does not exist, create it
+            const createCrmRoot = await Data.createCrmRoot(variables)
+
+            console.debug("crmRoot created:", createCrmRoot.data?.createCRMRoot)
+            // recursive call to fetch data after CRM root is created
+            fetchCrm()
+          }
+        } catch (e) {
+          console.error(e)
+        }
       }
-    )
+    }
+    getInitialData()
+    getUserDetails()
+    fetchCrm()
+  }, [userActions, props.loadId])
+  const getProfileImage = (userData: UserData): void => {
+    if (userData?.profileImage?.filenameUpload)
+      Storage.get(userData.profileImage.filenameUpload, {
+        level: "protected",
+        identityId: userData.profileImage.userId ?? "",
+      })
+        .then((result) => setProfileImage(result as string))
+        .catch((err) => {
+          console.log(err)
+        })
   }
-  clean(item) {
+  const clean = (item: any) => {
     delete item.organizations
     delete item.groups
     delete item.messages
@@ -368,83 +178,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     delete item.directMessages
     return item
   }
-  async finalizeProfile(): Promise<void> {
-    const validation = Validate.Profile(this.state.UserDetails, this.state.profileConfig)
-    if (validation.result) {
-      try {
-        const toSave = this.clean(this.state.UserDetails)
-        toSave["profileState"] = "Complete"
-        const updateUser = await Data.updateUser(toSave)
-        this.setState({ dirty: false })
-        console.log({ "updateUser:": updateUser })
-        if (this.props.finalizeProfile) this.props.finalizeProfile()
-        else this.setState({ editMode: false })
-      } catch (e: any) {
-        Sentry.captureException(e.errors || e)
-        console.log(e)
-      }
-    }
-    this.setState({ validationText: validation.validationError })
-  }
-  async onProfileImageChange(e: any): Promise<void> {
-    const file = e.target.files[0]
-    const user = await Auth.currentCredentials()
-    const userId = user.identityId
-    const lastDot = file.name.lastIndexOf(".")
-    const ext = file.name.substring(lastDot + 1)
-    const fn = "profile/upload/profile-" + new Date().getTime() + "." + ext
-    const fnSave = fn
-      .replace("/upload", "")
-      .replace(".", "-[size].")
-      .replace("." + ext, ".png")
-
-    Storage.put(fn, file, {
-      level: "protected",
-      contentType: file.type,
-      identityId: userId,
-    })
-      .then(() => {
-        const updateData = { ...this.state.UserDetails }
-        updateData["profileImage"] = {
-          __typename: "Image",
-          userId: userId,
-          filenameUpload: fn,
-          filenameLarge: fnSave.replace("[size]", "large"),
-          filenameMedium: fnSave.replace("[size]", "medium"),
-          filenameSmall: fnSave.replace("[size]", "small"),
-        }
-
-        this.setState(
-          {
-            UserDetails: updateData,
-            dirty: true,
-          },
-          () => {
-            this.getProfileImage()
-          }
-        )
-      })
-      .catch((err) => console.log(err))
-  }
-
-  getProfileImage(): void {
-    console.log("get profile image")
-    //console.log(this.state.UserDetails.profileImage)
-    if (this.state.UserDetails?.profileImage?.filenameUpload)
-      Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
-        level: "protected",
-        identityId: this.state.UserDetails.profileImage.userId,
-      })
-        .then((result) => this.setState({ profileImage: result as string }))
-        .catch((err) => {
-          console.log(err)
-        })
-  }
-  /* getValueFromKey(myObject: unknown, string: string) {
-    const key = Object.keys(myObject).filter((k) => k.includes(string))
-    return key.length ? myObject[key[0]] : ""
-  }*/
-  logout(actions: UserActions): void {
+  const logout = (actions: UserActions): void => {
     //this.props.navigation.navigate("", null)
 
     Auth.signOut()
@@ -463,51 +197,37 @@ class MyProfileImpl extends JCComponent<Props, State> {
         })
       })
   }
-  showMap(): void {
-    console.log("showMap")
-    this.setState({ mapVisible: true })
-  }
-  renderMap() {
-    return this.state.UserDetails?.location?.geocodeFull ? (
-      <MyMap
-        initCenter={this.state.initCenter}
-        visible={true}
-        mapData={this.state.mapData}
-        type={"profile"}
-      ></MyMap>
-    ) : null
-  }
-  handleAddInterest(): void {
-    if (this.state.interest && this.state.interestsArray === null) {
-      this.setState({ interestsArray: [this.state.interest] }, () => {
-        const updateData = { ...this.state.UserDetails }
-        updateData["interests"] = this.state.interestsArray
-        this.setState({
-          UserDetails: updateData,
-          dirty: true,
-        })
-      })
-    } else if (
-      this.state.interest &&
-      this.state.interestsArray.filter((item) => item === this.state.interest).length === 0 &&
-      this.state.interestsArray.length < 7
-    ) {
-      this.setState(
-        {
-          interestsArray: this.state.interestsArray.concat(this.state.interest),
-        },
-        () => {
-          const updateData = { ...this.state.UserDetails }
-          updateData["interests"] = this.state.interestsArray
-          this.setState({
-            UserDetails: updateData,
-            dirty: true,
-          })
-        }
-      )
+  const handleEditMode = () => {
+    if (dirty) {
+      if (window.confirm("You have unsaved changes")) {
+        setEditMode(!editMode)
+        setShowPage("profile")
+      }
+    } else {
+      setEditMode(!editMode)
+      setShowPage("profile")
     }
   }
-  deleteUser(): void {
+  const finalizeProfile = async (): Promise<void> => {
+    console.log("finalize profile")
+    const validation = Validate.Profile(userDetails, profileConfig)
+    if (validation.result) {
+      try {
+        const toSave = clean(userDetails)
+        toSave["profileState"] = "Complete"
+        const updateUser = await Data.updateUser(toSave)
+        setDirty(false)
+        console.log({ "updateUser:": updateUser })
+        if (props.finalizeProfile) props.finalizeProfile()
+        else setEditMode(false)
+      } catch (e: any) {
+        Sentry.captureException(e.errors || e)
+        console.log(e)
+      }
+    }
+    setValidationText(validation.validationError)
+  }
+  const deleteUser = (): void => {
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       const deleteUser = Data.deleteUser(user["username"])
       deleteUser
@@ -517,7 +237,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             null
           })
           console.log(delStat)
-          this.props.navigation?.push("", null)
+          navigation?.push("", null)
           // return delStat
         })
         .catch((e) => {
@@ -526,31 +246,612 @@ class MyProfileImpl extends JCComponent<Props, State> {
             null
           })
           console.log(delStat)
-          this.props.navigation?.push("", null)
+          navigation?.push("", null)
           //        this.props.navigation.navigate("/")
           // return delStat
         })
     })
   }
-  handleDeleteInterest(event: string): void {
-    const remainingInterests = this.state.interestsArray.filter((item) => item !== event)
-    this.setState(
-      {
-        interestsArray: remainingInterests.length === 0 ? [] : remainingInterests,
-      },
-      () => {
-        const updateData = { ...this.state.UserDetails }
-        updateData["interests"] = this.state.interestsArray
-        this.setState({
-          UserDetails: updateData,
-          dirty: true,
-        })
-      }
+  const renderTopBar = (userActions: UserActions) => {
+    const brand = Brand()
+    if (!userDetails) return null
+    return (
+      <View style={styles.style.myProfileTopButtons}>
+        {isEditable && (editMode || showPage != "profile") ? (
+          <Text accessibilityRole="header" style={styles.style.profileFontTitle}>
+            {props.hideOrg ? "Create Administrator's Profile" : "Tell us more about you"}
+          </Text>
+        ) : (
+          <Text style={styles.style.profileFontTitle}>{userDetails.given_name}&apos;s profile</Text>
+        )}
+        <View style={styles.style.myProfileTopButtonsExternalContainer}>
+          {isEditable ? (
+            <View style={styles.style.myProfileTopButtonsInternalContainer}>
+              {editMode ? (
+                <JCButton
+                  enabled={dirty}
+                  testID="profile-save"
+                  buttonType={
+                    brand == "oneStory"
+                      ? ButtonTypes.SolidRightMarginOneStory
+                      : ButtonTypes.SolidRightMargin
+                  }
+                  onPress={async () => {
+                    await finalizeProfile()
+                  }}
+                >
+                  Save Profile
+                </JCButton>
+              ) : null}
+              <JCButton
+                testID={"logout"}
+                buttonType={brand == "oneStory" ? ButtonTypes.SolidOneStory : ButtonTypes.Solid}
+                onPress={() => logout(userActions)}
+              >
+                Logout
+              </JCButton>
+              {props.loadId && showPage == "settings" ? (
+                <JCButton buttonType={ButtonTypes.SolidProfileDelete} onPress={() => deleteUser()}>
+                  Delete
+                </JCButton>
+              ) : null}
+            </View>
+          ) : null}
+          {isEditable && (editMode || showPage != "profile") ? (
+            <Text style={styles.style.myProfileErrorValidation}>{validationText}</Text>
+          ) : null}
+        </View>
+      </View>
     )
   }
+  const renderAdmin = (userActions: UserActions): React.ReactNode => {
+    if (userActions.isMemberOf("admin")) {
+      return (
+        <View style={styles.style.profileScreenRightCard}>
+          <View style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+            <View>
+              <Text style={styles.style.fontBold}>Admin/CRM</Text>
+            </View>
+            <CrmMessageBoard messages={messages} rootId={userDetails?.id} />
+          </View>
+        </View>
+      )
+    }
 
-  checkForValidOrgInfo(): boolean {
-    const user = this.state.UserDetails
+    return null
+  }
+  const renderAboutMeLong = () => {
+    if (!profileConfig["aboutMeLong"].isVisible) return null
+
+    if (!userDetails) return null
+    return (
+      <>
+        {isEditable && editMode ? (
+          <Text style={styles.style.myprofileAboutMe}>
+            <Text style={styles.style.fontFormMandatory}>*</Text>
+            About me
+          </Text>
+        ) : (
+          <Text style={styles.style.myprofileAboutMe}>About me</Text>
+        )}
+        <EditableText
+          accessibilityLabel="Describe yourself"
+          onChange={(e) => {
+            handleInputChange(e, "aboutMeLong")
+          }}
+          placeholder="Type here..."
+          multiline={true}
+          testID="profile-aboutMeLong"
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          inputStyle={{
+            borderWidth: 1,
+            borderColor: "#dddddd",
+            marginTop: 15,
+            marginBottom: 60,
+            width: "100%",
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            fontFamily: "Graphik-Regular-App",
+            fontSize: 16,
+            lineHeight: 28,
+            height: 150,
+          }}
+          value={userDetails.aboutMeLong ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </>
+    )
+  }
+  const handleAddInterest = (): void => {
+    if (interest && interestsArray === null) {
+      setInterestsArray([interest])
+      //await update
+      const updateData = { ...userDetails } as UserData
+      updateData["interests"] = interestsArray
+      setUserDetails(updateData)
+      setDirty(true)
+    } else if (
+      interest &&
+      interestsArray.filter((item: string) => item === interest).length === 0 &&
+      interestsArray.length < 7
+    ) {
+      setInterestsArray([...interestsArray, interest])
+      //await update
+      const updateData = { ...userDetails } as UserData
+      updateData["interests"] = interestsArray
+      setUserDetails(updateData)
+      setDirty(true)
+    }
+  }
+
+  const handleDeleteInterest = (event: string): void => {
+    const remainingInterests = interestsArray.filter((item: string) => item !== event)
+    setInterestsArray(remainingInterests.length === 0 ? [] : remainingInterests)
+    // await update
+    const updateData = { ...userDetails } as UserData
+    updateData["interests"] = interestsArray
+    setUserDetails(updateData)
+    setDirty(true)
+  }
+  const renderInterests = () => {
+    if (!profileConfig["interests"].isVisible) return null
+
+    const brand = Brand()
+    if (!userDetails) return null
+    return (
+      <>
+        {isEditable && editMode ? (
+          <Text style={styles.style.fontBold}>
+            <Text style={styles.style.fontFormMandatory}>*</Text>
+            My Interests
+          </Text>
+        ) : (
+          <Text style={styles.style.myprofileAboutMe}>Interests</Text>
+        )}
+        {isEditable && editMode ? (
+          <View style={styles.style.myprofilePickerMainContainer}>
+            <View style={styles.style.myprofilePickerContainer}>
+              <View style={styles.style.myprofilePickerContainerView}>
+                <Picker
+                  accessibilityLabel="Pick your personal interests"
+                  accessibilityHint="Pick an interest and then click the add button"
+                  testID="profile-interest-picker"
+                  style={styles.style.myprofilePicker}
+                  onValueChange={(itemValue: any) => setInterest(itemValue)}
+                  selectedValue={interest ?? undefined}
+                >
+                  <Picker.Item label={"None Selected"} value={""} />
+                  {interests.map((item, index) => {
+                    return <Picker.Item key={index} label={item} value={item} />
+                  })}
+                </Picker>
+                <JCButton
+                  accessibilityLabel={`${
+                    interest ? `Add ${interest} to list.` : `Add interest to list`
+                  }`}
+                  testID="profile-interest-button"
+                  buttonType={
+                    brand == "oneStory"
+                      ? ButtonTypes.SolidAboutMeOneStory
+                      : ButtonTypes.SolidAboutMe
+                  }
+                  onPress={() => {
+                    handleAddInterest()
+                    console.log(interestsArray)
+                  }}
+                >
+                  <Text>+ Add</Text>
+                </JCButton>
+              </View>
+              {isEditable && editMode ? (
+                <Text style={{ width: "100%", marginTop: 8 }}>
+                  You can select {interestsArray ? 7 - interestsArray.length : 7} more key interests
+                </Text>
+              ) : null}
+            </View>
+            <View style={styles.style.myprofileBadgeContainer}>
+              {interestsArray
+                ? interestsArray.map((item, index) => {
+                    return (
+                      <Badge
+                        key={index}
+                        style={{
+                          backgroundColor: "#EFF1F5",
+                          marginRight: 10,
+                          marginTop: 5,
+                          height: 30,
+                        }}
+                      >
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 18,
+                              paddingHorizontal: 10,
+                            }}
+                          >
+                            {item}
+                          </Text>
+                          <TouchableOpacity
+                            accessibilityLabel={`Remove ${item} from interests`}
+                            accessibilityRole="button"
+                            onPress={() => handleDeleteInterest(item ?? "")}
+                          >
+                            <AntDesign name="close" size={20} color="#979797" />
+                          </TouchableOpacity>
+                        </View>
+                      </Badge>
+                    )
+                  })
+                : null}
+            </View>
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignContent: "flex-start",
+              maxHeight: 100,
+              marginTop: 20,
+              marginBottom: 20,
+            }}
+          >
+            {userDetails.interests
+              ? userDetails.interests.map((item, index) => {
+                  return (
+                    <Badge
+                      key={index}
+                      style={{
+                        backgroundColor: "#EFF1F5",
+                        marginRight: 10,
+                        marginBottom: 10,
+                        height: 30,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            paddingHorizontal: 10,
+                          }}
+                        >
+                          {item}
+                        </Text>
+                      </View>
+                    </Badge>
+                  )
+                })
+              : null}
+          </View>
+        )}
+      </>
+    )
+  }
+  const renderJoinedDate = () => {
+    if (!profileConfig["aboutMeShort"].isVisible) return
+
+    if (userDetails)
+      return (
+        <Text style={styles.style.fontFormSmallGrey}>
+          <Image
+            style={{
+              width: "22px",
+              height: "22px",
+              top: 3,
+              marginRight: 5,
+            }}
+            source={require("../../assets/svg/calendar.svg")}
+          ></Image>
+          Joined:{" "}
+          {userDetails.joined
+            ? moment(userDetails.joined).format("MMMM Do YYYY")
+            : "Join date unknown"}
+        </Text>
+      )
+  }
+  const openConversation = (initialUser: string, name: string): void => {
+    console.log("Navigate to conversationScreen")
+    navigation?.push("ConversationScreen", {
+      initialUserID: initialUser,
+      initialUserName: name,
+    })
+  }
+  const renderMap = () => {
+    return userDetails?.location?.geocodeFull ? (
+      <MyMap initCenter={initCenter} visible={true} mapData={mapData} type={"profile"}></MyMap>
+    ) : null
+  }
+  const renderCurrentRoleEdit = () => {
+    if (!profileConfig["currentRole"].isVisible) return
+
+    if (!userDetails) return
+    return (
+      <View style={{ width: "100%" }}>
+        <View>
+          <Text style={styles.style.fontFormMandatory}>{isEditable && editMode ? "*" : ""}</Text>
+          <Text style={styles.style.fontFormSmall}>Current Role</Text>
+        </View>
+        <EditableText
+          accessibilityLabel="Current role"
+          onChange={(e) => {
+            handleInputChange(e, "currentRole")
+          }}
+          multiline={false}
+          testID="profile-currentRole"
+          placeholder="Type here..."
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          inputStyle={{
+            borderWidth: 1,
+            borderColor: "#dddddd",
+            width: "100%",
+            marginBottom: 15,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            fontFamily: "Graphik-Regular-App",
+            fontSize: 16,
+            lineHeight: 28,
+          }}
+          value={userDetails.currentRole ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </View>
+    )
+  }
+  const renderCurrentScope = () => {
+    if (!profileConfig["currentScope"].isVisible) return
+
+    if (!userDetails) return null
+    return (
+      <>
+        <Text style={styles.style.fontFormSmall}>&nbsp;</Text>
+        {isEditable && editMode ? (
+          <Text style={styles.style.fontFormSmall}>
+            <Text style={styles.style.fontFormMandatory}>*</Text>
+            Describe your current scope
+          </Text>
+        ) : (
+          <Text style={styles.style.fontFormSmall}>Current scope</Text>
+        )}
+        <EditableText
+          accessibilityLabel="Describe your current scope"
+          onChange={(e) => {
+            handleInputChange(e, "currentScope")
+          }}
+          multiline={true}
+          placeholder="Type here..."
+          testID="profile-currentScope"
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          inputStyle={{
+            borderWidth: 1,
+            borderColor: "#dddddd",
+            width: "100%",
+            marginBottom: 15,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            fontFamily: "Graphik-Regular-App",
+            fontSize: 16,
+            lineHeight: 28,
+          }}
+          value={userDetails.currentScope ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </>
+    )
+  }
+  const renderPersonalityIndicator = () => {
+    if (!profileConfig["personality"].isVisible) return
+
+    if (!userDetails) return
+    return (
+      <>
+        <Text style={styles.style.fontFormSmall}>&nbsp;</Text>
+        {isEditable && editMode ? (
+          <Text style={styles.style.fontFormSmall}>Identify your personality type indicator</Text>
+        ) : userDetails.personality ? (
+          <Text style={styles.style.fontFormSmall}>Personality type indicator</Text>
+        ) : null}
+        <EditableText
+          onChange={(e) => {
+            handleInputChange(e, "personality")
+          }}
+          accessibilityLabel="Identify personality type indicator"
+          multiline={true}
+          testID="profile-personality"
+          placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          inputStyle={{
+            borderWidth: 1,
+            borderColor: "#dddddd",
+            width: "100%",
+            marginBottom: 15,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 30,
+            paddingLeft: 10,
+            fontFamily: "Graphik-Regular-App",
+            fontSize: 16,
+            lineHeight: 28,
+          }}
+          value={userDetails.personality ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </>
+    )
+  }
+  const renderOrgName = () => {
+    if (!profileConfig["orgName"].isVisible) return
+
+    if (!userDetails) return
+    return (isEditable && editMode) || userDetails.orgName ? (
+      <View>
+        <View>
+          <Text style={styles.style.fontFormSmall}>Organization Name</Text>
+        </View>
+        <EditableText
+          accessibilityLabel="Organization name"
+          onChange={(e) => {
+            handleInputChange(e, "orgName")
+          }}
+          multiline={false}
+          testID="profile-orgName"
+          placeholder="Type here..."
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          inputStyle={styles.style.myProfileOrgTypeInput}
+          value={userDetails.orgName ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </View>
+    ) : null
+  }
+  const renderOrgType = () => {
+    if (!profileConfig["orgType"].isVisible) return
+
+    if (userDetails)
+      return (isEditable && editMode) || (userDetails.orgType && userDetails.orgType !== "None") ? (
+        <View style={{ marginTop: 15 }}>
+          <View>
+            <Text style={styles.style.fontFormSmall}>Type of Organization</Text>
+          </View>
+          {isEditable && editMode ? (
+            <View style={styles.style.myProfileOrgView}>
+              <Picker
+                accessibilityLabel="Organization type"
+                testID="profile-orgType"
+                style={styles.style.myprofilePicker}
+                onValueChange={(itemValue) => {
+                  handleInputChange(itemValue, "orgType")
+                }}
+                selectedValue={
+                  userDetails?.orgType && orgTypes.includes(userDetails?.orgType)
+                    ? userDetails.orgType
+                    : userDetails.orgType === null || userDetails.orgType === "None"
+                    ? "None"
+                    : ""
+                }
+              >
+                <Picker.Item label={"None Selected"} value={"None"} />
+                {orgTypes.map((item, index) => {
+                  return <Picker.Item key={index} label={item} value={item} />
+                })}
+                <Picker.Item label={"Other"} value={""} />
+              </Picker>
+              {userDetails.orgType === "" ||
+              (userDetails.orgType !== null &&
+                !orgTypes.includes(userDetails?.orgType ?? "") &&
+                userDetails.orgType !== "None") ? (
+                <EditableText
+                  accessibilityLabel="Organization type"
+                  onChange={(e) => {
+                    handleInputChange(e, "orgType")
+                  }}
+                  multiline={false}
+                  placeholder="Type here..."
+                  textStyle={styles.style.fontFormSmallDarkGrey}
+                  inputStyle={styles.style.myProfileOrgTypeInput}
+                  value={userDetails.orgType ?? ""}
+                  isEditable={isEditable && editMode}
+                ></EditableText>
+              ) : null}
+            </View>
+          ) : userDetails.orgType && userDetails.orgType !== "None" ? (
+            <EditableText
+              multiline={true}
+              textStyle={styles.style.fontFormSmallDarkGrey}
+              value={userDetails.orgType}
+              isEditable={false}
+            />
+          ) : null}
+        </View>
+      ) : null
+  }
+  const renderAdminButton = (userActions: UserActions) => {
+    return userActions.isMemberOf("admin") ? (
+      <View
+        style={{
+          borderBottomWidth: 1,
+          borderBottomColor: "#33333320",
+          paddingVertical: 10,
+          borderRightWidth: showPage == "billing" ? 7 : 0,
+          borderRightColor: "#F0493E",
+        }}
+      >
+        <JCButton
+          testID="profile-setmap"
+          buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
+          onPress={() => {
+            setShowPage("admin")
+            setEditMode(false)
+            scrollRef.current?.scrollTo(0, 80)
+          }}
+        >
+          Admin
+        </JCButton>
+      </View>
+    ) : null
+  }
+  const renderOrgSize = () => {
+    if (!profileConfig["orgSize"].isVisible) return
+
+    return userDetails?.orgType &&
+      orgTypes.includes(userDetails?.orgType) &&
+      (userDetails.orgSize || editMode) ? (
+      <View style={{ marginTop: 15 }}>
+        {isEditable && editMode ? (
+          <View>
+            <View style={styles.style.fontFormSmall}>
+              How many employees are there in the organization?
+            </View>
+            <Picker
+              accessibilityLabel="Number of employees in organization"
+              testID="profile-orgSize"
+              style={styles.style.myprofilePicker}
+              onValueChange={(itemValue: any) => {
+                handleInputChange(itemValue, "orgSize")
+              }}
+              selectedValue={userDetails.orgSize ?? ""}
+            >
+              <Picker.Item label={"None Selected"} value={""} />
+              {numberOfEmployees.map((item, index) => {
+                return <Picker.Item key={index} label={item} value={item} />
+              })}
+            </Picker>
+          </View>
+        ) : userDetails.orgSize ? (
+          <View>
+            <View style={styles.style.fontFormSmall}>Employees</View>
+
+            <EditableText
+              multiline={true}
+              textStyle={styles.style.fontFormSmallDarkGrey}
+              value={userDetails.orgSize}
+              isEditable={false}
+            />
+          </View>
+        ) : null}
+      </View>
+    ) : null
+  }
+  const checkForValidOrgInfo = (): boolean => {
+    const user = userDetails
 
     if (user?.orgName || user?.orgDescription) {
       return true
@@ -570,158 +871,378 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
     return false
   }
+  const renderOrgAttendance = () => {
+    if (!profileConfig["sundayAttendance"].isVisible) return
 
-  handleEditMode() {
-    if (this.state.dirty && window.confirm("You have unsaved changes"))
-      this.setState({
-        editMode: !this.state.editMode,
-        showPage: "profile",
+    return userDetails?.orgType &&
+      orgTypesChurches.includes(userDetails?.orgType) &&
+      (userDetails.sundayAttendance || editMode) ? (
+      <View style={{ marginTop: 15 }}>
+        {isEditable && editMode ? (
+          <View>
+            <View style={styles.style.fontFormSmall}>Average Sunday morning attendance</View>
+            <Picker
+              accessibilityLabel="Average Sunday morning attendance"
+              style={styles.style.myprofilePicker}
+              onValueChange={(itemValue: any) => {
+                handleInputChange(itemValue, "sundayAttendance")
+              }}
+              selectedValue={userDetails.sundayAttendance ?? ""}
+            >
+              <Picker.Item label={"None Selected"} value={""} />
+              {sundayAttendance.map((item, index) => {
+                return <Picker.Item key={index} label={item} value={item} />
+              })}
+            </Picker>
+          </View>
+        ) : userDetails.sundayAttendance ? (
+          <View>
+            <View style={styles.style.fontFormSmall}>Average Sunday morning attendance</View>
+            <EditableText
+              accessibilityLabel="Average Sunday morning attendance"
+              multiline={true}
+              textStyle={styles.style.fontFormSmallDarkGrey}
+              value={userDetails.sundayAttendance}
+              isEditable={false}
+            />
+          </View>
+        ) : null}
+      </View>
+    ) : null
+  }
+  const renderOrgVolunteers = () => {
+    if (!profileConfig["numberVolunteers"].isVisible) return
+
+    return userDetails?.orgType &&
+      orgTypes.includes(userDetails?.orgType) &&
+      (userDetails.numberVolunteers || editMode) ? (
+      <View style={{ marginTop: 15 }}>
+        {isEditable && editMode ? (
+          <View>
+            <View style={styles.style.fontFormSmall}>Number of volunteers</View>
+            <Picker
+              accessibilityLabel="Number of volunteers"
+              style={styles.style.myprofilePicker}
+              onValueChange={(itemValue: any) => {
+                handleInputChange(itemValue, "numberVolunteers")
+              }}
+              selectedValue={userDetails.numberVolunteers ?? ""}
+            >
+              <Picker.Item label={"None Selected"} value={""} />
+              {numberOfEmployees.map((item, index) => {
+                return <Picker.Item key={index} label={item} value={item} />
+              })}
+            </Picker>
+          </View>
+        ) : userDetails.numberVolunteers ? (
+          <View>
+            <View style={styles.style.fontFormSmall}>Number of volunteers</View>
+            <EditableText
+              multiline={true}
+              textStyle={styles.style.fontFormSmallDarkGrey}
+              value={userDetails.numberVolunteers}
+              isEditable={false}
+            />
+          </View>
+        ) : null}
+      </View>
+    ) : null
+  }
+  const renderOrgDenomination = () => {
+    if (!profileConfig["denomination"].isVisible) return
+
+    return userDetails?.orgType &&
+      orgTypesChurches.includes(userDetails?.orgType) &&
+      (userDetails?.denomination || editMode) ? (
+      <View style={{ marginTop: 15 }}>
+        <Text style={styles.style.fontFormSmall}>Denomination</Text>
+        <EditableText
+          onChange={(e) => {
+            handleInputChange(e, "denomination")
+          }}
+          accessibilityLabel="Denomination"
+          multiline={true}
+          testID="profile-denomination"
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          placeholder="Type here."
+          inputStyle={{
+            borderWidth: 1,
+            borderColor: "#dddddd",
+            width: "100%",
+            marginBottom: 15,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            fontFamily: "Graphik-Regular-App",
+            fontSize: 16,
+            lineHeight: 28,
+          }}
+          value={userDetails.denomination ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </View>
+    ) : null
+  }
+  const renderOrgPPLServed = () => {
+    if (!profileConfig["pplServed"].isVisible) return
+
+    return userDetails?.orgType &&
+      orgTypesNonChurch.includes(userDetails?.orgType) &&
+      (userDetails.pplServed || editMode) ? (
+      <View style={{ marginTop: 15 }}>
+        <Text style={styles.style.fontFormSmall}>
+          {editMode ? "How many people do you serve?" : "People impacted by our services"}
+        </Text>
+        <EditableText
+          accessibilityLabel={
+            editMode ? "How many people do you serve?" : "People impacted by our services"
+          }
+          onChange={(e) => {
+            handleInputChange(e, "pplServed")
+          }}
+          multiline={true}
+          testID="profile-pplServed"
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          placeholder="Type here."
+          inputStyle={{
+            borderWidth: 1,
+            borderColor: "#dddddd",
+            width: "100%",
+            marginBottom: 15,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            fontFamily: "Graphik-Regular-App",
+            fontSize: 16,
+            lineHeight: 28,
+          }}
+          value={userDetails.pplServed ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </View>
+    ) : null
+  }
+  const renderOrgDescription = () => {
+    if (!profileConfig["orgDescription"].isVisible) return
+
+    if (userDetails)
+      return userDetails.orgDescription || editMode ? (
+        <View style={{ marginTop: 15 }}>
+          <Text style={styles.style.fontFormSmall}>
+            Description of church or ministry organization
+          </Text>
+          <EditableText
+            onChange={(e) => {
+              handleInputChange(e, "orgDescription")
+            }}
+            multiline={true}
+            accessibilityLabel="Describe church or organization"
+            testID="profile-orgDescription"
+            textStyle={styles.style.fontFormSmallDarkGrey}
+            placeholder="Type here."
+            inputStyle={{
+              borderWidth: 1,
+              borderColor: "#dddddd",
+              width: "100%",
+              marginBottom: 15,
+              paddingTop: 10,
+              paddingRight: 10,
+              paddingBottom: 10,
+              paddingLeft: 10,
+              fontFamily: "Graphik-Regular-App",
+              fontSize: 16,
+              lineHeight: 28,
+            }}
+            value={userDetails.orgDescription ?? ""}
+            isEditable={isEditable && editMode}
+          ></EditableText>
+        </View>
+      ) : null
+  }
+  const renderProfile = () => {
+    if (!userDetails) return
+    return (
+      <View style={styles.style.profileScreenRightCard}>
+        <View style={{ width: "100%" }}>{renderMap()}</View>
+
+        {renderAboutMeLong()}
+        {renderInterests()}
+        {renderCurrentRoleEdit()}
+        {renderCurrentScope()}
+        {renderPersonalityIndicator()}
+
+        <Text style={styles.style.fontFormSmall}>&nbsp;</Text>
+        {checkForValidOrgInfo() || (isEditable && editMode) ? (
+          !props.hideOrg ? (
+            <View>
+              {isEditable && editMode ? (
+                <Text style={styles.style.fontBold}>Tell us about your organization</Text>
+              ) : (
+                <Text style={styles.style.fontBold}>Organization Info</Text>
+              )}
+              {renderOrgName()}
+              {renderOrgType()}
+              {renderOrgSize()}
+              {renderOrgAttendance()}
+              {renderOrgVolunteers()}
+              {renderOrgDenomination()}
+              {renderOrgPPLServed()}
+              {renderOrgDescription()}
+            </View>
+          ) : null
+        ) : null}
+      </View>
+    )
+  }
+  const renderLocation = () => {
+    if (!profileConfig["location"].isVisible) return
+
+    if (!userDetails) return null
+    return (
+      <>
+        {isEditable && editMode ? (
+          <Text style={styles.style.fontFormSmallHeader}>
+            <Text style={styles.style.fontFormMandatory}>*</Text>
+            Public Location
+          </Text>
+        ) : null}
+        {isEditable && editMode ? (
+          <EditableLocation
+            onChange={(value: any, location: any) => {
+              if (location) {
+                handleInputChange(
+                  {
+                    latitude: location.lat,
+                    longitude: location.lng,
+                    geocodeFull: value,
+                    randomLatitude: userDetails?.location?.randomLatitude
+                      ? userDetails?.location.randomLatitude
+                      : Math.random() * 0.04 - 0.02,
+                    randomLongitude: userDetails?.location?.randomLongitude
+                      ? userDetails.location.randomLongitude
+                      : Math.random() * 0.04 - 0.02,
+                  },
+                  "location"
+                )
+              }
+            }}
+            multiline={false}
+            textStyle={styles.style.fontRegular}
+            inputStyle={styles.style.groupNameInput}
+            value={userDetails.location?.geocodeFull ?? ""}
+            isEditable={isEditable && editMode}
+            citiesOnly={true}
+          ></EditableLocation>
+        ) : null}
+      </>
+    )
+  }
+  const renderStartConversation = () => {
+    if (!profileConfig["aboutMeShort"].isVisible) return null
+    if (isEditable) return null
+    if (!userDetails?.id) return null
+    return (
+      <Pressable
+        style={styles.style.connectWithSliderButton}
+        onPress={() => {
+          openConversation(
+            userDetails?.id,
+            userDetails?.given_name + " " + userDetails?.family_name
+          )
+        }}
+      >
+        <Text style={styles.style.fontStartConversation}>Start Conversation</Text>
+      </Pressable>
+    )
+  }
+  const onProfileImageChange = async (e: any): Promise<void> => {
+    const file = e.target.files[0]
+    const user = await Auth.currentCredentials()
+    const userId = user.identityId
+    const lastDot = file.name.lastIndexOf(".")
+    const ext = file.name.substring(lastDot + 1)
+    const fn = "profile/upload/profile-" + new Date().getTime() + "." + ext
+    const fnSave = fn
+      .replace("/upload", "")
+      .replace(".", "-[size].")
+      .replace("." + ext, ".png")
+
+    Storage.put(fn, file, {
+      level: "protected",
+      contentType: file.type,
+      identityId: userId,
+    } as any)
+      .then(() => {
+        const updateData = { ...userDetails }
+        updateData["profileImage"] = {
+          __typename: "Image",
+          userId: userId,
+          filenameUpload: fn,
+          filenameLarge: fnSave.replace("[size]", "large"),
+          filenameMedium: fnSave.replace("[size]", "medium"),
+          filenameSmall: fnSave.replace("[size]", "small"),
+        }
+        setUserDetails(updateData as UserData)
+        setDirty(true)
+        getProfileImage(updateData as UserData)
       })
-    else if (!this.state.dirty)
-      this.setState({
-        editMode: !this.state.editMode,
-        showPage: "profile",
-      })
+      .catch((err: unknown) => console.log(err))
   }
-
-  async handleChangeName(): Promise<void> {
-    const { firstName, lastName } = this.state
-
-    if (!firstName || !lastName) {
-      this.setState({ passError: "Required: First name, Last name" })
-      return
-    }
-
-    const UserDetails = { ...this.state.UserDetails } as UserData
-
-    UserDetails["given_name"] = firstName
-    UserDetails["family_name"] = lastName
-
-    this.setState({ UserDetails })
-
-    try {
-      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      const oldAttributes = user.attributes
-      const newAttributes = { ...oldAttributes, given_name: firstName, family_name: lastName }
-      const updateCognitoUser = await Auth.updateUserAttributes(user, newAttributes)
-
-      console.debug({ updateCognito: updateCognitoUser })
-
-      const updateUser = await Data.updateUser(this.clean(UserDetails))
-
-      console.debug({ updateUser: updateUser })
-      this.setState({ passError: "" })
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  async handlePasswordChange(): Promise<void> {
-    if (!this.state.oldPass || !this.state.newPass) {
-      this.setState({ passError: "Required: Current password, New password" })
-      return
-    }
-    try {
-      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      const result = await Auth.changePassword(user, this.state.oldPass, this.state.newPass)
-      this.setState({ passError: result })
-    } catch (e: any) {
-      console.error(e)
-      if (e.message.includes("validation")) this.setState({ passError: e.message.split(":")[0] })
-      else this.setState({ passError: e.message })
-    }
-    this.setState({ oldPass: "", newPass: "", passError: "" })
-  }
-
-  renderMainUserGroup(group: string) {
-    return <Text style={this.styles.style.fontFormUserType}>{group}</Text>
-  }
-  openConversation(initialUser: string, name: string): void {
-    console.log("Navigate to conversationScreen")
-    this.props.navigation?.push("ConversationScreen", {
-      initialUserID: initialUser,
-      initialUserName: name,
+  const convertProfileToMapData = () => {
+    if (userDetails?.location && userDetails?.location.latitude && userDetails?.location.longitude)
+      setMapData([
+        {
+          latitude:
+            Number(userDetails.location.latitude) + Number(userDetails.location.randomLatitude),
+          longitude:
+            Number(userDetails.location.longitude) + Number(userDetails.location.randomLatitude),
+          name: userDetails.given_name + " " + userDetails.family_name,
+          user: userDetails,
+          link: "",
+          type: "profile",
+        },
+      ])
+    setInitCenter({
+      lat: Number(userDetails?.location?.latitude) + Number(userDetails?.location?.randomLatitude),
+      lng: Number(userDetails?.location?.longitude) + Number(userDetails?.location?.randomLatitude),
     })
   }
-  static UserConsumer = UserContext.Consumer
-  renderTopBar(userActions: UserActions) {
-    const brand = Brand()
-    if (this.state.UserDetails)
-      return (
-        <View style={this.styles.style.myProfileTopButtons}>
-          {this.state.isEditable && (this.state.editMode || this.state.showPage != "profile") ? (
-            <Text accessibilityRole="header" style={this.styles.style.profileFontTitle}>
-              {this.props.hideOrg ? "Create Administrator's Profile" : "Setup your profile"}
-            </Text>
-          ) : (
-            <Text style={this.styles.style.profileFontTitle}>
-              {this.state.UserDetails.given_name}&apos;s profile
-            </Text>
-          )}
-          <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
-            {this.state.isEditable ? (
-              <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
-                {this.state.editMode ? (
-                  <JCButton
-                    enabled={this.state.dirty}
-                    testID="profile-save"
-                    buttonType={
-                      brand == "oneStory"
-                        ? ButtonTypes.SolidRightMarginOneStory
-                        : ButtonTypes.SolidRightMargin
-                    }
-                    onPress={async () => {
-                      await this.finalizeProfile()
-                    }}
-                  >
-                    Save Profile
-                  </JCButton>
-                ) : null}
-                <JCButton
-                  testID={"logout"}
-                  buttonType={brand == "oneStory" ? ButtonTypes.SolidOneStory : ButtonTypes.Solid}
-                  onPress={() => this.logout(userActions)}
-                >
-                  Logout
-                </JCButton>
-                {this.props.loadId && this.state.showPage == "settings" ? (
-                  <JCButton
-                    buttonType={ButtonTypes.SolidProfileDelete}
-                    onPress={() => this.deleteUser()}
-                  >
-                    Delete
-                  </JCButton>
-                ) : null}
-              </View>
-            ) : null}
-            {this.state.isEditable && (this.state.editMode || this.state.showPage != "profile") ? (
-              <Text style={this.styles.style.myProfileErrorValidation}>
-                {this.state.validationText}
-              </Text>
-            ) : null}
-          </View>
-        </View>
-      )
-    else return null
+  const handleInputChange = (event: any, name: string): void => {
+    const value =
+      event.target === undefined
+        ? event
+        : event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value
+    // const name = target.name;
+    console.log(value)
+    const updateData = { ...userDetails } as any
+    if (updateData && name) {
+      updateData[name] = value
+      setUserDetails(updateData)
+    }
+    setDirty(true)
+    // await state updates
+    if (name === "location") convertProfileToMapData()
   }
-  renderProfileImage() {
-    if (!this.state.profileConfig["profileImage"].isVisible) return
+  const renderProfileImage = () => {
+    if (!profileConfig?.["profileImage"]?.isVisible) return null
     const brand = Brand()
     return (
-      <View style={this.styles.style.myProfileImageWrapper}>
+      <View style={styles.style.myProfileImageWrapper}>
         <Image
-          style={this.styles.style.myProfileImage}
+          style={styles.style.myProfileImage}
           source={
-            this.state.profileImage == ""
-              ? require("../../assets/profile-placeholder.png")
-              : this.state.profileImage
+            profileImage == "" ? require("../../assets/profile-placeholder.png") : profileImage
           }
           onError={() => {
-            this.getProfileImage()
+            getProfileImage(userDetails as UserData)
           }}
         ></Image>
-        {this.state.isEditable && this.state.editMode ? (
-          <View accessible={false} style={this.styles.style.fileInputWrapper}>
+        {isEditable && editMode ? (
+          <View accessible={false} style={styles.style.fileInputWrapper}>
             <TouchableOpacity
               accessible={false}
               style={{
@@ -741,7 +1262,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   textAlign: "center",
                 }}
               >
-                Set Profile Picture
+                Set Account Picture
               </Text>
               <input
                 aria-role="button"
@@ -759,1335 +1280,123 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }}
                 type="file"
                 accept="image/*"
-                onChange={(e) => this.onProfileImageChange(e)}
+                onChange={(e) => onProfileImageChange(e)}
               />
             </TouchableOpacity>
           </View>
         ) : null}
-        {/*<Text style={this.styles.style.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
+        {/*<Text style={styles.style.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
       </View>
     )
   }
-  renderName() {
-    if (!this.state.profileConfig["fullName"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <Text style={this.styles.style.fontFormName}>
-          {this.state.UserDetails.given_name} {this.state.UserDetails.family_name}
-        </Text>
-      )
-  }
-  renderCurrentRole() {
-    if (!this.state.profileConfig["currentRole"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <Text style={this.styles.style.fontFormRole}>
-          {this.state.UserDetails.currentRole
-            ? this.state.UserDetails.currentRole
-            : "My Current Role not defined"}
-        </Text>
-      )
-  }
-  renderAboutMeShort() {
-    if (!this.state.profileConfig["aboutMeShort"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <>
-          {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontFormSmall}>One sentence about me</Text>
-          ) : null}
-          <EditableText
-            onChange={(e) => {
-              this.handleInputChange(e, "aboutMeShort")
-            }}
-            placeholder="Short sentence about me"
-            multiline={true}
-            placeholderTextColor="#757575"
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            inputStyle={this.styles.style.fontFormAboutMe}
-            testID="profile-aboutMeShort"
-            value={this.state.UserDetails.aboutMeShort ?? ""}
-            isEditable={this.state.isEditable && this.state.editMode}
-          ></EditableText>
-        </>
-      )
-  }
-  renderJoinedDate() {
-    if (!this.state.profileConfig["aboutMeShort"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <Text style={this.styles.style.fontFormSmallGrey}>
-          <Image
-            style={{
-              width: "22px",
-              height: "22px",
-              top: 3,
-              marginRight: 5,
-            }}
-            source={require("../../assets/svg/calendar.svg")}
-          ></Image>
-          Joined:{" "}
-          {this.state.UserDetails.joined
-            ? moment(this.state.UserDetails.joined).format("MMMM Do YYYY")
-            : "Join date unknown"}
-        </Text>
-      )
-  }
-  renderStartConversation() {
-    if (!this.state.profileConfig["aboutMeShort"].isVisible) return
-
-    return !this.state.isEditable ? (
-      <Pressable
-        style={this.styles.style.connectWithSliderButton}
-        onPress={() => {
-          this.openConversation(
-            this.state.UserDetails?.id,
-            this.state.UserDetails?.given_name + " " + this.state.UserDetails?.family_name
-          )
-        }}
-      >
-        <Text style={this.styles.style.fontStartConversation}>Start Conversation</Text>
-      </Pressable>
-    ) : null
-  }
-  renderMessages() {
-    if (!this.state.profileConfig["messages"].isVisible) return
-
-    if (this.state.UserDetails)
-      return this.state.isEditable &&
-        this.state.UserDetails.profileState !== "Incomplete" &&
-        constants["SETTING_ISVISIBLE_PROFILE_MESSAGES"] ? (
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderTopWidth: 1,
-            borderColor: "#33333320",
-            paddingVertical: 10,
-          }}
-        >
-          <JCButton
-            testID="profile-setmap"
-            buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-            onPress={() => {
-              this.props.navigation?.push("ConversationScreen", {
-                initialUserID: null,
-                initialUserName: null,
-              })
-            }}
-          >
-            Messages
-          </JCButton>
-        </View>
-      ) : null
-  }
-  renderAccountSettingsButton() {
-    if (this.state.UserDetails)
-      return this.state.isEditable &&
-        this.state.UserDetails.profileState !== "Incomplete" &&
-        constants["SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS"] ? (
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: "#33333320",
-            paddingVertical: 10,
-            borderRightWidth: this.state.showPage == "settings" ? 7 : 0,
-            borderRightColor: "#F0493E",
-          }}
-        >
-          <JCButton
-            testID="profile-setmap"
-            buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-            onPress={() =>
-              this.setState({
-                showPage: "settings",
-                editMode: false,
-              })
-            }
-          >
-            Account Settings
-          </JCButton>
-        </View>
-      ) : null
-  }
-  renderBillingListInvoices() {
-    if (this.state.UserDetails)
-      return this.state.isEditable &&
-        this.state.UserDetails.profileState !== "Incomplete" &&
-        constants["SETTING_ISVISIBLE_PROFILE_BILLING"] ? (
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: "#33333320",
-            paddingVertical: 10,
-            borderRightWidth: this.state.showPage == "billing" ? 7 : 0,
-            borderRightColor: "#F0493E",
-          }}
-        >
-          <JCButton
-            testID="profile-setmap"
-            buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-            onPress={() =>
-              this.setState(
-                {
-                  showPage: "billing",
-                  editMode: false,
-                },
-                () => {
-                  this.listInvoices()
-                }
-              )
-            }
-          >
-            Billing
-          </JCButton>
-        </View>
-      ) : null
-  }
-  renderAdminButton(userActions: UserActions) {
-    return userActions.isMemberOf("admin") ? (
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#33333320",
-          paddingVertical: 10,
-          borderRightWidth: this.state.showPage == "billing" ? 7 : 0,
-          borderRightColor: "#F0493E",
-        }}
-      >
-        <JCButton
-          testID="profile-setmap"
-          buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-          onPress={() => {
-            this.setState({
-              showPage: "admin",
-              editMode: false,
-            })
-
-            this.scrollRef?._root.scrollToPosition(0, 80)
-          }}
-        >
-          Admin
-        </JCButton>
-      </View>
-    ) : null
-  }
-  renderLocation() {
-    if (!this.state.profileConfig["location"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <>
-          {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontFormSmallHeader}>
-              <Text style={this.styles.style.fontFormMandatory}>*</Text>
-              Public Location
-            </Text>
-          ) : null}
-          {this.state.isEditable && this.state.editMode ? (
-            <EditableLocation
-              onChange={(value: any, location: any) => {
-                if (location) {
-                  this.handleInputChange(
-                    {
-                      latitude: location.lat,
-                      longitude: location.lng,
-                      geocodeFull: value,
-                      randomLatitude: this.state.UserDetails?.location?.randomLatitude
-                        ? this.state.UserDetails?.location.randomLatitude
-                        : Math.random() * 0.04 - 0.02,
-                      randomLongitude: this.state.UserDetails?.location?.randomLongitude
-                        ? this.state.UserDetails.location.randomLongitude
-                        : Math.random() * 0.04 - 0.02,
-                    },
-                    "location"
-                  )
-                }
-              }}
-              multiline={false}
-              textStyle={this.styles.style.fontRegular}
-              inputStyle={this.styles.style.groupNameInput}
-              value={this.state.UserDetails.location?.geocodeFull ?? ""}
-              isEditable={this.state.isEditable && this.state.editMode}
-              citiesOnly={true}
-            ></EditableLocation>
-          ) : null}
-        </>
-      )
-  }
-  renderLocation2() {
-    if (!this.state.profileConfig["location"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}>
-          <Image
-            style={{
-              width: "22px",
-              height: "22px",
-              top: 6,
-              marginRight: 5,
-            }}
-            source={require("../../assets/svg/pin 2.svg")}
-          ></Image>
-          {this.state.UserDetails.location?.geocodeFull
-            ? this.state.UserDetails.location.geocodeFull
-            : "Location not defined"}
-        </Text>
-      )
-  }
-  renderLeftBar(userActions: UserActions) {
-    if (this.state.UserDetails)
-      return (
-        <View style={this.styles.style.profileScreenLeftCard}>
-          {this.renderProfileImage()}
-          <View style={this.styles.style.myProfilePersonalInfoWrapper}>
-            {this.renderName()}
-            {this.renderCurrentRole()}
-            {this.renderMainUserGroup(this.state.UserDetails?.mainUserGroup ?? "Inactive")}
-            {this.renderAboutMeShort()}
-
-            <View style={this.styles.style.myProfileCoordinates}>
-              {this.renderLocation2()}
-              {this.state.isEditable && this.state.UserDetails.profileState !== "Incomplete" ? (
-                <JCButton buttonType={ButtonTypes.EditButton} onPress={() => this.handleEditMode()}>
-                  {this.state.editMode ? "View Profile" : "Edit Profile"}
-                </JCButton>
-              ) : null}
-            </View>
-            {this.renderJoinedDate()}
-            {this.renderStartConversation()}
-            {this.renderMessages()}
-            {this.renderAccountSettingsButton()}
-            {this.renderBillingListInvoices()}
-            {this.renderAdminButton(userActions)}
-          </View>
-          {this.renderLocation()}
-        </View>
-      )
-    else return null
-  }
-  renderAboutMeLong() {
-    if (!this.state.profileConfig["aboutMeLong"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <>
-          {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.myprofileAboutMe}>
-              <Text style={this.styles.style.fontFormMandatory}>*</Text>
-              About me
-            </Text>
-          ) : (
-            <Text style={this.styles.style.myprofileAboutMe}>About me</Text>
-          )}
-          <EditableText
-            accessibilityLabel="Describe yourself"
-            onChange={(e) => {
-              this.handleInputChange(e, "aboutMeLong")
-            }}
-            placeholder="Type here..."
-            multiline={true}
-            testID="profile-aboutMeLong"
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            inputStyle={{
-              borderWidth: 1,
-              borderColor: "#dddddd",
-              marginTop: 15,
-              marginBottom: 60,
-              width: "100%",
-              paddingTop: 10,
-              paddingRight: 10,
-              paddingBottom: 10,
-              paddingLeft: 10,
-              fontFamily: "Graphik-Regular-App",
-              fontSize: 16,
-              lineHeight: 28,
-              height: 150,
-            }}
-            value={this.state.UserDetails.aboutMeLong ?? ""}
-            isEditable={this.state.isEditable && this.state.editMode}
-          ></EditableText>
-        </>
-      )
-  }
-  renderInterests() {
-    if (!this.state.profileConfig["interests"].isVisible) return
-
-    const brand = Brand()
-    if (this.state.UserDetails)
-      return (
-        <>
-          {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontBold}>
-              <Text style={this.styles.style.fontFormMandatory}>*</Text>
-              My Interests
-            </Text>
-          ) : (
-            <Text style={this.styles.style.myprofileAboutMe}>Interests</Text>
-          )}
-          {this.state.isEditable && this.state.editMode ? (
-            <View style={this.styles.style.myprofilePickerMainContainer}>
-              <View style={this.styles.style.myprofilePickerContainer}>
-                <View style={this.styles.style.myprofilePickerContainerView}>
-                  <Picker
-                    accessibilityLabel="Pick your personal interests"
-                    accessibilityHint="Pick an interest and then click the add button"
-                    testID="profile-interest-picker"
-                    style={this.styles.style.myprofilePicker}
-                    onValueChange={(itemValue) => this.setState({ interest: itemValue })}
-                    selectedValue={this.state.interest ?? undefined}
-                  >
-                    <Picker.Item label={"None Selected"} value={""} />
-                    {interests.map((item, index) => {
-                      return <Picker.Item key={index} label={item} value={item} />
-                    })}
-                  </Picker>
-                  <JCButton
-                    accessibilityLabel={`${
-                      this.state.interest
-                        ? `Add ${this.state.interest} to list.`
-                        : `Add interest to list`
-                    }`}
-                    testID="profile-interest-button"
-                    buttonType={
-                      brand == "oneStory"
-                        ? ButtonTypes.SolidAboutMeOneStory
-                        : ButtonTypes.SolidAboutMe
-                    }
-                    onPress={() => {
-                      this.handleAddInterest()
-                      console.log(this.state.interestsArray)
-                    }}
-                  >
-                    <Text>+ Add</Text>
-                  </JCButton>
-                </View>
-                {this.state.isEditable && this.state.editMode ? (
-                  <Text style={{ width: "100%", marginTop: 8 }}>
-                    You can select{" "}
-                    {this.state.interestsArray ? 7 - this.state.interestsArray.length : 7} more key
-                    interests
-                  </Text>
-                ) : null}
-              </View>
-              <View style={this.styles.style.myprofileBadgeContainer}>
-                {this.state.interestsArray
-                  ? this.state.interestsArray.map((item, index) => {
-                      return (
-                        <Badge
-                          key={index}
-                          style={{
-                            backgroundColor: "#EFF1F5",
-                            marginRight: 10,
-                            marginTop: 5,
-                            height: 30,
-                          }}
-                        >
-                          <View
-                            style={{
-                              flex: 1,
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontSize: 18,
-                                paddingHorizontal: 10,
-                              }}
-                            >
-                              {item}
-                            </Text>
-                            <TouchableOpacity
-                              accessibilityLabel={`Remove ${item} from interests`}
-                              accessibilityRole="button"
-                              onPress={() => this.handleDeleteInterest(item ?? "")}
-                            >
-                              <AntDesign name="close" size={20} color="#979797" />
-                            </TouchableOpacity>
-                          </View>
-                        </Badge>
-                      )
-                    })
-                  : null}
-              </View>
-            </View>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                flexWrap: "wrap",
-                alignContent: "flex-start",
-                maxHeight: 100,
-                marginTop: 20,
-                marginBottom: 20,
-              }}
-            >
-              {this.state.UserDetails.interests
-                ? this.state.UserDetails.interests.map((item, index) => {
-                    return (
-                      <Badge
-                        key={index}
-                        style={{
-                          backgroundColor: "#EFF1F5",
-                          marginRight: 10,
-                          marginBottom: 10,
-                          height: 30,
-                        }}
-                      >
-                        <View
-                          style={{
-                            flex: 1,
-                            flexDirection: "row",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 18,
-                              paddingHorizontal: 10,
-                            }}
-                          >
-                            {item}
-                          </Text>
-                        </View>
-                      </Badge>
-                    )
-                  })
-                : null}
-            </View>
-          )}
-        </>
-      )
-  }
-  renderCurrentRoleEdit() {
-    if (!this.state.profileConfig["currentRole"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <View style={{ width: "100%" }}>
-          <View style={this.styles.style.fontFormSmall}>
-            <Text style={this.styles.style.fontFormMandatory}>
-              {this.state.isEditable && this.state.editMode ? "*" : ""}
-            </Text>
-            Current Role
-          </View>
-          <EditableText
-            accessibilityLabel="Current role"
-            onChange={(e) => {
-              this.handleInputChange(e, "currentRole")
-            }}
-            multiline={false}
-            testID="profile-currentRole"
-            placeholder="Type here..."
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            inputStyle={{
-              borderWidth: 1,
-              borderColor: "#dddddd",
-              width: "100%",
-              marginBottom: 15,
-              paddingTop: 10,
-              paddingRight: 10,
-              paddingBottom: 10,
-              paddingLeft: 10,
-              fontFamily: "Graphik-Regular-App",
-              fontSize: 16,
-              lineHeight: 28,
-            }}
-            value={this.state.UserDetails.currentRole ?? ""}
-            isEditable={this.state.isEditable && this.state.editMode}
-          ></EditableText>
-        </View>
-      )
-  }
-  renderCurrentScope() {
-    if (!this.state.profileConfig["currentScope"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <>
-          <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
-          {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontFormSmall}>
-              <Text style={this.styles.style.fontFormMandatory}>*</Text>
-              Describe your current scope
-            </Text>
-          ) : (
-            <Text style={this.styles.style.fontFormSmall}>Current scope</Text>
-          )}
-          <EditableText
-            accessibilityLabel="Describe your current scope"
-            onChange={(e) => {
-              this.handleInputChange(e, "currentScope")
-            }}
-            multiline={true}
-            placeholder="Type here..."
-            testID="profile-currentScope"
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            inputStyle={{
-              borderWidth: 1,
-              borderColor: "#dddddd",
-              width: "100%",
-              marginBottom: 15,
-              paddingTop: 10,
-              paddingRight: 10,
-              paddingBottom: 10,
-              paddingLeft: 10,
-              fontFamily: "Graphik-Regular-App",
-              fontSize: 16,
-              lineHeight: 28,
-            }}
-            value={this.state.UserDetails.currentScope ?? ""}
-            isEditable={this.state.isEditable && this.state.editMode}
-          ></EditableText>
-        </>
-      )
-  }
-  renderPersonalityIndicator() {
-    if (!this.state.profileConfig["personality"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (
-        <>
-          <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
-          {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontFormSmall}>
-              Identify your personality type indicator
-            </Text>
-          ) : this.state.UserDetails.personality ? (
-            <Text style={this.styles.style.fontFormSmall}>Personality type indicator</Text>
-          ) : null}
-          <EditableText
-            onChange={(e) => {
-              this.handleInputChange(e, "personality")
-            }}
-            accessibilityLabel="Identify personality type indicator"
-            multiline={true}
-            testID="profile-personality"
-            placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            inputStyle={{
-              borderWidth: 1,
-              borderColor: "#dddddd",
-              width: "100%",
-              marginBottom: 15,
-              paddingTop: 10,
-              paddingRight: 10,
-              paddingBottom: 30,
-              paddingLeft: 10,
-              fontFamily: "Graphik-Regular-App",
-              fontSize: 16,
-              lineHeight: 28,
-            }}
-            value={this.state.UserDetails.personality ?? ""}
-            isEditable={this.state.isEditable && this.state.editMode}
-          ></EditableText>
-        </>
-      )
-  }
-  renderOrgName() {
-    if (!this.state.profileConfig["orgName"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (this.state.isEditable && this.state.editMode) || this.state.UserDetails.orgName ? (
-        <View>
-          <View style={this.styles.style.fontFormSmall}>Organization Name</View>
-          <EditableText
-            accessibilityLabel="Organization name"
-            onChange={(e) => {
-              this.handleInputChange(e, "orgName")
-            }}
-            multiline={false}
-            testID="profile-orgName"
-            placeholder="Type here..."
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            inputStyle={this.styles.style.myProfileOrgTypeInput}
-            value={this.state.UserDetails.orgName ?? ""}
-            isEditable={this.state.isEditable && this.state.editMode}
-          ></EditableText>
-        </View>
-      ) : null
-  }
-  renderOrgType() {
-    if (!this.state.profileConfig["orgType"].isVisible) return
-
-    if (this.state.UserDetails)
-      return (this.state.isEditable && this.state.editMode) ||
-        (this.state.UserDetails.orgType && this.state.UserDetails.orgType !== "None") ? (
-        <View style={{ marginTop: 15 }}>
-          <View style={this.styles.style.fontFormSmall}>Type of Organization</View>
-          {this.state.isEditable && this.state.editMode ? (
-            <View style={this.styles.style.myProfileOrgView}>
-              <Picker
-                accessibilityLabel="Organization type"
-                testID="profile-orgType"
-                style={this.styles.style.myprofilePicker}
-                onValueChange={(itemValue) => {
-                  this.handleInputChange(itemValue, "orgType")
-                }}
-                selectedValue={
-                  this.state.UserDetails?.orgType &&
-                  orgTypes.includes(this.state.UserDetails?.orgType)
-                    ? this.state.UserDetails.orgType
-                    : this.state.UserDetails.orgType === null ||
-                      this.state.UserDetails.orgType === "None"
-                    ? "None"
-                    : ""
-                }
-              >
-                <Picker.Item label={"None Selected"} value={"None"} />
-                {orgTypes.map((item, index) => {
-                  return <Picker.Item key={index} label={item} value={item} />
-                })}
-                <Picker.Item label={"Other"} value={""} />
-              </Picker>
-              {this.state.UserDetails.orgType === "" ||
-              (this.state.UserDetails.orgType !== null &&
-                !orgTypes.includes(this.state.UserDetails?.orgType ?? "") &&
-                this.state.UserDetails.orgType !== "None") ? (
-                <EditableText
-                  accessibilityLabel="Organization type"
-                  onChange={(e) => {
-                    this.handleInputChange(e, "orgType")
-                  }}
-                  multiline={false}
-                  placeholder="Type here..."
-                  textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.myProfileOrgTypeInput}
-                  value={this.state.UserDetails.orgType ?? ""}
-                  isEditable={this.state.isEditable && this.state.editMode}
-                ></EditableText>
-              ) : null}
-            </View>
-          ) : this.state.UserDetails.orgType && this.state.UserDetails.orgType !== "None" ? (
-            <EditableText
-              multiline={true}
-              textStyle={this.styles.style.fontFormSmallDarkGrey}
-              value={this.state.UserDetails.orgType}
-              isEditable={false}
-            />
-          ) : null}
-        </View>
-      ) : null
-  }
-  renderOrgSize() {
-    if (!this.state.profileConfig["orgSize"].isVisible) return
-
-    return this.state.UserDetails?.orgType &&
-      orgTypes.includes(this.state.UserDetails?.orgType) &&
-      (this.state.UserDetails.orgSize || this.state.editMode) ? (
-      <View style={{ marginTop: 15 }}>
-        {this.state.isEditable && this.state.editMode ? (
-          <View>
-            <View style={this.styles.style.fontFormSmall}>
-              How many employees are there in the organization?
-            </View>
-            <Picker
-              accessibilityLabel="Number of employees in organization"
-              testID="profile-orgSize"
-              style={this.styles.style.myprofilePicker}
-              onValueChange={(itemValue: any) => {
-                this.handleInputChange(itemValue, "orgSize")
-              }}
-              selectedValue={this.state.UserDetails.orgSize ?? ""}
-            >
-              <Picker.Item label={"None Selected"} value={""} />
-              {numberOfEmployees.map((item, index) => {
-                return <Picker.Item key={index} label={item} value={item} />
-              })}
-            </Picker>
-          </View>
-        ) : this.state.UserDetails.orgSize ? (
-          <View>
-            <View style={this.styles.style.fontFormSmall}>Employees</View>
-
-            <EditableText
-              multiline={true}
-              textStyle={this.styles.style.fontFormSmallDarkGrey}
-              value={this.state.UserDetails.orgSize}
-              isEditable={false}
-            />
-          </View>
-        ) : null}
-      </View>
-    ) : null
-  }
-  renderOrgAttendance() {
-    if (!this.state.profileConfig["sundayAttendance"].isVisible) return
-
-    return this.state.UserDetails?.orgType &&
-      orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
-      (this.state.UserDetails.sundayAttendance || this.state.editMode) ? (
-      <View style={{ marginTop: 15 }}>
-        {this.state.isEditable && this.state.editMode ? (
-          <View>
-            <View style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</View>
-            <Picker
-              accessibilityLabel="Average Sunday morning attendance"
-              style={this.styles.style.myprofilePicker}
-              onValueChange={(itemValue: any) => {
-                this.handleInputChange(itemValue, "sundayAttendance")
-              }}
-              selectedValue={this.state.UserDetails.sundayAttendance ?? ""}
-            >
-              <Picker.Item label={"None Selected"} value={""} />
-              {sundayAttendance.map((item, index) => {
-                return <Picker.Item key={index} label={item} value={item} />
-              })}
-            </Picker>
-          </View>
-        ) : this.state.UserDetails.sundayAttendance ? (
-          <View>
-            <View style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</View>
-            <EditableText
-              accessibilityLabel="Average Sunday morning attendance"
-              multiline={true}
-              textStyle={this.styles.style.fontFormSmallDarkGrey}
-              value={this.state.UserDetails.sundayAttendance}
-              isEditable={false}
-            />
-          </View>
-        ) : null}
-      </View>
-    ) : null
-  }
-  renderOrgVolunteers() {
-    if (!this.state.profileConfig["numberVolunteers"].isVisible) return
-
-    return this.state.UserDetails?.orgType &&
-      orgTypes.includes(this.state.UserDetails?.orgType) &&
-      (this.state.UserDetails.numberVolunteers || this.state.editMode) ? (
-      <View style={{ marginTop: 15 }}>
-        {this.state.isEditable && this.state.editMode ? (
-          <View>
-            <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
-            <Picker
-              accessibilityLabel="Number of volunteers"
-              style={this.styles.style.myprofilePicker}
-              onValueChange={(itemValue: any) => {
-                this.handleInputChange(itemValue, "numberVolunteers")
-              }}
-              selectedValue={this.state.UserDetails.numberVolunteers ?? ""}
-            >
-              <Picker.Item label={"None Selected"} value={""} />
-              {numberOfEmployees.map((item, index) => {
-                return <Picker.Item key={index} label={item} value={item} />
-              })}
-            </Picker>
-          </View>
-        ) : this.state.UserDetails.numberVolunteers ? (
-          <View>
-            <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
-            <EditableText
-              multiline={true}
-              textStyle={this.styles.style.fontFormSmallDarkGrey}
-              value={this.state.UserDetails.numberVolunteers}
-              isEditable={false}
-            />
-          </View>
-        ) : null}
-      </View>
-    ) : null
-  }
-  renderOrgDenomination() {
-    if (!this.state.profileConfig["denomination"].isVisible) return
-
-    return this.state.UserDetails?.orgType &&
-      orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
-      (this.state.UserDetails.denomination || this.state.editMode) ? (
-      <View style={{ marginTop: 15 }}>
-        <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
-        <EditableText
-          onChange={(e) => {
-            this.handleInputChange(e, "denomination")
-          }}
-          accessibilityLabel="Denomination"
-          multiline={true}
-          testID="profile-denomination"
-          textStyle={this.styles.style.fontFormSmallDarkGrey}
-          placeholder="Type here."
-          inputStyle={{
-            borderWidth: 1,
-            borderColor: "#dddddd",
-            width: "100%",
-            marginBottom: 15,
-            paddingTop: 10,
-            paddingRight: 10,
-            paddingBottom: 10,
-            paddingLeft: 10,
-            fontFamily: "Graphik-Regular-App",
-            fontSize: 16,
-            lineHeight: 28,
-          }}
-          value={this.state.UserDetails.denomination ?? ""}
-          isEditable={this.state.isEditable && this.state.editMode}
-        ></EditableText>
-      </View>
-    ) : null
-  }
-  renderOrgPPLServed() {
-    if (!this.state.profileConfig["pplServed"].isVisible) return
-
-    return this.state.UserDetails?.orgType &&
-      orgTypesNonChurch.includes(this.state.UserDetails?.orgType) &&
-      (this.state.UserDetails.pplServed || this.state.editMode) ? (
-      <View style={{ marginTop: 15 }}>
-        <Text style={this.styles.style.fontFormSmall}>
-          {this.state.editMode
-            ? "How many people do you serve?"
-            : "People impacted by our services"}
-        </Text>
-        <EditableText
-          accessibilityLabel={
-            this.state.editMode
-              ? "How many people do you serve?"
-              : "People impacted by our services"
-          }
-          onChange={(e) => {
-            this.handleInputChange(e, "pplServed")
-          }}
-          multiline={true}
-          testID="profile-pplServed"
-          textStyle={this.styles.style.fontFormSmallDarkGrey}
-          placeholder="Type here."
-          inputStyle={{
-            borderWidth: 1,
-            borderColor: "#dddddd",
-            width: "100%",
-            marginBottom: 15,
-            paddingTop: 10,
-            paddingRight: 10,
-            paddingBottom: 10,
-            paddingLeft: 10,
-            fontFamily: "Graphik-Regular-App",
-            fontSize: 16,
-            lineHeight: 28,
-          }}
-          value={this.state.UserDetails.pplServed ?? ""}
-          isEditable={this.state.isEditable && this.state.editMode}
-        ></EditableText>
-      </View>
-    ) : null
-  }
-  renderOrgDescription() {
-    if (!this.state.profileConfig["orgDescription"].isVisible) return
-
-    if (this.state.UserDetails)
-      return this.state.UserDetails.orgDescription || this.state.editMode ? (
-        <View style={{ marginTop: 15 }}>
-          <Text style={this.styles.style.fontFormSmall}>
-            Description of church or ministry organization
-          </Text>
-          <EditableText
-            onChange={(e) => {
-              this.handleInputChange(e, "orgDescription")
-            }}
-            multiline={true}
-            accessibilityLabel="Describe church or organization"
-            testID="profile-orgDescription"
-            textStyle={this.styles.style.fontFormSmallDarkGrey}
-            placeholder="Type here."
-            inputStyle={{
-              borderWidth: 1,
-              borderColor: "#dddddd",
-              width: "100%",
-              marginBottom: 15,
-              paddingTop: 10,
-              paddingRight: 10,
-              paddingBottom: 10,
-              paddingLeft: 10,
-              fontFamily: "Graphik-Regular-App",
-              fontSize: 16,
-              lineHeight: 28,
-            }}
-            value={this.state.UserDetails.orgDescription ?? ""}
-            isEditable={this.state.isEditable && this.state.editMode}
-          ></EditableText>
-        </View>
-      ) : null
-  }
-  renderProfile() {
-    if (this.state.UserDetails)
-      return (
-        <View style={this.styles.style.profileScreenRightCard}>
-          <View style={{ width: "100%" }}>{this.renderMap()}</View>
-          {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us more about you</Text>
-          ) : null}
-
-          {this.renderAboutMeLong()}
-          {this.renderInterests()}
-          {this.renderCurrentRoleEdit()}
-          {this.renderCurrentScope()}
-          {this.renderPersonalityIndicator()}
-
-          <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
-          {this.checkForValidOrgInfo() || (this.state.isEditable && this.state.editMode) ? (
-            !this.props.hideOrg ? (
-              <View>
-                {this.state.isEditable && this.state.editMode ? (
-                  <Text style={this.styles.style.fontBold}>Tell us about your organization</Text>
-                ) : (
-                  <Text style={this.styles.style.fontBold}>Organization Info</Text>
-                )}
-                {this.renderOrgName()}
-                {this.renderOrgType()}
-                {this.renderOrgSize()}
-                {this.renderOrgAttendance()}
-                {this.renderOrgVolunteers()}
-                {this.renderOrgDenomination()}
-                {this.renderOrgPPLServed()}
-                {this.renderOrgDescription()}
-              </View>
-            ) : null
-          ) : null}
-        </View>
-      )
-    else return null
-  }
-  renderAccountSettings() {
-    if (this.state.UserDetails)
-      return (
-        <View style={this.styles.style.profileScreenRightCard}>
-          <Text style={this.styles.style.myprofileAboutMe}>Account Settings</Text>
-
-          <View style={this.styles.style.changeNamePasswordContainer}>
-            <View style={this.styles.style.changePasswordContainer}>
-              <View
-                style={{
-                  ...this.styles.style.fontFormSmallDarkGrey,
-                  marginBottom: 15,
-                }}
-              >
-                Change your password
-              </View>
-              <TextInput
-                placeholder="Current password"
-                value={this.state.oldPass}
-                onChange={(e) => this.setState({ oldPass: e.nativeEvent.text })}
-                secureTextEntry={true}
-                style={this.styles.style.changeNamePasswordInput}
-              />
-              <TextInput
-                placeholder="New password"
-                value={this.state.newPass}
-                onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
-                secureTextEntry={true}
-                style={this.styles.style.changeNamePasswordInput}
-              />
-              <JCButton
-                buttonType={ButtonTypes.SolidAboutMe}
-                onPress={() => this.handlePasswordChange()}
-              >
-                <Text> Change Password</Text>
-              </JCButton>
-            </View>
-            <View>
-              <View
-                style={{
-                  ...this.styles.style.fontFormSmallDarkGrey,
-                  marginBottom: 15,
-                }}
-              >
-                Change your name
-              </View>
-              <TextInput
-                placeholder="First name"
-                value={this.state.firstName}
-                onChange={(e) => this.setState({ firstName: e.nativeEvent.text })}
-                style={this.styles.style.changeNamePasswordInput}
-              />
-              <TextInput
-                placeholder="Last name"
-                value={this.state.lastName}
-                onChange={(e) => this.setState({ lastName: e.nativeEvent.text })}
-                style={this.styles.style.changeNamePasswordInput}
-              />
-              <JCButton
-                buttonType={ButtonTypes.SolidAboutMe}
-                onPress={() => this.handleChangeName()}
-              >
-                <Text>Change Name</Text>
-              </JCButton>
-            </View>
-          </View>
-          <Text
-            accessibilityLiveRegion={"assertive"}
-            accessibilityRole="alert"
-            style={{
-              ...this.styles.style.fontFormSmallDarkGrey,
-              marginTop: 5,
-            }}
-          >
-            {this.state.passError}
-          </Text>
-          <View style={{ marginTop: 40 }}>
-            <View
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              Alert Settings
-            </View>
-            <JCSwitch
-              containerWidth={500}
-              flexDirection={isTablet || isBrowser ? "row" : "column"}
-              toggleMargin={20}
-              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
-              toggleMarginTop={0}
-              toggleMarginBottom={0}
-              switchLabel="Email Alerts for Direct Messages"
-              initState={this.state.UserDetails.alertConfig?.emailDirectMessage == "true"}
-              onPress={(e) => {
-                this.handleAlertInputChange(e, "emailDirectMessage")
-              }}
-            ></JCSwitch>
-            <JCSwitch
-              containerWidth={500}
-              flexDirection={isTablet || isBrowser ? "row" : "column"}
-              toggleMargin={20}
-              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
-              toggleMarginTop={0}
-              toggleMarginBottom={0}
-              switchLabel="Email Alerts for Group Messages"
-              initState={this.state.UserDetails.alertConfig?.emailGroupMessage == "true"}
-              onPress={(e) => {
-                this.handleAlertInputChange(e, "emailGroupMessage")
-              }}
-            ></JCSwitch>
-            <JCSwitch
-              containerWidth={500}
-              flexDirection={isTablet || isBrowser ? "row" : "column"}
-              toggleMargin={20}
-              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
-              toggleMarginTop={0}
-              toggleMarginBottom={0}
-              switchLabel="Email Alerts for Event Messages"
-              initState={this.state.UserDetails.alertConfig?.emailEventMessage == "true"}
-              onPress={(e) => {
-                this.handleAlertInputChange(e, "emailEventMessage")
-              }}
-            ></JCSwitch>
-            <JCSwitch
-              containerWidth={500}
-              flexDirection={isTablet || isBrowser ? "row" : "column"}
-              toggleMargin={20}
-              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
-              toggleMarginTop={0}
-              toggleMarginBottom={0}
-              switchLabel="Email Alerts for Resource Messages"
-              initState={this.state.UserDetails.alertConfig?.emailResourceMessage == "true"}
-              onPress={(e) => {
-                this.handleAlertInputChange(e, "emailResourceMessage")
-              }}
-            ></JCSwitch>
-            <JCSwitch
-              containerWidth={500}
-              flexDirection={isTablet || isBrowser ? "row" : "column"}
-              toggleMargin={20}
-              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
-              toggleMarginTop={0}
-              toggleMarginBottom={0}
-              switchLabel="Email Alerts for Course Messages"
-              initState={this.state.UserDetails.alertConfig?.emailCourseMessage == "true"}
-              onPress={(e) => {
-                this.handleAlertInputChange(e, "emailCourseMessage")
-              }}
-            ></JCSwitch>
-            <JCSwitch
-              containerWidth={500}
-              flexDirection={isTablet || isBrowser ? "row" : "column"}
-              toggleMargin={20}
-              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
-              toggleMarginTop={0}
-              toggleMarginBottom={0}
-              switchLabel="Email Alerts for Organization Messages"
-              initState={this.state.UserDetails.alertConfig?.emailOrgMessage == "true"}
-              onPress={(e) => {
-                this.handleAlertInputChange(e, "emailOrgMessage")
-              }}
-            ></JCSwitch>
-            <JCSwitch
-              containerWidth={500}
-              flexDirection={isTablet || isBrowser ? "row" : "column"}
-              toggleMargin={20}
-              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
-              toggleMarginTop={0}
-              toggleMarginBottom={0}
-              switchLabel="Email Alerts for Org Messages"
-              initState={this.state.UserDetails.alertConfig?.emailPromotions == "true"}
-              onPress={(e) => {
-                this.handleAlertInputChange(e, "emailPromotions")
-              }}
-            ></JCSwitch>
-          </View>
-        </View>
-      )
-    else return null
-  }
-  renderBilling() {
-    if (this.state.UserDetails)
-      return (
-        <View style={this.styles.style.profileScreenRightCard}>
-          <Text style={this.styles.style.myprofileAboutMe}>Billing</Text>
-          <View style={{ marginTop: 40 }}>
-            <View
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              More billing features coming soon, please contact Jesus Collective directly for any
-              billing concerns.
-            </View>
-          </View>
-          <View style={{ marginTop: 40, width: "100%" }}>
-            <View
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              Invoices
-            </View>
-            {this.state.invoices ? (
-              <>
-                <View style={{ flex: 1, flexDirection: "row" }}>
-                  <Text style={{ flex: 1 }}>Invoice Number</Text>
-                  <Text style={{ flex: 1 }}>Transaction Date</Text>
-                  <Text style={{ flex: 1 }}>Status</Text>
-                  <Text style={{ flex: 1 }}>Amount</Text>
-                </View>
-                {this.state.invoices.map((item, index) => {
-                  return (
-                    <View key={index} style={{ flex: 1, flexDirection: "row" }}>
-                      <Text style={{ flex: 1 }}>
-                        {item?.invoice_pdf ? (
-                          <a href={item?.invoice_pdf}>{item?.number}</a>
-                        ) : (
-                          item?.invoice_pdf
-                        )}
-                      </Text>
-                      <Text style={{ flex: 1 }}>
-                        {moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}
-                      </Text>
-                      <Text style={{ flex: 1 }}>{item?.status}</Text>
-                      <Text style={{ flex: 1 }}>
-                        {"$" + (parseInt(item?.total ?? "0") / 100).toFixed(2)}{" "}
-                        {item?.currency?.toUpperCase()}
-                      </Text>
-                    </View>
-                  )
-                })}
-              </>
-            ) : (
-              <View>
-                <Text>Loading Invoices</Text>
-                <ActivityIndicator />
-              </View>
-            )}
-          </View>
-          <View style={{ marginTop: 40 }}>
-            <View
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              Modify Subscription
-            </View>
-          </View>
-          <View style={{ marginTop: 40 }}>
-            <View
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              Update Payment
-            </View>
-          </View>
-          <View style={{ marginTop: 40 }}>
-            <View
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              Cancel Subscription
-            </View>
-          </View>
-        </View>
-      )
-    else return null
-  }
-  renderAdmin(userActions: UserActions): React.ReactNode {
-    if (userActions.isMemberOf("admin")) {
-      return (
-        <View style={this.styles.style.profileScreenRightCard}>
-          <View style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-            <View>
-              <Text style={this.styles.style.fontBold}>Admin/CRM</Text>
-            </View>
-            <CrmMessageBoard messages={this.state.messages} rootId={this.state.UserDetails?.id} />
-          </View>
-        </View>
-      )
-    }
-
-    return null
-  }
-  render(): React.ReactNode {
+  const renderName = () => {
+    if (!profileConfig["fullName"].isVisible) return null
+    if (!userDetails) return null
     return (
-      <MyProfileImpl.UserConsumer>
-        {({ userState, userActions }) => {
-          if (!userState) return null
-
-          if (this.state.noUserFound) return <Text>No User Found</Text>
-          if (!this.state.profileConfig) return null
-
-          return this.state.UserDetails != null ? (
-            <ScrollView ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
-              {this.renderTopBar(userActions)}
-
-              <View style={this.styles.style.myProfileMainContainer}>
-                {this.renderLeftBar(userActions)}
-                {this.state.showPage == "admin" && this.renderAdmin(userActions)}
-                {this.state.showPage == "billing" && this.renderBilling()}
-                {this.state.showPage == "profile" && this.renderProfile()}
-                {this.state.showPage == "settings" && this.renderAccountSettings()}
-              </View>
-            </ScrollView>
-          ) : null
-        }}
-      </MyProfileImpl.UserConsumer>
+      <Text style={styles.style.fontFormName}>
+        {userDetails.given_name} {userDetails.family_name}
+      </Text>
     )
   }
-}
+  const renderCurrentRole = () => {
+    if (!profileConfig["currentRole"].isVisible) return
 
-export default function MyProfile(props: Props): JSX.Element {
-  const route = useRoute()
-  const navigation = useNavigation<StackNavigationProp<any, any>>()
+    if (userDetails)
+      return (
+        <Text style={styles.style.fontFormRole}>
+          {userDetails.currentRole ? userDetails.currentRole : "My Current Role not defined"}
+        </Text>
+      )
+  }
+  const renderAboutMeShort = () => {
+    if (!profileConfig["aboutMeShort"].isVisible) return
 
+    if (!userDetails) return null
+    return (
+      <>
+        {isEditable && editMode ? (
+          <Text style={styles.style.fontFormSmall}>One sentence about me</Text>
+        ) : null}
+        <EditableText
+          onChange={(e) => {
+            handleInputChange(e, "aboutMeShort")
+          }}
+          placeholder="Short sentence about me"
+          multiline={true}
+          placeholderTextColor="#757575"
+          textStyle={styles.style.fontFormSmallDarkGrey}
+          inputStyle={styles.style.fontFormAboutMe}
+          testID="profile-aboutMeShort"
+          value={userDetails.aboutMeShort ?? ""}
+          isEditable={isEditable && editMode}
+        ></EditableText>
+      </>
+    )
+  }
+  const renderMainUserGroup = (group: string) => {
+    return <Text style={styles.style.fontFormUserType}>{group}</Text>
+  }
+  const renderLocation2 = () => {
+    if (!profileConfig["location"].isVisible) return null
+
+    if (!userDetails) return null
+    return (
+      <Text style={styles.style.fontFormSmallDarkGreyCoordinates}>
+        <Image
+          style={{
+            width: "22px",
+            height: "22px",
+            top: 6,
+            marginRight: 5,
+          }}
+          source={require("../../assets/svg/pin 2.svg")}
+        ></Image>
+        {userDetails.location?.geocodeFull
+          ? userDetails.location.geocodeFull
+          : "Location not defined"}
+      </Text>
+    )
+  }
+  const renderLeftBar = (userActions: UserActions) => {
+    if (!userDetails) return null
+    return (
+      <View style={styles.style.profileScreenLeftCard}>
+        {renderProfileImage()}
+        <View style={styles.style.myProfilePersonalInfoWrapper}>
+          {renderName()}
+          {renderCurrentRole()}
+          {renderMainUserGroup(userDetails?.mainUserGroup ?? "Inactive")}
+          {renderAboutMeShort()}
+
+          <View style={styles.style.myProfileCoordinates}>
+            {renderLocation2()}
+            {isEditable && userDetails.profileState !== "Incomplete" ? (
+              <JCButton buttonType={ButtonTypes.EditButton} onPress={() => handleEditMode()}>
+                {editMode ? "View Profile" : "Edit Profile"}
+              </JCButton>
+            ) : null}
+          </View>
+          {renderJoinedDate()}
+          {renderStartConversation()}
+        </View>
+        {renderLocation()}
+        {renderAdminButton(userActions)}
+      </View>
+    )
+  }
+  if (!userState) return null
+  if (noUserFound) return <Text>No User Found</Text>
+  if (!profileConfig) return null
+  if (!userDetails) return null
   return (
-    <MyProfile.UserConsumer>
-      {({ userActions }) => {
-        return (
-          <MyProfileImpl
-            {...props}
-            navigation={navigation}
-            route={route}
-            userActions={userActions}
-          />
-        )
-      }}
-    </MyProfile.UserConsumer>
+    <ScrollView ref={scrollRef}>
+      {renderTopBar(userActions)}
+
+      <View style={styles.style.myProfileMainContainer}>
+        {renderLeftBar(userActions)}
+        {showPage == "admin" && renderAdmin(userActions)}
+        {showPage == "profile" && renderProfile()}
+      </View>
+    </ScrollView>
   )
 }
-MyProfile.UserConsumer = UserContext.Consumer

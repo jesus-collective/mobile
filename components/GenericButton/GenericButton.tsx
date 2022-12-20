@@ -51,7 +51,7 @@ export default function GenericButton(props: Props) {
         { flexDirection: "row", justifyContent: "center" },
         style.ButtonStyle,
         style.custom,
-        hovered ? { opacity: 0.8 } : {},
+        hovered ? { opacity: 0.7 } : {},
       ]}
     >
       {icon ? (

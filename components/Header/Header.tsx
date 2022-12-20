@@ -363,6 +363,14 @@ export default function HeaderJC(props: Props) {
                   </TouchableOpacity>
                 </View>
               ) : null}
+              <View style={{ marginHorizontal: 12 }}>
+                <TouchableOpacity onPress={() => navigation.push("MyAccountScreen")}>
+                  <Image
+                    style={headerStyles.style.icon}
+                    source={require("../../assets/Facelift/svg/Cog-Menu.svg")}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
               <TouchableOpacity

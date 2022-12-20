@@ -27,7 +27,7 @@ import {
   orgTypesChurches,
   orgTypesNonChurch,
   sundayAttendance,
-} from "../MyProfile/dropdown"
+} from "../MyProfile/DropdownOptions"
 import ProfileImage from "../ProfileImage/ProfileImage"
 import Validate from "../Validate/Validate"
 //import JCSwitch from '../../components/JCSwitch/JCSwitch';

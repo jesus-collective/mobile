@@ -34,7 +34,7 @@ const SearchScreen = lazy(() => import("../SearchScreen/SearchScreen"))
 const AdminScreen = lazy(() => import("../AdminScreen/AdminScreen"))
 const AdminCRMScreen = lazy(() => import("../AdminCRMScreen/AdminCRMScreen"))
 const CoursePaymentScreen = lazy(() => import("../CoursePaymentScreen/CoursePaymentScreen"))
-
+const MyAccountScreen = lazy(() => import("../MyAccountScreen/MyAccountScreen"))
 const PurchaseConfirmationScreen = lazy(
   () => import("../PurchaseConfirmationScreen/PurchaseConfirmationScreen")
 )
@@ -47,7 +47,6 @@ const AdminCustomPricingScreen = lazy(
 const AdminMenuScreen = lazy(() => import("../AdminMenuScreen/AdminMenuScreen"))
 const AdminStartupScreen = lazy(() => import("../AdminStartupScreen/AdminStartupScreen"))
 const AdminProfileScreen = lazy(() => import("../AdminProfileScreen/AdminProfileScreen"))
-
 class Nothing extends Component {
   render() {
     return null
@@ -170,6 +169,13 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       component={HomeScreen}
                       options={{ headerTitle: "Home", title: "Jesus Collective" }}
                     />
+
+                    <Stack.Screen
+                      name="MyAccountScreen"
+                      component={MyAccountScreen}
+                      options={{ headerTitle: "Account", title: "Jesus Collective" }}
+                    />
+
                     <Stack.Screen
                       name="GenericGroupScreen"
                       component={GenericGroupScreen}
@@ -324,6 +330,11 @@ export default class MainAppRouter extends JCComponent<EmptyProps, MapState> {
                       name="HomeScreen"
                       component={Nothing}
                       options={{ title: "Jesus Collective" }}
+                    />
+                    <Stack.Screen
+                      name="MyAccountScreen"
+                      component={MyAccountScreen}
+                      options={{ headerTitle: "Account", title: "Jesus Collective" }}
                     />
                     <Stack.Screen
                       name="GenericGroupScreen"

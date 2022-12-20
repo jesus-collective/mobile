@@ -127,7 +127,7 @@ export default class JCSwitch extends JCComponent<Props, State> {
                 : this.state.offColor,
               borderWidth: 2,
               borderRadius: 25,
-              width: 50,
+              width: 34,
               height: 20,
               marginLeft: this.props.toggleMarginLeft ? this.props.toggleMarginLeft : undefined,
               marginTop: this.props.toggleMarginTop ? this.props.toggleMarginTop : undefined,
@@ -146,7 +146,7 @@ export default class JCSwitch extends JCComponent<Props, State> {
                   {
                     translateX: this.state.animationState.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [0, 30],
+                      outputRange: [0, 14],
                     }),
                   },
                 ],

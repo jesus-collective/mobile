@@ -22,7 +22,7 @@ import {
 
 type WithoutKeys<T> = Omit<T, keyof T>
 export interface MapData {
-  id: string
+  id?: string
   latitude: any
   longitude: any
   name: string
