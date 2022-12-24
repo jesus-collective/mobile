@@ -158,6 +158,24 @@
         "jesuscollectiveCourses": {
           "s3UUID": "zgyka8ke"
         }
+      },
+      "api": {
+        "jcmobile": {},
+        "AdminQueries": {},
+        "jcmobileAPI": {}
+      },
+      "analytics": {
+        "jcmobile": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
+      },
+      "storage": {
+        "jcProfile": {}
+      },
+      "geo": {
+        "jcMap": {},
+        "jcPeople": {}
       }
     }
   },
