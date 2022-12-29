@@ -711,94 +711,96 @@ class CourseHomeImpl extends JCComponent<Props> {
                         </>
                       ) : null}
                       {constants["SETTING_ISVISIBLE_COURSE_CALENDAR"] ? (
-                        <View style={{ flex: 0 }}>
-                          <Text
-                            style={{
-                              fontSize: 20,
-                              lineHeight: 25,
-                              fontFamily: "Graphik-Bold-App",
-                              marginTop: 50,
-                              width: "90%",
-                            }}
-                          >
-                            My Calendar
-                          </Text>
-                          <Calendar
-                            style={this.styles.style.courseHomeCalendar}
-                            current={moment().format("YYYY-MM-DD")}
-                            markedDates={courseDates.markedDates as any} // @types/react-native-calendars has the incorrect type
-                            onDayPress={(day) =>
-                              this.handlePressCalendar(
-                                actions,
-                                courseDates.items[day.dateString],
-                                day.dateString
-                              )
-                            }
-                            theme={{ todayTextColor: "#F0493E" }}
-                            markingType="multi-dot"
-                          />
-                          <View style={this.styles.style.courseHomeCalendarLabels}>
+                        <View style={{ width: "100%" }}>
+                          <>
                             <Text
                               style={{
-                                fontSize: 25,
-                                color: "#ff0000",
+                                fontSize: 20,
+                                lineHeight: 25,
                                 fontFamily: "Graphik-Bold-App",
-                                marginTop: 10,
-                                marginRight: 25,
+                                marginTop: 50,
+                                width: "90%",
                               }}
                             >
-                              •{" "}
-                              <span
+                              My Calendar
+                            </Text>
+                            <Calendar
+                              style={this.styles.style.courseHomeCalendar}
+                              current={moment().format("YYYY-MM-DD")}
+                              markedDates={courseDates.markedDates as any} // @types/react-native-calendars has the incorrect type
+                              onDayPress={(day) =>
+                                this.handlePressCalendar(
+                                  actions,
+                                  courseDates.items[day.dateString],
+                                  day.dateString
+                                )
+                              }
+                              theme={{ todayTextColor: "#F0493E" }}
+                              markingType="multi-dot"
+                            />
+                            <View style={this.styles.style.courseHomeCalendarLabels}>
+                              <Text
                                 style={{
-                                  fontFamily: "Graphik-Regular-App",
-                                  color: "#000000",
-                                  fontSize: 13,
+                                  fontSize: 25,
+                                  color: "#ff0000",
+                                  fontFamily: "Graphik-Bold-App",
+                                  marginTop: 10,
+                                  marginRight: 25,
                                 }}
                               >
-                                Zoom
-                              </span>
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: 25,
-                                color: "#71C209",
-                                fontFamily: "Graphik-Bold-App",
-                                marginTop: 10,
-                                marginRight: 25,
-                              }}
-                            >
-                              •{" "}
-                              <span
+                                •{" "}
+                                <span
+                                  style={{
+                                    fontFamily: "Graphik-Regular-App",
+                                    color: "#000000",
+                                    fontSize: 13,
+                                  }}
+                                >
+                                  Zoom
+                                </span>
+                              </Text>
+                              <Text
                                 style={{
-                                  fontFamily: "Graphik-Regular-App",
-                                  color: "#000000",
-                                  fontSize: 13,
+                                  fontSize: 25,
+                                  color: "#71C209",
+                                  fontFamily: "Graphik-Bold-App",
+                                  marginTop: 10,
+                                  marginRight: 25,
                                 }}
                               >
-                                Assignment
-                              </span>
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: 25,
-                                color: "#0000ff",
-                                fontFamily: "Graphik-Bold-App",
-                                marginTop: 10,
-                                marginRight: 25,
-                              }}
-                            >
-                              •{" "}
-                              <span
+                                •{" "}
+                                <span
+                                  style={{
+                                    fontFamily: "Graphik-Regular-App",
+                                    color: "#000000",
+                                    fontSize: 13,
+                                  }}
+                                >
+                                  Assignment
+                                </span>
+                              </Text>
+                              <Text
                                 style={{
-                                  fontFamily: "Graphik-Regular-App",
-                                  color: "#000000",
-                                  fontSize: 13,
+                                  fontSize: 25,
+                                  color: "#0000ff",
+                                  fontFamily: "Graphik-Bold-App",
+                                  marginTop: 10,
+                                  marginRight: 25,
                                 }}
                               >
-                                Response
-                              </span>
-                            </Text>
-                          </View>
+                                •{" "}
+                                <span
+                                  style={{
+                                    fontFamily: "Graphik-Regular-App",
+                                    color: "#000000",
+                                    fontSize: 13,
+                                  }}
+                                >
+                                  Response
+                                </span>
+                              </Text>
+                            </View>
+                          </>
                         </View>
                       ) : null}
                       {constants["SETTING_ISVISIBLE_COURSE_ACTIVITY"] ? (

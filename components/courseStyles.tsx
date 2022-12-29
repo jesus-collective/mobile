@@ -541,8 +541,8 @@ const courseStyles = EStyleSheet.create({
         },
   courseHomeCalendar: {
     width: "90%",
-    paddingLeft: 60,
-    paddingRight: 60,
+    paddingLeft: 30,
+    paddingRight: 30,
     backgroundColor: "#FFF",
     borderWidth: 1,
     borderColor: "#E4E1E1",
