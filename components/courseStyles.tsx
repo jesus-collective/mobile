@@ -138,7 +138,6 @@ const courseStyles = EStyleSheet.create({
     borderRadius: 5,
     padding: 3,
     paddingLeft: 0,
-    flex: 0,
     minHeight: 100,
     fontSize: 16,
     lineHeight: 23,
