@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql"
 import { createStackNavigator } from "@react-navigation/stack"
-import Amplify, { Analytics, Auth } from "aws-amplify"
+import { Amplify, Analytics, Auth } from "aws-amplify"
 import * as Linking from "expo-linking"
 import moment from "moment"
 import React from "react"

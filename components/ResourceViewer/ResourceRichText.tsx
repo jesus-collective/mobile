@@ -1,5 +1,7 @@
 import React from "react"
-import { Picker, View } from "react-native"
+import { View } from "react-native"
+
+import { Picker } from "@react-native-picker/picker"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import MainStyles from "../../components/style"
 import { ResourcePageItemStyle } from "../../src/API"

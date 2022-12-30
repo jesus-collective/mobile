@@ -1,5 +1,5 @@
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
-import Badge from "@material-ui/core/Badge"
+import Badge from "@mui/material/Badge"
 import { Auth, Storage } from "aws-amplify"
 import React from "react"
 import { Text, TextInput, TouchableOpacity, View } from "react-native"

@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons"
+import { Picker } from "@react-native-picker/picker"
 import { NavigationProp } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
@@ -7,7 +8,6 @@ import {
   ActivityIndicator,
   Dimensions,
   NativeSyntheticEvent,
-  Picker,
   Platform,
   Text,
   TextInput,

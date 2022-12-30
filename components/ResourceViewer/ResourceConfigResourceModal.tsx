@@ -1,9 +1,9 @@
 import { AntDesign } from "@expo/vector-icons"
+import { Picker } from "@react-native-picker/picker"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import {
   NativeSyntheticEvent,
-  Picker,
   Text,
   TextInput,
   TextInputChangeEventData,

@@ -1,13 +1,7 @@
+import { Picker } from "@react-native-picker/picker"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
-import {
-  NativeSyntheticEvent,
-  Picker,
-  Text,
-  TextInput,
-  TextInputChangeEventData,
-  View,
-} from "react-native"
+import { NativeSyntheticEvent, Text, TextInput, TextInputChangeEventData, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import {

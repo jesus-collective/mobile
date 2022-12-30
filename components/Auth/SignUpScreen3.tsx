@@ -1,5 +1,5 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import Amplify from "aws-amplify"
+import { Amplify } from "aws-amplify"
 import React from "react"
 import { View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"

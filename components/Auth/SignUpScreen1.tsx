@@ -1,5 +1,5 @@
 ﻿import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
-import Amplify from "aws-amplify"
+import { Amplify } from "aws-amplify"
 import React from "react"
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native"
 import Billing from "../../components/Billing/Billing"

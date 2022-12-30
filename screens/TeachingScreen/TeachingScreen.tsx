@@ -1,5 +1,5 @@
 ﻿import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify from "aws-amplify"
+import { Amplify } from "aws-amplify"
 import { Authenticator } from "aws-amplify-react-native"
 import React from "react"
 import { Pressable, Text } from "react-native"

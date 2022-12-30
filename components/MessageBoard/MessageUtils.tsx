@@ -1,5 +1,5 @@
 import { FontAwesome5 } from "@expo/vector-icons"
-import Badge from "@material-ui/core/Badge"
+import Badge from "@mui/material/Badge"
 import { Storage } from "aws-amplify"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"

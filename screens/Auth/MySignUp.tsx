@@ -1,14 +1,15 @@
 import { Entypo } from "@expo/vector-icons"
+import { Picker } from "@react-native-picker/picker"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
 import React from "react"
 import { isMobile } from "react-device-detect"
+
 import {
   ActivityIndicator,
   Dimensions,
   NativeSyntheticEvent,
-  Picker,
   Platform,
   Text,
   TextInput,
@@ -687,25 +688,25 @@ class MySignUpImpl extends React.Component<Props, State> {
                           : "Sign in to Jesus Collective"}
                       </Text>
                       {/*this.state.brand == "oneStory" && (
-                        <Text
-                          style={{
-                            width: "100%",
-                            marginBottom: "5.5%",
-                            fontFamily: "Graphik-Regular-App",
+                      <Text
+                        style={{
+                          width: "100%",
+                          marginBottom: "5.5%",
+                          fontFamily: "Graphik-Regular-App",
 
-                            fontSize: 14,
-                            lineHeight: 20,
-                          }}
-                        >
-                          We are looking forward to partnering with you as you introduce kids and
-                          youth in your community to Jesus. To access our content you will need to
-                          create a Jesus Collective account. One Story’s partnership with Jesus
-                          Collective allows us to not only make all of our resources available
-                          online in a convenient easy to assess way, but also provides you the
-                          benefit of connecting with other One Story users to give feedback, share
-                          ideas and ask questions.
-                        </Text>
-                        )*/}
+                          fontSize: 14,
+                          lineHeight: 20,
+                        }}
+                      >
+                        We are looking forward to partnering with you as you introduce kids and
+                        youth in your community to Jesus. To access our content you will need to
+                        create a Jesus Collective account. One Story’s partnership with Jesus
+                        Collective allows us to not only make all of our resources available
+                        online in a convenient easy to assess way, but also provides you the
+                        benefit of connecting with other One Story users to give feedback, share
+                        ideas and ask questions.
+                      </Text>
+                      )*/}
                       <Text accessibilityRole="header" style={this.styles.style.mySignUpText}>
                         What type of account would you like to create?
                       </Text>

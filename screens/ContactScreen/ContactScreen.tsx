@@ -1,5 +1,5 @@
 ﻿import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify from "aws-amplify"
+import { Amplify } from "aws-amplify"
 import JCComponent from "components/JCComponent/JCComponent"
 import React from "react"
 import { Text, View } from "react-native"

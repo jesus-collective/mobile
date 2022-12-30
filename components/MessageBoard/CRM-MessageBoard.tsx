@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
-import Badge from "@material-ui/core/Badge"
+import Badge from "@mui/material/Badge"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify"

@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { Analytics, Auth } from "aws-amplify"
+import { Amplify, Analytics, Auth } from "aws-amplify"
 import { convertToRaw, EditorState } from "draft-js"
 import * as React from "react"
 import { ScrollView, View } from "react-native"

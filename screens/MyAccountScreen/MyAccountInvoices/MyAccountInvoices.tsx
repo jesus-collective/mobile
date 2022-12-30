@@ -1,4 +1,4 @@
-import API, { GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
+import { API, GraphQLResult, GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
 import { isMobileOnly } from "react-device-detect"

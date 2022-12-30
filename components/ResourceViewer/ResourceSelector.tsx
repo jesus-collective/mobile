@@ -1,5 +1,5 @@
+import { Picker } from "@react-native-picker/picker"
 import React, { useContext } from "react"
-import { Picker } from "react-native"
 import { ResourceAdminProp } from "src/types"
 import { ResourceContext } from "./ResourceContext"
 

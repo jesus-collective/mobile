@@ -1,5 +1,6 @@
+import { Picker } from "@react-native-picker/picker"
 import React, { useContext } from "react"
-import { Picker, Text, View, ViewStyle } from "react-native"
+import { Text, View, ViewStyle } from "react-native"
 import EditableText from "../../components/Forms/EditableText"
 import MainStyles from "../../components/style"
 import { ResourcePageItemInput, ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"

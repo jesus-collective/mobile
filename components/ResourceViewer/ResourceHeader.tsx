@@ -1,4 +1,4 @@
-import Amplify, { Storage } from "aws-amplify"
+import { Amplify, Storage } from "aws-amplify"
 import React, { useContext, useState } from "react"
 import InputColor from "react-input-color"
 import { Animated, Image, View } from "react-native"

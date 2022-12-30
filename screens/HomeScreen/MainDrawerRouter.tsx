@@ -17,3 +17,10 @@ export default class MainDrawerRouter extends JCComponent {
     )
   }
 }
+
+/*
+export default class MainDrawerRouter extends JCComponent {
+  render(): React.ReactNode {
+    return <MainAppRouter />
+  }
+}*/

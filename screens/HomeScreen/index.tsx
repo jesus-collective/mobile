@@ -1,5 +1,6 @@
-import MomentUtils from "@date-io/moment"
-import { MuiPickersUtilsProvider } from "@material-ui/pickers"
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
+
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import React, { Suspense } from "react"
 import { Text, View } from "react-native"
 import { AuthStateData } from "src/types"
@@ -34,7 +35,7 @@ export default class App extends JCComponent<Props> {
             flex: 1,
           }}
         >
-          <MuiPickersUtilsProvider utils={MomentUtils}>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
             <Main
               onStateChange={async (e: string, e2: AuthStateData) => {
                 console.log(e)
@@ -42,7 +43,7 @@ export default class App extends JCComponent<Props> {
               }}
               authState={this.props.authState}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </View>
       </Suspense>
     )

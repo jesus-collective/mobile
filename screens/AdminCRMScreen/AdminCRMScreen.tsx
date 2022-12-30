@@ -1,5 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
+import { Picker } from "@react-native-picker/picker"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { API, Auth } from "aws-amplify"
 import moment from "moment"
@@ -8,7 +9,6 @@ import { isMobile } from "react-device-detect"
 import {
   ActivityIndicator,
   Image,
-  Picker,
   Pressable,
   ScrollView,
   Text,

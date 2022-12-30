@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import Amplify, { Storage } from "aws-amplify"
+import { Amplify, Storage } from "aws-amplify"
 import * as React from "react"
 import { Image, ImageStyle, TouchableOpacity } from "react-native"
 import { Data } from "../../components/Data/Data"

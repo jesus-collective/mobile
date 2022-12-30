@@ -1,7 +1,8 @@
 ﻿import { AntDesign } from "@expo/vector-icons"
+import { Picker } from "@react-native-picker/picker"
 import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
-import { Dimensions, Picker, Pressable, Text, View } from "react-native"
+import { Dimensions, Pressable, Text, View } from "react-native"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { CourseContext } from "./CourseContext"
@@ -113,7 +114,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                         //  placeholder="Triad"
                         //  placeholderStyle={{ color: "#bfc6ea" }}
                         //  placeholderIconColor="#007aff"
-                        selectedValue={this.state.triadSelection.toString()}
+                        selectedValue={this.state.triadSelection}
                         onValueChange={(value: number) => {
                           this.setState({ triadSelection: value })
                         }}

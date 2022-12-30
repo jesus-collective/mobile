@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp } from "@react-navigation/native"
-import Amplify, { Auth, I18n } from "aws-amplify"
+import { Amplify, Auth, I18n } from "aws-amplify"
 import { Authenticator } from "aws-amplify-react-native"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"

@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
+import { Picker } from "@react-native-picker/picker"
 import React, { useContext, useState } from "react"
-import { Dimensions, Picker, Pressable, View } from "react-native"
+import { Dimensions, Pressable, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import MainStyles from "../../components/style"
 import {
