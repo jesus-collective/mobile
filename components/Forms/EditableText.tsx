@@ -1,4 +1,3 @@
-import React from "react"
 import { Text, TextInput } from "react-native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 

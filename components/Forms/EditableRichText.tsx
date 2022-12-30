@@ -3,7 +3,6 @@ import { Storage } from "aws-amplify"
 //import '../MessageBoard.css';
 import { ContentState, convertFromRaw, convertToRaw, EditorState } from "draft-js"
 import draftToHtml from "draftjs-to-html"
-import React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { TouchableOpacity } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"

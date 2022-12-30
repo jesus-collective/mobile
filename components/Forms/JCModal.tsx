@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons"
-import React from "react"
 import ReactDOM from "react-dom"
 import { Modal, Text, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"

@@ -1,4 +1,3 @@
-import React from "react"
 import { ActivityIndicator, Animated, Text, TouchableWithoutFeedback, View } from "react-native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
