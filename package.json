@@ -105,7 +105,8 @@
     "resize-observer-polyfill": "^1.5.1",
     "sentry-expo": "~6.0.0",
     "universal-cookie": "^4.0.4",
-    "zen-observable-ts": "^0.8.21"
+    "zen-observable-ts": "^0.8.21",
+    "expo-dev-client": "~2.0.1"
   },
   "husky": {
     "hooks": {
