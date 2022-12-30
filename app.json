@@ -6,7 +6,7 @@
     "platforms": ["ios", "android", "web"],
     "owner": "georgevicbell",
     "scheme": "jc",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "facebookScheme": "fb579712102531269",
@@ -27,10 +27,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.jesuscollective.iosapp",
-      "buildNumber": "9"
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
-      "versionCode": 9,
       "package": "com.jesuscollective.androidapp"
     },
     "web": {
