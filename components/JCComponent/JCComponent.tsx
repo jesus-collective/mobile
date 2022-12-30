@@ -11,8 +11,9 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     super(props)
     this.state = this.getInitialState()
   }
+  dimensionsSubscription: EmitterSubscription
   componentDidMount(): void {
-    Dimensions.addEventListener("change", () => {
+    this.dimensionsSubscription = Dimensions.addEventListener("change", () => {
       this.styles.updateStyles(this)
     })
   }
@@ -21,8 +22,6 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
   }
   styles = MainStyles.getInstance()
   componentWillUnmount(): void {
-    Dimensions.removeEventListener("change", () => {
-      this.styles.updateStyles(this)
-    })
+    this.dimensionsSubscription?.remove()
   }
 }
