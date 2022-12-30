@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react"
-import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, useWindowDimensions } from "react-native"
 import { PanGestureHandler } from "react-native-gesture-handler"
 import Animated, {
   useAnimatedGestureHandler,
@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
+import { CustomImage } from "../GenericButton/CustomImage"
 
 export default function BottomMenuModal(props: Props) {
   // TODO: ADD A BACKDROP
@@ -89,7 +90,7 @@ export default function BottomMenuModal(props: Props) {
                 onPress={item.action}
               >
                 {item?.icon ? (
-                  <Image style={ModalStyle.MenuItemIcon} source={require(`/${item?.icon}/`)} />
+                  <CustomImage style={ModalStyle.MenuItemIcon} source={`/${item?.icon}/`} />
                 ) : null}
                 <Text style={ModalStyle.MenuItemText}>{item.title}</Text>
               </TouchableOpacity>

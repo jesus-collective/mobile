@@ -1,5 +1,6 @@
 import React from "react"
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { CustomImage } from "../GenericButton/CustomImage"
 
 type ControlItem = {
   action: () => null
@@ -39,8 +40,8 @@ export const HeaderControls = (props: Props) => {
             onPress={controlItem.action}
             style={isLastItem ? style.LastItem : style.Item}
           >
-            <Image
-              source={require(`../../assets/header/${controlItem.icon}.png`)}
+            <CustomImage
+              source={`../../assets/header/${controlItem.icon}.png`}
               style={style.Icon}
             />
           </TouchableOpacity>

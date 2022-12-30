@@ -47,12 +47,8 @@ export default function MainBottomTabsRouter() {
           } else if (route.name === "profile") {
             iconName = focused ? "Person-Active" : "Person"
           }
-          return (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require(`../../assets/Facelift/svg/${iconName}.svg`)}
-            />
-          )
+          const img = Image.resolveAssetSource({ uri: `../../assets/Facelift/svg/${iconName}.svg` })
+          return <Image style={{ width: 24, height: 24 }} source={{ uri: img.uri }} />
         },
         tabBarShowLabel: false,
         tabBarActiveTintColor: "tomato",

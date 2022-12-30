@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Image, Platform, Text, TouchableOpacity } from "react-native"
+import { ActivityIndicator, Platform, Text, TouchableOpacity } from "react-native"
+import { CustomImage } from "./CustomImage"
 interface Props {
   label: string
   action: () => void | Promise<void>
@@ -55,9 +56,9 @@ export default function GenericButton(props: Props) {
       ]}
     >
       {icon ? (
-        <Image
+        <CustomImage
           style={{ width: 24, height: 24, marginRight: 10 }}
-          source={require(`../../assets/Facelift/svg/${icon}.svg`)}
+          source={`../../assets/Facelift/svg/${icon}.svg`}
         />
       ) : null}
       {spinner ? (
