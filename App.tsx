@@ -14,7 +14,7 @@ import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
 import Sentry from "./components/Sentry"
 import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
 import HomeScreen from "./screens/HomeScreen/index"
-import awsConfig from "./src/aws-exports"
+import awsConfig from "./src/aws-exports.js"
 import { version } from "./src/version"
 
 let env = "unknown"
