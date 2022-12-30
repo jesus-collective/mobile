@@ -207,9 +207,11 @@ export default function HeaderJC(props: Props) {
                         marginBottom: 10,
                       }
                 }
-                source={require(`../../assets/Facelift/svg/${
-                  width < 1300 ? "JC-Logo-No-Text.svg" : "JC-Logo.svg"
-                }`)}
+                source={
+                  width < 1300
+                    ? require("../../assets/Facelift/svg/JC-Logo-No-Text.svg")
+                    : require("../../assets/svg/JC-Logo.svg")
+                }
               />
             </TouchableOpacity>
             <View
