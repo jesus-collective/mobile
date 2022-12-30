@@ -11,3 +11,4 @@ src/types.ts
 rn-cli.config.js
 screens/HomeScreen/NavigationRoot.ts
 components/TestHelpers/TestHelpers.js
+metro.config.js
