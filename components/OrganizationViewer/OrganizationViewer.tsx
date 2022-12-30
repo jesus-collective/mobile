@@ -14,7 +14,8 @@ import {
   GetOrganizationQuery,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
-import { Brand, constants } from "../../src/constants"
+import { Brand } from "../../src/Brand"
+import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import EditableLocation from "../Forms/EditableLocation"
 import EditableText from "../Forms/EditableText"

@@ -5,6 +5,7 @@ import React from "react"
 import { isDesktop } from "react-device-detect"
 import {
   Dimensions,
+  EmitterSubscription,
   Image,
   Pressable,
   ScrollView,
@@ -41,12 +42,14 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
     this.headerStyles.update()
     this.forceUpdate()
   }
+  dimensionsSubscription: EmitterSubscription | undefined
+
   componentDidMount(): void {
-    Dimensions.addEventListener("change", this.updateStyles)
+    this.dimensionsSubscription = Dimensions.addEventListener("change", this.updateStyles)
   }
   componentWillUnmount(): void {
     // Important to stop updating state after unmount
-    Dimensions.removeEventListener("change", this.updateStyles)
+    this.dimensionsSubscription?.remove()
   }
   headerStyles = new HeaderStyles()
   render(): React.ReactNode {

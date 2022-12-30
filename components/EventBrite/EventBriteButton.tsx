@@ -12,6 +12,7 @@ interface Props {
   componentProps: any
   ebScriptPath: string
   onOrderComplete: any
+  children: any
 }
 export default class EventbritePopupCheckout extends React.Component<Props> {
   state = { isEventbriteLoaded: false }

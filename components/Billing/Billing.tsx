@@ -33,7 +33,7 @@ import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import { GetUserQuery, ListProductsQuery, StripeInvoice, StripePriceDetail } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
-import { Brand } from "../../src/constants"
+import { Brand } from "../../src/Brand"
 import "./CardSectionStyles.css"
 import HandleStripePayment from "./HandleStripePayment"
 

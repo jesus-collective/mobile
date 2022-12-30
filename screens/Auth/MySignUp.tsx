@@ -25,7 +25,7 @@ import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { Brand } from "../../src/constants"
+import { Brand } from "../../src/Brand"
 
 interface Props {
   navigation?: NavigationProp<any, any>

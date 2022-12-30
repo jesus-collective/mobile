@@ -13,7 +13,7 @@ import {
   UserState,
 } from "../../screens/HomeScreen/UserContext"
 import awsConfig from "../../src/aws-exports"
-import { Brand } from "../../src/constants"
+import { Brand } from "../../src/Brand"
 Amplify.configure(awsConfig)
 
 interface Props {

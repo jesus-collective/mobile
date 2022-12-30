@@ -1,7 +1,7 @@
 import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
-import { Dimensions, Image, Pressable, Text, View } from "react-native"
+import { Dimensions, EmitterSubscription, Image, Pressable, Text, View } from "react-native"
 import HeaderStyles from "../CourseSidebar/style"
 import { CourseContext } from "../CourseViewer/CourseContext"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
@@ -21,17 +21,18 @@ class CourseSidebarImpl extends JCComponent<Props> {
   }
   static Consumer = CourseContext.Consumer
   headerStyles = HeaderStyles.getInstance()
-
+  dimensionsSubscription: EmitterSubscription | undefined
   updateStyles = (): void => {
     this.headerStyles.update()
     this.forceUpdate()
   }
   componentDidMount(): void {
-    Dimensions.addEventListener("change", this.updateStyles)
+    this.dimensionsSubscription = Dimensions.addEventListener("change", this.updateStyles)
   }
   componentWillUnmount(): void {
     // Important to stop updating state after unmount
-    Dimensions.removeEventListener("change", this.updateStyles)
+    this.dimensionsSubscription?.remove()
+    //    Dimensions.removeEventListener("change", this.updateStyles)
   }
   openDrawer = (): void => {
     this.props.navigation?.dispatch(DrawerActions.openDrawer())

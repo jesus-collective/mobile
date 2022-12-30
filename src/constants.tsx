@@ -1,4 +1,4 @@
-let env, brand
+let env
 if (window.location === undefined) env = "mobile"
 else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"
@@ -45,17 +45,4 @@ export const constants: { [index: string]: boolean | string } = {
   SETTING_ISVISIBLE_EVENTS_SHOW_RECOMMENDED: false,
   SETTING_ISVISIBLE_COURSE_TODO: true,
   SETTING_KY_GROUP_ID: env == "beta" ? "resource-1611326161952" : "resource-1608148143731",
-}
-
-export const Brand = (): "oneStory" | "jc" | null => {
-  const params = new URLSearchParams(window.location.search)
-  const brandParam = params.get("brand")
-
-  if (brandParam === "jc") brand = "jc"
-  else if (brandParam === "oneStory") brand = "oneStory"
-  else if (window.location.hostname.includes("onestorycurriculum")) brand = "oneStory"
-  else if (window.location.hostname.includes("jesuscollective")) brand = "jc"
-  else brand = "jc"
-
-  return brand as "oneStory" | "jc" | null
 }

@@ -20,7 +20,7 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
-import { Brand } from "../../src/constants"
+import { Brand } from "../../src/Brand"
 
 interface Props {
   username: any

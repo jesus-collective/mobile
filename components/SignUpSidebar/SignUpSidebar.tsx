@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Dimensions, Image, Platform, Text, View } from "react-native"
-import { Brand } from "../../src/constants"
+import { Brand } from "../../src/Brand"
 import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {

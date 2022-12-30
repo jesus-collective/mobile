@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Dimensions } from "react-native"
+import { Dimensions, EmitterSubscription } from "react-native"
 import MainStyles from "../../components/style"
 type WithoutKeys<T> = Omit<T, keyof T>
 export type JCState = WithoutKeys<Record<string, never>>
@@ -11,7 +11,7 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     super(props)
     this.state = this.getInitialState()
   }
-  dimensionsSubscription: EmitterSubscription
+  dimensionsSubscription: EmitterSubscription | undefined
   componentDidMount(): void {
     this.dimensionsSubscription = Dimensions.addEventListener("change", () => {
       this.styles.updateStyles(this)
