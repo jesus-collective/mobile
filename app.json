@@ -12,9 +12,7 @@
     "facebookScheme": "fb579712102531269",
     "facebookAppId": "579712102531269",
     "facebookDisplayName": "Jesus Collective",
-    "loading": {
-      "icon": "./assets/icon.png"
-    },
+
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
