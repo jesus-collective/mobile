@@ -49,7 +49,7 @@ interface Props {
   onStateChange(state: string, data: AuthStateData): any
 }
 
-export default function AwesomeApp(props: Props) {
+export default function App(props: Props) {
   const [appIsReady, setAppIsReady] = useState(false)
 
   useEffect(() => {
