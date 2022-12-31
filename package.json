@@ -106,7 +106,8 @@
     "sentry-expo": "~6.0.0",
     "universal-cookie": "^4.0.4",
     "zen-observable-ts": "^0.8.21",
-    "expo-dev-client": "~2.0.1"
+    "expo-dev-client": "~2.0.1",
+    "expo-splash-screen": "~0.17.5"
   },
   "husky": {
     "hooks": {
