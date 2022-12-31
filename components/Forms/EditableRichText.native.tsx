@@ -1,13 +1,8 @@
-import { convertFromRaw } from "draft-js"
-import { stateToHTML } from "draft-js-export-html"
-import React from "react"
 //import './react-draft-wysiwyg.css';
 //import './EditableRichText.css';
 //import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN'T WORK
 //import '../MessageBoard.css';
-//import { EditorState } from 'draft-js';
-import { TouchableOpacity } from "react-native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
@@ -65,122 +60,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
       // this.props.onChange(this.state.value)
     )
   }
-  convertCommentFromJSONToHTML = (text: string): string => {
-    try {
-      return stateToHTML(convertFromRaw(JSON.parse(text)))
-    } catch (e) {
-      console.log({ Error: e })
-      return "<div>Message Can't Be Displayed</div>"
-    }
-  }
   render(): React.ReactNode {
-    if (this.props.isEditable)
-      if (this.state.isEditMode) {
-        {
-          /*return <Editor
-                    placeholder="Empty Content"
-                    initialContentState={ContentState.createFromText(this.state.value)}
-                    editorState={this.state.editorState}
-                    toolbarClassName="customToolbarRichText"
-                    wrapperClassName="customWrapperRichTextEdit"
-                    editorClassName="customEditorRichTextEdit"
-                    onEditorStateChange={(z) => { this.updateEditorInput(z) }}
-                    onContentStateChange={(z) => { this.updateInput(z) }}
-                    toolbar={this.props.toolBar ?? {
-                        options: ['inline', 'list', 'colorPicker', 'link', 'emoji', 'image', 'history'],
-                        inline: {
-                            options: ['bold', 'italic', 'underline', 'strikethrough']
-                        },
-                        list: {
-                            options: ['unordered', 'ordered']
-                        },
-                        image: {
-                            uploadCallback: async (z1) => {
-                                const id = uuidv1()
-
-                                const download = await Storage.get("messages/" + id + ".png", {
-                                    level: 'protected',
-                                    contentType: z1.type,
-                                    identityId: ""
-                                })
-                                return { data: { link: download } }
-                            },
-                            previewImage: true,
-                            alt: { present: true, mandatory: true },
-                            defaultSize: {
-                                height: 'auto',
-                                width: 'auto',
-                            }
-                        }
-                    }}
-                    onBlur={() => { this.onChanged(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))); }}
-                />
-            */
-        }
-        return null
-      } else {
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              this.setState({ isEditMode: true })
-            }}
-          >
-            <div id="comment-div" style={{ width: "100%" }}>
-              {!convertFromRaw(JSON.parse(this.state.value)).hasText() ||
-              this.state.value == null ? (
-                <div
-                  style={{
-                    fontFamily: "Graphik-Bold-App",
-                    fontWeight: "bold",
-                    fontSize: 16,
-                    marginTop: 0,
-                    color: "#F0493E",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Hold to Edit
-                </div>
-              ) : (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: this.convertCommentFromJSONToHTML(this.props.value),
-                  }}
-                  style={{
-                    fontFamily: "Graphik-Regular-App",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#333333",
-                    marginTop: 0,
-                    paddingTop: 0,
-                    paddingRight: "30px",
-                    minHeight: 50,
-                  }}
-                ></div>
-              )}
-            </div>
-          </TouchableOpacity>
-        )
-      }
-    else {
-      return (
-        <div id="comment-div">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: this.convertCommentFromJSONToHTML(this.state.value),
-            }}
-            style={{
-              fontFamily: "Graphik-Regular-App",
-              fontSize: "16px",
-              lineHeight: "26px",
-              color: "#333333",
-              marginTop: 0,
-              paddingTop: 0,
-              minHeight: 50,
-              paddingRight: 15,
-            }}
-          ></div>
-        </div>
-      )
-    }
+    return <></>
   }
 }

@@ -1,8 +1,6 @@
-import React from "react"
 import { StyleSheet, Text, View, ViewStyle } from "react-native"
 import { GetProductQuery } from "../../src/API"
 import PayPal from "./Paypal/PayPal"
-//import { convertFromRaw } from 'draft-js';
 
 interface Params {
   product: NonNullable<GetProductQuery>["getProduct"]
