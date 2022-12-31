@@ -65,8 +65,10 @@
     "emotion-theming": "^11.0.0",
     "expo": "^47.0.0",
     "expo-camera": "~13.1.0",
+    "expo-dev-client": "~2.0.1",
     "expo-linking": "~3.3.0",
     "expo-permissions": "~14.0.0",
+    "expo-splash-screen": "~0.17.5",
     "is-absolute-url": "^4.0.1",
     "jquery": "^3.6.0",
     "maplibre-gl": "^1.15.2",
@@ -96,6 +98,7 @@
     "react-native-screens": "~3.18.0",
     "react-native-scripts": "^2.0.1",
     "react-native-tags-input": "^1.0.10",
+    "react-native-user-agent": "^2.3.1",
     "react-native-web": "~0.18.7",
     "react-native-web-maps": "^0.3.0",
     "react-native-windows": "^0.70.0",
@@ -105,9 +108,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "sentry-expo": "~6.0.0",
     "universal-cookie": "^4.0.4",
-    "zen-observable-ts": "^0.8.21",
-    "expo-dev-client": "~2.0.1",
-    "expo-splash-screen": "~0.17.5"
+    "zen-observable-ts": "^0.8.21"
   },
   "husky": {
     "hooks": {
