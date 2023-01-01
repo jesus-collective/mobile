@@ -10,8 +10,8 @@ import { AuthStateData, JCCognitoUser } from "src/types"
 import NeedHelpButton from "./components/FloatingButton/NeedHelpButton"
 import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
 import { SidebarMobile } from "./components/Sidebar/SidebarMobile"
-import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
 import HomeScreen from "./screens/HomeScreen/index"
+import * as RootNavigation from "./screens/HomeScreen/NavigationRoot"
 
 UserAgent.getUserAgent() //synchronous
 
