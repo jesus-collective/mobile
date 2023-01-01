@@ -1,12 +1,12 @@
 import { NavigationContainerRef, Route } from "@react-navigation/native"
 import * as React from "react"
+type RouteOut = { brand: string }
+export const navigationRef = React.createRef<NavigationContainerRef<any>>()
 
-export const navigationRef = React.createRef<NavigationContainerRef>()
-
-export function getRoot(): Route<string, object | undefined> | undefined {
-  return navigationRef.current?.getCurrentRoute()
+export function getRoot(): Route<string, RouteOut | undefined> | undefined {
+  return navigationRef.current?.getCurrentRoute() as any
 }
-export function navigate(name: string, params: object): void {
+export function navigate(name: string, params: any): void {
   navigationRef.current?.navigate(name, params)
 }
 export function dispatch(a: any): any {
