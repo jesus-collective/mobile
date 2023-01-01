@@ -117,9 +117,7 @@ const ActivityBox = ({ title, activityGroupId }: Props): JSX.Element => {
               return (
                 <View style={ActivityBoxStyles.ActivityEntryContainer} key={activity?.id}>
                   <Text style={ActivityBoxStyles.ActivityEntryText}>
-                    <Text style={ActivityBoxStyles.ActivityEntryownerText}>
-                      {activity?.ownerName}
-                    </Text>
+                    <Text style={ActivityBoxStyles.ActivityEntryText}>{activity?.ownerName}</Text>
                     {DetermineMessage(activity)}
                     <Text style={ActivityBoxStyles.ActivityEntryTimeText}>
                       {`  ${

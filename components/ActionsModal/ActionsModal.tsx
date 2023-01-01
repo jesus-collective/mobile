@@ -44,7 +44,7 @@ export default function BottomMenuModal(props: Props) {
         top.value = calculateModalHeight
         close()
       } else {
-        // threshhold not met, stay open
+        // threshold not met, stay open
         top.value = calculateModalHeight
       }
     },

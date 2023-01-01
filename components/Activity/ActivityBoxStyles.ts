@@ -1,9 +1,8 @@
-import { Dimensions } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Dimensions, StyleSheet } from "react-native"
 
 const { height, width } = Dimensions.get("window")
 const smallScreen = width < 563
-const ActivityBoxStyles = EStyleSheet.create({
+const ActivityBoxStyles = StyleSheet.create({
   ActivityBoxContainer: {
     width: smallScreen ? width : "100%",
     height: smallScreen ? height : height * 0.4,
