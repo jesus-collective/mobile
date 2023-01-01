@@ -10,6 +10,7 @@ interface Props {
   title: string
   noScroll?: boolean
   unsetOverflow?: boolean
+  children: any
 }
 
 export default class JCModal extends JCComponent<Props> {
