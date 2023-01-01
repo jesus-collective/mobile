@@ -51,7 +51,7 @@ function MySignUpImpl(props: Props) {
     pass2: "",
     email: "",
     phone: "",
-    code: "",
+    code: "+1",
     orgName: "",
   })
   const [authError, setAuthError] = useState<string>("")
@@ -179,13 +179,6 @@ function MySignUpImpl(props: Props) {
     setUser((z) => {
       return { ...z, [field]: input }
     })
-
-    /*this.setState((prevState) => ({
-      user: {
-        ...prevState.user,
-        [field]: input,
-      },
-    }))*/
   }
   const styles = StyleSheet.create({
     signUpBackButtonWrapper:
