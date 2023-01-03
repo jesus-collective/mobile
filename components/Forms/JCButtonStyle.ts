@@ -1,6 +1,4 @@
-import { StyleSheet } from "react-native"
-
-export default StyleSheet.create({
+export const ButtonStyles = {
   UpgradeToDownloadButton: {
     backgroundColor: "#FF4438",
     height: 40,
@@ -1773,4 +1771,4 @@ export default StyleSheet.create({
       },
     },
   },
-})
+}

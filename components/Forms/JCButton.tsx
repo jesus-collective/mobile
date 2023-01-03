@@ -1,6 +1,6 @@
-import { ActivityIndicator, Pressable, Text, View } from "react-native"
-import JCComponent from "../JCComponent/JCComponent"
-import styles from "./JCButtonStyle"
+import { useState } from "react"
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native"
+import { ButtonStyles } from "./JCButtonStyle"
 
 export enum ButtonTypes {
   AdminModal,
@@ -76,65 +76,55 @@ export interface Props {
   accessibilityLabel?: string
   accessibilityHint?: string
 }
-class JCButton extends JCComponent<Props> {
-  static defaultProps = {
-    enabled: true,
+JCButton.defaultProps = {
+  enabled: true,
+}
+function JCButton(props: Props) {
+  const [busy, setBusy] = useState<boolean>(false)
+
+  const onPress = async (): Promise<void> => {
+    setBusy(true)
+    await props.onPress()
+    setBusy(false)
   }
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      busy: false,
-    }
-  }
-  setBusy(): void {
-    this.setState({ busy: true })
-  }
-  setNotBusy(): void {
-    this.setState({ busy: false })
-  }
-  async onPress(): Promise<void> {
-    this.setBusy()
-    await this.props.onPress()
-    this.setNotBusy()
-  }
-  determineSpinnerColor(): string {
+
+  const determineSpinnerColor = (): string => {
     // This can be used for changing color depending on button background color
-    if (this.props.buttonType === 34) {
+    if (props.buttonType === 34) {
       return "#F0493E"
     } else {
       return "white"
     }
   }
-  render(): React.ReactNode {
-    return (
-      <Pressable
-        accessible
-        accessibilityState={{ disabled: !this.props.enabled || this.state.busy }}
-        accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityHint={this.props.accessibilityHint}
-        accessibilityRole="button"
-        disabled={!this.props.enabled || this.state.busy}
-        testID={this.props.testID + "-" + this.props.enabled}
-        style={[
-          { justifyContent: "center", alignItems: "center", alignSelf: "flex-start" },
-          styles[ButtonTypes[this.props.buttonType] + "Button"],
-          !this.props.enabled ? styles[ButtonTypes[this.props.buttonType] + "ButtonDisabled"] : "",
-        ]}
-        onPress={() => {
-          this.onPress()
-        }}
-      >
-        <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>
-          <Text style={this.state.busy ? { color: "transparent" } : {}}>{this.props.children}</Text>
-          {this.state.busy ? (
-            <View style={{ position: "absolute", left: 0, right: 0, alignItems: "center" }}>
-              <ActivityIndicator color={this.determineSpinnerColor()}></ActivityIndicator>
-            </View>
-          ) : null}
-        </Text>
-      </Pressable>
-    )
-  }
+  const styles = StyleSheet.create(ButtonStyles)
+  return (
+    <Pressable
+      accessible
+      accessibilityState={{ disabled: !props.enabled || busy }}
+      accessibilityLabel={props.accessibilityLabel}
+      accessibilityHint={props.accessibilityHint}
+      accessibilityRole="button"
+      disabled={!props.enabled || busy}
+      testID={props.testID + "-" + props.enabled}
+      style={[
+        { justifyContent: "center", alignItems: "center", alignSelf: "flex-start" },
+        styles[ButtonTypes[props.buttonType] + "Button"],
+        !props.enabled ? styles[ButtonTypes[props.buttonType] + "ButtonDisabled"] : "",
+      ]}
+      onPress={() => {
+        onPress()
+      }}
+    >
+      <Text style={styles[ButtonTypes[props.buttonType] + "Text"]}>
+        <Text style={busy ? { color: "transparent" } : {}}>{props.children}</Text>
+        {busy ? (
+          <View style={{ position: "absolute", left: 0, right: 0, alignItems: "center" }}>
+            <ActivityIndicator color={determineSpinnerColor()}></ActivityIndicator>
+          </View>
+        ) : null}
+      </Text>
+    </Pressable>
+  )
 }
 
 export default JCButton
