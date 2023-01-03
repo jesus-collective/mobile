@@ -112,7 +112,7 @@ export default function HelpModal({ setShow }: Props): JSX.Element {
       {showEmailField ? (
         <TextInput
           autoFocus
-          autoCompleteType="email"
+          autoComplete="email"
           maxLength={320}
           placeholder="Enter your email..."
           keyboardType="email-address"

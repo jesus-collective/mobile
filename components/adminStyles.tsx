@@ -1,6 +1,36 @@
-import EStyleSheet from "react-native-extended-stylesheet"
+export const AdminStyles = {
+  adminScreenMainContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+  adminScreenLeftContainer: {
+    flex: 70,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+  },
 
-const adminStyles = EStyleSheet.create({
+  /*
+    eventsScreenMainContainer: {
+          flexDirection: "column",
+        },
+        */
+
+  icon: {
+    color: "#aaaaaa",
+    fontSize: 34,
+  },
+  /*  icon: {
+          color: "#aaaaaa",
+          fontSize: 28,
+        },
+        icon: {
+          color: "#aaaaaa",
+          fontSize: 30,
+        },*/
+  fontRegular: {
+    fontFamily: "Graphik-Regular-App",
+  },
   adminCRMTableHeading: {
     fontFamily: "Graphik-Bold-App",
     color: "#ffffff",
@@ -311,5 +341,4 @@ const adminStyles = EStyleSheet.create({
       alignSelf: "center",
     },
   },
-})
-export default adminStyles
+}

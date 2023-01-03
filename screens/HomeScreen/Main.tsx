@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native"
 import * as Linking from "expo-linking"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Platform } from "react-native"
 import { AuthStateData } from "src/types"
 import HomeScreenRouter from "./HomeScreenRouter"
@@ -130,10 +130,10 @@ export default function Main(props: Props): JSX.Element {
   // console.log(props)
   console.log("Main")
   const PERSISTENCE_KEY = "NAVIGATION_STATE"
-  const [isReady, setIsReady] = React.useState(false)
-  const [initialState, setInitialState] = React.useState()
+  const [isReady, setIsReady] = useState(false)
+  const [initialState, setInitialState] = useState()
 
-  React.useEffect(() => {
+  useEffect(() => {
     const restoreState = async () => {
       try {
         const initialUrl = await Linking.getInitialURL()

@@ -9,6 +9,7 @@ import {
   Dimensions,
   Image,
   Pressable,
+  StyleSheet,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -20,13 +21,13 @@ import { Data } from "../../components/Data/Data"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import SearchBar from "../Forms/SearchBar/SearchBar"
-import HeaderStyles from "../Header/style"
 import { JCState } from "../JCComponent/JCComponent"
 import ProfileImageNew, {
   ProfileImageQuality,
   ProfileImageStyle,
 } from "../ProfileImage/ProfileImageNew"
 import { HeaderControls } from "./HeaderControls"
+import { HeaderStyle } from "./HeaderStyle"
 import { SubHeader } from "./SubHeader"
 interface Props {
   navigation?: StackNavigationProp<any, any>
@@ -97,7 +98,7 @@ export default function HeaderJC(props: Props) {
     user: null,
   })
 
-  const headerStyles = HeaderStyles.getInstance()
+  const headerStyles = StyleSheet.create(HeaderStyle)
   const navigation = useNavigation<any>()
 
   /* const updateResourceStyles = (): void => {
@@ -191,7 +192,7 @@ export default function HeaderJC(props: Props) {
   return (
     <>
       <BrowserView>
-        <View style={headerStyles.style.container}>
+        <View style={headerStyles.container}>
           <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity style={{ paddingTop: 6 }} onPress={openHome} testID="header-logo">
               <Image
@@ -249,7 +250,7 @@ export default function HeaderJC(props: Props) {
                       style={state.menuStyle[mapItem.id] ?? resourcesStyle1}
                     >
                       <div style={{ display: "flex", flexDirection: "row" }}>
-                        <Text style={headerStyles.style.centerMenuButtonsTextResources}>
+                        <Text style={headerStyles.centerMenuButtonsTextResources}>
                           {mapItem.name}
                         </Text>
                         <img
@@ -277,10 +278,7 @@ export default function HeaderJC(props: Props) {
                               openScreen(subItem.action ?? "", subItem.params)
                             }}
                           >
-                            <Text
-                              testID="header-resources-all"
-                              style={headerStyles.style.dropdownText}
-                            >
+                            <Text testID="header-resources-all" style={headerStyles.dropdownText}>
                               {subItem.name}
                             </Text>
                           </MenuItem>
@@ -294,9 +292,9 @@ export default function HeaderJC(props: Props) {
                     onPress={() => {
                       openScreen(mapItem.action ?? "", mapItem.params)
                     }}
-                    style={headerStyles.style.centerMenuButtons}
+                    style={headerStyles.centerMenuButtons}
                   >
-                    <Text style={headerStyles.style.centerMenuButtonsText}> {mapItem.name}</Text>
+                    <Text style={headerStyles.centerMenuButtonsText}> {mapItem.name}</Text>
                   </TouchableOpacity>
                 )
               })}
@@ -349,7 +347,7 @@ export default function HeaderJC(props: Props) {
                 <View style={{ marginHorizontal: 12 }}>
                   <TouchableOpacity testID="header-messages" onPress={openMessages}>
                     <Image
-                      style={headerStyles.style.icon}
+                      style={headerStyles.icon}
                       source={require("../../assets/Facelift/svg/Airplane-LightGrey.svg")}
                     />
                   </TouchableOpacity>
@@ -359,7 +357,7 @@ export default function HeaderJC(props: Props) {
                 <View style={{ marginHorizontal: 12 }}>
                   <TouchableOpacity onPress={openMessages}>
                     <Image
-                      style={headerStyles.style.icon}
+                      style={headerStyles.icon}
                       source={require("../../assets/Facelift/svg/Bell-LightGrey.svg")}
                     />
                   </TouchableOpacity>
@@ -368,7 +366,7 @@ export default function HeaderJC(props: Props) {
               <View style={{ marginHorizontal: 12 }}>
                 <TouchableOpacity onPress={() => navigation.push("MyAccountScreen")}>
                   <Image
-                    style={headerStyles.style.icon}
+                    style={headerStyles.icon}
                     source={require("../../assets/Facelift/svg/Cog-Menu.svg")}
                   />
                 </TouchableOpacity>
@@ -377,17 +375,14 @@ export default function HeaderJC(props: Props) {
             <View style={{ marginHorizontal: 12, justifyContent: "center" }}>
               <TouchableOpacity
                 testID="header-hamburger"
-                style={headerStyles.style.leftButtons}
+                style={headerStyles.leftButtons}
                 onPress={openDrawer}
               >
                 {isOpen ? (
-                  <Image
-                    style={headerStyles.style.icon}
-                    source={require("../../assets/header/X.png")}
-                  />
+                  <Image style={headerStyles.icon} source={require("../../assets/header/X.png")} />
                 ) : (
                   <Image
-                    style={headerStyles.style.icon}
+                    style={headerStyles.icon}
                     source={require("../../assets/header/Boxes.png")}
                   />
                 )}

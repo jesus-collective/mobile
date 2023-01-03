@@ -5,21 +5,30 @@ import {
   CardExpiryElement,
   CardNumberElement,
   Elements,
-  ElementsConsumer,
+  useElements,
+  useStripe,
 } from "@stripe/react-stripe-js"
 import {
   loadStripe,
-  Stripe,
   StripeCardCvcElementChangeEvent,
   StripeCardExpiryElementChangeEvent,
   StripeCardNumberElementChangeEvent,
-  StripeElements,
 } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import { Amplify, Auth } from "aws-amplify"
 import onlyLastPromise, { DiscardSignal } from "only-last-promise"
-import React, { useState } from "react"
-import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import React, { useContext, useEffect, useReducer, useState } from "react"
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import { Data } from "../../components/Data/Data"
@@ -27,7 +36,6 @@ import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
@@ -78,67 +86,140 @@ interface Props {
   route?: any
   authState?: string
 }
-interface State extends JCState {
-  showSubscriptionSelector: boolean
-  products: Products
-  userData: NonNullable<GetUserQuery>["getUser"]
-  currentProduct: Products
-  joinedProduct: string[]
-  brand: "jc" | "oneStory" | null
-  idempotency: string
-  eula: boolean
-  showEULA: boolean
-  errorMsg: string | undefined
-  quantities: number[][]
+
+type OrderType = {
   isEditable: string[][]
-  invoice: StripeInvoice | null
-  processing: "entry" | "processing" | "complete"
-  stripeValidation: any
-  validatingUser: boolean
-  invoiceQueue: Array<Promise<any>>
-  freeDays: number
+  quantities: number[][]
+  currentProduct: Products
   coupon: string
 }
-class BillingImpl extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      showSubscriptionSelector: false,
-      products: [],
-      stripeValidation: {
-        cardNumber: false,
-        expiryDate: false,
-        cvc: false,
-      },
-      coupon: "",
-      showEULA: false,
-      errorMsg: "",
-      currentProduct: [],
-      invoiceQueue: [],
-      idempotency: uuidv4(),
-      processing: "entry",
-      validatingUser: false,
-      freeDays: 30,
-      eula: false,
-      brand: Brand(),
-      joinedProduct: props.route?.params?.joinedProduct
-        ? props.route?.params?.joinedProduct == "null"
-          ? []
-          : props.route?.params?.joinedProduct.split(",")
-        : [],
-    }
-    console.log({ brand: Brand })
-    console.log({ joinedProduct: this.state.joinedProduct })
-    this.setInitialData()
-  }
 
-  async setInitialData(): Promise<void> {
+function BillingImpl(props: Props) {
+  const [order, setOrder] = useReducer(
+    (state: OrderType, newState: OrderType) => ({ ...state, ...newState }),
+    {
+      isEditable: [[]],
+      quantities: [[]],
+      currentProduct: [],
+      coupon: "",
+    }
+  )
+  const styles = StyleSheet.create({
+    flexRow: {
+      flexDirection: "row",
+      marginTop: 10,
+    },
+    SignUpScreenSetupTextSmaller: {
+      fontFamily: "Graphik-Regular-App",
+      textAlign: "center",
+      width: "100%",
+      fontSize: 18,
+      lineHeight: 30,
+      marginBottom: 8,
+    },
+    /* SignUpScreenSetupTextSmaller: {
+          lineHeight: 24,
+        },*/
+    signUpScreen1PaymentColumn1:
+      Platform.OS === "web" && Dimensions.get("window").width > 720
+        ? { position: "absolute", left: "7.5%", width: "100%", top: "40vh", height: "100%" }
+        : { marginLeft: 20, marginRight: 20, left: "0%" },
+    SignUpScreenSetupText: {
+      fontFamily: "Graphik-Medium-App",
+      textAlign: "center",
+      width: "50%",
+      fontSize: 28,
+      lineHeight: 33,
+      marginBottom: 8,
+      left: "16rem",
+      position: "relative",
+    },
+    fontFormSmallDarkGreyCourseTopEditable: {
+      fontFamily: "Graphik-Regular-App",
+      fontSize: 40,
+      lineHeight: 55,
+      color: "#333333",
+      paddingTop: 30,
+      width: "100%",
+      marginBottom: 15,
+    },
+    signUpScreen1PaymentColumn1Form:
+      Platform.OS === "web" && Dimensions.get("window").width > 720
+        ? { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }
+        : { marginLeft: 20, marginRight: 20 },
+    signUpScreen1PaymentColumn2:
+      Platform.OS === "web" && Dimensions.get("window").width > 720
+        ? { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" }
+        : {},
+
+    fontFormSmallDarkGrey: {
+      fontFamily: "Graphik-Regular-App",
+      fontSize: 16,
+      lineHeight: 26,
+      color: "#333333",
+      paddingTop: 6,
+      width: "100%",
+    },
+    fontFormMandatory: {
+      fontFamily: "Graphik-Regular-App",
+      fontSize: 26,
+      lineHeight: 33,
+      color: "#F0493E",
+    },
+    fontFormSmall: {
+      fontFamily: "Graphik-Regular-App",
+      fontSize: 12,
+      lineHeight: 21,
+      textTransform: "uppercase",
+      color: "#333333",
+      opacity: 0.5,
+      marginTop: 10,
+    },
+  })
+  /*  const [isEditable, setIsEditable] = useState<string[][]>([[]])
+  const [quantities, setQuantities] = useState<number[][]>([[]])
+  const [currentProduct, setCurrentProduct] = useState<Products>([])
+*/
+  const [invoice, setInvoice] = useState<StripeInvoice | null>()
+  const [userData, setUserData] = useState<NonNullable<GetUserQuery>["getUser"]>()
+  const [showSubscriptionSelector, setShowSubscriptionSelector] = useState<boolean>(false)
+  const [products, setProducts] = useState<Products>([])
+  const [stripeValidation, setStripeValidation] = useState<any>({
+    cardNumber: false,
+    expiryDate: false,
+    cvc: false,
+  })
+  const [showEULA, setShowEULA] = useState<boolean>(false)
+  const [errorMsg, setErrorMsg] = useState<string | undefined>("")
+  const [invoiceQueue, setInvoiceQueue] = useState<Array<Promise<any>>>([])
+  const [idempotency, setIdempotency] = useState<string>(uuidv4())
+  const [processing, setProcessing] = useState<"entry" | "processing" | "complete">("entry")
+  const [validatingUser, setValidatingUser] = useState<boolean>(false)
+  const [freeDays, setFreeDays] = useState<number>(30)
+  const [eula, setEula] = useState<boolean>(false)
+  const [brand, setBrand] = useState(Brand())
+  const [joinedProduct, setJoinedProduct] = useState<string[]>(
+    props.route?.params?.joinedProduct
+      ? props.route?.params?.joinedProduct == "null"
+        ? []
+        : props.route?.params?.joinedProduct.split(",")
+      : []
+  )
+  useEffect(() => {
+    createInvoice()
+  }, [order])
+  useEffect(() => {
+    console.log({ brand: Brand })
+    console.log({ joinedProduct: joinedProduct })
+    setInitialData()
+  }, [])
+
+  const setInitialData = async (): Promise<void> => {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const getUser = await Data.getUser(user["username"])
       if (getUser.data) {
-        this.setState({ userData: getUser.data.getUser })
+        setUserData(getUser.data.getUser)
         console.log({ USER: getUser.data?.getUser })
       }
     } catch (e: any) {
@@ -150,58 +231,49 @@ class BillingImpl extends JCComponent<Props, State> {
         enabled: { eq: "true" },
         isLogin: { eq: "true" },
       })
-      if (listProducts.data?.listProducts)
-        this.setState({ products: listProducts.data.listProducts.items })
-      if (this.state.currentProduct?.length == 0)
-        if (this.state.joinedProduct.length == 0) {
+      if (listProducts.data?.listProducts) setProducts(listProducts.data.listProducts.items)
+      if (order.currentProduct?.length == 0)
+        if (joinedProduct.length == 0) {
           if (listProducts.data?.listProducts?.items) {
             console.log({ items: listProducts.data?.listProducts?.items })
-            this.setState(
-              {
-                currentProduct: [
-                  listProducts.data.listProducts.items.filter((e) => {
+            setOrder({
+              currentProduct: [
+                listProducts.data.listProducts.items.filter((e) => {
+                  return e?.isDefault == true
+                })[0],
+              ],
+              quantities: [
+                listProducts.data.listProducts.items
+                  .filter((e) => {
                     return e?.isDefault == true
-                  })[0],
-                ],
-                quantities: [
-                  listProducts.data.listProducts.items
-                    .filter((e) => {
-                      return e?.isDefault == true
-                    })[0]
-                    ?.tiered?.map((e) => e?.defaultAmount ?? 1) ?? [],
-                ],
-                isEditable: [
-                  listProducts.data.listProducts.items
-                    .filter((e) => {
-                      return e?.isDefault == true
-                    })[0]
-                    ?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? [],
-                ],
-              },
-              async () => {
-                await this.createInvoice()
-              }
-            )
+                  })[0]
+                  ?.tiered?.map((e) => e?.defaultAmount ?? 1) ?? [],
+              ],
+              isEditable: [
+                listProducts.data.listProducts.items
+                  .filter((e) => {
+                    return e?.isDefault == true
+                  })[0]
+                  ?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? [],
+              ],
+              coupon: order.coupon,
+            })
             console.log({ item0: listProducts.data.listProducts.items[0] })
           }
         } else {
           if (listProducts.data?.listProducts?.items) {
             const productIds = listProducts.data.listProducts.items
               .map((x) => x?.id ?? "")
-              .filter((x) => this.state.joinedProduct.includes(x))
+              .filter((x) => joinedProduct.includes(x))
             const products = listProducts.data.listProducts.items.filter((x) =>
               productIds.includes(x?.id ?? "")
             )
-            this.setState(
-              {
-                currentProduct: products,
-                quantities: [products[0]?.tiered?.map((e) => e?.defaultAmount ?? 1) ?? []],
-                isEditable: [products[0]?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? []],
-              },
-              async () => {
-                await this.createInvoice()
-              }
-            )
+            setOrder({
+              currentProduct: products,
+              quantities: [products[0]?.tiered?.map((e) => e?.defaultAmount ?? 1) ?? []],
+              isEditable: [products[0]?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? []],
+              coupon: order.coupon,
+            })
           }
         }
     } catch (err) {
@@ -209,18 +281,18 @@ class BillingImpl extends JCComponent<Props, State> {
       console.error(err)
     }
   }
-  async createStripeUser() {
+  const createStripeUser = async () => {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
       const customer = await Data.createStripeCustomer({
-        idempotency: this.state.idempotency,
+        idempotency: idempotency,
         firstName: user?.attributes?.given_name,
         lastName: user?.attributes?.family_name,
         email: user?.attributes?.email,
         phone: user?.attributes?.phone_number,
         orgName: user?.attributes!["custom:orgName"],
-        billingAddress: this.state.userData?.billingAddress,
+        billingAddress: userData?.billingAddress,
       })
       console.log({ customer: customer })
       //customerId = customer.data.createCustomer.customer.id;
@@ -229,14 +301,14 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log(e)
     }
   }
-  getOneOffPriceItems(): StripePriceDetail[] {
-    const priceItems = this.state.currentProduct
+  const getOneOffPriceItems = (): StripePriceDetail[] => {
+    const priceItems = order.currentProduct
       ?.map((item, index: number) => {
         const priceItems2 = item?.tiered?.map((item2, index2: number) => {
           if (item2?.isSubscription) return undefined
           return {
             price: item2?.stripePaymentID,
-            quantity: this.state.quantities[index][index2],
+            quantity: order.quantities[index][index2],
           } as StripePriceDetail
         })
         return priceItems2
@@ -248,14 +320,14 @@ class BillingImpl extends JCComponent<Props, State> {
       .filter((x) => x != undefined && (x.quantity ?? 0) > 0)
       .filter((e) => e) as StripePriceDetail[]
   }
-  getSubscriptionPriceItems(): StripePriceDetail[] {
-    const priceItems = this.state.currentProduct
+  const getSubscriptionPriceItems = (): StripePriceDetail[] => {
+    const priceItems = order.currentProduct
       ?.map((item, index: number) => {
         const priceItems2 = item?.tiered?.map((item2, index2: number) => {
           if (!item2?.isSubscription) return undefined
           return {
             price: item2?.stripePaymentID,
-            quantity: this.state.quantities[index][index2],
+            quantity: order.quantities[index][index2],
           } as StripePriceDetail
         })
         return priceItems2
@@ -267,91 +339,85 @@ class BillingImpl extends JCComponent<Props, State> {
       .filter((x) => x != undefined && (x.quantity ?? 0) > 0)
       .filter((e) => e) as StripePriceDetail[]
   }
-  async createInvoice() {
-    const subscriptionPriceItems = this.getSubscriptionPriceItems()
-    const oneOffPriceItems = this.getOneOffPriceItems()
+  const createInvoice = async () => {
+    const subscriptionPriceItems = getSubscriptionPriceItems()
+    const oneOffPriceItems = getOneOffPriceItems()
 
     try {
-      this.setState(
-        {
-          invoiceQueue: [
-            ...this.state.invoiceQueue,
-            wrappedPreviewInvoice({
-              idempotency: this.state.idempotency,
-              priceInfo: {
-                coupon: this.state.coupon,
-                subscriptionPrices: subscriptionPriceItems,
-                oneOffPrices: oneOffPriceItems,
-              },
-            }),
-          ],
-        },
-        async () => {
-          console.log({ invoiceQueue: this.state.invoiceQueue })
-          try {
-            const invoice = (await Promise.all(this.state.invoiceQueue))[
-              this.state.invoiceQueue.length - 1
-            ]
-            console.log({ invoiceQueue2: this.state.invoiceQueue })
-            console.log({ invoice1: invoice })
-            console.log({ invoice: invoice.data.previewInvoice?.invoice })
-            this.setState({ invoice: invoice.data.previewInvoice?.invoice })
-          } catch (e: any) {
-            console.log({ ERROR: e })
-          }
-        }
-      )
+      setInvoiceQueue([
+        ...invoiceQueue,
+        wrappedPreviewInvoice({
+          idempotency: idempotency,
+          priceInfo: {
+            coupon: order.coupon,
+            subscriptionPrices: subscriptionPriceItems,
+            oneOffPrices: oneOffPriceItems,
+          },
+        }),
+      ])
     } catch (e: any) {
       Sentry.captureException(e.errors || e)
       console.log({ error: e })
     }
   }
-  selectProduct(product: Product) {
-    if (this.state.currentProduct)
-      this.setState(
-        {
-          showSubscriptionSelector: false,
-          currentProduct: this.state.currentProduct.concat(product),
-          quantities: [
-            product?.tiered?.map((e) => {
-              return e?.defaultAmount ?? 1
-            }) ?? [],
-          ],
-          isEditable: [product?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? []],
-          invoice: null,
-        },
-        async () => {
-          await this.createInvoice()
-        }
-      )
+  useEffect(() => {
+    const updateInvoiceQueue = async () => {
+      console.log({ invoiceQueue: invoiceQueue })
+      try {
+        const invoice = (await Promise.all(invoiceQueue))[invoiceQueue.length - 1]
+        console.log({ invoiceQueue2: invoiceQueue })
+        console.log({ invoice1: invoice })
+        console.log({ invoice: invoice.data.previewInvoice?.invoice })
+        setInvoice(invoice.data.previewInvoice?.invoice)
+      } catch (e: any) {
+        console.log({ ERROR: e })
+      }
+    }
+    updateInvoiceQueue()
+  }, [invoiceQueue])
+  const selectProduct = (product: Product) => {
+    if (order.currentProduct) {
+      setInvoice(null)
+      setShowSubscriptionSelector(false)
+      setOrder({
+        coupon: order.coupon,
+        currentProduct: order.currentProduct.concat(product),
+        quantities: [
+          product?.tiered?.map((e) => {
+            return e?.defaultAmount ?? 1
+          }) ?? [],
+        ],
+        isEditable: [product?.tiered?.map((e) => e?.amountIsEditable ?? "false") ?? []],
+      })
+    }
   }
 
-  static UserConsumer = UserContext.Consumer
-
-  async makePayment(stripe: Stripe | null, elements: StripeElements | null): Promise<void> {
-    this.setState({ processing: "processing" }, async () => {
-      await this.createStripeUser()
-      const subscriptionPriceItems = this.getSubscriptionPriceItems()
-      const oneOffPriceItems = this.getOneOffPriceItems()
+  const UserConsumer = useContext(UserContext)
+  useEffect(() => {
+    const makePayment = async () => {
+      await createStripeUser()
+      const subscriptionPriceItems = getSubscriptionPriceItems()
+      const oneOffPriceItems = getOneOffPriceItems()
 
       try {
         if (stripe && elements) {
-          console.log(this.state.freeDays)
+          console.log(freeDays)
           const status = await new HandleStripePayment().handleSubmit(
             stripe,
             elements,
-            this.state.idempotency,
+            idempotency,
             {
               subscriptionPrices: subscriptionPriceItems,
               oneOffPrices: oneOffPriceItems,
-              coupon: this.state.coupon ?? "",
+              coupon: order.coupon ?? "",
             },
-            this.state.freeDays,
+            freeDays,
             () => {
-              this.setState({ processing: "complete" })
+              setProcessing("complete")
             },
             (error) => {
-              this.setState({ processing: "entry", errorMsg: error?.message })
+              setProcessing("entry")
+              setErrorMsg(error?.message)
             }
           )
           console.log(status)
@@ -360,44 +426,44 @@ class BillingImpl extends JCComponent<Props, State> {
         Sentry.captureException(e.errors || e)
         console.log({ "Payment Error": e })
       }
-    })
+    }
+
+    if (processing == "processing") makePayment()
+  }, [processing])
+  const makePayment = async (): Promise<void> => {
+    setProcessing("processing")
   }
-  removeProduct(index: number) {
-    const temp = this.state.currentProduct
-    const temp2 = this.state.quantities
+  const removeProduct = (index: number) => {
+    const temp = order.currentProduct
+    const temp2 = order.quantities
     temp?.splice(index)
     temp2.splice(index)
-    this.setState(
-      {
-        currentProduct: temp,
-        quantities: temp2,
-        invoice: null,
-      },
-      async () => {
-        await this.createInvoice()
-      }
-    )
+    setInvoice(null)
+    setOrder({
+      currentProduct: temp,
+      quantities: temp2,
+      isEditable: order.isEditable,
+      coupon: order.coupon,
+    })
   }
-  updateQuantity(index: number, index2: number, value: number) {
-    const temp = this.state.quantities
+  const updateQuantity = (index: number, index2: number, value: number) => {
+    const temp = order.quantities
     temp[index][index2] = value
-    this.setState(
-      {
-        quantities: temp,
-        invoice: null,
-      },
-      async () => {
-        await this.createInvoice()
-      }
-    )
+    setInvoice(null)
+    setOrder({
+      quantities: temp,
+      currentProduct: order.currentProduct,
+      isEditable: order.isEditable,
+      coupon: order.coupon,
+    })
   }
-  renderEULA(eula: string | null | undefined) {
+  const renderEULA = (eula: string | null | undefined) => {
     return (
       <JCModal
-        visible={this.state.showEULA}
+        visible={showEULA}
         title="End User Licensing Agreement"
         onHide={() => {
-          this.setState({ showEULA: false })
+          setShowEULA(false)
         }}
       >
         <ScrollView>
@@ -408,7 +474,7 @@ class BillingImpl extends JCComponent<Props, State> {
       </JCModal>
     )
   }
-  stripeFieldValidation = (
+  const stripeFieldValidation = (
     element:
       | StripeCardNumberElementChangeEvent
       | StripeCardExpiryElementChangeEvent
@@ -416,12 +482,12 @@ class BillingImpl extends JCComponent<Props, State> {
     name: string
   ) => {
     if (!element.empty && element.complete) {
-      this.setState({ stripeValidation: { ...this.state.stripeValidation, [name]: true } })
+      setStripeValidation({ ...stripeValidation, [name]: true })
     } else {
-      this.setState({ stripeValidation: { ...this.state.stripeValidation, [name]: false } })
+      setStripeValidation({ ...stripeValidation, [name]: false })
     }
   }
-  renderProduct(item: Product, index: number) {
+  const renderProduct = (item: Product, index: number) => {
     return (
       <View
         accessible
@@ -450,7 +516,7 @@ class BillingImpl extends JCComponent<Props, State> {
         <TouchableOpacity
           style={{ alignSelf: "flex-end", display: "none" }}
           onPress={() => {
-            this.removeProduct(index)
+            removeProduct(index)
           }}
         >
           <AntDesign name="close" size={20} color="black" />
@@ -472,13 +538,13 @@ class BillingImpl extends JCComponent<Props, State> {
               >
                 {item2?.name ?? ""}
               </Text>
-              {this.state.isEditable[index][index2] == "true" ? (
+              {order.isEditable[index][index2] == "true" ? (
                 <EditableText
                   accessibilityLabel={item2?.name ?? ""}
                   placeholder="Quantity"
                   multiline={false}
                   testID="course-weekTitle"
-                  textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
+                  textStyle={styles.fontFormSmallDarkGreyCourseTopEditable}
                   inputStyle={{
                     borderWidth: 1,
                     borderColor: "#dddddd",
@@ -494,13 +560,13 @@ class BillingImpl extends JCComponent<Props, State> {
                     lineHeight: 15,
                   }}
                   onChange={(value) => {
-                    this.updateQuantity(index, index2, parseInt(value))
+                    updateQuantity(index, index2, parseInt(value))
                   }}
-                  value={this.state.quantities[index][index2].toString()}
+                  value={order.quantities[index][index2].toString()}
                   isEditable={true}
                 ></EditableText>
               ) : (
-                <Text>{this.state.quantities[index][index2].toString()}</Text>
+                <Text>{order.quantities[index][index2].toString()}</Text>
               )}
             </View>
           )
@@ -509,9 +575,9 @@ class BillingImpl extends JCComponent<Props, State> {
         <View>
           <Text
             style={[
-              this.styles.style.fontFormMandatory,
+              styles.fontFormMandatory,
               { marginRight: -8 },
-              !this.state.eula ? { color: "#F0493E" } : { opacity: 0 },
+              !eula ? { color: "#F0493E" } : { opacity: 0 },
             ]}
           >
             *
@@ -520,9 +586,9 @@ class BillingImpl extends JCComponent<Props, State> {
             testId={"billing-accept-eula"}
             containerWidth={"95%"}
             switchLabel="I accept the End User Licensing Agreement"
-            initState={this.state.eula}
+            initState={eula}
             onPress={(e) => {
-              this.setState({ eula: e })
+              setEula(e)
             }}
           ></JCSwitch>
         </View>
@@ -530,29 +596,31 @@ class BillingImpl extends JCComponent<Props, State> {
         <JCButton
           buttonType={ButtonTypes.TransparentNoPadding}
           onPress={() => {
-            this.setState({ showEULA: true })
+            setShowEULA(true)
           }}
         >
           Read the End User Licensing Agreement
         </JCButton>
 
-        {this.renderEULA(item?.eula)}
+        {renderEULA(item?.eula)}
       </View>
     )
   }
-  showSubscriptionSelector() {
-    this.setState({ showSubscriptionSelector: true })
-  }
 
-  updateUserAndCheckState = async (userActions: UserActions, state: UserState) => {
+  const updateUserAndCheckState = async (
+    userActions: UserActions,
+    state: UserState | undefined
+  ) => {
+    if (state == undefined) return
     console.log(state)
-    this.setState({ validatingUser: true, errorMsg: "" })
+    setValidatingUser(true)
+    setErrorMsg("")
     const a = setInterval(async () => {
       await userActions.updateGroups()
       console.log({ Groups: state.groups })
       if (userActions.isMemberOf("subscriptionValid")) {
         console.log("Subscription is active.")
-        this.setState({ validatingUser: false })
+        setValidatingUser(false)
         clearInterval(a)
       } else {
         console.log("Subscription is not yet active")
@@ -561,23 +629,21 @@ class BillingImpl extends JCComponent<Props, State> {
     }, 2000)
     setTimeout(() => {
       clearInterval(a)
-      this.setState({
-        validatingUser: false,
-        errorMsg: "Something went wrong. Please try again later or contact support.",
-      })
+      setValidatingUser(false)
+      setErrorMsg("Something went wrong. Please try again later or contact support.")
     }, 60000)
   }
-  async handleInputChange(
+  const handleInputChange = async (
     value: any,
     field: keyof NonNullable<NonNullable<NonNullable<GetUserQuery>["getUser"]>["billingAddress"]>
-  ) {
+  ) => {
     const release = await handleInputMutex.acquire()
     console.log({ field: field, value: value })
-    console.log({ userData: this.state.userData?.billingAddress })
+    console.log({ userData: userData?.billingAddress })
     try {
-      if (this.state.userData && this.state.userData.billingAddress == null) {
+      if (userData && userData.billingAddress == null) {
         const user = await Data.updateUser({
-          id: this.state.userData.id,
+          id: userData.id,
           billingAddress: {
             country: "",
             line1: "",
@@ -588,32 +654,31 @@ class BillingImpl extends JCComponent<Props, State> {
           },
         })
         console.log("Billing Address added")
-        if (user.data)
-          this.setState({ userData: user.data.updateUser }, async () => {
-            const temp = this.state.userData
+        if (user.data) {
+          const temp = user.data.updateUser
 
-            if (temp?.billingAddress && temp?.billingAddress[field])
-              temp.billingAddress[field] = value
+          if (temp?.billingAddress && temp?.billingAddress[field])
+            temp.billingAddress[field] = value
 
-            const user = await Data.updateUser({
-              id: this.state.userData?.id ?? "",
-              billingAddress: temp?.billingAddress,
-            })
-
-            console.log(user)
-            this.setState({ userData: temp })
+          const user2 = await Data.updateUser({
+            id: userData?.id ?? "",
+            billingAddress: temp?.billingAddress,
           })
+
+          console.log(user2)
+          setUserData(temp)
+        }
       } else {
-        const temp = this.state.userData
+        const temp = userData
         if (temp?.billingAddress) temp.billingAddress[field] = value
 
         const user = await Data.updateUser({
-          id: this.state.userData?.id ?? "",
+          id: userData?.id ?? "",
           billingAddress: temp?.billingAddress,
         })
 
         console.log(user)
-        this.setState({ userData: temp })
+        setUserData(temp)
       }
     } catch (e: any) {
       Sentry.captureException(e.errors || e)
@@ -622,9 +687,9 @@ class BillingImpl extends JCComponent<Props, State> {
       release()
     }
   }
-  isMakePaymentEnabled(): boolean {
+  const isMakePaymentEnabled = (): boolean => {
     console.log("1")
-    const billingAddress = this.state.userData?.billingAddress
+    const billingAddress = userData?.billingAddress
     if (!billingAddress) return false
     console.log("2")
     if (!billingAddress.line1) return false
@@ -637,578 +702,509 @@ class BillingImpl extends JCComponent<Props, State> {
     console.log("6")
     if (!billingAddress.postal_code) return false
     console.log("7")
-    if (!this.state.stripeValidation.cardNumber) return false
+    if (!stripeValidation.cardNumber) return false
     console.log("8")
-    if (!this.state.stripeValidation.expiryDate) return false
+    if (!stripeValidation.expiryDate) return false
     console.log("9")
-    if (!this.state.stripeValidation.cvc) return false
+    if (!stripeValidation.cvc) return false
     console.log("10")
-    if (!this.state.currentProduct) return false
+    if (!order.currentProduct) return false
     console.log("11")
     return (
-      this.state.currentProduct.length > 0 &&
+      order.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
       billingAddress.state?.length > 0 &&
       billingAddress.country?.length > 0 &&
       billingAddress.city?.length > 0 &&
       billingAddress.postal_code?.length > 0 &&
-      this.state.eula == true
+      eula == true
     )
   }
-  async completePaymentProcess(actions: UserActions, state: UserState) {
-    this.updateUserAndCheckState(actions, state)
+  const completePaymentProcess = async (actions: UserActions, state: UserState | undefined) => {
+    updateUserAndCheckState(actions, state)
   }
-  render() {
-    return (
-      <ElementsConsumer>
-        {({ stripe, elements }) => (
-          <BillingImpl.UserConsumer>
-            {({ userState, userActions }) => {
-              if (!userState) return null
-              return this.state.processing === "complete" ? (
-                <ScrollView style={this.styles.style.signUpScreen1PaymentColumn1}>
-                  <Image
-                    style={{ alignSelf: "center", marginBottom: 20 }}
-                    source={require("../../assets/svg/checkmark-circle.svg")}
-                  />
+  const stripe = useStripe()
+  const elements = useElements()
 
-                  <Text accessibilityRole="header" style={this.styles.style.SignUpScreenSetupText}>
-                    Thank you. Your subscription is now active.
-                    <br />
-                    <JCButton
-                      accessibilityLabel="Navigate to profile"
-                      testID={"billing-continueToProfile-button"}
-                      onPress={() => {
-                        this.completePaymentProcess(userActions, userState)
-                      }}
-                      buttonType={
-                        this.state.brand == "oneStory"
-                          ? ButtonTypes.SolidOneStory
-                          : ButtonTypes.Solid
-                      }
-                      enabled={!this.state.validatingUser}
-                    >
-                      {this.state.validatingUser ? (
-                        <View style={{ flexDirection: "column", width: 177.7, top: 4 }}>
-                          <ActivityIndicator
-                            accessibilityRole="alert"
-                            accessibilityLabel="Loading"
-                            color="white"
-                          ></ActivityIndicator>
-                        </View>
-                      ) : (
-                        "Continue to your profile"
-                      )}
-                    </JCButton>
+  if (!UserConsumer.userState) return null
+  if (!UserConsumer.userActions) return null
+  return processing === "complete" ? (
+    <ScrollView style={styles.signUpScreen1PaymentColumn1}>
+      <Image
+        style={{ alignSelf: "center", marginBottom: 20 }}
+        source={require("../../assets/svg/checkmark-circle.svg")}
+      />
+
+      <Text accessibilityRole="header" style={styles.SignUpScreenSetupText}>
+        Thank you. Your subscription is now active.
+        <br />
+        <JCButton
+          accessibilityLabel="Navigate to profile"
+          testID={"billing-continueToProfile-button"}
+          onPress={() => {
+            completePaymentProcess(UserConsumer.userActions, UserConsumer.userState)
+          }}
+          buttonType={brand == "oneStory" ? ButtonTypes.SolidOneStory : ButtonTypes.Solid}
+          enabled={!validatingUser}
+        >
+          {validatingUser ? (
+            <View style={{ flexDirection: "column", width: 177.7, top: 4 }}>
+              <ActivityIndicator
+                accessibilityRole="alert"
+                accessibilityLabel="Loading"
+                color="white"
+              ></ActivityIndicator>
+            </View>
+          ) : (
+            "Continue to your profile"
+          )}
+        </JCButton>
+      </Text>
+      <Text
+        accessibilityLiveRegion={"assertive"}
+        accessibilityRole="alert"
+        style={{ textAlign: "center", color: "red", fontWeight: "bold" }}
+      >
+        {errorMsg}
+      </Text>
+    </ScrollView>
+  ) : (
+    <>
+      {processing == "processing" ? (
+        <ScrollView style={styles.signUpScreen1PaymentColumn1}>
+          <Text accessibilityRole="header" style={styles.SignUpScreenSetupText}>
+            Processing Payment
+          </Text>
+          <Text style={styles.SignUpScreenSetupTextSmaller}>
+            Please wait while we process your payment. This may take several seconds.
+          </Text>
+          <ActivityIndicator accessibilityRole="alert" accessibilityLabel="Loading" />
+        </ScrollView>
+      ) : null}
+
+      <ScrollView style={{ display: processing == "entry" ? "flex" : "none" }}>
+        <View style={styles.signUpScreen1PaymentColumn1Form}>
+          <Text
+            accessibilityRole="header"
+            style={{
+              fontFamily: "Graphik-Bold-App",
+            }}
+          >
+            Billing Information
+          </Text>
+          {userData && (
+            <>
+              <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+                <Text
+                  style={[
+                    styles.fontFormMandatory,
+                    !userData.billingAddress?.line1 ? { opacity: 1 } : { opacity: 0 },
+                  ]}
+                >
+                  *
+                </Text>
+                Billing Address Line 1
+              </View>
+
+              <EditableText
+                accessibilityLabel="Billing Address Line 1"
+                onChange={async (e) => {
+                  await handleInputChange(e, "line1")
+                }}
+                multiline={false}
+                testID="billing-line1"
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{
+                  borderWidth: 1,
+                  borderColor: "#dddddd",
+                  width: "100%",
+                  marginBottom: 15,
+                  paddingTop: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingLeft: 10,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 28,
+                }}
+                value={userData.billingAddress?.line1 ? userData.billingAddress?.line1 : ""}
+                isEditable={true}
+              ></EditableText>
+              <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>Billing Address Line 2</View>
+
+              <EditableText
+                accessibilityLabel="Billing Address Line 2"
+                onChange={async (e) => {
+                  await handleInputChange(e, "line2")
+                }}
+                multiline={false}
+                testID="billing-line2"
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{
+                  borderWidth: 1,
+                  borderColor: "#dddddd",
+                  width: "100%",
+                  marginBottom: 15,
+                  paddingTop: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingLeft: 10,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 28,
+                }}
+                value={userData.billingAddress?.line2 ? userData.billingAddress?.line2 : ""}
+                isEditable={true}
+              ></EditableText>
+              <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+                <Text
+                  style={[
+                    styles.fontFormMandatory,
+                    !userData.billingAddress?.city ? { opacity: 1 } : { opacity: 0 },
+                  ]}
+                >
+                  *
+                </Text>
+                City
+              </View>
+
+              <EditableText
+                accessibilityLabel="City"
+                onChange={async (e) => {
+                  await handleInputChange(e, "city")
+                }}
+                multiline={false}
+                testID="billing-city"
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{
+                  borderWidth: 1,
+                  borderColor: "#dddddd",
+                  width: "100%",
+                  marginBottom: 15,
+                  paddingTop: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingLeft: 10,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 28,
+                }}
+                value={userData.billingAddress?.city ? userData.billingAddress?.city : ""}
+                isEditable={true}
+              ></EditableText>
+              <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+                <Text
+                  style={[
+                    styles.fontFormMandatory,
+                    !userData?.billingAddress?.state ? { opacity: 1 } : { opacity: 0 },
+                  ]}
+                >
+                  *
+                </Text>
+                State/Province
+              </View>
+
+              <EditableText
+                accessibilityLabel="State/Province"
+                onChange={async (e) => {
+                  await handleInputChange(e, "state")
+                }}
+                multiline={false}
+                testID="billing-state"
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{
+                  borderWidth: 1,
+                  borderColor: "#dddddd",
+                  width: "100%",
+                  marginBottom: 15,
+                  paddingTop: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingLeft: 10,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 28,
+                }}
+                value={userData.billingAddress?.state ? userData.billingAddress?.state : ""}
+                isEditable={true}
+              ></EditableText>
+              <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+                <Text
+                  style={[
+                    styles.fontFormMandatory,
+                    !userData?.billingAddress?.country ? { opacity: 1 } : { opacity: 0 },
+                  ]}
+                >
+                  *
+                </Text>
+                Country
+              </View>
+
+              <EditableText
+                accessibilityLabel="Country"
+                onChange={async (e) => {
+                  await handleInputChange(e, "country")
+                }}
+                multiline={false}
+                testID="billing-country"
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{
+                  borderWidth: 1,
+                  borderColor: "#dddddd",
+                  width: "100%",
+                  marginBottom: 15,
+                  paddingTop: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingLeft: 10,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 28,
+                }}
+                value={userData.billingAddress?.country ? userData.billingAddress?.country : ""}
+                isEditable={true}
+              ></EditableText>
+              <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+                <Text
+                  style={[
+                    styles.fontFormMandatory,
+                    !userData?.billingAddress?.postal_code ? { opacity: 1 } : { opacity: 0 },
+                  ]}
+                >
+                  *
+                </Text>
+                Zip/Postal Code
+              </View>
+
+              <EditableText
+                accessibilityLabel="Zip/Postal Code"
+                onChange={async (e) => {
+                  await handleInputChange(e, "postal_code")
+                }}
+                multiline={false}
+                testID="billing-postalcode"
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{
+                  borderWidth: 1,
+                  borderColor: "#dddddd",
+                  width: "100%",
+                  marginBottom: 15,
+                  paddingTop: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingLeft: 10,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 28,
+                }}
+                value={
+                  userData.billingAddress?.postal_code ? userData.billingAddress?.postal_code : ""
+                }
+                isEditable={true}
+              ></EditableText>
+            </>
+          )}
+          <div>
+            <br></br>
+            <br></br>
+          </div>
+          <Text style={{ fontFamily: "Graphik-Bold-App" }}>Credit Card Information</Text>
+          <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+            <Text
+              style={[
+                styles.fontFormMandatory,
+                !stripeValidation.cardNumber ? { opacity: 1 } : { opacity: 0 },
+              ]}
+            >
+              *
+            </Text>
+            Credit Card Number
+          </View>
+          <CardNumberElement
+            onChange={(el) => stripeFieldValidation(el, "cardNumber")}
+            options={CARD_ELEMENT_OPTIONS}
+          />
+          <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+            <Text
+              style={[
+                styles.fontFormMandatory,
+                !stripeValidation.expiryDate ? { opacity: 1 } : { opacity: 0 },
+              ]}
+            >
+              *
+            </Text>
+            Expiry Date
+          </View>
+          <CardExpiryElement
+            onChange={(el) => stripeFieldValidation(el, "expiryDate")}
+            options={CARD_ELEMENT_OPTIONS}
+          />
+          <View style={[styles.fontFormSmall, { opacity: 0.8 }]}>
+            <Text
+              style={[
+                styles.fontFormMandatory,
+                !stripeValidation.cvc ? { opacity: 1 } : { opacity: 0 },
+              ]}
+            >
+              *
+            </Text>
+            CVC
+          </View>
+          <CardCvcElement
+            onChange={(el) => stripeFieldValidation(el, "cvc")}
+            options={CARD_ELEMENT_OPTIONS}
+          />
+        </View>
+        <View style={styles.signUpScreen1PaymentColumn2}>
+          <View style={{ display: "none" }}>
+            <JCButton
+              buttonType={ButtonTypes.TransparentNoPadding}
+              onPress={() => {
+                setShowSubscriptionSelector(true)
+              }}
+            >
+              Add another product
+            </JCButton>
+          </View>
+          <View style={{ marginBottom: 20, marginTop: 20 }}>
+            {order.currentProduct?.map((item: Product, index: number) => {
+              return renderProduct(item, index)
+            })}
+          </View>
+
+          {invoice?.lines?.data
+            ?.filter((item) => item?.amount != "0")
+            .map((line, index: number) => {
+              return (
+                <View accessible={!showEULA} key={index} style={styles.flexRow}>
+                  <Text
+                    style={{
+                      flex: 1,
+                      fontSize: 12,
+                      fontFamily: "Graphik-Regular-App",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 10,
+                      paddingRight: 25,
+                    }}
+                  >
+                    {line?.description?.split("(")?.[0]?.split("×")[1]?.trim() ??
+                      line?.description?.split("(")[0] ??
+                      line?.description}
                   </Text>
                   <Text
-                    accessibilityLiveRegion={"assertive"}
-                    accessibilityRole="alert"
-                    style={{ textAlign: "center", color: "red", fontWeight: "bold" }}
+                    style={{
+                      right: "20%",
+                      fontFamily: "Graphik-Bold-App",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingRight: 10,
+                    }}
                   >
-                    {this.state.errorMsg}
+                    ${line?.amount && (parseInt(line.amount) / 100).toFixed(2)}
                   </Text>
-                </ScrollView>
-              ) : (
-                <>
-                  {this.state.processing == "processing" ? (
-                    <ScrollView style={this.styles.style.signUpScreen1PaymentColumn1}>
-                      <Text
-                        accessibilityRole="header"
-                        style={this.styles.style.SignUpScreenSetupText}
-                      >
-                        Processing Payment
-                      </Text>
-                      <Text style={this.styles.style.SignUpScreenSetupTextSmaller}>
-                        Please wait while we process your payment. This may take several seconds.
-                      </Text>
-                      <ActivityIndicator accessibilityRole="alert" accessibilityLabel="Loading" />
-                    </ScrollView>
-                  ) : null}
-
-                  <ScrollView
-                    style={{ display: this.state.processing == "entry" ? "flex" : "none" }}
-                  >
-                    <View style={this.styles.style.signUpScreen1PaymentColumn1Form}>
-                      <Text
-                        accessibilityRole="header"
-                        style={{
-                          fontFamily: "Graphik-Bold-App",
-                        }}
-                      >
-                        Billing Information
-                      </Text>
-                      {this.state.userData && (
-                        <>
-                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                            <Text
-                              style={[
-                                this.styles.style.fontFormMandatory,
-                                !this.state.userData.billingAddress?.line1
-                                  ? { opacity: 1 }
-                                  : { opacity: 0 },
-                              ]}
-                            >
-                              *
-                            </Text>
-                            Billing Address Line 1
-                          </View>
-
-                          <EditableText
-                            accessibilityLabel="Billing Address Line 1"
-                            onChange={async (e) => {
-                              await this.handleInputChange(e, "line1")
-                            }}
-                            multiline={false}
-                            testID="billing-line1"
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={{
-                              borderWidth: 1,
-                              borderColor: "#dddddd",
-                              width: "100%",
-                              marginBottom: 15,
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 10,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 16,
-                              lineHeight: 28,
-                            }}
-                            value={
-                              this.state.userData.billingAddress?.line1
-                                ? this.state.userData.billingAddress?.line1
-                                : ""
-                            }
-                            isEditable={true}
-                          ></EditableText>
-                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                            Billing Address Line 2
-                          </View>
-
-                          <EditableText
-                            accessibilityLabel="Billing Address Line 2"
-                            onChange={async (e) => {
-                              await this.handleInputChange(e, "line2")
-                            }}
-                            multiline={false}
-                            testID="billing-line2"
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={{
-                              borderWidth: 1,
-                              borderColor: "#dddddd",
-                              width: "100%",
-                              marginBottom: 15,
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 10,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 16,
-                              lineHeight: 28,
-                            }}
-                            value={
-                              this.state.userData.billingAddress?.line2
-                                ? this.state.userData.billingAddress?.line2
-                                : ""
-                            }
-                            isEditable={true}
-                          ></EditableText>
-                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                            <Text
-                              style={[
-                                this.styles.style.fontFormMandatory,
-                                !this.state.userData.billingAddress?.city
-                                  ? { opacity: 1 }
-                                  : { opacity: 0 },
-                              ]}
-                            >
-                              *
-                            </Text>
-                            City
-                          </View>
-
-                          <EditableText
-                            accessibilityLabel="City"
-                            onChange={async (e) => {
-                              await this.handleInputChange(e, "city")
-                            }}
-                            multiline={false}
-                            testID="billing-city"
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={{
-                              borderWidth: 1,
-                              borderColor: "#dddddd",
-                              width: "100%",
-                              marginBottom: 15,
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 10,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 16,
-                              lineHeight: 28,
-                            }}
-                            value={
-                              this.state.userData.billingAddress?.city
-                                ? this.state.userData.billingAddress?.city
-                                : ""
-                            }
-                            isEditable={true}
-                          ></EditableText>
-                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                            <Text
-                              style={[
-                                this.styles.style.fontFormMandatory,
-                                !this.state.userData?.billingAddress?.state
-                                  ? { opacity: 1 }
-                                  : { opacity: 0 },
-                              ]}
-                            >
-                              *
-                            </Text>
-                            State/Province
-                          </View>
-
-                          <EditableText
-                            accessibilityLabel="State/Province"
-                            onChange={async (e) => {
-                              await this.handleInputChange(e, "state")
-                            }}
-                            multiline={false}
-                            testID="billing-state"
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={{
-                              borderWidth: 1,
-                              borderColor: "#dddddd",
-                              width: "100%",
-                              marginBottom: 15,
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 10,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 16,
-                              lineHeight: 28,
-                            }}
-                            value={
-                              this.state.userData.billingAddress?.state
-                                ? this.state.userData.billingAddress?.state
-                                : ""
-                            }
-                            isEditable={true}
-                          ></EditableText>
-                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                            <Text
-                              style={[
-                                this.styles.style.fontFormMandatory,
-                                !this.state.userData?.billingAddress?.country
-                                  ? { opacity: 1 }
-                                  : { opacity: 0 },
-                              ]}
-                            >
-                              *
-                            </Text>
-                            Country
-                          </View>
-
-                          <EditableText
-                            accessibilityLabel="Country"
-                            onChange={async (e) => {
-                              await this.handleInputChange(e, "country")
-                            }}
-                            multiline={false}
-                            testID="billing-country"
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={{
-                              borderWidth: 1,
-                              borderColor: "#dddddd",
-                              width: "100%",
-                              marginBottom: 15,
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 10,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 16,
-                              lineHeight: 28,
-                            }}
-                            value={
-                              this.state.userData.billingAddress?.country
-                                ? this.state.userData.billingAddress?.country
-                                : ""
-                            }
-                            isEditable={true}
-                          ></EditableText>
-                          <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                            <Text
-                              style={[
-                                this.styles.style.fontFormMandatory,
-                                !this.state.userData?.billingAddress?.postal_code
-                                  ? { opacity: 1 }
-                                  : { opacity: 0 },
-                              ]}
-                            >
-                              *
-                            </Text>
-                            Zip/Postal Code
-                          </View>
-
-                          <EditableText
-                            accessibilityLabel="Zip/Postal Code"
-                            onChange={async (e) => {
-                              await this.handleInputChange(e, "postal_code")
-                            }}
-                            multiline={false}
-                            testID="billing-postalcode"
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={{
-                              borderWidth: 1,
-                              borderColor: "#dddddd",
-                              width: "100%",
-                              marginBottom: 15,
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 10,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 16,
-                              lineHeight: 28,
-                            }}
-                            value={
-                              this.state.userData.billingAddress?.postal_code
-                                ? this.state.userData.billingAddress?.postal_code
-                                : ""
-                            }
-                            isEditable={true}
-                          ></EditableText>
-                        </>
-                      )}
-                      <div>
-                        <br></br>
-                        <br></br>
-                      </div>
-                      <Text style={{ fontFamily: "Graphik-Bold-App" }}>
-                        Credit Card Information
-                      </Text>
-                      <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                        <Text
-                          style={[
-                            this.styles.style.fontFormMandatory,
-                            !this.state.stripeValidation.cardNumber
-                              ? { opacity: 1 }
-                              : { opacity: 0 },
-                          ]}
-                        >
-                          *
-                        </Text>
-                        Credit Card Number
-                      </View>
-                      <CardNumberElement
-                        onChange={(el) => this.stripeFieldValidation(el, "cardNumber")}
-                        options={CARD_ELEMENT_OPTIONS}
-                      />
-                      <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                        <Text
-                          style={[
-                            this.styles.style.fontFormMandatory,
-                            !this.state.stripeValidation.expiryDate
-                              ? { opacity: 1 }
-                              : { opacity: 0 },
-                          ]}
-                        >
-                          *
-                        </Text>
-                        Expiry Date
-                      </View>
-                      <CardExpiryElement
-                        onChange={(el) => this.stripeFieldValidation(el, "expiryDate")}
-                        options={CARD_ELEMENT_OPTIONS}
-                      />
-                      <View style={[this.styles.style.fontFormSmall, { opacity: 0.8 }]}>
-                        <Text
-                          style={[
-                            this.styles.style.fontFormMandatory,
-                            !this.state.stripeValidation.cvc ? { opacity: 1 } : { opacity: 0 },
-                          ]}
-                        >
-                          *
-                        </Text>
-                        CVC
-                      </View>
-                      <CardCvcElement
-                        onChange={(el) => this.stripeFieldValidation(el, "cvc")}
-                        options={CARD_ELEMENT_OPTIONS}
-                      />
-                    </View>
-                    <View style={this.styles.style.signUpScreen1PaymentColumn2}>
-                      <View style={{ display: "none" }}>
-                        <JCButton
-                          buttonType={ButtonTypes.TransparentNoPadding}
-                          onPress={() => {
-                            this.showSubscriptionSelector()
-                          }}
-                        >
-                          Add another product
-                        </JCButton>
-                      </View>
-                      <View style={{ marginBottom: 20, marginTop: 20 }}>
-                        {this.state.currentProduct?.map((item: Product, index: number) => {
-                          return this.renderProduct(item, index)
-                        })}
-                      </View>
-
-                      {this.state.invoice?.lines?.data
-                        ?.filter((item) => item?.amount != "0")
-                        .map((line, index: number) => {
-                          return (
-                            <View
-                              accessible={!this.state.showEULA}
-                              key={index}
-                              style={this.styles.style.flexRow}
-                            >
-                              <Text
-                                style={{
-                                  flex: 1,
-                                  fontSize: 12,
-                                  fontFamily: "Graphik-Regular-App",
-                                  paddingTop: 10,
-                                  paddingBottom: 10,
-                                  paddingLeft: 10,
-                                  paddingRight: 25,
-                                }}
-                              >
-                                {line?.description?.split("(")?.[0]?.split("×")[1]?.trim() ??
-                                  line?.description?.split("(")[0] ??
-                                  line?.description}
-                              </Text>
-                              <Text
-                                style={{
-                                  right: "20%",
-                                  fontFamily: "Graphik-Bold-App",
-                                  paddingTop: 10,
-                                  paddingBottom: 10,
-                                  paddingRight: 10,
-                                }}
-                              >
-                                ${line?.amount && (parseInt(line.amount) / 100).toFixed(2)}
-                              </Text>
-                            </View>
-                          )
-                        })}
-                      <View
-                        accessible={!this.state.showEULA}
-                        style={[this.styles.style.flexRow, { marginBottom: 10 }]}
-                      >
-                        {!this.state.invoice ? (
-                          <View style={{ paddingTop: 10, marginRight: 10 }}>
-                            <ActivityIndicator
-                              accessibilityRole="alert"
-                              accessibilityLabel="Loading"
-                            ></ActivityIndicator>
-                          </View>
-                        ) : null}
-                        <Text
-                          style={{
-                            flex: 1,
-                            textAlign: !this.state.invoice ? "left" : "right",
-                            textAlignVertical: "center",
-                            paddingRight: 45,
-
-                            fontFamily: "Graphik-Bold-App",
-                            paddingTop: 10,
-                            paddingBottom: 10,
-                          }}
-                        >
-                          {this.state.invoice ? "Total:" : <>Calculating Total...</>}
-                        </Text>
-                        <Text
-                          style={{
-                            fontFamily: "Graphik-Bold-App",
-                            paddingTop: 10,
-                            paddingBottom: 10,
-                            paddingRight: 10,
-                          }}
-                        >
-                          {this.state.invoice?.total
-                            ? "$" + (parseInt(this.state.invoice.total) / 100).toFixed(2)
-                            : ""}
-                        </Text>
-                      </View>
-                      <Text
-                        style={{
-                          marginHorizontal: 10,
-                          fontFamily: "Graphik-Regular-App",
-                          fontSize: 12,
-                        }}
-                      >
-                        Coupon
-                      </Text>
-                      <EditableText
-                        placeholder="Coupon Name"
-                        multiline={false}
-                        testID="billing-coupon"
-                        textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-                        inputStyle={{
-                          borderWidth: 1,
-                          borderColor: "#dddddd",
-                          marginTop: 5,
-                          marginBottom: 5,
-                          width: "100%",
-                          paddingTop: 5,
-                          paddingRight: 5,
-                          paddingBottom: 5,
-                          paddingLeft: 5,
-                          fontFamily: "Graphik-Regular-App",
-                          fontSize: 10,
-                          lineHeight: 15,
-                        }}
-                        onChange={async (value) => {
-                          this.setState({ invoice: null, coupon: value }, async () => {
-                            await this.createInvoice()
-                          })
-                        }}
-                        value={this.state.coupon ?? ""}
-                        isEditable={true}
-                      ></EditableText>
-                      <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
-                        {this.state.errorMsg}
-                      </Text>
-                      <View style={{ marginHorizontal: 10 }}>
-                        <JCButton
-                          accessibilityLabel="Process Payment"
-                          testID={"billing-processPayment-button"}
-                          buttonType={
-                            this.state.brand == "oneStory"
-                              ? ButtonTypes.SolidOneStory
-                              : ButtonTypes.Solid
-                          }
-                          onPress={() => {
-                            this.setState({ errorMsg: "" })
-                            this.makePayment(stripe, elements)
-                          }}
-                          enabled={this.isMakePaymentEnabled() && !!this.state.invoice}
-                        >
-                          {this.state.currentProduct &&
-                          this.state.currentProduct[0] &&
-                          this.state.currentProduct[0].submitButtonText != "" &&
-                          this.state.currentProduct[0].submitButtonText != null ? (
-                            this.state.currentProduct[0].submitButtonText
-                          ) : (
-                            <>Process Payment</>
-                          )}
-                        </JCButton>
-                      </View>
-                    </View>
-                  </ScrollView>
-                </>
+                </View>
               )
+            })}
+          <View accessible={!showEULA} style={[styles.flexRow, { marginBottom: 10 }]}>
+            {!invoice ? (
+              <View style={{ paddingTop: 10, marginRight: 10 }}>
+                <ActivityIndicator
+                  accessibilityRole="alert"
+                  accessibilityLabel="Loading"
+                ></ActivityIndicator>
+              </View>
+            ) : null}
+            <Text
+              style={{
+                flex: 1,
+                textAlign: !invoice ? "left" : "right",
+                textAlignVertical: "center",
+                paddingRight: 45,
+
+                fontFamily: "Graphik-Bold-App",
+                paddingTop: 10,
+                paddingBottom: 10,
+              }}
+            >
+              {invoice ? "Total:" : <>Calculating Total...</>}
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Graphik-Bold-App",
+                paddingTop: 10,
+                paddingBottom: 10,
+                paddingRight: 10,
+              }}
+            >
+              {invoice?.total ? "$" + (parseInt(invoice.total) / 100).toFixed(2) : ""}
+            </Text>
+          </View>
+          <Text
+            style={{
+              marginHorizontal: 10,
+              fontFamily: "Graphik-Regular-App",
+              fontSize: 12,
             }}
-          </BillingImpl.UserConsumer>
-        )}
-      </ElementsConsumer>
-    )
-  }
+          >
+            Coupon
+          </Text>
+          <EditableText
+            placeholder="Coupon Name"
+            multiline={false}
+            testID="billing-coupon"
+            textStyle={styles.fontFormSmallDarkGreyCourseTopEditable}
+            inputStyle={{
+              borderWidth: 1,
+              borderColor: "#dddddd",
+              marginTop: 5,
+              marginBottom: 5,
+              width: "100%",
+              paddingTop: 5,
+              paddingRight: 5,
+              paddingBottom: 5,
+              paddingLeft: 5,
+              fontFamily: "Graphik-Regular-App",
+              fontSize: 10,
+              lineHeight: 15,
+            }}
+            onChange={async (value) => {
+              setOrder({
+                isEditable: order.isEditable,
+                currentProduct: order.currentProduct,
+                coupon: value,
+                quantities: order.quantities,
+              })
+            }}
+            value={order.coupon ?? ""}
+            isEditable={true}
+          ></EditableText>
+          <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>{errorMsg}</Text>
+          <View style={{ marginHorizontal: 10 }}>
+            <JCButton
+              accessibilityLabel="Process Payment"
+              testID={"billing-processPayment-button"}
+              buttonType={brand == "oneStory" ? ButtonTypes.SolidOneStory : ButtonTypes.Solid}
+              onPress={() => {
+                setErrorMsg("")
+                makePayment()
+              }}
+              enabled={isMakePaymentEnabled() && !!invoice}
+            >
+              {order.currentProduct &&
+              order.currentProduct[0] &&
+              order.currentProduct[0].submitButtonText != "" &&
+              order.currentProduct[0].submitButtonText != null ? (
+                order.currentProduct[0].submitButtonText
+              ) : (
+                <>Process Payment</>
+              )}
+            </JCButton>
+          </View>
+        </View>
+      </ScrollView>
+    </>
+  )
 }
 let env = "unknown"
 if (window.location === undefined) env = "mobile"

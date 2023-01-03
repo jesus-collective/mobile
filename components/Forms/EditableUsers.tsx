@@ -9,7 +9,7 @@ import ProfileImageNew, {
   ProfileImageQuality,
   ProfileImageStyle,
 } from "../../components/ProfileImage/ProfileImageNew"
-import { useDebounce } from "../../screens/AdminCRMScreen/AdminCRMScreen"
+import { useDebounce } from "../../screens/Admin/AdminCRMScreen"
 import { SearchableUserFilterInput, SearchUsersQuery } from "../../src/API"
 
 interface Props {

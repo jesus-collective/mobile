@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import { Picker } from "@react-native-picker/picker"
 import React, { useContext, useState } from "react"
-import { Dimensions, Pressable, View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import MainStyles from "../../components/style"
 import {
@@ -11,7 +11,7 @@ import {
 } from "../../src/API"
 import { ResourceAdminProp, ResourceSetupProp } from "../../src/types"
 import EditableButton from "../Forms/EditableButton"
-import HeaderStyles from "../Header/style"
+import { HeaderStyle } from "../Header/HeaderStyle"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 import ResourceMenuBreakItem from "./ResourceMenu/ResourceMenuBreakItem"
@@ -51,21 +51,11 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
   const [open, setOpen] = useState<boolean>(false)
   const resourceContext = useContext(ResourceContext)
 
-  const updateStyles = (): void => {
-    headerStyles.update()
-    // forceUpdate()
-  }
-  React.useEffect(() => {
-    const dimensionsSubscription = Dimensions.addEventListener("change", updateStyles)
-    return () => {
-      dimensionsSubscription.remove()
-    }
-  }, [])
-  const headerStyles: HeaderStyles = new HeaderStyles()
+  const headerStyles = StyleSheet.create(HeaderStyle)
 
   const renderTopMenu = (): JSX.Element => {
     return (
-      <View style={headerStyles.style.resourceContainer}>
+      <View style={headerStyles.resourceContainer}>
         <View></View>
         <View style={styles.style.resourcesSubMenu}>{renderItems()}</View>
         <View></View>
@@ -124,14 +114,12 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
       else return false
     } else return false
   }
-  const MenuIcon1 = (): JSX.Element => (
-    <Ionicons name="md-menu" style={headerStyles.style.resourceIcon} />
-  )
+  const MenuIcon1 = (): JSX.Element => <Ionicons name="md-menu" style={headerStyles.resourceIcon} />
   const BreakIcon1 = (): JSX.Element => (
-    <Ionicons name="md-menu" style={headerStyles.style.resourceIcon} />
+    <Ionicons name="md-menu" style={headerStyles.resourceIcon} />
   )
   const ScheduleIcon1 = (): JSX.Element => (
-    <Ionicons name="md-menu" style={headerStyles.style.resourceIcon} />
+    <Ionicons name="md-menu" style={headerStyles.resourceIcon} />
   )
   const FindParentIndex = (itemIndex: number, currentActiveIndex: number, items: any): number => {
     for (let i = currentActiveIndex - 1; i > 1; i--) {
@@ -219,9 +207,9 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
                     placeholder="temp"
                     isEditable={resourceContext.resourceState?.isEditable ?? false}
                     onPress={() => resourceContext.resourceActions.changeMenuItem(index)}
-                    inputStyle={headerStyles.style.resourcesMenuButtonsText}
+                    inputStyle={headerStyles.resourcesMenuButtonsText}
                     textStyle={[
-                      headerStyles.style.resourcesMenuButtonsText,
+                      headerStyles.resourcesMenuButtonsText,
                       resourceContext.resourceState?.currentMenuItem == index && {
                         fontWeight: "bold",
                       },
@@ -241,7 +229,7 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
                             )
                           }}
                         >
-                          <Ionicons name="arrow-forward-outline" style={headerStyles.style.icon} />
+                          <Ionicons name="arrow-forward-outline" style={headerStyles.icon} />
                         </Pressable>
                       ) : (
                         <Pressable
@@ -253,7 +241,7 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
                             )
                           }}
                         >
-                          <Ionicons name="arrow-back-outline" style={headerStyles.style.icon} />
+                          <Ionicons name="arrow-back-outline" style={headerStyles.icon} />
                         </Pressable>
                       )}
                       {index >= 1 && (
@@ -262,7 +250,7 @@ export default function ResourceMenu(props: ResourceSetupProp): JSX.Element {
                             await resourceContext.resourceActions.moveMenuItemUp(index)
                           }}
                         >
-                          <Ionicons name="arrow-up-outline" style={headerStyles.style.icon} />
+                          <Ionicons name="arrow-up-outline" style={headerStyles.icon} />
                         </Pressable>
                       )}
                     </>

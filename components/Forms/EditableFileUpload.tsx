@@ -62,8 +62,8 @@ export default class EditableFileUpload extends JCComponent<Props> {
             </TouchableOpacity>
           </View>
         </Badge>
-        <View style={{ fontSize: 12, marginLeft: 10, marginTop: 7 }}>
-          {this.processFileName(this.props.attachment)}
+        <View style={{ marginLeft: 10, marginTop: 7 }}>
+          <Text style={{ fontSize: 12 }}>{this.processFileName(this.props.attachment)}</Text>
         </View>
       </View>
     ) : null

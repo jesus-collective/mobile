@@ -12,7 +12,7 @@ import {
 import { TextInput } from "react-native-gesture-handler"
 import SearchActiveIcon from "../../../assets/Facelift/svg/Search-Active.svg"
 import SearchInactiveIcon from "../../../assets/Facelift/svg/Search.svg"
-import { useDebounce } from "../../../screens/AdminCRMScreen/AdminCRMScreen"
+import { useDebounce } from "../../../screens/Admin/AdminCRMScreen"
 import { User } from "../../../src/API"
 import { Data } from "../../Data/Data"
 import useComponentVisible from "../../useComponentVisible"

@@ -31,22 +31,18 @@ const ProfileScreen = lazy(() => import("../ProfileScreen/ProfileScreen"))
 const EditProfileScreen = lazy(() => import("../../components/MyProfile/MyProfile"))
 const ProfilesScreen = lazy(() => import("../ProfilesScreen/ProfilesScreen"))
 const SearchScreen = lazy(() => import("../SearchScreen/SearchScreen"))
-const AdminScreen = lazy(() => import("../AdminScreen/AdminScreen"))
-const AdminCRMScreen = lazy(() => import("../AdminCRMScreen/AdminCRMScreen"))
+const AdminScreen = lazy(() => import("../Admin/AdminScreen"))
+const AdminCRMScreen = lazy(() => import("../Admin/AdminCRMScreen"))
 const CoursePaymentScreen = lazy(() => import("../CoursePaymentScreen/CoursePaymentScreen"))
 const MyAccountScreen = lazy(() => import("../MyAccountScreen/MyAccountScreen"))
 const PurchaseConfirmationScreen = lazy(
   () => import("../PurchaseConfirmationScreen/PurchaseConfirmationScreen")
 )
-const AdminCreateProductScreen = lazy(
-  () => import("../AdminCreateProductScreen/AdminCreateProductScreen")
-)
-const AdminCustomPricingScreen = lazy(
-  () => import("../AdminCustomPricingScreen/AdminCustomPricingScreen")
-)
-const AdminMenuScreen = lazy(() => import("../AdminMenuScreen/AdminMenuScreen"))
-const AdminStartupScreen = lazy(() => import("../AdminStartupScreen/AdminStartupScreen"))
-const AdminProfileScreen = lazy(() => import("../AdminProfileScreen/AdminProfileScreen"))
+const AdminCreateProductScreen = lazy(() => import("../Admin/AdminCreateProductScreen"))
+const AdminCustomPricingScreen = lazy(() => import("../Admin/AdminCustomPricingScreen"))
+const AdminMenuScreen = lazy(() => import("../Admin/AdminMenuScreen"))
+const AdminStartupScreen = lazy(() => import("../Admin/AdminStartupScreen"))
+const AdminProfileScreen = lazy(() => import("../Admin/AdminProfileScreen"))
 class Nothing extends Component {
   render() {
     return null

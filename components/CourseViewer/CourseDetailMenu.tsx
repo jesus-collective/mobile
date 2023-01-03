@@ -5,17 +5,17 @@ import React from "react"
 import { isDesktop } from "react-device-detect"
 import {
   Dimensions,
-  EmitterSubscription,
   Image,
   Pressable,
   ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native"
 import { constants } from "../../src/constants"
 import EditableButton from "../Forms/EditableButton"
-import HeaderStyles from "../Header/style"
+import { HeaderStyle } from "../Header/HeaderStyle"
 import JCComponent from "../JCComponent/JCComponent"
 import { CourseActions, CourseContext, CourseState } from "./CourseContext"
 
@@ -38,20 +38,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
     this.props.navigation?.push("ConversationScreen")
   }
 
-  updateStyles = (): void => {
-    this.headerStyles.update()
-    this.forceUpdate()
-  }
-  dimensionsSubscription: EmitterSubscription | undefined
-
-  componentDidMount(): void {
-    this.dimensionsSubscription = Dimensions.addEventListener("change", this.updateStyles)
-  }
-  componentWillUnmount(): void {
-    // Important to stop updating state after unmount
-    this.dimensionsSubscription?.remove()
-  }
-  headerStyles = new HeaderStyles()
+  headerStyles = StyleSheet.create(HeaderStyle)
   render(): React.ReactNode {
     return (
       <CourseDetailMenuImpl.Consumer>
@@ -76,9 +63,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                   resetArrow()
                 }}
               >
-                <Text
-                  style={[this.headerStyles.style.centerMenuButtonsText, { marginHorizontal: 12 }]}
-                >
+                <Text style={[this.headerStyles.centerMenuButtonsText, { marginHorizontal: 12 }]}>
                   +
                 </Text>
               </Pressable>
@@ -86,7 +71,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
           }
           const Weeks = Object.values(state.courseWeeks).filter((item) => item)
           return (
-            <View style={this.headerStyles.style.resourceContainer}>
+            <View style={this.headerStyles.resourceContainer}>
               <View
                 style={{
                   flex: 1,
@@ -123,11 +108,11 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                       placeholder="temp"
                       isEditable={state.isEditable}
                       onPress={() => actions.setActiveWeek(item.id)}
-                      inputStyle={this.headerStyles.style.centerMenuButtonsText}
+                      inputStyle={this.headerStyles.centerMenuButtonsText}
                       textStyle={
                         state.activeWeek == item.id
-                          ? this.headerStyles.style.centerMenuButtonsTextSelected
-                          : this.headerStyles.style.centerMenuButtonsText
+                          ? this.headerStyles.centerMenuButtonsTextSelected
+                          : this.headerStyles.centerMenuButtonsText
                       }
                       value={item.name ?? ""}
                     />
@@ -146,7 +131,7 @@ class CourseDetailMenuImpl extends JCComponent<Props> {
                   >
                     <Ionicons
                       name={this.state.listEnd ? "arrow-back" : "arrow-forward"}
-                      style={this.headerStyles.style.icon}
+                      style={this.headerStyles.icon}
                     />
                   </Pressable>
                 ) : null}

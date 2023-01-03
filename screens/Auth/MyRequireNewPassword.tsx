@@ -23,7 +23,6 @@ import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/Us
 import { Brand } from "../../src/Brand"
 
 interface Props {
-  username: any
   navigation?: NavigationProp<any, any>
   route?: any
 }
@@ -39,8 +38,6 @@ function MyForgotPassword(props: Props) {
   const [newPass, setNewPass] = useState<string>("")
   const [newPass2, setNewPass2] = useState<string>("")
   const [resetting, setResetting] = useState<boolean>(false)
-  const [username, setUsername] = useState<string>(props.username)
-  const [authState, setAuthState] = useState<string | null>(null)
 
   const UserConsumer = useContext(UserContext)
 
