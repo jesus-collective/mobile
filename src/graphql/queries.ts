@@ -3670,6 +3670,7 @@ export const getResource = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
@@ -3813,6 +3814,7 @@ export const getResourceSeries = /* GraphQL */ `
           description
           whoIsThisFor
           episodeID
+          tags
           createdAt
           updatedAt
         }
@@ -3859,6 +3861,7 @@ export const getResourceSeries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -3913,6 +3916,7 @@ export const listResourceSeriess = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
@@ -3993,9 +3997,11 @@ export const getResourceEpisode = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -4041,9 +4047,11 @@ export const listResourceEpisodes = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
@@ -5346,6 +5354,133 @@ export const searchGroups = /* GraphQL */ `
           createdAt
           updatedAt
         }
+      }
+      nextToken
+      total
+    }
+  }
+`
+export const searchResourceSeriess = /* GraphQL */ `
+  query SearchResourceSeriess(
+    $filter: SearchableResourceSeriesFilterInput
+    $sort: SearchableResourceSeriesSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchResourceSeriess(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        id
+        owner
+        type
+        title
+        order
+        description
+        whoIsThisFor
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        category
+        status
+        details {
+          type
+          name
+          text
+          value
+        }
+        episodes {
+          nextToken
+        }
+        seriesID
+        parentResource {
+          id
+          owner
+          type
+          order
+          title
+          subtitle
+          description
+          whoIsThisFor
+          extendedDescription
+          readGroups
+          resourceID
+          createdAt
+          updatedAt
+        }
+        tags
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
+    }
+  }
+`
+export const searchResourceEpisodes = /* GraphQL */ `
+  query SearchResourceEpisodes(
+    $filter: SearchableResourceEpisodeFilterInput
+    $sort: SearchableResourceEpisodeSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchResourceEpisodes(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        id
+        owner
+        episodeNumber
+        type
+        title
+        description
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        whoIsThisFor
+        details {
+          type
+          name
+          text
+          value
+        }
+        episodeID
+        parentSeries {
+          id
+          owner
+          type
+          title
+          order
+          description
+          whoIsThisFor
+          category
+          status
+          seriesID
+          tags
+          createdAt
+          updatedAt
+        }
+        tags
+        createdAt
+        updatedAt
       }
       nextToken
       total

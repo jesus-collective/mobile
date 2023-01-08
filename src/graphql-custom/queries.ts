@@ -1,3 +1,65 @@
+export const searchResourceEpisodes = /* GraphQL */ `
+  query SearchResourceEpisodes(
+    $filter: SearchableResourceEpisodeFilterInput
+    $sort: SearchableResourceEpisodeSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchResourceEpisodes(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        id
+        owner
+        episodeNumber
+        type
+        title
+        description
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        whoIsThisFor
+        details {
+          type
+          name
+          text
+          value
+        }
+        episodeID
+        parentSeries {
+          id
+          owner
+          type
+          title
+          order
+          description
+          whoIsThisFor
+          category
+          status
+          seriesID
+          tags
+          createdAt
+          updatedAt
+        }
+        tags
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
+    }
+  }
+`
+
 export const listMenus = /* GraphQL */ `
   query ListMenus($filter: ModelMenuFilterInput, $limit: Int, $nextToken: String) {
     listMenus(filter: $filter, limit: $limit, nextToken: $nextToken) {

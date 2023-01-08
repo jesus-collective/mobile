@@ -10331,6 +10331,7 @@ export const onCreateResource = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
@@ -10430,6 +10431,7 @@ export const onUpdateResource = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
@@ -10529,6 +10531,7 @@ export const onDeleteResource = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
@@ -10625,6 +10628,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
           description
           whoIsThisFor
           episodeID
+          tags
           createdAt
           updatedAt
         }
@@ -10671,6 +10675,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -10718,6 +10723,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
           description
           whoIsThisFor
           episodeID
+          tags
           createdAt
           updatedAt
         }
@@ -10764,6 +10770,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -10811,6 +10818,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
           description
           whoIsThisFor
           episodeID
+          tags
           createdAt
           updatedAt
         }
@@ -10857,6 +10865,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -10935,9 +10944,11 @@ export const onCreateResourceEpisode = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -11016,9 +11027,11 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -11097,9 +11110,11 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }

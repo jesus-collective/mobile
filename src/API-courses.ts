@@ -451,6 +451,7 @@ export type ResourceSeries = {
   episodes?: ModelResourceEpisodeConnection | null
   seriesID: string
   parentResource: Resource
+  tags?: Array<string | null> | null
   createdAt: string
   updatedAt: string
 }
@@ -474,6 +475,7 @@ export type ResourceEpisode = {
   details?: Array<ResourceDetail | null> | null
   episodeID: string
   parentSeries: ResourceSeries
+  tags?: Array<string | null> | null
   createdAt: string
   updatedAt: string
 }

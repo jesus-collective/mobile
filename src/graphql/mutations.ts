@@ -11491,6 +11491,7 @@ export const createResource = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
@@ -11590,6 +11591,7 @@ export const updateResource = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
@@ -11689,6 +11691,7 @@ export const deleteResource = /* GraphQL */ `
           category
           status
           seriesID
+          tags
           createdAt
           updatedAt
         }
@@ -11785,6 +11788,7 @@ export const createResourceSeries = /* GraphQL */ `
           description
           whoIsThisFor
           episodeID
+          tags
           createdAt
           updatedAt
         }
@@ -11831,6 +11835,7 @@ export const createResourceSeries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -11878,6 +11883,7 @@ export const updateResourceSeries = /* GraphQL */ `
           description
           whoIsThisFor
           episodeID
+          tags
           createdAt
           updatedAt
         }
@@ -11924,6 +11930,7 @@ export const updateResourceSeries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -11971,6 +11978,7 @@ export const deleteResourceSeries = /* GraphQL */ `
           description
           whoIsThisFor
           episodeID
+          tags
           createdAt
           updatedAt
         }
@@ -12017,6 +12025,7 @@ export const deleteResourceSeries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -12095,9 +12104,11 @@ export const createResourceEpisode = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -12176,9 +12187,11 @@ export const updateResourceEpisode = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }
@@ -12257,9 +12270,11 @@ export const deleteResourceEpisode = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        tags
         createdAt
         updatedAt
       }
+      tags
       createdAt
       updatedAt
     }

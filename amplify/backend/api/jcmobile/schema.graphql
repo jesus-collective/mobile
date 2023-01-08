@@ -1256,6 +1256,7 @@ type Resource
 
 type ResourceSeries 
 @model 
+@searchable
 @auth(rules: [
      {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
 
@@ -1278,6 +1279,7 @@ type ResourceSeries
   episodes: [ResourceEpisode] @connection(name:"r3",keyField: "episodeID")
   seriesID: ID!
   parentResource: Resource! @connection(name:"r2",keyField: "seriesID")
+  tags: [String]
 }
 enum ResourceDetailType{
   DefaultYoutube
@@ -1294,6 +1296,7 @@ type ResourceDetail{
 }
 type ResourceEpisode 
 @model 
+@searchable
 @auth(rules: [
      {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
   { allow: groups, groups: ["verifiedUsers"], operations: [read] }
@@ -1312,6 +1315,7 @@ type ResourceEpisode
   details:[ResourceDetail]  
   episodeID:ID!
   parentSeries: ResourceSeries! @connection(name:"r3",keyField: "episodeID")
+  tags: [String]
 }
 
 type Product
