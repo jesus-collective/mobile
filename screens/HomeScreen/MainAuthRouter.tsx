@@ -3,6 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack"
 import React, { lazy } from "react"
 import SignUpScreen3 from "../../components/Auth/SignUpScreen3"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import MyConfirmSignIn from "../Auth/MyConfirmSignIn"
+import MyLoading from "../Auth/MyLoading"
+import MyVerifyContact from "../Auth/MyVerifyContact"
 import { UserContext } from "./UserContext"
 
 const SignUpScreen1 = lazy(() => import("../../components/Auth/SignUpScreen1"))
@@ -13,9 +16,6 @@ const MySignUp = lazy(() => import("../Auth/MySignUp"))
 const MyConfirmSignUp = lazy(() => import("../Auth/MyConfirmSignUp"))
 const MyForgotPassword = lazy(() => import("../Auth/MyForgotPassword"))
 const MyRequireNewPassword = lazy(() => import("../Auth/MyRequireNewPassword"))
-const MyLoading = lazy(() => import("../Auth/MyLoading"))
-const MyConfirmSignIn = lazy(() => import("../Auth/MyConfirmSignIn"))
-const MyVerifyContact = lazy(() => import("../Auth/MyVerifyContact"))
 
 type MARState = JCState
 interface MARProp {
