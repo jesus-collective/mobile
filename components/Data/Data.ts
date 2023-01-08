@@ -157,8 +157,10 @@ import {
   PreviewInvoiceMutation,
   PreviewInvoiceMutationVariables,
   SearchableGroupFilterInput,
+  SearchableResourceEpisodeFilterInput,
   SearchableUserFilterInput,
   SearchGroupsQuery,
+  SearchResourceEpisodesQuery,
   SearchUsersQuery,
   UpdateCourseInfoInput,
   UpdateCourseInfoMutation,
@@ -912,6 +914,16 @@ export class Data {
       variables: variables,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<MessagesByRoomQuery>>
+  }
+  static searchResources(filter: SearchableResourceEpisodeFilterInput) {
+    return API.graphql({
+      query: customQueries.searchResourceEpisodes,
+      variables: {
+        filter: filter,
+        limit: 20,
+      },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<SearchResourceEpisodesQuery>>
   }
   static searchUsers(filter: SearchableUserFilterInput) {
     return API.graphql({
