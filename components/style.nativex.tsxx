@@ -1,6 +1,7 @@
 //import Constants from "expo-constants"
 import { Dimensions, Platform } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import adminStyles from "./adminStyles"
 import courseStyles from "./courseStyles"
 import resourceStyles from "./resourceStyles"
 const mainColor = "#ffffff"
@@ -11,8 +12,12 @@ export default class MainStyles {
   constructor() {
     this.update()
   }
-  static instance: MainStyles = new MainStyles()
+  static instance = new MainStyles()
   public static getInstance(): MainStyles {
+    // if (MainStyles.instance == undefined) {
+    //MainStyles.instance =
+    //}
+
     return this.instance
   }
   style!: EStyleSheet.AnyObject
@@ -24,12 +29,21 @@ export default class MainStyles {
     this.style = EStyleSheet.create({
       ...resourceStyles,
       ...courseStyles,
-
+      ...adminStyles,
       container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: mainColor,
+      },
+      authView3Welcome: {
+        width: "100%",
+        marginTop: "2%",
+        marginBottom: "5.5%",
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "bold",
+        fontSize: 28,
+        lineHeight: 30,
       },
       groupsJoinCourseModalContainer: {
         overflow: "none",
@@ -75,6 +89,15 @@ export default class MainStyles {
         paddingLeft: 30,
         paddingRight: 30,
         marginBottom: 60,
+      },
+      mapSelectorView: {
+        position: Platform.OS === "web" ? "fixed" : "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 100,
+        backgroundColor: "#33333366",
       },
 
       peopleContainer: {
@@ -151,6 +174,20 @@ export default class MainStyles {
         paddingLeft: 30,
         paddingRight: 30,
         marginBottom: 20,
+      },
+      groupNameInput: {
+        borderColor: "white",
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+        paddingLeft: 0,
+        flex: 0,
+        fontSize: 30,
+        lineHeight: 36,
+        fontWeight: "bold",
+        fontFamily: "Graphik-Bold-App",
+        width: "100%",
       },
 
       eventNameInput: {
@@ -238,6 +275,9 @@ export default class MainStyles {
       tagText: {
         color: "#000000",
       },
+      fontRegular: {
+        fontFamily: "Graphik-Regular-App",
+      },
 
       font: {
         fontFamily: "Graphik-Regular-App",
@@ -272,7 +312,90 @@ export default class MainStyles {
         color: "#FFFFFF",
         width: 230,
       },
+      fontFormMandatory: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 26,
+        lineHeight: 33,
+        color: "#F0493E",
+      },
+      fontFormName: {
+        fontFamily: "Graphik-Bold-App",
+        fontSize: 30,
+        lineHeight: 36,
+        textAlign: "center",
+        color: "#333333",
+        fontWeight: "bold",
+      },
 
+      fontFormRole: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 21,
+        textAlign: "center",
+        color: "#333333",
+        opacity: 0.6,
+      },
+      fontFormUserType: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 14,
+        lineHeight: 16,
+        textAlign: "center",
+        textTransform: "uppercase",
+        color: "#333333",
+        marginTop: 18,
+        marginBottom: 18,
+      },
+      fontFormAboutMe: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 28,
+        color: "#333333",
+        borderColor: "#dddddd",
+        borderWidth: 1,
+        height: 80,
+        width: "100%",
+        paddingBottom: 60,
+        paddingLeft: 10,
+      },
+      fontFormSmallDarkGrey: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 26,
+        color: "#333333",
+        paddingTop: 6,
+        width: "100%",
+      },
+
+      fontFormSmallDarkGreyCourseTopEditable: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 40,
+        lineHeight: 55,
+        color: "#333333",
+        paddingTop: 30,
+        width: "100%",
+        marginBottom: 15,
+      },
+      fontFormSmallDarkGreyCoordinates: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 22,
+        color: "#333333",
+        paddingTop: 5,
+        width: "100%",
+      },
+
+      fontFormMediumInput: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 28,
+        letterSpacing: -0.3,
+        color: "#333333",
+        maxWidth: 350,
+        height: 18,
+        borderWidth: 0,
+        borderColor: "#dddddd",
+        overflow: "hidden",
+      },
       fontFormLargeInput: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 16,
@@ -287,6 +410,22 @@ export default class MainStyles {
         marginTop: 7,
       },
 
+      fontFormSmallGrey: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 16,
+        color: "#333333",
+        opacity: 0.5,
+        marginBottom: 19,
+      },
+      fontFormSmallHeader: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 14,
+        lineHeight: 26,
+        letterSpacing: -0.3,
+        textTransform: "uppercase",
+        color: "#333333",
+      },
       profilePrivateInformation: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 14,
@@ -294,6 +433,25 @@ export default class MainStyles {
         letterSpacing: -0.3,
         textTransform: "uppercase",
         color: "#333333",
+      },
+      fontFormSmall: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 12,
+        lineHeight: 21,
+        textTransform: "uppercase",
+        color: "#333333",
+        opacity: 0.5,
+        marginTop: 10,
+      },
+      fontBold: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 24,
+      },
+      myprofileAboutMe: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 24,
       },
 
       fontTitle: {
@@ -349,7 +507,14 @@ export default class MainStyles {
         color: "#333333",
         paddingTop: 29,
       },
-
+      profileFontTitle: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 20,
+        height: 75,
+        lineHeight: 32,
+        flex: 3,
+      },
       fontDetailTop: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 14,
@@ -404,6 +569,13 @@ export default class MainStyles {
         lineHeight: 16,
         color: "#333333",
         opacity: 0.5,
+      },
+
+      fontStartConversation: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        color: "#F0493E",
+        padding: 5,
       },
 
       fontConnectWith: {
@@ -503,6 +675,20 @@ export default class MainStyles {
         color: "#333333",
         marginTop: 10,
         flexWrap: "wrap",
+      },
+
+      connectWithSliderButton: {
+        padding: 0,
+        height: "auto",
+        borderColor: "#F0493E",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+
+      flexRow: {
+        flexDirection: "row",
+        marginTop: 10,
       },
 
       rightCardWidth: {
@@ -652,6 +838,113 @@ export default class MainStyles {
               width: 446,
             },
 
+      profileScreenLeftCard:
+        Platform.OS === "web"
+          ? {
+              flex: 30,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              paddingLeft: 30,
+              paddingRight: 30,
+              paddingTop: 40,
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              shadowOffset: { width: 0, height: 5 },
+              shadowColor: "rgba(0, 0, 0, 0.05)",
+              shadowRadius: 30,
+              // height: 'auto',
+              width: 446,
+            }
+          : {
+              flex: 30,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              paddingLeft: 30,
+              paddingRight: 30,
+              paddingTop: 40,
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              minHeight: 700,
+              width: 446,
+            },
+      profileScreenRightCard:
+        Platform.OS === "web"
+          ? {
+              flex: 70,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              shadowOffset: { width: 0, height: 5 },
+              shadowColor: "rgba(0, 0, 0, 0.05)",
+              shadowRadius: 30,
+              // minHeight: 1500,
+              width: 446,
+              paddingTop: 30,
+              paddingRight: 30,
+              paddingBottom: 30,
+              paddingLeft: 30,
+            }
+          : {
+              flex: 70,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              minHeight: 1500,
+              width: 446,
+              paddingTop: 30,
+              paddingRight: 30,
+              paddingBottom: 30,
+              paddingLeft: 30,
+            },
+      myProfileTopButtons: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        width: "100%",
+        flexGrow: 0,
+        marginTop: 30,
+        paddingLeft: 32,
+        paddingRight: 32,
+        minHeight: 45,
+      },
+      myProfileImageWrapper: {
+        alignSelf: "center",
+        marginBottom: 90,
+      },
+      myProfileImage: {
+        width: "250px",
+        height: "290px",
+        borderRadius: 120,
+      },
+      fileInputWrapper: {
+        left: 0,
+        width: 250,
+        top: 310,
+        overflow: "hidden",
+        position: "absolute",
+      },
+      myProfilePersonalInfoWrapper: {
+        marginBottom: 35,
+        alignSelf: "center",
+        width: "100%",
+      },
       eventAttendeesPictures: {
         flexDirection: "row",
         marginBottom: 20,
@@ -664,6 +957,16 @@ export default class MainStyles {
         flexGrow: 0,
         flexWrap: "wrap",
       },
+      myProfileCoordinates: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        marginBottom: 80,
+        width: "100%",
+        flexGrow: 0,
+        marginTop: 30,
+        alignSelf: "flex-start",
+        height: "2.75rem",
+      },
 
       dashboardLeftCard: {
         flex: 70,
@@ -674,12 +977,65 @@ export default class MainStyles {
         flex: 25,
         flexDirection: "column",
       },
-
+      myProfileMainContainer: {
+        marginBottom: 20,
+        display: "flex",
+        flexDirection: "row",
+      },
+      myProfileTopButtonsInternalContainer: {
+        flex: 1,
+        flexDirection: "row",
+        alignSelf: "flex-end",
+        justifyContent: "flex-end",
+      },
+      myProfileTopButtonsExternalContainer: {
+        flexDirection: "column",
+      },
+      myProfileMapSelectorContainer: {
+        position: Platform.OS === "web" ? "fixed" : "relative",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: 1955,
+        zIndex: 100,
+        backgroundColor: "#33333366",
+      },
+      myProfileMapSelectorInnerContainer: {
+        backgroundColor: "#ffffff",
+        borderRadius: 10,
+        padding: 10,
+        margin: 10,
+        left: "10%",
+        top: "10%",
+        width: "80%",
+        height: "40%",
+      },
+      myProfileMapSelectorInnerCopyContainer: {
+        flexDirection: "row",
+        alignContent: "space-between",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1000,
+        backgroundColor: "#FFFFFF",
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
+        width: "100%",
+        borderBottomRightRadius: 4,
+      },
       map: {
         height: "94.5%",
         width: "98%",
       },
-
+      mapSelectorText: {
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "bold",
+        fontSize: 20,
+        marginBottom: 0,
+        marginRight: 20,
+        textAlign: "center",
+      },
       eventScreenMainContainer: {
         display: "flex",
         flexDirection: "row",
@@ -879,6 +1235,14 @@ export default class MainStyles {
         paddingRight: 12,
       },
 
+      myProfileErrorValidation: {
+        color: "red",
+        fontWeight: "bold",
+        flex: 0.75,
+        paddingLeft: 20,
+        textAlign: "right",
+        paddingBottom: 20,
+      },
       myMapCalloutEventContainer: {
         height: 233,
         paddingTop: 20,
@@ -897,11 +1261,55 @@ export default class MainStyles {
       conversationsCard: {
         alignSelf: "flex-start",
       },
-
+      myprofilePickerContainer: {
+        flexGrow: 0,
+        flexDirection: "column",
+        alignItems: "center",
+      },
+      myprofilePickerContainerView: {
+        flexDirection: "row",
+      },
+      myprofileBadgeContainer: {
+        flex: 0,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignContent: "flex-start",
+        top: 20,
+        marginBottom: 120,
+      },
       myprofileMyRoleContainer: {
         marginBottom: 15,
         width: "100%",
         // marginTop: 80
+      },
+      myprofilePickerMainContainer: {
+        width: "100%",
+        alignItems: "flex-start",
+        marginTop: 5,
+        //flexGrow: 0.5,
+      },
+      myprofilePicker: {
+        height: 45,
+        width: 308,
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: "#dddddd",
+      },
+      myProfileOrgView: {
+        flex: 1,
+        flexDirection: "row",
+      },
+      myProfileOrgTypeInput: {
+        borderWidth: 1,
+        borderColor: "#dddddd",
+        width: 308,
+        paddingTop: 8,
+        paddingRight: 10,
+        paddingBottom: 8,
+        paddingLeft: 10,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 24,
       },
 
       headerLeft: {
@@ -1024,6 +1432,92 @@ export default class MainStyles {
         color: "FF4438",
         fontSize: 20,
       },
+      mySignUpText: {
+        width: "100%",
+        marginBottom: "8.33%",
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "bold",
+        fontSize: 22,
+        lineHeight: 30,
+        alignSelf: "center",
+      },
+      mySignUpButton: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 15,
+      },
+      mySignUpOr: {
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "bold",
+        fontSize: 22,
+        marginHorizontal: 15,
+      },
+      mySignUpInputFieldscontainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "5.5%",
+      },
+      mySignUpEmailContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "1.4%",
+      },
+      mySignUpPasswordContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "5.5%",
+      },
+      mySignUpLeftPasswordContainer: {
+        borderBottomWidth: 1,
+        borderColor: "#00000020",
+        marginBottom: "1.4%",
+        marginRight: 30,
+        width: "100%",
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 18,
+        lineHeight: 24,
+      },
+      mySignUpPhoneContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "8.33%",
+      },
+      mySignUpConfirmCode: {
+        alignSelf: "flex-end",
+        paddingHorizontal: 30,
+        paddingBottom: 15,
+        paddingTop: 15,
+      },
+      mySignInForgotPassword: {
+        alignSelf: "flex-end",
+        marginRight: 30,
+        fontSize: 14,
+        fontFamily: "Graphik-Regular-App",
+        lineHeight: 22,
+        color: "#333333",
+        opacity: 0.7,
+        marginTop: 20,
+      },
+      mySignUpPlaceholderText: {
+        borderBottomWidth: 1,
+        borderColor: "#00000020",
+        marginBottom: "1.4%",
+        marginRight: 30,
+        width: "100%",
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 18,
+        lineHeight: 24,
+      },
       dashboardSectionSubNav: {
         zIndex: 6000,
         maxHeight: 45,
@@ -1038,9 +1532,48 @@ export default class MainStyles {
       profileCardContent: {
         paddingTop: 15,
       },
+      SignUpScreenSetupText: {
+        fontFamily: "Graphik-Medium-App",
+        textAlign: "center",
+        width: "50%",
+        fontSize: 28,
+        lineHeight: 33,
+        marginBottom: 8,
+        left: "16rem",
+        position: "relative",
+      },
+      SignUpScreenSetupTextSmaller: {
+        fontFamily: "Graphik-Regular-App",
+        textAlign: "center",
+        width: "100%",
+        fontSize: 18,
+        lineHeight: 30,
+        marginBottom: 8,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
+        authView3Welcome: {
+          width: "100%",
+          marginBottom: "5.5%",
+          fontFamily: "Graphik-Regular-App",
+          fontWeight: "bold",
+          fontSize: 28,
+          lineHeight: 30,
+          textAlign: "center",
+        },
+        confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
+        signUpBackButtonWrapper: { position: "absolute", top: "10%", left: "30%", zIndex: 9999 },
+        authView2: { left: "37.5%", width: 300, top: "20%", height: "auto" },
+        connectWithSliderButton: {
+          height: 45,
+          paddingTop: 6,
+          paddingBottom: 6,
+          paddingLeft: 10,
+          paddingRight: 10,
+          width: "100%",
+        },
+
         fontConnectWithName: {
           fontSize: 18,
           lineHeight: 23,
@@ -1069,11 +1602,57 @@ export default class MainStyles {
           flex: 65,
         },
 
+        groupNameInput: {
+          fontSize: 24,
+          lineHeight: 30,
+          width: "50%",
+        },
+
         eventNameInput: {
           fontSize: 24,
           lineHeight: 30,
         },
-
+        myProfileTopButtons: {
+          width: "100%",
+          flexDirection: "column",
+          alignItems: "flex-start",
+        },
+        profileScreenLeftCard: {
+          marginRight: 10,
+          flex: 35,
+          minHeight: "50%",
+        },
+        profileScreenRightCard: {
+          marginLeft: 10,
+          flex: 65,
+        },
+        myProfileImageWrapper: {
+          marginBottom: 0,
+        },
+        myProfileImage: {
+          width: "160px",
+          height: "200px",
+          borderRadius: 120,
+        },
+        fileInputWrapper: {
+          position: "static",
+          width: "100%",
+          top: 265,
+          left: 0,
+        },
+        myProfileCoordinates: {
+          flexDirection: "column",
+          marginBottom: 130,
+        },
+        myProfilePersonalInfoWrapper: {
+          marginBottom: 35,
+          alignSelf: "center",
+          width: "100%",
+          top: 100,
+        },
+        fontFormSmallHeader: {
+          marginTop: 100,
+        },
         profilePrivateInformation: {
           marginTop: 25,
         },
@@ -1085,7 +1664,16 @@ export default class MainStyles {
           flexDirection: "column",
           justifyContent: "center",
         },
-
+        myProfileTopButtonsInternalContainer: {
+          flex: 3,
+        },
+        myProfileErrorValidation: {
+          flex: 1,
+          paddingLeft: 0,
+          paddingBottom: 15,
+          paddingTop: 0,
+          textAlign: "left",
+        },
         myMapFontTitle: {
           fontSize: 22,
           lineHeight: 28,
@@ -1094,7 +1682,24 @@ export default class MainStyles {
           fontSize: 14,
           lineHeight: 20,
         },
+        fontFormMediumInput: {
+          maxWidth: 175,
+        },
+        fontFormSmallDarkGreyCoordinates: {
+          width: "100%",
+          marginBottom: 15,
+        },
+        myProfileTopButtonsExternalContainer: {
+          flexDirection: "column",
+        },
 
+        myprofilePickerContainerView: {
+          flexDirection: "column",
+        },
+        myprofilePicker: {
+          marginBottom: 10,
+          width: "75%",
+        },
         dashboardConversationBody: {
           alignItems: "center",
         },
@@ -1102,6 +1707,21 @@ export default class MainStyles {
           textAlign: "center",
         },
 
+        myProfileOrgView: {
+          flexDirection: "column",
+        },
+        myprofilePickerMainContainer: {
+          flexGrow: 0.2,
+        },
+        profileFontTitle: {
+          marginBottom: 15,
+        },
+        fontFormName: {
+          marginTop: 30,
+        },
+        myProfileOrgTypeInput: {
+          width: "100%",
+        },
         jcDirectoryButton: {
           height: 50,
           paddingTop: 10,
@@ -1139,10 +1759,35 @@ export default class MainStyles {
         friendsLegend: {
           paddingLeft: 40,
         },
+        mySignUpText: {
+          width: "100%",
+          alignSelf: "flex-start",
+        },
+        mySignUpButton: {
+          flexDirection: "column",
+          height: "auto",
+        },
+        mySignUpOr: {
+          marginTop: 15,
+          marginBottom: 15,
+          width: "40%",
+        },
+        authView3: {
+          left: "30%",
+          width: "70vw",
+          top: "15%",
+          height: "auto",
+          alignSelf: "flex-start",
+        },
       },
 
       // Media Query Desktop Large Tablet
       "@media (min-width: 769) and (max-width: 1024)": {
+        connectWithSliderButton: {
+          height: 45,
+          width: "100%",
+        },
+
         rightCardWidth: {
           minWidth: "100%",
         },
@@ -1157,6 +1802,19 @@ export default class MainStyles {
           marginLeft: 10,
         },
 
+        profileScreenLeftCard: {
+          marginRight: 10,
+          flex: 35,
+          minHeight: "50%",
+        },
+        profileScreenRightCard: {
+          marginLeft: 10,
+          flex: 65,
+        },
+        myProfileTopButtons: {
+          width: "100%",
+        },
+
         dashboardConversationCard: {
           width: "100%",
           paddingRight: 32,
@@ -1164,7 +1822,9 @@ export default class MainStyles {
         dashboardConversationCardLeft: {
           flexDirection: "row",
         },
-
+        myProfileTopButtonsInternalContainer: {
+          flex: 1,
+        },
         myMapFontTitle: {
           fontSize: 22,
           lineHeight: 28,
@@ -1172,6 +1832,29 @@ export default class MainStyles {
         myMapFontDetailMiddle: {
           fontSize: 14,
           lineHeight: 20,
+        },
+        fontFormMediumInput: {
+          maxWidth: 287,
+        },
+        myprofilePickerMainContainer: {
+          maxHeight: 300,
+        },
+        myProfileTopButtonsExternalContainer: {
+          flexDirection: "column",
+        },
+        myProfileOrgView: {
+          flexDirection: "column",
+        },
+        myProfileOrgTypeInput: {
+          marginTop: 10,
+        },
+        myProfileCoordinates: {
+          flexDirection: "column",
+          marginBottom: 80,
+        },
+        fontFormSmallDarkGreyCoordinates: {
+          width: "100%",
+          marginBottom: 15,
         },
 
         animatedCircleContainerSideBar: {
@@ -1194,10 +1877,13 @@ export default class MainStyles {
       },
 
       "@media (min-width: 320px) and (max-width: 720px)": {
+        authView2: { left: "2%", width: "96%", top: "12%", height: "100%" },
         createAccountButtonWrapper:
           Platform.OS === "web"
             ? { position: "absolute", top: "0%", left: "2%", marginTop: 5 }
             : { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
+        confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
+        signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "2%", zIndex: 9999 },
 
         dashboardLeftCard: {
           flexBasis: "auto",
@@ -1206,7 +1892,74 @@ export default class MainStyles {
           flexBasis: "auto",
           top: 2150,
         },
-
+        myProfileMainContainer: {
+          flexDirection: "column",
+        },
+        myProfileTopButtons: {
+          flexDirection: "column",
+          width: "100%",
+          paddingRight: 32,
+          alignItems: "center",
+        },
+        myProfileTopButtonsInternalContainer: {
+          flex: 0,
+          flexDirection: "row",
+          alignSelf: "auto",
+          width: "100%",
+        },
+        profileFontTitle: {
+          minWidth: 300,
+          flex: 0,
+          textAlign: "center",
+          marginBottom: 20,
+        },
+        profileScreenLeftCard: {
+          marginRight: 0,
+          marginLeft: 0,
+          flex: 0,
+          paddingBottom: 0,
+          width: "auto",
+          shadowOffset: { width: 0, height: 0 },
+          shadowRadius: 0,
+          shadowColor: "rgba(0, 0, 0, 0)",
+          minHeight: "auto",
+        },
+        profileScreenRightCard: {
+          width: "auto",
+          flex: 0,
+          top: 0,
+          marginLeft: 0,
+          marginRight: 0,
+          shadowOffset: { width: 0, height: 0 },
+          shadowRadius: 0,
+          shadowColor: "rgba(0, 0, 0, 0)",
+        },
+        myProfileCoordinates: {
+          flexDirection: "column",
+          alignSelf: "flex-start",
+          marginBottom: 75,
+        },
+        myProfileMapSelectorContainer: {
+          height: 3210,
+        },
+        myProfileMapSelectorInnerContainer: {
+          top: "5%",
+          margin: 0,
+          height: "20%",
+        },
+        myProfileMapSelectorInnerCopyContainer: {
+          width: "107%",
+          right: "3.5%",
+          borderRadius: 0,
+          flexDirection: "column",
+        },
+        myprofilePicker: {
+          width: 250,
+        },
+        mapSelectorText: {
+          marginBottom: 15,
+          marginRight: 0,
+        },
         eventScreenMainContainer: {
           flexDirection: "column",
         },
@@ -1235,7 +1988,9 @@ export default class MainStyles {
           shadowColor: "none",
           shadowRadius: 0,
         },
-
+        groupNameInput: {
+          width: "100%",
+        },
         courseMktNameInput: {
           width: "100%",
         },
@@ -1281,19 +2036,44 @@ export default class MainStyles {
         profilesScreenLeftContainer: {
           minHeight: 2000,
         },
-
+        fontFormName: {
+          textAlign: "center",
+        },
+        fontFormRole: {
+          textAlign: "center",
+        },
+        fontFormUserType: {
+          textAlign: "center",
+        },
+        myProfileErrorValidation: {
+          textAlign: "center",
+          paddingLeft: 0,
+          paddingBottom: 20,
+        },
         myMapCalloutEventContainer: {
           width: 250,
         },
-
+        fontFormMediumInput: {
+          maxWidth: 250,
+        },
         conversationsCard: {
           maxWidth: 300,
         },
-
+        myprofilePickerMainContainer: {
+          maxHeight: 200,
+        },
+        myprofileBadgeContainer: {
+          top: 30,
+        },
         fontConnectConversation: {
           textAlign: "center",
         },
-
+        myProfileOrgView: {
+          flexDirection: "column",
+        },
+        myProfileOrgTypeInput: {
+          width: "100%",
+        },
         headerLeft: {
           flex: 0.3,
         },
@@ -1331,7 +2111,13 @@ export default class MainStyles {
         dashboardConversationCardLeft: {
           flexDirection: "row",
         },
-
+        connectWithSliderButton: {
+          width: "80%",
+          alignSelf: "center",
+        },
+        myProfilePersonalInfoWrapper: {
+          top: 0,
+        },
         peopleContainer: {
           shadowOffset: { width: 0, height: 0 },
           shadowColor: "rgba(0, 0, 0, 0.0)",
@@ -1353,6 +2139,58 @@ export default class MainStyles {
         },
         myMapConversationCardRole: {
           textAlign: "center",
+        },
+        mySignUpText: {
+          marginTop: Platform.OS === "android" || Platform.OS === "web" ? 50 : 50,
+          width: "100%",
+          textAlign: "center",
+        },
+        authView3: {
+          marginLeft: 0,
+          marginRight: 0,
+          paddingLeft: 5,
+          paddingRight: 5,
+          left: "0%",
+          width: "100%",
+          top: "5%",
+          height: "auto",
+          alignSelf: "flex-start",
+        },
+        mySignUpOr: {
+          marginTop: 15,
+          marginBottom: 15,
+          width: "40%",
+        },
+        mySignUpInputFieldscontainer: {
+          marginRight: 0,
+          marginLeft: 10,
+        },
+        mySignUpEmailContainer: {
+          marginRight: 0,
+          marginLeft: 10,
+        },
+        mySignUpPasswordContainer: {
+          marginRight: 0,
+          marginLeft: 10,
+        },
+        mySignUpLeftPasswordContainer: {
+          marginRight: 0,
+          fontSize: 15,
+          marginLeft: 0,
+        },
+        mySignUpPhoneContainer: {
+          marginRight: 0,
+          marginLeft: 10,
+        },
+        mySignUpConfirmCode: {
+          alignSelf: "flex-start",
+          marginLeft: 10,
+        },
+        mySignInForgotPassword: {
+          alignSelf: "flex-end",
+        },
+        mySignUpPlaceholderText: {
+          fontSize: 15,
         },
         fontConnectWithRole: {
           textAlign: "center",
@@ -1383,6 +2221,17 @@ export default class MainStyles {
         coursePageMessageBoardInnerCard: {
           paddingLeft: 20,
         },
+        signUpScreen1PaymentColumn1: {
+          left: "0%",
+          width: "90%",
+        },
+        SignUpScreenSetupText: {
+          width: "100%",
+          left: 0,
+        },
+        SignUpScreenSetupTextSmaller: {
+          lineHeight: 24,
+        },
       },
 
       dashboardMainContainer:
@@ -1390,12 +2239,67 @@ export default class MainStyles {
           ? { height: 2800, flex: 1, display: "flex", flexDirection: "row" }
           : { flexDirection: "column" },
 
+      authView2:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { left: "37.5%", width: 500, top: "20%", height: "auto" }
+          : { left: "2%", width: "96%", top: "0%", height: "100%" },
+
+      authView3:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { left: "32.5%", width: 600, top: "15%", height: "auto" }
+          : { left: "2%", width: "96%", top: "0%", height: "100%" },
+
       createAccountButtonWrapper: {
         position: "absolute",
         top: "6%",
         right: "3.5%",
       },
 
+      signUpBackButtonWrapper: {
+        position: "absolute",
+        top: "6%",
+        left: "20%",
+        marginTop: Platform.OS === "android" ? 50 : 10,
+        zIndex: 9999,
+      },
+
+      confirmationCodeWrapper: { display: "flex", flexDirection: "row" },
+
+      authView:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { left: "35%", width: "40%", top: 100, height: "auto" }
+          : { left: "2%", width: "96%", top: "0%", height: "100%" },
+
+      signUpSidebarPanel:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 1,
+              position: "fixed",
+              left: 0,
+              minWidth: 196,
+              width: "15%",
+              height: "100%",
+              top: 0,
+            }
+          : {
+              zIndex: 1,
+              position: "relative",
+              left: 0,
+              width: "100%",
+              height: 100 + Constants.statusBarHeight,
+              top: 0,
+            },
+      signUpSidebarLogo: {
+        zIndex: 2,
+        position: "absolute",
+        left: 20,
+        width: 156,
+        height: 43,
+        top:
+          Platform.OS === "web" && Dimensions.get("window").width > 720
+            ? 20
+            : 20 + Constants.statusBarHeight,
+      },
       signUpSidebarLogoOneStory:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? {
@@ -1442,11 +2346,286 @@ export default class MainStyles {
               left: 200,
               top: 22,
             },
+      signUpSidebarProgress:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { zIndex: 3, position: "fixed", left: 20, width: 20, height: 300, top: "40%" }
+          : {
+              zIndex: 3,
+              display: "none",
+              position: "relative",
+              left: 20,
+              width: 20,
+              height: 300,
+              top: "40%",
+            },
+
+      signUpSidebarProgressText1:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "95%",
+              height: "10%",
+              left: "50px",
+              top: "calc(40vh - 18px)",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            }
+          : {
+              zIndex: 3,
+              position: "absolute",
+              width: "50%",
+              height: "10%",
+              left: "65%",
+              top: 20 + Constants.statusBarHeight,
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            },
+      signUpSidebarProgressText2:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "95%",
+              height: "10%",
+              left: "50px",
+              top: "calc(40vh + 36px)",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            }
+          : {
+              zIndex: 3,
+              position: "absolute",
+              width: "50%",
+              height: "10%",
+              left: "65%",
+              top: 20 + Constants.statusBarHeight,
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            },
+      signUpSidebarProgressText3:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "95%",
+              height: "10%",
+              left: "50px",
+              top: "calc(40vh + 90px)",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            }
+          : {
+              zIndex: 3,
+              position: "absolute",
+              width: "50%",
+              height: "10%",
+              left: "65%",
+              top: 20 + Constants.statusBarHeight,
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            },
+      signUpSidebarProgressText4:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "95%",
+              height: "10%",
+              left: "50px",
+              top: "calc(40vh + 144px)",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            }
+          : {
+              zIndex: 3,
+              position: "absolute",
+              width: "50%",
+              height: "10%",
+              left: "65%",
+              top: 20 + Constants.statusBarHeight,
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            },
+      signUpSidebarProgressText5:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "95%",
+              height: "10%",
+              left: "50px",
+              top: "calc(40vh + 198px)",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            }
+          : {
+              zIndex: 3,
+              position: "absolute",
+              width: "50%",
+              height: "10%",
+              left: "65%",
+              top: 20 + Constants.statusBarHeight,
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 12,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            },
+      signUpSidebarProgressTextView: {
+        zIndex: 3,
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        left: "0%",
+        top: "0%",
+      },
+
+      signUpSidebarView:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { position: "fixed", width: "15%", height: "100%", left: "0%", top: "0%" }
+          : { position: "relative", width: "100%", height: 100, left: "0%", top: 0 },
+
+      signUpSidebarText:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "80%",
+              height: "10%",
+              left: "10%",
+              top: "40%",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 20,
+              lineHeight: 30,
+              color: "#FFFFFF",
+            }
+          : {
+              display: "none",
+              zIndex: 3,
+              position: "absolute",
+              width: "80%",
+              height: "10%",
+              left: "10%",
+              top: "40%",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 24,
+              lineHeight: 48,
+              color: "#FFFFFF",
+            },
+      signUpSidebarTextOneStory:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 3,
+              position: "absolute",
+              width: "80%",
+              height: "10%",
+              left: "10%",
+              top: "40%",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 20,
+              lineHeight: 30,
+              color: "#000000",
+            }
+          : {
+              display: "none",
+              zIndex: 3,
+              position: "absolute",
+              width: "80%",
+              height: "10%",
+              left: "10%",
+              top: "40%",
+              fontFamily: "Graphik-Bold-App",
+              fontSize: 24,
+              lineHeight: 48,
+              color: "#000000",
+            },
+
+      signUpProfile:
+        Platform.OS === "web" && Dimensions.get("window").width > 1024
+          ? { position: "absolute", left: "20%", width: "78%", top: 10 }
+          : Platform.OS === "web" && Dimensions.get("window").width > 768
+          ? { position: "absolute", left: "24%", width: "74%", top: 10 }
+          : Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { position: "absolute", left: "28%", width: "78%", top: 10 }
+          : {
+              position: "absolute",
+              left: "0%",
+              width: "100%",
+              top: 100 + Constants.statusBarHeight,
+              height: Dimensions.get("window").height - 100 + Constants.statusBarHeight,
+            },
+
+      signUpProfileOrg:
+        Platform.OS === "web" && Dimensions.get("window").width > 1024
+          ? {
+              position: "absolute",
+              left: "20%",
+              width: "78%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : Platform.OS === "web" && Dimensions.get("window").width > 768
+          ? {
+              position: "absolute",
+              left: "24%",
+              width: "74%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              position: "absolute",
+              left: "28%",
+              width: "78%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : {
+              position: "absolute",
+              left: "0%",
+              width: "100%",
+              top: 200 + Constants.statusBarHeight,
+              height: Dimensions.get("window").height - 200 + Constants.statusBarHeight,
+            },
 
       signUpScreen1Content:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", width: "100%" }
           : { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
+      signUpScreen1PaymentColumn1:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { position: "absolute", left: "7.5%", width: "100%", top: "40vh", height: "100%" }
+          : { marginLeft: 20, marginRight: 20, left: "0%" },
+      signUpScreen1PaymentColumn1Form:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }
+          : { marginLeft: 20, marginRight: 20 },
+      signUpScreen1PaymentColumn2:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" }
+          : {},
+      signUpScreen1PaymentBody:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { width: "100%", left: 0, top: 0, height: "100%" }
+          : { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 },
 
       fontFormProfileImageButton: {
         backgroundColor: "#F0493E",

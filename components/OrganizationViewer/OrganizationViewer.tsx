@@ -4,7 +4,16 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Amplify, Auth, Storage } from "aws-amplify"
 import moment from "moment"
 import * as React from "react"
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { useEffect, useState } from "react"
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import Sentry from "../../components/Sentry"
@@ -21,8 +30,8 @@ import EditableLocation from "../Forms/EditableLocation"
 import EditableText from "../Forms/EditableText"
 import EditableUsers from "../Forms/EditableUsers"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import MyMap from "../MyMap/MyMap"
+import { ProfileStyle } from "../MyProfile/ProfileStyle"
 //import { AlertConfigInput } from '../../src/API'
 import {
   numberOfEmployees,
@@ -47,130 +56,86 @@ interface Props {
 }
 export type OrganizationData = NonNullable<GetOrganizationQuery["getOrganization"]>
 
-interface State extends JCState {
-  OrganizationDetails: OrganizationData
-  interest: string | null
-  interestsArray: any
-  profileImage: any
-  validationText: any
-  mapVisible: any
-  // mapCoord: any
-  isEditable: boolean
-  showAccountSettings: boolean
-  editMode: boolean
-  mapData: MapData[]
-  initCenter: any
-  dirty: boolean
-  oldPass: string
-  newPass: string
-  passError: string
-  currentUser: string | null
-  newAdmins: any[]
-  toAddAdmin: any
-  removeAdmins: any[]
-}
-class OrganizationImpl extends JCComponent<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      ...super.getInitialState(),
-      OrganizationDetails: null,
-      interest: null,
-      interestsArray: [],
-      profileImage: "",
-      validationText: null,
-      showAccountSettings: false,
-      mapVisible: false,
-      isEditable: false,
-      editMode: false,
-      mapData: [],
-      initCenter: { lat: 44, lng: -78.0 },
-      dirty: false,
-      oldPass: "",
-      newPass: "",
-      passError: "",
-      currentUser: null,
-      newAdmins: [],
-      toAddAdmin: null,
-      removeAdmins: null,
-    }
-    this.getUserDetails().then(() => this.getOrg())
-  }
+function OrganizationImpl(props: Props) {
+  const [organizationDetails, setOrganizationDetails] = useState<OrganizationData | null>(null)
 
-  convertProfileToMapData() {
+  const [profileImage, setProfileImage] = useState<any>("")
+  const [validationText, setValidationText] = useState<any>(null)
+  const [showAccountSettings, setShowAccountSettings] = useState<boolean>(false)
+  const [isEditable, setIsEditable] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(false)
+  const [mapData, setMapData] = useState<MapData[]>([])
+  const [initCenter, setInitCenter] = useState<any>({ lat: 44, lng: -78.0 })
+  const [dirty, setDirty] = useState<boolean>(false)
+  const [currentUser, setCurrentUser] = useState<string | null>(null)
+  const [newAdmins, setNewAdmins] = useState<any[]>([])
+  const [removeAdmins, setRemoveAdmins] = useState<any[] | null>(null)
+  useEffect(() => {
+    getUserDetails().then(() => getOrg())
+  }, [])
+  useEffect(() => {
+    getProfileImage()
+    convertProfileToMapData()
+  }, [organizationDetails])
+
+  const convertProfileToMapData = () => {
     if (
-      this.state.OrganizationDetails?.location &&
-      this.state.OrganizationDetails?.location.latitude &&
-      this.state.OrganizationDetails?.location.longitude
+      organizationDetails?.location &&
+      organizationDetails?.location.latitude &&
+      organizationDetails?.location.longitude
     )
-      this.setState({
-        mapData: [
-          {
-            latitude:
-              Number(this.state.OrganizationDetails.location.latitude) +
-              Number(this.state.OrganizationDetails.location.randomLatitude),
-            longitude:
-              Number(this.state.OrganizationDetails.location.longitude) +
-              Number(this.state.OrganizationDetails.location.randomLatitude),
-            name: "test",
-            user: this.state.OrganizationDetails,
-            link: "",
-            type: "organization",
-          },
-        ],
-        initCenter: {
-          lat:
-            Number(this.state.OrganizationDetails.location.latitude) +
-            Number(this.state.OrganizationDetails.location.randomLatitude),
-          lng:
-            Number(this.state.OrganizationDetails.location.longitude) +
-            Number(this.state.OrganizationDetails.location.randomLatitude),
+      setMapData([
+        {
+          latitude:
+            Number(organizationDetails.location.latitude) +
+            Number(organizationDetails.location.randomLatitude),
+          longitude:
+            Number(organizationDetails.location.longitude) +
+            Number(organizationDetails.location.randomLatitude),
+          name: "test",
+          user: organizationDetails,
+          link: "",
+          type: "organization",
         },
-      })
+      ])
+
+    setInitCenter({
+      lat:
+        Number(organizationDetails?.location?.latitude) +
+        Number(organizationDetails?.location?.randomLatitude),
+      lng:
+        Number(organizationDetails?.location?.longitude) +
+        Number(organizationDetails?.location?.randomLatitude),
+    })
   }
 
-  async getUserDetails(): Promise<void> {
+  const getUserDetails = async (): Promise<void> => {
     try {
       const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
-      this.setState({ currentUser: user["username"] })
+      setCurrentUser(user["username"])
     } catch (e) {
       console.log(e)
     }
   }
 
-  async getOrg(): Promise<void> {
-    if (!this.state.currentUser) {
+  const getOrg = async (): Promise<void> => {
+    if (!currentUser) {
       return
     }
 
-    if (this.props.loadId && this.props.create === false) {
+    if (props.loadId && props.create === false) {
       try {
-        const getOrg = await Data.getOrganization(this.props.loadId)
-        this.setState(
-          {
-            OrganizationDetails: getOrg.data?.getOrganization,
-            isEditable: getOrg.data?.getOrganization?.admins.includes(this.state.currentUser),
-            editMode:
-              getOrg.data?.getOrganization?.admins.includes(this.state.currentUser) &&
-              getOrg.data?.getOrganization?.profileState === "Incomplete",
-          },
-          () => {
-            this.getProfileImage()
-            this.convertProfileToMapData()
-          }
+        const getOrg = await Data.getOrganization(props.loadId)
+        setOrganizationDetails(getOrg.data?.getOrganization)
+        setIsEditable(getOrg.data?.getOrganization?.admins.includes(currentUser))
+        setEditMode(
+          getOrg.data?.getOrganization?.admins.includes(currentUser) &&
+            getOrg.data?.getOrganization?.profileState === "Incomplete"
         )
       } catch (e: any) {
         if (e.data?.getOrganization) {
-          this.setState(
-            {
-              OrganizationDetails: e.data.getOrganization,
-              isEditable: e.data.getOrganization.admins.includes(this.state.currentUser),
-            },
-            () => {
-              this.getProfileImage()
-              this.convertProfileToMapData()
-            }
-          )
+          setOrganizationDetails(e.data.getOrganization)
+          setIsEditable(e.data.getOrganization.admins.includes(currentUser))
         }
         console.error(e)
       }
@@ -179,8 +144,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
         const id = `organization-${Date.now()}`
         const orgInput: CreateOrganizationInput = {
           id: id,
-          superAdmin: this.state.currentUser,
-          admins: [this.state.currentUser],
+          superAdmin: currentUser,
+          admins: [currentUser],
           orgName: "",
           profileState: "Incomplete",
           parentOrganizationId: id,
@@ -190,7 +155,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
         const orgMember: CreateOrganizationMemberInput = {
           userRole: "superAdmin",
-          userId: this.state.currentUser,
+          userId: currentUser,
           organizationId: createOrg.data?.createOrganization?.id,
         }
 
@@ -201,24 +166,16 @@ class OrganizationImpl extends JCComponent<Props, State> {
           console.log({ error: e })
         }
 
-        this.setState(
-          {
-            OrganizationDetails: createOrg.data?.createOrganization,
-            isEditable: true,
-            editMode: true,
-          },
-          () => {
-            this.getProfileImage()
-            this.convertProfileToMapData()
-          }
-        )
+        setOrganizationDetails(createOrg.data?.createOrganization)
+        setIsEditable(true)
+        setEditMode(true)
       } catch (e) {
         console.error(e)
       }
     }
   }
 
-  handleInputChange(event: any, name: string): void {
+  const handleInputChange = (event: any, name: string): void => {
     const value =
       event.target === undefined
         ? event
@@ -227,19 +184,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
         : event.target.value
     // const name = target.name;
     console.log(value)
-    const updateData = { ...this.state.OrganizationDetails }
+    const updateData = { ...organizationDetails }
     updateData[name] = value
-    this.setState(
-      {
-        OrganizationDetails: updateData,
-        dirty: true,
-      },
-      () => {
-        if (name === "location") this.convertProfileToMapData()
-      }
-    )
+    setOrganizationDetails(updateData)
+    setDirty(true)
   }
-  clean(item: OrganizationData): OrganizationData {
+  const clean = (item: OrganizationData): OrganizationData => {
     delete item.parentOrganization
     delete item.subOrganizations
     delete item.ownsGroups
@@ -250,23 +200,26 @@ class OrganizationImpl extends JCComponent<Props, State> {
     if (item.profileImage) delete item.profileImage["__typename"]
     return item
   }
-  async finalizeProfile(): Promise<void> {
-    const validation = Validate.Organization(this.state.OrganizationDetails)
+  const finalizeProfile = async (): Promise<void> => {
+    const validation = Validate.Organization(organizationDetails)
     if (validation.result) {
       try {
-        const toSave = this.clean(this.state.OrganizationDetails)
+        const toSave = clean(organizationDetails)
         toSave["profileState"] = "Complete"
         await Data.updateOrganization(toSave)
-        if (this.props.finalizeProfile) this.props.finalizeProfile()
-        else this.setState({ dirty: false, editMode: false })
+        if (props.finalizeProfile) props.finalizeProfile()
+        else {
+          setDirty(false)
+          setEditMode(false)
+        }
       } catch (e: any) {
         Sentry.captureException(e.errors || e)
         console.log(e)
       }
     }
-    this.setState({ validationText: validation.validationError })
+    setValidationText(validation.validationError)
   }
-  async onProfileImageChange(e: any): Promise<void> {
+  const onProfileImageChange = async (e: any): Promise<void> => {
     const file = e.target.files[0]
     const user = await Auth.currentCredentials()
     const userId = user.identityId
@@ -284,7 +237,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       identityId: userId,
     })
       .then(() => {
-        const updateData = { ...this.state.OrganizationDetails }
+        const updateData = { ...organizationDetails }
         updateData["profileImage"] = {
           __typename: "Image",
           userId: userId,
@@ -293,53 +246,46 @@ class OrganizationImpl extends JCComponent<Props, State> {
           filenameMedium: fnSave.replace("[size]", "medium"),
           filenameSmall: fnSave.replace("[size]", "small"),
         }
-        this.setState(
-          {
-            OrganizationDetails: updateData,
-            dirty: true,
-          },
-          () => {
-            this.getProfileImage()
-          }
-        )
+        setOrganizationDetails(updateData)
+        setDirty(true)
       })
       .catch((err) => console.log(err))
   }
-  getProfileImage(): void {
+  const getProfileImage = (): void => {
     console.log("get profile image")
-    //console.log(this.state.OrganizationDetails.profileImage)
-    if (this.state.OrganizationDetails.profileImage != null)
-      if (this.state.OrganizationDetails.profileImage.filenameUpload)
-        Storage.get(this.state.OrganizationDetails.profileImage.filenameUpload, {
+    //console.log(organizationDetails.profileImage)
+    if (organizationDetails?.profileImage != null)
+      if (organizationDetails?.profileImage.filenameUpload)
+        Storage.get(organizationDetails.profileImage.filenameUpload, {
           level: "protected",
-          identityId: this.state.OrganizationDetails.profileImage.userId ?? "",
+          identityId: organizationDetails.profileImage.userId ?? "",
         })
-          .then((result) => this.setState({ profileImage: result }))
+          .then((result) => setProfileImage(result))
           .catch((err) => {
             console.log(err)
           })
   }
 
-  async addAdmins(): Promise<void> {
-    if (!this.state.newAdmins || this.state.newAdmins.length === 0) {
+  const addAdmins = async (): Promise<void> => {
+    if (!newAdmins || newAdmins.length === 0) {
       return
     }
 
-    const newAdmins = this.state.OrganizationDetails.admins
+    const newAdmins = organizationDetails?.admins
     const justNewAdmins = []
 
-    this.state.newAdmins.forEach((user) => {
+    newAdmins.forEach((user) => {
       if (!newAdmins.includes(user.id)) newAdmins.push(user.id)
       justNewAdmins.push(user.id)
     })
 
-    if (newAdmins.length < this.state.OrganizationDetails.admins.length) {
+    if (newAdmins.length < organizationDetails?.admins.length) {
       return
     }
 
     try {
       const addAdmins = await Data.updateOrganization({
-        id: this.state.OrganizationDetails.id,
+        id: organizationDetails?.id,
         admins: newAdmins,
       })
       console.log({ success: addAdmins })
@@ -347,15 +293,15 @@ class OrganizationImpl extends JCComponent<Props, State> {
       Sentry.captureException(err)
       console.error(err)
     }
-    this.createGroupMembers(justNewAdmins)
+    createGroupMembers(justNewAdmins)
   }
 
-  createGroupMembers(admins: string[]) {
+  const createGroupMembers = (admins: string[]) => {
     admins.map(async (admin) => {
       const orgMember: CreateOrganizationMemberInput = {
         userRole: "admin",
         userId: admin,
-        organizationId: this.state.OrganizationDetails.id,
+        organizationId: organizationDetails?.id,
       }
       try {
         const createOrgMember = await Data.createOrganizationMember(orgMember)
@@ -366,864 +312,804 @@ class OrganizationImpl extends JCComponent<Props, State> {
     })
   }
 
-  async removeAdmins(): Promise<void> {
-    if (!this.state.removeAdmins || this.state.removeAdmins.length === 0) {
-      return
-    }
-    const toRemove = []
-    this.state.removeAdmins.forEach((user) => {
-      if (user.id !== this.state.OrganizationDetails.superAdmin) toRemove.push(user.id)
-    })
-    const remainingAdmins = this.state.OrganizationDetails.admins.filter(
-      (user) => !toRemove.includes(user)
-    )
-    try {
-      const addAdmins = await Data.updateOrganization({
-        id: this.state.OrganizationDetails.id,
-        admins: remainingAdmins,
-      })
-      console.log({ success: addAdmins })
-    } catch (err) {
-      Sentry.captureException(err)
-      console.error(err)
-    }
-  }
-
-  showMap(): void {
-    console.log("showMap")
-    this.setState({ mapVisible: true })
-  }
-  renderMap() {
-    return this.state.OrganizationDetails.location?.geocodeFull ? (
-      <MyMap
-        initCenter={this.state.initCenter}
-        visible={true}
-        mapData={this.state.mapData}
-        type={"profile"}
-      ></MyMap>
+  const renderMap = () => {
+    return organizationDetails?.location?.geocodeFull ? (
+      <MyMap initCenter={initCenter} visible={true} mapData={mapData} type={"profile"}></MyMap>
     ) : null
   }
 
-  showProfile(id: string): void {
+  const showProfile = (id: string): void => {
     console.log("Navigate to profileScreen")
-    this.props.navigation?.push("ProfileScreen", { id: id, create: false })
+    props.navigation?.push("ProfileScreen", { id: id, create: false })
   }
 
-  deleteOrg(): void {
+  const deleteOrg = (): void => {
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
-      if (this.state.OrganizationDetails.superAdmin === user["username"]) {
-        const deleteOrganization = Data.deleteOrganization(this.state.OrganizationDetails.id)
+      if (organizationDetails?.superAdmin === user["username"]) {
+        const deleteOrganization = Data.deleteOrganization(organizationDetails.id)
         deleteOrganization
           .then((c) => {
             console.log(c)
-            this.props.navigation?.navigate("HomeScreen")
+            props.navigation?.navigate("HomeScreen")
           })
           .catch((e) => {
             console.log(e)
-            this.props.navigation?.navigate("HomeScreen")
+            props.navigation?.navigate("HomeScreen")
           })
       } else {
         return false
       }
     })
   }
-
-  handleEditMode() {
-    if (this.state.dirty && window.confirm("You have unsaved changes"))
-      this.setState({ editMode: !this.state.editMode, showAccountSettings: false })
-    else if (!this.state.dirty)
-      this.setState({ editMode: !this.state.editMode, showAccountSettings: false })
+  const styles = StyleSheet.create(ProfileStyle)
+  const handleEditMode = () => {
+    if (dirty && window.confirm("You have unsaved changes")) {
+      setEditMode(!editMode)
+      setShowAccountSettings(false)
+    } else if (!dirty) {
+      setEditMode(!editMode)
+      setShowAccountSettings(false)
+    }
   }
 
-  renderMainUserGroup(group: string) {
+  const renderMainUserGroup = (group: string) => {
     switch (group) {
       case "verifiedUser":
-        return <Text style={this.styles.style.fontFormUserType}>Verified</Text>
+        return <Text style={styles.fontFormUserType}>Verified</Text>
       case "friend":
-        return <Text style={this.styles.style.fontFormUserType}>Friend</Text>
+        return <Text style={styles.fontFormUserType}>Friend</Text>
       case "partner":
-        return <Text style={this.styles.style.fontFormUserType}>Partner</Text>
+        return <Text style={styles.fontFormUserType}>Partner</Text>
       case "admin":
-        return <Text style={this.styles.style.fontFormUserType}>Admin</Text>
+        return <Text style={styles.fontFormUserType}>Admin</Text>
       default:
-        return <Text style={this.styles.style.fontFormUserType}>Un-Verified</Text>
+        return <Text style={styles.fontFormUserType}>Un-Verified</Text>
     }
   }
   /*openConversation(initialUser, name): void {
     console.log("Navigate to conversationScreen")
-    this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
+    props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }*/
-  render(): React.ReactNode {
-    const brand = Brand()
-    return this.state.OrganizationDetails != null ? (
-      <ScrollView>
-        <View style={this.styles.style.myProfileTopButtons}>
-          {this.state.isEditable && (this.state.editMode || this.state.showAccountSettings) ? (
-            <Text style={this.styles.style.profileFontTitle}>
-              Create Organization/Church Profile
-            </Text>
-          ) : (
-            <Text style={this.styles.style.profileFontTitle}>
-              {this.state.OrganizationDetails.orgName}
-            </Text>
-          )}
-          <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
-            {this.state.isEditable ? (
-              <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
-                {this.state.editMode ? (
-                  <JCButton
-                    enabled={this.state.dirty}
-                    testID="org-save"
-                    buttonType={
-                      brand == "oneStory"
-                        ? ButtonTypes.SolidRightMarginOneStory
-                        : ButtonTypes.SolidRightMargin
-                    }
-                    onPress={async () => {
-                      await this.finalizeProfile()
-                    }}
-                  >
-                    Save Profile
-                  </JCButton>
-                ) : null}
-                {this.props.loadId && this.state.showAccountSettings ? (
-                  <JCButton
-                    buttonType={
-                      brand == "oneStory"
-                        ? ButtonTypes.SolidProfileDeleteOneStory
-                        : ButtonTypes.SolidProfileDelete
-                    }
-                    onPress={() => this.deleteOrg()}
-                  >
-                    Delete
-                  </JCButton>
-                ) : null}
-              </View>
-            ) : null}
-            {this.state.isEditable && (this.state.editMode || this.state.showAccountSettings) ? (
-              <Text style={this.styles.style.myProfileErrorValidation}>
-                {this.state.validationText}
-              </Text>
-            ) : null}
-          </View>
-        </View>
 
-        <View style={this.styles.style.myProfileMainContainer}>
-          <View style={this.styles.style.profileScreenLeftCard}>
-            <View style={this.styles.style.myProfileImageWrapper}>
-              <Image
-                style={this.styles.style.myProfileImage}
-                source={
-                  this.state.profileImage == ""
-                    ? require("../../assets/profile-placeholder.png")
-                    : this.state.profileImage
-                }
-                onError={() => {
-                  this.getProfileImage()
-                }}
-              ></Image>
-              {this.state.isEditable && this.state.editMode ? (
-                <View style={this.styles.style.fileInputWrapper}>
-                  <JCButton
-                    buttonType={
-                      brand == "oneStory"
-                        ? ButtonTypes.SolidProfileOneStory
-                        : ButtonTypes.SolidProfile
-                    }
-                    onPress={() => {
-                      null
-                    }}
-                  >
-                    Set Logo
-                  </JCButton>
-                  <input
-                    data-testId="org-image"
-                    style={{
-                      cursor: "pointer",
-                      fontSize: 200,
-                      position: "absolute",
-                      top: "0px",
-                      right: "0px",
-                      opacity: "0",
-                    }}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => this.onProfileImageChange(e)}
-                  />
-                </View>
+  const brand = Brand()
+  return organizationDetails != null ? (
+    <ScrollView>
+      <View style={styles.myProfileTopButtons}>
+        {isEditable && (editMode || showAccountSettings) ? (
+          <Text style={styles.profileFontTitle}>Create Organization/Church Profile</Text>
+        ) : (
+          <Text style={styles.profileFontTitle}>{organizationDetails.orgName}</Text>
+        )}
+        <View style={styles.myProfileTopButtonsExternalContainer}>
+          {isEditable ? (
+            <View style={styles.myProfileTopButtonsInternalContainer}>
+              {editMode ? (
+                <JCButton
+                  enabled={dirty}
+                  testID="org-save"
+                  buttonType={
+                    brand == "oneStory"
+                      ? ButtonTypes.SolidRightMarginOneStory
+                      : ButtonTypes.SolidRightMargin
+                  }
+                  onPress={async () => {
+                    await finalizeProfile()
+                  }}
+                >
+                  Save Profile
+                </JCButton>
               ) : null}
-              {/*<Text style={this.styles.style.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
+              {props.loadId && showAccountSettings ? (
+                <JCButton
+                  buttonType={
+                    brand == "oneStory"
+                      ? ButtonTypes.SolidProfileDeleteOneStory
+                      : ButtonTypes.SolidProfileDelete
+                  }
+                  onPress={() => deleteOrg()}
+                >
+                  Delete
+                </JCButton>
+              ) : null}
             </View>
-            <View style={this.styles.style.myProfilePersonalInfoWrapper}>
-              <Text style={this.styles.style.fontFormName}>
-                {this.state.OrganizationDetails.orgName}
-              </Text>
-              {this.state.isEditable && this.state.editMode ? (
-                <Text style={this.styles.style.fontFormSmall}>One sentence about us</Text>
-              ) : null}
-              <EditableText
-                onChange={(e) => {
-                  this.handleInputChange(e, "aboutMeShort")
-                }}
-                placeholder="Short sentence about me"
-                multiline={true}
-                placeholderTextColor="#757575"
-                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={this.styles.style.fontFormAboutMe}
-                testID="org-aboutMeShort"
-                value={this.state.OrganizationDetails.aboutMeShort ?? ""}
-                isEditable={this.state.isEditable && this.state.editMode}
-              ></EditableText>
+          ) : null}
+          {isEditable && (editMode || showAccountSettings) ? (
+            <Text style={styles.myProfileErrorValidation}>{validationText}</Text>
+          ) : null}
+        </View>
+      </View>
 
-              <View style={this.styles.style.myProfileCoordinates}>
-                <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}>
-                  <Image
-                    style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }}
-                    source={require("../../assets/svg/pin 2.svg")}
-                  ></Image>
-                  {this.state.OrganizationDetails.location?.geocodeFull
-                    ? this.state.OrganizationDetails.location.geocodeFull
-                    : "Location not defined"}
-                </Text>
-                {this.state.isEditable &&
-                this.state.OrganizationDetails.profileState !== "Incomplete" ? (
-                  <JCButton
-                    buttonType={ButtonTypes.EditButton}
-                    onPress={() => this.handleEditMode()}
-                  >
-                    {this.state.editMode ? "View Profile" : "Edit Profile"}
-                  </JCButton>
-                ) : null}
+      <View style={styles.myProfileMainContainer}>
+        <View style={styles.profileScreenLeftCard}>
+          <View style={styles.myProfileImageWrapper}>
+            <Image
+              style={styles.myProfileImage}
+              source={
+                profileImage == "" ? require("../../assets/profile-placeholder.png") : profileImage
+              }
+              onError={() => {
+                getProfileImage()
+              }}
+            ></Image>
+            {isEditable && editMode ? (
+              <View style={styles.fileInputWrapper}>
+                <JCButton
+                  buttonType={
+                    brand == "oneStory"
+                      ? ButtonTypes.SolidProfileOneStory
+                      : ButtonTypes.SolidProfile
+                  }
+                  onPress={() => {
+                    null
+                  }}
+                >
+                  Set Logo
+                </JCButton>
+                <input
+                  data-testId="org-image"
+                  style={{
+                    cursor: "pointer",
+                    fontSize: 200,
+                    position: "absolute",
+                    top: "0px",
+                    right: "0px",
+                    opacity: "0",
+                  }}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => onProfileImageChange(e)}
+                />
               </View>
-              <Text style={this.styles.style.fontFormSmallGrey}>
+            ) : null}
+            {/*<Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
+          </View>
+          <View style={styles.myProfilePersonalInfoWrapper}>
+            <Text style={styles.fontFormName}>{organizationDetails.orgName}</Text>
+            {isEditable && editMode ? (
+              <Text style={styles.fontFormSmall}>One sentence about us</Text>
+            ) : null}
+            <EditableText
+              onChange={(e) => {
+                handleInputChange(e, "aboutMeShort")
+              }}
+              placeholder="Short sentence about me"
+              multiline={true}
+              placeholderTextColor="#757575"
+              textStyle={styles.fontFormSmallDarkGrey}
+              inputStyle={styles.fontFormAboutMe}
+              testID="org-aboutMeShort"
+              value={organizationDetails.aboutMeShort ?? ""}
+              isEditable={isEditable && editMode}
+            ></EditableText>
+
+            <View style={styles.myProfileCoordinates}>
+              <Text style={styles.fontFormSmallDarkGreyCoordinates}>
                 <Image
-                  style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }}
-                  source={require("../../assets/svg/calendar.svg")}
+                  style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }}
+                  source={require("../../assets/svg/pin 2.svg")}
                 ></Image>
-                Joined:{" "}
-                {this.state.OrganizationDetails.joined
-                  ? moment(this.state.OrganizationDetails.joined).format("MMMM Do YYYY")
-                  : "Join date unknown"}
+                {organizationDetails.location?.geocodeFull
+                  ? organizationDetails.location.geocodeFull
+                  : "Location not defined"}
               </Text>
-              <Text style={this.styles.style.fontFormSmallGrey}>
-                <Image
-                  style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }}
-                  source={require("../../assets/svg/church.svg")}
-                ></Image>
-                {this.state.OrganizationDetails.orgName
-                  ? this.state.OrganizationDetails.orgName
-                  : "No Organization Name"}
-              </Text>
-              {/*!this.state.isEditable ?
-                  <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(this.state.OrganizationDetails.id, this.state.OrganizationDetails.given_name + " " + this.state.OrganizationDetails.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
+              {isEditable && organizationDetails.profileState !== "Incomplete" ? (
+                <JCButton buttonType={ButtonTypes.EditButton} onPress={() => handleEditMode()}>
+                  {editMode ? "View Profile" : "Edit Profile"}
+                </JCButton>
+              ) : null}
+            </View>
+            <Text style={styles.fontFormSmallGrey}>
+              <Image
+                style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }}
+                source={require("../../assets/svg/calendar.svg")}
+              ></Image>
+              Joined:{" "}
+              {organizationDetails.joined
+                ? moment(organizationDetails.joined).format("MMMM Do YYYY")
+                : "Join date unknown"}
+            </Text>
+            <Text style={styles.fontFormSmallGrey}>
+              <Image
+                style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }}
+                source={require("../../assets/svg/church.svg")}
+              ></Image>
+              {organizationDetails.orgName ? organizationDetails.orgName : "No Organization Name"}
+            </Text>
+            {/*!isEditable ?
+                  <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(organizationDetails.id, organizationDetails.given_name + " " + organizationDetails.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
                 : null*/}
 
-              {this.state.isEditable &&
-              this.state.OrganizationDetails.profileState !== "Incomplete" &&
-              constants["SETTING_ISVISIBLE_PROFILE_MESSAGES"] ? (
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderTopWidth: 1,
-                    borderColor: "#33333320",
-                    paddingVertical: 10,
-                  }}
-                >
-                  <JCButton
-                    testID="org-setmap"
-                    buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-                    onPress={() => console.error("messages not yet supported")}
-                  >
-                    Messages
-                  </JCButton>
-                </View>
-              ) : null}
-              {this.state.isEditable &&
-              this.state.OrganizationDetails.profileState !== "Incomplete" &&
-              constants["SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS"] ? (
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomColor: "#33333320",
-                    paddingVertical: 10,
-                    borderRightWidth: this.state.showAccountSettings ? 7 : 0,
-                    borderRightColor: "#F0493E",
-                  }}
-                >
-                  <JCButton
-                    buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-                    onPress={() =>
-                      this.setState({
-                        showAccountSettings: !this.state.showAccountSettings,
-                        editMode: false,
-                      })
-                    }
-                  >
-                    Account Settings
-                  </JCButton>
-                </View>
-              ) : null}
-            </View>
-
-            {this.state.isEditable && this.state.editMode ? (
-              <Text style={this.styles.style.fontFormSmallHeader}>Public Location</Text>
-            ) : null}
-            {this.state.isEditable && this.state.editMode ? (
-              <EditableLocation
-                onChange={(value: any, location: any) => {
-                  if (location) {
-                    this.handleInputChange(
-                      {
-                        latitude: location.lat,
-                        longitude: location.lng,
-                        geocodeFull: value,
-                        randomLatitude: this.state.OrganizationDetails.location?.randomLatitude
-                          ? this.state.OrganizationDetails.location.randomLatitude
-                          : Math.random() * 0.04 - 0.02,
-                        randomLongitude: this.state.OrganizationDetails.location?.randomLongitude
-                          ? this.state.OrganizationDetails.location.randomLongitude
-                          : Math.random() * 0.04 - 0.02,
-                      },
-                      "location"
-                    )
-                  }
+            {isEditable &&
+            organizationDetails.profileState !== "Incomplete" &&
+            constants["SETTING_ISVISIBLE_PROFILE_MESSAGES"] ? (
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderTopWidth: 1,
+                  borderColor: "#33333320",
+                  paddingVertical: 10,
                 }}
-                multiline={false}
-                textStyle={this.styles.style.fontRegular}
-                inputStyle={this.styles.style.groupNameInput}
-                value={this.state.OrganizationDetails.location?.geocodeFull ?? ""}
-                isEditable={this.state.isEditable && this.state.editMode}
-                citiesOnly={true}
-              ></EditableLocation>
-            ) : null}
-
-            {!this.state.editMode ? (
-              <View>
-                <Text
-                  style={{
-                    fontFamily: "Graphik-Bold-App",
-                    fontSize: 20,
-                    lineHeight: 25,
-                    letterSpacing: -0.3,
-                    color: "#333333",
-                    paddingTop: 48,
-                    paddingBottom: 12,
-                  }}
+              >
+                <JCButton
+                  testID="org-setmap"
+                  buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
+                  onPress={() => console.error("messages not yet supported")}
                 >
-                  Members ({this.state.OrganizationDetails.admins.length - 1})
-                </Text>
-                <View style={this.styles.style.groupAttendeesPictures}>
-                  {this.state.OrganizationDetails.admins.map((id: any, index: any) => {
-                    if (id === this.state.OrganizationDetails.superAdmin) {
-                      return null
-                    }
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                          this.showProfile(id)
-                        }}
-                      >
-                        <ProfileImage key={index} user={id} size="small" />
-                      </TouchableOpacity>
-                    )
-                  })}
-                </View>
-
-                <Text
-                  style={{
-                    fontFamily: "Graphik-Bold-App",
-                    fontSize: 20,
-                    lineHeight: 25,
-                    letterSpacing: -0.3,
-                    color: "#333333",
-                    paddingBottom: 12,
-                  }}
-                >
-                  Administrator
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.showProfile(this.state.OrganizationDetails.superAdmin)
-                  }}
-                >
-                  <ProfileImage user={this.state.OrganizationDetails.superAdmin} size="small" />
-                </TouchableOpacity>
+                  Messages
+                </JCButton>
               </View>
             ) : null}
-
-            {this.state.isEditable && this.state.editMode ? (
-              <Text style={this.styles.style.profilePrivateInformation}>Private Information</Text>
-            ) : null}
-            {this.state.isEditable && this.state.editMode ? (
-              <View style={{ backgroundColor: "#FFFFFF", width: "100%", marginBottom: 30 }}>
-                <View>
-                  <View style={this.styles.style.fontFormSmall}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>Address
-                  </View>
-                  <TextInput
-                    testID="org-Address"
-                    style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.address ?? ""}
-                    onChange={(e) => {
-                      this.handleInputChange(e, "address")
-                    }}
-                  />
-                </View>
-                <View>
-                  <View style={this.styles.style.fontFormSmall}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>City
-                  </View>
-                  <TextInput
-                    testID="org-City"
-                    style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.city ?? ""}
-                    onChange={(e) => {
-                      this.handleInputChange(e, "city")
-                    }}
-                  />
-                </View>
-                <View>
-                  <View style={this.styles.style.fontFormSmall}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>Province/State
-                  </View>
-                  <TextInput
-                    testID="org-Province"
-                    style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.province ?? ""}
-                    onChange={(e) => {
-                      this.handleInputChange(e, "province")
-                    }}
-                  />
-                </View>
-                <View>
-                  <View style={this.styles.style.fontFormSmall}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>Postal/Zip Code
-                  </View>
-                  <TextInput
-                    testID="org-PostalCode"
-                    style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.postalCode ?? ""}
-                    onChange={(e) => {
-                      this.handleInputChange(e, "postalCode")
-                    }}
-                  />
-                </View>
-                <View>
-                  <View style={this.styles.style.fontFormSmall}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>Country
-                  </View>
-                  <TextInput
-                    testID="org-Country"
-                    style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.country ?? ""}
-                    onChange={(e) => {
-                      this.handleInputChange(e, "country")
-                    }}
-                  />
-                </View>
-                <View>
-                  <View style={this.styles.style.fontFormSmall}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Email Address
-                  </View>
-                  <TextInput
-                    testID="org-Email"
-                    style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.adminEmail ?? ""}
-                    onChange={(e) => {
-                      this.handleInputChange(e, "adminEmail")
-                    }}
-                  />
-                </View>
-                <View>
-                  <View style={this.styles.style.fontFormSmall}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Phone #
-                  </View>
-                  <TextInput
-                    testID="org-Phone"
-                    style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.phone ?? ""}
-                    onChange={(e) => {
-                      this.handleInputChange(e, "phone")
-                    }}
-                  />
-                </View>
+            {isEditable &&
+            organizationDetails.profileState !== "Incomplete" &&
+            constants["SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS"] ? (
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#33333320",
+                  paddingVertical: 10,
+                  borderRightWidth: showAccountSettings ? 7 : 0,
+                  borderRightColor: "#F0493E",
+                }}
+              >
+                <JCButton
+                  buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
+                  onPress={() => {
+                    setShowAccountSettings(!showAccountSettings)
+                    setEditMode(false)
+                  }}
+                >
+                  Account Settings
+                </JCButton>
               </View>
             ) : null}
           </View>
 
-          {!this.state.showAccountSettings ? (
-            <View style={this.styles.style.profileScreenRightCard}>
-              <View style={{ width: "100%" }}>{this.renderMap()}</View>
-              {this.state.isEditable && this.state.editMode ? (
-                <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us about your Org</Text>
-              ) : null}
-              {this.state.isEditable && this.state.editMode ? (
-                <Text style={this.styles.style.myprofileAboutMe}>
-                  <Text style={this.styles.style.fontFormMandatory}>*</Text>About us
+          {isEditable && editMode ? (
+            <Text style={styles.fontFormSmallHeader}>Public Location</Text>
+          ) : null}
+          {isEditable && editMode ? (
+            <EditableLocation
+              onChange={(value: any, location: any) => {
+                if (location) {
+                  handleInputChange(
+                    {
+                      latitude: location.lat,
+                      longitude: location.lng,
+                      geocodeFull: value,
+                      randomLatitude: organizationDetails.location?.randomLatitude
+                        ? organizationDetails.location.randomLatitude
+                        : Math.random() * 0.04 - 0.02,
+                      randomLongitude: organizationDetails.location?.randomLongitude
+                        ? organizationDetails.location.randomLongitude
+                        : Math.random() * 0.04 - 0.02,
+                    },
+                    "location"
+                  )
+                }
+              }}
+              multiline={false}
+              textStyle={styles.fontRegular}
+              inputStyle={styles.groupNameInput}
+              value={organizationDetails.location?.geocodeFull ?? ""}
+              isEditable={isEditable && editMode}
+              citiesOnly={true}
+            ></EditableLocation>
+          ) : null}
+
+          {!editMode ? (
+            <View>
+              <Text
+                style={{
+                  fontFamily: "Graphik-Bold-App",
+                  fontSize: 20,
+                  lineHeight: 25,
+                  letterSpacing: -0.3,
+                  color: "#333333",
+                  paddingTop: 48,
+                  paddingBottom: 12,
+                }}
+              >
+                Members ({organizationDetails.admins.length - 1})
+              </Text>
+              <View style={styles.groupAttendeesPictures}>
+                {organizationDetails.admins.map((id: any, index: any) => {
+                  if (id === organizationDetails.superAdmin) {
+                    return null
+                  }
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        showProfile(id)
+                      }}
+                    >
+                      <ProfileImage key={index} user={id} size="small" />
+                    </TouchableOpacity>
+                  )
+                })}
+              </View>
+
+              <Text
+                style={{
+                  fontFamily: "Graphik-Bold-App",
+                  fontSize: 20,
+                  lineHeight: 25,
+                  letterSpacing: -0.3,
+                  color: "#333333",
+                  paddingBottom: 12,
+                }}
+              >
+                Administrator
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  showProfile(organizationDetails.superAdmin)
+                }}
+              >
+                <ProfileImage user={organizationDetails.superAdmin} size="small" />
+              </TouchableOpacity>
+            </View>
+          ) : null}
+
+          {isEditable && editMode ? (
+            <Text style={styles.profilePrivateInformation}>Private Information</Text>
+          ) : null}
+          {isEditable && editMode ? (
+            <View style={{ backgroundColor: "#FFFFFF", width: "100%", marginBottom: 30 }}>
+              <View>
+                <View style={styles.fontFormSmall}>
+                  <Text style={styles.fontFormMandatory}>*</Text>Address
+                </View>
+                <TextInput
+                  testID="org-Address"
+                  style={styles.fontFormMediumInput}
+                  value={organizationDetails.address ?? ""}
+                  onChange={(e) => {
+                    handleInputChange(e, "address")
+                  }}
+                />
+              </View>
+              <View>
+                <View style={styles.fontFormSmall}>
+                  <Text style={styles.fontFormMandatory}>*</Text>City
+                </View>
+                <TextInput
+                  testID="org-City"
+                  style={styles.fontFormMediumInput}
+                  value={organizationDetails.city ?? ""}
+                  onChange={(e) => {
+                    handleInputChange(e, "city")
+                  }}
+                />
+              </View>
+              <View>
+                <View style={styles.fontFormSmall}>
+                  <Text style={styles.fontFormMandatory}>*</Text>Province/State
+                </View>
+                <TextInput
+                  testID="org-Province"
+                  style={styles.fontFormMediumInput}
+                  value={organizationDetails.province ?? ""}
+                  onChange={(e) => {
+                    handleInputChange(e, "province")
+                  }}
+                />
+              </View>
+              <View>
+                <View style={styles.fontFormSmall}>
+                  <Text style={styles.fontFormMandatory}>*</Text>Postal/Zip Code
+                </View>
+                <TextInput
+                  testID="org-PostalCode"
+                  style={styles.fontFormMediumInput}
+                  value={organizationDetails.postalCode ?? ""}
+                  onChange={(e) => {
+                    handleInputChange(e, "postalCode")
+                  }}
+                />
+              </View>
+              <View>
+                <View style={styles.fontFormSmall}>
+                  <Text style={styles.fontFormMandatory}>*</Text>Country
+                </View>
+                <TextInput
+                  testID="org-Country"
+                  style={styles.fontFormMediumInput}
+                  value={organizationDetails.country ?? ""}
+                  onChange={(e) => {
+                    handleInputChange(e, "country")
+                  }}
+                />
+              </View>
+              <View>
+                <View style={styles.fontFormSmall}>
+                  <Text style={styles.fontFormMandatory}>*</Text>Admin Email Address
+                </View>
+                <TextInput
+                  testID="org-Email"
+                  style={styles.fontFormMediumInput}
+                  value={organizationDetails.adminEmail ?? ""}
+                  onChange={(e) => {
+                    handleInputChange(e, "adminEmail")
+                  }}
+                />
+              </View>
+              <View>
+                <View style={styles.fontFormSmall}>
+                  <Text style={styles.fontFormMandatory}>*</Text>Admin Phone #
+                </View>
+                <TextInput
+                  testID="org-Phone"
+                  style={styles.fontFormMediumInput}
+                  value={organizationDetails.phone ?? ""}
+                  onChange={(e) => {
+                    handleInputChange(e, "phone")
+                  }}
+                />
+              </View>
+            </View>
+          ) : null}
+        </View>
+
+        {!showAccountSettings ? (
+          <View style={styles.profileScreenRightCard}>
+            <View style={{ width: "100%" }}>{renderMap()}</View>
+            {isEditable && editMode ? (
+              <Text style={styles.fontMyProfileLeftTop}>Tell us about your Org</Text>
+            ) : null}
+            {isEditable && editMode ? (
+              <Text style={styles.myprofileAboutMe}>
+                <Text style={styles.fontFormMandatory}>*</Text>About us
+              </Text>
+            ) : (
+              <Text style={styles.myprofileAboutMe}>About us</Text>
+            )}
+            <EditableText
+              onChange={(e) => {
+                handleInputChange(e, "aboutMeLong")
+              }}
+              placeholder="type here"
+              multiline={true}
+              testID="org-aboutMeLong"
+              textStyle={styles.fontFormSmallDarkGrey}
+              inputStyle={{
+                borderWidth: 1,
+                borderColor: "#dddddd",
+                marginTop: 15,
+                marginBottom: 60,
+                width: "100%",
+                paddingTop: 10,
+                paddingRight: 10,
+                paddingBottom: 10,
+                paddingLeft: 10,
+                fontFamily: "Graphik-Regular-App",
+                fontSize: 16,
+                lineHeight: 28,
+              }}
+              value={organizationDetails.aboutMeLong ?? ""}
+              isEditable={isEditable && editMode}
+            ></EditableText>
+
+            <Text style={styles.fontFormSmall}>&nbsp;</Text>
+            {isEditable && editMode ? (
+              <View>
+                <Text style={styles.fontBold}>
+                  <Text style={styles.fontFormMandatory}>*</Text>Tell us about your organization
                 </Text>
-              ) : (
-                <Text style={this.styles.style.myprofileAboutMe}>About us</Text>
-              )}
-              <EditableText
-                onChange={(e) => {
-                  this.handleInputChange(e, "aboutMeLong")
-                }}
-                placeholder="type here"
-                multiline={true}
-                testID="org-aboutMeLong"
-                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={{
-                  borderWidth: 1,
-                  borderColor: "#dddddd",
-                  marginTop: 15,
-                  marginBottom: 60,
-                  width: "100%",
-                  paddingTop: 10,
-                  paddingRight: 10,
-                  paddingBottom: 10,
-                  paddingLeft: 10,
-                  fontFamily: "Graphik-Regular-App",
-                  fontSize: 16,
-                  lineHeight: 28,
-                }}
-                value={this.state.OrganizationDetails.aboutMeLong ?? ""}
-                isEditable={this.state.isEditable && this.state.editMode}
-              ></EditableText>
+                {(isEditable && editMode) || organizationDetails.orgName ? (
+                  <View>
+                    <View style={styles.fontFormSmall}>Organization Name</View>
+                    <EditableText
+                      onChange={(e) => {
+                        handleInputChange(e, "orgName")
+                      }}
+                      multiline={false}
+                      testID="org-orgName"
+                      textStyle={styles.fontFormSmallDarkGrey}
+                      inputStyle={styles.myProfileOrgTypeInput}
+                      value={organizationDetails.orgName}
+                      isEditable={isEditable && editMode}
+                    ></EditableText>
+                  </View>
+                ) : null}
 
-              <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
-              {this.state.isEditable && this.state.editMode ? (
-                <View>
-                  <Text style={this.styles.style.fontBold}>
-                    <Text style={this.styles.style.fontFormMandatory}>*</Text>Tell us about your
-                    organization
-                  </Text>
-                  {(this.state.isEditable && this.state.editMode) ||
-                  this.state.OrganizationDetails.orgName ? (
-                    <View>
-                      <View style={this.styles.style.fontFormSmall}>Organization Name</View>
-                      <EditableText
-                        onChange={(e) => {
-                          this.handleInputChange(e, "orgName")
-                        }}
-                        multiline={false}
-                        testID="org-orgName"
-                        textStyle={this.styles.style.fontFormSmallDarkGrey}
-                        inputStyle={this.styles.style.myProfileOrgTypeInput}
-                        value={this.state.OrganizationDetails.orgName}
-                        isEditable={this.state.isEditable && this.state.editMode}
-                      ></EditableText>
-                    </View>
-                  ) : null}
-
-                  {(this.state.isEditable && this.state.editMode) ||
-                  (this.state.OrganizationDetails.orgType &&
-                    this.state.OrganizationDetails.orgType !== "None") ? (
-                    <View style={{ marginTop: 15 }}>
-                      <View style={this.styles.style.fontFormSmall}>Type of Organization</View>
-                      {this.state.isEditable && this.state.editMode ? (
-                        <View style={this.styles.style.myProfileOrgView}>
-                          <Picker
-                            testID="org-typeOfOrg"
-                            style={this.styles.style.myprofilePicker}
-                            onValueChange={(itemValue) => {
-                              this.handleInputChange(itemValue, "orgType")
+                {(isEditable && editMode) ||
+                (organizationDetails.orgType && organizationDetails.orgType !== "None") ? (
+                  <View style={{ marginTop: 15 }}>
+                    <View style={styles.fontFormSmall}>Type of Organization</View>
+                    {isEditable && editMode ? (
+                      <View style={styles.myProfileOrgView}>
+                        <Picker
+                          testID="org-typeOfOrg"
+                          style={styles.myprofilePicker}
+                          onValueChange={(itemValue) => {
+                            handleInputChange(itemValue, "orgType")
+                          }}
+                          selectedValue={
+                            (orgTypes.includes(organizationDetails.orgType ?? "")
+                              ? organizationDetails.orgType
+                              : organizationDetails.orgType === null ||
+                                organizationDetails.orgType === "None"
+                              ? "None"
+                              : "") ?? undefined
+                          }
+                        >
+                          <Picker.Item label={"None Selected"} value={"None"} />
+                          {orgTypes.map((item, index) => {
+                            return <Picker.Item key={index} label={item} value={item} />
+                          })}
+                          <Picker.Item label={"Other"} value={""} />
+                        </Picker>
+                        {organizationDetails.orgType === "" ||
+                        (!orgTypes.includes(organizationDetails.orgType ?? "") &&
+                          organizationDetails.orgType !== "None" &&
+                          organizationDetails.orgType !== null) ? (
+                          <EditableText
+                            onChange={(e) => {
+                              handleInputChange(e, "orgType")
                             }}
-                            selectedValue={
-                              (orgTypes.includes(this.state.OrganizationDetails.orgType ?? "")
-                                ? this.state.OrganizationDetails.orgType
-                                : this.state.OrganizationDetails.orgType === null ||
-                                  this.state.OrganizationDetails.orgType === "None"
-                                ? "None"
-                                : "") ?? undefined
-                            }
-                          >
-                            <Picker.Item label={"None Selected"} value={"None"} />
-                            {orgTypes.map((item, index) => {
-                              return <Picker.Item key={index} label={item} value={item} />
-                            })}
-                            <Picker.Item label={"Other"} value={""} />
-                          </Picker>
-                          {this.state.OrganizationDetails.orgType === "" ||
-                          (!orgTypes.includes(this.state.OrganizationDetails.orgType ?? "") &&
-                            this.state.OrganizationDetails.orgType !== "None" &&
-                            this.state.OrganizationDetails.orgType !== null) ? (
-                            <EditableText
-                              onChange={(e) => {
-                                this.handleInputChange(e, "orgType")
-                              }}
-                              multiline={false}
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={this.styles.style.myProfileOrgTypeInput}
-                              value={this.state.OrganizationDetails.orgType ?? ""}
-                              isEditable={this.state.isEditable && this.state.editMode}
-                            ></EditableText>
-                          ) : null}
+                            multiline={false}
+                            textStyle={styles.fontFormSmallDarkGrey}
+                            inputStyle={styles.myProfileOrgTypeInput}
+                            value={organizationDetails.orgType ?? ""}
+                            isEditable={isEditable && editMode}
+                          ></EditableText>
+                        ) : null}
+                      </View>
+                    ) : organizationDetails.orgType && organizationDetails.orgType !== "None" ? (
+                      <EditableText
+                        multiline={true}
+                        textStyle={styles.fontFormSmallDarkGrey}
+                        value={organizationDetails.orgType}
+                        isEditable={false}
+                      />
+                    ) : null}
+                  </View>
+                ) : null}
+
+                {orgTypes.includes(organizationDetails.orgType ?? "") &&
+                (organizationDetails.orgSize || editMode) ? (
+                  <View style={{ marginTop: 15 }}>
+                    {isEditable && editMode ? (
+                      <View>
+                        <View style={styles.fontFormSmall}>
+                          How many employees are there in the organization?
                         </View>
-                      ) : this.state.OrganizationDetails.orgType &&
-                        this.state.OrganizationDetails.orgType !== "None" ? (
+                        <Picker
+                          testID="org-numEmployees"
+                          style={styles.myprofilePicker}
+                          onValueChange={(itemValue) => {
+                            handleInputChange(itemValue, "orgSize")
+                          }}
+                          selectedValue={organizationDetails.orgSize ?? undefined}
+                        >
+                          <Picker.Item label={"None Selected"} value={""} />
+                          {numberOfEmployees.map((item, index) => {
+                            return <Picker.Item key={index} label={item} value={item} />
+                          })}
+                        </Picker>
+                      </View>
+                    ) : organizationDetails.orgSize ? (
+                      <View>
+                        <View style={styles.fontFormSmall}>Employees</View>
+
                         <EditableText
                           multiline={true}
-                          textStyle={this.styles.style.fontFormSmallDarkGrey}
-                          value={this.state.OrganizationDetails.orgType}
+                          textStyle={styles.fontFormSmallDarkGrey}
+                          value={organizationDetails.orgSize}
                           isEditable={false}
                         />
-                      ) : null}
-                    </View>
-                  ) : null}
+                      </View>
+                    ) : null}
+                  </View>
+                ) : null}
 
-                  {orgTypes.includes(this.state.OrganizationDetails.orgType ?? "") &&
-                  (this.state.OrganizationDetails.orgSize || this.state.editMode) ? (
-                    <View style={{ marginTop: 15 }}>
-                      {this.state.isEditable && this.state.editMode ? (
-                        <View>
-                          <View style={this.styles.style.fontFormSmall}>
-                            How many employees are there in the organization?
-                          </View>
-                          <Picker
-                            testID="org-numEmployees"
-                            style={this.styles.style.myprofilePicker}
-                            onValueChange={(itemValue) => {
-                              this.handleInputChange(itemValue, "orgSize")
-                            }}
-                            selectedValue={this.state.OrganizationDetails.orgSize ?? undefined}
-                          >
-                            <Picker.Item label={"None Selected"} value={""} />
-                            {numberOfEmployees.map((item, index) => {
-                              return <Picker.Item key={index} label={item} value={item} />
-                            })}
-                          </Picker>
-                        </View>
-                      ) : this.state.OrganizationDetails.orgSize ? (
-                        <View>
-                          <View style={this.styles.style.fontFormSmall}>Employees</View>
+                {orgTypesChurches.includes(organizationDetails.orgType ?? "") &&
+                (organizationDetails.sundayAttendance || editMode) ? (
+                  <View style={{ marginTop: 15 }}>
+                    {isEditable && editMode ? (
+                      <View>
+                        <View style={styles.fontFormSmall}>Average Sunday morning attendance</View>
+                        <Picker
+                          testID="org-aveSunday"
+                          style={styles.myprofilePicker}
+                          onValueChange={(itemValue) => {
+                            handleInputChange(itemValue, "sundayAttendance")
+                          }}
+                          selectedValue={organizationDetails.sundayAttendance ?? undefined}
+                        >
+                          <Picker.Item label={"None Selected"} value={""} />
+                          {sundayAttendance.map((item, index) => {
+                            return <Picker.Item key={index} label={item} value={item} />
+                          })}
+                        </Picker>
+                      </View>
+                    ) : organizationDetails.sundayAttendance ? (
+                      <View>
+                        <View style={styles.fontFormSmall}>Average Sunday morning attendance</View>
+                        <EditableText
+                          multiline={true}
+                          textStyle={styles.fontFormSmallDarkGrey}
+                          value={organizationDetails.sundayAttendance}
+                          isEditable={false}
+                        />
+                      </View>
+                    ) : null}
+                  </View>
+                ) : null}
 
-                          <EditableText
-                            multiline={true}
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            value={this.state.OrganizationDetails.orgSize}
-                            isEditable={false}
-                          />
-                        </View>
-                      ) : null}
-                    </View>
-                  ) : null}
+                {orgTypes.includes(organizationDetails.orgType ?? "") &&
+                (organizationDetails.numberVolunteers || editMode) ? (
+                  <View style={{ marginTop: 15 }}>
+                    {isEditable && editMode ? (
+                      <View>
+                        <View style={styles.fontFormSmall}>Number of volunteers</View>
+                        <Picker
+                          testID="org-numVolunteers"
+                          style={styles.myprofilePicker}
+                          onValueChange={(itemValue) => {
+                            handleInputChange(itemValue, "numberVolunteers")
+                          }}
+                          selectedValue={organizationDetails.numberVolunteers ?? undefined}
+                        >
+                          <Picker.Item label={"None Selected"} value={""} />
+                          {numberOfEmployees.map((item, index) => {
+                            return <Picker.Item key={index} label={item} value={item} />
+                          })}
+                        </Picker>
+                      </View>
+                    ) : organizationDetails.numberVolunteers ? (
+                      <View>
+                        <View style={styles.fontFormSmall}>Number of volunteers</View>
+                        <EditableText
+                          multiline={true}
+                          textStyle={styles.fontFormSmallDarkGrey}
+                          value={organizationDetails.numberVolunteers}
+                          isEditable={false}
+                        />
+                      </View>
+                    ) : null}
+                  </View>
+                ) : null}
 
-                  {orgTypesChurches.includes(this.state.OrganizationDetails.orgType ?? "") &&
-                  (this.state.OrganizationDetails.sundayAttendance || this.state.editMode) ? (
-                    <View style={{ marginTop: 15 }}>
-                      {this.state.isEditable && this.state.editMode ? (
-                        <View>
-                          <View style={this.styles.style.fontFormSmall}>
-                            Average Sunday morning attendance
-                          </View>
-                          <Picker
-                            testID="org-aveSunday"
-                            style={this.styles.style.myprofilePicker}
-                            onValueChange={(itemValue) => {
-                              this.handleInputChange(itemValue, "sundayAttendance")
-                            }}
-                            selectedValue={
-                              this.state.OrganizationDetails.sundayAttendance ?? undefined
-                            }
-                          >
-                            <Picker.Item label={"None Selected"} value={""} />
-                            {sundayAttendance.map((item, index) => {
-                              return <Picker.Item key={index} label={item} value={item} />
-                            })}
-                          </Picker>
-                        </View>
-                      ) : this.state.OrganizationDetails.sundayAttendance ? (
-                        <View>
-                          <View style={this.styles.style.fontFormSmall}>
-                            Average Sunday morning attendance
-                          </View>
-                          <EditableText
-                            multiline={true}
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            value={this.state.OrganizationDetails.sundayAttendance}
-                            isEditable={false}
-                          />
-                        </View>
-                      ) : null}
-                    </View>
-                  ) : null}
+                {orgTypesChurches.includes(organizationDetails.orgType ?? "") &&
+                (organizationDetails.denomination || editMode) ? (
+                  <View style={{ marginTop: 15 }}>
+                    <Text style={styles.fontFormSmall}>Denomination</Text>
+                    <EditableText
+                      onChange={(e) => {
+                        handleInputChange(e, "denomination")
+                      }}
+                      multiline={true}
+                      testID="org-denomination"
+                      textStyle={styles.fontFormSmallDarkGrey}
+                      placeholder="Type here."
+                      inputStyle={{
+                        borderWidth: 1,
+                        borderColor: "#dddddd",
+                        width: "100%",
+                        marginBottom: 15,
+                        paddingTop: 10,
+                        paddingRight: 10,
+                        paddingBottom: 10,
+                        paddingLeft: 10,
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        lineHeight: 28,
+                      }}
+                      value={organizationDetails.denomination ?? ""}
+                      isEditable={isEditable && editMode}
+                    ></EditableText>
+                  </View>
+                ) : null}
 
-                  {orgTypes.includes(this.state.OrganizationDetails.orgType ?? "") &&
-                  (this.state.OrganizationDetails.numberVolunteers || this.state.editMode) ? (
-                    <View style={{ marginTop: 15 }}>
-                      {this.state.isEditable && this.state.editMode ? (
-                        <View>
-                          <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
-                          <Picker
-                            testID="org-numVolunteers"
-                            style={this.styles.style.myprofilePicker}
-                            onValueChange={(itemValue) => {
-                              this.handleInputChange(itemValue, "numberVolunteers")
-                            }}
-                            selectedValue={
-                              this.state.OrganizationDetails.numberVolunteers ?? undefined
-                            }
-                          >
-                            <Picker.Item label={"None Selected"} value={""} />
-                            {numberOfEmployees.map((item, index) => {
-                              return <Picker.Item key={index} label={item} value={item} />
-                            })}
-                          </Picker>
-                        </View>
-                      ) : this.state.OrganizationDetails.numberVolunteers ? (
-                        <View>
-                          <View style={this.styles.style.fontFormSmall}>Number of volunteers</View>
-                          <EditableText
-                            multiline={true}
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            value={this.state.OrganizationDetails.numberVolunteers}
-                            isEditable={false}
-                          />
-                        </View>
-                      ) : null}
-                    </View>
-                  ) : null}
+                {orgTypesNonChurch.includes(organizationDetails.orgType ?? "") &&
+                (organizationDetails.pplServed || editMode) ? (
+                  <View style={{ marginTop: 15 }}>
+                    <Text style={styles.fontFormSmall}>
+                      {editMode
+                        ? "How many people do you serve?"
+                        : "People impacted by our services"}
+                    </Text>
+                    <EditableText
+                      onChange={(e) => {
+                        handleInputChange(e, "pplServed")
+                      }}
+                      multiline={true}
+                      testID="org-pplServed"
+                      textStyle={styles.fontFormSmallDarkGrey}
+                      placeholder="Type here."
+                      inputStyle={{
+                        borderWidth: 1,
+                        borderColor: "#dddddd",
+                        width: "100%",
+                        marginBottom: 15,
+                        paddingTop: 10,
+                        paddingRight: 10,
+                        paddingBottom: 10,
+                        paddingLeft: 10,
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        lineHeight: 28,
+                      }}
+                      value={organizationDetails.pplServed ?? ""}
+                      isEditable={isEditable && editMode}
+                    ></EditableText>
+                  </View>
+                ) : null}
 
-                  {orgTypesChurches.includes(this.state.OrganizationDetails.orgType ?? "") &&
-                  (this.state.OrganizationDetails.denomination || this.state.editMode) ? (
-                    <View style={{ marginTop: 15 }}>
-                      <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
-                      <EditableText
-                        onChange={(e) => {
-                          this.handleInputChange(e, "denomination")
-                        }}
-                        multiline={true}
-                        testID="org-denomination"
-                        textStyle={this.styles.style.fontFormSmallDarkGrey}
-                        placeholder="Type here."
-                        inputStyle={{
-                          borderWidth: 1,
-                          borderColor: "#dddddd",
-                          width: "100%",
-                          marginBottom: 15,
-                          paddingTop: 10,
-                          paddingRight: 10,
-                          paddingBottom: 10,
-                          paddingLeft: 10,
-                          fontFamily: "Graphik-Regular-App",
-                          fontSize: 16,
-                          lineHeight: 28,
-                        }}
-                        value={this.state.OrganizationDetails.denomination ?? ""}
-                        isEditable={this.state.isEditable && this.state.editMode}
-                      ></EditableText>
-                    </View>
-                  ) : null}
+                {organizationDetails.orgDescription || editMode ? (
+                  <View style={{ marginTop: 15 }}>
+                    <Text style={styles.fontFormSmall}>
+                      Description of church or ministry organization
+                    </Text>
+                    <EditableText
+                      onChange={(e) => {
+                        handleInputChange(e, "orgDescription")
+                      }}
+                      multiline={true}
+                      testID="org-orgDescription"
+                      textStyle={styles.fontFormSmallDarkGrey}
+                      placeholder="Type here."
+                      inputStyle={{
+                        borderWidth: 1,
+                        borderColor: "#dddddd",
+                        width: "100%",
+                        marginBottom: 15,
+                        paddingTop: 10,
+                        paddingRight: 10,
+                        paddingBottom: 10,
+                        paddingLeft: 10,
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        lineHeight: 28,
+                      }}
+                      value={organizationDetails.orgDescription ?? ""}
+                      isEditable={isEditable && editMode}
+                    ></EditableText>
+                  </View>
+                ) : null}
+              </View>
+            ) : null}
+          </View>
+        ) : (
+          <View style={styles.profileScreenRightCard}>
+            <Text style={styles.myprofileAboutMe}>Account Settings</Text>
 
-                  {orgTypesNonChurch.includes(this.state.OrganizationDetails.orgType ?? "") &&
-                  (this.state.OrganizationDetails.pplServed || this.state.editMode) ? (
-                    <View style={{ marginTop: 15 }}>
-                      <Text style={this.styles.style.fontFormSmall}>
-                        {this.state.editMode
-                          ? "How many people do you serve?"
-                          : "People impacted by our services"}
-                      </Text>
-                      <EditableText
-                        onChange={(e) => {
-                          this.handleInputChange(e, "pplServed")
-                        }}
-                        multiline={true}
-                        testID="org-pplServed"
-                        textStyle={this.styles.style.fontFormSmallDarkGrey}
-                        placeholder="Type here."
-                        inputStyle={{
-                          borderWidth: 1,
-                          borderColor: "#dddddd",
-                          width: "100%",
-                          marginBottom: 15,
-                          paddingTop: 10,
-                          paddingRight: 10,
-                          paddingBottom: 10,
-                          paddingLeft: 10,
-                          fontFamily: "Graphik-Regular-App",
-                          fontSize: 16,
-                          lineHeight: 28,
-                        }}
-                        value={this.state.OrganizationDetails.pplServed ?? ""}
-                        isEditable={this.state.isEditable && this.state.editMode}
-                      ></EditableText>
-                    </View>
-                  ) : null}
+            <EditableUsers
+              onChange={(newAdmins2: any[]) => setNewAdmins(newAdmins2)}
+              multiline={false}
+              showProfileImages={true}
+              textStyle={styles.fontFormSmallDarkGrey}
+              inputStyle={styles.fontFormLargeInput}
+              value={newAdmins}
+              isEditable={true}
+            ></EditableUsers>
+            <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => addAdmins()}>
+              <Text>Add Admins</Text>
+            </JCButton>
 
-                  {this.state.OrganizationDetails.orgDescription || this.state.editMode ? (
-                    <View style={{ marginTop: 15 }}>
-                      <Text style={this.styles.style.fontFormSmall}>
-                        Description of church or ministry organization
-                      </Text>
-                      <EditableText
-                        onChange={(e) => {
-                          this.handleInputChange(e, "orgDescription")
-                        }}
-                        multiline={true}
-                        testID="org-orgDescription"
-                        textStyle={this.styles.style.fontFormSmallDarkGrey}
-                        placeholder="Type here."
-                        inputStyle={{
-                          borderWidth: 1,
-                          borderColor: "#dddddd",
-                          width: "100%",
-                          marginBottom: 15,
-                          paddingTop: 10,
-                          paddingRight: 10,
-                          paddingBottom: 10,
-                          paddingLeft: 10,
-                          fontFamily: "Graphik-Regular-App",
-                          fontSize: 16,
-                          lineHeight: 28,
-                        }}
-                        value={this.state.OrganizationDetails.orgDescription ?? ""}
-                        isEditable={this.state.isEditable && this.state.editMode}
-                      ></EditableText>
-                    </View>
-                  ) : null}
-                </View>
-              ) : null}
-            </View>
-          ) : (
-            <View style={this.styles.style.profileScreenRightCard}>
-              <Text style={this.styles.style.myprofileAboutMe}>Account Settings</Text>
-
-              <EditableUsers
-                onChange={(newAdmins: any[]) => this.setState({ newAdmins })}
-                multiline={false}
-                showProfileImages={true}
-                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={this.styles.style.fontFormLargeInput}
-                value={this.state.newAdmins}
-                isEditable={true}
-              ></EditableUsers>
-              <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.addAdmins()}>
-                <Text>Add Admins</Text>
-              </JCButton>
-
-              {/*<EditableUsers
+            {/*<EditableUsers
                   onChange={(removeAdmins: any[]) => this.setState({ removeAdmins })}
                   multiline={false}
                   showProfileImages={true}
-                  textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.fontFormLargeInput}
-                  value={this.state.removeAdmins} isEditable={true}></EditableUsers>
+                  textStyle={styles.fontFormSmallDarkGrey}
+                  inputStyle={styles.fontFormLargeInput}
+                  value={removeAdmins} isEditable={true}></EditableUsers>
                 <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.removeAdmins()}><Text>Remove Admins</Text></JCButton>*/}
-              {/*<View style={{ ...this.styles.style.fontFormSmallDarkGrey, marginBottom: 15 }}>Alert Settings</View>
-                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Direct Messages" initState={this.state.OrganizationDetails.alertConfig?.emailDirectMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailDirectMessage") }}></JCSwitch>
-                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Group Messages" initState={this.state.OrganizationDetails.alertConfig?.emailGroupMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailGroupMessage") }}></JCSwitch>
-                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Event Messages" initState={this.state.OrganizationDetails.alertConfig?.emailEventMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailEventMessage") }}></JCSwitch>
-                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Resource Messages" initState={this.state.OrganizationDetails.alertConfig?.emailResourceMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailResourceMessage") }}></JCSwitch>
-                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Course Messages" initState={this.state.OrganizationDetails.alertConfig?.emailCourseMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailCourseMessage") }}></JCSwitch>
-                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Organization Messages" initState={this.state.OrganizationDetails.alertConfig?.emailOrgMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailOrgMessage") }}></JCSwitch>
-                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Org Messages" initState={this.state.OrganizationDetails.alertConfig?.emailPromotions == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailPromotions") }}></JCSwitch>*/}
-            </View>
-          )}
-        </View>
-      </ScrollView>
-    ) : null
-  }
+            {/*<View style={{ ...styles.fontFormSmallDarkGrey, marginBottom: 15 }}>Alert Settings</View>
+                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Direct Messages" initState={organizationDetails.alertConfig?.emailDirectMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailDirectMessage") }}></JCSwitch>
+                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Group Messages" initState={organizationDetails.alertConfig?.emailGroupMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailGroupMessage") }}></JCSwitch>
+                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Event Messages" initState={organizationDetails.alertConfig?.emailEventMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailEventMessage") }}></JCSwitch>
+                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Resource Messages" initState={organizationDetails.alertConfig?.emailResourceMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailResourceMessage") }}></JCSwitch>
+                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Course Messages" initState={organizationDetails.alertConfig?.emailCourseMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailCourseMessage") }}></JCSwitch>
+                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Organization Messages" initState={organizationDetails.alertConfig?.emailOrgMessage == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailOrgMessage") }}></JCSwitch>
+                  <JCSwitch containerWidth={500} switchLabel="Receive Email Alerts for Org Messages" initState={organizationDetails.alertConfig?.emailPromotions == "true"} onPress={(e) => { this.handleAlertInputChange(e, "emailPromotions") }}></JCSwitch>*/}
+          </View>
+        )}
+      </View>
+    </ScrollView>
+  ) : null
 }
 
 export default function Organization(props: Props): JSX.Element {

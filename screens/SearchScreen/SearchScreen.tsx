@@ -3,9 +3,9 @@ import { FlatList, Image, Text, View } from "react-native"
 import SearchBar from "../../components/Forms/SearchBar/SearchBar"
 import Header from "../../components/Header/Header"
 import ProfileCard from "../../screens/ProfilesScreen/ProfileCard"
-import { User } from "../../src/API"
+import { ResourceEpisode, User } from "../../src/API"
 export default function SearchScreen2(props: any) {
-  const [data, setData] = useState<User[]>([])
+  const [data, setData] = useState<(User | ResourceEpisode)[]>([])
   const [showListEmpty, setShowListEmpty] = useState(false)
   useEffect(() => {
     props.navigation.setOptions({

@@ -9,18 +9,19 @@ import {
   useWindowDimensions,
   View,
 } from "react-native"
+import { User } from "src/API"
 import ProfileImageNew, {
   ProfileImageQuality,
   ProfileImageStyle,
-} from "../../../components/ProfileImage/ProfileImageNew"
+} from "../../ProfileImage/ProfileImageNew"
 
-export default function SearchBarSearchItem({
+export default function SearchBarSearchItemUser({
   item,
   isFirst,
   isLast,
   clearData,
 }: {
-  item: any
+  item: User
   isFirst: boolean
   isLast: boolean
   clearData: () => void

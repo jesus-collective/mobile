@@ -8,7 +8,15 @@ import { Amplify, API, Auth, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import * as React from "react"
-import { Image, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { MapData } from "src/types"
 import { Data } from "../../components/Data/Data"
 import EditableLocation from "../../components/Forms/EditableLocation"
@@ -16,7 +24,6 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import CrmMessageBoard from "../../components/MessageBoard/CRM-MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
 import Sentry from "../../components/Sentry"
-import style from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { GetUserQuery } from "../../src/API"
 import { GetCrmRootQuery } from "../../src/API-crm"
@@ -33,6 +40,7 @@ import {
   orgTypesNonChurch,
   sundayAttendance,
 } from "./DropdownOptions"
+import { ProfileStyle } from "./ProfileStyle"
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
 Amplify.configure(awsconfig)
@@ -51,7 +59,7 @@ type CrmMessages = NonNullable<NonNullable<GetCrmRootQuery["getCRMRoot"]>["messa
 
 export default function MyProfile(props: Props): JSX.Element | null {
   const navigation = useNavigation<StackNavigationProp<any, any>>()
-  const styles = style.getInstance()
+  const styles = StyleSheet.create(ProfileStyle)
   const [showPage, setShowPage] = React.useState<"profile" | "settings" | "billing" | "admin">(
     "profile"
   )
@@ -257,17 +265,17 @@ export default function MyProfile(props: Props): JSX.Element | null {
     const brand = Brand()
     if (!userDetails) return null
     return (
-      <View style={styles.style.myProfileTopButtons}>
+      <View style={styles.myProfileTopButtons}>
         {isEditable && (editMode || showPage != "profile") ? (
-          <Text accessibilityRole="header" style={styles.style.profileFontTitle}>
+          <Text accessibilityRole="header" style={styles.profileFontTitle}>
             {props.hideOrg ? "Create Administrator's Profile" : "Tell us more about you"}
           </Text>
         ) : (
-          <Text style={styles.style.profileFontTitle}>{userDetails.given_name}&apos;s profile</Text>
+          <Text style={styles.profileFontTitle}>{userDetails.given_name}&apos;s profile</Text>
         )}
-        <View style={styles.style.myProfileTopButtonsExternalContainer}>
+        <View style={styles.myProfileTopButtonsExternalContainer}>
           {isEditable ? (
-            <View style={styles.style.myProfileTopButtonsInternalContainer}>
+            <View style={styles.myProfileTopButtonsInternalContainer}>
               {editMode ? (
                 <JCButton
                   enabled={dirty}
@@ -299,7 +307,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
             </View>
           ) : null}
           {isEditable && (editMode || showPage != "profile") ? (
-            <Text style={styles.style.myProfileErrorValidation}>{validationText}</Text>
+            <Text style={styles.myProfileErrorValidation}>{validationText}</Text>
           ) : null}
         </View>
       </View>
@@ -308,10 +316,10 @@ export default function MyProfile(props: Props): JSX.Element | null {
   const renderAdmin = (userActions: UserActions): React.ReactNode => {
     if (userActions.isMemberOf("admin")) {
       return (
-        <View style={styles.style.profileScreenRightCard}>
+        <View style={styles.profileScreenRightCard}>
           <View style={{ display: "flex", flexDirection: "column", width: "100%" }}>
             <View>
-              <Text style={styles.style.fontBold}>Admin/CRM</Text>
+              <Text style={styles.fontBold}>Admin/CRM</Text>
             </View>
             <CrmMessageBoard messages={messages} rootId={userDetails?.id} />
           </View>
@@ -328,12 +336,12 @@ export default function MyProfile(props: Props): JSX.Element | null {
     return (
       <>
         {isEditable && editMode ? (
-          <Text style={styles.style.myprofileAboutMe}>
-            <Text style={styles.style.fontFormMandatory}>*</Text>
+          <Text style={styles.myprofileAboutMe}>
+            <Text style={styles.fontFormMandatory}>*</Text>
             About me
           </Text>
         ) : (
-          <Text style={styles.style.myprofileAboutMe}>About me</Text>
+          <Text style={styles.myprofileAboutMe}>About me</Text>
         )}
         <EditableText
           accessibilityLabel="Describe yourself"
@@ -343,7 +351,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           placeholder="Type here..."
           multiline={true}
           testID="profile-aboutMeLong"
-          textStyle={styles.style.fontFormSmallDarkGrey}
+          textStyle={styles.fontFormSmallDarkGrey}
           inputStyle={{
             borderWidth: 1,
             borderColor: "#dddddd",
@@ -404,22 +412,22 @@ export default function MyProfile(props: Props): JSX.Element | null {
     return (
       <>
         {isEditable && editMode ? (
-          <Text style={styles.style.fontBold}>
-            <Text style={styles.style.fontFormMandatory}>*</Text>
+          <Text style={styles.fontBold}>
+            <Text style={styles.fontFormMandatory}>*</Text>
             My Interests
           </Text>
         ) : (
-          <Text style={styles.style.myprofileAboutMe}>Interests</Text>
+          <Text style={styles.myprofileAboutMe}>Interests</Text>
         )}
         {isEditable && editMode ? (
-          <View style={styles.style.myprofilePickerMainContainer}>
-            <View style={styles.style.myprofilePickerContainer}>
-              <View style={styles.style.myprofilePickerContainerView}>
+          <View style={styles.myprofilePickerMainContainer}>
+            <View style={styles.myprofilePickerContainer}>
+              <View style={styles.myprofilePickerContainerView}>
                 <Picker
                   accessibilityLabel="Pick your personal interests"
                   accessibilityHint="Pick an interest and then click the add button"
                   testID="profile-interest-picker"
-                  style={styles.style.myprofilePicker}
+                  style={styles.myprofilePicker}
                   onValueChange={(itemValue: any) => setInterest(itemValue)}
                   selectedValue={interest ?? undefined}
                 >
@@ -452,9 +460,9 @@ export default function MyProfile(props: Props): JSX.Element | null {
                 </Text>
               ) : null}
             </View>
-            <View style={styles.style.myprofileBadgeContainer}>
+            <View style={styles.myprofileBadgeContainer}>
               {interestsArray
-                ? interestsArray.map((item, index) => {
+                ? interestsArray.map((item, index: number) => {
                     return (
                       <Badge
                         key={index}
@@ -548,7 +556,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
 
     if (userDetails)
       return (
-        <Text style={styles.style.fontFormSmallGrey}>
+        <Text style={styles.fontFormSmallGrey}>
           <Image
             style={{
               width: "22px",
@@ -584,8 +592,8 @@ export default function MyProfile(props: Props): JSX.Element | null {
     return (
       <View style={{ width: "100%" }}>
         <View>
-          <Text style={styles.style.fontFormMandatory}>{isEditable && editMode ? "*" : ""}</Text>
-          <Text style={styles.style.fontFormSmall}>Current Role</Text>
+          <Text style={styles.fontFormMandatory}>{isEditable && editMode ? "*" : ""}</Text>
+          <Text style={styles.fontFormSmall}>Current Role</Text>
         </View>
         <EditableText
           accessibilityLabel="Current role"
@@ -595,7 +603,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           multiline={false}
           testID="profile-currentRole"
           placeholder="Type here..."
-          textStyle={styles.style.fontFormSmallDarkGrey}
+          textStyle={styles.fontFormSmallDarkGrey}
           inputStyle={{
             borderWidth: 1,
             borderColor: "#dddddd",
@@ -621,14 +629,14 @@ export default function MyProfile(props: Props): JSX.Element | null {
     if (!userDetails) return null
     return (
       <>
-        <Text style={styles.style.fontFormSmall}>&nbsp;</Text>
+        <Text style={styles.fontFormSmall}>&nbsp;</Text>
         {isEditable && editMode ? (
-          <Text style={styles.style.fontFormSmall}>
-            <Text style={styles.style.fontFormMandatory}>*</Text>
+          <Text style={styles.fontFormSmall}>
+            <Text style={styles.fontFormMandatory}>*</Text>
             Describe your current scope
           </Text>
         ) : (
-          <Text style={styles.style.fontFormSmall}>Current scope</Text>
+          <Text style={styles.fontFormSmall}>Current scope</Text>
         )}
         <EditableText
           accessibilityLabel="Describe your current scope"
@@ -638,7 +646,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           multiline={true}
           placeholder="Type here..."
           testID="profile-currentScope"
-          textStyle={styles.style.fontFormSmallDarkGrey}
+          textStyle={styles.fontFormSmallDarkGrey}
           inputStyle={{
             borderWidth: 1,
             borderColor: "#dddddd",
@@ -664,11 +672,11 @@ export default function MyProfile(props: Props): JSX.Element | null {
     if (!userDetails) return
     return (
       <>
-        <Text style={styles.style.fontFormSmall}>&nbsp;</Text>
+        <Text style={styles.fontFormSmall}>&nbsp;</Text>
         {isEditable && editMode ? (
-          <Text style={styles.style.fontFormSmall}>Identify your personality type indicator</Text>
+          <Text style={styles.fontFormSmall}>Identify your personality type indicator</Text>
         ) : userDetails.personality ? (
-          <Text style={styles.style.fontFormSmall}>Personality type indicator</Text>
+          <Text style={styles.fontFormSmall}>Personality type indicator</Text>
         ) : null}
         <EditableText
           onChange={(e) => {
@@ -678,7 +686,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           multiline={true}
           testID="profile-personality"
           placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
-          textStyle={styles.style.fontFormSmallDarkGrey}
+          textStyle={styles.fontFormSmallDarkGrey}
           inputStyle={{
             borderWidth: 1,
             borderColor: "#dddddd",
@@ -705,7 +713,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     return (isEditable && editMode) || userDetails.orgName ? (
       <View>
         <View>
-          <Text style={styles.style.fontFormSmall}>Organization Name</Text>
+          <Text style={styles.fontFormSmall}>Organization Name</Text>
         </View>
         <EditableText
           accessibilityLabel="Organization name"
@@ -715,8 +723,8 @@ export default function MyProfile(props: Props): JSX.Element | null {
           multiline={false}
           testID="profile-orgName"
           placeholder="Type here..."
-          textStyle={styles.style.fontFormSmallDarkGrey}
-          inputStyle={styles.style.myProfileOrgTypeInput}
+          textStyle={styles.fontFormSmallDarkGrey}
+          inputStyle={styles.myProfileOrgTypeInput}
           value={userDetails.orgName ?? ""}
           isEditable={isEditable && editMode}
         ></EditableText>
@@ -730,14 +738,14 @@ export default function MyProfile(props: Props): JSX.Element | null {
       return (isEditable && editMode) || (userDetails.orgType && userDetails.orgType !== "None") ? (
         <View style={{ marginTop: 15 }}>
           <View>
-            <Text style={styles.style.fontFormSmall}>Type of Organization</Text>
+            <Text style={styles.fontFormSmall}>Type of Organization</Text>
           </View>
           {isEditable && editMode ? (
-            <View style={styles.style.myProfileOrgView}>
+            <View style={styles.myProfileOrgView}>
               <Picker
                 accessibilityLabel="Organization type"
                 testID="profile-orgType"
-                style={styles.style.myprofilePicker}
+                style={styles.myprofilePicker}
                 onValueChange={(itemValue) => {
                   handleInputChange(itemValue, "orgType")
                 }}
@@ -766,8 +774,8 @@ export default function MyProfile(props: Props): JSX.Element | null {
                   }}
                   multiline={false}
                   placeholder="Type here..."
-                  textStyle={styles.style.fontFormSmallDarkGrey}
-                  inputStyle={styles.style.myProfileOrgTypeInput}
+                  textStyle={styles.fontFormSmallDarkGrey}
+                  inputStyle={styles.myProfileOrgTypeInput}
                   value={userDetails.orgType ?? ""}
                   isEditable={isEditable && editMode}
                 ></EditableText>
@@ -776,7 +784,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           ) : userDetails.orgType && userDetails.orgType !== "None" ? (
             <EditableText
               multiline={true}
-              textStyle={styles.style.fontFormSmallDarkGrey}
+              textStyle={styles.fontFormSmallDarkGrey}
               value={userDetails.orgType}
               isEditable={false}
             />
@@ -818,13 +826,13 @@ export default function MyProfile(props: Props): JSX.Element | null {
       <View style={{ marginTop: 15 }}>
         {isEditable && editMode ? (
           <View>
-            <View style={styles.style.fontFormSmall}>
+            <View style={styles.fontFormSmall}>
               How many employees are there in the organization?
             </View>
             <Picker
               accessibilityLabel="Number of employees in organization"
               testID="profile-orgSize"
-              style={styles.style.myprofilePicker}
+              style={styles.myprofilePicker}
               onValueChange={(itemValue: any) => {
                 handleInputChange(itemValue, "orgSize")
               }}
@@ -838,11 +846,11 @@ export default function MyProfile(props: Props): JSX.Element | null {
           </View>
         ) : userDetails.orgSize ? (
           <View>
-            <View style={styles.style.fontFormSmall}>Employees</View>
+            <View style={styles.fontFormSmall}>Employees</View>
 
             <EditableText
               multiline={true}
-              textStyle={styles.style.fontFormSmallDarkGrey}
+              textStyle={styles.fontFormSmallDarkGrey}
               value={userDetails.orgSize}
               isEditable={false}
             />
@@ -881,10 +889,10 @@ export default function MyProfile(props: Props): JSX.Element | null {
       <View style={{ marginTop: 15 }}>
         {isEditable && editMode ? (
           <View>
-            <View style={styles.style.fontFormSmall}>Average Sunday morning attendance</View>
+            <View style={styles.fontFormSmall}>Average Sunday morning attendance</View>
             <Picker
               accessibilityLabel="Average Sunday morning attendance"
-              style={styles.style.myprofilePicker}
+              style={styles.myprofilePicker}
               onValueChange={(itemValue: any) => {
                 handleInputChange(itemValue, "sundayAttendance")
               }}
@@ -898,11 +906,11 @@ export default function MyProfile(props: Props): JSX.Element | null {
           </View>
         ) : userDetails.sundayAttendance ? (
           <View>
-            <View style={styles.style.fontFormSmall}>Average Sunday morning attendance</View>
+            <View style={styles.fontFormSmall}>Average Sunday morning attendance</View>
             <EditableText
               accessibilityLabel="Average Sunday morning attendance"
               multiline={true}
-              textStyle={styles.style.fontFormSmallDarkGrey}
+              textStyle={styles.fontFormSmallDarkGrey}
               value={userDetails.sundayAttendance}
               isEditable={false}
             />
@@ -920,10 +928,10 @@ export default function MyProfile(props: Props): JSX.Element | null {
       <View style={{ marginTop: 15 }}>
         {isEditable && editMode ? (
           <View>
-            <View style={styles.style.fontFormSmall}>Number of volunteers</View>
+            <View style={styles.fontFormSmall}>Number of volunteers</View>
             <Picker
               accessibilityLabel="Number of volunteers"
-              style={styles.style.myprofilePicker}
+              style={styles.myprofilePicker}
               onValueChange={(itemValue: any) => {
                 handleInputChange(itemValue, "numberVolunteers")
               }}
@@ -937,10 +945,10 @@ export default function MyProfile(props: Props): JSX.Element | null {
           </View>
         ) : userDetails.numberVolunteers ? (
           <View>
-            <View style={styles.style.fontFormSmall}>Number of volunteers</View>
+            <View style={styles.fontFormSmall}>Number of volunteers</View>
             <EditableText
               multiline={true}
-              textStyle={styles.style.fontFormSmallDarkGrey}
+              textStyle={styles.fontFormSmallDarkGrey}
               value={userDetails.numberVolunteers}
               isEditable={false}
             />
@@ -956,7 +964,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
       orgTypesChurches.includes(userDetails?.orgType) &&
       (userDetails?.denomination || editMode) ? (
       <View style={{ marginTop: 15 }}>
-        <Text style={styles.style.fontFormSmall}>Denomination</Text>
+        <Text style={styles.fontFormSmall}>Denomination</Text>
         <EditableText
           onChange={(e) => {
             handleInputChange(e, "denomination")
@@ -964,7 +972,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           accessibilityLabel="Denomination"
           multiline={true}
           testID="profile-denomination"
-          textStyle={styles.style.fontFormSmallDarkGrey}
+          textStyle={styles.fontFormSmallDarkGrey}
           placeholder="Type here."
           inputStyle={{
             borderWidth: 1,
@@ -992,7 +1000,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
       orgTypesNonChurch.includes(userDetails?.orgType) &&
       (userDetails.pplServed || editMode) ? (
       <View style={{ marginTop: 15 }}>
-        <Text style={styles.style.fontFormSmall}>
+        <Text style={styles.fontFormSmall}>
           {editMode ? "How many people do you serve?" : "People impacted by our services"}
         </Text>
         <EditableText
@@ -1004,7 +1012,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           }}
           multiline={true}
           testID="profile-pplServed"
-          textStyle={styles.style.fontFormSmallDarkGrey}
+          textStyle={styles.fontFormSmallDarkGrey}
           placeholder="Type here."
           inputStyle={{
             borderWidth: 1,
@@ -1031,9 +1039,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     if (userDetails)
       return userDetails.orgDescription || editMode ? (
         <View style={{ marginTop: 15 }}>
-          <Text style={styles.style.fontFormSmall}>
-            Description of church or ministry organization
-          </Text>
+          <Text style={styles.fontFormSmall}>Description of church or ministry organization</Text>
           <EditableText
             onChange={(e) => {
               handleInputChange(e, "orgDescription")
@@ -1041,7 +1047,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
             multiline={true}
             accessibilityLabel="Describe church or organization"
             testID="profile-orgDescription"
-            textStyle={styles.style.fontFormSmallDarkGrey}
+            textStyle={styles.fontFormSmallDarkGrey}
             placeholder="Type here."
             inputStyle={{
               borderWidth: 1,
@@ -1065,7 +1071,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
   const renderProfile = () => {
     if (!userDetails) return
     return (
-      <View style={styles.style.profileScreenRightCard}>
+      <View style={styles.profileScreenRightCard}>
         <View style={{ width: "100%" }}>{renderMap()}</View>
 
         {renderAboutMeLong()}
@@ -1074,14 +1080,14 @@ export default function MyProfile(props: Props): JSX.Element | null {
         {renderCurrentScope()}
         {renderPersonalityIndicator()}
 
-        <Text style={styles.style.fontFormSmall}>&nbsp;</Text>
+        <Text style={styles.fontFormSmall}>&nbsp;</Text>
         {checkForValidOrgInfo() || (isEditable && editMode) ? (
           !props.hideOrg ? (
             <View>
               {isEditable && editMode ? (
-                <Text style={styles.style.fontBold}>Tell us about your organization</Text>
+                <Text style={styles.fontBold}>Tell us about your organization</Text>
               ) : (
-                <Text style={styles.style.fontBold}>Organization Info</Text>
+                <Text style={styles.fontBold}>Organization Info</Text>
               )}
               {renderOrgName()}
               {renderOrgType()}
@@ -1104,8 +1110,8 @@ export default function MyProfile(props: Props): JSX.Element | null {
     return (
       <>
         {isEditable && editMode ? (
-          <Text style={styles.style.fontFormSmallHeader}>
-            <Text style={styles.style.fontFormMandatory}>*</Text>
+          <Text style={styles.fontFormSmallHeader}>
+            <Text style={styles.fontFormMandatory}>*</Text>
             Public Location
           </Text>
         ) : null}
@@ -1130,8 +1136,8 @@ export default function MyProfile(props: Props): JSX.Element | null {
               }
             }}
             multiline={false}
-            textStyle={styles.style.fontRegular}
-            inputStyle={styles.style.groupNameInput}
+            textStyle={styles.fontRegular}
+            inputStyle={styles.groupNameInput}
             value={userDetails.location?.geocodeFull ?? ""}
             isEditable={isEditable && editMode}
             citiesOnly={true}
@@ -1146,7 +1152,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     if (!userDetails?.id) return null
     return (
       <Pressable
-        style={styles.style.connectWithSliderButton}
+        style={styles.connectWithSliderButton}
         onPress={() => {
           openConversation(
             userDetails?.id,
@@ -1154,7 +1160,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           )
         }}
       >
-        <Text style={styles.style.fontStartConversation}>Start Conversation</Text>
+        <Text style={styles.fontStartConversation}>Start Conversation</Text>
       </Pressable>
     )
   }
@@ -1232,9 +1238,9 @@ export default function MyProfile(props: Props): JSX.Element | null {
     if (!profileConfig?.["profileImage"]?.isVisible) return null
     const brand = Brand()
     return (
-      <View style={styles.style.myProfileImageWrapper}>
+      <View style={styles.myProfileImageWrapper}>
         <Image
-          style={styles.style.myProfileImage}
+          style={styles.myProfileImage}
           source={
             profileImage == "" ? require("../../assets/profile-placeholder.png") : profileImage
           }
@@ -1243,7 +1249,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
           }}
         ></Image>
         {isEditable && editMode ? (
-          <View accessible={false} style={styles.style.fileInputWrapper}>
+          <View accessible={false} style={styles.fileInputWrapper}>
             <TouchableOpacity
               accessible={false}
               style={{
@@ -1286,7 +1292,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
             </TouchableOpacity>
           </View>
         ) : null}
-        {/*<Text style={styles.style.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
+        {/*<Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
       </View>
     )
   }
@@ -1294,7 +1300,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     if (!profileConfig["fullName"].isVisible) return null
     if (!userDetails) return null
     return (
-      <Text style={styles.style.fontFormName}>
+      <Text style={styles.fontFormName}>
         {userDetails.given_name} {userDetails.family_name}
       </Text>
     )
@@ -1304,7 +1310,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
 
     if (userDetails)
       return (
-        <Text style={styles.style.fontFormRole}>
+        <Text style={styles.fontFormRole}>
           {userDetails.currentRole ? userDetails.currentRole : "My Current Role not defined"}
         </Text>
       )
@@ -1316,7 +1322,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     return (
       <>
         {isEditable && editMode ? (
-          <Text style={styles.style.fontFormSmall}>One sentence about me</Text>
+          <Text style={styles.fontFormSmall}>One sentence about me</Text>
         ) : null}
         <EditableText
           onChange={(e) => {
@@ -1325,8 +1331,8 @@ export default function MyProfile(props: Props): JSX.Element | null {
           placeholder="Short sentence about me"
           multiline={true}
           placeholderTextColor="#757575"
-          textStyle={styles.style.fontFormSmallDarkGrey}
-          inputStyle={styles.style.fontFormAboutMe}
+          textStyle={styles.fontFormSmallDarkGrey}
+          inputStyle={styles.fontFormAboutMe}
           testID="profile-aboutMeShort"
           value={userDetails.aboutMeShort ?? ""}
           isEditable={isEditable && editMode}
@@ -1335,14 +1341,14 @@ export default function MyProfile(props: Props): JSX.Element | null {
     )
   }
   const renderMainUserGroup = (group: string) => {
-    return <Text style={styles.style.fontFormUserType}>{group}</Text>
+    return <Text style={styles.fontFormUserType}>{group}</Text>
   }
   const renderLocation2 = () => {
     if (!profileConfig["location"].isVisible) return null
 
     if (!userDetails) return null
     return (
-      <Text style={styles.style.fontFormSmallDarkGreyCoordinates}>
+      <Text style={styles.fontFormSmallDarkGreyCoordinates}>
         <Image
           style={{
             width: "22px",
@@ -1361,15 +1367,15 @@ export default function MyProfile(props: Props): JSX.Element | null {
   const renderLeftBar = (userActions: UserActions) => {
     if (!userDetails) return null
     return (
-      <View style={styles.style.profileScreenLeftCard}>
+      <View style={styles.profileScreenLeftCard}>
         {renderProfileImage()}
-        <View style={styles.style.myProfilePersonalInfoWrapper}>
+        <View style={styles.myProfilePersonalInfoWrapper}>
           {renderName()}
           {renderCurrentRole()}
           {renderMainUserGroup(userDetails?.mainUserGroup ?? "Inactive")}
           {renderAboutMeShort()}
 
-          <View style={styles.style.myProfileCoordinates}>
+          <View style={styles.myProfileCoordinates}>
             {renderLocation2()}
             {isEditable && userDetails.profileState !== "Incomplete" ? (
               <JCButton buttonType={ButtonTypes.EditButton} onPress={() => handleEditMode()}>
@@ -1393,7 +1399,7 @@ export default function MyProfile(props: Props): JSX.Element | null {
     <ScrollView ref={scrollRef}>
       {renderTopBar(userActions)}
 
-      <View style={styles.style.myProfileMainContainer}>
+      <View style={styles.myProfileMainContainer}>
         {renderLeftBar(userActions)}
         {showPage == "admin" && renderAdmin(userActions)}
         {showPage == "profile" && renderProfile()}

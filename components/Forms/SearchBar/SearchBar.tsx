@@ -13,14 +13,15 @@ import { TextInput } from "react-native-gesture-handler"
 import SearchActiveIcon from "../../../assets/Facelift/svg/Search-Active.svg"
 import SearchInactiveIcon from "../../../assets/Facelift/svg/Search.svg"
 import { useDebounce } from "../../../screens/Admin/AdminCRMScreen"
-import { User } from "../../../src/API"
+import { ResourceEpisode, User } from "../../../src/API"
 import { Data } from "../../Data/Data"
 import useComponentVisible from "../../useComponentVisible"
 import SearchBarListEmpty from "./SearchBarListEmpty"
-import SearchBarSearchItem from "./SearchBarSearchItem"
+import SearchBarSearchItem from "./SearchBarSearchItemUser"
+import SearchBarSearchItemResourceEpisode from "./SearchBarSearchItemUserResourceEpisode"
 
 type SearchBarProps = {
-  passDataToParent?: (data: User[]) => void
+  passDataToParent?: (data: (User | ResourceEpisode)[]) => void
   passIsListEmpty?: (isEmpty: boolean) => void
   closeSearchBar?: () => void
 }
@@ -30,7 +31,7 @@ export default function SearchBar({
   closeSearchBar,
 }: SearchBarProps) {
   const { width } = useWindowDimensions()
-  const [data, setData] = useState<User[]>([])
+  const [data, setData] = useState<(User | ResourceEpisode)[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [showListEmpty, setShowListEmpty] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
@@ -50,6 +51,10 @@ export default function SearchBar({
     if (newSearchTerm.includes("@")) {
       conditions.push({ email: { eq: newSearchTerm } })
     }
+    const resourceResult = await Data.searchResources({
+      title: { match: newSearchTerm },
+    })
+    console.log(resourceResult)
     const userResult = await Data.searchUsers({
       and: [
         { isArchived: { ne: "true" } },
@@ -61,9 +66,10 @@ export default function SearchBar({
       ],
     })
     const users = userResult.data?.searchUsers?.items as User[]
-    if (!users.length) setShowListEmpty(true)
+    const resources = resourceResult.data?.searchResourceEpisodes?.items as ResourceEpisode[]
+    if (!users.length && !resources.length) setShowListEmpty(true)
     else setShowListEmpty(false)
-    setData(users)
+    setData([...users, ...resources])
     setIsLoading(false)
   }
   useEffect(() => {
@@ -183,8 +189,15 @@ export default function SearchBar({
               renderItem={({ item, index }) => {
                 const isLast = index === data.length - 1
                 const isFirst = index === 0
-                return (
+                return item.__typename == "User" ? (
                   <SearchBarSearchItem
+                    isFirst={isFirst}
+                    isLast={isLast}
+                    item={item}
+                    clearData={clearData}
+                  />
+                ) : (
+                  <SearchBarSearchItemResourceEpisode
                     isFirst={isFirst}
                     isLast={isLast}
                     item={item}

@@ -15,5 +15,12 @@
   },
   "[graphql]": {
     "editor.formatOnSave": false
-  }
+  },
+  "cSpell.words": [
+    "fileupload",
+    "geocode",
+    "Graphik",
+    "testid",
+    "uuidv"
+  ]
 }
