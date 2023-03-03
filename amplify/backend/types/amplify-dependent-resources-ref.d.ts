@@ -1,184 +1,44 @@
 export type AmplifyDependentResourcesAttributes = {
-  function: {
-    jcmobilePostConfirmation: {
-      Name: "string"
-      Arn: "string"
+  analytics: {
+    jcmobile: {
+      Id: "string"
       Region: "string"
-      LambdaExecutionRole: "string"
+      appName: "string"
     }
-    S3Trigger14f1cefa: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
+  }
+  api: {
+    AdminQueries: {
+      ApiId: "string"
+      ApiName: "string"
+      RootUrl: "string"
     }
-    S3Trigger839efa13: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
+    jcmobile: {
+      GraphQLAPIEndpointOutput: "string"
+      GraphQLAPIIdOutput: "string"
     }
-    AdminQueries7403b6cf: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobilePreSignup: {
-      Name: "string"
-      Arn: "string"
-      LambdaExecutionRole: "string"
-      Region: "string"
-    }
-    jcUpdateMainUserGroup: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-      CloudWatchEventRule: "string"
-    }
-    jcProcessDMAlerts: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcProcessMessageAlerts: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileStripeCreatePaymentIntent: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobilePreTokenGeneration: {
-      Name: "string"
-      Arn: "string"
-      LambdaExecutionRole: "string"
-      Region: "string"
-    }
-    jcmobileStripWebhook: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileStripCreateCustomer: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileStripCreateSubscription: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileStripPreviewInvoice: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileGetOrgStripeSubs: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileCreateCognitoOrgUser: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileSendInviteToOrgUser: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileStripListInvoices: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileStripCancelSubscription: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileSendHelpRequest: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcHandleActivity: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobilePinpointCleanEndpoints: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-      CloudWatchEventRule: "string"
-    }
-    jcmobileStripListProducts: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
-    }
-    jcmobileShared: {
-      Arn: "string"
-    }
-    deleteJCUser: {
-      Name: "string"
-      Arn: "string"
-      Region: "string"
-      LambdaExecutionRole: "string"
+    jcmobileAPI: {
+      ApiId: "string"
+      ApiName: "string"
+      RootUrl: "string"
     }
   }
   auth: {
     jcmobile: {
+      AppClientID: "string"
+      AppClientIDWeb: "string"
+      CreatedSNSRole: "string"
+      FacebookWebClient: "string"
+      GoogleWebClient: "string"
       IdentityPoolId: "string"
       IdentityPoolName: "string"
-      UserPoolId: "string"
       UserPoolArn: "string"
+      UserPoolId: "string"
       UserPoolName: "string"
-      AppClientIDWeb: "string"
-      AppClientID: "string"
-      CreatedSNSRole: "string"
-      GoogleWebClient: "string"
-      FacebookWebClient: "string"
     }
     userPoolGroups: {
-      userpoolGroupRole: "string"
-      verifiedUsersGroupRole: "string"
       adminGroupRole: "string"
       courseAdminGroupRole: "string"
       courseCoachGroupRole: "string"
-      courseUserGroupRole: "string"
-      friendsGroupRole: "string"
-      partnersGroupRole: "string"
-      subscriptionPartnersGroupRole: "string"
-      subscriptionkyearlyyearsGroupRole: "string"
-      subscriptionkykidsGroupRole: "string"
-      subscriptionkyyouthGroupRole: "string"
-      subscriptionValidGroupRole: "string"
-      legacyUserGroup1GroupRole: "string"
-      productMarkBakerGroupRole: "string"
       courseGroup1GroupRole: "string"
       courseGroup2GroupRole: "string"
       courseGroup3GroupRole: "string"
@@ -188,59 +48,223 @@ export type AmplifyDependentResourcesAttributes = {
       courseGroup7GroupRole: "string"
       courseGroup8GroupRole: "string"
       courseGroup9GroupRole: "string"
+      courseUserGroupRole: "string"
+      friendsGroupRole: "string"
+      legacyUserGroup1GroupRole: "string"
+      partnersGroupRole: "string"
+      productMarkBakerGroupRole: "string"
+      subscriptionPartnersGroupRole: "string"
+      subscriptionValidGroupRole: "string"
+      subscriptionkyearlyyearsGroupRole: "string"
+      subscriptionkykidsGroupRole: "string"
+      subscriptionkyyouthGroupRole: "string"
+      userpoolGroupRole: "string"
+      verifiedUsersGroupRole: "string"
     }
   }
-  api: {
-    jcmobile: {
-      GraphQLAPIIdOutput: "string"
-      GraphQLAPIEndpointOutput: "string"
-    }
-    AdminQueries: {
-      RootUrl: "string"
-      ApiName: "string"
-      ApiId: "string"
-    }
-    jcmobileAPI: {
-      RootUrl: "string"
-      ApiName: "string"
-      ApiId: "string"
-    }
-  }
-  analytics: {
-    jcmobile: {
+  function: {
+    AdminQueries7403b6cf: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
       Region: "string"
-      Id: "string"
-      appName: "string"
+    }
+    S3Trigger14f1cefa: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    S3Trigger839efa13: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    deleteJCUser: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcHandleActivity: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcProcessDMAlerts: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcProcessMessageAlerts: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcUpdateMainUserGroup: {
+      Arn: "string"
+      CloudWatchEventRule: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileCreateCognitoOrgUser: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileGetOrgStripeSubs: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobilePinpointCleanEndpoints: {
+      Arn: "string"
+      CloudWatchEventRule: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobilePostConfirmation: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobilePreSignup: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobilePreTokenGeneration: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileSendHelpRequest: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileSendInviteToOrgUser: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileShared: {
+      Arn: "string"
+    }
+    jcmobileStripCancelSubscription: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileStripCreateCustomer: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileStripCreateSubscription: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileStripListInvoices: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileStripListProducts: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileStripPreviewInvoice: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileStripWebhook: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+    jcmobileStripeCreatePaymentIntent: {
+      Arn: "string"
+      LambdaExecutionRole: "string"
+      LambdaExecutionRoleArn: "string"
+      Name: "string"
+      Region: "string"
+    }
+  }
+  geo: {
+    jcMap: {
+      Arn: "string"
+      Name: "string"
+      Region: "string"
+      Style: "string"
+    }
+    jcPeople: {
+      Arn: "string"
+      Name: "string"
+      Region: "string"
     }
   }
   hosting: {
     S3AndCloudFront: {
-      Region: "string"
-      HostingBucketName: "string"
-      WebsiteURL: "string"
-      S3BucketSecureURL: "string"
       CloudFrontDistributionID: "string"
       CloudFrontDomainName: "string"
       CloudFrontSecureURL: "string"
+      HostingBucketName: "string"
+      Region: "string"
+      S3BucketSecureURL: "string"
+      WebsiteURL: "string"
     }
   }
   storage: {
     jcProfile: {
       BucketName: "string"
       Region: "string"
-    }
-  }
-  geo: {
-    jcMap: {
-      Name: "string"
-      Style: "string"
-      Region: "string"
-      Arn: "string"
-    }
-    jcPeople: {
-      Name: "string"
-      Region: "string"
-      Arn: "string"
     }
   }
 }

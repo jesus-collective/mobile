@@ -48,6 +48,12 @@ const awsmobile = {
     ],
     "aws_mobile_analytics_app_id": "f01a4b6158c24f9fbdc960a868368c92",
     "aws_mobile_analytics_app_region": "us-east-1",
+    "Analytics": {
+        "AWSPinpoint": {
+            "appId": "f01a4b6158c24f9fbdc960a868368c92",
+            "region": "us-east-1"
+        }
+    },
     "aws_content_delivery_bucket": "jc-mobile-20190818234527-hostingbucket-beta",
     "aws_content_delivery_bucket_region": "us-east-1",
     "aws_content_delivery_url": "https://ddy0xjuoytpqt.cloudfront.net",

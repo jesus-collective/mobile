@@ -1,504 +1,42 @@
 {
-  "function": {
-    "jcmobilePostConfirmation": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": []
-    },
-    "S3Trigger14f1cefa": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": []
-    },
-    "S3Trigger839efa13": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true
-    },
-    "AdminQueries7403b6cf": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "jcmobilePreSignup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
-    },
-    "jcUpdateMainUserGroup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "jcProcessDMAlerts": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "analytics",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "Id",
-            "Region"
-          ]
-        }
-      ]
-    },
-    "jcProcessMessageAlerts": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "analytics",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "Id",
-            "Region"
-          ]
-        }
-      ]
-    },
-    "jcmobileStripeCreatePaymentIntent": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        }
-      ]
-    },
-    "jcmobilePreTokenGeneration": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
-    },
-    "jcmobileStripWebhook": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "AdminQueries",
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ]
-        }
-      ]
-    },
-    "jcmobileStripCreateCustomer": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "jcmobileStripCreateSubscription": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "jcmobileStripPreviewInvoice": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "jcmobileGetOrgStripeSubs": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobileAPI",
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ]
-        }
-      ]
-    },
-    "jcmobileCreateCognitoOrgUser": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileGetOrgStripeSubs",
-          "attributes": [
-            "Name"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobileAPI",
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ]
-        }
-      ]
-    },
-    "jcmobileSendInviteToOrgUser": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "jcmobileCreateCognitoOrgUser",
-          "attributes": [
-            "Name"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobileAPI",
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ]
-        }
-      ]
-    },
-    "jcmobileStripListInvoices": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "jcmobileStripCancelSubscription": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "jcmobileSendHelpRequest": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "jcHandleActivity": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "jcmobilePinpointCleanEndpoints": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "analytics",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "Id",
-            "Region"
-          ]
-        }
-      ]
-    },
-    "jcmobileStripListProducts": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobileShared",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "jcmobileShared": {
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer",
-      "build": true
-    },
-    "deleteJCUser": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    }
-  },
-  "auth": {
+  "analytics": {
     "jcmobile": {
-      "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "jcmobilePostConfirmation",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "jcmobilePreSignup",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "jcmobilePreTokenGeneration",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ]
-    },
-    "userPoolGroups": {
-      "service": "Cognito-UserPool-Groups",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId",
-            "AppClientIDWeb",
-            "AppClientID",
-            "IdentityPoolId"
-          ]
-        }
-      ]
+      "service": "Pinpoint"
     }
   },
   "api": {
-    "jcmobile": {
-      "service": "AppSync",
+    "AdminQueries": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "AdminQueries7403b6cf"
+        }
+      ],
       "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "jcmobile": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        }
+      ],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [
@@ -514,113 +52,1241 @@
           }
         }
       },
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "AdminQueries": {
-      "service": "API Gateway",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "jcmobile",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "AdminQueries7403b6cf",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ]
+      "service": "AppSync"
     },
     "jcmobileAPI": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "jcmobileStripWebhook",
           "attributes": [
             "Name",
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "jcmobileStripWebhook"
         }
-      ]
-    }
-  },
-  "analytics": {
-    "jcmobile": {
-      "service": "Pinpoint",
-      "providerPlugin": "awscloudformation"
-    }
-  },
-  "hosting": {
-    "S3AndCloudFront": {
-      "service": "S3AndCloudFront",
-      "providerPlugin": "awscloudformation"
-    }
-  },
-  "storage": {
-    "jcProfile": {
-      "service": "S3",
+      ],
       "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "auth": {
+    "jcmobile": {
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "S3Trigger14f1cefa",
           "attributes": [
-            "Name",
             "Arn",
-            "LambdaExecutionRole"
-          ]
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "jcmobilePostConfirmation",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "jcmobilePreSignup",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "jcmobilePreTokenGeneration",
+          "triggerProvider": "Cognito"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
     }
   },
-  "video": {
-    "jesuscollectiveCourses": {
-      "service": "video",
-      "serviceType": "video-on-demand",
-      "providerPlugin": "awscloudformation"
+  "function": {
+    "AdminQueries7403b6cf": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "S3Trigger14f1cefa": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "S3Trigger839efa13": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "deleteJCUser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcHandleActivity": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcProcessDMAlerts": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "Id",
+            "Region"
+          ],
+          "category": "analytics",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcProcessMessageAlerts": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "Id",
+            "Region"
+          ],
+          "category": "analytics",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcUpdateMainUserGroup": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileCreateCognitoOrgUser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileGetOrgStripeSubs"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "jcmobileAPI"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileGetOrgStripeSubs": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "jcmobileAPI"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobilePinpointCleanEndpoints": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "Id",
+            "Region"
+          ],
+          "category": "analytics",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobilePostConfirmation": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobilePreSignup": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobilePreTokenGeneration": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileSendHelpRequest": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileSendInviteToOrgUser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileCreateCognitoOrgUser"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "jcmobileAPI"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileShared": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "jcmobileStripCancelSubscription": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileStripCreateCustomer": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileStripCreateSubscription": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileStripListInvoices": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileStripListProducts": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileStripPreviewInvoice": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileStripWebhook": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "jcmobile"
+        },
+        {
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "AdminQueries"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "jcmobileStripeCreatePaymentIntent": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "geo": {
     "jcMap": {
-      "isDefault": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Map",
-      "mapStyle": "VectorEsriLightGrayCanvas",
       "accessType": "AuthorizedUsers",
       "dependsOn": [
         {
-          "category": "auth",
-          "resourceName": "jcmobile",
           "attributes": [
             "UserPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "jcmobile"
+        }
+      ],
+      "isDefault": true,
+      "mapStyle": "VectorEsriLightGrayCanvas",
+      "providerPlugin": "awscloudformation",
+      "service": "Map"
+    },
+    "jcPeople": {
+      "accessType": "AuthorizedUsers",
+      "dataProvider": "Esri",
+      "dataSourceIntendedUse": "SingleUse",
+      "isDefault": true,
+      "pricingPlan": "RequestBasedUsage",
+      "providerPlugin": "awscloudformation",
+      "service": "PlaceIndex"
+    }
+  },
+  "hosting": {
+    "S3AndCloudFront": {
+      "providerPlugin": "awscloudformation",
+      "service": "S3AndCloudFront"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_jcmobile_facebookAppId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "jcmobile"
         }
       ]
     },
-    "jcPeople": {
-      "isDefault": true,
+    "AMPLIFY_auth_jcmobile_googleClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "jcmobile"
+        }
+      ]
+    },
+    "AMPLIFY_auth_true_facebookAppId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "true"
+        }
+      ]
+    },
+    "AMPLIFY_auth_true_googleClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "true"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueries7403b6cf_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries7403b6cf"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueries7403b6cf_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries7403b6cf"
+        }
+      ]
+    },
+    "AMPLIFY_function_S3Trigger14f1cefa_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger14f1cefa"
+        }
+      ]
+    },
+    "AMPLIFY_function_S3Trigger14f1cefa_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger14f1cefa"
+        }
+      ]
+    },
+    "AMPLIFY_function_S3Trigger839efa13_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger839efa13"
+        }
+      ]
+    },
+    "AMPLIFY_function_S3Trigger839efa13_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger839efa13"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteJCUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteJCUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteJCUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteJCUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcHandleActivity_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcHandleActivity"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcHandleActivity_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcHandleActivity"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcHandleActivity_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcHandleActivity"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcHandleActivity_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcHandleActivity"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcHandleActivity_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcHandleActivity"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessDMAlerts_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessDMAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessDMAlerts_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessDMAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessDMAlerts_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessDMAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessDMAlerts_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessDMAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessDMAlerts_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessDMAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessMessageAlerts_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessMessageAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessMessageAlerts_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessMessageAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessMessageAlerts_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessMessageAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessMessageAlerts_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessMessageAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcProcessMessageAlerts_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcProcessMessageAlerts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcUpdateMainUserGroup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcUpdateMainUserGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcUpdateMainUserGroup_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcUpdateMainUserGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcUpdateMainUserGroup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcUpdateMainUserGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcUpdateMainUserGroup_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcUpdateMainUserGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcUpdateMainUserGroup_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcUpdateMainUserGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileCreateCognitoOrgUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileCreateCognitoOrgUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileCreateCognitoOrgUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileCreateCognitoOrgUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileGetOrgStripeSubs_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileGetOrgStripeSubs"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileGetOrgStripeSubs_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileGetOrgStripeSubs"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePinpointCleanEndpoints_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePinpointCleanEndpoints"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePinpointCleanEndpoints_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePinpointCleanEndpoints"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePreSignup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePreSignup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePreTokenGeneration_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePreTokenGeneration"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobilePreTokenGeneration_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobilePreTokenGeneration"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileSendHelpRequest_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileSendHelpRequest"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileSendHelpRequest_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileSendHelpRequest"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileSendInviteToOrgUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileSendInviteToOrgUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileSendInviteToOrgUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileSendInviteToOrgUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileShared_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileShared_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileShared"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCancelSubscription_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCancelSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCancelSubscription_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCancelSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateCustomer_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateCustomer"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateCustomer_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateCustomer"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateCustomer_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateCustomer"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateCustomer_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateCustomer"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateCustomer_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateCustomer"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateSubscription_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateSubscription_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateSubscription_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateSubscription_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripCreateSubscription_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripCreateSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripListInvoices_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripListInvoices"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripListInvoices_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripListInvoices"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripListInvoices_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripListInvoices"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripListInvoices_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripListInvoices"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripListInvoices_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripListInvoices"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripListProducts_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripListProducts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripListProducts_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripListProducts"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripPreviewInvoice_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripPreviewInvoice"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripPreviewInvoice_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripPreviewInvoice"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripPreviewInvoice_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripPreviewInvoice"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripPreviewInvoice_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripPreviewInvoice"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripPreviewInvoice_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripPreviewInvoice"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripWebhook_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripWebhook_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripWebhook_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripWebhook_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripWebhook_userPoolWebClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripeCreatePaymentIntent_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripeCreatePaymentIntent"
+        }
+      ]
+    },
+    "AMPLIFY_function_jcmobileStripeCreatePaymentIntent_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileStripeCreatePaymentIntent"
+        }
+      ]
+    },
+    "AMPLIFY_video_jesuscollectiveCourses_s3UUID": {
+      "usedBy": [
+        {
+          "category": "video",
+          "resourceName": "jesuscollectiveCourses"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "jcProfile": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ],
+          "category": "function",
+          "resourceName": "S3Trigger14f1cefa"
+        }
+      ],
       "providerPlugin": "awscloudformation",
-      "service": "PlaceIndex",
-      "dataProvider": "Esri",
-      "dataSourceIntendedUse": "SingleUse",
-      "pricingPlan": "RequestBasedUsage",
-      "accessType": "AuthorizedUsers"
+      "service": "S3"
+    }
+  },
+  "video": {
+    "jesuscollectiveCourses": {
+      "providerPlugin": "awscloudformation",
+      "service": "video",
+      "serviceType": "video-on-demand"
     }
   }
 }
