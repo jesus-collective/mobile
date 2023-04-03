@@ -21,10 +21,10 @@ export default function PageItemSettings(props: ResourceSetupProp) {
   const [settings, setSettings] = useState(props.pageItem)
   const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false)
   const styles = MainStyles.getInstance()
+  React.useEffect(() => {
+    setSettings(props.pageItem)
+  }, [props.pageItem])
 
-  const componentDidUpdate = (prevProps: ResourceSetupProp): void => {
-    if (prevProps.pageItem != props.pageItem) setSettings(props.pageItem)
-  }
   const saveResource = (): void => {
     if (props.save && resourceContext.resourceState)
       props.save(resourceContext.resourceState?.currentMenuItem, props.pageItemIndex, settings)
