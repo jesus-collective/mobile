@@ -159,7 +159,7 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
   }, [debouncedSearchTerm])
   const placeHolder = `Search by ${attribute.label}`
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: "row", height: 30 }}>
       <Picker
         selectedValue={attribute.value}
         onValueChange={(val, index) => {
@@ -188,7 +188,7 @@ function SearchUser({ setFilteredData }: SearchUserProps): JSX.Element {
             paddingVertical: 6,
             marginLeft: -36,
             paddingLeft: 36,
-            flex: 1,
+
             borderColor: "black",
             borderRadius: 4,
             borderWidth: 1,
@@ -360,44 +360,33 @@ export default function AdminScreen(props: Props) {
     return (
       <View style={styles.adminCRMTableContainer}>
         <View style={[styles.AdminFirstNameTableHeader, styles.adminCRMTableHeading]}>
-          <Text>Name</Text>
+          <Text style={AdminStyles.textTableHeader}>Name</Text>
         </View>
-        <View style={[styles.AdminFirstNameTableHeader, styles.adminCRMTableHeading]}>
-          <Text>Picture</Text>
+
+        <View style={[styles.AdminUserIdTableHeader, styles.adminCRMTableHeading]}>
+          <Text style={AdminStyles.textTableHeader}>User id</Text>
         </View>
-        {showUid ? (
-          <View style={[styles.AdminUserIdTableHeader, styles.adminCRMTableHeading]}>
-            <Text>User id</Text>
-          </View>
-        ) : null}
-        {showEmail ? (
-          <View style={[styles.adminCRMTableHeader, styles.adminCRMTableHeading]}>
-            <Text>Email</Text>
-          </View>
-        ) : null}
-        {showPhone && !isMobile ? (
-          <View style={[styles.AdminPhoneTableHeader, styles.adminCRMTableHeading]}>
-            <Text>Phone</Text>
-          </View>
-        ) : null}
-        {showStatus && !isMobile ? (
-          <View style={[styles.AdminStatusTableHeader, styles.adminCRMTableHeading]}>
-            <Text>Status</Text>
-          </View>
-        ) : null}
-        {!isMobile ? (
-          <View style={[styles.AdminEnabledTableHeader, styles.adminCRMTableHeading]}>
-            <Text>Enabled</Text>
-          </View>
-        ) : null}
+
+        <View style={[styles.AdminPhoneTableHeader, styles.adminCRMTableHeading]}>
+          <Text style={AdminStyles.textTableHeader}>Phone</Text>
+        </View>
+
+        <View style={[styles.AdminStatusTableHeader, styles.adminCRMTableHeading]}>
+          <Text style={AdminStyles.textTableHeader}>Status</Text>
+        </View>
+
+        <View style={[styles.AdminEnabledTableHeader, styles.adminCRMTableHeading]}>
+          <Text style={AdminStyles.textTableHeader}>Enabled</Text>
+        </View>
+
         <View style={[styles.AdminGroupsTableHeader, styles.adminCRMTableHeading]}>
-          <Text>Edit</Text>
+          <Text style={AdminStyles.textTableHeader}>Edit</Text>
         </View>
         <View style={[styles.AdminGroupsTableHeader, styles.adminCRMTableHeading]}>
-          <Text>Groups</Text>
+          <Text style={AdminStyles.textTableHeader}>Groups</Text>
         </View>
         <View style={[styles.AdminPaymentsTableHeader, styles.adminCRMTableHeading]}>
-          <Text>Payments</Text>
+          <Text style={AdminStyles.textTableHeader}>Payments</Text>
         </View>
       </View>
     )
@@ -573,59 +562,49 @@ export default function AdminScreen(props: Props) {
               showProfile(item.Username)
             }}
           >
-            <Text>
-              {item.Attributes.find((e: any) => e.Name == "given_name")?.Value}{" "}
-              {item.Attributes.find((e: any) => e.Name == "family_name")?.Value}
-            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <ProfileImageNew
+                linkToProfile
+                user={item.Username}
+                quality={ProfileImageQuality.medium}
+                type="user"
+                style={ProfileImageStyle.UserXSmall2}
+              />
+              <View style={{ flexDirection: "column" }}>
+                <Text>
+                  {item.Attributes.find((e: any) => e.Name == "given_name")?.Value}{" "}
+                  {item.Attributes.find((e: any) => e.Name == "family_name")?.Value}
+                </Text>
+                <Text>{item.Attributes.find((e: any) => e.Name == "email")?.Value}</Text>
+              </View>
+            </View>
           </TouchableOpacity>
         </View>
-        <View style={[styles.AdminFirstNameTableRow, styles.adminCRMTableParagraph]}>
-          <ProfileImageNew
-            linkToProfile
-            user={item.Username}
-            quality={ProfileImageQuality.medium}
-            type="user"
-            style={ProfileImageStyle.UserXSmall2}
+        <View style={[styles.AdminUserIdTableRow, styles.adminCRMTableParagraph]}>
+          <TouchableOpacity
+            onPress={() => {
+              showProfile(item.Username)
+            }}
+          >
+            <Text selectable>{item.Username}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.AdminPhoneTableRow, styles.adminCRMTableParagraph]}>
+          <Text>{item.Attributes.find((e: any) => e.Name == "phone_number")?.Value}</Text>
+        </View>
+        <View style={[styles.AdminStatusTableRow, styles.adminCRMTableParagraph]}>
+          <Text>{item.UserStatus}</Text>
+        </View>
+        <View style={[styles.AdminEnabledTableRow, styles.adminCRMTableParagraph]}>
+          <JCSwitch
+            containerWidth={1}
+            switchLabel=""
+            disabled={item.UserStatus !== "CONFIRMED"}
+            initState={item.Enabled}
+            asyncOnPress={async () => await handleToggleEnabled(item, index)}
+            onPress={() => null}
           />
         </View>
-        {showUid ? (
-          <View style={[styles.AdminUserIdTableRow, styles.adminCRMTableParagraph]}>
-            <TouchableOpacity
-              onPress={() => {
-                showProfile(item.Username)
-              }}
-            >
-              <Text selectable>{item.Username}</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
-        {showEmail ? (
-          <View style={[styles.adminCRMTableRow, styles.adminCRMTableParagraph]}>
-            <Text>{item.Attributes.find((e: any) => e.Name == "email")?.Value}</Text>
-          </View>
-        ) : null}
-        {showPhone && !isMobile ? (
-          <View style={[styles.AdminPhoneTableRow, styles.adminCRMTableParagraph]}>
-            <Text>{item.Attributes.find((e: any) => e.Name == "phone_number")?.Value}</Text>
-          </View>
-        ) : null}
-        {showStatus && !isMobile ? (
-          <View style={[styles.AdminStatusTableRow, styles.adminCRMTableParagraph]}>
-            <Text>{item.UserStatus}</Text>
-          </View>
-        ) : null}
-        {!isMobile ? (
-          <View style={[styles.AdminEnabledTableRow, styles.adminCRMTableParagraph]}>
-            <JCSwitch
-              containerWidth={1}
-              switchLabel=""
-              disabled={item.UserStatus !== "CONFIRMED"}
-              initState={item.Enabled}
-              asyncOnPress={async () => await handleToggleEnabled(item, index)}
-              onPress={() => null}
-            />
-          </View>
-        ) : null}
         <View style={styles.AdminGroupBTTableRow}>
           {!isMobile ? (
             <JCButton
@@ -1101,9 +1080,21 @@ export default function AdminScreen(props: Props) {
   if (!UserConsumer.userState) return null
   console.log("AdminScreen")
   return (
-    <View testID="events">
+    <View testID="events" style={{ margin: 96 }}>
       {UserConsumer.userActions.isMemberOf("admin") ? (
         <ScrollView>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={[AdminStyles.textHeader, { flexGrow: 2 }]}>People</Text>
+            <SearchUser setFilteredData={(newData) => setData(newData)} />
+            <JCButton
+              buttonType={ButtonTypes.AdminSmallOutline}
+              onPress={() => {
+                showInviteModal()
+              }}
+            >
+              Invite
+            </JCButton>
+          </View>
           <View style={styles.fontRegular}>
             <View
               style={{
@@ -1112,56 +1103,7 @@ export default function AdminScreen(props: Props) {
                 justifyContent: "flex-start",
               }}
             >
-              <View style={styles.adminSubNavMainContainer}>
-                <View style={styles.adminSubNavTogglesView}>
-                  <JCSwitch
-                    toggleSpacing={"space-between"}
-                    containerWidth={150}
-                    toggleMargin={5}
-                    switchLabel="show user id"
-                    initState={false}
-                    onPress={() => setShowUid(!showUid)}
-                  />
-                  <JCSwitch
-                    toggleSpacing={"space-between"}
-                    containerWidth={150}
-                    toggleMargin={5}
-                    switchLabel="show email"
-                    initState={true}
-                    onPress={() => setShowEmail(!showEmail)}
-                  />
-                </View>
-                <View style={styles.adminSubNavTogglesView}>
-                  <JCSwitch
-                    toggleSpacing={"space-between"}
-                    containerWidth={160}
-                    toggleMargin={5}
-                    switchLabel="show phone #"
-                    initState={true}
-                    onPress={() => setShowPhone(!showPhone)}
-                  />
-                  <JCSwitch
-                    toggleSpacing={"space-between"}
-                    containerWidth={160}
-                    toggleMargin={5}
-                    switchLabel="show status"
-                    initState={true}
-                    onPress={() => setShowStatus(!showStatus)}
-                  />
-                </View>
-                <View style={styles.adminInviteButton}>
-                  <JCButton
-                    buttonType={ButtonTypes.AdminOutline}
-                    onPress={() => {
-                      showInviteModal()
-                    }}
-                  >
-                    Invite
-                  </JCButton>
-                </View>
-              </View>
               <View style={{ width: "100%" }}>
-                <SearchUser setFilteredData={(newData) => setData(newData)} />
                 {renderHeader()}
 
                 {data

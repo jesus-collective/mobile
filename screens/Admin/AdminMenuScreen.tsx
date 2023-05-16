@@ -439,29 +439,28 @@ export default function AdminScreen(props: Props) {
   }
   const renderPreview = (): React.ReactNode => {
     return (
-      <View>
-        <Text>Menu Preview:</Text>
-        <Header
-          title="Jesus Collective"
-          overrideMenu={getPreviewMenu()}
-          navigation={props.navigation}
-        />
-        <Picker
-          style={{
-            height: 45,
-            paddingLeft: 10,
-            paddingRight: 10,
-            marginTop: 10,
-          }}
-          selectedValue={groupToAdd}
-          onValueChange={(val) => {
-            setPreviewGroupData(previewGroupData.concat([val]))
-          }}
-        >
-          {Object.keys(UserGroupType).map((org) => {
-            return <Picker.Item key={org} label={org} value={org} />
-          })}
-        </Picker>
+      <View style={{ marginBottom: 40 }}>
+        <Text style={AdminStyles.textHeader}>Menu Preview</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text>Select User Permissions to preview:</Text>
+          <Picker
+            style={{
+              height: 45,
+              paddingLeft: 10,
+              paddingRight: 10,
+              marginTop: 10,
+            }}
+            selectedValue={groupToAdd}
+            onValueChange={(val) => {
+              setPreviewGroupData(previewGroupData.concat([val]))
+            }}
+          >
+            {Object.keys(UserGroupType).map((org) => {
+              return <Picker.Item key={org} label={org} value={org} />
+            })}
+          </Picker>
+        </View>
+
         {previewGroupData
           ? previewGroupData.map((item: any, index: number) => {
               return (
@@ -490,6 +489,12 @@ export default function AdminScreen(props: Props) {
               )
             })
           : null}
+
+        <Header
+          title="Jesus Collective"
+          overrideMenu={getPreviewMenu()}
+          navigation={props.navigation}
+        />
       </View>
     )
   }
@@ -497,13 +502,13 @@ export default function AdminScreen(props: Props) {
   if (!UserConsumer.userState) return null
   console.log("AdminScreen")
   return (
-    <View testID="events">
+    <View testID="events" style={{ margin: 96 }}>
       {UserConsumer.userActions.isMemberOf("admin") ? (
         <ScrollView>
           {renderPreview()}
-
+          <Text style={AdminStyles.textHeader}>Menu Configuration</Text>
           <View style={styles.fontRegular}>
-            <JCButton buttonType={ButtonTypes.AdminAdd} onPress={addMenuItem}>
+            <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={addMenuItem}>
               Add Root Menu
             </JCButton>
             <View
@@ -517,92 +522,116 @@ export default function AdminScreen(props: Props) {
               {menus?.map((item, index: number) => {
                 if (item == null) return null
                 return (
-                  <>
+                  <div style={{ width: "100%" }}>
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                      <Text>{item.name}</Text>
-                      <JCButton
-                        buttonType={ButtonTypes.AdminSmallOutline}
-                        onPress={() => addSubMenuItem(item.id)}
-                      >
-                        +
-                      </JCButton>
-                      <JCButton
-                        buttonType={ButtonTypes.AdminSmallOutline}
-                        onPress={() => editMenuItem(item)}
-                      >
-                        ...
-                      </JCButton>
-                      {(item.order ?? 0) > 0 ? (
+                      <div style={{ display: "flex", flexGrow: 1, flexDirection: "row" }}>
+                        <Text>{item.name}</Text>
                         <JCButton
                           buttonType={ButtonTypes.AdminSmallOutline}
-                          onPress={() => reOrderMenuItem(item, menus[index - 1])}
+                          onPress={() => addSubMenuItem(item.id)}
                         >
-                          <Ionicons name="arrow-up-outline" style={styles.icon} />
+                          +
                         </JCButton>
-                      ) : null}
-                      {(item.order ?? 0) < menus.length - 1 ? (
                         <JCButton
                           buttonType={ButtonTypes.AdminSmallOutline}
-                          onPress={() => reOrderMenuItem(item, menus[index + 1])}
+                          onPress={() => editMenuItem(item)}
                         >
-                          <Ionicons name="arrow-down-outline" style={styles.icon} />
+                          ...
                         </JCButton>
-                      ) : null}
-                      <JCButton
-                        buttonType={ButtonTypes.AdminSmallOutline}
-                        onPress={() => deleteMenuItem(item.id)}
-                      >
-                        -
-                      </JCButton>
-                      <Text>{item.action}</Text>
-                      <Text>{item.readGroups?.toString()}</Text>
+                        {(item.order ?? 0) > 0 ? (
+                          <JCButton
+                            buttonType={ButtonTypes.AdminSmallOutline}
+                            onPress={() => reOrderMenuItem(item, menus[index - 1])}
+                          >
+                            <Ionicons name="arrow-up-outline" style={styles.smallIcon} size={12} />
+                          </JCButton>
+                        ) : null}
+                        {(item.order ?? 0) < menus.length - 1 ? (
+                          <JCButton
+                            buttonType={ButtonTypes.AdminSmallOutline}
+                            onPress={() => reOrderMenuItem(item, menus[index + 1])}
+                          >
+                            <Ionicons
+                              name="arrow-down-outline"
+                              style={styles.smallIcon}
+                              size={12}
+                            />
+                          </JCButton>
+                        ) : null}
+                        <JCButton
+                          buttonType={ButtonTypes.AdminSmallOutline}
+                          onPress={() => deleteMenuItem(item.id)}
+                        >
+                          -
+                        </JCButton>
+                      </div>
+                      <div style={{ display: "flex", flexGrow: 3, flexDirection: "row" }}>
+                        <Text>{item.action}</Text>
+                      </div>
+                      <div>
+                        <Text>{item.readGroups?.toString()}</Text>
+                      </div>
                     </div>
                     <div>
                       {item.subItems?.items.map((item2, index2: number) => {
                         if (item2 == null) return null
                         return (
                           <div style={{ display: "flex", flexDirection: "row" }}>
-                            <Text>&nbsp;&nbsp;&nbsp;</Text>
-                            <Text>{item2.name}</Text>
-                            <JCButton
-                              buttonType={ButtonTypes.AdminSmallOutline}
-                              onPress={() => editSubMenuItem(item2)}
-                            >
-                              ...
-                            </JCButton>
-                            {(item2.order ?? 0) > 0 ? (
+                            <div style={{ display: "flex", flexGrow: 1, flexDirection: "row" }}>
+                              <Text>&nbsp;&nbsp;&nbsp;</Text>
+                              <Text>{item2.name}</Text>
                               <JCButton
                                 buttonType={ButtonTypes.AdminSmallOutline}
-                                onPress={() =>
-                                  reOrderSubMenuItem(item2, item.subItems?.items[index2 - 1])
-                                }
+                                onPress={() => editSubMenuItem(item2)}
                               >
-                                <Ionicons name="arrow-up-outline" style={styles.icon} />
+                                ...
                               </JCButton>
-                            ) : null}
-                            {(item2.order ?? 0) < (item.subItems?.items?.length ?? 0) - 1 ? (
+                              {(item2.order ?? 0) > 0 ? (
+                                <JCButton
+                                  buttonType={ButtonTypes.AdminSmallOutline}
+                                  onPress={() =>
+                                    reOrderSubMenuItem(item2, item.subItems?.items[index2 - 1])
+                                  }
+                                >
+                                  <Ionicons
+                                    name="arrow-up-outline"
+                                    style={styles.smallIcon}
+                                    size={12}
+                                  />
+                                </JCButton>
+                              ) : null}
+                              {(item2.order ?? 0) < (item.subItems?.items?.length ?? 0) - 1 ? (
+                                <JCButton
+                                  buttonType={ButtonTypes.AdminSmallOutline}
+                                  onPress={() =>
+                                    reOrderSubMenuItem(item2, item.subItems?.items[index2 + 1])
+                                  }
+                                >
+                                  <Ionicons
+                                    name="arrow-down-outline"
+                                    style={styles.smallIcon}
+                                    size={12}
+                                  />
+                                </JCButton>
+                              ) : null}
                               <JCButton
                                 buttonType={ButtonTypes.AdminSmallOutline}
-                                onPress={() =>
-                                  reOrderSubMenuItem(item2, item.subItems?.items[index2 + 1])
-                                }
+                                onPress={() => deleteSubMenuItem(item2.id)}
                               >
-                                <Ionicons name="arrow-down-outline" style={styles.icon} />
+                                -
                               </JCButton>
-                            ) : null}
-                            <JCButton
-                              buttonType={ButtonTypes.AdminSmallOutline}
-                              onPress={() => deleteSubMenuItem(item2.id)}
-                            >
-                              -
-                            </JCButton>
-                            <Text>{item2.action}</Text>
-                            <Text>{item2.readGroups?.toString()}</Text>
+                            </div>
+                            <div style={{ display: "flex", flexGrow: 3, flexDirection: "row" }}>
+                              <Text>{item2.action}</Text>
+                            </div>
+                            <div>
+                              <Text>{item2.readGroups?.toString()}</Text>
+                            </div>
                           </div>
                         )
                       })}
                     </div>
-                  </>
+                  </div>
                 )
               })}
             </View>

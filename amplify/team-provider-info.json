@@ -211,11 +211,11 @@
         },
         "S3Trigger14f1cefa": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/S3Trigger14f1cefa-644d71427a365a7a6741-build.zip"
+          "s3Key": "amplify-builds/S3Trigger14f1cefa-4b6731493636395a6648-build.zip"
         },
         "S3Trigger839efa13": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/S3Trigger839efa13-58354f542f46714e764c-build.zip"
+          "s3Key": "amplify-builds/S3Trigger839efa13-6a706f6a7756534b4371-build.zip"
         },
         "AdminQueries7403b6cf": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
@@ -230,56 +230,56 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-392b31626f49504a4645-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripPreviewInvoice-4f6e6553634952535a75-build.zip"
         },
         "jcUpdateMainUserGroup": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcUpdateMainUserGroup-535a6c507263795a6876-build.zip"
+          "s3Key": "amplify-builds/jcUpdateMainUserGroup-544a613657447a61746c-build.zip"
         },
         "jcmobileStripWebhook": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripWebhook-5743304875366c4d7247-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripWebhook-516e73676c5931424f68-build.zip"
         },
         "jcmobileStripCreateSubscription": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-74336d38484f435a3761-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripCreateSubscription-6c356255697a31475263-build.zip"
         },
         "jcmobileStripCreateCustomer": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripCreateCustomer-48596d3570344c497948-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripCreateCustomer-634e794e6d566236354a-build.zip"
         },
         "jcmobileStripListInvoices": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripListInvoices-4e4c54756e78546f5a39-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripListInvoices-4d6f47386d44334d356e-build.zip"
         },
         "jcProcessDMAlerts": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcProcessDMAlerts-6f364546663143487764-build.zip"
+          "s3Key": "amplify-builds/jcProcessDMAlerts-7262724e3658306c6171-build.zip"
         },
         "jcProcessMessageAlerts": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcProcessMessageAlerts-692b73506b3454335156-build.zip"
+          "s3Key": "amplify-builds/jcProcessMessageAlerts-2f6c416f434f68522b63-build.zip"
         },
         "jcmobile": {},
         "jcmobileStripeCreatePaymentIntent": {
@@ -296,7 +296,7 @@
         },
         "jcmobileCreateCognitoOrgUser": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileCreateCognitoOrgUser-51316a4e3446466e354b-build.zip"
+          "s3Key": "amplify-builds/jcmobileCreateCognitoOrgUser-6e5934784c445a706354-build.zip"
         },
         "jcmobileSendInviteToOrgUser": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
@@ -315,15 +315,15 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca",
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcHandleActivity-486d71615965666d4876-build.zip"
+          "s3Key": "amplify-builds/jcHandleActivity-65694471516d79756b30-build.zip"
         },
         "jcmobilePinpointCleanEndpoints": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobilePinpointCleanEndpoints-4a446f654f43686c4374-build.zip"
+          "s3Key": "amplify-builds/jcmobilePinpointCleanEndpoints-4a6531736b376437546c-build.zip"
         },
         "jcmobileStripListProducts": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/jcmobileStripListProducts-376e76326b487335396c-build.zip"
+          "s3Key": "amplify-builds/jcmobileStripListProducts-62517476544e64427761-build.zip"
         },
         "jcmobileShared": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
@@ -331,7 +331,7 @@
         },
         "deleteJCUser": {
           "deploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
-          "s3Key": "amplify-builds/deleteJCUser-6d4c457a56595647716f-build.zip"
+          "s3Key": "amplify-builds/deleteJCUser-677538716e6f6f785756-build.zip"
         }
       },
       "video": {

@@ -1,4 +1,28 @@
 export const AdminStyles = {
+  textHeader: {
+    fontFamily: "Graphik-Bold-App",
+    fontStyle: "normal",
+    fontWeight: 600,
+    fontSize: 24,
+    lineHeight: "140%",
+    color: "#3D454D",
+    marginBottom: 40,
+  },
+  textTableHeader: {
+    fontFamily: "Graphik-Regular-App",
+    textTransform: "uppercase",
+    fontStyle: "normal",
+    fontWeight: 500,
+    fontSize: 12,
+    color: "#49596B",
+  },
+  textTableBold: {
+    fontFamily: "Graphik-Regular-App",
+    fontStyle: "normal",
+    fontWeight: "600",
+    fontSize: 14,
+    color: "#49596B",
+  },
   adminScreenMainContainer: {
     display: "flex",
     flexDirection: "row",
@@ -19,6 +43,10 @@ export const AdminStyles = {
   icon: {
     color: "#aaaaaa",
     fontSize: 34,
+  },
+  smallIcon: {
+    color: "#aaaaaa",
+    fontSize: 12,
   },
   /*  icon: {
           color: "#aaaaaa",
@@ -83,7 +111,6 @@ export const AdminStyles = {
     fontSize: 24,
   },
   adminCRMTableContainer: {
-    backgroundColor: "#F0493E",
     flex: 1,
     height: 40,
     alignSelf: "stretch",
@@ -124,7 +151,7 @@ export const AdminStyles = {
     flexDirection: "row",
   },
   AdminFirstNameTableHeader: {
-    flex: 1,
+    flex: 3,
     alignSelf: "stretch",
   },
   AdminLastNameTableHeader: {
@@ -166,9 +193,12 @@ export const AdminStyles = {
     marginTop: 10,
     marginBottom: 10,
     alignContent: "center",
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#E9EDF2",
   },
   AdminFirstNameTableRow: {
-    flex: 1,
+    flex: 3,
     alignSelf: "stretch",
     justifyContent: "center",
   },
