@@ -12,12 +12,13 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from "react-native"
 import { ListMenusQuery } from "src/API-customqueries"
 import SearchInactiveIcon from "../../assets/Facelift/svg/Search-2.svg"
 import { Data } from "../../components/Data/Data"
+import JCImage, { JCImageQuality, JCImageStyle } from "../../components/ProfileImage/JCImage"
 import { constants } from "../../src/constants"
 import { JCCognitoUser } from "../../src/types"
 import SearchBar from "../Forms/SearchBar/SearchBar"
@@ -278,6 +279,14 @@ export default function HeaderJC(props: Props) {
                               openScreen(subItem.action ?? "", subItem.params)
                             }}
                           >
+                            <View style={{ width: 25, height: 20 }}>
+                              <JCImage
+                                style={JCImageStyle.IconSmall}
+                                quality={JCImageQuality.small}
+                                type={"icon"}
+                                image={subItem.icon}
+                              />
+                            </View>
                             <Text testID="header-resources-all" style={headerStyles.dropdownText}>
                               {subItem.name}
                             </Text>

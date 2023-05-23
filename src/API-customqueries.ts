@@ -2,158 +2,19 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type ModelMenuFilterInput = {
-  id?: ModelIDFilterInput | null
-  order?: ModelIntFilterInput | null
-  name?: ModelStringFilterInput | null
-  action?: ModelStringFilterInput | null
-  params?: ModelStringFilterInput | null
-  readGroups?: ModelUserGroupTypeListFilterInput | null
-  and?: Array<ModelMenuFilterInput | null> | null
-  or?: Array<ModelMenuFilterInput | null> | null
-  not?: ModelMenuFilterInput | null
-}
-
-export type ModelIDFilterInput = {
-  ne?: string | null
-  eq?: string | null
-  le?: string | null
-  lt?: string | null
-  ge?: string | null
-  gt?: string | null
-  contains?: string | null
-  notContains?: string | null
-  between?: Array<string | null> | null
-  beginsWith?: string | null
-}
-
-export type ModelIntFilterInput = {
-  ne?: number | null
-  eq?: number | null
-  le?: number | null
-  lt?: number | null
-  ge?: number | null
-  gt?: number | null
-  between?: Array<number | null> | null
-}
-
-export type ModelStringFilterInput = {
-  ne?: string | null
-  eq?: string | null
-  le?: string | null
-  lt?: string | null
-  ge?: string | null
-  gt?: string | null
-  contains?: string | null
-  notContains?: string | null
-  between?: Array<string | null> | null
-  beginsWith?: string | null
-}
-
-export type ModelUserGroupTypeListFilterInput = {
-  eq?: Array<UserGroupType | null> | null
-  ne?: Array<UserGroupType | null> | null
-  contains?: UserGroupType | null
-  notContains?: UserGroupType | null
-}
-
-export enum UserGroupType {
-  verifiedUsers = "verifiedUsers",
-  admin = "admin",
-  courseAdmin = "courseAdmin",
-  courseCoach = "courseCoach",
-  courseUser = "courseUser",
-  friends = "friends",
-  partners = "partners",
-  subscriptionPartners = "subscriptionPartners",
-  subscriptionkyearlyyears = "subscriptionkyearlyyears",
-  subscriptionkykids = "subscriptionkykids",
-  subscriptionkyyouth = "subscriptionkyyouth",
-  subscriptionValid = "subscriptionValid",
-  userpool = "userpool",
-  legacyUserGroup1 = "legacyUserGroup1",
-  productMarkBaker = "productMarkBaker",
-  courseGroup1 = "courseGroup1",
-  courseGroup2 = "courseGroup2",
-  courseGroup3 = "courseGroup3",
-  courseGroup4 = "courseGroup4",
-  courseGroup5 = "courseGroup5",
-  courseGroup6 = "courseGroup6",
-  courseGroup7 = "courseGroup7",
-  courseGroup8 = "courseGroup8",
-  courseGroup9 = "courseGroup9",
-}
-
-export type ModelMenuConnection = {
-  __typename: "ModelMenuConnection"
-  items: Array<Menu | null>
-  nextToken?: string | null
-}
-
-export type Menu = {
-  __typename: "Menu"
-  id: string
-  order?: number | null
-  name?: string | null
-  action?: string | null
-  params?: string | null
-  readGroups?: Array<UserGroupType | null> | null
-  subItems?: ModelSubMenuConnection | null
-  createdAt: string
-  updatedAt: string
-}
-
-export type ModelSubMenuConnection = {
-  __typename: "ModelSubMenuConnection"
-  items: Array<SubMenu | null>
-  nextToken?: string | null
-}
-
-export type SubMenu = {
-  __typename: "SubMenu"
-  id: string
-  menuID?: string | null
-  order?: number | null
-  menu?: Menu | null
-  name?: string | null
-  action?: string | null
-  params?: string | null
-  readGroups?: Array<UserGroupType | null> | null
-  createdAt: string
-  updatedAt: string
-}
-
-export type SearchableUserFilterInput = {
+export type SearchableResourceEpisodeFilterInput = {
   id?: SearchableIDFilterInput | null
-  given_name?: SearchableStringFilterInput | null
-  family_name?: SearchableStringFilterInput | null
-  email?: SearchableStringFilterInput | null
-  phone?: SearchableStringFilterInput | null
   owner?: SearchableStringFilterInput | null
-  mainUserGroup?: SearchableStringFilterInput | null
-  stripeCustomerID?: SearchableStringFilterInput | null
-  stripeSubscriptionID?: SearchableStringFilterInput | null
-  profileState?: SearchableStringFilterInput | null
-  aboutMeShort?: SearchableStringFilterInput | null
-  aboutMeLong?: SearchableStringFilterInput | null
-  interests?: SearchableStringFilterInput | null
-  currentRole?: SearchableStringFilterInput | null
-  currentScope?: SearchableStringFilterInput | null
-  personality?: SearchableStringFilterInput | null
-  orgName?: SearchableStringFilterInput | null
-  orgType?: SearchableStringFilterInput | null
-  orgSize?: SearchableStringFilterInput | null
-  denomination?: SearchableStringFilterInput | null
-  pplServed?: SearchableStringFilterInput | null
-  sundayAttendance?: SearchableStringFilterInput | null
-  numberVolunteers?: SearchableStringFilterInput | null
-  orgDescription?: SearchableStringFilterInput | null
-  joined?: SearchableStringFilterInput | null
-  isArchived?: SearchableStringFilterInput | null
-  primaryOrganization?: SearchableStringFilterInput | null
-  and?: Array<SearchableUserFilterInput | null> | null
-  or?: Array<SearchableUserFilterInput | null> | null
-  not?: SearchableUserFilterInput | null
+  episodeNumber?: SearchableIntFilterInput | null
+  type?: SearchableStringFilterInput | null
+  title?: SearchableStringFilterInput | null
+  description?: SearchableStringFilterInput | null
+  whoIsThisFor?: SearchableStringFilterInput | null
+  episodeID?: SearchableIDFilterInput | null
+  tags?: SearchableStringFilterInput | null
+  and?: Array<SearchableResourceEpisodeFilterInput | null> | null
+  or?: Array<SearchableResourceEpisodeFilterInput | null> | null
+  not?: SearchableResourceEpisodeFilterInput | null
 }
 
 export type SearchableIDFilterInput = {
@@ -190,39 +51,31 @@ export type SearchableStringFilterInput = {
   range?: Array<string | null> | null
 }
 
-export type SearchableUserSortInput = {
-  field?: SearchableUserSortableFields | null
+export type SearchableIntFilterInput = {
+  ne?: number | null
+  gt?: number | null
+  lt?: number | null
+  gte?: number | null
+  lte?: number | null
+  eq?: number | null
+  range?: Array<number | null> | null
+}
+
+export type SearchableResourceEpisodeSortInput = {
+  field?: SearchableResourceEpisodeSortableFields | null
   direction?: SearchableSortDirection | null
 }
 
-export enum SearchableUserSortableFields {
+export enum SearchableResourceEpisodeSortableFields {
   id = "id",
-  given_name = "given_name",
-  family_name = "family_name",
-  email = "email",
-  phone = "phone",
   owner = "owner",
-  mainUserGroup = "mainUserGroup",
-  stripeCustomerID = "stripeCustomerID",
-  stripeSubscriptionID = "stripeSubscriptionID",
-  profileState = "profileState",
-  aboutMeShort = "aboutMeShort",
-  aboutMeLong = "aboutMeLong",
-  interests = "interests",
-  currentRole = "currentRole",
-  currentScope = "currentScope",
-  personality = "personality",
-  orgName = "orgName",
-  orgType = "orgType",
-  orgSize = "orgSize",
-  denomination = "denomination",
-  pplServed = "pplServed",
-  sundayAttendance = "sundayAttendance",
-  numberVolunteers = "numberVolunteers",
-  orgDescription = "orgDescription",
-  joined = "joined",
-  isArchived = "isArchived",
-  primaryOrganization = "primaryOrganization",
+  episodeNumber = "episodeNumber",
+  type = "type",
+  title = "title",
+  description = "description",
+  whoIsThisFor = "whoIsThisFor",
+  episodeID = "episodeID",
+  tags = "tags",
 }
 
 export enum SearchableSortDirection {
@@ -230,11 +83,228 @@ export enum SearchableSortDirection {
   desc = "desc",
 }
 
-export type SearchableUserConnection = {
-  __typename: "SearchableUserConnection"
-  items: Array<User | null>
+export type SearchableResourceEpisodeConnection = {
+  __typename: "SearchableResourceEpisodeConnection"
+  items: Array<ResourceEpisode | null>
   nextToken?: string | null
   total?: number | null
+}
+
+export type ResourceEpisode = {
+  __typename: "ResourceEpisode"
+  id: string
+  owner?: string | null
+  episodeNumber?: number | null
+  type?: string | null
+  title?: string | null
+  description?: string | null
+  imageFile?: Image | null
+  whoIsThisFor?: string | null
+  details?: Array<ResourceDetail | null> | null
+  episodeID: string
+  parentSeries: ResourceSeries
+  tags?: Array<string | null> | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type Image = {
+  __typename: "Image"
+  userId?: string | null
+  filenameSmall?: string | null
+  filenameMedium?: string | null
+  filenameLarge?: string | null
+  filenameUpload?: string | null
+}
+
+export type ResourceDetail = {
+  __typename: "ResourceDetail"
+  type?: ResourceDetailType | null
+  name?: string | null
+  text?: string | null
+  value?: string | null
+  image?: Image | null
+}
+
+export enum ResourceDetailType {
+  DefaultYoutube = "DefaultYoutube",
+  Image = "Image",
+  Button = "Button",
+  Link = "Link",
+}
+
+export type ResourceSeries = {
+  __typename: "ResourceSeries"
+  id: string
+  owner?: string | null
+  type?: string | null
+  title?: string | null
+  order?: number | null
+  description?: string | null
+  whoIsThisFor?: string | null
+  imageFile?: Image | null
+  category?: Array<string | null> | null
+  status?: string | null
+  details?: Array<ResourceDetail | null> | null
+  episodes?: ModelResourceEpisodeConnection | null
+  seriesID: string
+  parentResource: Resource
+  tags?: Array<string | null> | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type ModelResourceEpisodeConnection = {
+  __typename: "ModelResourceEpisodeConnection"
+  items: Array<ResourceEpisode | null>
+  nextToken?: string | null
+}
+
+export type Resource = {
+  __typename: "Resource"
+  id: string
+  owner?: string | null
+  type?: string | null
+  order?: string | null
+  title?: string | null
+  subtitle?: string | null
+  image?: Image | null
+  description?: string | null
+  whoIsThisFor?: string | null
+  extendedDescription?: string | null
+  readGroups?: Array<UserGroupType | null> | null
+  details?: Array<ResourceDetail | null> | null
+  series?: ModelResourceSeriesConnection | null
+  resourceID: string
+  resourceRoot: ResourceRoot
+  createdAt: string
+  updatedAt: string
+}
+
+export enum UserGroupType {
+  verifiedUsers = "verifiedUsers",
+  admin = "admin",
+  courseAdmin = "courseAdmin",
+  courseCoach = "courseCoach",
+  courseUser = "courseUser",
+  friends = "friends",
+  partners = "partners",
+  subscriptionPartners = "subscriptionPartners",
+  subscriptionkyearlyyears = "subscriptionkyearlyyears",
+  subscriptionkykids = "subscriptionkykids",
+  subscriptionkyyouth = "subscriptionkyyouth",
+  subscriptionValid = "subscriptionValid",
+  userpool = "userpool",
+  legacyUserGroup1 = "legacyUserGroup1",
+  productMarkBaker = "productMarkBaker",
+  courseGroup1 = "courseGroup1",
+  courseGroup2 = "courseGroup2",
+  courseGroup3 = "courseGroup3",
+  courseGroup4 = "courseGroup4",
+  courseGroup5 = "courseGroup5",
+  courseGroup6 = "courseGroup6",
+  courseGroup7 = "courseGroup7",
+  courseGroup8 = "courseGroup8",
+  courseGroup9 = "courseGroup9",
+}
+
+export type ModelResourceSeriesConnection = {
+  __typename: "ModelResourceSeriesConnection"
+  items: Array<ResourceSeries | null>
+  nextToken?: string | null
+}
+
+export type ResourceRoot = {
+  __typename: "ResourceRoot"
+  id: string
+  type?: string | null
+  groupId?: string | null
+  organizationId: string
+  owner?: string | null
+  resources?: ModelResourceConnection | null
+  organization?: Organization | null
+  menuItems?: ModelResourceMenuItemConnection | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type ModelResourceConnection = {
+  __typename: "ModelResourceConnection"
+  items: Array<Resource | null>
+  nextToken?: string | null
+}
+
+export type Organization = {
+  __typename: "Organization"
+  id: string
+  orgName: string
+  adminEmail?: string | null
+  phone?: string | null
+  admins: Array<string>
+  superAdmin: string
+  hasPaidState?: string | null
+  profileState?: string | null
+  address?: string | null
+  city?: string | null
+  province?: string | null
+  postalCode?: string | null
+  country?: string | null
+  location?: LatLong | null
+  profileImage?: Image | null
+  aboutMeShort?: string | null
+  aboutMeLong?: string | null
+  orgType?: string | null
+  orgSize?: string | null
+  denomination?: string | null
+  pplServed?: string | null
+  sundayAttendance?: string | null
+  numberVolunteers?: string | null
+  orgDescription?: string | null
+  joined?: string | null
+  parentOrganizationId: string
+  parentOrganization?: Organization | null
+  subOrganizations?: ModelOrganizationConnection | null
+  members?: ModelOrganizationMemberConnection | null
+  ownsGroups?: ModelGroupConnection | null
+  resource?: ModelResourceRootConnection | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type LatLong = {
+  __typename: "LatLong"
+  latitude?: string | null
+  longitude?: string | null
+  geocodeFull?: string | null
+  geocodeCity?: string | null
+  geocodeRegion?: string | null
+  randomLatitude?: string | null
+  randomLongitude?: string | null
+}
+
+export type ModelOrganizationConnection = {
+  __typename: "ModelOrganizationConnection"
+  items: Array<Organization | null>
+  nextToken?: string | null
+}
+
+export type ModelOrganizationMemberConnection = {
+  __typename: "ModelOrganizationMemberConnection"
+  items: Array<OrganizationMember | null>
+  nextToken?: string | null
+}
+
+export type OrganizationMember = {
+  __typename: "OrganizationMember"
+  id: string
+  userRole: string
+  userId: string
+  organizationId: string
+  organizationName?: string | null
+  organization: Organization
+  createdAt: string
+  updatedAt: string
+  user: User
 }
 
 export type User = {
@@ -301,88 +371,6 @@ export type Address = {
   line2?: string | null
   postal_code?: string | null
   state?: string | null
-}
-
-export type LatLong = {
-  __typename: "LatLong"
-  latitude?: string | null
-  longitude?: string | null
-  geocodeFull?: string | null
-  geocodeCity?: string | null
-  geocodeRegion?: string | null
-  randomLatitude?: string | null
-  randomLongitude?: string | null
-}
-
-export type Image = {
-  __typename: "Image"
-  userId?: string | null
-  filenameSmall?: string | null
-  filenameMedium?: string | null
-  filenameLarge?: string | null
-  filenameUpload?: string | null
-}
-
-export type ModelOrganizationMemberConnection = {
-  __typename: "ModelOrganizationMemberConnection"
-  items: Array<OrganizationMember | null>
-  nextToken?: string | null
-}
-
-export type OrganizationMember = {
-  __typename: "OrganizationMember"
-  id: string
-  userRole: string
-  userId: string
-  organizationId: string
-  organizationName?: string | null
-  organization: Organization
-  createdAt: string
-  updatedAt: string
-  user: User
-}
-
-export type Organization = {
-  __typename: "Organization"
-  id: string
-  orgName: string
-  adminEmail?: string | null
-  phone?: string | null
-  admins: Array<string>
-  superAdmin: string
-  hasPaidState?: string | null
-  profileState?: string | null
-  address?: string | null
-  city?: string | null
-  province?: string | null
-  postalCode?: string | null
-  country?: string | null
-  location?: LatLong | null
-  profileImage?: Image | null
-  aboutMeShort?: string | null
-  aboutMeLong?: string | null
-  orgType?: string | null
-  orgSize?: string | null
-  denomination?: string | null
-  pplServed?: string | null
-  sundayAttendance?: string | null
-  numberVolunteers?: string | null
-  orgDescription?: string | null
-  joined?: string | null
-  parentOrganizationId: string
-  parentOrganization?: Organization | null
-  subOrganizations?: ModelOrganizationConnection | null
-  members?: ModelOrganizationMemberConnection | null
-  ownsGroups?: ModelGroupConnection | null
-  resource?: ModelResourceRootConnection | null
-  createdAt: string
-  updatedAt: string
-}
-
-export type ModelOrganizationConnection = {
-  __typename: "ModelOrganizationConnection"
-  items: Array<Organization | null>
-  nextToken?: string | null
 }
 
 export type ModelGroupConnection = {
@@ -488,213 +476,6 @@ export type Reply = {
   createdAt: string
   updatedAt: string
   author?: User | null
-}
-
-export type ModelResourceRootConnection = {
-  __typename: "ModelResourceRootConnection"
-  items: Array<ResourceRoot | null>
-  nextToken?: string | null
-}
-
-export type ResourceRoot = {
-  __typename: "ResourceRoot"
-  id: string
-  type?: string | null
-  groupId?: string | null
-  organizationId: string
-  owner?: string | null
-  resources?: ModelResourceConnection | null
-  organization?: Organization | null
-  menuItems?: ModelResourceMenuItemConnection | null
-  createdAt: string
-  updatedAt: string
-}
-
-export type ModelResourceConnection = {
-  __typename: "ModelResourceConnection"
-  items: Array<Resource | null>
-  nextToken?: string | null
-}
-
-export type Resource = {
-  __typename: "Resource"
-  id: string
-  owner?: string | null
-  type?: string | null
-  order?: string | null
-  title?: string | null
-  subtitle?: string | null
-  image?: Image | null
-  description?: string | null
-  whoIsThisFor?: string | null
-  extendedDescription?: string | null
-  readGroups?: Array<UserGroupType | null> | null
-  details?: Array<ResourceDetail | null> | null
-  series?: ModelResourceSeriesConnection | null
-  resourceID: string
-  resourceRoot: ResourceRoot
-  createdAt: string
-  updatedAt: string
-}
-
-export type ResourceDetail = {
-  __typename: "ResourceDetail"
-  type?: ResourceDetailType | null
-  name?: string | null
-  text?: string | null
-  value?: string | null
-  image?: Image | null
-}
-
-export enum ResourceDetailType {
-  DefaultYoutube = "DefaultYoutube",
-  Image = "Image",
-  Button = "Button",
-  Link = "Link",
-}
-
-export type ModelResourceSeriesConnection = {
-  __typename: "ModelResourceSeriesConnection"
-  items: Array<ResourceSeries | null>
-  nextToken?: string | null
-}
-
-export type ResourceSeries = {
-  __typename: "ResourceSeries"
-  id: string
-  owner?: string | null
-  type?: string | null
-  title?: string | null
-  order?: number | null
-  description?: string | null
-  whoIsThisFor?: string | null
-  imageFile?: Image | null
-  category?: Array<string | null> | null
-  status?: string | null
-  details?: Array<ResourceDetail | null> | null
-  episodes?: ModelResourceEpisodeConnection | null
-  seriesID: string
-  parentResource: Resource
-  tags?: Array<string | null> | null
-  createdAt: string
-  updatedAt: string
-}
-
-export type ModelResourceEpisodeConnection = {
-  __typename: "ModelResourceEpisodeConnection"
-  items: Array<ResourceEpisode | null>
-  nextToken?: string | null
-}
-
-export type ResourceEpisode = {
-  __typename: "ResourceEpisode"
-  id: string
-  owner?: string | null
-  episodeNumber?: number | null
-  type?: string | null
-  title?: string | null
-  description?: string | null
-  imageFile?: Image | null
-  whoIsThisFor?: string | null
-  details?: Array<ResourceDetail | null> | null
-  episodeID: string
-  parentSeries: ResourceSeries
-  tags?: Array<string | null> | null
-  createdAt: string
-  updatedAt: string
-}
-
-export type ModelResourceMenuItemConnection = {
-  __typename: "ModelResourceMenuItemConnection"
-  items: Array<ResourceMenuItem | null>
-  nextToken?: string | null
-}
-
-export type ResourceMenuItem = {
-  __typename: "ResourceMenuItem"
-  id: string
-  owner?: string | null
-  readGroups?: Array<UserGroupType | null> | null
-  type?: ResourceMenuItemType | null
-  menuTitle?: string | null
-  order?: string | null
-  depth?: string | null
-  pageItems?: Array<ResourcePageItem | null> | null
-  resourceRootID: string
-  resourceRoot: ResourceRoot
-  createdAt: string
-  updatedAt: string
-}
-
-export enum ResourceMenuItemType {
-  resource = "resource",
-  menuItem = "menuItem",
-  break = "break",
-  schedule = "schedule",
-  curriculum = "curriculum",
-}
-
-export type ResourcePageItem = {
-  __typename: "ResourcePageItem"
-  id?: string | null
-  type?: ResourcePageItemType | null
-  style?: ResourcePageItemStyle | null
-  size?: string | null
-  title1?: string | null
-  title2?: string | null
-  description1?: string | null
-  description2?: string | null
-  resourceID?: string | null
-  seriesID?: string | null
-  episodeID?: string | null
-  color?: string | null
-  image?: Image | null
-  url?: string | null
-  order?: number | null
-  pageItemsLeft?: Array<ResourcePageItem | null> | null
-  pageItemsRight?: Array<ResourcePageItem | null> | null
-}
-
-export enum ResourcePageItemType {
-  Menu = "Menu",
-  Header = "Header",
-  RichText = "RichText",
-  List = "List",
-  Grid = "Grid",
-  Column = "Column",
-  Card = "Card",
-  DropDownPicker = "DropDownPicker",
-}
-
-export enum ResourcePageItemStyle {
-  MenuTop = "MenuTop",
-  MenuLeft = "MenuLeft",
-  Column3070 = "Column3070",
-  Column7030 = "Column7030",
-  Column5050 = "Column5050",
-  CardManual = "CardManual",
-  CardAuto = "CardAuto",
-  CardLarge = "CardLarge",
-  RichTextH1 = "RichTextH1",
-  RichTextH2 = "RichTextH2",
-  RichTextH3 = "RichTextH3",
-  RichTextH4 = "RichTextH4",
-  RichTextH5 = "RichTextH5",
-  RichTextH6 = "RichTextH6",
-  RichTextH1Small = "RichTextH1Small",
-  RichTextH2Small = "RichTextH2Small",
-  RichTextH3Small = "RichTextH3Small",
-  RichTextH4Small = "RichTextH4Small",
-  RichTextH5Small = "RichTextH5Small",
-  RichTextH6Small = "RichTextH6Small",
-  RichTextBody1 = "RichTextBody1",
-  RichTextBody2 = "RichTextBody2",
-  RichTextBody3 = "RichTextBody3",
-  RichTextBody4 = "RichTextBody4",
-  GridManual = "GridManual",
-  GridAuto = "GridAuto",
-  ListManual = "ListManual",
-  ListAuto = "ListAuto",
 }
 
 export type ModelDirectMessageConnection = {
@@ -991,6 +772,276 @@ export type AlertConfig = {
   emailPromotions?: string | null
 }
 
+export type ModelResourceRootConnection = {
+  __typename: "ModelResourceRootConnection"
+  items: Array<ResourceRoot | null>
+  nextToken?: string | null
+}
+
+export type ModelResourceMenuItemConnection = {
+  __typename: "ModelResourceMenuItemConnection"
+  items: Array<ResourceMenuItem | null>
+  nextToken?: string | null
+}
+
+export type ResourceMenuItem = {
+  __typename: "ResourceMenuItem"
+  id: string
+  owner?: string | null
+  readGroups?: Array<UserGroupType | null> | null
+  type?: ResourceMenuItemType | null
+  menuTitle?: string | null
+  order?: string | null
+  depth?: string | null
+  pageItems?: Array<ResourcePageItem | null> | null
+  resourceRootID: string
+  resourceRoot: ResourceRoot
+  createdAt: string
+  updatedAt: string
+}
+
+export enum ResourceMenuItemType {
+  resource = "resource",
+  menuItem = "menuItem",
+  break = "break",
+  schedule = "schedule",
+  curriculum = "curriculum",
+}
+
+export type ResourcePageItem = {
+  __typename: "ResourcePageItem"
+  id?: string | null
+  type?: ResourcePageItemType | null
+  style?: ResourcePageItemStyle | null
+  size?: string | null
+  title1?: string | null
+  title2?: string | null
+  description1?: string | null
+  description2?: string | null
+  resourceID?: string | null
+  seriesID?: string | null
+  episodeID?: string | null
+  color?: string | null
+  image?: Image | null
+  url?: string | null
+  order?: number | null
+  pageItemsLeft?: Array<ResourcePageItem | null> | null
+  pageItemsRight?: Array<ResourcePageItem | null> | null
+}
+
+export enum ResourcePageItemType {
+  Menu = "Menu",
+  Header = "Header",
+  RichText = "RichText",
+  List = "List",
+  Grid = "Grid",
+  Column = "Column",
+  Card = "Card",
+  DropDownPicker = "DropDownPicker",
+}
+
+export enum ResourcePageItemStyle {
+  MenuTop = "MenuTop",
+  MenuLeft = "MenuLeft",
+  Column3070 = "Column3070",
+  Column7030 = "Column7030",
+  Column5050 = "Column5050",
+  CardManual = "CardManual",
+  CardAuto = "CardAuto",
+  CardLarge = "CardLarge",
+  RichTextH1 = "RichTextH1",
+  RichTextH2 = "RichTextH2",
+  RichTextH3 = "RichTextH3",
+  RichTextH4 = "RichTextH4",
+  RichTextH5 = "RichTextH5",
+  RichTextH6 = "RichTextH6",
+  RichTextH1Small = "RichTextH1Small",
+  RichTextH2Small = "RichTextH2Small",
+  RichTextH3Small = "RichTextH3Small",
+  RichTextH4Small = "RichTextH4Small",
+  RichTextH5Small = "RichTextH5Small",
+  RichTextH6Small = "RichTextH6Small",
+  RichTextBody1 = "RichTextBody1",
+  RichTextBody2 = "RichTextBody2",
+  RichTextBody3 = "RichTextBody3",
+  RichTextBody4 = "RichTextBody4",
+  GridManual = "GridManual",
+  GridAuto = "GridAuto",
+  ListManual = "ListManual",
+  ListAuto = "ListAuto",
+}
+
+export type ModelMenuFilterInput = {
+  id?: ModelIDFilterInput | null
+  order?: ModelIntFilterInput | null
+  name?: ModelStringFilterInput | null
+  action?: ModelStringFilterInput | null
+  params?: ModelStringFilterInput | null
+  readGroups?: ModelUserGroupTypeListFilterInput | null
+  and?: Array<ModelMenuFilterInput | null> | null
+  or?: Array<ModelMenuFilterInput | null> | null
+  not?: ModelMenuFilterInput | null
+}
+
+export type ModelIDFilterInput = {
+  ne?: string | null
+  eq?: string | null
+  le?: string | null
+  lt?: string | null
+  ge?: string | null
+  gt?: string | null
+  contains?: string | null
+  notContains?: string | null
+  between?: Array<string | null> | null
+  beginsWith?: string | null
+}
+
+export type ModelIntFilterInput = {
+  ne?: number | null
+  eq?: number | null
+  le?: number | null
+  lt?: number | null
+  ge?: number | null
+  gt?: number | null
+  between?: Array<number | null> | null
+}
+
+export type ModelStringFilterInput = {
+  ne?: string | null
+  eq?: string | null
+  le?: string | null
+  lt?: string | null
+  ge?: string | null
+  gt?: string | null
+  contains?: string | null
+  notContains?: string | null
+  between?: Array<string | null> | null
+  beginsWith?: string | null
+}
+
+export type ModelUserGroupTypeListFilterInput = {
+  eq?: Array<UserGroupType | null> | null
+  ne?: Array<UserGroupType | null> | null
+  contains?: UserGroupType | null
+  notContains?: UserGroupType | null
+}
+
+export type ModelMenuConnection = {
+  __typename: "ModelMenuConnection"
+  items: Array<Menu | null>
+  nextToken?: string | null
+}
+
+export type Menu = {
+  __typename: "Menu"
+  id: string
+  order?: number | null
+  name?: string | null
+  action?: string | null
+  params?: string | null
+  icon?: Image | null
+  readGroups?: Array<UserGroupType | null> | null
+  subItems?: ModelSubMenuConnection | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type ModelSubMenuConnection = {
+  __typename: "ModelSubMenuConnection"
+  items: Array<SubMenu | null>
+  nextToken?: string | null
+}
+
+export type SubMenu = {
+  __typename: "SubMenu"
+  id: string
+  menuID?: string | null
+  order?: number | null
+  menu?: Menu | null
+  name?: string | null
+  action?: string | null
+  icon?: Image | null
+  params?: string | null
+  readGroups?: Array<UserGroupType | null> | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type SearchableUserFilterInput = {
+  id?: SearchableIDFilterInput | null
+  given_name?: SearchableStringFilterInput | null
+  family_name?: SearchableStringFilterInput | null
+  email?: SearchableStringFilterInput | null
+  phone?: SearchableStringFilterInput | null
+  owner?: SearchableStringFilterInput | null
+  mainUserGroup?: SearchableStringFilterInput | null
+  stripeCustomerID?: SearchableStringFilterInput | null
+  stripeSubscriptionID?: SearchableStringFilterInput | null
+  profileState?: SearchableStringFilterInput | null
+  aboutMeShort?: SearchableStringFilterInput | null
+  aboutMeLong?: SearchableStringFilterInput | null
+  interests?: SearchableStringFilterInput | null
+  currentRole?: SearchableStringFilterInput | null
+  currentScope?: SearchableStringFilterInput | null
+  personality?: SearchableStringFilterInput | null
+  orgName?: SearchableStringFilterInput | null
+  orgType?: SearchableStringFilterInput | null
+  orgSize?: SearchableStringFilterInput | null
+  denomination?: SearchableStringFilterInput | null
+  pplServed?: SearchableStringFilterInput | null
+  sundayAttendance?: SearchableStringFilterInput | null
+  numberVolunteers?: SearchableStringFilterInput | null
+  orgDescription?: SearchableStringFilterInput | null
+  joined?: SearchableStringFilterInput | null
+  isArchived?: SearchableStringFilterInput | null
+  primaryOrganization?: SearchableStringFilterInput | null
+  and?: Array<SearchableUserFilterInput | null> | null
+  or?: Array<SearchableUserFilterInput | null> | null
+  not?: SearchableUserFilterInput | null
+}
+
+export type SearchableUserSortInput = {
+  field?: SearchableUserSortableFields | null
+  direction?: SearchableSortDirection | null
+}
+
+export enum SearchableUserSortableFields {
+  id = "id",
+  given_name = "given_name",
+  family_name = "family_name",
+  email = "email",
+  phone = "phone",
+  owner = "owner",
+  mainUserGroup = "mainUserGroup",
+  stripeCustomerID = "stripeCustomerID",
+  stripeSubscriptionID = "stripeSubscriptionID",
+  profileState = "profileState",
+  aboutMeShort = "aboutMeShort",
+  aboutMeLong = "aboutMeLong",
+  interests = "interests",
+  currentRole = "currentRole",
+  currentScope = "currentScope",
+  personality = "personality",
+  orgName = "orgName",
+  orgType = "orgType",
+  orgSize = "orgSize",
+  denomination = "denomination",
+  pplServed = "pplServed",
+  sundayAttendance = "sundayAttendance",
+  numberVolunteers = "numberVolunteers",
+  orgDescription = "orgDescription",
+  joined = "joined",
+  isArchived = "isArchived",
+  primaryOrganization = "primaryOrganization",
+}
+
+export type SearchableUserConnection = {
+  __typename: "SearchableUserConnection"
+  items: Array<User | null>
+  nextToken?: string | null
+  total?: number | null
+}
+
 export type ModelOrganizationFilterInput = {
   id?: ModelIDFilterInput | null
   orgName?: ModelStringFilterInput | null
@@ -1229,6 +1280,67 @@ export type ModelDirectMessageUserFilterInput = {
   not?: ModelDirectMessageUserFilterInput | null
 }
 
+export type SearchResourceEpisodesQueryVariables = {
+  filter?: SearchableResourceEpisodeFilterInput | null
+  sort?: SearchableResourceEpisodeSortInput | null
+  limit?: number | null
+  nextToken?: string | null
+  from?: number | null
+}
+
+export type SearchResourceEpisodesQuery = {
+  searchResourceEpisodes?: {
+    __typename: "SearchableResourceEpisodeConnection"
+    items: Array<{
+      __typename: "ResourceEpisode"
+      id: string
+      owner?: string | null
+      episodeNumber?: number | null
+      type?: string | null
+      title?: string | null
+      description?: string | null
+      imageFile?: {
+        __typename: "Image"
+        userId?: string | null
+        filenameSmall?: string | null
+        filenameMedium?: string | null
+        filenameLarge?: string | null
+        filenameUpload?: string | null
+      } | null
+      whoIsThisFor?: string | null
+      details?: Array<{
+        __typename: "ResourceDetail"
+        type?: ResourceDetailType | null
+        name?: string | null
+        text?: string | null
+        value?: string | null
+      } | null> | null
+      episodeID: string
+      parentSeries: {
+        __typename: "ResourceSeries"
+        id: string
+        owner?: string | null
+        type?: string | null
+        title?: string | null
+        order?: number | null
+        description?: string | null
+        whoIsThisFor?: string | null
+        category?: Array<string | null> | null
+        status?: string | null
+        seriesID: string
+        tags?: Array<string | null> | null
+        createdAt: string
+        updatedAt: string
+      }
+      tags?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+    } | null>
+    nextToken?: string | null
+    total?: number | null
+  } | null
+}
+
 export type ListMenusQueryVariables = {
   filter?: ModelMenuFilterInput | null
   limit?: number | null
@@ -1246,6 +1358,14 @@ export type ListMenusQuery = {
       order?: number | null
       readGroups?: Array<UserGroupType | null> | null
       params?: string | null
+      icon?: {
+        __typename: "Image"
+        userId?: string | null
+        filenameSmall?: string | null
+        filenameMedium?: string | null
+        filenameLarge?: string | null
+        filenameUpload?: string | null
+      } | null
       subItems?: {
         __typename: "ModelSubMenuConnection"
         items: Array<{
@@ -1256,6 +1376,14 @@ export type ListMenusQuery = {
           params?: string | null
           name?: string | null
           action?: string | null
+          icon?: {
+            __typename: "Image"
+            userId?: string | null
+            filenameSmall?: string | null
+            filenameMedium?: string | null
+            filenameLarge?: string | null
+            filenameUpload?: string | null
+          } | null
           readGroups?: Array<UserGroupType | null> | null
           createdAt: string
           updatedAt: string

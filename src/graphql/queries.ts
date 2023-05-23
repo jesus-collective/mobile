@@ -4229,6 +4229,13 @@ export const getMenu = /* GraphQL */ `
       name
       action
       params
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       readGroups
       subItems {
         items {
@@ -4258,6 +4265,13 @@ export const listMenus = /* GraphQL */ `
         name
         action
         params
+        icon {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         readGroups
         subItems {
           nextToken
@@ -4281,6 +4295,13 @@ export const getSubMenu = /* GraphQL */ `
         name
         action
         params
+        icon {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         readGroups
         subItems {
           nextToken
@@ -4290,6 +4311,13 @@ export const getSubMenu = /* GraphQL */ `
       }
       name
       action
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       params
       readGroups
       createdAt
@@ -4316,6 +4344,13 @@ export const listSubMenus = /* GraphQL */ `
         }
         name
         action
+        icon {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         params
         readGroups
         createdAt

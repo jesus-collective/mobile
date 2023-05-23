@@ -1415,6 +1415,7 @@ type Menu
   name:String
   action:String
   params:String
+  icon:Image
   readGroups:[UserGroupType]
   subItems: [SubMenu] @connection(name:"subMenuMenu",keyField: "menuID",sortField:"order")
 
@@ -1434,6 +1435,7 @@ type SubMenu
   menu:Menu @connection(name:"subMenuMenu",keyField:"menuID")
   name:String
   action:String
+  icon:Image
   params:String
   readGroups:[UserGroupType]
 }

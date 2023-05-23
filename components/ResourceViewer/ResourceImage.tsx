@@ -10,6 +10,7 @@ interface Props {
   fileName: string
   currentImage: ImageInput | null | undefined
   onUpdate(image: ImageInput): void
+  style?: ButtonTypes
 }
 interface State extends JCState {
   uploading: boolean
@@ -46,7 +47,7 @@ class ResourceImage extends JCComponent<Props, State> {
         ) : (
           <>
             <JCButton
-              buttonType={ButtonTypes.Transparent}
+              buttonType={this.props.style ?? ButtonTypes.Transparent}
               onPress={() => {
                 null
               }}

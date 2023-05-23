@@ -11368,6 +11368,13 @@ export const onCreateMenu = /* GraphQL */ `
       name
       action
       params
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       readGroups
       subItems {
         items {
@@ -11396,6 +11403,13 @@ export const onUpdateMenu = /* GraphQL */ `
       name
       action
       params
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       readGroups
       subItems {
         items {
@@ -11424,6 +11438,13 @@ export const onDeleteMenu = /* GraphQL */ `
       name
       action
       params
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       readGroups
       subItems {
         items {
@@ -11456,6 +11477,13 @@ export const onCreateSubMenu = /* GraphQL */ `
         name
         action
         params
+        icon {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         readGroups
         subItems {
           nextToken
@@ -11465,6 +11493,13 @@ export const onCreateSubMenu = /* GraphQL */ `
       }
       name
       action
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       params
       readGroups
       createdAt
@@ -11484,6 +11519,13 @@ export const onUpdateSubMenu = /* GraphQL */ `
         name
         action
         params
+        icon {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         readGroups
         subItems {
           nextToken
@@ -11493,6 +11535,13 @@ export const onUpdateSubMenu = /* GraphQL */ `
       }
       name
       action
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       params
       readGroups
       createdAt
@@ -11512,6 +11561,13 @@ export const onDeleteSubMenu = /* GraphQL */ `
         name
         action
         params
+        icon {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         readGroups
         subItems {
           nextToken
@@ -11521,6 +11577,13 @@ export const onDeleteSubMenu = /* GraphQL */ `
       }
       name
       action
+      icon {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       params
       readGroups
       createdAt

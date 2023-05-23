@@ -70,6 +70,13 @@ export const listMenus = /* GraphQL */ `
         order
         readGroups
         params
+        icon {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         subItems {
           items {
             id
@@ -78,6 +85,13 @@ export const listMenus = /* GraphQL */ `
             params
             name
             action
+            icon {
+              userId
+              filenameSmall
+              filenameMedium
+              filenameLarge
+              filenameUpload
+            }
             readGroups
             createdAt
             updatedAt

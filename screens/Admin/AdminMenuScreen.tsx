@@ -9,7 +9,9 @@ import { Data } from "../../components/Data/Data"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
-import { ListSubMenusQuery, UserGroupType } from "../../src/API"
+import JCImage, { JCImageQuality, JCImageStyle } from "../../components/ProfileImage/JCImage"
+import ResourceImage from "../../components/ResourceViewer/ResourceImage"
+import { ImageInput, ListSubMenusQuery, UserGroupType } from "../../src/API"
 import { UserContext } from "../HomeScreen/UserContext"
 interface Props {
   navigation: StackNavigationProp<any, any>
@@ -31,6 +33,7 @@ export default function AdminScreen(props: Props) {
   const [menuName, setMenuName] = useState<string>()
   const [menuProps, setMenuProps] = useState<string>()
   const [subMenuName, setSubMenuName] = useState<string>()
+  const [subMenuImage, setSubMenuImage] = useState<ImageInput>()
   const [menuAction, setMenuAction] = useState<string>()
   const [subMenuAction, setSubMenuAction] = useState<string>()
   const [subMenuProps, setSubMenuProps] = useState<string>()
@@ -103,6 +106,7 @@ export default function AdminScreen(props: Props) {
         const z = await Data.updateSubMenu({
           id: showEditSubMenuItem,
           name: subMenuName,
+          icon: subMenuImage,
           action: subMenuAction,
           params: subMenuProps,
           readGroups: groupData,
@@ -112,6 +116,7 @@ export default function AdminScreen(props: Props) {
         setSubMenuAction("")
         setSubMenuProps("")
         setGroupData([])
+        setSubMenuImage({})
         await setInitialData()
         closeAddSubMenuItem()
       }
@@ -127,6 +132,7 @@ export default function AdminScreen(props: Props) {
         params: subMenuProps,
         readGroups: groupData,
         menuID: showAddSubMenuItem,
+        icon: subMenuImage,
         order: menus.filter((f) => f.id == showAddSubMenuItem)[0].subItems?.items.length,
       })
       console.log(z)
@@ -134,6 +140,7 @@ export default function AdminScreen(props: Props) {
       setSubMenuAction("")
       setSubMenuProps("")
       setGroupData([])
+      setSubMenuImage({})
       await setInitialData()
       closeAddSubMenuItem()
     } catch (e) {
@@ -287,6 +294,14 @@ export default function AdminScreen(props: Props) {
             value={subMenuProps}
             style={styles.adminCRMModalInviteEmail}
           ></TextInput>
+          <ResourceImage
+            onUpdate={(image: ImageInput) => {
+              setSubMenuImage(image)
+            }}
+            style={ButtonTypes.AdminOutline}
+            fileName={"menus/upload/icon-test-"}
+            currentImage={subMenuImage}
+          ></ResourceImage>
           <Text style={styles.adminCRMModal}>Visible to:</Text>
           {groupData
             ? groupData.map((item: any, index: number) => {
@@ -370,6 +385,7 @@ export default function AdminScreen(props: Props) {
     setShowAddSubMenuItem(null)
     setShowEditSubMenuItem(null)
     setSubMenuName("")
+    setSubMenuImage({})
     setSubMenuAction("")
     setSubMenuProps("")
     setGroupData([])
@@ -386,6 +402,7 @@ export default function AdminScreen(props: Props) {
   const editSubMenuItem = (item: any) => {
     setShowEditSubMenuItem(item.id)
     setSubMenuName(item.name)
+    setSubMenuImage(item.icon)
     setSubMenuAction(item.action)
     setSubMenuProps(item.params)
     setGroupData(item.readGroups)
@@ -525,6 +542,14 @@ export default function AdminScreen(props: Props) {
                   <div style={{ width: "100%" }}>
                     <div style={{ display: "flex", flexDirection: "row" }}>
                       <div style={{ display: "flex", flexGrow: 1, flexDirection: "row" }}>
+                        <View style={{ width: 25 }}>
+                          <JCImage
+                            style={JCImageStyle.IconSmall}
+                            quality={JCImageQuality.small}
+                            type={"icon"}
+                            image={item.icon}
+                          />
+                        </View>
                         <Text>{item.name}</Text>
                         <JCButton
                           buttonType={ButtonTypes.AdminSmallOutline}
@@ -579,6 +604,14 @@ export default function AdminScreen(props: Props) {
                           <div style={{ display: "flex", flexDirection: "row" }}>
                             <div style={{ display: "flex", flexGrow: 1, flexDirection: "row" }}>
                               <Text>&nbsp;&nbsp;&nbsp;</Text>
+                              <View style={{ width: 25 }}>
+                                <JCImage
+                                  style={JCImageStyle.IconSmall}
+                                  quality={JCImageQuality.small}
+                                  type={"icon"}
+                                  image={item2.icon}
+                                />
+                              </View>
                               <Text>{item2.name}</Text>
                               <JCButton
                                 buttonType={ButtonTypes.AdminSmallOutline}
