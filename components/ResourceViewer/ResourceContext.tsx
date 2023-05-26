@@ -88,6 +88,7 @@ export type ResourceActions = {
   saveGroup(): void
   leaveGroup(): void
   joinGroup(): void
+  createGroupInitial(): void
   deleteGroup(): void
   showProfile(id: string): void
   updateValueGroup(field: string, value: any): void
@@ -118,6 +119,7 @@ type ResourceContextType = {
 }
 export const ResourceContext = React.createContext<ResourceContextType>({
   resourceActions: {
+    createGroupInitial: async () => {},
     createPageItem: async () => {},
     updatePageItem: async () => {},
     deletePageItem: async () => {},

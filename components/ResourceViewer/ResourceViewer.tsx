@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Amplify, Analytics, Auth } from "aws-amplify"
-import { convertToRaw, EditorState } from "draft-js"
+import { EditorState, convertToRaw } from "draft-js"
 import * as React from "react"
 import { ScrollView, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
@@ -43,6 +43,7 @@ import Validate from "../Validate/Validate"
 import ResourceConfig from "./ResourceConfig"
 import ResourceContent from "./ResourceContent"
 //import { DataStore, Predicates } from '@aws-amplify/datastore'
+import { ResourceAdmin } from "../../screens/AdminNew/AdminResourcesScreen"
 import { ResourceContext, ResourceState } from "./ResourceContext"
 import ResourceDisplay from "./ResourceDisplay"
 
@@ -52,7 +53,7 @@ interface Props {
   navigation?: StackNavigationProp<any, any>
   groupId?: any
   route?: any
-  showConfig?: "config" | "detail" | "regular"
+  showConfig?: "config" | "detail" | "regular" | "admin"
   displayResource?: string
   displaySeries?: string
   displayEpisode?: string
@@ -75,9 +76,11 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       currentEpisode: null,
       isEditable: false,
       showMap: false,
-      loadId: props.route.params.id,
+      loadId: props.route?.params?.id ?? "NONE",
       createNew:
-        props.route.params.create === "true" || props.route.params.create === true ? true : false,
+        props.route?.params?.create === "true" || props.route?.params?.create === true
+          ? true
+          : false,
       canSave: false,
       canLeave: false,
       canJoin: false,
@@ -100,9 +103,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       currentEpisode: null,
       isEditable: false,
       showMap: false,
-      loadId: this.props.route.params.id,
+      loadId: this.props.route?.params?.id ?? "NONE",
       createNew:
-        this.props.route.params.create === "true" || this.props.route.params.create === true
+        this.props.route?.params?.create === "true" || this.props.route?.params?.create === true
           ? true
           : false,
       canSave: false,
@@ -137,83 +140,86 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         })
     })
   }
-  setInitialData(props: Props): void {
-    if (props.route.params.create === "true" || props.route.params.create === true) {
-      console.log("creating Resource")
-      Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
-        const z: CreateGroupInput = {
-          id: "resource-" + Date.now(),
-          owner: user.username,
-          type: "resource",
-          name: "",
-          description: "",
-          memberCount: 1,
-          isSponsored: "false",
-          image: "temp",
-          ownerOrgID: "0000000000000",
-          readGroups: [
-            UserGroupType.partners,
-            UserGroupType.legacyUserGroup1,
-            UserGroupType.subscriptionPartners,
-          ],
-        }
-        const isEditable = true
-        this.setState(
-          {
-            groupData: z,
-            isEditable: isEditable,
-            canLeave: true && !isEditable,
-            canJoin: true && !isEditable,
-            canSave: !this.state.createNew && isEditable,
-            createNew: this.state.createNew && isEditable,
-            canDelete: !this.state.createNew && isEditable,
-          },
-          () => {
-            this.setInitialResourceData()
-          }
-        )
-      })
-    } else {
-      const getGroup = Data.getGroup(props.route.params.id)
-      const processResults = (json: GetGroupQueryResult) => {
-        const isEditable =
-          (json.data?.getGroup?.owner == this.state.currentUser ||
-            this.props.userAction?.isMemberOf("admin")) ??
-          false
-
-        this.setState(
-          {
-            groupData: json.data?.getGroup,
-            memberIDs:
-              json.data?.getGroup?.members?.items?.map((item) =>
-                item?.userID ? item?.userID : ""
-              ) ?? [],
-            isEditable: isEditable,
-            canLeave: true && !isEditable,
-            canJoin: true && !isEditable,
-            canSave: !this.state.createNew && isEditable,
-            createNew: this.state.createNew && isEditable,
-            canDelete: !this.state.createNew && isEditable,
-          },
-          () => {
-            this.setInitialResourceData()
-            const groupMemberByUser: GroupMemberByUserQueryResultPromise = Data.groupMemberByUser(
-              this.state.currentUser,
-              this.state.groupData?.id
-            )
-            groupMemberByUser.then((json: GroupMemberByUserQueryResult) => {
-              console.log({ groupMemberByUser: json })
-              if (
-                json.data?.groupMemberByUser?.items &&
-                json.data.groupMemberByUser.items.length > 0
-              )
-                this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
-              else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
-            })
-          }
-        )
+  createGroupInitial = async () => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
+      const z: CreateGroupInput = {
+        id: "resource-" + Date.now(),
+        owner: user.username,
+        type: "resource",
+        name: "",
+        description: "",
+        memberCount: 1,
+        isSponsored: "false",
+        image: "temp",
+        ownerOrgID: "0000000000000",
+        readGroups: [
+          UserGroupType.partners,
+          UserGroupType.legacyUserGroup1,
+          UserGroupType.subscriptionPartners,
+        ],
       }
-      getGroup.then(processResults).catch(processResults)
+      const isEditable = true
+      this.setState(
+        {
+          groupData: z,
+          isEditable: isEditable,
+          canLeave: true && !isEditable,
+          canJoin: true && !isEditable,
+          canSave: !this.state.createNew && isEditable,
+          createNew: this.state.createNew && isEditable,
+          canDelete: !this.state.createNew && isEditable,
+        },
+        () => {
+          this.setInitialResourceData()
+        }
+      )
+    })
+  }
+  loadGroup(id) {
+    const getGroup = Data.getGroup(id)
+    const processResults = (json: GetGroupQueryResult) => {
+      const isEditable =
+        (json.data?.getGroup?.owner == this.state.currentUser ||
+          this.props.userAction?.isMemberOf("admin")) ??
+        false
+
+      this.setState(
+        {
+          groupData: json.data?.getGroup,
+          memberIDs:
+            json.data?.getGroup?.members?.items?.map((item) =>
+              item?.userID ? item?.userID : ""
+            ) ?? [],
+          isEditable: isEditable,
+          canLeave: true && !isEditable,
+          canJoin: true && !isEditable,
+          canSave: !this.state.createNew && isEditable,
+          createNew: this.state.createNew && isEditable,
+          canDelete: !this.state.createNew && isEditable,
+        },
+        () => {
+          this.setInitialResourceData()
+          const groupMemberByUser: GroupMemberByUserQueryResultPromise = Data.groupMemberByUser(
+            this.state.currentUser,
+            this.state.groupData?.id
+          )
+          groupMemberByUser.then((json: GroupMemberByUserQueryResult) => {
+            console.log({ groupMemberByUser: json })
+            if (json.data?.groupMemberByUser?.items && json.data.groupMemberByUser.items.length > 0)
+              this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
+            else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
+          })
+        }
+      )
+    }
+    getGroup.then(processResults).catch(processResults)
+  }
+  setInitialData(props: Props): void {
+    if (props.route?.params?.create === "true" || props.route?.params?.create === true) {
+      console.log("creating Resource")
+      this.createGroupInitial()
+    } else {
+      this.loadGroup(props.route?.params?.id)
     }
   }
   async setInitialResourceData(): Promise<void> {
@@ -1125,29 +1131,33 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     )
   }
   renderRouter() {
-    if (this.props.showConfig == "config") return <ResourceConfig></ResourceConfig>
-    else if (this.props.showConfig == "detail") {
-      return (
-        <ResourceDisplay
-          displayResource={this.props.displayResource}
-          displayEpisode={this.props.displayEpisode}
-          displaySeries={this.props.displaySeries}
-        ></ResourceDisplay>
-      )
-    } else
-      return this.state.currentResource == 0 ? (
-        <>
-          <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
-        </>
-      ) : (
-        <>
-          <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
-        </>
-      )
+    if (this.props.showConfig == "admin") return <ResourceAdmin></ResourceAdmin>
+    else {
+      if (this.state.resourceData == null) return null
+      if (this.props.showConfig == "config") return <ResourceConfig></ResourceConfig>
+      else if (this.props.showConfig == "detail") {
+        return (
+          <ResourceDisplay
+            displayResource={this.props.displayResource}
+            displayEpisode={this.props.displayEpisode}
+            displaySeries={this.props.displaySeries}
+          ></ResourceDisplay>
+        )
+      } else
+        return this.state.currentResource == 0 ? (
+          <>
+            <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
+          </>
+        ) : (
+          <>
+            <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
+          </>
+        )
+    }
   }
 
   render(): React.ReactNode {
-    return this.state.resourceData != null ? (
+    return (
       <ErrorBoundary>
         <ResourceViewerImpl.Provider
           value={{
@@ -1179,6 +1189,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               mapChanged: this.mapChanged,
               validateGroup: this.validateGroup,
               createGroup: this.createGroup,
+              createGroupInitial: this.createGroupInitial,
               saveGroup: this.saveGroup,
               leaveGroup: this.leaveGroup,
               joinGroup: this.joinGroup,
@@ -1203,7 +1214,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           </View>
         </ResourceViewerImpl.Provider>
       </ErrorBoundary>
-    ) : null
+    )
   }
 }
 
