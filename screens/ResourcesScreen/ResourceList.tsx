@@ -1,7 +1,10 @@
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Auth } from "aws-amplify"
 import React, { useEffect, useState } from "react"
 import { isMobile, isMobileOnly } from "react-device-detect"
-import { ActivityIndicator, FlatList, Text, View } from "react-native"
+import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import { Group } from "src/API"
 import { JCCognitoUser } from "src/types"
 import { Data } from "../../components/Data/Data"
 import LastListItem from "../../components/LastListItem/LastListItem"
@@ -10,12 +13,64 @@ import ResourceCard from "./ResourceCard"
 type Props = {
   filter: string
   reverse: boolean
+  type: "card" | "list"
+}
+function ResourceItem({ item }: { item: Group }) {
+  const navigation = useNavigation<StackNavigationProp<any, any>>()
+
+  const navigateToResourceScreen = () => {
+    navigation.push("ResourceScreen", { id: item.id })
+  }
+
+  return (
+    <TouchableOpacity delayPressIn={150} onPress={navigateToResourceScreen}>
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <Image
+          style={{
+            margin: 5,
+            padding: 0,
+            width: 40,
+            height: 40,
+            borderRadius: 3,
+          }}
+          source={require("../../assets/svg/pattern.svg")}
+        ></Image>
+        <View>
+          <Text
+            style={{
+              fontFamily: "Graphik-Regular-App",
+              fontStyle: "normal",
+              fontWeight: "600",
+              fontSize: 16,
+              lineHeight: "150%",
+              color: "#1D61B8",
+            }}
+          >
+            {item.name}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Graphik-Regular-App",
+              fontStyle: "normal",
+              fontWeight: 400,
+              fontSize: 14,
+              lineHeight: "140%",
+              color: "#7A8899",
+            }}
+          >
+            {item.description.substring(0, 90)}
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  )
 }
 export default function GroupsList(props: Props) {
   const { reverse, filter } = props
   const [data, setData] = useState<Array<any>>([])
   const [currentUser, setCurrentUser] = useState("")
   const [isLoading, setIsLoading] = useState(true)
+  const isList = props.type == "list"
   const filterResources = (d: any[]) => {
     if (filter === ": Your Resources") {
       return d.filter((a) => a?.owner === currentUser)
@@ -67,7 +122,7 @@ export default function GroupsList(props: Props) {
         style={isMobileOnly ? { paddingBottom: 16 } : { minHeight: 300, marginRight: 32 }} // prevents UI shifting on desktop, 2 rows of 292 + footer height
         contentContainerStyle={isMobileOnly ? { paddingHorizontal: 12, paddingTop: 16 } : {}}
         ItemSeparatorComponent={() => (isMobileOnly ? null : <View style={{ height: 32 }}></View>)}
-        columnWrapperStyle={isMobileOnly ? null : { gap: 32 }}
+        columnWrapperStyle={isMobileOnly ? null : isList ? null : { gap: 32 }}
         ListHeaderComponent={() =>
           isLoading ? (
             <ActivityIndicator
@@ -110,7 +165,7 @@ export default function GroupsList(props: Props) {
             reverse ? b?.name?.localeCompare(a?.name) : a?.name.localeCompare(b?.name)
           )
         )}
-        numColumns={isMobile ? 1 : 2}
+        numColumns={isMobile ? 1 : isList ? 1 : 2}
         keyExtractor={(item) => item?.id}
         refreshing={isLoading}
         renderItem={({ item, index }) => {
@@ -118,7 +173,7 @@ export default function GroupsList(props: Props) {
             <ResourceCard item={item} />
           ) : (
             <LastListItem listLength={data.length} index={index}>
-              <ResourceCard item={item} />
+              {isList ? <ResourceItem item={item} /> : <ResourceCard item={item} />}
             </LastListItem>
           )
         }}

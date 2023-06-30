@@ -4,7 +4,7 @@ import { NavigationProp, useNavigation, useRoute } from "@react-navigation/nativ
 import React, { useContext } from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import JCModal from "../../components/Forms/JCModal"
+import JCModal, { JCModalType } from "../../components/Forms/JCModal"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserGroupType } from "../../src/API"
@@ -28,7 +28,7 @@ function JCResourceConfigModalImpl(props: Props) {
       <View style={{ flexDirection: "column" }}>
         {state.canJoin ? (
           <JCButton
-            buttonType={ButtonTypes.OutlineBoldNoMargin}
+            buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => {
               actions.joinGroup()
             }}
@@ -38,7 +38,7 @@ function JCResourceConfigModalImpl(props: Props) {
         ) : null}
         {state.canLeave ? (
           <JCButton
-            buttonType={ButtonTypes.OutlineBoldNoMargin}
+            buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => {
               actions.leaveGroup()
             }}
@@ -48,7 +48,7 @@ function JCResourceConfigModalImpl(props: Props) {
         ) : null}
         {state.createNew ? (
           <JCButton
-            buttonType={ButtonTypes.OutlineBoldNoMargin}
+            buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => {
               actions.createGroup()
 
@@ -69,7 +69,7 @@ function JCResourceConfigModalImpl(props: Props) {
         ) : null}
         {state.canSave ? (
           <JCButton
-            buttonType={ButtonTypes.OutlineBoldNoMargin}
+            buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => {
               actions.saveGroup()
               props.onClose()
@@ -80,7 +80,7 @@ function JCResourceConfigModalImpl(props: Props) {
         ) : null}
         {state.canDelete ? (
           <JCButton
-            buttonType={ButtonTypes.OutlineBoldNoMargin}
+            buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => {
               if (window.confirm("Are you sure you wish to delete this group?")) {
                 actions.deleteGroup()
@@ -102,60 +102,72 @@ function JCResourceConfigModalImpl(props: Props) {
     return (
       resourceState.isEditable && (
         <View style={{ marginBottom: 35 }}>
-          <Text style={{ fontWeight: "bold" }}>Permissions</Text>
-          <Picker
-            mode="dropdown"
+          <Text
             style={{
-              width: "100%",
-              marginTop: 10,
-              marginBottom: 30,
-              fontSize: 16,
-              height: 30,
-              flexGrow: 0,
-              paddingTop: 3,
-              paddingBottom: 3,
-            }}
-            selectedValue={undefined}
-            onValueChange={(value: string) => {
-              console.log({ value: value })
-              let tmp = resourceState?.groupData?.readGroups
-              if (!tmp) tmp = []
-              tmp.push(value as UserGroupType)
-              resourceActions.updateValueGroup("readGroups", tmp)
+              fontSize: 12,
+              lineHeight: 16,
+              fontFamily: "Graphik-Regular-App",
+              color: "#333333",
+              fontWeight: "bold",
             }}
           >
-            <Picker.Item key={null} label={"Add Group"} value={undefined} />
-            {Object.keys(UserGroupType).map((org: string) => {
-              return <Picker.Item key={org} label={org} value={org} />
-            })}
-          </Picker>
-          {resourceState?.groupData?.readGroups?.map(
-            (item: UserGroupType | null, index: number) => {
-              return (
-                <React.Fragment key={index}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text style={{ fontWeight: "normal" }}>{item}</Text>
-                    <TouchableOpacity
-                      style={{ alignSelf: "center", marginLeft: 15 }}
-                      onPress={() => {
-                        let tmp = resourceState?.groupData?.readGroups
-                        if (!tmp) tmp = []
-                        tmp.splice(index, 1)
-                        resourceActions.updateValueGroup("readGroups", tmp)
+            Permissions
+          </Text>
+          <View style={{ backgroundColor: "white" }}>
+            <Picker
+              mode="dropdown"
+              style={{
+                width: "100%",
+                marginTop: 10,
+                marginBottom: 30,
+                fontSize: 16,
+                height: 30,
+                flexGrow: 0,
+                paddingTop: 3,
+                paddingBottom: 3,
+              }}
+              selectedValue={undefined}
+              onValueChange={(value: string) => {
+                console.log({ value: value })
+                let tmp = resourceState?.groupData?.readGroups
+                if (!tmp) tmp = []
+                tmp.push(value as UserGroupType)
+                resourceActions.updateValueGroup("readGroups", tmp)
+              }}
+            >
+              <Picker.Item key={null} label={"Add Group"} value={undefined} />
+              {Object.keys(UserGroupType).map((org: string) => {
+                return <Picker.Item key={org} label={org} value={org} />
+              })}
+            </Picker>
+            {resourceState?.groupData?.readGroups?.map(
+              (item: UserGroupType | null, index: number) => {
+                return (
+                  <React.Fragment key={index}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
                       }}
                     >
-                      <AntDesign name="close" size={20} color="black" />
-                    </TouchableOpacity>
-                  </View>
-                </React.Fragment>
-              )
-            }
-          )}
+                      <Text style={{ fontWeight: "normal" }}>{item}</Text>
+                      <TouchableOpacity
+                        style={{ alignSelf: "center", marginLeft: 15 }}
+                        onPress={() => {
+                          let tmp = resourceState?.groupData?.readGroups
+                          if (!tmp) tmp = []
+                          tmp.splice(index, 1)
+                          resourceActions.updateValueGroup("readGroups", tmp)
+                        }}
+                      >
+                        <AntDesign name="close" size={20} color="black" />
+                      </TouchableOpacity>
+                    </View>
+                  </React.Fragment>
+                )
+              }
+            )}
+          </View>
         </View>
       )
     )
@@ -167,12 +179,13 @@ function JCResourceConfigModalImpl(props: Props) {
   return (
     <JCModal
       visible={props.visible}
-      title="Configure JC Group"
+      title="Create Resource Group"
+      type={JCModalType.FullScreen}
       onHide={() => {
         props.onClose()
       }}
     >
-      <View>
+      <View style={{ backgroundColor: "#F0F2F5", padding: 16 }}>
         <View
           style={{
             flexDirection: "row",
@@ -187,10 +200,10 @@ function JCResourceConfigModalImpl(props: Props) {
               lineHeight: 16,
               fontFamily: "Graphik-Regular-App",
               color: "#333333",
-              textTransform: "uppercase",
+              fontWeight: "bold",
             }}
           >
-            Resource
+            Collection Name*
           </Text>
           {resourceState.isEditable ? (
             <JCSwitch
@@ -218,37 +231,46 @@ function JCResourceConfigModalImpl(props: Props) {
             </Text>
           ) : null}
         </View>
-
         <EditableText
           onChange={(value: any) => {
             resourceActions.updateValueGroup("name", value) // actions.updateOverview("title", value)
           }}
-          placeholder="Enter Resource Name"
+          placeholder="Resource Name"
           multiline={false}
           textStyle={styles.groupNameInput}
           inputStyle={styles.groupNameInput}
           value={resourceState.groupData?.name ?? ""}
           isEditable={resourceState.isEditable}
         ></EditableText>
+        <Text
+          style={{
+            fontSize: 12,
+            lineHeight: 16,
+            fontFamily: "Graphik-Regular-App",
+            color: "#333333",
+            fontWeight: "bold",
+          }}
+        >
+          Collection Description*
+        </Text>
         <EditableText
           onChange={(value: any) => {
             resourceActions.updateValueGroup("description", value) //actions.updateOverview("description", value)
           }}
-          placeholder="Enter Resource Description"
+          placeholder="Resource Description"
           multiline={true}
           textStyle={styles.groupDescriptionInput}
           inputStyle={styles.groupDescriptionInput}
           value={resourceState.groupData?.description ?? ""}
           isEditable={resourceState.isEditable}
         ></EditableText>
-
         <Text
           style={{
+            fontSize: 12,
+            lineHeight: 16,
             fontFamily: "Graphik-Regular-App",
-            fontSize: 16,
-            lineHeight: 23,
             color: "#333333",
-            paddingBottom: 12,
+            fontWeight: "bold",
           }}
         >
           Organizer
@@ -272,25 +294,22 @@ function JCResourceConfigModalImpl(props: Props) {
         </TouchableOpacity>
         <Text
           style={{
-            fontFamily: "Graphik-Bold-App",
-            fontSize: 20,
-            lineHeight: 25,
-            letterSpacing: -0.3,
+            fontSize: 12,
+            lineHeight: 16,
+            fontFamily: "Graphik-Regular-App",
             color: "#333333",
-            paddingTop: 48,
-            paddingBottom: 12,
+            fontWeight: "bold",
           }}
         >
           Members ({resourceState.memberIDs.length})
         </Text>
-
         <View style={styles.groupAttendeesPictures}>
           {resourceState.memberIDs.length == 0 ? (
             <Text
               style={{
                 fontFamily: "Graphik-Bold-App",
-                fontSize: 16,
-                lineHeight: 24,
+                fontSize: 10,
+                lineHeight: 16,
                 letterSpacing: -0.3,
                 color: "#333333",
                 marginBottom: 30,
@@ -314,6 +333,27 @@ function JCResourceConfigModalImpl(props: Props) {
           )}
         </View>
         {renderPermissions(resourceState, resourceActions)}
+        <View style={{ marginTop: 20 }}>
+          {resourceState.isEditable ? (
+            resourceState.resourceData?.type == "simple" ? (
+              <JCSwitch
+                switchLabel="Simple Resource"
+                initState={resourceState.resourceData?.type == "simple" ? true : false}
+                onPress={(status) => {
+                  if (
+                    window.confirm(
+                      "Converting a group to curriculum from simple can't be undone, are you sure you want to continue?"
+                    )
+                  ) {
+                    resourceActions.convertToCurriculum()
+                  }
+                }}
+              ></JCSwitch>
+            ) : (
+              <Text>Curriculum - Can't be converted back to Simple</Text>
+            )
+          ) : null}
+        </View>
         {renderButtons(resourceState, resourceActions)}
       </View>
     </JCModal>

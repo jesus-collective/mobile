@@ -8,8 +8,8 @@ import {
   GetResourceData,
   GetResourceSeriesData,
   ListResourceEpisodesData,
-  ListResourcesData,
   ListResourceSeriessData,
+  ListResourcesData,
   ResourceAdminProp,
   ResourceSetupProp,
 } from "../../src/types"

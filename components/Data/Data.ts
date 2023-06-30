@@ -16,6 +16,12 @@ import { DirectMessagesByRoomQueryVariables } from "src/API-messages"
 import { InviteType } from "src/types"
 import {
   CourseTriadUserByUserQuery,
+  CreateCRMMessageInput,
+  CreateCRMMessageMutation,
+  CreateCRMReplyInput,
+  CreateCRMReplyMutation,
+  CreateCRMRootInput,
+  CreateCRMRootMutation,
   CreateCourseBackOfficeStaffInput,
   CreateCourseBackOfficeStaffMutation,
   CreateCourseInfoInput,
@@ -26,18 +32,12 @@ import {
   CreateCourseLessonMutation,
   CreateCourseTriadCoachesInput,
   CreateCourseTriadCoachesMutation,
-  CreateCourseTriadsInput,
-  CreateCourseTriadsMutation,
   CreateCourseTriadUsersInput,
   CreateCourseTriadUsersMutation,
+  CreateCourseTriadsInput,
+  CreateCourseTriadsMutation,
   CreateCourseWeekInput,
   CreateCourseWeekMutation,
-  CreateCRMMessageInput,
-  CreateCRMMessageMutation,
-  CreateCRMReplyInput,
-  CreateCRMReplyMutation,
-  CreateCRMRootInput,
-  CreateCRMRootMutation,
   CreateCustomPricingInput,
   CreateCustomPricingMutation,
   CreateCustomProfileInput,
@@ -94,8 +94,8 @@ import {
   DeleteCourseInstructorsMutation,
   DeleteCourseLessonMutation,
   DeleteCourseTriadCoachesMutation,
-  DeleteCourseTriadsMutation,
   DeleteCourseTriadUsersMutation,
+  DeleteCourseTriadsMutation,
   DeleteCourseWeekMutation,
   DeleteCustomPricingMutation,
   DeleteCustomProfileMutation,
@@ -156,12 +156,12 @@ import {
   PaymentByUserQuery,
   PreviewInvoiceMutation,
   PreviewInvoiceMutationVariables,
-  SearchableGroupFilterInput,
-  SearchableResourceEpisodeFilterInput,
-  SearchableUserFilterInput,
   SearchGroupsQuery,
   SearchResourceEpisodesQuery,
   SearchUsersQuery,
+  SearchableGroupFilterInput,
+  SearchableResourceEpisodeFilterInput,
+  SearchableUserFilterInput,
   UpdateCourseInfoInput,
   UpdateCourseInfoMutation,
   UpdateCourseLessonInput,
@@ -190,6 +190,8 @@ import {
   UpdateResourceMenuItemInput,
   UpdateResourceMenuItemMutation,
   UpdateResourceMutation,
+  UpdateResourceRootInput,
+  UpdateResourceRootMutation,
   UpdateResourceSeriesInput,
   UpdateResourceSeriesMutation,
   UpdateStartupInput,
@@ -212,6 +214,13 @@ export enum UserGroupType {
   OneStory = "OneStory",
 }
 export class Data {
+  static updateResourceRoot(input: UpdateResourceRootInput) {
+    return API.graphql({
+      query: mutations.updateResourceRoot,
+      variables: { input: input },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Promise<GraphQLResult<UpdateResourceRootMutation>>
+  }
   static updateDirectMessage(input: UpdateDirectMessageInput) {
     return API.graphql({
       query: customMutations.updateDirectMessage,

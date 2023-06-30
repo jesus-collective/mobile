@@ -119,7 +119,7 @@ export default function ResourcesScreen() {
   return (
     <GenericDirectoryScreen
       ControlButtons={<GroupsControlButtons />}
-      MainContent={<ResourceList filter={filter} reverse={reverse} />}
+      MainContent={<ResourceList type="list" filter={filter} reverse={reverse} />}
       Widgets={<ResourceWidgets />}
       pageTitle="Resources"
     />

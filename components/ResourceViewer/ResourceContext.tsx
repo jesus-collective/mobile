@@ -112,6 +112,7 @@ export type ResourceActions = {
 
   getMenuItem(menuIndex: number | null): any
   moveMenuItemUp(index: number): void
+  convertToCurriculum(): void
 }
 type ResourceContextType = {
   resourceActions: ResourceActions
@@ -119,6 +120,7 @@ type ResourceContextType = {
 }
 export const ResourceContext = React.createContext<ResourceContextType>({
   resourceActions: {
+    convertToCurriculum: async () => {},
     createGroupInitial: async () => {},
     createPageItem: async () => {},
     updatePageItem: async () => {},

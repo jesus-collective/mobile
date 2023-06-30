@@ -21,6 +21,7 @@ import {
   ResourcePageItemType,
   UpdateResourceEpisodeInput,
   UpdateResourceInput,
+  UpdateResourceRootInput,
   UpdateResourceSeriesInput,
   UserGroupType,
 } from "../../src/API"
@@ -175,6 +176,47 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       )
     })
   }
+  convertToCurriculum = async (): Promise<void> => {
+    console.log("converting")
+    try {
+      const resourceRoot: UpdateResourceRootInput = {
+        id: this.state.resourceData?.id,
+        type: `curriculum`,
+      }
+      const updateResourceRoot = await Data.updateResourceRoot(resourceRoot)
+      console.log({ updateResourceRoot: updateResourceRoot })
+      if (updateResourceRoot.data?.updateResourceRoot) {
+        const menuItem: CreateResourceMenuItemInput = {
+          type: ResourceMenuItemType.menuItem,
+          readGroups: [UserGroupType.verifiedUsers],
+          menuTitle: "Overview",
+          order: "0",
+          depth: "1",
+          resourceRootID: updateResourceRoot.data.updateResourceRoot.id,
+        }
+
+        const createMenuItem = await Data.createResourceMenuItem(menuItem)
+        console.log({ createMenuItem: createMenuItem })
+
+        const getResourceRoot = await Data.getResourceRoot(
+          updateResourceRoot.data.updateResourceRoot.id
+        )
+
+        console.log({ updateResourceRoot: updateResourceRoot })
+        console.log({ resourceRoot: getResourceRoot })
+        if (getResourceRoot.data?.getResourceRoot)
+          this.setState({
+            resourceData: getResourceRoot.data.getResourceRoot as GetResourceRootDataCustom,
+            currentResource: 0,
+            currentEpisode: null,
+            currentSeries: null,
+          })
+      }
+    } catch (e) {
+      console.log({ error: e })
+    }
+  }
+
   loadGroup(id) {
     const getGroup = Data.getGroup(id)
     const processResults = (json: GetGroupQueryResult) => {
@@ -269,7 +311,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     console.log("test1")
     try {
       const resourceRoot: CreateResourceRootInput = {
-        type: `curriculum`,
+        type: `simple`,
         groupId: this.state.groupData?.id,
         organizationId: "0",
       }
@@ -283,9 +325,33 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           order: "0",
           depth: "1",
           resourceRootID: createResourceRoot.data.createResourceRoot.id,
+          pageItems: [
+            {
+              id: uuidv4(),
+              color: "#0000ff",
+              type: ResourcePageItemType.Header,
+              title1: "Overview",
+              title2: "Hello",
+            },
+            {
+              id: uuidv4(),
+              type: ResourcePageItemType.List,
+              title1: "Overview",
+              title2: "Hello",
+              style: ResourcePageItemStyle.ListAuto,
+            },
+          ],
         }
-
+        const z: ResourcePageItemInput = {
+          id: uuidv4(),
+          type: ResourcePageItemType.Header,
+          title1: "Overview",
+          title2: "Hello",
+          order: 0,
+        }
         const createMenuItem = await Data.createResourceMenuItem(menuItem)
+
+        const createPageItem = await Data.createResource
         console.log({ createMenuItem: createMenuItem })
 
         const getResourceRoot = await Data.getResourceRoot(
@@ -1165,6 +1231,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               ...this.state,
             },
             resourceActions: {
+              convertToCurriculum: this.convertToCurriculum,
               createPageItem: this.createPageItem,
               updatePageItem: this.updatePageItem,
               deletePageItem: this.deletePageItem,

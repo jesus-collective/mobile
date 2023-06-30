@@ -1,8 +1,13 @@
 import { Ionicons } from "@expo/vector-icons"
 import ReactDOM from "react-dom"
-import { Modal, Text, View } from "react-native"
+import { Modal, StyleSheet, Text, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
+
+export enum JCModalType {
+  Default = "Default",
+  FullScreen = "FullScreen",
+}
 
 interface Props {
   visible: boolean
@@ -11,6 +16,7 @@ interface Props {
   noScroll?: boolean
   unsetOverflow?: boolean
   children: any
+  type?: JCModalType
 }
 
 export default class JCModal extends JCComponent<Props> {
@@ -33,10 +39,10 @@ export default class JCModal extends JCComponent<Props> {
     return this.props.visible ? (
       <Modal
         accessibilityViewIsModal
-        animationType="slide"
+        animationType={this.props.type == JCModalType.Default ? "slide" : "fade"}
         transparent={true}
-        presentationStyle="pageSheet"
-        style={this.styles.style.jcModal}
+        presentationStyle={this.props.type == JCModalType.Default ? "pageSheet" : "fullScreen"}
+        style={styles.jcModal}
         visible={this.props.visible}
       >
         <View
@@ -48,27 +54,18 @@ export default class JCModal extends JCComponent<Props> {
           }}
         >
           <View
-            style={{
-              margin: 20,
-              backgroundColor: "white",
-              borderRadius: 10,
-              paddingTop: 10,
-              paddingBottom: 25,
-              paddingLeft: 20,
-              paddingRight: 20,
-              alignItems: "center",
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-              maxHeight: "80vh",
-              overflow: this.props.unsetOverflow
-                ? undefined
-                : this.props.noScroll
-                ? "hidden"
-                : "scroll",
-            }}
+            style={[
+              this.props.type == JCModalType.Default
+                ? styles.jcModalDefault
+                : styles.jcModalFullScreen,
+              {
+                overflow: this.props.unsetOverflow
+                  ? undefined
+                  : this.props.noScroll
+                  ? "hidden"
+                  : "scroll",
+              },
+            ]}
           >
             <View
               style={{
@@ -104,4 +101,51 @@ export default class JCModal extends JCComponent<Props> {
       </Modal>
     ) : null
   }
+  static defaultProps = {
+    type: JCModalType.Default,
+  }
 }
+const styles = StyleSheet.create({
+  jcModal: {
+    position: "fixed",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    borderWidth: 0,
+  },
+  jcModalDefault: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    paddingTop: 10,
+    paddingBottom: 25,
+    paddingLeft: 20,
+    paddingRight: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    maxHeight: "80vh",
+  },
+  jcModalFullScreen: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 0,
+    paddingTop: 10,
+    paddingBottom: 25,
+    paddingLeft: 20,
+    paddingRight: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    maxHeight: "100vh",
+    width: "100%",
+  },
+})

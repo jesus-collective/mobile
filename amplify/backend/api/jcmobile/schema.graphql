@@ -1207,6 +1207,7 @@ enum ResourcePageItemStyle{
   GridAuto
   ListManual
   ListAuto
+  ListAutoSimple
 
 }
 type ResourcePageItem{

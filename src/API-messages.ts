@@ -781,6 +781,7 @@ export enum ResourcePageItemStyle {
   GridAuto = "GridAuto",
   ListManual = "ListManual",
   ListAuto = "ListAuto",
+  ListAutoSimple = "ListAutoSimple",
 }
 
 export type ModelStringKeyConditionInput = {
